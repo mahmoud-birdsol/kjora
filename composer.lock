@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7e13eaf910b3b1a71f9f8c27598edcb0",
+    "content-hash": "1de58121929520c80210fd1f66b17ed2",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -3824,6 +3824,69 @@
                 }
             ],
             "time": "2022-07-30T15:51:26+00:00"
+        },
+        {
+            "name": "pktharindu/nova-permissions",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pktharindu/nova-permissions.git",
+                "reference": "9c45a27a5a96314477e82c4453d75abd4e4ce963"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pktharindu/nova-permissions/zipball/9c45a27a5a96314477e82c4453d75abd4e4ce963",
+                "reference": "9c45a27a5a96314477e82c4453d75abd4e4ce963",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0|^8.0"
+            },
+            "require-dev": {
+                "laravel/nova": "^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Pktharindu\\NovaPermissions\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Pktharindu\\NovaPermissions\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "P. K. Tharindu",
+                    "email": "pktharindu@outlook.com"
+                }
+            ],
+            "description": "Laravel Nova Grouped Permissions (ACL)",
+            "keywords": [
+                "Authentication",
+                "access control",
+                "acl",
+                "authorization",
+                "gates",
+                "laravel",
+                "nova",
+                "permissions",
+                "policies",
+                "roles",
+                "tool"
+            ],
+            "support": {
+                "issues": "https://github.com/pktharindu/nova-permissions/issues",
+                "source": "https://github.com/pktharindu/nova-permissions/tree/v3.0.0"
+            },
+            "time": "2022-04-17T04:14:24+00:00"
         },
         {
             "name": "pragmarx/google2fa",

@@ -2,23 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Nova\Auth\Impersonatable;
 use Laravel\Sanctum\HasApiTokens;
+use Pktharindu\NovaPermissions\Traits\HasRoles;
 
-class User extends Authenticatable implements MustVerifyEmail
+class Admin extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
-    use TwoFactorAuthenticatable;
+    use HasRoles;
     use Impersonatable;
 
     /**
@@ -40,17 +39,6 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
-        'two_factor_recovery_codes',
-        'two_factor_secret',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
     ];
 
     /**
@@ -63,12 +51,24 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
+     * Determine if the user can impersonate another user.
+     *
+     * @return bool
+     */
+    public function canImpersonate(): bool
+    {
+        return $this->hasPermissionTo('impersonate users') || $this->hasPermissionTo('impersonate admins');
+    }
+
+    /**
      * Determine if the user can be impersonated.
      *
      * @return bool
      */
     public function canBeImpersonated(): bool
     {
-        return Auth::check() && Auth::user()->hasPermissionTo('impersonate users');
+        return Auth::check()
+            ? Auth::user()->hasPermissionTo('impersonate admins') && ! $this->roles()->where('slug', 'developer')->exists()
+            : false;
     }
 }
