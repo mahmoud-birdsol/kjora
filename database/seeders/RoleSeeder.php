@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Pktharindu\NovaPermissions\Permission;
 use Pktharindu\NovaPermissions\Role;

@@ -1,7 +1,9 @@
 <?php
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
 class CreateGatesTable extends Migration
 {
     /**
@@ -12,7 +14,7 @@ class CreateGatesTable extends Migration
     public function up()
     {
         $tableNames = config('nova-permissions.table_names');
-        
+
         Schema::create($tableNames['roles'], function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('slug');
@@ -39,7 +41,7 @@ class CreateGatesTable extends Migration
                   ->references('id')
                   ->on($tableNames['roles'])
                   ->onDelete('cascade');
-        
+
             $table->foreign('user_id')
                   ->references('id')
                   ->on($tableNames['users'])
@@ -56,7 +58,7 @@ class CreateGatesTable extends Migration
     public function down()
     {
         $tableNames = config('nova-permissions.table_names');
-        
+
         Schema::dropIfExists($tableNames['role_permission']);
         Schema::dropIfExists($tableNames['role_user']);
         Schema::dropIfExists($tableNames['roles']);
