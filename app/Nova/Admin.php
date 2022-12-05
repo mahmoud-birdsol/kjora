@@ -4,11 +4,13 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Pktharindu\NovaPermissions\Nova\Role;
 
 class Admin extends Resource
 {
@@ -32,7 +34,7 @@ class Admin extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email'
+        'id', 'name', 'email',
     ];
 
     /**
@@ -62,6 +64,10 @@ class Admin extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),
+
+            BelongsToMany::make('Roles', 'roles', Role::class)
+                ->filterable()
+                ->showCreateRelationButton(),
         ];
     }
 

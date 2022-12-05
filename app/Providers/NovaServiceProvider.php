@@ -2,10 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Admin;
+use App\Nova\Dashboards\Main;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Pktharindu\NovaPermissions\NovaPermissions;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -51,10 +54,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function gate()
     {
-        Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+        Gate::define('viewNova', function (Admin $user) {
+            return $user->hasPermissionTo('access nova');
         });
     }
 
@@ -66,7 +67,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function dashboards()
     {
         return [
-            new \App\Nova\Dashboards\Main,
+            Main::make(),
         ];
     }
 
@@ -77,7 +78,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     public function tools()
     {
-        return [];
+        return [
+            NovaPermissions::make(),
+        ];
     }
 
     /**

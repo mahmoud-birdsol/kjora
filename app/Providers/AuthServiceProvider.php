@@ -3,7 +3,10 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,7 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        \Pktharindu\NovaPermissions\Role::class => \App\Policies\RolePolicy::class,
     ];
 
     /**
@@ -25,6 +28,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        foreach (config('nova-permissions.permissions') as $key => $permissions) {
+            Gate::define($key, function (Admin $user) use ($key) {
+                if ($this->nobodyHasAccess($key)) {
+                    return true;
+                }
+
+                return $user->hasPermissionTo($key);
+            });
+        }
     }
 }
