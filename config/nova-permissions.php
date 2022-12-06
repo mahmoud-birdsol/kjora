@@ -133,6 +133,12 @@ return [
             'group' => 'Admin',
         ],
 
+        'send admin invitations' => [
+            'display_name' => 'Send admin invitations',
+            'description' => 'Can send admin invitations',
+            'group' => 'Admin',
+        ],
+
         /*
          |--------------------------------------------------------------------------
          | Roles permissions...

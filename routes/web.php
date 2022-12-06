@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JoinPlatformController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,3 +34,12 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
+
+Route::middleware('guest')
+    ->resource(
+        'join-platform/{token}',
+        JoinPlatformController::class
+    )->only('create', 'store')->names([
+        'create' => 'join-platform.create',
+        'store' => 'join-platform.store',
+    ]);

@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\SendInvitation;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -112,6 +113,11 @@ class Admin extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            SendInvitation::make()
+                ->showInline()
+                ->canSee(fn () => $request->user()->hasPermissionTo('send admin invitations'))
+                ->canRun(fn () => $request->user()->hasPermissionTo('send admin invitations')),
+        ];
     }
 }
