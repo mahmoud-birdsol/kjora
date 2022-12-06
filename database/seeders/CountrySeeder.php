@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Country;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -23,23 +22,41 @@ class CountrySeeder extends Seeder
 
         DB::table('countries')->truncate();
 
-        // Get the file...
-        $countriesFile = database_path('data/countries.json');
-
-        // Collect the data...
-        $countries = collect(json_decode(file_get_contents($countriesFile), true));
+        $countries = $this->collectCountries(
+            database_path('data/countries.json')
+        );
 
         $countries->each(function (array $country) {
-            // Upload the flag
-            if (array_key_exists('flag', $country)) {
-                $flag = database_path('data/flags/'.$country['flag']);
-                Storage::disk('public')->put('flags/'.$country['flag'], file_get_contents($flag));
-                $country['flag'] = 'flags/'.$country['flag'];
-            }
-
-            Country::create($country);
+            Country::create($this->uploadFlag($country));
         });
 
         Schema::enableForeignKeyConstraints();
+    }
+
+    /**
+     * @param  string  $countriesFile
+     * @return \Illuminate\Support\Collection
+     */
+    private function collectCountries(string $countriesFile): Collection
+    {
+        return collect(json_decode(file_get_contents($countriesFile), true));
+    }
+
+    /**
+     * @param  array  $country
+     * @return array
+     */
+    function uploadFlag(array $country): array
+    {
+        if (array_key_exists('flag', $country)) {
+            Storage::disk('public')->put(
+                'flags/'.$country['flag'],
+                file_get_contents(database_path('data/flags/'.$country['flag']))
+            );
+
+            $country['flag'] = 'flags/'.$country['flag'];
+        }
+
+        return $country;
     }
 }
