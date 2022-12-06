@@ -17,9 +17,7 @@ class GenerateUniqueToken
      */
     public function __invoke(string $tableName, int $length = 16, string $tokenColumnName = 'token'): string
     {
-        $token = $this->generateToken($length, $tableName, $tokenColumnName);
-
-        return $token;
+        return $this->generateToken($length, $tableName, $tokenColumnName);
     }
 
     /**
@@ -47,10 +45,10 @@ class GenerateUniqueToken
      * @param  string  $tableName
      * @param  string  $tokenColumnName
      * @param  string  $token
-     * @return int
+     * @return bool
      */
-    private function tokenExists(string $tableName, string $tokenColumnName, string $token): int
+    private function tokenExists(string $tableName, string $tokenColumnName, string $token): bool
     {
-        return DB::table($tableName)->where($tokenColumnName, $token)->count();
+        return DB::table($tableName)->where($tokenColumnName, $token)->exists();
     }
 }

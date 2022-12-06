@@ -13,7 +13,8 @@ use Laravel\Nova\Fields\ActionFields;
 
 class SendInvitation extends Action implements ShouldQueue
 {
-    use InteractsWithQueue, Queueable;
+    use InteractsWithQueue;
+    use Queueable;
 
     /**
      * Perform the action on the given models.
