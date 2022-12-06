@@ -45,7 +45,6 @@ class TokenTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-
         Token::make('join_platform_tokens')->find(Str::random());
     }
 
