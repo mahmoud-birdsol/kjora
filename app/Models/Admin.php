@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Jetstream\HasProfilePhoto;
+use Laravel\Nova\Actions\Actionable;
 use Laravel\Nova\Auth\Impersonatable;
 use Laravel\Sanctum\HasApiTokens;
 use Pktharindu\NovaPermissions\Traits\HasRoles;
@@ -19,6 +20,7 @@ class Admin extends Authenticatable
     use Notifiable;
     use HasRoles;
     use Impersonatable;
+    use Actionable;
 
     /**
      * The attributes that are mass assignable.
