@@ -168,5 +168,65 @@ return [
             'description' => 'Can delete roles',
             'group' => 'Role',
         ],
+
+        /*
+         |--------------------------------------------------------------------------
+         | Advertisements...
+         |--------------------------------------------------------------------------
+         */
+
+        'view advertisements' => [
+            'display_name' => 'View advertisements',
+            'description' => 'Can view advertisements',
+            'group' => 'Advertisement',
+        ],
+
+        'create advertisements' => [
+            'display_name' => 'Create advertisements',
+            'description' => 'Can create advertisements',
+            'group' => 'Advertisement',
+        ],
+
+        'edit advertisements' => [
+            'display_name' => 'Edit advertisements',
+            'description' => 'Can edit advertisements',
+            'group' => 'Advertisement',
+        ],
+
+        'delete advertisements' => [
+            'display_name' => 'Delete advertisements',
+            'description' => 'Can delete advertisements',
+            'group' => 'Advertisement',
+        ],
+
+        /*
+         |--------------------------------------------------------------------------
+         | Country...
+         |--------------------------------------------------------------------------
+         */
+
+        'view countries' => [
+            'display_name' => 'View countries',
+            'description' => 'Can view countries',
+            'group' => 'Country',
+        ],
+
+        'create countries' => [
+            'display_name' => 'Create countries',
+            'description' => 'Can create countries',
+            'group' => 'Country',
+        ],
+
+        'edit countries' => [
+            'display_name' => 'Edit countries',
+            'description' => 'Can edit countries',
+            'group' => 'Country',
+        ],
+
+        'delete countries' => [
+            'display_name' => 'Delete countries',
+            'description' => 'Can delete countries',
+            'group' => 'Country',
+        ],
     ],
 ];
