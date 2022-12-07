@@ -46,7 +46,7 @@ class CountrySeeder extends Seeder
      * @param  array  $country
      * @return array
      */
-    function uploadFlag(array $country): array
+    public function uploadFlag(array $country): array
     {
         if (array_key_exists('flag', $country)) {
             Storage::disk('public')->put(

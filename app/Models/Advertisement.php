@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\AdvertisementRetrieved;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -43,6 +44,17 @@ class Advertisement extends Model implements HasMedia
     ];
 
     /**
+     * The event map for the model.
+     *
+     * Allows for object-based events for native Eloquent events.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'retrieved' => AdvertisementRetrieved::class,
+    ];
+
+    /**
      * Get the advertisement country.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -77,6 +89,7 @@ class Advertisement extends Model implements HasMedia
      *
      * @param  \Spatie\MediaLibrary\MediaCollections\Models\Media|null  $media
      * @return void
+     *
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
     public function registerMediaConversions(Media $media = null): void

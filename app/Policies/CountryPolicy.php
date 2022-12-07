@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Country;
 use App\Models\Admin;
+use App\Models\Country;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CountryPolicy

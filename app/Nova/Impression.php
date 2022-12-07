@@ -31,7 +31,7 @@ class Impression extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'user.name', 'advertisement.name'
+        'id', 'user.name', 'advertisement.name',
     ];
 
     /**

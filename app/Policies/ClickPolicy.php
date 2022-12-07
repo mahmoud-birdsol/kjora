@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Click;
 use App\Models\Admin;
+use App\Models\Click;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ClickPolicy

@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Advertisement;
 use App\Models\Admin;
+use App\Models\Advertisement;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AdvertisementPolicy
