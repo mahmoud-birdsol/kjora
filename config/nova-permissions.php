@@ -63,6 +63,18 @@ return [
             'group' => 'System',
         ],
 
+        'access telescope' => [
+            'display_name' => 'Access Telescope',
+            'description' => 'Can access telescope',
+            'group' => 'System',
+        ],
+
+        'access horizon' => [
+            'display_name' => 'Access Horizon',
+            'description' => 'Can access horizon',
+            'group' => 'System',
+        ],
+
         /*
          |--------------------------------------------------------------------------
          | Users permissions...
@@ -167,6 +179,126 @@ return [
             'display_name' => 'Delete roles',
             'description' => 'Can delete roles',
             'group' => 'Role',
+        ],
+
+        /*
+         |--------------------------------------------------------------------------
+         | Advertisements...
+         |--------------------------------------------------------------------------
+         */
+
+        'view advertisements' => [
+            'display_name' => 'View advertisements',
+            'description' => 'Can view advertisements',
+            'group' => 'Advertisement',
+        ],
+
+        'create advertisements' => [
+            'display_name' => 'Create advertisements',
+            'description' => 'Can create advertisements',
+            'group' => 'Advertisement',
+        ],
+
+        'edit advertisements' => [
+            'display_name' => 'Edit advertisements',
+            'description' => 'Can edit advertisements',
+            'group' => 'Advertisement',
+        ],
+
+        'delete advertisements' => [
+            'display_name' => 'Delete advertisements',
+            'description' => 'Can delete advertisements',
+            'group' => 'Advertisement',
+        ],
+
+        /*
+         |--------------------------------------------------------------------------
+         | Country...
+         |--------------------------------------------------------------------------
+         */
+
+        'view countries' => [
+            'display_name' => 'View countries',
+            'description' => 'Can view countries',
+            'group' => 'Country',
+        ],
+
+        'create countries' => [
+            'display_name' => 'Create countries',
+            'description' => 'Can create countries',
+            'group' => 'Country',
+        ],
+
+        'edit countries' => [
+            'display_name' => 'Edit countries',
+            'description' => 'Can edit countries',
+            'group' => 'Country',
+        ],
+
+        'delete countries' => [
+            'display_name' => 'Delete countries',
+            'description' => 'Can delete countries',
+            'group' => 'Country',
+        ],
+
+        /*
+         |--------------------------------------------------------------------------
+         | Clicks...
+         |--------------------------------------------------------------------------
+         */
+
+        'view clicks' => [
+            'display_name' => 'View clicks',
+            'description' => 'Can view clicks',
+            'group' => 'Click',
+        ],
+
+        'create clicks' => [
+            'display_name' => 'Create clicks',
+            'description' => 'Can create clicks',
+            'group' => 'Click',
+        ],
+
+        'edit clicks' => [
+            'display_name' => 'Edit clicks',
+            'description' => 'Can edit clicks',
+            'group' => 'Click',
+        ],
+
+        'delete clicks' => [
+            'display_name' => 'Delete clicks',
+            'description' => 'Can delete clicks',
+            'group' => 'Click',
+        ],
+
+        /*
+         |--------------------------------------------------------------------------
+         | Impressions...
+         |--------------------------------------------------------------------------
+         */
+
+        'view impressions' => [
+            'display_name' => 'View impressions',
+            'description' => 'Can view impressions',
+            'group' => 'Impression',
+        ],
+
+        'create impressions' => [
+            'display_name' => 'Create impressions',
+            'description' => 'Can create impressions',
+            'group' => 'Impression',
+        ],
+
+        'edit impressions' => [
+            'display_name' => 'Edit impressions',
+            'description' => 'Can edit impressions',
+            'group' => 'Impression',
+        ],
+
+        'delete impressions' => [
+            'display_name' => 'Delete impressions',
+            'description' => 'Can delete impressions',
+            'group' => 'Impression',
         ],
     ],
 ];
