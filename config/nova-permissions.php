@@ -63,6 +63,12 @@ return [
             'group' => 'System',
         ],
 
+        'access telescope' => [
+            'display_name' => 'Access Telescope',
+            'description' => 'Can access telescope',
+            'group' => 'System',
+        ],
+
         /*
          |--------------------------------------------------------------------------
          | Users permissions...
