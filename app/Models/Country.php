@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Nova\Actions\Actionable;
 
 class Country extends Model
 {
     use HasFactory;
+    use Actionable;
 
     /**
      * The attributes that are mass assignable.
@@ -33,4 +36,14 @@ class Country extends Model
         "currency_decimals",
         "flag",
     ];
+
+    /**
+     * Get the country advertisement.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function advertisements(): HasMany
+    {
+        return $this->hasMany(Advertisement::class);
+    }
 }
