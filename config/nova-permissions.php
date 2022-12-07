@@ -69,6 +69,12 @@ return [
             'group' => 'System',
         ],
 
+        'access horizon' => [
+            'display_name' => 'Access Horizon',
+            'description' => 'Can access horizon',
+            'group' => 'System',
+        ],
+
         /*
          |--------------------------------------------------------------------------
          | Users permissions...
