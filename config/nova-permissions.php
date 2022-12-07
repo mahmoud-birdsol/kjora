@@ -228,5 +228,65 @@ return [
             'description' => 'Can delete countries',
             'group' => 'Country',
         ],
+
+        /*
+         |--------------------------------------------------------------------------
+         | Clicks...
+         |--------------------------------------------------------------------------
+         */
+
+        'view clicks' => [
+            'display_name' => 'View clicks',
+            'description' => 'Can view clicks',
+            'group' => 'Click',
+        ],
+
+        'create clicks' => [
+            'display_name' => 'Create clicks',
+            'description' => 'Can create clicks',
+            'group' => 'Click',
+        ],
+
+        'edit clicks' => [
+            'display_name' => 'Edit clicks',
+            'description' => 'Can edit clicks',
+            'group' => 'Click',
+        ],
+
+        'delete clicks' => [
+            'display_name' => 'Delete clicks',
+            'description' => 'Can delete clicks',
+            'group' => 'Click',
+        ],
+
+        /*
+         |--------------------------------------------------------------------------
+         | Impressions...
+         |--------------------------------------------------------------------------
+         */
+
+        'view impressions' => [
+            'display_name' => 'View impressions',
+            'description' => 'Can view impressions',
+            'group' => 'Impression',
+        ],
+
+        'create impressions' => [
+            'display_name' => 'Create impressions',
+            'description' => 'Can create impressions',
+            'group' => 'Impression',
+        ],
+
+        'edit impressions' => [
+            'display_name' => 'Edit impressions',
+            'description' => 'Can edit impressions',
+            'group' => 'Impression',
+        ],
+
+        'delete impressions' => [
+            'display_name' => 'Delete impressions',
+            'description' => 'Can delete impressions',
+            'group' => 'Impression',
+        ],
     ],
 ];

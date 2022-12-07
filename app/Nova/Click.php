@@ -2,35 +2,28 @@
 
 namespace App\Nova;
 
-use App\Nova\Metrics\AdvertisementClicksOverTime;
-use App\Nova\Metrics\AdvertisementViewsOverTime;
-use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Sparkline;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Advertisement extends Resource
+class Click extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Advertisement>
+     * @var class-string<\App\Models\Click>
      */
-    public static $model = \App\Models\Advertisement::class;
+    public static $model = \App\Models\Click::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -38,7 +31,7 @@ class Advertisement extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'link',
+        'id', 'user.name', 'advertisement.name'
     ];
 
     /**
@@ -52,55 +45,49 @@ class Advertisement extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make('Country')
+            BelongsTo::make('User')
                 ->showCreateRelationButton()
                 ->showOnPreview()
-                ->sortable()
                 ->filterable()
+                ->sortable()
                 ->searchable()
                 ->rules('required'),
 
-            Text::make('Name')
+            BelongsTo::make('Advertisement')
+                ->showCreateRelationButton()
                 ->showOnPreview()
-                ->required()
-                ->rules('required', 'max:254'),
+                ->filterable()
+                ->sortable()
+                ->searchable()
+                ->rules('required'),
 
-            URL::make('Link')
+            URL::make('Source')
                 ->showOnPreview()
                 ->required()
                 ->rules('required', 'url', 'max:254'),
 
-            Text::make('URL', 'link')
+            Text::make('URL', 'source')
                 ->showOnPreview()
                 ->onlyOnDetail()
                 ->copyable(),
 
-            Number::make('Priority')
+            Text::make('IP address', 'ip')
                 ->showOnPreview()
-                ->required()
-                ->sortable()
-                ->filterable()
-                ->rules('required', 'integer')
-                ->help('This will determine the display order of the advertisement in relation to other advertisements for the specified country if the priority is duplicated the advertisement ID will determine the order.'),
-
-            Date::make('Start Date')
-                ->showOnPreview()
-                ->required()
-                ->rules('required'),
-
-            Date::make('End Date')
-                ->showOnPreview()
-                ->required()
-                ->rules('required'),
-
-            Images::make('Main Image', 'main')
-                ->conversionOnIndexView('thumb')
-                ->required()
-                ->rules('required'),
-
-            HasMany::make('Clicks'),
-            HasMany::make('Impressions'),
+                ->required('required'),
         ];
+    }
+
+    /**
+     * Get the value that should be displayed to represent the resource.
+     *
+     * @return string
+     */
+    public function title(): string
+    {
+        return
+            $this->resource->advertisement->name.' ('.
+            $this->resource->user->name.') '.
+            $this->resource->created_at->toDateTimeString();
     }
 
     /**
@@ -111,12 +98,7 @@ class Advertisement extends Resource
      */
     public function cards(NovaRequest $request)
     {
-        return [
-            AdvertisementClicksOverTime::make()
-                ->onlyOnDetail(),
-            AdvertisementViewsOverTime::make()
-                ->onlyOnDetail(),
-        ];
+        return [];
     }
 
     /**
