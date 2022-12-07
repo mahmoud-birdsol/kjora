@@ -44,17 +44,6 @@ class Advertisement extends Model implements HasMedia
     ];
 
     /**
-     * The event map for the model.
-     *
-     * Allows for object-based events for native Eloquent events.
-     *
-     * @var array
-     */
-    protected $dispatchesEvents = [
-        'retrieved' => AdvertisementRetrieved::class,
-    ];
-
-    /**
      * Get the advertisement country.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
