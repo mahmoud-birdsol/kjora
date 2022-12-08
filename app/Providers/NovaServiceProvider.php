@@ -51,7 +51,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     }),
                 ])->icon('view-grid')->collapsable(),
 
-
                 MenuSection::make('Advertisements', [
                     MenuGroup::make('Advertisements', [
                         MenuItem::resource(Advertisement::class),

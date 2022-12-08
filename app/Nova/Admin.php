@@ -122,8 +122,8 @@ class Admin extends Resource
         return [
             SendInvitation::make()
                 ->showInline()
-                ->canSee(fn() => $request->user()->hasPermissionTo('send admin invitations'))
-                ->canRun(fn() => $request->user()->hasPermissionTo('send admin invitations')),
+                ->canSee(fn () => $request->user()->hasPermissionTo('send admin invitations'))
+                ->canRun(fn () => $request->user()->hasPermissionTo('send admin invitations')),
         ];
     }
 }

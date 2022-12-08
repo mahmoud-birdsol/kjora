@@ -27,7 +27,7 @@ class JoinPlatformControllerTest extends TestCase
 
         $this->get(route('join-platform.create', $token))
             ->assertInertia(
-                fn(Assert $page) => $page
+                fn (Assert $page) => $page
                     ->component('Auth/JoinPlatform')
                     ->has('user')
                     ->has('token')

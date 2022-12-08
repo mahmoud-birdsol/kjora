@@ -5,7 +5,6 @@ namespace App\Nova\Dashboards;
 use App\Nova\Metrics\ClickPerAdvertisement;
 use App\Nova\Metrics\ExpiringAdvertisementTable;
 use App\Nova\Metrics\ImpressionPerAdvertisement;
-use Coroowicaksono\ChartJsIntegration\PieChart;
 use Laravel\Nova\Dashboard;
 
 class AdvertisementDashboard extends Dashboard

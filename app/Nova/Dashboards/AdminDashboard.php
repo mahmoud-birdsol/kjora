@@ -2,7 +2,6 @@
 
 namespace App\Nova\Dashboards;
 
-use App\Nova\Metrics\AdminPerRole;
 use App\Nova\Metrics\PendingInvitations;
 use Laravel\Nova\Dashboard;
 

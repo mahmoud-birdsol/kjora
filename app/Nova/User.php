@@ -65,7 +65,6 @@ class User extends Resource
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),
 
-
             DateTime::make('Joined Platform At')
                 ->showOnPreview()
                 ->hideWhenCreating()
