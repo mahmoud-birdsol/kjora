@@ -1,51 +1,35 @@
 <?php
 
-namespace App\Nova;
+namespace App\Nova\Lenses;
 
-use App\Nova\Lenses\ActiveAdvertisement;
-use App\Nova\Lenses\ArchivedAdvertisement;
-use App\Nova\Lenses\ExpiringAdvertisement;
-use App\Nova\Metrics\AdvertisementClicksOverTime;
-use App\Nova\Metrics\AdvertisementViewsOverTime;
-use App\Nova\Metrics\ExpiringAdvertisementTable;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\URL;
+use Laravel\Nova\Http\Requests\LensRequest;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Lenses\Lens;
 
-class Advertisement extends Resource
+class ActiveAdvertisement extends Lens
 {
     /**
-     * The model the resource corresponds to.
+     * Get the query builder / paginator for the lens.
      *
-     * @var class-string<\App\Models\Advertisement>
+     * @param  \Laravel\Nova\Http\Requests\LensRequest  $request
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return mixed
      */
-    public static $model = \App\Models\Advertisement::class;
+    public static function query(LensRequest $request, $query)
+    {
+        return $request->withOrdering($request->withFilters(
+            $query->active()
+        ));
+    }
 
     /**
-     * The single value that should be used to represent the resource when being displayed.
-     *
-     * @var string
-     */
-    public static $title = 'name';
-
-    /**
-     * The columns that should be searched.
-     *
-     * @var array
-     */
-    public static $search = [
-        'id', 'name', 'link',
-    ];
-
-    /**
-     * Get the fields displayed by the resource.
+     * Get the fields available to the lens.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
@@ -53,15 +37,7 @@ class Advertisement extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-            ID::make()->sortable(),
-
-            BelongsTo::make('Country')
-                ->showCreateRelationButton()
-                ->showOnPreview()
-                ->sortable()
-                ->filterable()
-                ->searchable()
-                ->rules('required'),
+            ID::make(__('ID'), 'id')->sortable(),
 
             Text::make('Name')
                 ->showOnPreview()
@@ -100,32 +76,22 @@ class Advertisement extends Resource
                 ->conversionOnIndexView('thumb')
                 ->required()
                 ->rules('required'),
-
-            HasMany::make('Clicks'),
-            HasMany::make('Impressions'),
         ];
     }
 
     /**
-     * Get the cards available for the request.
+     * Get the cards available on the lens.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
     public function cards(NovaRequest $request)
     {
-        return [
-            ExpiringAdvertisementTable::make()->width('2/3'),
-
-            AdvertisementClicksOverTime::make()
-                ->onlyOnDetail(),
-            AdvertisementViewsOverTime::make()
-                ->onlyOnDetail(),
-        ];
+        return [];
     }
 
     /**
-     * Get the filters available for the resource.
+     * Get the filters available for the lens.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
@@ -136,28 +102,23 @@ class Advertisement extends Resource
     }
 
     /**
-     * Get the lenses available for the resource.
-     *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @return array
-     */
-    public function lenses(NovaRequest $request)
-    {
-        return [
-            ActiveAdvertisement::make(),
-            ExpiringAdvertisement::make(),
-            ArchivedAdvertisement::make(),
-        ];
-    }
-
-    /**
-     * Get the actions available for the resource.
+     * Get the actions available on the lens.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return parent::actions($request);
+    }
+
+    /**
+     * Get the URI key for the lens.
+     *
+     * @return string
+     */
+    public function uriKey()
+    {
+        return 'active-advertisement';
     }
 }

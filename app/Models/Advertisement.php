@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\AdvertisementRetrieved;
+use App\Models\Queries\AdvertisementQueryBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -42,6 +43,17 @@ class Advertisement extends Model implements HasMedia
         'start_date' => 'datetime',
         'end_date' => 'datetime',
     ];
+
+    /**
+     * Create a new Eloquent query builder for the model.
+     *
+     * @param  \Illuminate\Database\Query\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder|static
+     */
+    public function newEloquentBuilder($query): AdvertisementQueryBuilder
+    {
+        return new AdvertisementQueryBuilder($query);
+    }
 
     /**
      * Get the advertisement country.

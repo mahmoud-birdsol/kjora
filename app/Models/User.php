@@ -70,7 +70,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function click(): HasMany
+    public function clicks(): HasMany
     {
         return $this->hasMany(Click::class);
     }

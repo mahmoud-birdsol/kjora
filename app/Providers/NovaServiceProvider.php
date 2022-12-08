@@ -2,12 +2,26 @@
 
 namespace App\Providers;
 
-use App\Models\Admin;
+use App\Nova\Admin;
+use App\Nova\Advertisement;
+use App\Nova\Click;
+use App\Nova\Country;
+use App\Nova\Dashboards\AdvertisementDashboard;
 use App\Nova\Dashboards\Main;
+use App\Nova\Impression;
+use App\Nova\Lenses\ActiveAdvertisement;
+use App\Nova\Lenses\ArchivedAdvertisement;
+use App\Nova\Lenses\ExpiringAdvertisement;
+use App\Nova\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Menu\MenuGroup;
+use Laravel\Nova\Menu\MenuItem;
+use Laravel\Nova\Menu\MenuSection;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Pktharindu\NovaPermissions\Nova\Role;
 use Pktharindu\NovaPermissions\NovaPermissions;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -22,6 +36,44 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         parent::boot();
 
         Nova::withBreadcrumbs();
+
+        Nova::mainMenu(function (Request $request) {
+            return [
+                MenuSection::dashboard(Main::class)->icon('chart-bar'),
+
+                MenuSection::make('Dashboards', [
+                    MenuItem::dashboard(AdvertisementDashboard::class),
+                ])->icon('view-grid')->collapsable(),
+
+
+                MenuSection::make('Advertisements', [
+                    MenuGroup::make('Advertisements', [
+                        MenuItem::resource(Advertisement::class),
+                        MenuItem::lens(Advertisement::class, ActiveAdvertisement::class),
+                        MenuItem::lens(Advertisement::class, ExpiringAdvertisement::class),
+                        MenuItem::lens(Advertisement::class, ArchivedAdvertisement::class),
+                    ]),
+
+                    MenuGroup::make('Analytics', [
+                        MenuItem::resource(Click::class),
+                        MenuItem::resource(Impression::class),
+                    ]),
+                ])->icon('color-swatch')->collapsable(),
+
+                MenuSection::make('Admins', [
+                    MenuItem::resource(Admin::class),
+                    MenuItem::resource(Role::class),
+                ])->icon('users')->collapsable(),
+
+                MenuSection::make('Players', [
+                    MenuItem::resource(User::class),
+                ])->icon('user-group')->collapsable(),
+
+                MenuSection::make('Settings', [
+                    MenuItem::resource(Country::class),
+                ])->icon('cog')->collapsable(),
+            ];
+        });
 
         Nova::footer(function ($request) {
             return Blade::render('
@@ -68,6 +120,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             Main::make(),
+            AdvertisementDashboard::make()->showRefreshButton(),
         ];
     }
 
