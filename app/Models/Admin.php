@@ -31,6 +31,7 @@ class Admin extends Authenticatable
         'name',
         'email',
         'password',
+        'joined_platform_at',
     ];
 
     /**
@@ -41,6 +42,15 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'joined_platform_at' => 'datetime',
     ];
 
     /**

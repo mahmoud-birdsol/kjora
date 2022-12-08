@@ -2,13 +2,11 @@
 
 namespace App\Nova\Dashboards;
 
-use App\Nova\Metrics\ClickPerAdvertisement;
-use App\Nova\Metrics\ExpiringAdvertisementTable;
-use App\Nova\Metrics\ImpressionPerAdvertisement;
-use Coroowicaksono\ChartJsIntegration\PieChart;
+use App\Nova\Metrics\AdminPerRole;
+use App\Nova\Metrics\PendingInvitations;
 use Laravel\Nova\Dashboard;
 
-class AdvertisementDashboard extends Dashboard
+class AdminDashboard extends Dashboard
 {
     /**
      * Get the cards for the dashboard.
@@ -18,9 +16,7 @@ class AdvertisementDashboard extends Dashboard
     public function cards()
     {
         return [
-            ExpiringAdvertisementTable::make()->width('2/3'),
-            ClickPerAdvertisement::make(),
-            ImpressionPerAdvertisement::make(),
+            PendingInvitations::make()->width('2/3'),
         ];
     }
 
@@ -31,7 +27,7 @@ class AdvertisementDashboard extends Dashboard
      */
     public function label(): string
     {
-        return 'Advertisements';
+        return 'Admins';
     }
 
     /**
@@ -41,6 +37,6 @@ class AdvertisementDashboard extends Dashboard
      */
     public function uriKey()
     {
-        return 'advertisement';
+        return 'admin-dashboard';
     }
 }

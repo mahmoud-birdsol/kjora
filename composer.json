@@ -13,6 +13,7 @@
     "require": {
         "php": "^8.0.2",
         "algolia/algoliasearch-client-php": "^3.3",
+        "coroowicaksono/chart-js-integration": "^0.4.0",
         "ebess/advanced-nova-media-library": "^4.0",
         "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^0.6.3",

@@ -39,10 +39,13 @@ class JoinPlatformController extends Controller
     {
         $token = Token::make('join_platform_tokens')->find($token);
 
+        $request->merge(['joined_platform_at' => now()]);
+
         $token->authenticatable()->forceFill($request->only([
             'name',
             'password',
-        ]))->update();
+            'joined_platform_at',
+        ]))->save();
 
         Auth::guard($token->guard())->login($token->authenticatable());
 

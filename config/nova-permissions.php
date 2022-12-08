@@ -151,6 +151,12 @@ return [
             'group' => 'Admin',
         ],
 
+        'access admins dashboard' => [
+            'display_name' => 'Access Admins Dashboard',
+            'description' => 'Can admins dashboard',
+            'group' => 'Admin',
+        ],
+
         /*
          |--------------------------------------------------------------------------
          | Roles permissions...
@@ -208,6 +214,12 @@ return [
         'delete advertisements' => [
             'display_name' => 'Delete advertisements',
             'description' => 'Can delete advertisements',
+            'group' => 'Advertisement',
+        ],
+
+        'access advertisements dashboard' => [
+            'display_name' => 'Access Advertisements Dashboard',
+            'description' => 'Can advertisements dashboard',
             'group' => 'Advertisement',
         ],
 

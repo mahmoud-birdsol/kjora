@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
@@ -63,6 +64,12 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),
+
+
+            DateTime::make('Joined Platform At')
+                ->showOnPreview()
+                ->hideWhenCreating()
+                ->hideWhenUpdating(),
 
             HasMany::make('Clicks'),
             HasMany::make('Impressions'),

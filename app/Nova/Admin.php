@@ -6,6 +6,7 @@ use App\Nova\Actions\SendInvitation;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
@@ -66,6 +67,11 @@ class Admin extends Resource
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),
 
+            DateTime::make('Joined Platform At')
+                ->showOnPreview()
+                ->hideWhenCreating()
+                ->hideWhenUpdating(),
+
             BelongsToMany::make('Roles', 'roles', Role::class)
                 ->filterable()
                 ->showCreateRelationButton(),
@@ -116,8 +122,8 @@ class Admin extends Resource
         return [
             SendInvitation::make()
                 ->showInline()
-                ->canSee(fn () => $request->user()->hasPermissionTo('send admin invitations'))
-                ->canRun(fn () => $request->user()->hasPermissionTo('send admin invitations')),
+                ->canSee(fn() => $request->user()->hasPermissionTo('send admin invitations'))
+                ->canRun(fn() => $request->user()->hasPermissionTo('send admin invitations')),
         ];
     }
 }
