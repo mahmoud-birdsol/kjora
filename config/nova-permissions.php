@@ -343,5 +343,34 @@ return [
             'group' => 'Club',
         ],
 
+        /*
+         |--------------------------------------------------------------------------
+         | Position...
+         |--------------------------------------------------------------------------
+         */
+
+        'view positions' => [
+            'display_name' => 'View positions',
+            'description' => 'Can view positions',
+            'group' => 'Position',
+        ],
+
+        'create positions' => [
+            'display_name' => 'Create positions',
+            'description' => 'Can create positions',
+            'group' => 'Position',
+        ],
+
+        'edit positions' => [
+            'display_name' => 'Edit positions',
+            'description' => 'Can edit positions',
+            'group' => 'Position',
+        ],
+
+        'delete positions' => [
+            'display_name' => 'Delete positions',
+            'description' => 'Can delete positions',
+            'group' => 'Position',
+        ],
     ],
 ];

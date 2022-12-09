@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Position;
 use App\Nova\Admin;
 use App\Nova\Advertisement;
 use App\Nova\Click;
+use App\Nova\Club;
 use App\Nova\Country;
 use App\Nova\Dashboards\AdminDashboard;
 use App\Nova\Dashboards\AdvertisementDashboard;
@@ -76,6 +78,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
                 MenuSection::make('Settings', [
                     MenuItem::resource(Country::class),
+                    MenuItem::resource(Club::class),
+                    MenuItem::resource(Position::class),
                 ])->icon('cog')->collapsable(),
             ];
         });
