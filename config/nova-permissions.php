@@ -312,5 +312,36 @@ return [
             'description' => 'Can delete impressions',
             'group' => 'Impression',
         ],
+
+        /*
+         |--------------------------------------------------------------------------
+         | Club...
+         |--------------------------------------------------------------------------
+         */
+
+        'view clubs' => [
+            'display_name' => 'View clubs',
+            'description' => 'Can view clubs',
+            'group' => 'Club',
+        ],
+
+        'create clubs' => [
+            'display_name' => 'Create clubs',
+            'description' => 'Can create clubs',
+            'group' => 'Club',
+        ],
+
+        'edit clubs' => [
+            'display_name' => 'Edit clubs',
+            'description' => 'Can edit clubs',
+            'group' => 'Club',
+        ],
+
+        'delete clubs' => [
+            'display_name' => 'Delete clubs',
+            'description' => 'Can delete clubs',
+            'group' => 'Club',
+        ],
+
     ],
 ];

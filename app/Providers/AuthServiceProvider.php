@@ -23,6 +23,7 @@ class AuthServiceProvider extends ServiceProvider
         \App\Models\Country::class => \App\Policies\CountryPolicy::class,
         \App\Models\Impression::class => \App\Policies\ImpressionPolicy::class,
         \App\Models\User::class => \App\Policies\UserPolicy::class,
+        \App\Models\Club::class => \App\Policies\ClubPolicy::class,
     ];
 
     /**

@@ -145,6 +145,7 @@ class Country extends Resource
                 ->rules('nullable'),
 
             HasMany::make('Advertisements'),
+            HasMany::make('Clubs'),
         ];
     }
 
