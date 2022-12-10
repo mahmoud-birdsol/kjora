@@ -2,8 +2,10 @@
 
 namespace App\Nova;
 
+use App\Actions\Verification\SendVerificationReminder;
 use App\Actions\Verification\VerifyUser;
 use App\Nova\Actions\MarkAsVerified;
+use App\Nova\Actions\SendIdentityVerificationReminder;
 use App\Nova\Lenses\UnverifiedUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
@@ -228,6 +230,15 @@ class User extends Resource
     {
         return [
             MarkAsVerified::make()
+                ->showInline()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('verify users');
+                })
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('verify users');
+                }),
+
+            SendIdentityVerificationReminder::make()
                 ->showInline()
                 ->canSee(function ($request) {
                     return $request->user()->hasPermissionTo('verify users');

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class AccountVerifiedNotification extends Notification implements ShouldQueue
+class VerificationReminderNotification extends Notification
 {
     use Queueable;
 
@@ -31,25 +31,25 @@ class AccountVerifiedNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Account verified!')
-            ->line('Your account and identity has been verified on '.config('app.name').'.')
-            ->action('Login', url('/dashboard'))
+            ->subject('Verification Reminder')
+            ->line('This is a reminder that you haven\'t uploaded your verification documents to '.config('app.name'))
+            ->action('Verify Account', url(route('profile.show')))
             ->line('Thank you for using our application!');
     }
 
     /**
      * Get the array representation of the notification.
      *
-     * @param $notifiable
+     * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable): array
+    public function toArray($notifiable)
     {
         return [
-            'type' => 'success',
+            'type' => 'warning',
             'title' => 'Identity verification.',
-            'subtitle' => 'Your account has been verified.',
-            'action' => route('profile.show'),
+            'subtitle' => 'Please upload your identity verification documents for review.',
+            'action'  => route('profile.show'),
         ];
     }
 }
