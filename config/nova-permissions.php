@@ -110,6 +110,12 @@ return [
             'group' => 'User',
         ],
 
+        'verify users' => [
+            'display_name' => 'Verify users',
+            'description' => 'Can verify users',
+            'group' => 'User',
+        ],
+
         /*
          |--------------------------------------------------------------------------
          | Admins permissions...

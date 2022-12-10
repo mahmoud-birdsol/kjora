@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Position;
 use App\Models\Admin;
+use App\Models\Position;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PositionPolicy

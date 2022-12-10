@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\MarkAsVerified;
+use App\Nova\Actions\SendIdentityVerificationReminder;
 use App\Nova\Lenses\UnverifiedUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
@@ -10,7 +12,6 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\DateTime;
-use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
@@ -145,7 +146,7 @@ class User extends Resource
             Number::make('Age')
                 ->onlyOnDetail(),
 
-            Panel::make('Identity Verification', fn() => [
+            Panel::make('Identity Verification', fn () => [
                 Boolean::make('Verified', 'has_verified_identity')
                     ->filterable()
                     ->sortable()
@@ -169,13 +170,13 @@ class User extends Resource
             ]),
 
             // Todo after security feature is done.
-//            'accepted_terms_and_conditions_version',
-//            'accepted_privacy_policy_version',
-//            'accepted_cookie_policy_version',
-//
-//            'accepted_terms_and_conditions_at',
-//            'accepted_privacy_policy_at',
-//            'accepted_cookie_policy_at',
+            //            'accepted_terms_and_conditions_version',
+            //            'accepted_privacy_policy_version',
+            //            'accepted_cookie_policy_version',
+            //
+            //            'accepted_terms_and_conditions_at',
+            //            'accepted_privacy_policy_at',
+            //            'accepted_cookie_policy_at',
 
             HasMany::make('Clicks'),
             HasMany::make('Impressions'),
@@ -225,6 +226,24 @@ class User extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            MarkAsVerified::make()
+                ->showInline()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('verify users');
+                })
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('verify users');
+                }),
+
+            SendIdentityVerificationReminder::make()
+                ->showInline()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('verify users');
+                })
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('verify users');
+                }),
+        ];
     }
 }
