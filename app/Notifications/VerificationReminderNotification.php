@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -49,7 +48,7 @@ class VerificationReminderNotification extends Notification
             'type' => 'warning',
             'title' => 'Identity verification.',
             'subtitle' => 'Please upload your identity verification documents for review.',
-            'action'  => route('profile.show'),
+            'action' => route('profile.show'),
         ];
     }
 }

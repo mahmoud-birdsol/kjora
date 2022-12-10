@@ -2,8 +2,6 @@
 
 namespace App\Nova;
 
-use App\Actions\Verification\SendVerificationReminder;
-use App\Actions\Verification\VerifyUser;
 use App\Nova\Actions\MarkAsVerified;
 use App\Nova\Actions\SendIdentityVerificationReminder;
 use App\Nova\Lenses\UnverifiedUsers;
@@ -148,7 +146,7 @@ class User extends Resource
             Number::make('Age')
                 ->onlyOnDetail(),
 
-            Panel::make('Identity Verification', fn() => [
+            Panel::make('Identity Verification', fn () => [
                 Boolean::make('Verified', 'has_verified_identity')
                     ->filterable()
                     ->sortable()

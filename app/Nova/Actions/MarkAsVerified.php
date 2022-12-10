@@ -5,12 +5,10 @@ namespace App\Nova\Actions;
 use App\Actions\Verification\VerifyUser;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class MarkAsVerified extends Action
 {
@@ -27,6 +25,6 @@ class MarkAsVerified extends Action
     {
         $action = resolve(VerifyUser::class);
 
-        $models->each(fn(User $user) => $action($user));
+        $models->each(fn (User $user) => $action($user));
     }
 }

@@ -5,12 +5,10 @@ namespace App\Nova\Actions;
 use App\Actions\Verification\SendVerificationReminder;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class SendIdentityVerificationReminder extends Action
 {
@@ -27,6 +25,6 @@ class SendIdentityVerificationReminder extends Action
     {
         $action = resolve(SendVerificationReminder::class);
 
-        $models->each(fn(User $user) => $action($user));
+        $models->each(fn (User $user) => $action($user));
     }
 }
