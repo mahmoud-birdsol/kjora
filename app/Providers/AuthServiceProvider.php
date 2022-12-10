@@ -20,8 +20,10 @@ class AuthServiceProvider extends ServiceProvider
         \App\Models\Admin::class => \App\Policies\AdminPolicy::class,
         \App\Models\Advertisement::class => \App\Policies\AdvertisementPolicy::class,
         \App\Models\Click::class => \App\Policies\ClickPolicy::class,
+        \App\Models\Club::class => \App\Policies\ClubPolicy::class,
         \App\Models\Country::class => \App\Policies\CountryPolicy::class,
         \App\Models\Impression::class => \App\Policies\ImpressionPolicy::class,
+        \App\Models\Position::class => \App\Policies\PositionPolicy::class,
         \App\Models\User::class => \App\Policies\UserPolicy::class,
     ];
 

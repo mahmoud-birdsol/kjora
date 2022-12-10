@@ -46,4 +46,14 @@ class Country extends Model
     {
         return $this->hasMany(Advertisement::class);
     }
+
+    /**
+     * Get the country clubs.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function clubs(): HasMany
+    {
+        return $this->hasMany(Club::class);
+    }
 }

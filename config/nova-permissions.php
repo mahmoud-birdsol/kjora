@@ -312,5 +312,65 @@ return [
             'description' => 'Can delete impressions',
             'group' => 'Impression',
         ],
+
+        /*
+         |--------------------------------------------------------------------------
+         | Club...
+         |--------------------------------------------------------------------------
+         */
+
+        'view clubs' => [
+            'display_name' => 'View clubs',
+            'description' => 'Can view clubs',
+            'group' => 'Club',
+        ],
+
+        'create clubs' => [
+            'display_name' => 'Create clubs',
+            'description' => 'Can create clubs',
+            'group' => 'Club',
+        ],
+
+        'edit clubs' => [
+            'display_name' => 'Edit clubs',
+            'description' => 'Can edit clubs',
+            'group' => 'Club',
+        ],
+
+        'delete clubs' => [
+            'display_name' => 'Delete clubs',
+            'description' => 'Can delete clubs',
+            'group' => 'Club',
+        ],
+
+        /*
+         |--------------------------------------------------------------------------
+         | Position...
+         |--------------------------------------------------------------------------
+         */
+
+        'view positions' => [
+            'display_name' => 'View positions',
+            'description' => 'Can view positions',
+            'group' => 'Position',
+        ],
+
+        'create positions' => [
+            'display_name' => 'Create positions',
+            'description' => 'Can create positions',
+            'group' => 'Position',
+        ],
+
+        'edit positions' => [
+            'display_name' => 'Edit positions',
+            'description' => 'Can edit positions',
+            'group' => 'Position',
+        ],
+
+        'delete positions' => [
+            'display_name' => 'Delete positions',
+            'description' => 'Can delete positions',
+            'group' => 'Position',
+        ],
     ],
 ];

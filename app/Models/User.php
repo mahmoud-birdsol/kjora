@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -34,6 +36,27 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'joined_platform_at,',
+        // Profile information.
+        'country_id',
+        'club_id',
+        'position_id',
+        'first_name',
+        'last_name',
+        'phone',
+        'gender',
+        'avatar',
+        'identity_type',
+        'identity_front_image',
+        'identity_back_image',
+        'accepted_terms_and_conditions_version',
+        'accepted_privacy_policy_version',
+        'accepted_cookie_policy_version',
+        'date_of_birth',
+        'identity_verified_at',
+        'phone_verified_at',
+        'accepted_terms_and_conditions_at',
+        'accepted_privacy_policy_at',
+        'accepted_cookie_policy_at',
     ];
 
     /**
@@ -56,6 +79,12 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
         'joined_platform_at' => 'datetime',
+        'date_of_birth' => 'datetime',
+        'identity_verified_at' => 'datetime',
+        'phone_verified_at' => 'datetime',
+        'accepted_terms_and_conditions_at' => 'datetime',
+        'accepted_privacy_policy_at' => 'datetime',
+        'accepted_cookie_policy_at' => 'datetime',
     ];
 
     /**
@@ -85,6 +114,60 @@ class User extends Authenticatable implements MustVerifyEmail
     public function impressions(): HasMany
     {
         return $this->hasMany(Impression::class);
+    }
+
+    /**
+     * Get the user country.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    /**
+     * Get the user club.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function club(): BelongsTo
+    {
+        return $this->belongsTo(Club::class);
+    }
+
+    /**
+     * Get the user position.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function position(): BelongsTo
+    {
+        return $this->belongsTo(Position::class);
+    }
+
+    /**
+     * Get the age attribute.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function age(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $this->date_of_birth->age,
+        );
+    }
+
+    /**
+     * Get the has verified identity attribute.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function hasVerifiedIdentity(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => ! is_null($this->identity_verified_at)
+        );
     }
 
     /**
