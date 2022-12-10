@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Club;
 use App\Models\Admin;
+use App\Models\Club;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ClubPolicy

@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Nova\Lenses\UnverifiedUsers;
-use App\Nova\Position;
 use App\Nova\Admin;
 use App\Nova\Advertisement;
 use App\Nova\Click;
@@ -16,6 +14,8 @@ use App\Nova\Impression;
 use App\Nova\Lenses\ActiveAdvertisement;
 use App\Nova\Lenses\ArchivedAdvertisement;
 use App\Nova\Lenses\ExpiringAdvertisement;
+use App\Nova\Lenses\UnverifiedUsers;
+use App\Nova\Position;
 use App\Nova\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
