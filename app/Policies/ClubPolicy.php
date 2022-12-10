@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Club;
-use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ClubPolicy
@@ -13,82 +13,82 @@ class ClubPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Admin  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function viewAny(Admin $user)
     {
-        //
+        return $user->hasPermissionTo('view clubs');
     }
 
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Admin  $user
      * @param  \App\Models\Club  $club
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Club $club)
+    public function view(Admin $user, Club $club)
     {
-        //
+        return $user->hasPermissionTo('view clubs');
     }
 
     /**
      * Determine whether the user can create models.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Admin  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create(Admin $user)
     {
-        //
+        return $user->hasPermissionTo('create clubs');
     }
 
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Admin  $user
      * @param  \App\Models\Club  $club
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Club $club)
+    public function update(Admin $user, Club $club)
     {
-        //
+        return $user->hasPermissionTo('edit clubs');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Admin  $user
      * @param  \App\Models\Club  $club
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Club $club)
+    public function delete(Admin $user, Club $club)
     {
-        //
+        return $user->hasPermissionTo('delete clubs');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Admin  $user
      * @param  \App\Models\Club  $club
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Club $club)
+    public function restore(Admin $user, Club $club)
     {
-        //
+        return $user->hasPermissionTo('delete clubs');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Admin  $user
      * @param  \App\Models\Club  $club
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Club $club)
+    public function forceDelete(Admin $user, Club $club)
     {
-        //
+        return $user->hasPermissionTo('delete clubs');
     }
 }
