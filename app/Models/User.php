@@ -154,7 +154,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function age(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->date_of_birth->age,
+            get: fn($value) => $this->date_of_birth->age,
         );
     }
 
@@ -166,8 +166,20 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasVerifiedIdentity(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => ! is_null($this->identity_verified_at)
+            get: fn($value) => ! is_null($this->identity_verified_at)
         );
+    }
+
+    /**
+     * Mark account as verified.
+     *
+     * @return void
+     */
+    public function markAccountAsVerified(): void
+    {
+        $this->forceFill([
+            'identity_verified_at' => now(),
+        ])->save();
     }
 
     /**
