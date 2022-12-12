@@ -3,7 +3,6 @@
 namespace App\Nova;
 
 use App\Nova\Actions\SendInvitation;
-use App\Nova\Metrics\AdminsPerRole;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Laravel\Nova\Fields\BelongsToMany;
