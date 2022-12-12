@@ -116,6 +116,12 @@ return [
             'group' => 'User',
         ],
 
+        'access users dashboard' => [
+            'display_name' => 'Access Users Dashboard',
+            'description' => 'Can users dashboard',
+            'group' => 'User',
+        ],
+
         /*
          |--------------------------------------------------------------------------
          | Admins permissions...

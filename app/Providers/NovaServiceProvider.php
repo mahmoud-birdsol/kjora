@@ -10,6 +10,7 @@ use App\Nova\Country;
 use App\Nova\Dashboards\AdminDashboard;
 use App\Nova\Dashboards\AdvertisementDashboard;
 use App\Nova\Dashboards\Main;
+use App\Nova\Dashboards\UserDashboard;
 use App\Nova\Impression;
 use App\Nova\Lenses\ActiveAdvertisement;
 use App\Nova\Lenses\ArchivedAdvertisement;
@@ -51,6 +52,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     }),
                     MenuItem::dashboard(AdminDashboard::class)->canSee(function (Request $request) {
                         return $request->user()->hasPermissionTo('access admins dashboard');
+                    }),
+                    MenuItem::dashboard(UserDashboard::class)->canSee(function (Request $request) {
+                        return $request->user()->hasPermissionTo('access users dashboard');
                     }),
                 ])->icon('view-grid')->collapsable(),
 
@@ -140,6 +144,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 ->showRefreshButton()
                 ->canSee(function (Request $request) {
                     return $request->user()->hasPermissionTo('access admins dashboard');
+                }),
+            UserDashboard::make()
+                ->showRefreshButton()
+                ->canSee(function (Request $request) {
+                    return $request->user()->hasPermissionTo('access users dashboard');
                 }),
         ];
     }

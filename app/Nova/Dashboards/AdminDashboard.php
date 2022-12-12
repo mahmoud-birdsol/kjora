@@ -2,6 +2,7 @@
 
 namespace App\Nova\Dashboards;
 
+use App\Nova\Metrics\AdminsPerRole;
 use App\Nova\Metrics\PendingInvitations;
 use Laravel\Nova\Dashboard;
 
@@ -16,6 +17,7 @@ class AdminDashboard extends Dashboard
     {
         return [
             PendingInvitations::make()->width('2/3'),
+            AdminsPerRole::make(),
         ];
     }
 
