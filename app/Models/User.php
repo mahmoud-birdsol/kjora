@@ -94,6 +94,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $appends = [
         'profile_photo_url',
+        'has_verified_identity',
     ];
 
     /**
@@ -154,7 +155,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function age(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->date_of_birth->age,
+            get: fn ($value) => $this->date_of_birth?->age,
         );
     }
 
