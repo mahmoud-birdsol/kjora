@@ -4,7 +4,6 @@ namespace App\Models\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use stdClass;
 
@@ -18,7 +17,7 @@ trait Suspendable
     public function isActive(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->getLatestSuspensionState() == config('suspensions.activated')
+            get: fn () => $this->getLatestSuspensionState() == config('suspensions.activated')
         );
     }
 
@@ -30,7 +29,7 @@ trait Suspendable
     public function isSuspended(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->getLatestSuspensionState() == config('suspensions.suspended')
+            get: fn () => $this->getLatestSuspensionState() == config('suspensions.suspended')
         );
     }
 
@@ -42,15 +41,14 @@ trait Suspendable
      */
     public function scopeSuspended(Builder $query): Builder
     {
-        return $query->whereExists(function ($query) {
-            $query->selectSub(function ($query) {
-                $query->select('state')
-                    ->from('suspensions')
-                    ->whereColumn('suspensions.suspendable_id', 'countries.id')
-                    ->orderByDesc('suspensions.created_at')
-                    ->limit(1);
-            }, 'state')->where('state', 'suspended');
-        });
+        return $query->where(function ($query) {
+            $query->select('state')
+                ->from(config('suspensions.table_name'))
+                ->whereColumn(config('suspensions.table_name').'.suspendable_id', $this->getTable().'.id')
+                ->where(config('suspensions.table_name').'.suspendable_type', get_class($this))
+                ->orderByDesc(config('suspensions.table_name').'.created_at')
+                ->limit(1);
+        }, config('suspensions.suspended'));
     }
 
     /**
@@ -61,14 +59,22 @@ trait Suspendable
      */
     public function scopeActive(Builder $query): Builder
     {
-        return $query->whereNotExists(function ($query) {
-            $query->selectSub(function ($query) {
+        return $query->where(function ($query) {
+            $query->where(function ($query) {
                 $query->select('state')
-                    ->from('suspensions')
-                    ->whereColumn('suspensions.suspendable_id', 'countries.id')
+                    ->from(config('suspensions.table_name'))
+                    ->whereColumn(config('suspensions.table_name').'.suspendable_id', $this->getTable().'.id')
+                    ->where(config('suspensions.table_name').'.suspendable_type', get_class($this))
                     ->orderByDesc('suspensions.created_at')
                     ->limit(1);
-            }, 'state')->where('state', 'suspended');
+            }, config('suspensions.activated'))->orWhere(function ($query) {
+                $query->whereNotExists(function ($query) {
+                    $query->select('state')
+                        ->from(config('suspensions.table_name'))
+                        ->whereColumn(config('suspensions.table_name').'.suspendable_id', $this->getTable().'.id')
+                        ->where(config('suspensions.table_name').'.suspendable_type', get_class($this));
+                });
+            });
         });
     }
 

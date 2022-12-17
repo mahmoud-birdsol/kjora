@@ -97,6 +97,6 @@ class SuspendableTest extends TestCase
         Carbon::setTestNow(now()->addMinute());
         $country->activate();
 
-        $this->assertCount(4, Country::active()->get());
+        $this->assertCount(4, Country::active()->orderByDesc('id')->limit(26)->offset(0)->get());
     }
 }

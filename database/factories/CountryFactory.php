@@ -23,7 +23,7 @@ class CountryFactory extends Factory
         );
 
         $filtered = $countries->filter(
-            fn($country) => ! Country::where('name', $country['name'])->count()
+            fn ($country) => ! Country::where('name', $country['name'])->count()
         );
 
         $country = $filtered->first();
