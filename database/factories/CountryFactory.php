@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Country;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Collection;
 
@@ -21,7 +22,11 @@ class CountryFactory extends Factory
             database_path('data/countries.json')
         );
 
-        $country = $countries->first();
+        $filtered = $countries->filter(
+            fn($country) => ! Country::where('name', $country['name'])->count()
+        );
+
+        $country = $filtered->first();
 
         return [
             'capital' => $country['capital'],
