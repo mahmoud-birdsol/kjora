@@ -25,6 +25,8 @@ class Token
     private Authenticatable $authenticatable;
 
     /**
+     * Create a new token instance.
+     *
      * @param  string  $table
      */
     public function __construct(string $table)
@@ -33,6 +35,8 @@ class Token
     }
 
     /**
+     * Create a new token instance.
+     *
      * @param  string  $table
      * @return \App\Repositories\Token
      */
@@ -42,6 +46,8 @@ class Token
     }
 
     /**
+     * Create an authenticatable token.
+     *
      * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @param  string  $token
      * @return bool
@@ -57,6 +63,8 @@ class Token
     }
 
     /**
+     * Validate an authenticatable token.
+     *
      * @param  string  $token
      * @return bool
      */
@@ -66,6 +74,8 @@ class Token
     }
 
     /**
+     * Find the authenticatable model from token.
+     *
      * @param  string  $token
      * @return $this|null
      */
@@ -87,6 +97,8 @@ class Token
     }
 
     /**
+     * Get the authenticatable model.
+     *
      * @return \Illuminate\Contracts\Auth\Authenticatable
      */
     public function authenticatable(): Authenticatable
@@ -105,6 +117,8 @@ class Token
     }
 
     /**
+     * Save the newly generated token to DB.
+     *
      * @return void
      */
     private function save(): void
