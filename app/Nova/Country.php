@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\Activate;
+use App\Nova\Actions\Suspend;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Boolean;
@@ -144,6 +146,16 @@ class Country extends Resource
                 ->nullable()
                 ->rules('nullable'),
 
+            Boolean::make('Active', 'is_active')
+                ->showOnPreview()
+                ->showOnIndex()
+                ->showOnDetail()
+                ->hideWhenUpdating()
+                ->filterable(function ($request, $query, $value, $attribute) {
+                    $value ? $query->active() : $query->suspended();
+                })
+                ->hideWhenCreating(),
+
             HasMany::make('Advertisements'),
             HasMany::make('Clubs'),
             HasMany::make('Users'),
@@ -191,6 +203,13 @@ class Country extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            Activate::make()
+                ->canSee(fn () => $request->user()->hasPermissionTo('activate countries'))
+                ->canRun(fn () => $request->user()->hasPermissionTo('activate countries')),
+            Suspend::make()
+                ->canSee(fn () => $request->user()->hasPermissionTo('suspend countries'))
+                ->canRun(fn () => $request->user()->hasPermissionTo('suspend countries')),
+        ];
     }
 }

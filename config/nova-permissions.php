@@ -265,6 +265,18 @@ return [
             'group' => 'Country',
         ],
 
+        'suspend countries' => [
+            'display_name' => 'Suspend countries',
+            'description' => 'Can suspend countries',
+            'group' => 'Country',
+        ],
+
+        'activate countries' => [
+            'display_name' => 'Activate countries',
+            'description' => 'Can activate countries',
+            'group' => 'Country',
+        ],
+
         /*
          |--------------------------------------------------------------------------
          | Clicks...
@@ -352,6 +364,18 @@ return [
         'delete clubs' => [
             'display_name' => 'Delete clubs',
             'description' => 'Can delete clubs',
+            'group' => 'Club',
+        ],
+
+        'suspend clubs' => [
+            'display_name' => 'Suspend clubs',
+            'description' => 'Can suspend clubs',
+            'group' => 'Club',
+        ],
+
+        'activate clubs' => [
+            'display_name' => 'Activate clubs',
+            'description' => 'Can activate clubs',
             'group' => 'Club',
         ],
 

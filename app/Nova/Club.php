@@ -2,9 +2,12 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\Activate;
+use App\Nova\Actions\Suspend;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
@@ -63,6 +66,16 @@ class Club extends Resource
                 ->nullable()
                 ->rules('nullable'),
 
+            Boolean::make('Active', 'is_active')
+                ->showOnPreview()
+                ->showOnIndex()
+                ->showOnDetail()
+                ->hideWhenUpdating()
+                ->filterable(function ($request, $query, $value, $attribute) {
+                    $value ? $query->active() : $query->suspended();
+                })
+                ->hideWhenCreating(),
+
             HasMany::make('Users'),
         ];
     }
@@ -108,6 +121,13 @@ class Club extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            Activate::make()
+                ->canSee(fn () => $request->user()->hasPermissionTo('activate clubs'))
+                ->canRun(fn () => $request->user()->hasPermissionTo('activate clubs')),
+            Suspend::make()
+                ->canSee(fn () => $request->user()->hasPermissionTo('suspend clubs'))
+                ->canRun(fn () => $request->user()->hasPermissionTo('suspend clubs')),
+        ];
     }
 }
