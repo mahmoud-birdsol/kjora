@@ -2,14 +2,14 @@
 
 namespace App\Nova\Actions;
 
-use App\Models\Contracts\Suspendable;
+use App\Models\Contracts\Publishable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 
-class Activate extends Action
+class UnPublish extends Action
 {
     use InteractsWithQueue, Queueable;
 
@@ -22,8 +22,8 @@ class Activate extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        $action = resolve(\App\Actions\Suspension\Activate::class);
+        $action = resolve(\App\Actions\Publishable\UnPublish::class);
 
-        $models->each(fn (Suspendable $suspendable) => $action($suspendable));
+        $models->each(fn (Publishable $publishable) => $action($publishable));
     }
 }

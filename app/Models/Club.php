@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
-use App\Models\Concerns\Suspendable;
+use App\Models\Concerns\CanBeSuspended;
+use App\Models\Contracts\Suspendable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Nova\Actions\Actionable;
 
-class Club extends Model
+class Club extends Model implements Suspendable
 {
     use HasFactory;
     use Actionable;
-    use Suspendable;
+    use CanBeSuspended;
 
     /**
      * The attributes that are mass assignable.

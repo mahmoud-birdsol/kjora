@@ -2,17 +2,17 @@
 
 namespace App\Actions\Suspension;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Contracts\Suspendable;
 
 class Suspend
 {
     /**
      * Mark the specified model as suspended.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $suspendable
+     * @param  \App\Models\Contracts\Suspendable  $suspendable
      * @return void
      */
-    public function __invoke(Model $suspendable): void
+    public function __invoke(Suspendable $suspendable): void
     {
         $suspendable->suspend();
     }
