@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\DB;
 use stdClass;
 
-trait Suspendable
+trait CanBeSuspended
 {
     /**
      * Check if the model is active.

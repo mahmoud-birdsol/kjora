@@ -25,6 +25,9 @@ class AuthServiceProvider extends ServiceProvider
         \App\Models\Impression::class => \App\Policies\ImpressionPolicy::class,
         \App\Models\Position::class => \App\Policies\PositionPolicy::class,
         \App\Models\User::class => \App\Policies\UserPolicy::class,
+        \App\Models\PrivacyPolicy::class => \App\Policies\PrivacyPolicyPolicy::class,
+        \App\Models\CookiePolicy::class => \App\Policies\CookiePolicyPolicy::class,
+        \App\Models\TermsAndConditions::class => \App\Policies\TermsAndConditionsPolicy::class,
     ];
 
     /**

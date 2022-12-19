@@ -408,5 +408,113 @@ return [
             'description' => 'Can delete positions',
             'group' => 'Position',
         ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Privacy policy
+        |--------------------------------------------------------------------------
+        */
+
+        'view privacy policies' => [
+            'display_name' => 'View privacy policies',
+            'description' => 'Can view privacy policies',
+            'group' => 'Privacy Policy',
+        ],
+
+        'create privacy policies' => [
+            'display_name' => 'Create privacy policies',
+            'description' => 'Can create privacy policies',
+            'group' => 'Privacy Policy',
+        ],
+
+        'edit privacy policies' => [
+            'display_name' => 'Edit privacy policies',
+            'description' => 'Can edit privacy policies',
+            'group' => 'Privacy Policy',
+        ],
+
+        'delete privacy policies' => [
+            'display_name' => 'Delete privacy policies',
+            'description' => 'Can delete privacy policies',
+            'group' => 'Privacy Policy',
+        ],
+
+        'publish privacy policies' => [
+            'display_name' => 'Publish privacy policies',
+            'description' => 'Can publish privacy policies',
+            'group' => 'Privacy Policy',
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Terms and conditions.
+        |--------------------------------------------------------------------------
+        */
+
+        'view terms and conditions' => [
+            'display_name' => 'View terms and conditions',
+            'description' => 'Can view terms and conditions',
+            'group' => 'Terms and conditions',
+        ],
+
+        'create terms and conditions' => [
+            'display_name' => 'Create terms and conditions',
+            'description' => 'Can create terms and conditions',
+            'group' => 'Terms and conditions',
+        ],
+
+        'edit terms and conditions' => [
+            'display_name' => 'Edit terms and conditions',
+            'description' => 'Can edit terms and conditions',
+            'group' => 'Terms and conditions',
+        ],
+
+        'delete terms and conditions' => [
+            'display_name' => 'Delete terms and conditions',
+            'description' => 'Can delete terms and conditions',
+            'group' => 'Terms and conditions',
+        ],
+
+        'publish terms and conditions' => [
+            'display_name' => 'Publish terms and conditions',
+            'description' => 'Can publish terms and conditions',
+            'group' => 'Terms and conditions',
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Cookie policies.
+        |--------------------------------------------------------------------------
+        */
+
+        'view cookie policies' => [
+            'display_name' => 'View cookie policies',
+            'description' => 'Can view cookie policies',
+            'group' => 'Cookie Policy',
+        ],
+
+        'create cookie policies' => [
+            'display_name' => 'Create cookie policies',
+            'description' => 'Can create cookie policies',
+            'group' => 'Cookie Policy',
+        ],
+
+        'edit cookie policies' => [
+            'display_name' => 'Edit cookie policies',
+            'description' => 'Can edit cookie policies',
+            'group' => 'Cookie Policy',
+        ],
+
+        'delete cookie policies' => [
+            'display_name' => 'Delete cookie policies',
+            'description' => 'Can delete cookie policies',
+            'group' => 'Cookie Policy',
+        ],
+
+        'publish cookie policies' => [
+            'display_name' => 'Publish cookie policies',
+            'description' => 'Can publish cookie policies',
+            'group' => 'Cookie Policy',
+        ],
     ],
 ];

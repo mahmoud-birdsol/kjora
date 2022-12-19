@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
-use App\Models\Concerns\Suspendable;
+use App\Models\Concerns\CanBeSuspended;
+use App\Models\Contracts\Suspendable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Nova\Actions\Actionable;
 
-class Country extends Model
+class Country extends Model implements Suspendable
 {
     use HasFactory;
     use Actionable;
-    use Suspendable;
+    use CanBeSuspended;
 
     /**
      * The attributes that are mass assignable.

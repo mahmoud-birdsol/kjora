@@ -6,6 +6,7 @@ use App\Nova\Admin;
 use App\Nova\Advertisement;
 use App\Nova\Click;
 use App\Nova\Club;
+use App\Nova\CookiePolicy;
 use App\Nova\Country;
 use App\Nova\Dashboards\AdminDashboard;
 use App\Nova\Dashboards\AdvertisementDashboard;
@@ -17,6 +18,8 @@ use App\Nova\Lenses\ArchivedAdvertisement;
 use App\Nova\Lenses\ExpiringAdvertisement;
 use App\Nova\Lenses\UnverifiedUsers;
 use App\Nova\Position;
+use App\Nova\PrivacyPolicy;
+use App\Nova\TermsAndConditions;
 use App\Nova\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
@@ -81,6 +84,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(User::class),
                     MenuItem::lens(User::class, UnverifiedUsers::class),
                 ])->icon('user-group')->collapsable(),
+
+                MenuSection::make('Security', [
+                    MenuItem::resource(PrivacyPolicy::class),
+                    MenuItem::resource(TermsAndConditions::class),
+                    MenuItem::resource(CookiePolicy::class),
+                ])->icon('lock')->collapsable(),
 
                 MenuSection::make('Settings', [
                     MenuItem::resource(Country::class),

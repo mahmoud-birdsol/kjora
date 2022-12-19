@@ -2,6 +2,7 @@
 
 namespace App\Nova\Actions;
 
+use App\Models\Contracts\Suspendable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
@@ -24,6 +25,6 @@ class Suspend extends DestructiveAction
     {
         $action = resolve(\App\Actions\Suspension\Suspend::class);
 
-        $models->each(fn ($suspendable) => $action($suspendable));
+        $models->each(fn (Suspendable $suspendable) => $action($suspendable));
     }
 }
