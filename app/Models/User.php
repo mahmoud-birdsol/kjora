@@ -57,6 +57,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'accepted_terms_and_conditions_at',
         'accepted_privacy_policy_at',
         'accepted_cookie_policy_at',
+        'preferred_foot',
     ];
 
     /**

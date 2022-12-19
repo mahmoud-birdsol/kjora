@@ -59,4 +59,14 @@ class Country extends Model implements Suspendable
     {
         return $this->hasMany(Club::class);
     }
+
+    /**
+     * Get the country users.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
 }

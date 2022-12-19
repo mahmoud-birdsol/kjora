@@ -146,6 +146,11 @@ class User extends Resource
             Number::make('Age')
                 ->onlyOnDetail(),
 
+            Select::make('Preferred Foot')->options([
+                'left' => 'Left',
+                'right' => 'Right',
+            ])->displayUsingLabels()->showOnPreview()->sortable()->filterable()->required()->rules('required'),
+
             Panel::make('Identity Verification', fn () => [
                 Boolean::make('Verified', 'has_verified_identity')
                     ->filterable()

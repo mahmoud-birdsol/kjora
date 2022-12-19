@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Nova\Actions\Activate;
 use App\Nova\Actions\Suspend;
+use App\Nova\Metrics\UsersPerClub;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\BelongsTo;
@@ -88,7 +89,9 @@ class Club extends Resource
      */
     public function cards(NovaRequest $request)
     {
-        return [];
+        return [
+            UsersPerClub::make(),
+        ];
     }
 
     /**
