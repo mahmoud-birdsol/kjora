@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5fd7cbf3e0cb97b5be6b22cb7f68ab05",
+    "content-hash": "b2df6074ca959fb96ea3695df3df3b3b",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -1115,6 +1115,54 @@
                 }
             ],
             "time": "2022-06-18T20:57:19+00:00"
+        },
+        {
+            "name": "emilianotisato/nova-google-autocomplete-field",
+            "version": "0.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/emilianotisato/nova-google-autocomplete-field.git",
+                "reference": "88ad8050c9e4b6af09b5b0da5e4d9d87e25c4958"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/emilianotisato/nova-google-autocomplete-field/zipball/88ad8050c9e4b6af09b5b0da5e4d9d87e25c4958",
+                "reference": "88ad8050c9e4b6af09b5b0da5e4d9d87e25c4958",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "EmilianoTisato\\GoogleAutocomplete\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "EmilianoTisato\\GoogleAutocomplete\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "This Nova Package it's a Field that allows you to Autocomplete addresses with Google Place API and get the full metadata (lat and long, etc).",
+            "keywords": [
+                "Google Places Api",
+                "address autocomplete",
+                "field",
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/emilianotisato/nova-google-autocomplete-field/issues",
+                "source": "https://github.com/emilianotisato/nova-google-autocomplete-field/tree/0.8.0"
+            },
+            "time": "2021-03-26T17:56:37+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -3467,6 +3515,51 @@
                 }
             ],
             "time": "2022-08-04T09:53:51+00:00"
+        },
+        {
+            "name": "naif/address_autocomplete",
+            "version": "1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/naifalshaye/nova-address-autocomplete.git",
+                "reference": "ed56fa7c1690fe0d490e97e6705529200bc15a6d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/naifalshaye/nova-address-autocomplete/zipball/ed56fa7c1690fe0d490e97e6705529200bc15a6d",
+                "reference": "ed56fa7c1690fe0d490e97e6705529200bc15a6d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Naif\\AddressAutocomplete\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Naif\\AddressAutocomplete\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "An address field that autocomplete the user input to show suggested addresses using Google Place service.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "issues": "https://github.com/naifalshaye/nova-address-autocomplete/issues",
+                "source": "https://github.com/naifalshaye/nova-address-autocomplete/tree/1.4"
+            },
+            "time": "2019-10-08T08:17:06+00:00"
         },
         {
             "name": "nesbot/carbon",

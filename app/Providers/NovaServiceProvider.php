@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Nova\Venue;
 use App\Nova\Admin;
 use App\Nova\Advertisement;
 use App\Nova\Click;
@@ -83,6 +84,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 MenuSection::make('Players', [
                     MenuItem::resource(User::class),
                     MenuItem::lens(User::class, UnverifiedUsers::class),
+                    MenuItem::resource(Venue::class),
                 ])->icon('user-group')->collapsable(),
 
                 MenuSection::make('Security', [
