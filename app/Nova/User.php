@@ -36,7 +36,7 @@ class User extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'username';
 
     /**
      * The columns that should be searched.
@@ -44,7 +44,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email', 'phone',
+        'id', 'username', 'email', 'phone', 'first_name', 'last_name'
     ];
 
     /**
@@ -88,7 +88,7 @@ class User extends Resource
                 ->nullable()
                 ->rules('nullable'),
 
-            Text::make('Name')
+            Text::make('Username')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
