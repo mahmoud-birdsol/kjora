@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Nova\Venue;
 use App\Nova\Admin;
 use App\Nova\Advertisement;
 use App\Nova\Click;
@@ -22,6 +21,7 @@ use App\Nova\Position;
 use App\Nova\PrivacyPolicy;
 use App\Nova\TermsAndConditions;
 use App\Nova\User;
+use App\Nova\Venue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;

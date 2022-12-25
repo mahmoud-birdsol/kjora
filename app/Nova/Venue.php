@@ -2,7 +2,6 @@
 
 namespace App\Nova;
 
-use EmilianoTisato\GoogleAutocomplete\GoogleAutocomplete;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
@@ -31,7 +30,7 @@ class Venue extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name'
+        'id', 'name',
     ];
 
     /**

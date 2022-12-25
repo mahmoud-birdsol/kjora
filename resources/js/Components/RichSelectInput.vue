@@ -13,14 +13,18 @@ const props = defineProps({
     }
 });
 
+const filteredOptions = ref([]);
+
 onMounted(() => {
     if (props.modelValue) {
         selected.value = props.options.filter((option) => {
             return option[props.valueName] == props.modelValue;
         })[0];
-    }else{
+    } else {
         selected.value = props.options[0];
     }
+
+    filteredOptions.value = props.options;
 });
 
 const showDropDown = ref(false);
@@ -33,6 +37,16 @@ const select = (option) => {
     selected.value = option;
     emit('update:modelValue', selected.value[props.valueName]);
     showDropDown.value = false;
+};
+
+const searchValue = ref('');
+
+const search = () => {
+    filteredOptions.value = props.options.filter((option) => {
+        return option.name
+            .toUpperCase()
+            .includes(searchValue.value.toUpperCase())
+    })
 };
 </script>
 
@@ -63,15 +77,28 @@ const select = (option) => {
                     class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                     tabindex="-1" role="listbox" aria-labelledby="listbox-label"
                     aria-activedescendant="listbox-option-3">
-                    <li v-for="option in options" @click="select(option)"
-                        class="text-gray-900 relative cursor-pointer select-none py-2 pl-3 pr-9 hover:bg-primary hover:text-white" id="listbox-option-0"
+                    <li>
+                        <div class="flex p-4">
+                            <input type="text"
+                                   v-model="searchValue"
+                                   class="block w-full rounded border-gray-300 px-4 shadow-sm focus:border-primary focus:ring-primary sm:text-sm disabled:bg-gray-100"
+                                   @input="search"
+                                   placeholder="Search">
+                        </div>
+                    </li>
+
+                    <li v-for="option in filteredOptions" @click="select(option)"
+                        class="text-gray-900 relative cursor-pointer select-none py-2 pl-3 pr-9 hover:bg-primary hover:text-white"
+                        id="listbox-option-0"
                         role="option">
                         <div class="flex items-center">
                             <img :src="option[imageName]" alt="" class="h-6 w-6 flex-shrink-0 rounded-full">
-                            <span class="font-normal ml-3 block truncate" :class="{'font-semibold': option[valueName] == selected[valueName], 'font-normal': option[valueName] != selected[valueName]}">{{ option[textName] }}</span>
+                            <span class="font-normal ml-3 block truncate"
+                                  :class="{'font-semibold': option[valueName] == selected[valueName], 'font-normal': option[valueName] != selected[valueName]}">{{ option[textName] }}</span>
                         </div>
 
-                        <span class="absolute inset-y-0 right-0 flex items-center pr-4" :class="{'text-primary': option[valueName] == selected[valueName], 'text-white': option[valueName] != selected[valueName]}">
+                        <span class="absolute inset-y-0 right-0 flex items-center pr-4"
+                              :class="{'text-primary': option[valueName] == selected[valueName], 'text-white': option[valueName] != selected[valueName]}">
                             <CheckIcon class="h-5 w-5"/>
                         </span>
                     </li>

@@ -2,8 +2,8 @@
 
 namespace App\Http\Responses;
 
-use App\Models\Country;
 use App\Models\Club;
+use App\Models\Country;
 use App\Models\Position;
 use Inertia\Inertia;
 use Laravel\Fortify\Contracts\RegisterViewResponse;
@@ -11,7 +11,7 @@ use Laravel\Fortify\Contracts\RegisterViewResponse;
 class RegisterResponse implements RegisterViewResponse
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function toResponse($request)
     {

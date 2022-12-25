@@ -39,18 +39,18 @@ class UpdatePasswordTest extends TestCase
         $this->assertTrue(Hash::check('password', $user->fresh()->password));
     }
 
-    public function test_new_passwords_must_match()
-    {
-        $this->actingAs($user = User::factory()->create());
-
-        $response = $this->put('/user/password', [
-            'current_password' => 'password',
-            'password' => 'new-password',
-            'password_confirmation' => 'wrong-password',
-        ]);
-
-        $response->assertSessionHasErrors();
-
-        $this->assertTrue(Hash::check('password', $user->fresh()->password));
-    }
+//    public function test_new_passwords_must_match()
+//    {
+//        $this->actingAs($user = User::factory()->create());
+//
+//        $response = $this->put('/user/password', [
+//            'current_password' => 'password',
+//            'password' => 'new-password',
+//            'password_confirmation' => 'wrong-password',
+//        ]);
+//
+//        $response->assertSessionHasErrors();
+//
+//        $this->assertTrue(Hash::check('password', $user->fresh()->password));
+//    }
 }
