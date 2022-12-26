@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Club;
 use App\Models\Country;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -71,7 +70,6 @@ class ClubSeeder extends Seeder
 
             $clubs->each(function (array $data) {
                 /** @var Club $club */
-
                 $data['team']['country_id'] = Country::where('name', $data['team']['country'])->first()->id;
 
                 $club = Club::create(collect($data['team'])->only('name', 'country_id')->toArray());

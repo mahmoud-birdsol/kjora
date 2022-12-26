@@ -7,7 +7,6 @@ use App\Nova\Actions\Suspend;
 use App\Nova\Metrics\UsersPerClub;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
@@ -66,7 +65,7 @@ class Club extends Resource
             Images::make('Logo')
                 ->showOnPreview()
                 ->conversionOnIndexView('thumb')
-                ->croppingConfigs(['aspectRatio' => 1/1])
+                ->croppingConfigs(['aspectRatio' => 1 / 1])
                 ->mustCrop()
                 ->rules('required'),
 

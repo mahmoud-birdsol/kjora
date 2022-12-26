@@ -46,6 +46,7 @@ class Country extends Model implements Suspendable, HasMedia
      *
      * @param  \Spatie\MediaLibrary\MediaCollections\Models\Media|null  $media
      * @return void
+     *
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
     public function registerMediaConversions(Media $media = null): void

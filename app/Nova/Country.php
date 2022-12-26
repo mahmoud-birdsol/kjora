@@ -6,7 +6,6 @@ use App\Nova\Actions\Activate;
 use App\Nova\Actions\Suspend;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
@@ -67,7 +66,7 @@ class Country extends Resource
 
             Images::make('Flag')
                 ->showOnPreview()
-                ->croppingConfigs(['aspectRatio' => 1/1])
+                ->croppingConfigs(['aspectRatio' => 1 / 1])
                 ->mustCrop()
                 ->rules('required'),
 
