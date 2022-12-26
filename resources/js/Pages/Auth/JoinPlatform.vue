@@ -1,8 +1,6 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
-import AuthenticationCard from '@/Components/AuthenticationCard.vue';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
-import Checkbox from '@/Components/Checkbox.vue';
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -18,7 +16,7 @@ const form = useForm({
     email: props.user.email,
     password: '',
     password_confirmation: '',
-    terms: false,
+    terms: true,
 });
 
 const submit = () => {
@@ -31,82 +29,72 @@ const submit = () => {
 <template>
     <Head title="Accept Invitation" />
 
-    <AuthenticationCard>
-        <template #logo>
-            <AuthenticationCardLogo />
-        </template>
-
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="name" value="Name" />
-                <TextInput
-                    id="name"
-                    v-model="form.name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
-                <InputError class="mt-2" :message="form.errors.name" />
+    <GuestLayout>
+        <div class="w-full sm:flex sm:justify-between sm:space-x-4 px-4 sm:px-8">
+            <div class="w-full sm:flex sm:justify-end sm:w-1/2">
+                <div>
+                    <h2 class="text-white text-2xl font-light uppercase">Welcome to</h2>
+                    <h1 class="text-white text-6xl font-black uppercase">KJORA</h1>
+                </div>
             </div>
+            <div class="bg-white rounded-md p-6 w-full sm:w-1/2">
+                <div class="flex justify-center my-4">
+                    <h2 class="text-xl text-primary font-bold uppercase">Create an account</h2>
+                </div>
 
-            <div class="mt-4">
-                <InputLabel for="email" value="Email" />
-                <TextInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    disabled="true"
-                />
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-                <TextInput
-                    id="password"
-                    v-model="form.password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="new-password"
-                />
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
-                <TextInput
-                    id="password_confirmation"
-                    v-model="form.password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    required
-                    autocomplete="new-password"
-                />
-                <InputError class="mt-2" :message="form.errors.password_confirmation" />
-            </div>
-
-            <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
-                <InputLabel for="terms">
-                    <div class="flex items-center">
-                        <Checkbox id="terms" v-model:checked="form.terms" name="terms" required />
-
-                        <div class="ml-2">
-                            I agree to the <a target="_blank" :href="route('terms.show')" class="underline text-sm text-gray-600 hover:text-gray-900">Terms of Service</a> and <a target="_blank" :href="route('policy.show')" class="underline text-sm text-gray-600 hover:text-gray-900">Privacy Policy</a>
-                        </div>
+                <form @submit.prevent="submit">
+                    <div>
+                        <InputLabel color="primary" for="name" value="Name" />
+                        <TextInput
+                            id="name"
+                            v-model="form.name"
+                            type="text"
+                            class="mt-1 block w-full"
+                            required
+                            autofocus
+                            autocomplete="name"
+                        />
+                        <InputError class="mt-2" :message="form.errors.name" />
                     </div>
-                    <InputError class="mt-2" :message="form.errors.terms" />
-                </InputLabel>
-            </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Join
-                </PrimaryButton>
+                    <div class="mt-4">
+                        <InputLabel color="primary" for="email" value="Email" />
+                        <TextInput
+                            id="email"
+                            v-model="form.email"
+                            type="email"
+                            class="mt-1 block w-full"
+                            disabled="true"
+                        />
+                        <InputError class="mt-2" :message="form.errors.email" />
+                    </div>
+
+                    <div class="mt-4">
+                        <InputLabel color="primary" for="password" value="Password" />
+                        <PasswordInput v-model="form.password"/>
+                        <InputError class="mt-2" :message="form.errors.password" />
+                    </div>
+
+                    <div class="mt-4">
+                        <InputLabel color="primary" for="password_confirmation" value="Confirm Password" />
+                        <PasswordInput v-model="form.password_confirmation"/>
+                        <InputError class="mt-2" :message="form.errors.password_confirmation" />
+                    </div>
+
+                    <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
+                        <p class="text-xs text-black font-light">
+                            By signing up, you agree to the <a target="_blank" :href="route('terms.show')" class="text-sky-500 hover:text-sky-700">Terms of Service</a> and <a target="_blank" :href="route('policy.show')" class="text-sky-500 hover:text-sky-700">Privacy Policy</a> including <Link class="text-sky-500 hover:text-sky-700">Cookie use</Link>
+                        </p>
+                    </div>
+
+                    <div class="mt-4">
+                        <PrimaryButton :class="{ 'opacity-25': form.processing }"
+                                       :disabled="form.processing">
+                            Join
+                        </PrimaryButton>
+                    </div>
+                </form>
             </div>
-        </form>
-    </AuthenticationCard>
+        </div>
+    </GuestLayout>
 </template>

@@ -4,7 +4,6 @@ namespace Tests\Feature\Controllers;
 
 use App\Models\Admin;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use App\Repositories\Token;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -36,7 +35,7 @@ class JoinPlatformControllerTest extends TestCase
 
     public function test_it_updates_the_user_password_and_name()
     {
-        $user = User::factory()->create();
+        $user = Admin::factory()->create();
         $token = Str::random();
 
         Token::make('join_platform_tokens')->create($user, $token);
@@ -47,12 +46,12 @@ class JoinPlatformControllerTest extends TestCase
             'password' => 'passcode',
             'password_confirmation' => 'passcode',
             'terms' => 'true',
-        ])->assertRedirect(RouteServiceProvider::HOME)->assertSessionDoesntHaveErrors();
+        ])->assertRedirect('/nova')->assertSessionDoesntHaveErrors();
     }
 
     public function test_it_updates_the_admin_joined_platform_at_timestamp()
     {
-        $user = User::factory()->create();
+        $user = Admin::factory()->create();
         $token = Str::random();
 
         $now = now();
@@ -67,9 +66,9 @@ class JoinPlatformControllerTest extends TestCase
             'password' => 'passcode',
             'password_confirmation' => 'passcode',
             'terms' => 'true',
-        ])->assertRedirect(RouteServiceProvider::HOME)->assertSessionDoesntHaveErrors();
+        ])->assertRedirect('/nova')->assertSessionDoesntHaveErrors();
 
-        $this->assertDatabaseHas('users', [
+        $this->assertDatabaseHas('admins', [
             'joined_platform_at' => $now,
         ]);
     }

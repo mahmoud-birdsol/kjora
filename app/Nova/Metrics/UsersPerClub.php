@@ -5,7 +5,6 @@ namespace App\Nova\Metrics;
 use App\Models\Club;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Metrics\Partition;
-use Pktharindu\NovaPermissions\Role;
 
 class UsersPerClub extends Partition
 {
