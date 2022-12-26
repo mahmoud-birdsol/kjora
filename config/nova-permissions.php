@@ -516,5 +516,35 @@ return [
             'description' => 'Can publish cookie policies',
             'group' => 'Cookie Policy',
         ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Ratings.
+        |--------------------------------------------------------------------------
+        */
+
+        'view ratings' => [
+            'display_name' => 'View ratings',
+            'description' => 'Can view ratings',
+            'group' => 'Rating',
+        ],
+
+        'create ratings' => [
+            'display_name' => 'Create ratings',
+            'description' => 'Can create ratings',
+            'group' => 'Rating',
+        ],
+
+        'edit ratings' => [
+            'display_name' => 'Edit ratings',
+            'description' => 'Can edit ratings',
+            'group' => 'Rating',
+        ],
+
+        'delete ratings' => [
+            'display_name' => 'Delete ratings',
+            'description' => 'Can delete ratings',
+            'group' => 'Rating',
+        ],
     ],
 ];
