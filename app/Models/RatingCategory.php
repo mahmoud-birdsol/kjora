@@ -5,13 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Laravel\Nova\Actions\Actionable;
 
-class Position extends Model
+class RatingCategory extends Model
 {
     use HasFactory;
-    use Actionable;
 
     /**
      * The attributes that are mass assignable.
@@ -24,24 +21,14 @@ class Position extends Model
     ];
 
     /**
-     * Get the position users.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function users(): HasMany
-    {
-        return $this->hasMany(User::class);
-    }
-
-    /**
-     * Get the position rating categories.
+     * Get the rating category positions.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function ratingCategories(): BelongsToMany
+    public function positions(): BelongsToMany
     {
         return $this
-            ->belongsToMany(RatingCategory::class)
+            ->belongsToMany(Position::class)
             ->withTimestamps();
     }
 }

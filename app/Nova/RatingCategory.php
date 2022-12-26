@@ -4,20 +4,19 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Position extends Resource
+class RatingCategory extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Position>
+     * @var class-string<\App\Models\RatingCategory>
      */
-    public static $model = \App\Models\Position::class;
+    public static $model = \App\Models\RatingCategory::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -48,15 +47,16 @@ class Position extends Resource
 
             Text::make('Name')
                 ->showOnPreview()
-                ->rules('required', 'max:254'),
+                ->sortable()
+                ->required()
+                ->rules('required', 'string', 'max:255'),
 
             Textarea::make('Description')
                 ->showOnPreview()
-                ->rules('required', 'max:254'),
+                ->nullable()
+                ->rules('nullable'),
 
-            BelongsToMany::make('Rating Categories'),
-
-            HasMany::make('Users'),
+            BelongsToMany::make('Positions'),
         ];
     }
 

@@ -20,6 +20,7 @@ use App\Nova\Lenses\UnverifiedUsers;
 use App\Nova\Position;
 use App\Nova\PrivacyPolicy;
 use App\Nova\Rating;
+use App\Nova\RatingCategory;
 use App\Nova\TermsAndConditions;
 use App\Nova\User;
 use App\Nova\Venue;
@@ -99,6 +100,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(Club::class),
                     MenuItem::resource(Position::class),
                     MenuItem::resource(Rating::class),
+                    MenuItem::resource(RatingCategory::class),
                 ])->icon('cog')->collapsable(),
             ];
         });

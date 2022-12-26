@@ -546,5 +546,35 @@ return [
             'description' => 'Can delete ratings',
             'group' => 'Rating',
         ],
+
+       /*
+       |--------------------------------------------------------------------------
+       | Rating Categories.
+       |--------------------------------------------------------------------------
+       */
+
+        'view rating categories' => [
+            'display_name' => 'View rating categories',
+            'description' => 'Can view rating categories',
+            'group' => 'Rating Category',
+        ],
+
+        'create rating categories' => [
+            'display_name' => 'Create rating categories',
+            'description' => 'Can create rating categories',
+            'group' => 'Rating Category',
+        ],
+
+        'edit rating categories' => [
+            'display_name' => 'Edit rating categories',
+            'description' => 'Can edit rating categories',
+            'group' => 'Rating Category',
+        ],
+
+        'delete rating categories' => [
+            'display_name' => 'Delete rating categories',
+            'description' => 'Can delete rating categories',
+            'group' => 'Rating Category',
+        ],
     ],
 ];
