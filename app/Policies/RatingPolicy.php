@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Rating;
 use App\Models\Admin;
+use App\Models\Rating;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class RatingPolicy
