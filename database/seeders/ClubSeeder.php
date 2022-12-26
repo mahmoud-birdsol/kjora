@@ -64,6 +64,10 @@ class ClubSeeder extends Seeder
         ];
 
         foreach ($clubCountries as $clubCountry) {
+            $this->command->info('#######################');
+            $this->command->info('Loading: '. $clubCountry);
+            $this->command->info('#######################');
+
             $clubs = $this->collectClubs(
                 database_path('data/'.$clubCountry.'_teams.json')
             );
@@ -73,6 +77,8 @@ class ClubSeeder extends Seeder
                 $data['team']['country_id'] = Country::where('name', $data['team']['country'])->first()->id;
 
                 $club = Club::create(collect($data['team'])->only('name', 'country_id')->toArray());
+
+                $this->command->info('Loading club: '. $club->name);
 
                 if (array_key_exists('logo', $data['team'])) {
                     try {
