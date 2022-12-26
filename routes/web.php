@@ -16,6 +16,60 @@ use Inertia\Inertia;
 |
 */
 
+Route::get('test', function () {
+    $countries = [
+        //        'england',
+        //        'spain',
+        //        'italy',
+        //        'germany',
+        //        'france',
+        //        'saudi-arabia',
+        //        'kuwait',
+        //        'scotland',
+        //        'argentina',
+        //        'australia',
+        //        'japan',
+        //        'usa',
+        //        'netherlands',
+        //        'portugal',
+        //        'turkey',
+        //        'qatar',
+        //        'united-arab-emirates',
+        //        'bahrain',
+        //        'oman',
+        //        'egypt',
+        //        'brazil',
+        //        'russia',
+        //        'denmark',
+        //        'ukraine',
+        //        'czech-republic',
+        //        'greece',
+        //        'india',
+        //        'pakistan',
+        //        'switzerland',
+        //        'ireland',
+        //        'venezuela',
+        //        'mexico',
+        //        'belgium',
+        //        'china',
+        //        'croatia',
+        //        'cyprus',
+        //        'austria',
+    ];
+
+    foreach ($countries as $country) {
+        $response = \Illuminate\Support\Facades\Http::withHeaders([
+            'X-RapidAPI-Key' => '3a1c620ca8msh4673a22874df0f4p1eb3fdjsn3899a303c73c',
+            'X-RapidAPI-Host' => 'api-football-v1.p.rapidapi.com',
+        ])->get('https://api-football-v1.p.rapidapi.com/v3/teams?country='.$country);
+
+        $data = json_encode(json_decode($response->body(), true)['response']);
+
+        file_put_contents(database_path('data/'.$country.'_teams.json'), $data);
+    }
+//    dd(json_decode($response->body()));
+});
+
 Route::redirect('/', 'login')->name('welcome');
 
 Route::middleware([

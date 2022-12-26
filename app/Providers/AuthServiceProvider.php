@@ -15,19 +15,21 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        \Pktharindu\NovaPermissions\Role::class => \App\Policies\RolePolicy::class,
-
         \App\Models\Admin::class => \App\Policies\AdminPolicy::class,
         \App\Models\Advertisement::class => \App\Policies\AdvertisementPolicy::class,
         \App\Models\Click::class => \App\Policies\ClickPolicy::class,
         \App\Models\Club::class => \App\Policies\ClubPolicy::class,
+        \App\Models\CookiePolicy::class => \App\Policies\CookiePolicyPolicy::class,
         \App\Models\Country::class => \App\Policies\CountryPolicy::class,
         \App\Models\Impression::class => \App\Policies\ImpressionPolicy::class,
+        \App\Models\Label::class => \App\Policies\LabelPolicy::class,
         \App\Models\Position::class => \App\Policies\PositionPolicy::class,
-        \App\Models\User::class => \App\Policies\UserPolicy::class,
         \App\Models\PrivacyPolicy::class => \App\Policies\PrivacyPolicyPolicy::class,
-        \App\Models\CookiePolicy::class => \App\Policies\CookiePolicyPolicy::class,
+        \App\Models\RatingCategory::class => \App\Policies\RatingCategoryPolicy::class,
+        \App\Models\Rating::class => \App\Policies\RatingPolicy::class,
+        \Pktharindu\NovaPermissions\Role::class => \App\Policies\RolePolicy::class,
         \App\Models\TermsAndConditions::class => \App\Policies\TermsAndConditionsPolicy::class,
+        \App\Models\User::class => \App\Policies\UserPolicy::class,
     ];
 
     /**

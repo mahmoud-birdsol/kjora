@@ -516,5 +516,95 @@ return [
             'description' => 'Can publish cookie policies',
             'group' => 'Cookie Policy',
         ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Ratings.
+        |--------------------------------------------------------------------------
+        */
+
+        'view ratings' => [
+            'display_name' => 'View ratings',
+            'description' => 'Can view ratings',
+            'group' => 'Rating',
+        ],
+
+        'create ratings' => [
+            'display_name' => 'Create ratings',
+            'description' => 'Can create ratings',
+            'group' => 'Rating',
+        ],
+
+        'edit ratings' => [
+            'display_name' => 'Edit ratings',
+            'description' => 'Can edit ratings',
+            'group' => 'Rating',
+        ],
+
+        'delete ratings' => [
+            'display_name' => 'Delete ratings',
+            'description' => 'Can delete ratings',
+            'group' => 'Rating',
+        ],
+
+        /*
+       |--------------------------------------------------------------------------
+       | Rating Categories.
+       |--------------------------------------------------------------------------
+       */
+
+        'view rating categories' => [
+            'display_name' => 'View rating categories',
+            'description' => 'Can view rating categories',
+            'group' => 'Rating Category',
+        ],
+
+        'create rating categories' => [
+            'display_name' => 'Create rating categories',
+            'description' => 'Can create rating categories',
+            'group' => 'Rating Category',
+        ],
+
+        'edit rating categories' => [
+            'display_name' => 'Edit rating categories',
+            'description' => 'Can edit rating categories',
+            'group' => 'Rating Category',
+        ],
+
+        'delete rating categories' => [
+            'display_name' => 'Delete rating categories',
+            'description' => 'Can delete rating categories',
+            'group' => 'Rating Category',
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Labels.
+        |--------------------------------------------------------------------------
+        */
+
+        'view labels' => [
+            'display_name' => 'View labels',
+            'description' => 'Can view labels',
+            'group' => 'Label',
+        ],
+
+        'create labels' => [
+            'display_name' => 'Create labels',
+            'description' => 'Can create labels',
+            'group' => 'Label',
+        ],
+
+        'edit labels' => [
+            'display_name' => 'Edit labels',
+            'description' => 'Can edit labels',
+            'group' => 'Label',
+        ],
+
+        'delete labels' => [
+            'display_name' => 'Delete labels',
+            'description' => 'Can delete labels',
+            'group' => 'Label',
+        ],
     ],
 ];
