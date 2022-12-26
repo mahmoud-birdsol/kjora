@@ -35,7 +35,7 @@ class Country extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'full_name', 'iso_3166_2', 'iso_3166_3',
+        'id', 'name', 'code',
     ];
 
     /**
@@ -49,76 +49,11 @@ class Country extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Capital')
-                ->nullable()
-                ->showOnPreview()
-                ->hideFromIndex()
-                ->rules('nullable', 'max:254'),
-
-            Text::make('Citizenship')
-                ->nullable()
-                ->showOnPreview()
-                ->hideFromIndex()
-                ->rules('nullable', 'max:254'),
-
-            Text::make('Country Code')
-                ->showOnPreview()
-                ->rules('required', 'max:254'),
-
-            Text::make('Currency')
-                ->nullable()
-                ->showOnPreview()
-                ->hideFromIndex()
-                ->rules('nullable', 'max:254'),
-
-            Text::make('Currency Code')
-                ->nullable()
-                ->showOnPreview()
-                ->hideFromIndex()
-                ->rules('nullable', 'max:254'),
-
-            Text::make('Currency Sub Unit')
-                ->nullable()
-                ->showOnPreview()
-                ->hideFromIndex()
-                ->rules('nullable', 'max:254'),
-
-            Text::make('Full Name')
-                ->nullable()
-                ->showOnPreview()
-                ->hideFromIndex()
-                ->rules('nullable', 'max:254'),
-
-            Text::make('ISO 3166 2')
-                ->nullable()
-                ->showOnPreview()
-                ->hideFromIndex()
-                ->rules('nullable', 'max:254'),
-
-            Text::make('ISO 3166 3')
-                ->nullable()
-                ->showOnPreview()
-                ->hideFromIndex()
-                ->rules('nullable', 'max:254'),
-
             Text::make('Name')
                 ->showOnPreview()
                 ->rules('required', 'max:254'),
 
-            Text::make('Region Code')
-                ->nullable()
-                ->showOnPreview()
-                ->hideFromIndex()
-                ->rules('nullable', 'max:254'),
-
-            Text::make('Sub Region Code')
-                ->nullable()
-                ->showOnPreview()
-                ->hideFromIndex()
-                ->rules('nullable', 'max:254'),
-
-            Boolean::make('EEA')
-                ->default(false)
+            Text::make('Code')
                 ->nullable()
                 ->showOnPreview()
                 ->hideFromIndex()
@@ -130,21 +65,8 @@ class Country extends Resource
                 ->hideFromIndex()
                 ->rules('nullable', 'max:254'),
 
-            Text::make('Currency Symbol')
-                ->nullable()
-                ->showOnPreview()
-                ->hideFromIndex()
-                ->rules('nullable', 'max:254'),
-
-            Text::make('Currency Decimals')
-                ->nullable()
-                ->showOnPreview()
-                ->hideFromIndex()
-                ->rules('nullable', 'max:254'),
-
             Images::make('Flag')
                 ->showOnPreview()
-                ->conversionOnIndexView('thumb')
                 ->croppingConfigs(['aspectRatio' => 1/1])
                 ->mustCrop()
                 ->rules('required'),

@@ -33,7 +33,7 @@ class CountrySeeder extends Seeder
 
             if (array_key_exists('flag', $data)) {
                 try {
-                    $country->addMedia(database_path('data/flags/'.$data['flag']))->toMediaCollection('flag');
+                    $country->addMediaFromUrl($data['flag'])->toMediaCollection('flag');
                 } catch (\Exception $e) {
                     Log::info($e->getMessage());
                 }
@@ -50,14 +50,5 @@ class CountrySeeder extends Seeder
     private function collectCountries(string $countriesFile): Collection
     {
         return collect(json_decode(file_get_contents($countriesFile), true));
-    }
-
-    /**
-     * @param  array  $country
-     * @return array
-     */
-    public function uploadFlag(array $country): array
-    {
-        return $country;
     }
 }
