@@ -45,7 +45,6 @@ class CountryFactory extends Factory
             'calling_code' => $country['calling_code'],
             'currency_symbol' => $country['currency_symbol'],
             'currency_decimals' => $country['currency_decimals'],
-            'flag' => $country['flag'],
         ];
     }
 

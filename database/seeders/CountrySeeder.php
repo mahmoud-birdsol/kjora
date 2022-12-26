@@ -6,6 +6,7 @@ use App\Models\Country;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 
@@ -26,8 +27,17 @@ class CountrySeeder extends Seeder
             database_path('data/countries.json')
         );
 
-        $countries->each(function (array $country) {
-            Country::create($this->uploadFlag($country));
+        $countries->each(function (array $data) {
+            /** @var Country $country */
+            $country = Country::create(collect($data)->except('flag')->toArray());
+
+            if (array_key_exists('flag', $data)) {
+                try {
+                    $country->addMedia(database_path('data/flags/'.$data['flag']))->toMediaCollection('flag');
+                } catch (\Exception $e) {
+                    Log::info($e->getMessage());
+                }
+            }
         });
 
         Schema::enableForeignKeyConstraints();
@@ -48,15 +58,6 @@ class CountrySeeder extends Seeder
      */
     public function uploadFlag(array $country): array
     {
-        if (array_key_exists('flag', $country)) {
-            Storage::disk('public')->put(
-                'flags/'.$country['flag'],
-                file_get_contents(database_path('data/flags/'.$country['flag']))
-            );
-
-            $country['flag'] = 'flags/'.$country['flag'];
-        }
-
         return $country;
     }
 }

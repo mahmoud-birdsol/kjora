@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Nova\Actions\Activate;
 use App\Nova\Actions\Suspend;
 use App\Nova\Metrics\UsersPerClub;
+use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\BelongsTo;
@@ -62,10 +63,12 @@ class Club extends Resource
                 ->showOnPreview()
                 ->rules('required', 'max:254'),
 
-            Avatar::make('Logo')
-                ->path('logos')
-                ->nullable()
-                ->rules('nullable'),
+            Images::make('Logo')
+                ->showOnPreview()
+                ->conversionOnIndexView('thumb')
+                ->croppingConfigs(['aspectRatio' => 1/1])
+                ->mustCrop()
+                ->rules('required'),
 
             Boolean::make('Active', 'is_active')
                 ->showOnPreview()

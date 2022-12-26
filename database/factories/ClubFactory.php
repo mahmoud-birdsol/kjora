@@ -20,7 +20,6 @@ class ClubFactory extends Factory
         return [
             'country_id' => Country::factory(),
             'name' => $this->faker->word(),
-            'logo' => $this->faker->imageUrl(),
         ];
     }
 }

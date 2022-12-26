@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use App\Nova\Actions\Activate;
 use App\Nova\Actions\Suspend;
+use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Boolean;
@@ -141,10 +142,12 @@ class Country extends Resource
                 ->hideFromIndex()
                 ->rules('nullable', 'max:254'),
 
-            Avatar::make('Flag')
-                ->path('flags')
-                ->nullable()
-                ->rules('nullable'),
+            Images::make('Flag')
+                ->showOnPreview()
+                ->conversionOnIndexView('thumb')
+                ->croppingConfigs(['aspectRatio' => 1/1])
+                ->mustCrop()
+                ->rules('required'),
 
             Boolean::make('Active', 'is_active')
                 ->showOnPreview()

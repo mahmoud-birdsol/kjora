@@ -31,7 +31,6 @@ return new class extends Migration
             $table->string('calling_code')->nullable();
             $table->string('currency_symbol')->nullable();
             $table->string('currency_decimals')->nullable();
-            $table->string('flag')->nullable();
             $table->timestamps();
         });
     }
