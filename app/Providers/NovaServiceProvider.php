@@ -13,6 +13,7 @@ use App\Nova\Dashboards\AdvertisementDashboard;
 use App\Nova\Dashboards\Main;
 use App\Nova\Dashboards\UserDashboard;
 use App\Nova\Impression;
+use App\Nova\Label;
 use App\Nova\Lenses\ActiveAdvertisement;
 use App\Nova\Lenses\ArchivedAdvertisement;
 use App\Nova\Lenses\ExpiringAdvertisement;
@@ -101,6 +102,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(Position::class),
                     MenuItem::resource(Rating::class),
                     MenuItem::resource(RatingCategory::class),
+                    MenuItem::resource(Label::class),
                 ])->icon('cog')->collapsable(),
             ];
         });

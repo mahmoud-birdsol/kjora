@@ -576,5 +576,35 @@ return [
             'description' => 'Can delete rating categories',
             'group' => 'Rating Category',
         ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Labels.
+        |--------------------------------------------------------------------------
+        */
+
+        'view labels' => [
+            'display_name' => 'View labels',
+            'description' => 'Can view labels',
+            'group' => 'Label',
+        ],
+
+        'create labels' => [
+            'display_name' => 'Create labels',
+            'description' => 'Can create labels',
+            'group' => 'Label',
+        ],
+
+        'edit labels' => [
+            'display_name' => 'Edit labels',
+            'description' => 'Can edit labels',
+            'group' => 'Label',
+        ],
+
+        'delete labels' => [
+            'display_name' => 'Delete labels',
+            'description' => 'Can delete labels',
+            'group' => 'Label',
+        ],
     ],
 ];
