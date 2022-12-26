@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Label;
 use App\Models\Admin;
+use App\Models\Label;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class LabelPolicy
