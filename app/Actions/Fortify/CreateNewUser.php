@@ -28,13 +28,15 @@ class CreateNewUser implements CreatesNewUsers
             'username' => ['required', 'string', 'max:255', 'unique:users'],
             'country_id' => ['required', 'integer', 'exists:countries,id'],
             'club_id' => ['required', 'integer', 'exists:clubs,id'],
-            'date_of_birth' => ['required', 'date'],
+            'date_of_birth' => ['required', 'date', 'before:-18 years'],
             'phone' => ['required'],
             'position_id' => ['required', 'exists:positions,id'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
+        ], [
+            'date_of_birth.before' => 'You must be at least 18 years of age.'
         ])->validate();
 
         return User::create([
