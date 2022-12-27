@@ -20,7 +20,7 @@ const form = useForm({
     email: '',
     password: '',
     country_id: 84,
-    club_id: '',
+    club_id: 1386,
     password_confirmation: '',
     date_of_birth: '',
     terms: true,
