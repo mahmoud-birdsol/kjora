@@ -145,7 +145,7 @@ const submit = () => {
                                 </div>
 
                                 <div class="flex items-center space-x-2">
-                                    <input type="radio" id="female" value="Female" v-model="form.gender"  class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
+                                    <input type="radio" id="female" value="female" v-model="form.gender"  class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
                                     <label for="female" class="text-sm text-black font-medium">Female</label>
                                 </div>
                             </div>
