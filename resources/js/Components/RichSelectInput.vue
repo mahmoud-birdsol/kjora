@@ -57,7 +57,7 @@ const search = () => {
                     class="relative w-full cursor-pointer rounded-full border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
                     aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
                 <span class="flex items-center" v-if="selected">
-                    <img :src="selected[imageName]" alt="" class="h-6 w-6 flex-shrink-0 rounded-full">
+                    <img :src="selected[imageName]" alt="" class="h-6 w-6 flex-shrink-0 rounded">
                     <span class="ml-3 block truncate">{{ selected[textName] }}</span>
                 </span>
                 <span class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
@@ -92,7 +92,7 @@ const search = () => {
                         id="listbox-option-0"
                         role="option">
                         <div class="flex items-center">
-                            <img :src="option[imageName]" alt="" class="h-6 w-6 flex-shrink-0 rounded-full">
+                            <img :src="option[imageName]" alt="" class="h-6 w-6 flex-shrink-0 rounded">
                             <span class="font-normal ml-3 block truncate"
                                   :class="{'font-semibold': option[valueName] == selected[valueName], 'font-normal': option[valueName] != selected[valueName]}">{{ option[textName] }}</span>
                         </div>

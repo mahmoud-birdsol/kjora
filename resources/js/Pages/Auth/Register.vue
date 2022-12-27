@@ -19,7 +19,7 @@ const form = useForm({
     username: '',
     email: '',
     password: '',
-    country_id: '',
+    country_id: 84,
     club_id: '',
     password_confirmation: '',
     date_of_birth: '',
@@ -27,6 +27,7 @@ const form = useForm({
     phone: '',
     position_id: '',
     gender: '',
+    preferred_foot: '',
 });
 
 const submit = () => {
@@ -163,6 +164,24 @@ const submit = () => {
                         </div>
                     </div>
 
+                    <div class="flex">
+                        <div class="mt-4">
+                            <InputLabel color="primary" value="Preferred Foot"/>
+
+                            <div class="sm:flex sm:justify-start items-center sm:space-x-4">
+                                <div class="flex items-center space-x-2">
+                                    <input type="radio" id="left" value="left" v-model="form.preferred_foot" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
+                                    <label for="left" class="text-sm text-black font-medium">Left</label>
+                                </div>
+
+                                <div class="flex items-center space-x-2">
+                                    <input type="radio" id="right" value="right" v-model="form.preferred_foot"  class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
+                                    <label for="right" class="text-sm text-black font-medium">Right</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
                         <p class="text-xs text-black font-light">
                             By signing up, you agree to the <a target="_blank" :href="route('terms.show')" class="text-sky-500 hover:text-sky-700">Terms of Service</a> and <a target="_blank" :href="route('policy.show')" class="text-sky-500 hover:text-sky-700">Privacy Policy</a> including <Link class="text-sky-500 hover:text-sky-700">Cookie use</Link>
@@ -170,7 +189,7 @@ const submit = () => {
                     </div>
 
                     <div class="flex items-center justify-end mt-4">
-                        <Link :href="route('login')" class="underline text-sm text-gray-600 hover:text-gray-900">
+                        <Link :href="route('login')" class="underline text-sm text-sky-500 hover:text-sky-700">
                             Already registered?
                         </Link>
                     </div>
@@ -191,6 +210,7 @@ const submit = () => {
 
 .el-input__inner {
     height: 42px !important;
+    color: black;
 }
 
 .el-form-item__label {
@@ -221,18 +241,26 @@ const submit = () => {
 .el-picker-panel{
     background-color: black !important;
     color: green !important;
+    font-weight: bold !important;
 }
 
 .el-picker-panel__body-wrapper, .el-date-picker__header-label, .el-picker-panel__icon-btn, .el-picker-panel__content, .el-date-table > tbody > tr > th {
     color: green !important;
+    font-weight: bold !important;
 }
 
-.el-picker-panel__body{
-    color: green !important;
+/*.el-picker-panel__body{*/
+/*    color: green !important;*/
+/*}*/
+
+.el-date-table-cell__text {
+    color: white !important;
+    font-weight: bold !important;
 }
 
 .el-date-picker__header{
     color: green !important;
+    font-weight: bold !important;
 }
 
 .el-date-picker__prev-btn {

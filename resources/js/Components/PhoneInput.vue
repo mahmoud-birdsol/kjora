@@ -21,7 +21,11 @@ onMounted(() => {
             return option[props.valueName] == props.modelValue;
         })[0];
     } else {
-        selected.value = props.options[0];
+        selected.value = props.options.filter((option) => {
+            return option[props.valueName] == 84;
+        })[0];
+
+        emit('update:modelValue', '+' + selected.value.calling_code);
     }
 
     filteredOptions.value = props.options;
@@ -73,7 +77,7 @@ const type = (event) => {
                     class="relative w-full cursor-pointer rounded-full border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
                     aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
                 <span class="flex items-center cursor-pointer" v-if="selected">
-                    <img :src="selected[imageName]" alt="" class="h-6 w-6 flex-shrink-0 rounded-full cursor-pointer"
+                    <img :src="selected[imageName]" alt="" class="h-6 w-6 flex-shrink-0 rounded cursor-pointer"
                          @click="showDropDown = ! showDropDown">
                     <input type="text" :value="modelValue" @input="type"
                            class="block w-full px-4 mx-4 py-0 my-0 border-none sm:text-sm disabled:bg-gray-100 focus:ring-none focus:border-none ring-transparent">
@@ -111,7 +115,7 @@ const type = (event) => {
                         id="listbox-option-0"
                         role="option">
                         <div class="flex items-center">
-                            <img :src="option[imageName]" alt="" class="h-6 w-6 flex-shrink-0 rounded-full">
+                            <img :src="option[imageName]" alt="" class="h-6 w-6 flex-shrink-0 rounded">
                             <span class="font-normal ml-3 block truncate"
                                   :class="{'font-semibold': option[valueName] == selected[valueName], 'font-normal': option[valueName] != selected[valueName]}">{{ option[textName] }}</span>
                         </div>

@@ -3,10 +3,15 @@
 @tailwind utilities;
 
 @charset "UTF-8";
+
+[type='checkbox'], [type='radio'] {
+    color: green !important;
+}
+
 :root {
     --el-color-white: #ffffff;
     --el-color-black: #000000;
-    --el-color-primary-rgb: 64, 158, 255;
+    --el-color-primary-rgb: 0, 100, 0;
     --el-color-success-rgb: 103, 194, 58;
     --el-color-warning-rgb: 230, 162, 60;
     --el-color-danger-rgb: 245, 108, 108;
@@ -48,13 +53,13 @@
     color-scheme: light;
     --el-color-white: #ffffff;
     --el-color-black: #000000;
-    --el-color-primary: #409eff;
+    --el-color-primary: green;
     --el-color-primary-light-3: #79bbff;
     --el-color-primary-light-5: #a0cfff;
     --el-color-primary-light-7: #c6e2ff;
     --el-color-primary-light-8: #d9ecff;
     --el-color-primary-light-9: #ecf5ff;
-    --el-color-primary-dark-2: #337ecc;
+    --el-color-primary-dark-2: darkgreen;
     --el-color-success: #67c23a;
     --el-color-success-light-3: #95d475;
     --el-color-success-light-5: #b3e19d;
