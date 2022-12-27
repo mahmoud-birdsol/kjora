@@ -24,7 +24,7 @@ import dayjs from 'dayjs';
             </main>
             <footer>
                 <div class="h-10 flex justify-center">
-                    <p class="text-white text-sm font-light">Copyright &copy; {{ dayjs().format('YYYY') }} KJORA. All Rights Reserved.</p>
+                    <p class="text-white text-sm font-medium">Copyright &copy; {{ dayjs().format('YYYY') }} KJORA. All Rights Reserved.</p>
                 </div>
             </footer>
         </div>

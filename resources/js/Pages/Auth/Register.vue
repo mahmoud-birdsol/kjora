@@ -134,30 +134,30 @@ const submit = () => {
                         </div>
                     </div>
 
-                    <div class="flex space-x-6 mt-4">
+                    <div class="sm:flex sm:space-x-6 mt-4">
                         <div>
                             <InputLabel color="primary" value="Gender"/>
 
-                            <div class="flex justify-start items-center space-x-4">
+                            <div class="sm:flex sm:justify-start items-center sm:space-x-4">
                                 <div class="flex items-center space-x-2">
                                     <input type="radio" id="male" value="male" v-model="form.gender" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
-                                    <label for="male" class="text-sm text-black font-semibold">Male</label>
+                                    <label for="male" class="text-sm text-black font-medium">Male</label>
                                 </div>
 
                                 <div class="flex items-center space-x-2">
                                     <input type="radio" id="female" value="Female" v-model="form.gender"  class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
-                                    <label for="female" class="text-sm text-black font-semibold">Female</label>
+                                    <label for="female" class="text-sm text-black font-medium">Female</label>
                                 </div>
                             </div>
                         </div>
 
-                        <div>
+                        <div class="mt-4 sm:mt-0">
                             <InputLabel color="primary" value="Position"/>
 
-                            <div class="flex justify-start items-center space-x-4">
+                            <div class="sm:flex sm:justify-start items-center sm:space-x-4">
                                 <div class="flex items-center space-x-2" v-for="position in positions">
                                     <input type="radio" :id="position.name" :value="position.id" v-model="form.position_id" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
-                                    <label :for="position.name" class="text-sm text-black font-semibold">{{ position.name }}</label>
+                                    <label :for="position.name" class="text-sm text-black font-medium">{{ position.name }}</label>
                                 </div>
                             </div>
                         </div>
