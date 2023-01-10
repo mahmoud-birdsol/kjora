@@ -105,7 +105,8 @@ class User extends Resource
 
             DateTime::make('Joined Platform At')
                 ->showOnPreview()
-                ->onlyOnDetail(),
+                ->hideWhenCreating()
+                ->hideWhenUpdating(),
 
             /*
              |--------------------------------------------------------------------------
