@@ -7,7 +7,7 @@ const socials = usePage().props.value.socials;
 </script>
 
 <template>
-    <div class="min-h-screen bg-gradient-to-b from-black to-primary">
+    <div class="min-h-screen bg-gradient-to-b from-black to-primaryDark">
         <div class="min-h-screen flex flex-col justify-between pt-6 sm:pt-0 space-y-8">
             <GuestNavbar/>
 
