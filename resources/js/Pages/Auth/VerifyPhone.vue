@@ -28,7 +28,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
                     <h1 class="text-white text-6xl font-black uppercase">KJORA</h1>
                 </div>
             </div>
-            <div class="bg-white rounded-md p-6 w-full sm:w-1/2">
+            <div class="bg-white rounded-md p-6 w-full sm:w-1/2 min-h-[500px]">
                 <div class="flex justify-center my-4">
                     <div>
                         <h2 class="text-xl text-primary font-bold uppercase text-center">Verify Phone Number</h2>

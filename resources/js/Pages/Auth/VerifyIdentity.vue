@@ -11,14 +11,12 @@ const props = defineProps({
 const form = useForm();
 
 const submit = () => {
-    form.post(route('verification.phone.send'));
-};
 
-const verificationLinkSent = computed(() => props.status === 'verification-link-sent');
+};
 </script>
 
 <template>
-    <Head title="Email Verification" />
+    <Head title="Identity Verification" />
 
     <GuestLayout>
         <div class="w-full sm:flex sm:justify-between sm:space-x-4 px-4 sm:px-8">
