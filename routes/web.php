@@ -77,7 +77,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified.email',
 //    'verified.phone',
-    'verified.identity',
+//    'verified.identity',
 ])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
