@@ -76,12 +76,16 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified.email',
-    'verified.phone',
+//    'verified.phone',
     'verified.identity',
 ])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::get('/verification/identity', function () {
+        return Inertia::render('Auth/VerifyIdentity');
+    })->name('identity.verify');
 });
 
 Route::middleware('guest')

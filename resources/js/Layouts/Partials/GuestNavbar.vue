@@ -13,10 +13,10 @@ const showMobileMenu = ref(false);
             <div class="flex h-16 justify-between items-center">
                 <div class="hidden lg:block sm:w-1/3"></div>
                 <div class="sm:w-1/3 sm:flex sm:justify-center sm:items-center">
-                    <img class="block h-8 w-auto lg:hidden"
-                         src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
-                    <img class="hidden h-8 w-auto lg:block"
-                         src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
+                    <img class="block h-20 mt-8 w-auto lg:hidden"
+                         src="/images/logo.png" alt="Your Company">
+                    <img class="hidden h-20 mt-8 w-auto lg:block"
+                         src="/images/logo.png" alt="Your Company">
                 </div>
 
                 <div class="hidden sm:w-1/3 sm:ml-6 sm:flex sm:justify-end sm:space-x-8">

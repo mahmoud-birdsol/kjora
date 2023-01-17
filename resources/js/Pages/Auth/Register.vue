@@ -12,7 +12,7 @@ import AvatarInput from '@/Components/AvatarInput.vue';
 
 import { ElDatePicker } from 'element-plus';
 
-const props = defineProps(['countries', 'clubs', 'positions']);
+const props = defineProps(['countries', 'positions']);
 
 const form = useForm({
     first_name: '',
@@ -141,56 +141,59 @@ const submit = () => {
                         </div>
                     </div>
 
-                    <div class="sm:flex sm:space-x-6 mt-4">
-                        <div>
-                            <InputLabel color="primary" value="Gender"/>
+                    <div class="sm:flex sm:justify-between mt-4">
+                        <div class="w-full sm:w-1/3 mt-4 sm:mt-0">
+                            <div>
+                                <InputLabel color="primary" value="Gender"/>
 
-                            <div class="sm:flex sm:justify-start items-center sm:space-x-4">
                                 <div class="flex items-center space-x-2">
-                                    <input type="radio" id="male" value="male" v-model="form.gender" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
+                                    <input type="radio" id="male" value="male" v-model="form.gender"
+                                           class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
                                     <label for="male" class="text-sm text-black font-medium">Male</label>
                                 </div>
 
                                 <div class="flex items-center space-x-2">
-                                    <input type="radio" id="female" value="female" v-model="form.gender"  class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
+                                    <input type="radio" id="female" value="female" v-model="form.gender"
+                                           class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
                                     <label for="female" class="text-sm text-black font-medium">Female</label>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="mt-4 sm:mt-0">
+                        <div class="w-full sm:w-1/3 mt-4 sm:mt-0">
                             <InputLabel color="primary" value="Position"/>
 
-                            <div class="sm:flex sm:justify-start items-center sm:space-x-4">
-                                <div class="flex items-center space-x-2" v-for="position in positions">
-                                    <input type="radio" :id="position.name" :value="position.id" v-model="form.position_id" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
-                                    <label :for="position.name" class="text-sm text-black font-medium">{{ position.name }}</label>
-                                </div>
+                            <div class="flex items-center space-x-2" v-for="position in positions">
+                                <input type="radio" :id="position.name" :value="position.id"
+                                       v-model="form.position_id"
+                                       class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
+                                <label :for="position.name"
+                                       class="text-sm text-black font-medium">{{ position.name }}</label>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="flex">
-                        <div class="mt-4">
+                        <div class="w-full sm:w-1/3 mt-4 sm:mt-0">
                             <InputLabel color="primary" value="Preferred Foot"/>
 
-                            <div class="sm:flex sm:justify-start items-center sm:space-x-4">
-                                <div class="flex items-center space-x-2">
-                                    <input type="radio" id="left" value="left" v-model="form.preferred_foot" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
-                                    <label for="left" class="text-sm text-black font-medium">Left</label>
-                                </div>
+                            <div class="flex items-center space-x-2">
+                                <input type="radio" id="left" value="left" v-model="form.preferred_foot"
+                                       class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
+                                <label for="left" class="text-sm text-black font-medium">Left</label>
+                            </div>
 
-                                <div class="flex items-center space-x-2">
-                                    <input type="radio" id="right" value="right" v-model="form.preferred_foot"  class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
-                                    <label for="right" class="text-sm text-black font-medium">Right</label>
-                                </div>
+                            <div class="flex items-center space-x-2">
+                                <input type="radio" id="right" value="right" v-model="form.preferred_foot"
+                                       class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
+                                <label for="right" class="text-sm text-black font-medium">Right</label>
                             </div>
                         </div>
                     </div>
 
                     <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
                         <p class="text-xs text-black font-light">
-                            By signing up, you agree to the <a target="_blank" :href="route('terms.show')" class="text-sky-500 hover:text-sky-700">Terms of Service</a> and <a target="_blank" :href="route('policy.show')" class="text-sky-500 hover:text-sky-700">Privacy Policy</a> including <Link class="text-sky-500 hover:text-sky-700">Cookie use</Link>
+                            By signing up, you agree to the <a target="_blank" :href="route('terms.show')"
+                                                               class="text-sky-500 hover:text-sky-700">Terms of Service</a> and
+                            <a target="_blank" :href="route('policy.show')"
+                               class="text-sky-500 hover:text-sky-700">Privacy Policy</a> including
+                            <Link class="text-sky-500 hover:text-sky-700">Cookie use</Link>
                         </p>
                     </div>
 
@@ -244,7 +247,7 @@ const submit = () => {
     color: green !important;
 }
 
-.el-picker-panel{
+.el-picker-panel {
     background-color: black !important;
     color: green !important;
     font-weight: bold !important;
@@ -264,7 +267,7 @@ const submit = () => {
     font-weight: bold !important;
 }
 
-.el-date-picker__header{
+.el-date-picker__header {
     color: green !important;
     font-weight: bold !important;
 }
@@ -273,7 +276,7 @@ const submit = () => {
     color: green !important;
 }
 
-.el-date-picker__next-btn{
+.el-date-picker__next-btn {
     color: green !important;
 }
 </style>
