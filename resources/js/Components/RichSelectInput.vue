@@ -8,23 +8,46 @@ const props = defineProps({
     textName: String,
     imageName: String,
     options: {
-        required: true,
+        required: false,
         type: Array,
-    }
+        default: []
+    },
+    source: {
+        required: false,
+        type: String,
+        default: '',
+    },
 });
+
+const nextPageUrl = ref(null);
 
 const filteredOptions = ref([]);
 
 onMounted(() => {
-    if (props.modelValue) {
-        selected.value = props.options.filter((option) => {
-            return option[props.valueName] == props.modelValue;
-        })[0];
-    } else {
-        selected.value = props.options[0];
-    }
+    if (props.options.length) {
+        filteredOptions.value = props.options;
 
-    filteredOptions.value = props.options;
+        if (props.modelValue) {
+            selected.value = props.options.filter((option) => {
+                return option[props.valueName] == props.modelValue;
+            })[0];
+        } else {
+            selected.value = props.options[0];
+        }
+    } else {
+        axios.get(props.source).then(response => {
+            filteredOptions.value = response.data.data;
+            nextPageUrl.value = response.data.next_page_url;
+
+            if (props.modelValue) {
+                selected.value = filteredOptions.value.filter((option) => {
+                    return option[props.valueName] == props.modelValue;
+                })[0];
+            } else {
+                selected.value = response.data.data[0];
+            }
+        }).catch(error => console.log(error.response));
+    }
 });
 
 const showDropDown = ref(false);
@@ -42,11 +65,43 @@ const select = (option) => {
 const searchValue = ref('');
 
 const search = () => {
-    filteredOptions.value = props.options.filter((option) => {
-        return option.name
-            .toUpperCase()
-            .includes(searchValue.value.toUpperCase())
-    })
+    if (props.options.length) {
+        filteredOptions.value = props.options.filter((option) => {
+            return option.name
+                .toUpperCase()
+                .includes(searchValue.value.toUpperCase());
+        });
+    } else {
+        axios.get(props.source, {
+            params: {
+                search: searchValue.value,
+            }
+        }).then(response => {
+            filteredOptions.value = response.data.data;
+            nextPageUrl.value = response.data.next_page_url;
+        }).catch(error => console.log(error.response));
+    }
+
+};
+
+const loading = ref(false);
+
+const loadMore = () => {
+    loading.value = true;
+
+    if (props.options.length) {
+        return;
+    }
+
+    if (nextPageUrl == null) {
+        return;
+    }
+
+    axios.get(nextPageUrl.value).then(response => {
+        filteredOptions.value = filteredOptions.value.concat(response.data.data);
+        loading.value = false;
+        nextPageUrl.value = response.data.next_page_url;
+    }).catch(error => console.log(error.response));
 };
 </script>
 
@@ -74,12 +129,14 @@ const search = () => {
                 leave-to-class="opacity-0"
             >
                 <ul v-if="showDropDown"
+                    v-infinite-scroll="loadMore"
+                    v-loading="loading"
                     class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                     tabindex="-1" role="listbox" aria-labelledby="listbox-label"
                     aria-activedescendant="listbox-option-3">
                     <li>
                         <div class="flex p-4">
-                            <input type="text"
+                            <input type="search"
                                    v-model="searchValue"
                                    class="block w-full rounded border-gray-300 px-4 shadow-sm focus:border-primary focus:ring-primary sm:text-sm disabled:bg-gray-100"
                                    @input="search"
@@ -87,7 +144,7 @@ const search = () => {
                         </div>
                     </li>
 
-                    <li v-for="option in filteredOptions" @click="select(option)"
+                    <li v-if="filteredOptions.length" v-for="option in filteredOptions" @click="select(option)"
                         class="text-gray-900 relative cursor-pointer select-none py-2 pl-3 pr-9 hover:bg-primary hover:text-white"
                         id="listbox-option-0"
                         role="option">

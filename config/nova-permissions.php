@@ -606,5 +606,47 @@ return [
             'description' => 'Can delete labels',
             'group' => 'Label',
         ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Socials.
+        |--------------------------------------------------------------------------
+        */
+
+        'view socials' => [
+            'display_name' => 'View socials',
+            'description' => 'Can view socials',
+            'group' => 'Social',
+        ],
+
+        'create socials' => [
+            'display_name' => 'Create socials',
+            'description' => 'Can create socials',
+            'group' => 'Social',
+        ],
+
+        'edit socials' => [
+            'display_name' => 'Edit socials',
+            'description' => 'Can edit socials',
+            'group' => 'Social',
+        ],
+
+        'delete socials' => [
+            'display_name' => 'Delete socials',
+            'description' => 'Can delete socials',
+            'group' => 'Social',
+        ],
+
+        'suspend socials' => [
+            'display_name' => 'Suspend socials',
+            'description' => 'Can suspend socials',
+            'group' => 'Social',
+        ],
+
+        'activate socials' => [
+            'display_name' => 'Activate socials',
+            'description' => 'Can activate socials',
+            'group' => 'Social',
+        ],
     ],
 ];

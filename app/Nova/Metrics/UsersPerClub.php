@@ -16,7 +16,10 @@ class UsersPerClub extends Partition
      */
     public function calculate(NovaRequest $request)
     {
-        $result = Club::withCount('users')->pluck('users_count', 'name')->toArray();
+        $result = Club::whereHas('users')
+            ->withCount('users')
+            ->pluck('users_count', 'name')
+            ->toArray();
 
         return $this->result($result);
     }

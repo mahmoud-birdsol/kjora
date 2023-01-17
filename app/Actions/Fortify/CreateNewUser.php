@@ -36,10 +36,10 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ], [
-            'date_of_birth.before' => 'You must be at least 18 years of age.'
+            'date_of_birth.before' => 'You must be at least 18 years of age.',
         ])->validate();
 
-        return User::create([
+        $user = User::create([
             'username' => $input['username'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
@@ -58,5 +58,11 @@ class CreateNewUser implements CreatesNewUsers
             'accepted_privacy_policy_at' => now(),
             'accepted_cookie_policy_at' => now(),
         ]);
+
+        if (isset($input['photo'])) {
+            $user->updateProfilePhoto($input['photo']);
+        }
+
+        return $user;
     }
 }

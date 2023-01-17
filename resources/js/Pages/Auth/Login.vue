@@ -34,6 +34,7 @@ const submit = () => {
 
     <GuestLayout>
         <div class="w-full sm:max-w-md mt-6 px-6 py-4">
+
             <div class="my-8">
                 <h2 class="text-white text-2xl font-light uppercase">Welcome to</h2>
                 <h1 class="text-white text-6xl font-black uppercase">KJORA</h1>

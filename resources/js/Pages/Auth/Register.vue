@@ -8,6 +8,7 @@ import TextInput from '@/Components/TextInput.vue';
 import PasswordInput from '@/Components/PasswordInput.vue';
 import RichSelectInput from '@/Components/RichSelectInput.vue';
 import PhoneInput from '@/Components/PhoneInput.vue';
+import AvatarInput from '@/Components/AvatarInput.vue';
 
 import { ElDatePicker } from 'element-plus';
 
@@ -20,7 +21,7 @@ const form = useForm({
     email: '',
     password: '',
     country_id: 84,
-    club_id: 1386,
+    club_id: 11,
     password_confirmation: '',
     date_of_birth: '',
     terms: true,
@@ -28,6 +29,7 @@ const form = useForm({
     position_id: '',
     gender: '',
     preferred_foot: '',
+    photo: null,
 });
 
 const submit = () => {
@@ -54,7 +56,11 @@ const submit = () => {
                 </div>
 
                 <form @submit.prevent="submit">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="flex justify-end items-center -mt-12">
+                        <AvatarInput v-model="form.photo"/>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-12">
                         <div>
                             <InputLabel color="primary" for="first_name" value="First Name"/>
                             <TextInput type="text"
@@ -102,7 +108,7 @@ const submit = () => {
                         </div>
                         <div>
                             <InputLabel color="primary" for="club" value="Favorite Club"/>
-                            <RichSelectInput :options="clubs"
+                            <RichSelectInput source="/api/clubs"
                                              value-name="id"
                                              text-name="name"
                                              image-name="logo"

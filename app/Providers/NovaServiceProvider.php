@@ -22,6 +22,7 @@ use App\Nova\Position;
 use App\Nova\PrivacyPolicy;
 use App\Nova\Rating;
 use App\Nova\RatingCategory;
+use App\Nova\Social;
 use App\Nova\TermsAndConditions;
 use App\Nova\User;
 use App\Nova\Venue;
@@ -103,6 +104,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(Rating::class),
                     MenuItem::resource(RatingCategory::class),
                     MenuItem::resource(Label::class),
+                    MenuItem::resource(Social::class),
                 ])->icon('cog')->collapsable(),
             ];
         });

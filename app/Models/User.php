@@ -193,4 +193,24 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return Auth::check() && Auth::user()->hasPermissionTo('impersonate users');
     }
+
+    /**
+     * Check if the user has verified their phone number.
+     *
+     * @return bool
+     */
+    public function hasVerifiedPhone(): bool
+    {
+        return !is_null($this->phone_verified_at);
+    }
+
+    /**
+     * Check if the user has verified their phone number.
+     *
+     * @return bool
+     */
+    public function hasVerifiedPersonalIdentity(): bool
+    {
+        return !is_null($this->identity_verified_at);
+    }
 }
