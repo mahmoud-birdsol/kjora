@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\JoinPlatformController;
+use App\Models\Country;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -77,14 +78,18 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified.email',
 //    'verified.phone',
-//    'verified.identity',
+    'verified.identity',
 ])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
     Route::get('/verification/identity', function () {
-        return Inertia::render('Auth/VerifyIdentity');
+        $countries = Country::active()->orderBy('name')->get();
+
+        return Inertia::render('Auth/VerifyIdentity', [
+            'countries' => $countries,
+        ]);
     })->name('identity.verify');
 });
 

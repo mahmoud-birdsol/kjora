@@ -297,7 +297,7 @@ const logout = () => {
             </nav>
 
             <!-- Page Content -->
-            <main>
+            <main class="max-w-7xl mx-auto">
                 <SystemMessage/>
 
                 <slot />

@@ -1,14 +1,26 @@
 <script setup>
-import { computed } from 'vue';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import { Head, useForm } from '@inertiajs/inertia-vue3';
+import AppLayout from '@/Layouts/AppLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import RichSelectInput from '@/Components/RichSelectInput.vue';
+import InputError from '@/Components/InputError.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faPassport } from '@fortawesome/free-solid-svg-icons';
+import { onMounted } from 'vue';
+
+onMounted(() => {
+    library.add(faPassport);
+});
 
 const props = defineProps({
     status: String,
+    countries: Array,
 });
 
-const form = useForm();
+const form = useForm({
+    country_id: 84,
+});
 
 const submit = () => {
 
@@ -16,55 +28,61 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Identity Verification" />
+    <Head title="Identity Verification"/>
 
-    <GuestLayout>
-        <div class="w-full sm:flex sm:justify-between sm:space-x-4 px-4 sm:px-8">
-            <div class="w-full sm:flex sm:justify-end sm:w-1/2">
-                <div>
-                    <h2 class="text-white text-2xl font-light uppercase">Welcome to</h2>
-                    <h1 class="text-white text-6xl font-black uppercase">KJORA</h1>
-                </div>
-            </div>
-            <div class="bg-white rounded-md p-6 w-full sm:w-1/2">
-                <div class="flex justify-center my-4">
-                    <div>
-                        <h2 class="text-xl text-primary font-bold uppercase text-center">Verify Phone Number</h2>
-                        <div class="mb-4 text-sm text-gray-600">
-                            Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS? If you didn't receive the SMS, we will gladly send you another.
+    <AppLayout>
+        <div class="my-8">
+            <h1 class="text-7xl font-bold text-white uppercase">Security</h1>
+        </div>
+
+        <div class="w-full sm:flex sm:justify-between sm:space-x-4 mt-8">
+            <div class="w-full">
+                <form @submit.prevent="submit">
+                    <div class="bg-white rounded-md p-6 w-full min-h-[500px]">
+                        <div class="min-h-[500px] flex flex-col justify-between">
+                            <div class="flex justify-center my-4">
+                                <h2 class="text-xl text-primary font-bold uppercase">Verify Identity</h2>
+                            </div>
+                            <div class="mx-8">
+                                <h3 class="text-gray-900 text-lg font-bold mb-4">Use a valid government-issued document</h3>
+                                <p class="text-gray-500 text-xs">Only the following documents listed below will be accepted, all other documents will be rejected.</p>
+
+                                <div class="mt-4">
+                                    <InputLabel color="primary" for="country" value="Country of issue"/>
+                                    <RichSelectInput :options="countries"
+                                                     value-name="id"
+                                                     text-name="name"
+                                                     image-name="flag"
+                                                     v-model="form.country_id"/>
+                                    <InputError class="mt-2" :message="form.errors.country_id"/>
+                                </div>
+
+                                <div class="mt-4 flex justify-between space-x-4 px-20">
+                                    <div class="bg-primary rounded p-6 w-full flex items-center justify-center min-h-[200-px]">
+                                        <div>
+                                            <font-awesome-icon icon="fa-solid fa-passport"/>
+                                            <p class="font-bold uppercase">Passport</p>
+                                        </div>
+                                    </div>
+                                    <div></div>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <PrimaryButton :class="{ 'opacity-25': form.processing }"
+                                               :disabled="form.processing">
+                                    Register
+                                </PrimaryButton>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="flex justify-end">
-                    <Link
-                        :href="route('profile.show')"
-                        class="underline text-sm text-gray-600 hover:text-gray-900"
-                    >
-                        Edit Profile</Link>
-
-                    <Link
-                        :href="route('logout')"
-                        method="post"
-                        as="button"
-                        class="underline text-sm text-gray-600 hover:text-gray-900 ml-2"
-                    >
-                        Log Out
-                    </Link>
-                </div>
-
-                <form @submit.prevent="submit">
-                    <div class="mt-4 flex items-center justify-between">
-                        <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            Resend Verification Code
-                        </PrimaryButton>
-                    </div>
                 </form>
+            </div>
 
-                <div v-if="verificationLinkSent" class="mt-4 font-medium text-sm text-green-600">
-                    A new verification code has been sent to the phone number you provided in your profile settings.
+            <div class="w-full">
+                <div class="bg-white rounded-md p-6 w-full min-h-[500px]">
+
                 </div>
             </div>
         </div>
-    </GuestLayout>
+    </AppLayout>
 </template>
