@@ -7,16 +7,21 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPassport } from '@fortawesome/free-solid-svg-icons';
-import { onMounted } from 'vue';
+import { faAddressCard } from '@fortawesome/free-solid-svg-icons';
+import { ref, onBeforeMount } from 'vue';
+import UploadImageModal from '@/Components/UploadImageModal.vue';
 
-onMounted(() => {
+onBeforeMount(() => {
     library.add(faPassport);
+    library.add(faAddressCard);
 });
 
 const props = defineProps({
     status: String,
     countries: Array,
 });
+
+const showUploadPassportModal = ref(false);
 
 const form = useForm({
     country_id: 84,
@@ -57,20 +62,34 @@ const submit = () => {
                                     <InputError class="mt-2" :message="form.errors.country_id"/>
                                 </div>
 
-                                <div class="mt-4 flex justify-between space-x-4 px-20">
-                                    <div class="bg-primary rounded p-6 w-full flex items-center justify-center min-h-[200-px]">
+                                <div class="mt-4 flex justify-between space-x-4 px-4">
+
+                                    <div class="bg-primary rounded-lg p-6 w-full flex items-center justify-center min-h-[200-px]">
+                                        <button role="button" type="button"
+                                                @click="showUploadPassportModal = ! showUploadPassportModal">
+                                            <div class="flex justify-center mb-4">
+                                                <font-awesome-icon icon="passport" class="w-12 h-auto text-white text-center"/>
+                                            </div>
+                                            <p class="text-white font-bold uppercase">Passport</p>
+                                        </button>
+                                    </div>
+
+                                    <div
+                                        class="bg-primary rounded-lg p-6 w-full flex items-center justify-center min-h-[200-px]">
                                         <div>
-                                            <font-awesome-icon icon="fa-solid fa-passport"/>
-                                            <p class="font-bold uppercase">Passport</p>
+                                            <div class="flex justify-center mb-4">
+                                                <font-awesome-icon icon="address-card"
+                                                                   class="w-12 h-auto text-white text-center"/>
+                                            </div>
+                                            <p class="text-white font-bold uppercase">Government issue id</p>
                                         </div>
                                     </div>
-                                    <div></div>
                                 </div>
                             </div>
                             <div class="mt-4">
                                 <PrimaryButton :class="{ 'opacity-25': form.processing }"
                                                :disabled="form.processing">
-                                    Register
+                                    Continue
                                 </PrimaryButton>
                             </div>
                         </div>
@@ -84,5 +103,10 @@ const submit = () => {
                 </div>
             </div>
         </div>
+
+        <!-- Upload image Modals...
+        =====================================================-->
+
+        <UploadImageModal :show="showUploadPassportModal" @close="showUploadPassportModal = false"/>
     </AppLayout>
 </template>
