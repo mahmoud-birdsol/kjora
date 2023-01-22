@@ -45,6 +45,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'phone',
         'gender',
         'avatar',
+        'identity_issue_country',
         'identity_type',
         'identity_front_image',
         'identity_back_image',
@@ -156,7 +157,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function age(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->date_of_birth?->age,
+            get: fn($value) => $this->date_of_birth?->age,
         );
     }
 
@@ -168,7 +169,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasVerifiedIdentity(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => ! is_null($this->identity_verified_at)
+            get: fn($value) => ! is_null($this->identity_verified_at)
         );
     }
 
@@ -201,7 +202,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function hasVerifiedPhone(): bool
     {
-        return !is_null($this->phone_verified_at);
+        return ! is_null($this->phone_verified_at);
     }
 
     /**
@@ -211,6 +212,19 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function hasVerifiedPersonalIdentity(): bool
     {
-        return !is_null($this->identity_verified_at);
+        return ! is_null($this->identity_verified_at);
+    }
+
+    /**
+     * Check if the user has upload verification documents.
+     *
+     * @return bool
+     */
+    public function hasUploadedVerificationDocuments(): bool
+    {
+        return
+            ! is_null($this->identity_type) &&
+            ! is_null($this->identity_front_image) &&
+            ! is_null($this->identity_back_image);
     }
 }

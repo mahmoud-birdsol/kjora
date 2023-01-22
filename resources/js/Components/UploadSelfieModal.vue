@@ -1,11 +1,9 @@
 <script setup>
 import Modal from '@/Components/Modal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { useForm } from '@inertiajs/inertia-vue3';
-import { PlusCircleIcon } from '@heroicons/vue/24/outline';
-import { ref, onMounted } from 'vue';
-
-const emit = defineEmits(['close', 'update:modelValue']);
+import { ref, onMounted, onBeforeMount } from 'vue';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
 
 const props = defineProps({
     show: {
@@ -26,20 +24,43 @@ const props = defineProps({
     },
 });
 
-// const form = useForm({});
-
-const close = () => {
-    emit('close');
-};
-
-const photoPreview = ref(null);
-const photoInput = ref(null);
+onBeforeMount(() => {
+    library.add(faCamera);
+});
 
 onMounted(() => {
     if (props.modelValue) {
         photoPreview.value = modelValue;
     }
 });
+
+
+const emit = defineEmits(['close', 'update:modelValue']);
+const camera = ref(null);
+const photoPreview = ref(null);
+const photoInput = ref(null);
+const cameraIsOpen = ref(false);
+
+const close = () => {
+    emit('close');
+};
+
+const openCamera = () => {
+    const constraints = (window.constraints = {
+        audio: false,
+        video: true
+    });
+
+    navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then(stream => {
+            cameraIsOpen.value = true;
+            camera.value.srcObject = stream;
+        })
+        .catch(error => {
+            alert("May be the browser didn't support or there is some errors.");
+        });
+}
 
 const selectNewPhoto = () => {
     photoInput.value.click();
@@ -80,13 +101,21 @@ const updatePhotoPreview = () => {
                     class="hidden"
                     @change="updatePhotoPreview"
                 >
-                <button type="button"
-                        class="inline-flex items-center rounded-full border border-transparent bg-black p-4 text-white shadow-sm hover:bg-black focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
-                        v-show="! photoPreview"
-                        @click.prevent="selectNewPhoto"
-                >
-                    <PlusCircleIcon class="h-5 w-5"/>
-                </button>
+                <div class="grid grid-cols-1 gap-4">
+                    <video v-if="cameraIsOpen" ref="camera" :width="450" :height="337.5" autoplay></video>
+                    <div v-if="!cameraIsOpen" class="w-[450px] h-[337.5px] rounded border border-gray-500 flex justify-center items-center">
+                        <p class="text-gray-500 text-xs font-light">
+                            Click on the following link to open the camera.
+                            <a href="javascript:;" class="text-sky-500 hover:text-sky-700">Open camera</a>
+                        </p>
+                    </div>
+
+                    <div>
+                        <PrimaryButton type="button" @click.prevent="openCamera">
+                            <font-awesome-icon icon="camera" class="h-5 w-5 text-white text-center"/> Open Camera
+                        </PrimaryButton>
+                    </div>
+                </div>
 
                 <button v-show="photoPreview" class="mt-2 p-20" @click.prevent="selectNewPhoto">
                     <div class="block rounded p-20">

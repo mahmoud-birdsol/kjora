@@ -152,12 +152,22 @@ class User extends Resource
                 'right' => 'Right',
             ])->displayUsingLabels()->showOnPreview()->sortable()->filterable()->required()->rules('required'),
 
-            Panel::make('Identity Verification', fn () => [
+            Panel::make('Identity Verification', fn() => [
                 Boolean::make('Verified', 'has_verified_identity')
                     ->filterable()
                     ->sortable()
                     ->hideWhenUpdating()
                     ->hideWhenCreating(),
+
+                Select::make('Identity Issue Country')
+                    ->options(\App\Models\Country::all()->pluck('name', 'name')->toArray())
+                    ->hideFromIndex()
+                    ->displayUsingLabels()
+                    ->showOnPreview()
+                    ->sortable()
+                    ->filterable()
+                    ->required()
+                    ->rules('required'),
 
                 Select::make('Identity Type')->options([
                     'national_id' => 'National ID',

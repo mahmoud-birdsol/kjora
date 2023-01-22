@@ -24,9 +24,11 @@ return new class extends Migration
             $table->string('gender')->nullable();
             $table->string('avatar')->nullable();
 
+            $table->string('identity_issue_country')->nullable();
             $table->string('identity_type')->nullable();
             $table->string('identity_front_image')->nullable();
             $table->string('identity_back_image')->nullable();
+            $table->string('identity_selfie_image')->nullable();
 
             $table->string('accepted_terms_and_conditions_version')->nullable();
             $table->string('accepted_privacy_policy_version')->nullable();

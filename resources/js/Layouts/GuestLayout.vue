@@ -1,7 +1,7 @@
 <script setup>
 import GuestNavbar from '@/Layouts/Partials/GuestNavbar.vue';
-import dayjs from 'dayjs';
 import { usePage } from '@inertiajs/inertia-vue3';
+import CopyrightClaim from '@/Components/CopyrightClaim.vue';
 
 const socials = usePage().props.value.socials;
 </script>
@@ -27,7 +27,7 @@ const socials = usePage().props.value.socials;
 
             <footer>
                 <div class="h-10 flex justify-center">
-                    <p class="text-white text-sm font-medium">Copyright &copy; {{ dayjs().format('YYYY') }} KJORA. All Rights Reserved.</p>
+                    <CopyrightClaim/>
                 </div>
             </footer>
         </div>
