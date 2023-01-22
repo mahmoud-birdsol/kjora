@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Nova\Actions\Actionable;
@@ -45,9 +47,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'phone',
         'gender',
         'avatar',
+        'identity_issue_country',
         'identity_type',
         'identity_front_image',
         'identity_back_image',
+        'identity_selfie_image',
         'accepted_terms_and_conditions_version',
         'accepted_privacy_policy_version',
         'accepted_cookie_policy_version',
@@ -97,6 +101,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_photo_url',
         'has_verified_identity',
     ];
+
+    public function name(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->first_name.' '.$this->last_name
+        );
+    }
 
     /**
      * Get the advertisement clicks.
@@ -156,7 +167,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function age(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->date_of_birth?->age,
+            get: fn($value) => $this->date_of_birth?->age,
         );
     }
 
@@ -168,7 +179,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasVerifiedIdentity(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => ! is_null($this->identity_verified_at)
+            get: fn($value) => ! is_null($this->identity_verified_at)
         );
     }
 
@@ -201,7 +212,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function hasVerifiedPhone(): bool
     {
-        return !is_null($this->phone_verified_at);
+        return ! is_null($this->phone_verified_at);
     }
 
     /**
@@ -211,6 +222,40 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function hasVerifiedPersonalIdentity(): bool
     {
-        return !is_null($this->identity_verified_at);
+        return ! is_null($this->identity_verified_at);
+    }
+
+    /**
+     * Check if the user has upload verification documents.
+     *
+     * @return bool
+     */
+    public function hasUploadedVerificationDocuments(): bool
+    {
+        return
+            ! is_null($this->identity_type) &&
+            ! is_null($this->identity_front_image) &&
+            ! is_null($this->identity_back_image);
+    }
+
+    /**
+     * Update the user's profile photo.
+     *
+     * @param  \Illuminate\Http\UploadedFile  $photo
+     * @return void
+     */
+    public function updateProfilePhoto(UploadedFile $photo)
+    {
+        tap($this->profile_photo_path, function ($previous) use ($photo) {
+            $this->forceFill([
+                'avatar' => $photo->storePublicly(
+                    'profile-photos', ['disk' => $this->profilePhotoDisk()]
+                ),
+            ])->save();
+
+            if ($previous) {
+                Storage::disk($this->profilePhotoDisk())->delete($previous);
+            }
+        });
     }
 }

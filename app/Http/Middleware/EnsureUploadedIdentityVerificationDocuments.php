@@ -2,10 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 
-class EnsureIdentityIsVerified
+class EnsureUploadedIdentityVerificationDocuments
 {
     /**
      * Handle an incoming request.
@@ -16,14 +17,14 @@ class EnsureIdentityIsVerified
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! $request->user()->hasVerifiedPersonalIdentity()) {
+        if (! $request->user()->hasUploadedVerificationDocuments()) {
             $request->session()->flash('message', [
                 'type' => 'warning',
                 'body' => 'Please verify your identity.',
                 'action' => [
-                    'url' => route('identity.verify'),
-                    'text' => 'Verify identity',
-                ]
+                    'url' => route('identity.verification.create'),
+                    'text' => 'Upload Verification Documents',
+                ],
             ]);
         }
 
