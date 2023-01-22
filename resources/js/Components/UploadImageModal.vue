@@ -37,7 +37,7 @@ const photoInput = ref(null);
 
 onMounted(() => {
     if (props.modelValue) {
-        photoPreview.value = modelValue;
+        photoPreview.value = '/' + props.modelValue;
     }
 });
 

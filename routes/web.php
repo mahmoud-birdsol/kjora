@@ -3,6 +3,7 @@
 use App\Http\Controllers\IdentityVerificationController;
 use App\Http\Controllers\JoinPlatformController;
 use App\Models\Country;
+use App\Models\Position;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -54,5 +55,15 @@ Route::middleware([
         Route::get('/dashboard', function () {
             return Inertia::render('Dashboard');
         })->name('dashboard');
+
+        Route::get('/user/profile', function () {
+            $countries = Country::active()->orderBy('name')->get();
+            $positions = Position::all();
+
+            return Inertia::render('Profile/Show', [
+                'countries' => $countries,
+                'positions' => $positions,
+            ]);
+        })->name('profile.show');
     });
 });

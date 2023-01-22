@@ -143,14 +143,14 @@ const logout = () => {
                                             <button v-if="$page.props.jetstream.managesProfilePhotos"
                                                     class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
                                                 <img class="h-8 w-8 rounded-full object-cover"
-                                                     :src="$page.props.user.profile_photo_url"
+                                                     :src="'/' + $page.props.user.avatar"
                                                      :alt="$page.props.user.name">
                                             </button>
 
                                             <span v-else class="inline-flex rounded-md">
                                                 <button type="button"
                                                         class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
-                                                    {{ $page.props.user.name }}
+                                                    {{ $page.props.user.username }}
 
                                                     <svg
                                                         class="ml-2 -mr-0.5 h-4 w-4"
@@ -174,6 +174,10 @@ const logout = () => {
 
                                             <DropdownLink :href="route('profile.show')">
                                                 Profile
+                                            </DropdownLink>
+
+                                            <DropdownLink :href="route('identity.verification.create')">
+                                                Identity Verification
                                             </DropdownLink>
 
                                             <DropdownLink v-if="$page.props.jetstream.hasApiFeatures"
@@ -239,12 +243,12 @@ const logout = () => {
                             <div class="flex items-center px-4">
                                 <div v-if="$page.props.jetstream.managesProfilePhotos" class="shrink-0 mr-3">
                                     <img class="h-10 w-10 rounded-full object-cover"
-                                         :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name">
+                                         :src="'/' + $page.props.user.avatar" :alt="$page.props.user.name">
                                 </div>
 
                                 <div>
                                     <div class="font-medium text-base text-gray-800">
-                                        {{ $page.props.user.name }}
+                                        {{ $page.props.user.username }}
                                     </div>
                                     <div class="font-medium text-sm text-gray-500">
                                         {{ $page.props.user.email }}
@@ -256,6 +260,11 @@ const logout = () => {
                                 <ResponsiveNavLink :href="route('profile.show')"
                                                    :active="route().current('profile.show')">
                                     Profile
+                                </ResponsiveNavLink>
+
+                                <ResponsiveNavLink :href="route('identity.verification.create')"
+                                                   :active="route().current('identity.verification.create')">
+                                    Identity Verification
                                 </ResponsiveNavLink>
 
                                 <ResponsiveNavLink v-if="$page.props.jetstream.hasApiFeatures"
@@ -336,7 +345,7 @@ const logout = () => {
                 </header>
 
                 <!-- Page Content -->
-                <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <SystemMessage/>
 
                     <slot/>
@@ -352,3 +361,70 @@ const logout = () => {
         </div>
     </div>
 </template>
+
+
+<style>
+
+.el-input__inner {
+    height: 42px !important;
+    color: black;
+}
+
+.el-form-item__label {
+    color: rgb(0, 100, 0) !important;
+}
+
+.el-checkbox__label {
+    color: rgb(0, 100, 0) !important;
+}
+
+.el-input__wrapper {
+    width: 100%;
+    height: 42px !important;
+    border-radius: 25px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.el-input {
+    width: 100% !important;
+}
+
+.el-picker__popper {
+    background-color: black !important;
+    color: green !important;
+}
+
+.el-picker-panel {
+    background-color: black !important;
+    color: green !important;
+    font-weight: bold !important;
+}
+
+.el-picker-panel__body-wrapper, .el-date-picker__header-label, .el-picker-panel__icon-btn, .el-picker-panel__content, .el-date-table > tbody > tr > th {
+    color: green !important;
+    font-weight: bold !important;
+}
+
+/*.el-picker-panel__body{*/
+/*    color: green !important;*/
+/*}*/
+
+.el-date-table-cell__text {
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.el-date-picker__header {
+    color: green !important;
+    font-weight: bold !important;
+}
+
+.el-date-picker__prev-btn {
+    color: green !important;
+}
+
+.el-date-picker__next-btn {
+    color: green !important;
+}
+</style>

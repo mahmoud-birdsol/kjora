@@ -183,6 +183,11 @@ class User extends Resource
                     ->hideFromIndex()
                     ->nullable()
                     ->rules('nullable'),
+
+                Image::make('Identity selfie Image')
+                    ->hideFromIndex()
+                    ->nullable()
+                    ->rules('nullable'),
             ]),
 
             // Todo after security feature is done.

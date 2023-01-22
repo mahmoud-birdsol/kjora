@@ -8,7 +8,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import Card from '@/Components/Card.vue';
 import CardContent from '@/Components/CardContent.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { ref, onBeforeMount, onMounted } from 'vue';
+import { ref, onBeforeMount, onMounted, watch } from 'vue';
 import UploadImageModal from '@/Components/UploadImageModal.vue';
 import UploadSelfieModal from '@/Components/UploadSelfieModal.vue';
 import { CheckIcon, XMarkIcon } from '@heroicons/vue/24/solid';
@@ -27,6 +27,18 @@ onMounted(() => {
     ) {
         completedFirstStep.value = true;
     }
+
+    if (
+        usePage().props.value.auth.user.identity_front_image != null
+    ) {
+        identityFrontImagePreview.value = '/' + usePage().props.value.auth.user.identity_front_image;
+    }
+
+    if (
+        usePage().props.value.auth.user.identity_back_image != null
+    ) {
+        identityBackImagePreview.value = '/' + usePage().props.value.auth.user.identity_back_image;
+    }
 });
 
 const props = defineProps({
@@ -38,6 +50,8 @@ const showIdentityFrontImageModal = ref(false);
 const showIdentityBackImageModal = ref(false);
 const showIdentitySelfieModal = ref(false);
 const completedFirstStep = ref(false);
+const identityBackImagePreview = ref(null);
+const identityFrontImagePreview = ref(null);
 
 const form = useForm({
     identity_issue_country: usePage().props.value.auth.user.identity_issue_country ?? 'Kuwait',
@@ -46,6 +60,30 @@ const form = useForm({
     identity_back_image: usePage().props.value.auth.user.identity_back_image,
     identity_selfie_image: usePage().props.value.auth.user.identity_selfie_image,
 });
+
+watch(() => form.identity_back_image, (photo) => {
+    if (photo != null) {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            identityBackImagePreview.value = e.target.result;
+        };
+
+        reader.readAsDataURL(photo);
+    }
+}, { deep: true });
+
+watch(() => form.identity_front_image, (photo) => {
+    if (photo != null) {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            identityFrontImagePreview.value = e.target.result;
+        };
+
+        reader.readAsDataURL(photo);
+    }
+}, { deep: true });
 
 const save = () => {
     form.post(route('identity.verification.store'), {
@@ -135,7 +173,12 @@ const save = () => {
                             <div class="flex space-x-4">
                                 <div class="w-1/4">
                                     <button @click="showIdentitySelfieModal = true">
-                                        <img src="/images/selfie_example.png" alt="" class="w-full h-auto">
+                                        <img :src="
+                                            form.identity_selfie_image != null
+                                                ? (form.identity_selfie_image.indexOf('data:image') > -1 ? form.identity_selfie_image : '/' +  form.identity_selfie_image)
+                                                : '/images/selfie_example.png'
+                                        " alt=""
+                                             class="w-full h-auto">
                                     </button>
                                 </div>
                                 <div class="w-3/4">
@@ -177,11 +220,17 @@ const save = () => {
                                             type="button"
                                             @click="showIdentityFrontImageModal = true"
                                     >
-                                        <div class="flex justify-center mb-4">
-                                            <font-awesome-icon icon="camera"
-                                                               class="w-12 h-auto text-white text-center"/>
+                                        <div v-if="!form.identity_front_image">
+                                            <div class="flex justify-center mb-4">
+                                                <font-awesome-icon icon="camera"
+                                                                   class="w-12 h-auto text-white text-center"/>
+                                            </div>
+                                            <p class="text-white font-bold uppercase">Front</p>
                                         </div>
-                                        <p class="text-white font-bold uppercase">Front</p>
+
+                                        <div v-if="form.identity_front_image" class="flex justify-center items-center">
+                                            <img :src="identityFrontImagePreview" alt="" class="w-full h-auto rounded">
+                                        </div>
                                     </button>
                                 </div>
 
@@ -192,23 +241,31 @@ const save = () => {
                                         type="button"
                                         @click="showIdentityBackImageModal = true"
                                     >
-                                        <div class="flex justify-center mb-4">
-                                            <font-awesome-icon icon="camera"
-                                                               class="w-12 h-auto text-white text-center"/>
+                                        <div v-if="!form.identity_back_image">
+                                            <div class="flex justify-center mb-4">
+                                                <font-awesome-icon icon="camera"
+                                                                   class="w-12 h-auto text-white text-center"/>
+                                            </div>
+                                            <p class="text-white font-bold uppercase">Back</p>
                                         </div>
-                                        <p class="text-white font-bold uppercase">Back</p>
+
+                                        <div v-if="form.identity_back_image" class="flex justify-center items-center">
+                                            <img :src="identityBackImagePreview" alt="" class="w-full h-auto rounded">
+                                        </div>
                                     </button>
                                 </div>
                             </div>
                         </template>
                         <template #footer>
-                            <PrimaryButton v-show="completedFirstStep == true"
-                                           :class="{ 'opacity-25': form.processing }"
-                                           :disabled="form.processing"
-                                           @click="save()"
-                            >
-                                Verify
-                            </PrimaryButton>
+                            <div class="mt-4">
+                                <PrimaryButton v-show="completedFirstStep == true"
+                                               :class="{ 'opacity-25': form.processing }"
+                                               :disabled="form.processing"
+                                               @click="save()"
+                                >
+                                    Verify
+                                </PrimaryButton>
+                            </div>
                         </template>
                     </CardContent>
                 </Card>
