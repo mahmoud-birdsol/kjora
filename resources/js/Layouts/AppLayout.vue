@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
-import { Head, usePage } from '@inertiajs/inertia-vue3';
+import { Head, Link, usePage } from '@inertiajs/inertia-vue3';
 import SystemMessage from '@/Components/SystemMessage.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
@@ -244,7 +244,7 @@ Echo.private('users.' + usePage().props.value.auth.user.id)
                                             </div>
 
                                             <div class="block px-4 py-2 text-xs text-sky-500 text-center">
-                                                <a href="#" class="text-sky-500 hover:text-sky-700">View all</a>
+                                                <Link :href="route('notification.index')" class="text-sky-500 hover:text-sky-700">View all</Link>
                                             </div>
                                         </template>
                                     </Dropdown>

@@ -55,7 +55,7 @@ const deleteNotification = () => {
         <div class="flex justify-between space-x-3">
             <div class="">
                 <Link :href="notification.data.action" class="block focus:outline-none">
-                    <p class="truncate text-sm font-medium text-gray-700">{{ notification.data.title }}</p>
+                    <p class="truncate text-sm" :class="{'font-medium text-gray-700': notification.read_at == null, 'text-gray-500': notification.read_at != null}">{{ notification.data.title }}</p>
                 </Link>
             </div>
             <div>

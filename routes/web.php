@@ -3,9 +3,6 @@
 use App\Http\Controllers\IdentityVerificationController;
 use App\Http\Controllers\JoinPlatformController;
 use App\Http\Controllers\UserProfileController;
-use App\Models\Country;
-use App\Models\Position;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -61,6 +58,12 @@ Route::middleware([
             UserProfileController::class,
             'show'
         ])->name('profile.show');
+
+        Route::get('/notifications', function (\Illuminate\Http\Request $request) {
+            return Inertia::render('Notifications/Index', [
+                'notifications' => $request->user()->notifications()->paginate(),
+            ]);
+        })->name('notification.index');
 
         Route::patch('/notifications/{notificationId}/mark-as-read', function (\Illuminate\Http\Request $request, string $notificationId) {
             $request->user()->notifications()->where('id', $notificationId)->first()->markAsRead();
