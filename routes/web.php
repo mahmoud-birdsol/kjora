@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\IdentityVerificationController;
 use App\Http\Controllers\JoinPlatformController;
+use App\Http\Controllers\UserProfileController;
 use App\Models\Country;
 use App\Models\Position;
 use Illuminate\Foundation\Application;
@@ -56,14 +57,21 @@ Route::middleware([
             return Inertia::render('Dashboard');
         })->name('dashboard');
 
-        Route::get('/user/profile', function () {
-            $countries = Country::active()->orderBy('name')->get();
-            $positions = Position::all();
+        Route::get('/user/profile', [
+            UserProfileController::class,
+            'show'
+        ])->name('profile.show');
 
-            return Inertia::render('Profile/Show', [
-                'countries' => $countries,
-                'positions' => $positions,
-            ]);
-        })->name('profile.show');
+        Route::patch('/notifications/{notificationId}/mark-as-read', function (\Illuminate\Http\Request $request, string $notificationId) {
+            $request->user()->notifications()->where('id', $notificationId)->first()->markAsRead();
+
+            return redirect()->back();
+        })->name('notification.read');
+
+        Route::delete('/notifications/{notificationId}', function (\Illuminate\Http\Request $request, string $notificationId) {
+            $request->user()->notifications()->where('id', $notificationId)->first()->delete();
+
+            return redirect()->back();
+        })->name('notification.delete');
     });
 });

@@ -110,7 +110,7 @@ const clearPhotoFileInput = () => {
                 <h2 class="text-xl text-primary font-bold uppercase">My Account</h2>
             </div>
 
-            <form @submit.prevent="submit">
+            <form @submit.prevent="updateProfileInformation">
                 <div class="flex justify-end items-center -mt-12">
                     <AvatarInput v-model="form.avatar"/>
                 </div>

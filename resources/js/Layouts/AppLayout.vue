@@ -1,15 +1,20 @@
 <script setup>
 import { ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
-import { Head, Link } from '@inertiajs/inertia-vue3';
-import ApplicationMark from '@/Components/ApplicationMark.vue';
-import Banner from '@/Components/Banner.vue';
+import { Head, usePage } from '@inertiajs/inertia-vue3';
 import SystemMessage from '@/Components/SystemMessage.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import CopyrightClaim from '@/Components/CopyrightClaim.vue';
+import { BellIcon } from '@heroicons/vue/24/outline';
+import NotificationComponent from '@/Components/NotificationComponent.vue';
+import { CheckCircleIcon } from '@heroicons/vue/24/outline';
+import { XMarkIcon } from '@heroicons/vue/20/solid';
+
+const showNotificationPopup = ref(false);
+const broadcastNotification = ref(null);
 
 defineProps({
     title: String,
@@ -28,6 +33,16 @@ const switchToTeam = (team) => {
 const logout = () => {
     Inertia.post(route('logout'));
 };
+
+Echo.private('users.' + usePage().props.value.auth.user.id)
+    .notification((notification) => {
+        broadcastNotification.value = notification
+        showNotificationPopup.value = true;
+
+        Inertia.reload({
+            only: ['notifications'],
+        });
+    });
 </script>
 
 <template>
@@ -59,9 +74,10 @@ const logout = () => {
                             </div>
 
                             <div class="hidden sm:flex sm:items-center sm:ml-6">
+                                <!-- Teams Dropdown -->
                                 <div class="ml-3 relative">
-                                    <!-- Teams Dropdown -->
-                                    <Dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
+                                    <Dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right"
+                                              width="60">
                                         <template #trigger>
                                             <span class="inline-flex rounded-md">
                                                 <button type="button"
@@ -108,7 +124,8 @@ const logout = () => {
                                                         Switch Teams
                                                     </div>
 
-                                                    <template v-for="team in $page.props.user.all_teams" :key="team.id">
+                                                    <template v-for="team in $page.props.user.all_teams"
+                                                              :key="team.id">
                                                         <form @submit.prevent="switchToTeam(team)">
                                                             <DropdownLink as="button">
                                                                 <div class="flex items-center">
@@ -142,8 +159,8 @@ const logout = () => {
                                         <template #trigger>
                                             <button v-if="$page.props.jetstream.managesProfilePhotos"
                                                     class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                                                <img class="h-8 w-8 rounded-full object-cover"
-                                                     :src="'/' + $page.props.user.avatar"
+                                                <img class="h-10 w-10 rounded-full object-cover"
+                                                     :src="$page.props.user.avatar ? '/' + $page.props.user.avatar : 'https://ui-avatars.com/api/?name=' + $page.props.user.first_name + ' ' + $page.props.user.last_name + '&color=094609FF&background=E2E2E2'"
                                                      :alt="$page.props.user.name">
                                             </button>
 
@@ -196,6 +213,42 @@ const logout = () => {
                                         </template>
                                     </Dropdown>
                                 </div>
+
+                                <!-- Notifications Dropdown -->
+                                <div class="ml-3 relative">
+                                    <Dropdown width="96">
+                                        <template #trigger>
+                                            <button>
+                                                <BellIcon class="h-6 w-6 text-white"></BellIcon>
+                                            </button>
+                                        </template>
+
+                                        <template #content>
+                                            <!-- Notifications -->
+                                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                                Notifications
+                                            </div>
+
+                                            <div v-if="$page.props.notifications.length">
+                                                <ul role="list" class="divide-y divide-gray-200">
+                                                    <template v-for="notification in $page.props.notifications">
+                                                        <NotificationComponent :notification="notification"/>
+                                                    </template>
+                                                </ul>
+                                            </div>
+
+                                            <div v-else>
+                                                <div class="block px-4 py-2 text-xs text-gray-500 text-center">
+                                                    You don't have any new notifications.
+                                                </div>
+                                            </div>
+
+                                            <div class="block px-4 py-2 text-xs text-sky-500 text-center">
+                                                <a href="#" class="text-sky-500 hover:text-sky-700">View all</a>
+                                            </div>
+                                        </template>
+                                    </Dropdown>
+                                </div>
                             </div>
 
                             <!-- Hamburger -->
@@ -233,7 +286,8 @@ const logout = () => {
                     <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}"
                          class="sm:hidden">
                         <div class="pt-2 pb-3 space-y-1">
-                            <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                            <ResponsiveNavLink :href="route('dashboard')"
+                                               :active="route().current('dashboard')">
                                 Dashboard
                             </ResponsiveNavLink>
                         </div>
@@ -289,8 +343,9 @@ const logout = () => {
                                     </div>
 
                                     <!-- Team Settings -->
-                                    <ResponsiveNavLink :href="route('teams.show', $page.props.user.current_team)"
-                                                       :active="route().current('teams.show')">
+                                    <ResponsiveNavLink
+                                        :href="route('teams.show', $page.props.user.current_team)"
+                                        :active="route().current('teams.show')">
                                         Team Settings
                                     </ResponsiveNavLink>
 
@@ -321,7 +376,8 @@ const logout = () => {
                                                         stroke="currentColor"
                                                         viewBox="0 0 24 24"
                                                     >
-                                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                        <path
+                                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                                     </svg>
                                                     <div>{{ team.name }}</div>
                                                 </div>
@@ -357,6 +413,34 @@ const logout = () => {
                         <CopyrightClaim/>
                     </div>
                 </footer>
+            </div>
+        </div>
+
+        <!-- Global notification live region, render this permanently at the end of the document -->
+        <div aria-live="assertive" class="pointer-events-none fixed inset-0 flex items-end px-4 py-6 sm:items-start sm:p-6">
+            <div class="flex w-full flex-col items-center space-y-4 sm:items-end">
+                <!-- Notification panel, dynamically insert this into the live region when it needs to be displayed -->
+                <transition enter-active-class="transform ease-out duration-300 transition" enter-from-class="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2" enter-to-class="translate-y-0 opacity-100 sm:translate-x-0" leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
+                    <div v-if="showNotificationPopup" class="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+                        <div class="p-4">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0">
+                                    <CheckCircleIcon class="h-6 w-6 text-green-400" aria-hidden="true" />
+                                </div>
+                                <div class="ml-3 w-0 flex-1 pt-0.5">
+                                    <p class="text-sm font-medium text-gray-900">{{ broadcastNotification.title }}</p>
+                                    <p class="mt-1 text-sm text-gray-500">{{ broadcastNotification.subtitle }}</p>
+                                </div>
+                                <div class="ml-4 flex flex-shrink-0">
+                                    <button type="button" @click="showNotificationPopup = false" class="inline-flex rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                        <span class="sr-only">Close</span>
+                                        <XMarkIcon class="h-5 w-5" aria-hidden="true" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </transition>
             </div>
         </div>
     </div>

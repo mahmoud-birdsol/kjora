@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -19,7 +20,7 @@ class AccountVerifiedNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database', 'broadcast'];
     }
 
     /**
@@ -46,10 +47,26 @@ class AccountVerifiedNotification extends Notification implements ShouldQueue
     public function toArray($notifiable): array
     {
         return [
-            'type' => 'success',
+            'color' => 'success',
             'title' => 'Identity verification.',
             'subtitle' => 'Your account has been verified.',
             'action' => route('profile.show'),
         ];
+    }
+
+    /**
+     * Get the broadcastable representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return BroadcastMessage
+     */
+    public function toBroadcast($notifiable)
+    {
+        return new BroadcastMessage([
+            'color' => 'success',
+            'title' => 'Identity verification.',
+            'subtitle' => 'Your account has been verified.',
+            'action' => route('profile.show'),
+        ]);
     }
 }
