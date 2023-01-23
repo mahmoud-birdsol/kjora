@@ -197,11 +197,11 @@ const submit = () => {
                         </p>
                     </div>
 
-                    <div class="flex items-center justify-end mt-4">
-                        <Link :href="route('login')" class="underline text-sm text-sky-500 hover:text-sky-700">
-                            Already registered?
-                        </Link>
-                    </div>
+<!--                    <div class="flex items-center justify-end mt-4">-->
+<!--                        <Link :href="route('login')" class="underline text-sm text-sky-500 hover:text-sky-700">-->
+<!--                            Already registered?-->
+<!--                        </Link>-->
+<!--                    </div>-->
 
                     <div class="mt-4">
                         <PrimaryButton :class="{ 'opacity-25': form.processing }"

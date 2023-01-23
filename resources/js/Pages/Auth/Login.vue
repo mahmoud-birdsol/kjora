@@ -75,16 +75,16 @@ const submit = () => {
                 </div>
             </form>
 
-            <div class="flex justify-end my-4">
+            <div class="flex justify-end">
                 <Link v-if="canResetPassword" :href="route('password.request')"
-                      class="underline text-sm text-white hover:text-gray-200">
+                      class="text-xs text-white font-bold hover:text-gray-200">
                     Forgot your password?
                 </Link>
             </div>
 
             <div class="flex justify-end items-center">
-                <span class="text-white text-sm font-light">Don't have an account</span> &nbsp;
-                <Link :href="route('register')"><span class="text-blue-500 text-sm font-light">Sign up</span></Link>
+                <span class="text-white text-xs font-bold">Don't have an account</span> &nbsp;
+                <Link :href="route('register')"><span class="text-blue-500 text-xs font-bold">Sign up</span></Link>
             </div>
         </div>
     </GuestLayout>
