@@ -80,7 +80,7 @@ class Social extends Model implements HasMedia, Suspendable
     public function icon(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMedia('icon')->getFullUrl(),
+            get: fn () => $this->getFirstMedia('icon')?->getFullUrl(),
         );
     }
 }
