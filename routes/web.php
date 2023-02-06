@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\Actions\MarkNotificationAsRead;
 use App\Http\Controllers\IdentityVerificationController;
 use App\Http\Controllers\JoinPlatformController;
+use App\Http\Controllers\NotificationsController;
+use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\UserProfileController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -35,7 +39,6 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
 ])->group(function () {
-
     Route::get('/verification/identity', [
         IdentityVerificationController::class,
         'create',
@@ -47,8 +50,8 @@ Route::middleware([
     ])->name('identity.verification.store');
 
     Route::middleware([
-        'verified.email',
-        'verified.identity',
+//        'verified.email',
+//        'verified.identity',
     ])->group(function () {
         Route::get('/dashboard', function () {
             return Inertia::render('Dashboard');
@@ -56,25 +59,39 @@ Route::middleware([
 
         Route::get('/user/profile', [
             UserProfileController::class,
-            'show'
+            'show',
         ])->name('profile.show');
 
-        Route::get('/notifications', function (\Illuminate\Http\Request $request) {
-            return Inertia::render('Notifications/Index', [
-                'notifications' => $request->user()->notifications()->paginate(),
-            ]);
-        })->name('notification.index');
+        Route::get('home', [
+            PlayerController::class,
+            'index'
+        ])->name('home');
 
-        Route::patch('/notifications/{notificationId}/mark-as-read', function (\Illuminate\Http\Request $request, string $notificationId) {
-            $request->user()->notifications()->where('id', $notificationId)->first()->markAsRead();
+        Route::get('player/{user}', [
+            PlayerController::class,
+            'show'
+        ])->name('player.profile');
 
-            return redirect()->back();
-        })->name('notification.read');
 
-        Route::delete('/notifications/{notificationId}', function (\Illuminate\Http\Request $request, string $notificationId) {
-            $request->user()->notifications()->where('id', $notificationId)->first()->delete();
+        /*
+         |--------------------------------------------------------------------------
+         | Notifications Routes...
+         |--------------------------------------------------------------------------
+         */
 
-            return redirect()->back();
-        })->name('notification.delete');
+        Route::get('notifications', [
+            NotificationsController::class,
+            'index',
+        ])->name('notification.index');
+
+        Route::delete('notifications/{notificationId}', [
+            NotificationsController::class,
+            'destroy',
+        ])->name('notification.delete');
+
+        Route::patch(
+            'notifications/{notificationId}/mark-as-read',
+            MarkNotificationAsRead::class
+        )->name('notification.read');
     });
 });

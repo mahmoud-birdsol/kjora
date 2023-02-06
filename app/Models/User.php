@@ -62,6 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'accepted_privacy_policy_at',
         'accepted_cookie_policy_at',
         'preferred_foot',
+        'rating',
     ];
 
     /**
@@ -90,6 +91,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'accepted_terms_and_conditions_at' => 'datetime',
         'accepted_privacy_policy_at' => 'datetime',
         'accepted_cookie_policy_at' => 'datetime',
+        'rating' => 'float',
     ];
 
     /**
@@ -100,8 +102,24 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $appends = [
         'profile_photo_url',
         'has_verified_identity',
+        'hourly_rate',
+        'age',
     ];
 
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = [
+        'position'
+    ];
+
+    /**
+     * Get the username.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
     public function name(): Attribute
     {
         return Attribute::make(
@@ -267,5 +285,19 @@ class User extends Authenticatable implements MustVerifyEmail
     public function receivesBroadcastNotificationsOn()
     {
         return 'users.'.$this->id;
+    }
+
+    /**
+     * Get the user hourly rate.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function hourlyRate(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $this->rating ?
+                Rating::where('rating_from', '<=', $this->rating)->where('rating_to', '>=', $this->rating)->first()?->hourly_rate :
+                null
+        );
     }
 }

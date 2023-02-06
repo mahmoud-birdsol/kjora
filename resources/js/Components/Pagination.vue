@@ -13,7 +13,7 @@ defineProps({
                      v-html="link.label"/>
                 <Link v-else
                       class="mr-1 mb-1 px-4 py-3 text-sm leading-4 border rounded hover:bg-white focus:border-primary focus:text-primary"
-                      :class="{ 'bg-purple-700 text-white': link.active }" :href="link.url" v-html="link.label"/>
+                      :class="{ 'bg-primary text-white': link.active }" :href="link.url" v-html="link.label"/>
             </template>
         </div>
     </div>

@@ -29,9 +29,9 @@ class CountryFactory extends Factory
         $country = $filtered->first();
 
         return [
-            'name' => $country['name'],
-            'code' => $country['code'],
-            'calling_code' => $country['calling_code'] ?? null,
+            'name' => $this->faker->country(),
+            'code' => $this->faker->countryCode(),
+            'calling_code' => '+20',
         ];
     }
 
