@@ -31,13 +31,19 @@ onMounted(() => {
     if (
         usePage().props.value.auth.user.identity_front_image != null
     ) {
-        identityFrontImagePreview.value = '/' + usePage().props.value.auth.user.identity_front_image;
+        identityFrontImagePreview.value = usePage().props.value.auth.user.identity_front_image_url;
     }
 
     if (
         usePage().props.value.auth.user.identity_back_image != null
     ) {
-        identityBackImagePreview.value = '/' + usePage().props.value.auth.user.identity_back_image;
+        identityBackImagePreview.value = usePage().props.value.auth.user.identity_back_image_url;
+    }
+
+    if (
+        usePage().props.value.auth.user.identity_selfie_image != null
+    ) {
+        identitySelfieImagePreview.value = usePage().props.value.auth.user.identity_selfie_image_url;
     }
 });
 
@@ -52,6 +58,7 @@ const showIdentitySelfieModal = ref(false);
 const completedFirstStep = ref(false);
 const identityBackImagePreview = ref(null);
 const identityFrontImagePreview = ref(null);
+const identitySelfieImagePreview = ref(null);
 
 const form = useForm({
     identity_issue_country: usePage().props.value.auth.user.identity_issue_country ?? 'Kuwait',
@@ -120,7 +127,7 @@ const save = () => {
                                 <InputError class="mt-2" :message="form.errors.identity_issue_country"/>
                             </div>
 
-                            <div class="mt-12 flex justify-between space-x-4">
+                            <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div class="rounded-lg p-6 w-full flex items-center justify-center min-h-[200-px]"
                                      :class="{'bg-primary': form.identity_type == null || form.identity_type  == 'national_id', 'bg-primaryDark': form.identity_type == 'passport'}"
                                 >
@@ -163,7 +170,7 @@ const save = () => {
                 </Card>
             </div>
 
-            <div class="w-full">
+            <div class="w-full mt-4 sm:mt-0">
                 <Card>
                     <CardContent title="Upload Identity">
                         <template #body>
@@ -213,7 +220,7 @@ const save = () => {
                                     File size must be between 10KB and 5120KB in jpg/jpeg/png format.
                                 </p>
                             </div>
-                            <div class="mt-4 flex justify-between space-x-4">
+                            <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div
                                     class="bg-primary rounded-lg p-6 w-full flex items-center justify-center min-h-[200-px]">
                                     <button role="button"

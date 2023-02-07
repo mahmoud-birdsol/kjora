@@ -2,13 +2,15 @@
 
 namespace App\Notifications;
 
+use App\Data\NotificationData;
+use App\Data\RouteActionData;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class AccountVerifiedNotification extends Notification implements ShouldQueue
+class IdentityVerifiedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -46,12 +48,16 @@ class AccountVerifiedNotification extends Notification implements ShouldQueue
      */
     public function toArray($notifiable): array
     {
-        return [
-            'color' => 'success',
-            'title' => 'Identity verification.',
-            'subtitle' => 'Your account has been verified.',
-            'action' => route('profile.show'),
-        ];
+        return (new NotificationData(
+            displayType: 'simple',
+            state: 'success',
+            title: 'Identity Verification',
+            subtitle: 'Your account has been verified',
+            actionData: new RouteActionData(
+                route: route('profile.show'),
+                text: 'View Profile',
+            ),
+        ))->toArray();
     }
 
     /**
@@ -62,11 +68,6 @@ class AccountVerifiedNotification extends Notification implements ShouldQueue
      */
     public function toBroadcast($notifiable)
     {
-        return new BroadcastMessage([
-            'color' => 'success',
-            'title' => 'Identity verification.',
-            'subtitle' => 'Your account has been verified.',
-            'action' => route('profile.show'),
-        ]);
+        return new BroadcastMessage($this->toArray($notifiable));
     }
 }

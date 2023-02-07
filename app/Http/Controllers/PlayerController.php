@@ -24,17 +24,15 @@ class PlayerController extends Controller
         $request->whenFilled('rating', fn() => $query->where('rating', '>=', $request->input('rating')));
 
         $request->whenFilled('age',
-            fn() => $query->whereDate('date_of_birth', '>=', now()->subYears($request->input('age')))
+            fn() => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('age')))
         );
 
-        $request->whenFilled('search',
-            fn() => $query->where(
-                fn($query) => $query
-                    ->where('first_name', 'LIKE', '%'.$request->input('search').'%')
-                    ->orWhere('last_name', 'LIKE', '%'.$request->input('search').'%')
-                    ->orWhere('username', 'LIKE', '%'.$request->input('search').'%')
-            )
-        );
+        $request->whenFilled('search', fn() => $query->where(function ($query) use ($request) {
+            $query
+                ->where('first_name', 'LIKE', '%'.$request->input('search').'%')
+                ->orWhere('last_name', 'LIKE', '%'.$request->input('search').'%')
+                ->orWhere('username', 'LIKE', '%'.$request->input('search').'%');
+        }));
 
         return Inertia::render('Home', [
             'players' => $query->paginate(20),
@@ -52,7 +50,7 @@ class PlayerController extends Controller
     public function show(Request $request, User $user): Response
     {
         return Inertia::render('Player/Show', [
-            'player' => $user
+            'player' => $user,
         ]);
     }
 }

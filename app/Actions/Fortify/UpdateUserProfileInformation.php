@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -21,7 +22,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         Validator::make($input, [
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'avatar' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+            'avatar' => ['nullable'],
 
             'first_name' => ['required', 'string', 'min:3', 'max:18'],
             'last_name' => ['required', 'string', 'min:3', 'max:18'],
@@ -32,7 +33,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'gender' => ['required', Rule::in(['male', 'female'])],
         ])->validateWithBag('updateProfileInformation');
 
-        if (isset($input['avatar'])) {
+        if (isset($input['avatar']) && request()->hasFile('avatar')) {
             $user->updateProfilePhoto($input['avatar']);
         }
 
@@ -41,6 +42,10 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $this->updateVerifiedUser($user, $input);
         } else {
             $user->forceFill([
+                'first_name' => $input['first_name'],
+                'last_name' => $input['last_name'],
+                'date_of_birth' => Carbon::parse($input['date_of_birth']),
+                'club_id' => $input['club_id'],
                 'username' => $input['username'],
                 'email' => $input['email'],
             ])->save();

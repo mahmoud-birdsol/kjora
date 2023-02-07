@@ -48,7 +48,7 @@ const showMobileMenu = ref(false);
         </div>
 
         <div class="sm:hidden" id="mobile-menu" v-if="showMobileMenu">
-            <div class="space-y-1 pt-2 pb-3">
+            <div class="space-y-1 pt-2 pb-3 mt-8 bg-black">
                 <ResponsiveNavLink :href="route('welcome')"
                                    :active="route().current('login') || route().current('welcome')">Home
                 </ResponsiveNavLink>

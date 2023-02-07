@@ -4,7 +4,7 @@ namespace Tests\Feature\Actions;
 
 use App\Actions\Verification\VerifyUser;
 use App\Models\User;
-use App\Notifications\AccountVerifiedNotification;
+use App\Notifications\IdentityVerifiedNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
@@ -40,6 +40,6 @@ class VerifyUserTest extends TestCase
 
         $action($user);
 
-        Notification::assertSentTo($user, AccountVerifiedNotification::class);
+        Notification::assertSentTo($user, IdentityVerifiedNotification::class);
     }
 }

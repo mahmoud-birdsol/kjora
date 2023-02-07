@@ -3,7 +3,7 @@
 namespace App\Actions\Verification;
 
 use App\Models\User;
-use App\Notifications\AccountVerifiedNotification;
+use App\Notifications\IdentityVerifiedNotification;
 
 class SendVerifiedNotification
 {
@@ -15,6 +15,6 @@ class SendVerifiedNotification
      */
     public function __invoke(User $user): void
     {
-        $user->notify(new AccountVerifiedNotification());
+        $user->notify(new IdentityVerifiedNotification());
     }
 }

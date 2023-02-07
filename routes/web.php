@@ -50,8 +50,8 @@ Route::middleware([
     ])->name('identity.verification.store');
 
     Route::middleware([
-//        'verified.email',
-//        'verified.identity',
+        'verified.email',
+        'verified.identity',
     ])->group(function () {
         Route::get('/dashboard', function () {
             return Inertia::render('Dashboard');
@@ -62,16 +62,87 @@ Route::middleware([
             'show',
         ])->name('profile.show');
 
+        /*
+         |--------------------------------------------------------------------------
+         | Player
+         |--------------------------------------------------------------------------
+         */
+
         Route::get('home', [
             PlayerController::class,
-            'index'
+            'index',
         ])->name('home');
 
         Route::get('player/{user}', [
             PlayerController::class,
-            'show'
+            'show',
         ])->name('player.profile');
 
+        /*
+         |--------------------------------------------------------------------------
+         | Invitation
+         |--------------------------------------------------------------------------
+         */
+
+        Route::get('invitations', function (Request $request) {
+            $invitingInvitations = \App\Models\Invitation::where('inviting_player_id',
+                $request->user()->id)->latest('date')->get();
+            $invitedInvitations = \App\Models\Invitation::where('invited_player_id',
+                $request->user()->id)->latest('date')->get();
+
+            return Inertia::render('Invitation/Index', [
+                'invitingInvitations' => $invitingInvitations,
+                'invitedInvitations' => $invitedInvitations,
+            ]);
+        })->name('invitation.index');
+
+        Route::get('invitations/create/{invited}', function (\App\Models\User $invited) {
+            return Inertia::render('Invitation/Create', [
+                'invited' => $invited,
+                'stadiums' => \App\Models\Stadium::all(),
+            ]);
+        })->name('invitation.create');
+
+        Route::post('invitations', function (Request $request) {
+            $data = $request->validate([
+                'stadium_id' => ['required', 'integer', 'exists:stadia,id'],
+                'invited_player_id' => ['required', 'integer', 'exists:users,id'],
+                'date' => ['required'],
+                'time' => ['required'],
+            ]);
+
+            $hours = explode(':', $request->input('time'))[0];
+            $minutes = explode(':', $request->input('time'))[1];
+
+            $data['inviting_player_id'] = $request->user()->id;
+            $data['date'] = \Carbon\Carbon::parse($data['date'])->setTime($hours, $minutes);
+            unset($data['time']);
+
+            $invitation = \App\Models\Invitation::create($data);
+
+            // Notify the invited user
+            $invitation->invitedPlayer->notify(new \App\Notifications\InvitationCreatedNotification($invitation));
+
+            return redirect()->back();
+        })->name('invitation.store');
+
+        // Accept invitation
+        Route::patch('invitations/{invitation}/accept', function (\App\Models\Invitation $invitation) {
+            $invitation->forceFill(['state' => 'accepted'])->save();
+
+            $invitation->invitingPlayer->notify(new \App\Notifications\InvitationAcceptedNotification($invitation));
+
+            return redirect()->route('invitation.index');
+        })->name('invitation.accept');
+
+        // Decline invitation
+        Route::patch('invitations/{invitation}/decline', function (\App\Models\Invitation $invitation) {
+            $invitation->forceFill(['state' => 'declined'])->save();
+
+            $invitation->invitingPlayer->notify(new \App\Notifications\InvitationDeclinedNotification($invitation));
+
+            return redirect()->route('invitation.index');
+        })->name('invitation.decline');
 
         /*
          |--------------------------------------------------------------------------

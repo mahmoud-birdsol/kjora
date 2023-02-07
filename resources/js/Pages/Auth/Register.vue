@@ -56,7 +56,7 @@ const submit = () => {
                 </div>
 
                 <form @submit.prevent="submit">
-                    <div class="flex justify-end items-center -mt-12">
+                    <div class="flex justify-center sm:justify-end items-center sm:-mt-12">
                         <AvatarInput v-model="form.photo"/>
                     </div>
 
@@ -146,43 +146,49 @@ const submit = () => {
                             <div>
                                 <InputLabel color="primary" value="Gender"/>
 
-                                <div class="flex items-center space-x-2">
-                                    <input type="radio" id="male" value="male" v-model="form.gender"
-                                           class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
-                                    <label for="male" class="text-sm text-black font-medium">Male</label>
-                                </div>
+                                <div class="ml-4">
+                                    <div class="flex items-center space-x-2">
+                                        <input type="radio" id="male" value="male" v-model="form.gender"
+                                               class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
+                                        <label for="male" class="text-sm text-black font-medium">Male</label>
+                                    </div>
 
-                                <div class="flex items-center space-x-2">
-                                    <input type="radio" id="female" value="female" v-model="form.gender"
-                                           class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
-                                    <label for="female" class="text-sm text-black font-medium">Female</label>
+                                    <div class="flex items-center space-x-2">
+                                        <input type="radio" id="female" value="female" v-model="form.gender"
+                                               class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
+                                        <label for="female" class="text-sm text-black font-medium">Female</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="w-full sm:w-1/3 mt-4 sm:mt-0">
                             <InputLabel color="primary" value="Position"/>
 
-                            <div class="flex items-center space-x-2" v-for="position in positions">
-                                <input type="radio" :id="position.name" :value="position.id"
-                                       v-model="form.position_id"
-                                       class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
-                                <label :for="position.name"
-                                       class="text-sm text-black font-medium">{{ position.name }}</label>
+                            <div class="ml-4">
+                                <div class="flex items-center space-x-2" v-for="position in positions">
+                                    <input type="radio" :id="position.name" :value="position.id"
+                                           v-model="form.position_id"
+                                           class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
+                                    <label :for="position.name"
+                                           class="text-sm text-black font-medium">{{ position.name }}</label>
+                                </div>
                             </div>
                         </div>
                         <div class="w-full sm:w-1/3 mt-4 sm:mt-0">
                             <InputLabel color="primary" value="Preferred Foot"/>
 
-                            <div class="flex items-center space-x-2">
-                                <input type="radio" id="left" value="left" v-model="form.preferred_foot"
-                                       class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
-                                <label for="left" class="text-sm text-black font-medium">Left</label>
-                            </div>
+                            <div class="ml-4">
+                                <div class="flex items-center space-x-2">
+                                    <input type="radio" id="left" value="left" v-model="form.preferred_foot"
+                                           class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
+                                    <label for="left" class="text-sm text-black font-medium">Left</label>
+                                </div>
 
-                            <div class="flex items-center space-x-2">
-                                <input type="radio" id="right" value="right" v-model="form.preferred_foot"
-                                       class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
-                                <label for="right" class="text-sm text-black font-medium">Right</label>
+                                <div class="flex items-center space-x-2">
+                                    <input type="radio" id="right" value="right" v-model="form.preferred_foot"
+                                           class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"/>
+                                    <label for="right" class="text-sm text-black font-medium">Right</label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -197,11 +203,11 @@ const submit = () => {
                         </p>
                     </div>
 
-<!--                    <div class="flex items-center justify-end mt-4">-->
-<!--                        <Link :href="route('login')" class="underline text-sm text-sky-500 hover:text-sky-700">-->
-<!--                            Already registered?-->
-<!--                        </Link>-->
-<!--                    </div>-->
+                    <!--                    <div class="flex items-center justify-end mt-4">-->
+                    <!--                        <Link :href="route('login')" class="underline text-sm text-sky-500 hover:text-sky-700">-->
+                    <!--                            Already registered?-->
+                    <!--                        </Link>-->
+                    <!--                    </div>-->
 
                     <div class="mt-4">
                         <PrimaryButton :class="{ 'opacity-25': form.processing }"

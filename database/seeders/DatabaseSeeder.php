@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Rating;
+use App\Models\Stadium;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,5 +23,15 @@ class DatabaseSeeder extends Seeder
             CountrySeeder::class,
             ClubSeeder::class,
         ]);
+
+        for ($i = 1; $i++; $i <= 5) {
+            Rating::factory()->create([
+                'rating_from' => $i,
+                'rating_to' => $i + 1,
+                'hourly_rate' => $i * 10,
+            ]);
+        }
+
+        Stadium::factory()->count(10)->create();
     }
 }

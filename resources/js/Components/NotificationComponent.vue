@@ -3,10 +3,7 @@ import { computed } from 'vue';
 import { TrashIcon, EyeIcon } from '@heroicons/vue/24/outline';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { useForm, usePage, Link } from '@inertiajs/inertia-vue3';
-import { Inertia } from '@inertiajs/inertia';
-import ElNotification from 'element-plus';
-import { notify } from "notiwind"
+import { useForm, Link } from '@inertiajs/inertia-vue3';
 
 dayjs.extend(relativeTime);
 
@@ -20,7 +17,7 @@ const borderColor = computed(() => {
         'warning': 'border-amber-500',
         'danger': 'border-red-500',
         'info': 'border-sky-500'
-    }[props.notification.data.color.toString()];
+    }[props.notification.data.state.toString()];
 });
 
 const readForm = useForm({});
@@ -54,7 +51,7 @@ const deleteNotification = () => {
     >
         <div class="flex justify-between space-x-3">
             <div class="">
-                <Link :href="notification.data.action" class="block focus:outline-none">
+                <Link :href="notification.data.actionData.route" class="block focus:outline-none">
                     <p class="truncate text-sm" :class="{'font-medium text-gray-700': notification.read_at == null, 'text-gray-500': notification.read_at != null}">{{ notification.data.title }}</p>
                 </Link>
             </div>

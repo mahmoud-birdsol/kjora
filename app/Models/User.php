@@ -46,7 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'last_name',
         'phone',
         'gender',
-        'avatar',
+//        'avatar',
         'identity_issue_country',
         'identity_type',
         'identity_front_image',
@@ -101,9 +101,14 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $appends = [
         'profile_photo_url',
+        'avatar_url',
+        'identity_front_image_url',
+        'identity_back_image_url',
+        'identity_selfie_image_url',
         'has_verified_identity',
         'hourly_rate',
         'age',
+        'name',
     ];
 
     /**
@@ -124,6 +129,54 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return Attribute::make(
             get: fn() => $this->first_name.' '.$this->last_name
+        );
+    }
+
+    /**
+     * Get the user avatar url.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function avatarUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => Storage::url($this->avatar)
+        );
+    }
+
+    /**
+     * Get the user identity_front_image url.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function identityFrontImageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => Storage::url($this->identity_front_image)
+        );
+    }
+
+    /**
+     * Get the user identity_back_image url.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function identityBackImageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => Storage::url($this->identity_back_image)
+        );
+    }
+
+    /**
+     * Get the user identity_selfie_image url.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function identitySelfieImageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => Storage::url($this->identity_selfie_image)
         );
     }
 

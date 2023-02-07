@@ -60,7 +60,7 @@ const updatePhotoPreview = () => {
         <button v-show="showModelValue" class="mt-2" @click.prevent="selectNewPhoto">
             <span
                 class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
-                :style="'background-image: url(\'' + '/' + modelValue + '\');'"
+                :style="'background-image: url(\'' + modelValue + '\');'"
             />
         </button>
 

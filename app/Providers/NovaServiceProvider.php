@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Nova\Invitation;
 use App\Nova\Admin;
 use App\Nova\Advertisement;
 use App\Nova\Click;
@@ -23,6 +24,7 @@ use App\Nova\PrivacyPolicy;
 use App\Nova\Rating;
 use App\Nova\RatingCategory;
 use App\Nova\Social;
+use App\Nova\Stadium;
 use App\Nova\TermsAndConditions;
 use App\Nova\User;
 use App\Nova\Venue;
@@ -89,6 +91,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(User::class),
                     MenuItem::lens(User::class, UnverifiedUsers::class),
                     MenuItem::resource(Venue::class),
+                    MenuItem::resource(Invitation::class),
                 ])->icon('user-group')->collapsable(),
 
                 MenuSection::make('Security', [
@@ -100,6 +103,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 MenuSection::make('Settings', [
                     MenuItem::resource(Country::class),
                     MenuItem::resource(Club::class),
+                    MenuItem::resource(Stadium::class),
                     MenuItem::resource(Position::class),
                     MenuItem::resource(Rating::class),
                     MenuItem::resource(RatingCategory::class),

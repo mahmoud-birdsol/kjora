@@ -137,7 +137,7 @@ const filter = () => {
                                         Cairo
                                     </p>
 
-                                    <Link href="" class="text-sm text-white">Send Invitation
+                                    <Link :href="route('invitation.create', player.id)" class="text-sm text-white">Send Invitation
                                         <ChevronDoubleRightIcon class="inline h-4 w-4 text-white"/>
                                     </Link>
                                 </div>
@@ -216,6 +216,7 @@ const filter = () => {
                                     <InputLabel>Position</InputLabel>
                                     <div class="px-4">
                                         <select id="location" name="location"
+                                                v-model="form.position_id"
                                                 class="mt-1 block w-full rounded-full border-white py-2 pl-3 pr-10 text-base focus:border-primary focus:outline-none focus:ring-primary sm:text-sm text-white placeholder:center text-center bg-black">
                                             <option :value="null">All Positions</option>
                                             <option v-for="position in positions" :key="position.id"
@@ -225,7 +226,7 @@ const filter = () => {
                                     </div>
                                 </div>
 
-                                <div class="my-6 px-4">
+                                <div class="my-6 mt-4">
                                     <SecondaryButton @click="filter">Apply</SecondaryButton>
                                 </div>
                             </form>
