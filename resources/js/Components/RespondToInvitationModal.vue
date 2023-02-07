@@ -56,7 +56,7 @@ const decline = () => {
                          style="background: url('/images/player_bg_sm.png'); background-size: cover; background-position: center;">
                         <div class="flex justify-between items-start">
                             <div class="flex justify-start space-x-2 mb-2">
-                                <img :src="invitation.inviting_player.avatar" :alt="invitation.inviting_player.name"
+                                <img :src="invitation.inviting_player.avatar_url" :alt="invitation.inviting_player.name"
                                      class="h-14 w-14 rounded-full border-2 border-white">
                                 <div>
                                     <h2 class="text-sm text-white font-bold">

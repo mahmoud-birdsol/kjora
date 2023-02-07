@@ -91,7 +91,7 @@ const filter = () => {
                                  style="background: url('/images/player_bg_sm.png'); background-size: cover; background-position: center;">
                                 <div class="flex justify-between items-start">
                                     <div class="flex justify-start space-x-2 mb-2">
-                                        <img :src="player.avatar" :alt="player.name"
+                                        <img :src="player.avatar_url" :alt="player.name"
                                              class="h-14 w-14 rounded-full border-2 border-white">
                                         <div>
                                             <Link :href="route('player.profile', player.id)">
