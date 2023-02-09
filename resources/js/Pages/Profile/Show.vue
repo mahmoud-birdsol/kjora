@@ -7,6 +7,7 @@ import SectionBorder from '@/Components/SectionBorder.vue';
 import TwoFactorAuthenticationForm from '@/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue';
 import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue';
+import dayjs from 'dayjs';
 
 defineProps({
     // confirmsTwoFactorAuthentication: Boolean,
@@ -21,7 +22,9 @@ defineProps({
 
     <AppLayout title="Profile">
         <template #header>
-            Account
+            <p class="text-2xl font-light">Hello,</p>
+            <p class="text-7xl font-black">{{ $page.props.auth.user.first_name }}</p>
+            <p class="text-lg font-semibold">{{ dayjs().format('dddd, DD MMMM YYYY') }}</p>
         </template>
 
         <UpdateProfileInformationForm :user="$page.props.user" :countries="countries" :positions="positions"/>
