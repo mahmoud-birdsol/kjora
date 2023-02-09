@@ -111,7 +111,7 @@ const clearPhotoFileInput = () => {
             </div>
 
             <form @submit.prevent="updateProfileInformation">
-                <div class="flex justify-end items-center -mt-12">
+                <div class="flex justify-center sm:justify-end items-center sm:-mt-12">
                     <AvatarInput v-model="form.avatar"/>
                 </div>
 
@@ -163,6 +163,7 @@ const clearPhotoFileInput = () => {
                                          value-name="id"
                                          text-name="name"
                                          image-name="logo"
+                                         :append="user.club"
                                          v-model="form.club_id"/>
                         <InputError class="mt-2" :message="form.errors.club_id"/>
                     </div>

@@ -47,10 +47,10 @@ const submit = () => {
             <form @submit.prevent="submit">
                 <div class="grid grid-cols-1 gap-4">
                     <div>
-                        <InputLabel for="email" value="Email Address"/>
+                        <InputLabel for="email" value="Sign in"/>
                         <TextInput type="text"
                                    v-model="form.email"
-                                   placeholder="Please enter your email address"
+                                   placeholder="Enter username or email"
                                    auto-complete="email"
                                    aria-required="true"
                         />
@@ -58,7 +58,7 @@ const submit = () => {
                     </div>
                     <div>
                         <InputLabel for="password" value="Password"/>
-                        <PasswordInput v-model="form.password"/>
+                        <PasswordInput v-model="form.password" placeholder="Enter password"/>
                         <InputError class="mt-2" :message="form.errors.password"/>
                     </div>
 

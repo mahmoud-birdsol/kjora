@@ -4,6 +4,7 @@ import { onMounted, ref } from 'vue';
 
 defineProps({
     modelValue: String,
+    placeholder: String,
 });
 
 defineEmits(['update:modelValue']);
@@ -26,10 +27,10 @@ defineExpose({ focus: () => input.value.focus() });
         <input
             ref="input"
             :type="type"
-            class="block w-full rounded-full border-gray-300 px-4 shadow-sm focus:border-primary focus:ring-primary sm:text-sm disabled:bg-gray-100"
             :value="modelValue"
+            :placeholder="placeholder"
+            class="block w-full rounded-full border-gray-300 px-4 shadow-sm focus:border-primary focus:ring-primary sm:text-sm disabled:bg-gray-100"
             @input="$emit('update:modelValue', $event.target.value)"
-            placeholder="Please enter new password"
             auto-complete="new-password"
             aria-required="true"
         >

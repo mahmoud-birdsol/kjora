@@ -117,7 +117,8 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $with = [
-        'position'
+        'position',
+        'club'
     ];
 
     /**

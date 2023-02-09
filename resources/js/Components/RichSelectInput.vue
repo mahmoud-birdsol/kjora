@@ -17,6 +17,10 @@ const props = defineProps({
         type: String,
         default: '',
     },
+    append: {
+        required: false,
+        type: Object,
+    }
 });
 
 const nextPageUrl = ref(null);
@@ -39,6 +43,20 @@ onMounted(() => {
             filteredOptions.value = response.data.data;
             nextPageUrl.value = response.data.next_page_url;
 
+            if (props.append) {
+                let exists = false;
+
+                filteredOptions.value.forEach((item) => {
+                    if (item[props.valueName] == props.append[props.valueName]) {
+                        exists = true;
+                    }
+                });
+
+                if (!exists) {
+                    filteredOptions.value.push(props.append);
+                }
+            }
+
             if (props.modelValue) {
                 selected.value = filteredOptions.value.filter((option) => {
                     return option[props.valueName] == props.modelValue;
@@ -46,7 +64,7 @@ onMounted(() => {
             } else {
                 selected.value = response.data.data[0];
             }
-        }).catch(error => console.log(error.response));
+        }).catch(error => console.log(error));
     }
 });
 
