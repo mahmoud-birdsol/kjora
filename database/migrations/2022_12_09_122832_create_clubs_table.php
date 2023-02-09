@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('clubs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('country_id')->constrained()->cascadeOnDelete();
+            $table->string('country');
             $table->string('name');
             $table->timestamps();
         });

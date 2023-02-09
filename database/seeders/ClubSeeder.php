@@ -74,9 +74,9 @@ class ClubSeeder extends Seeder
 
             $clubs->each(function (array $data) {
                 /** @var Club $club */
-                $data['team']['country_id'] = Country::where('name', $data['team']['country'])->first()->id;
+//                $data['team']['country'] = Country::where('name', $data['team']['country'])->first()->name;
 
-                $club = Club::create(collect($data['team'])->only('name', 'country_id')->toArray());
+                $club = Club::create(collect($data['team'])->only('name', 'country')->toArray());
 
                 $this->command->info('Loading club: '. $club->name);
 

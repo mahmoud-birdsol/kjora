@@ -26,13 +26,19 @@ class CountrySeeder extends Seeder
             database_path('data/countries.json')
         );
 
+//        dd($countries->first());
+
         $countries->each(function (array $data) {
             /** @var Country $country */
-            $country = Country::create(collect($data)->except('flag')->toArray());
+            $country = Country::create([
+                'name' => $data['name'],
+                'code' => $data['alpha2Code'],
+                'calling_code' => $data['callingCodes'][0]
+            ]);
 
-            if (array_key_exists('flag', $data)) {
+            if (array_key_exists('flags', $data)) {
                 try {
-                    $country->addMediaFromUrl($data['flag'])->toMediaCollection('flag');
+                    $country->addMediaFromUrl($data['flags']["svg"])->toMediaCollection('flag');
                 } catch (\Exception $e) {
                     Log::info($e->getMessage());
                 }
