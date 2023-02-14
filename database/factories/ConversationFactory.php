@@ -2,13 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Country;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Club>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Conversation>
  */
-class ClubFactory extends Factory
+class ConversationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +17,6 @@ class ClubFactory extends Factory
     public function definition()
     {
         return [
-            'country' => $this->faker->country(),
-            'name' => $this->faker->word(),
         ];
     }
 }
