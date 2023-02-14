@@ -19,13 +19,13 @@ class ChatController extends Controller
     {
         $userConversationsIds = $request->user()->conversations->pluck('id');
 
-        $conversations = Conversation::whereHas('users', function ($query) use ($userConversationsIds, $request) {
+        $conversations = Conversation::query()->whereHas('users', function ($query) use ($userConversationsIds, $request) {
             $query->whereIn('conversation_user.conversation_id', $userConversationsIds)
                 ->whereNot('conversation_user.user_id', $request->user()->id);
-        })->with('messages')->get();
+        })->with('messages');
 
         return Inertia::render('Chat/Index', [
-            'conversations' => $conversations
+            'conversations' => $conversations->get()
         ]);
     }
 }

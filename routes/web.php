@@ -5,6 +5,7 @@ use App\Http\Controllers\Actions\MarkNotificationAsRead;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\IdentityVerificationController;
 use App\Http\Controllers\JoinPlatformController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\UserProfileController;
@@ -176,7 +177,7 @@ Route::middleware([
      |--------------------------------------------------------------------------
      | Chat Routes...
      |--------------------------------------------------------------------------
-     */
+    */
 
     Route::get(
         'chats', [
@@ -184,4 +185,16 @@ Route::middleware([
         'index'
     ])->name('chats.index');
 
+
+    /*
+     |--------------------------------------------------------------------------
+     | Message Routes...
+     |--------------------------------------------------------------------------
+    */
+
+    Route::post(
+        'chats/{conversation}/messages', [
+            MessageController::class,
+            'store'
+    ])->name('messages.store');
 });
