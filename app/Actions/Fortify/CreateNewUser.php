@@ -60,7 +60,7 @@ class CreateNewUser implements CreatesNewUsers
         ]);
 
         if (isset($input['photo'])) {
-            $user->updateProfilePhoto($input['photo']);
+            $user->addMediaFromRequest('photo')->toMediaCollection('avatar');
         }
 
         return $user;

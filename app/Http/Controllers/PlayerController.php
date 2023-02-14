@@ -21,7 +21,13 @@ class PlayerController extends Controller
         $query = User::query();
 
         $request->whenFilled('position', fn() => $query->where('position_id', $request->input('position')));
-        $request->whenFilled('rating', fn() => $query->where('rating', '>=', $request->input('rating')));
+        $request->whenFilled('rating',
+            $request->input('rating') > 0
+                ? fn() => $query->where(function ($query) use ($request) {
+                $query->where('rating', '>=', $request->input('rating'));
+            })
+                : fn() => null
+        );
 
         $request->whenFilled('age',
             fn() => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('age')))
@@ -49,6 +55,8 @@ class PlayerController extends Controller
      */
     public function show(Request $request, User $user): Response
     {
+        $user->load('club');
+
         return Inertia::render('Player/Show', [
             'player' => $user,
         ]);

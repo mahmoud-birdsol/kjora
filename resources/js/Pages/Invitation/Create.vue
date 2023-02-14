@@ -51,7 +51,7 @@ const createInvitation = () => {
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="grid grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div class="col-span-1">
                         <div class="bg-black rounded-xl p-6">
                             <div class="rounded-xl p-4"
@@ -88,7 +88,7 @@ const createInvitation = () => {
                                     </div>
                                 </div>
 
-                                <div class="flex justify-between items-center mt-2  border-t border-white">
+                                <div class="flex justify-between items-center mt-8 mb-4 border-t border-white">
                                     <p class="text-white text-sm flex items-center">
                                         <MapPinIcon class="inline h-4 w-4 text-white"/>
                                         Cairo

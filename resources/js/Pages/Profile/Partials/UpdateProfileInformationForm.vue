@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue';
-import { Inertia } from '@inertiajs/inertia';
 import { useForm } from '@inertiajs/inertia-vue3';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -8,8 +7,9 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { ElDatePicker } from 'element-plus';
 import RichSelectInput from '@/Components/RichSelectInput.vue';
-import AvatarInput from '@/Components/AvatarInput.vue';
 import SuccessMessageModal from '@/Components/SuccessMessageModal.vue';
+import UploadImageField from '@/Components/UploadImageField.vue';
+import Avatar from '@/Components/Avatar.vue';
 
 const props = defineProps({
     user: Object,
@@ -35,72 +35,24 @@ const form = useForm({
     avatar: props.user.avatar_url,
 });
 
-const verificationLinkSent = ref(null);
-const photoPreview = ref(null);
-const photoInput = ref(null);
 const showSuccessMessage = ref(false);
 
 const updateProfileInformation = () => {
-    if (photoInput.value) {
-        form.avatar = photoInput.value.files[0];
-    }
-
     form.post(route('user-profile-information.update'), {
         errorBag: 'updateProfileInformation',
         preserveScroll: true,
         onSuccess: () => {
-            clearPhotoFileInput();
             showSuccessMessage.value = true;
         },
     });
 };
 
-const sendEmailVerification = () => {
-    verificationLinkSent.value = true;
-};
-
-const selectNewPhoto = () => {
-    photoInput.value.click();
-};
-
-const updatePhotoPreview = () => {
-    const photo = photoInput.value.files[0];
-
-    if (!photo) return;
-
-    const reader = new FileReader();
-
-    reader.onload = (e) => {
-        photoPreview.value = e.target.result;
-    };
-
-    reader.readAsDataURL(photo);
-};
-
-const deletePhoto = () => {
-    Inertia.delete(route('current-user-photo.destroy'), {
-        preserveScroll: true,
-        onSuccess: () => {
-            photoPreview.value = null;
-            clearPhotoFileInput();
-        },
-    });
-};
-
-const clearPhotoFileInput = () => {
-    if (photoInput.value?.value) {
-        photoInput.value.value = null;
-    }
-};
+const showUploadAvatarModal = ref(false);
 </script>
 
 <template>
     <div class="w-full sm:flex sm:justify-between sm:space-x-4 mt-8">
         <div class="w-full sm:flex sm:justify-end sm:w-1/2">
-            <div>
-                <!--                <h2 class="text-white text-2xl font-light uppercase">Welcome to</h2>-->
-                <!--                <h1 class="text-white text-6xl font-black uppercase">KJORA</h1>-->
-            </div>
         </div>
         <div class="bg-white rounded-md p-6 w-full sm:w-1/2">
             <div class="flex justify-center my-4">
@@ -109,7 +61,22 @@ const clearPhotoFileInput = () => {
 
             <form @submit.prevent="updateProfileInformation">
                 <div class="flex justify-center sm:justify-end items-center sm:-mt-12">
-                    <AvatarInput v-model="form.avatar"/>
+                    <button class="mt-2" @click.prevent="showUploadAvatarModal = true">
+                        <Avatar
+                            :image-url="user.avatar_url"
+                            :username="user.name"
+                            size="lg"/>
+                    </button>
+
+                    <UploadImageField
+                        :current-image-url="user.avatar_url"
+                        :show="showUploadAvatarModal"
+                        :model-name="'\\App\\Models\\User'"
+                        :model-id="user.id"
+                        :should-upload="true"
+                        collection-name="avatar"
+                        @close="showUploadAvatarModal = false"
+                    />
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-12">
@@ -253,6 +220,7 @@ const clearPhotoFileInput = () => {
 
     <SuccessMessageModal
         :show="showSuccessMessage"
+        position="right"
         title="Account"
         message="Congratulations your account has been successfully updated."
         @close="showSuccessMessage = false"

@@ -4,6 +4,8 @@ import { Inertia } from '@inertiajs/inertia';
 import Modal from '@/Components/Modal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { ElRate } from 'element-plus';
+import dayjs from 'dayjs';
+import Avatar from '@/Components/Avatar.vue';
 import {
     MapPinIcon,
 } from '@heroicons/vue/24/outline';
@@ -54,10 +56,13 @@ const decline = () => {
                 <div class="max-w-sm p-6">
                     <div class="rounded-xl p-4"
                          style="background: url('/images/player_bg_sm.png'); background-size: cover; background-position: center;">
+                        <div class="flex justify-start mb-4">
+                            <p class="text-white text-xs font-bold uppercase">{{ dayjs(invitation.date).format('d MMMM YYYY, h:m P') }}</p>
+                        </div>
+
                         <div class="flex justify-between items-start">
                             <div class="flex justify-start space-x-2 mb-2">
-                                <img :src="invitation.inviting_player.avatar_url" :alt="invitation.inviting_player.name"
-                                     class="h-14 w-14 rounded-full border-2 border-white">
+                                <Avatar :image-url="invitation.inviting_player.avatar_url" size="md" :username="invitation.inviting_player.name" :border="true"/>
                                 <div>
                                     <h2 class="text-sm text-white font-bold">
                                         {{ invitation.inviting_player.first_name }} {{ invitation.inviting_player.last_name }}
@@ -76,11 +81,16 @@ const decline = () => {
                             </div>
                         </div>
 
-                        <div class="flex justify-between items-center mt-2  border-t border-white">
-                            <p class="text-white text-sm flex items-center">
-                                <MapPinIcon class="inline h-4 w-4 text-white"/>
-                                Cairo
-                            </p>
+                        <div class="flex justify-between items-center mt-8 mb-4 border-t border-white">
+                            <div>
+                                <p class="text-white text-sm flex items-center capitalize">
+                                    <MapPinIcon class="inline h-4 w-4 text-white"/>
+                                    {{ invitation.stadium.name }}
+                                </p>
+                                <p class="text-white text-xs font-extralight">
+                                    {{ invitation.stadium.address }}, {{ invitation.stadium.city }}, {{ invitation.stadium.country }}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>

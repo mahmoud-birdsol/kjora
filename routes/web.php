@@ -50,8 +50,8 @@ Route::middleware([
     ])->name('identity.verification.store');
 
     Route::middleware([
-        'verified.email',
-        'verified.identity',
+//        'verified.email',
+//        'verified.identity',
     ])->group(function () {
         Route::get('/dashboard', function () {
             return Inertia::render('Dashboard');
@@ -86,9 +86,9 @@ Route::middleware([
 
         Route::get('invitations', function (Request $request) {
             $invitingInvitations = \App\Models\Invitation::where('inviting_player_id',
-                $request->user()->id)->latest('date')->get();
+                $request->user()->id)->latest('date')->with('invitingPlayer')->with('invitedPlayer')->with('stadium')->get();
             $invitedInvitations = \App\Models\Invitation::where('invited_player_id',
-                $request->user()->id)->latest('date')->get();
+                $request->user()->id)->latest('date')->with('invitingPlayer')->with('invitedPlayer')->with('stadium')->get();
 
             return Inertia::render('Invitation/Index', [
                 'invitingInvitations' => $invitingInvitations,
@@ -164,5 +164,39 @@ Route::middleware([
             'notifications/{notificationId}/mark-as-read',
             MarkNotificationAsRead::class
         )->name('notification.read');
+
+        /*
+         |--------------------------------------------------------------------------
+         | Media routes...
+         |--------------------------------------------------------------------------
+         */
+
+        Route::post('upload', function (Request $request) {
+            $request->validate([
+                'model_name' => [
+                    'required',
+                    'string',
+                ],
+                'model_id' => [
+                    'required',
+                    'integer',
+                ],
+                'collection_name' => [
+                    'required',
+                    'string',
+                ],
+                'image' => [
+                    'required',
+                    'file'
+                ],
+            ]);
+
+            /** @var \Spatie\MediaLibrary\HasMedia $model */
+            $model = (new ReflectionClass($request->model_name))->newInstance()->find($request->model_id);
+
+            $model->addMediaFromRequest('image')->toMediaCollection($request->collection_name);
+
+            return redirect()->back();
+        })->name('upload');
     });
 });

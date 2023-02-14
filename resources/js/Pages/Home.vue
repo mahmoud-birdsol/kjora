@@ -1,20 +1,18 @@
 <script setup>
 import { ref } from 'vue';
-import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { ElRate } from 'element-plus';
-import dayjs from 'dayjs';
+import { Head, useForm, usePage } from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import Modal from '@/Components/Modal.vue';
 import { ElSlider } from 'element-plus';
 import InputLabel from '@/Components/InputLabel.vue';
 import Pagination from '@/Components/Pagination.vue';
+import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
+import HelloUserHeader from '@/Components/HelloUserHeader.vue';
+
 import {
     XMarkIcon,
     AdjustmentsHorizontalIcon,
-    MapPinIcon,
-    ChevronDoubleRightIcon,
-    FlagIcon
 } from '@heroicons/vue/24/outline';
 
 const props = defineProps({
@@ -23,9 +21,9 @@ const props = defineProps({
 });
 
 const form = useForm({
-    position: usePage().props.value.queryParams.position,
-    age: usePage().props.value.queryParams.age ?? 18,
-    rating: usePage().props.value.queryParams.rating ?? 0,
+    position: usePage().props.value.queryParams.position ?? null,
+    age: parseInt(usePage().props.value.queryParams.age ?? 18),
+    rating: parseInt(usePage().props.value.queryParams.rating ?? 0),
     search: usePage().props.value.queryParams.search ?? '',
 });
 
@@ -56,9 +54,7 @@ const filter = () => {
 
     <AppLayout title="Home">
         <template #header>
-            <p class="text-2xl font-light">Hello,</p>
-            <p class="text-7xl font-black">{{ $page.props.auth.user.first_name }}</p>
-            <p class="text-lg font-semibold">{{ dayjs().format('dddd, DD MMMM YYYY') }}</p>
+            <HelloUserHeader/>
         </template>
 
         <div class="py-12">
@@ -85,74 +81,14 @@ const filter = () => {
                 <!-- Current list...
                 =====================================================-->
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
+
+                    <div class="flex justify-start items-start my-6">
+                        <p class="text-sm font-bold">Total ({{ players.total }})</p>
+                    </div>
+
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
                         <template v-for="player in players.data" :key="player.id">
-                            <div class="rounded-xl p-4"
-                                 style="background: url('/images/player_bg_sm.png'); background-size: cover; background-position: center;">
-                                <div class="flex justify-between items-start">
-                                    <div class="flex justify-start space-x-2 mb-2">
-                                        <img :src="player.avatar_url" :alt="player.name"
-                                             class="h-14 w-14 rounded-full border-2 border-white">
-                                        <div>
-                                            <Link :href="route('player.profile', player.id)">
-                                                <h2 class="text-sm text-white font-bold">
-                                                    {{ player.first_name }} {{ player.last_name }}
-                                                </h2>
-                                            </Link>
-
-                                            <p class="text-xs text-white opacity-50">@{{ player.username }}</p>
-                                            <p class="text-sm text-white flex items-center space-x-2">
-                                                <ElRate v-model="player.rating" size="small"/>
-                                                {{ player.rating }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-bold text-white">$ {{ player.hourly_rate }}</p>
-                                    </div>
-                                </div>
-
-                                <div class="grid grid-cols-4 gap-4 border-b border-white">
-                                    <div>
-                                        <p class="text-xs text-white opacity-50 text-light text-center">Age</p>
-                                        <p class="text-sm text-white text-center font-semi-bold">{{ player.age }}</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-xs text-white opacity-50 text-light text-center">Played</p>
-                                        <p class="text-sm text-white text-center font-semi-bold">0</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-xs text-white opacity-50 text-light text-center">Missed</p>
-                                        <p class="text-sm text-white text-center font-semi-bold">0</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-xs text-white opacity-50 text-light text-center">Position</p>
-                                        <p class="text-sm text-white text-center font-semi-bold">{{ player.position.name }}</p>
-                                    </div>
-                                </div>
-
-                                <div class="flex justify-between items-center mt-2">
-                                    <p class="text-white text-sm flex items-center">
-                                        <MapPinIcon class="inline h-4 w-4 text-white"/>
-                                        Cairo
-                                    </p>
-
-                                    <Link :href="route('invitation.create', player.id)" class="text-sm text-white">Send Invitation
-                                        <ChevronDoubleRightIcon class="inline h-4 w-4 text-white"/>
-                                    </Link>
-                                </div>
-
-                                <div class="flex justify-between items-center mt-6">
-                                    <div>
-                                        <div class="flex justify-center items-center rounded-full bg-black h-10 w-10">
-                                            <span class="text-xs text-white">70KM</span>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <FlagIcon class="h-6 w-6 text-red-500"/>
-                                    </div>
-                                </div>
-                            </div>
+                            <MainPlayerCard :player="player"/>
                         </template>
                     </div>
 
@@ -170,7 +106,7 @@ const filter = () => {
                         <AdjustmentsHorizontalIcon class="text-white h-10 w-10"/>
                     </button>
 
-                    <Modal :show="showFiltersModal" max-width="sm" @close="showFiltersModal = false">
+                    <Modal :show="showFiltersModal" max-width="sm" @close="showFiltersModal = false" :closeable="false">
                         <div class="bg-black p-6">
                             <div class="flex justify-between items-center">
                                 <p class="text-white text-sm">Filter </p>
@@ -216,7 +152,7 @@ const filter = () => {
                                     <InputLabel>Position</InputLabel>
                                     <div class="px-4">
                                         <select id="location" name="location"
-                                                v-model="form.position_id"
+                                                v-model="form.position"
                                                 class="mt-1 block w-full rounded-full border-white py-2 pl-3 pr-10 text-base focus:border-primary focus:outline-none focus:ring-primary sm:text-sm text-white placeholder:center text-center bg-black">
                                             <option :value="null">All Positions</option>
                                             <option v-for="position in positions" :key="position.id"

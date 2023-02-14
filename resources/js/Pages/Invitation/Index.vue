@@ -5,6 +5,8 @@ import { ElRate } from 'element-plus';
 import dayjs from 'dayjs';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
+import Avatar from '@/Components/Avatar.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 import {
     CalendarDaysIcon,
     MapPinIcon,
@@ -92,8 +94,8 @@ const respondToInvitation = (invitation) => {
                                  style="background: url('/images/player_bg_sm.png'); background-size: cover; background-position: center;">
                                 <div class="flex justify-between items-start">
                                     <div class="flex justify-start space-x-2 mb-2">
-                                        <img :src="invitation[playerId].avatar_url" :alt="invitation[playerId].name"
-                                             class="h-14 w-14 rounded-full border-2 border-white">
+                                        <Avatar :image-url="invitation[playerId].avatar_url" size="sm" :username="invitation[playerId].name" :border="true"/>
+
                                         <div>
                                             <h2 class="text-sm text-white font-bold">
                                                 {{ invitation[playerId].first_name }} {{ invitation[playerId].last_name }}
@@ -112,17 +114,17 @@ const respondToInvitation = (invitation) => {
                                     </div>
                                 </div>
 
-                                <button v-if="invitation.state == 'accepted'" class="bg-white opacity-50 rounded-full w-full py-1 uppercase font-bold mt-5">
+                                <button v-if="invitation.state == 'accepted'" class="w-full flex justify-center items-center px-4 py-2 bg-green-300 bg-opacity-50 border border-transparent rounded-full font-bold text-xs text-black text-center uppercase tracking-widest hover:bg-primaryDark active:bg-primaryDark focus:outline-none focus:border-primaryDark focus:ring focus:ring-primary transition">
                                     Message
                                 </button>
 
-                                <button v-if="invitation.state == 'declined'" class="bg-rose-300 opacity-50 rounded-full w-full py-1 uppercase font-bold mt-5" :disabled="true">
+                                <button v-if="invitation.state == 'declined'" :disabled="true" class="w-full flex justify-center items-center px-4 py-2 bg-rose-300 bg-opacity-50 border border-transparent rounded-full font-bold text-xs text-black text-center uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 transition">
                                     Declined
                                 </button>
 
-                                <button v-if="invitation.state == null" class="bg-green-300 opacity-50 rounded-full w-full py-1 uppercase font-bold mt-5" @click="respondToInvitation(invitation)">
+                                <PrimaryButton v-if="invitation.state == null" @click="respondToInvitation(invitation)">
                                     Respond
-                                </button>
+                                </PrimaryButton>
 
                                 <div class="flex justify-between items-center mt-2  border-t border-white">
                                     <p class="text-white text-sm flex items-center">

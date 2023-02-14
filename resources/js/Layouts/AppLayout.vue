@@ -21,7 +21,7 @@ defineProps({
                 <header v-if="$slots.header" class="">
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div class="flex justify-start px-4 sm:px-6 lg:px-8">
-                            <h1 class="text-7xl font-bold text-white uppercase">
+                            <h1 class="text-2xl sm:text-7xl font-bold text-white uppercase">
                                 <slot name="header"/>
                             </h1>
                         </div>

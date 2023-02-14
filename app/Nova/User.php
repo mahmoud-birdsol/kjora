@@ -5,6 +5,7 @@ namespace App\Nova;
 use App\Nova\Actions\MarkAsVerified;
 use App\Nova\Actions\SendIdentityVerificationReminder;
 use App\Nova\Lenses\UnverifiedUsers;
+use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Laravel\Nova\Fields\Avatar;
@@ -58,8 +59,12 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Avatar::make('Avatar')
-                ->showOnPreview()
+//            Avatar::make('Avatar')
+//                ->showOnPreview()
+//                ->nullable()
+//                ->rules('nullable'),
+
+            Images::make('Avatar')
                 ->nullable()
                 ->rules('nullable'),
 
@@ -174,17 +179,17 @@ class User extends Resource
                     'passport' => 'Passport',
                 ])->hideFromIndex()->displayUsingLabels()->showOnPreview()->sortable()->filterable()->required()->rules('required'),
 
-                Image::make('Identity Front Image')
+                Images::make('Identity Front Image')
                     ->hideFromIndex()
                     ->nullable()
                     ->rules('nullable'),
 
-                Image::make('Identity Back Image')
+                Images::make('Identity Back Image')
                     ->hideFromIndex()
                     ->nullable()
                     ->rules('nullable'),
 
-                Image::make('Identity selfie Image')
+                Images::make('Identity selfie Image')
                     ->hideFromIndex()
                     ->nullable()
                     ->rules('nullable'),

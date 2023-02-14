@@ -1,4 +1,5 @@
 <script setup>
+import { XMarkIcon } from '@heroicons/vue/24/outline';
 import { computed, onMounted, onUnmounted, watch } from 'vue';
 
 const props = defineProps({
@@ -90,6 +91,9 @@ const maxWidthClass = computed(() => {
                         <div v-show="position == 'center'"
                              class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
                              :class="maxWidthClass">
+                            <div class="flex justify-end px-6 py-6" v-if="closeable">
+                                <button @click="$emit('close')"><XMarkIcon class="w-4 h-4 text-gray-900 hover:text-gray=500"/></button>
+                            </div>
                             <slot v-if="show"/>
                         </div>
 
@@ -99,6 +103,9 @@ const maxWidthClass = computed(() => {
                                     <div class="w-1/2 flex justify-center">
                                         <div class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
                                              :class="maxWidthClass">
+                                            <div class="flex justify-end px-6 pt-6" v-if="closeable">
+                                                <button @click="$emit('close')"><XMarkIcon class="w-4 h-4 text-gray-900 hover:text-gray=500"/></button>
+                                            </div>
                                             <slot v-if="show"/>
                                         </div>
                                     </div>
