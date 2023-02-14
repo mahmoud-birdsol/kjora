@@ -27,6 +27,10 @@ class PlayerController extends Controller
             fn() => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('age')))
         );
 
+        $request->whenFilled('country',
+            fn() => $query->where('country_id', $request->input('country'))
+        );
+
         $request->whenFilled('search', fn() => $query->where(function ($query) use ($request) {
             $query
                 ->where('first_name', 'LIKE', '%'.$request->input('search').'%')
