@@ -18,7 +18,7 @@ class ClubFactory extends Factory
     public function definition()
     {
         return [
-            'country_id' => Country::factory(),
+            'country' => $this->faker->country(),
             'name' => $this->faker->word(),
         ];
     }
