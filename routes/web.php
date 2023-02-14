@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AcceptInvitationController;
 use App\Http\Controllers\Actions\MarkNotificationAsRead;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\IdentityVerificationController;
 use App\Http\Controllers\JoinPlatformController;
 use App\Http\Controllers\NotificationsController;
@@ -134,7 +135,11 @@ Route::middleware([
         })->name('invitation.store');
 
         // Accept invitation
-        Route::patch('invitations/{invitation}/accept', AcceptInvitationController::class)->name('invitation.accept');
+        Route::patch(
+            'invitations/{invitation}/accept',
+            AcceptInvitationController::class
+        )
+            ->name('invitation.accept');
 
         // Decline invitation
         Route::patch('invitations/{invitation}/decline', function (Invitation $invitation) {
@@ -166,4 +171,17 @@ Route::middleware([
             MarkNotificationAsRead::class
         )->name('notification.read');
     });
+
+    /*
+     |--------------------------------------------------------------------------
+     | Chat Routes...
+     |--------------------------------------------------------------------------
+     */
+
+    Route::get(
+        'chats', [
+        ChatController::class,
+        'index'
+    ])->name('chats.index');
+
 });
