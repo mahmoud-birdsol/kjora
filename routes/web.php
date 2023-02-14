@@ -50,8 +50,8 @@ Route::middleware([
     ])->name('identity.verification.store');
 
     Route::middleware([
-//        'verified.email',
-//        'verified.identity',
+        'verified.email',
+        'verified.identity',
     ])->group(function () {
         Route::get('/dashboard', function () {
             return Inertia::render('Dashboard');

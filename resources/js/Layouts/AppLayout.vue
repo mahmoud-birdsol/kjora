@@ -14,6 +14,8 @@ defineProps({
     <div>
         <Head :title="title"/>
 
+        <SystemMessage/>
+
         <div class="min-h-screen bg-gradient-to-b from-black to-primaryDark">
             <div class="min-h-screen flex flex-col justify-between pt-6 sm:pt-0 space-y-4">
                 <Navbar/>
@@ -30,8 +32,6 @@ defineProps({
 
                 <!-- Page Content -->
                 <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <SystemMessage/>
-
                     <slot/>
                 </main>
 
