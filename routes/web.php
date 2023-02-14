@@ -52,9 +52,7 @@ Route::middleware([
         'create',
     ])->name('identity.verification.create');
 
-    Route::get('/chats', function(){
-        return Inertia::render('Chat/Index');
-    })->name('chats.index');
+
 
     Route::post('/verification/identity', [
         IdentityVerificationController::class,
