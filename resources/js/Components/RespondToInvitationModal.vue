@@ -26,7 +26,7 @@ const emit = defineEmits(['close']);
 const accept = () => {
     const form = useForm({});
     form.patch(route('invitation.accept', props.invitation.id), {}, {
-        preserveState: false,
+        preserveState: true,
         onSuccess: () => {
             emit('close');
         }
@@ -36,7 +36,7 @@ const accept = () => {
 const decline = () => {
     const form = useForm({});
     form.patch(route('invitation.decline', props.invitation.id), {}, {
-        preserveState: false,
+        preserveState: true,
         onSuccess: () => {
             emit('close');
         }
