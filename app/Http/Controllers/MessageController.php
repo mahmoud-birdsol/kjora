@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageSentEvent;
 use App\Http\Requests\MessageStoreRequest;
 use App\Models\Conversation;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
@@ -23,6 +23,10 @@ class MessageController extends Controller
             'sender_id' => auth()->id(),
             'parent_id' => $request->input('parent_id')
         ]);
+
+        $user = $conversation->users()->whereNot('id', $request->user()->id())->first();
+
+        event(new MessageSentEvent($user));
 
         return redirect()->back();
     }
