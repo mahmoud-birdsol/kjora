@@ -9,6 +9,7 @@ import InputError from '@/Components/InputError.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import Modal from '@/Components/Modal.vue';
+import Avatar from '@/Components/Avatar.vue';
 import {
     MapPinIcon,
     ChevronDoubleRightIcon,
@@ -68,8 +69,7 @@ const createInvitation = () => {
                                 </div>
                                 <div class="flex justify-between items-start">
                                     <div class="flex justify-start space-x-2 mb-2">
-                                        <img :src="invited.avatar_url" :alt="invited.name"
-                                             class="h-14 w-14 rounded-full border-2 border-white">
+                                        <Avatar :image-url="invited.avatar_url" size="md" :username="invited.name" :border="true"/>
                                         <div>
                                             <h2 class="text-sm text-white font-bold">
                                                 {{ invited.first_name }} {{ invited.last_name }}
