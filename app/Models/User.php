@@ -352,8 +352,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     {
         return
             ! is_null($this->identity_type) &&
-            ! is_null($this->identity_front_image) &&
-            ! is_null($this->identity_back_image);
+            ! is_null($this->getFirstMedia('identity_front_image')->exists()) &&
+            ! is_null($this->getFirstMedia('identity_back_image')->exists());
     }
 
     /**
