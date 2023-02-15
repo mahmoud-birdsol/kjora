@@ -28,4 +28,20 @@ class ChatController extends Controller
             'conversations' => $conversations
         ]);
     }
+
+    /**
+     * Display a single conversation with its messages
+     *
+     * @param \App\Models\Conversation $conversation
+     * @return \Inertia\Response
+     */
+    public function show(Conversation $conversation): Response
+    {
+        $messages = $conversation->messages()->orderBy('created_at', 'DESC')->paginate(12);
+
+        return Inertia::render('Chat/Show', [
+            'messages' => $messages,
+            'conversation' => $conversation
+        ]);
+    }
 }
