@@ -17,9 +17,9 @@ const message = usePage().props.value.flash?.message;
         </div>
 
         <!-- Warning Message -->
-        <div v-if="message.type == 'warning'" class="w-full flex bg-amber-500 px-6 py-4">
+        <div v-if="message.type == 'warning'" class="w-full flex bg-yellow-400 px-6 py-4">
             <div class="flex justify-between max-w-7xl mx-auto items-center space-x-4">
-                <p class="text-amber-50 font-bold">{{ message.body }}</p>
+                <p class="text-gray-700 font-bold">{{ message.body }}</p>
                 <Link v-if="message.action" :href="message.action.url">
                     <SecondaryButton size="sm">{{ message.action.text }}</SecondaryButton>
                 </Link>

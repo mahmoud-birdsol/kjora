@@ -68,10 +68,10 @@ const backgroundImage = computed(() => {
             class="grid gap-4 border-b border-white"
             :class="{'grid-cols-4 pb-4 mt-2': size == 'sm', 'grid-cols-5 pb-8 mt-6': size == 'lg'}"
         >
-            <div>
+            <div v-if="size == 'lg'">
                 <p class="text-xs text-white opacity-50 text-light text-center">Favorite Club</p>
                 <div class="flex justify-center item-center">
-                    <img :src="player.club.logo_thumb" class="h-5 w-5 rounded-full border-2 border-white"/>
+                    <img :src="player.club?.logo_thumb" class="h-5 w-5 rounded-full border-2 border-white"/>
                 </div>
             </div>
             <div>
