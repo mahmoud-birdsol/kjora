@@ -1,13 +1,12 @@
 <script setup>
 import { ref } from 'vue';
 import AppLayout from '../../Layouts/AppLayout.vue';
-import dayjs from 'dayjs';
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
 import { FlagIcon } from '@heroicons/vue/24/outline'
-import ChatFriendCard from '../../Components/ChatFriendCard.vue';
 import ChatLayout from '../../Layouts/ChatLayout.vue';
 import ConversationsList from '../../Components/ConversationsList.vue';
-const todayDate = ref(new Date().now)
+import ChatMessage from '../../Components/ChatMessage.vue';
+
 const friends = [{
     name: 'friend 1', userName: '@friend1', imgUrl: null, id: 1
 }, {
@@ -33,12 +32,15 @@ const friends = [{
 }, {
     name: 'friend 3', userName: '@friend3', imgUrl: null, id: 3
 }]
+
+const messages = [{ id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: 1215, }, { id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 124, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 124, body: 'hello how are you', read_at: '12:15 pm', parent_id: 1215, },]
 </script>
 <template>
-    <AppLayout :title="chat">
+    <AppLayout title="chat">
         <template #header>
             <p>chat</p>
         </template>
+        <h1 class="text-white">chat welcome page</h1>
         <ChatLayout>
             <template #sidebar>
                 <ConversationsList :friends="friends" />
@@ -85,11 +87,46 @@ const friends = [{
 
                 </div>
             </template>
-            <!-- <template #footer>
+            <template #footer>
                 <div class="grid p-10 bg-white place-items-center rounded-2xl">
                     <button class="py-2 text-white bg-black px-28 rounded-3xl">ok</button>
                 </div>
-            </template> -->
+            </template>
+        </ChatLayout>
+
+
+        <!-- show page -->
+        <h1 class="text-white"> conversation page page</h1>
+        <ChatLayout>
+            <template #sidebar>
+                <ConversationsList :friends="friends" />
+            </template>
+            <template #header>
+                <div class="flex-1 border-r-2 border-r-stone-500"></div>
+                <div class="flex items-center gap-2 p-4">
+                    <button>
+                        <MagnifyingGlassIcon class="w-4 h-4 cursor-pointer hover:text-primaryDark text-primary">
+                        </MagnifyingGlassIcon>
+                    </button>
+                    <button>
+                        <FlagIcon class="w-4 h-4 text-red-600" />
+                    </button>
+                </div>
+            </template>
+            <template #main>
+                <div class="flex flex-col gap-y-4 div ">
+                    <template v-for="message in messages" :key="message.id">
+
+                        <ChatMessage :message="message" />
+
+                    </template>
+                </div>
+            </template>
+            <template #footer>
+                <div class="grid p-10 bg-white place-items-center rounded-2xl">
+                    <button class="py-2 text-white bg-black px-28 rounded-3xl">ok</button>
+                </div>
+            </template>
         </ChatLayout>
 
     </AppLayout>
