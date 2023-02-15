@@ -48,10 +48,14 @@ class ChatController extends Controller
      */
     public function show(Conversation $conversation): Response
     {
-        $messages = $conversation->messages()->orderBy('created_at', 'DESC')->paginate(12);
+        $query = $conversation->messages()->orderBy('created_at', 'DESC');
+
+        if (request()->has('search')) {
+            $query->where('body', '%LIKE%', request()->input('search'));
+        }
 
         return Inertia::render('Chat/Show', [
-            'messages' => $messages,
+            'messages' => $query->paginate(12),
             'conversation' => $conversation
         ]);
     }
