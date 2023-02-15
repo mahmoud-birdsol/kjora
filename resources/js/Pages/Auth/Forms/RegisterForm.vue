@@ -21,7 +21,7 @@ const form = useForm({
     username: '',
     email: '',
     password: '',
-    country_id: 84,
+    country_id: 121,
     club_id: 11,
     password_confirmation: '',
     date_of_birth: '',
