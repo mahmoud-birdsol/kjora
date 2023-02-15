@@ -2,13 +2,16 @@
 
 namespace App\Notifications;
 
+use App\Data\NotificationData;
+use App\Data\RouteActionData;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NotifyUserOfChatMessageNotification extends Notification
+class NotifyUserOfChatMessageNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -41,7 +44,7 @@ class NotifyUserOfChatMessageNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database', 'broadcast'];
     }
 
     /**
@@ -68,8 +71,26 @@ class NotifyUserOfChatMessageNotification extends Notification
      */
     public function toArray($notifiable)
     {
-        return [
-            //
-        ];
+        return (new NotificationData(
+            displayType: 'simple',
+            state: 'success',
+            title: 'Chat Notification',
+            subtitle: 'User ' . $this->notifier->name . 'has sent you a message',
+            actionData: new RouteActionData(
+                route: route('chats.index'),
+                text: 'Chat Now',
+            ),
+        ))->toArray();
+    }
+
+    /**
+     * Get the broadcastable representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return BroadcastMessage
+     */
+    public function toBroadcast($notifiable)
+    {
+        return new BroadcastMessage($this->toArray($notifiable));
     }
 }
