@@ -7,6 +7,7 @@ use App\Events\MessageSentEvent;
 use App\Http\Requests\MessageStoreRequest;
 use App\Models\Conversation;
 use App\Notifications\NotifyUserOfChatMessageNotification;
+use Illuminate\Broadcasting\BroadcastManager;
 use Illuminate\Http\RedirectResponse;
 
 class MessageController extends Controller
@@ -49,7 +50,6 @@ class MessageController extends Controller
         else{
             $user->notify(new NotifyUserOfChatMessageNotification($user, $request->user()));
         }
-
 
         return redirect()->back();
     }
