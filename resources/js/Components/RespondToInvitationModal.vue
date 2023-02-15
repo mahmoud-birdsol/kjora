@@ -1,6 +1,6 @@
 <script setup>
 import { defineEmits } from 'vue';
-import { Inertia } from '@inertiajs/inertia';
+import { useForm } from '@inertiajs/inertia';
 import Modal from '@/Components/Modal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { ElRate } from 'element-plus';
@@ -24,7 +24,8 @@ const props = defineProps({
 const emit = defineEmits(['close']);
 
 const accept = () => {
-    Inertia.patch(route('invitation.accept', props.invitation.id), {}, {
+    const form = useForm({});
+    form.patch(route('invitation.accept', props.invitation.id), {}, {
         preserveState: false,
         onSuccess: () => {
             emit('close');
@@ -33,7 +34,8 @@ const accept = () => {
 };
 
 const decline = () => {
-    Inertia.patch(route('invitation.decline', props.invitation.id), {}, {
+    const form = useForm({});
+    form.patch(route('invitation.decline', props.invitation.id), {}, {
         preserveState: false,
         onSuccess: () => {
             emit('close');
