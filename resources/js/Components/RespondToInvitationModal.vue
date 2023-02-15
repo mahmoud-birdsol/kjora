@@ -1,6 +1,6 @@
 <script setup>
 import { defineEmits } from 'vue';
-import { useForm } from '@inertiajs/inertia';
+import { useForm } from "@inertiajs/inertia-vue3";
 import Modal from '@/Components/Modal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { ElRate } from 'element-plus';
