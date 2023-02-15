@@ -54,7 +54,6 @@ class Club extends Resource
                 ->showOnPreview()
                 ->sortable()
                 ->filterable()
-                ->searchable()
                 ->rules('required'),
 
             Text::make('Name')
