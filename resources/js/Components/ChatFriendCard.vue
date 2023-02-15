@@ -10,7 +10,7 @@
             <span class="text-xs leading-none text-neutral-500"> {{ friend.userName }} </span>
         </div>
         <div class="mis-auto">
-            <TrashIcon class="w-6 h-6 text-white " />
+            <TrashIcon class="w-6 h-6 text-white cursor-pointer hover:text-red-500 " />
         </div>
     </div>
 </template>

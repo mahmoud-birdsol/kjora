@@ -39,7 +39,7 @@ const friends = [{
         </template>
         <div class="py-12 ">
             <!-- chat box -->
-            <div class="grid  w-full h-full md:grid-cols-[1fr_2fr]  text-stone-500 bg-stone-300 rounded-2xl ">
+            <div class="grid  w-full h-full md:grid-cols-[1fr_2fr]  text-neutral-500 bg-stone-300 rounded-2xl ">
                 <div
                     class="flex flex-col gap-3 px-6 py-3 md:border-r-2 md:border-r-stone-500 max-md:border-b-2 max-md:border-b-stone-500">
                     <!-- search input -->
@@ -47,7 +47,7 @@ const friends = [{
 
                         <input type="search" class="w-full col-start-1 row-start-1 pis-10 rounded-3xl">
                         <div class="col-start-1 row-start-1 pis-3">
-                            <MagnifyingGlassIcon class="w-6 h-6 text-primary">
+                            <MagnifyingGlassIcon class="w-5 h-5 text-primary">
                             </MagnifyingGlassIcon>
                         </div>
 
@@ -70,7 +70,8 @@ const friends = [{
                         <div class="flex-1 border-r-2 border-r-stone-500"></div>
                         <div class="flex items-center gap-2 p-4">
                             <button>
-                                <MagnifyingGlassIcon class="w-4 h-4 text-primary"></MagnifyingGlassIcon>
+                                <MagnifyingGlassIcon class="w-4 h-4 cursor-pointer hover:text-primaryDark text-primary">
+                                </MagnifyingGlassIcon>
                             </button>
 
                             <button>
