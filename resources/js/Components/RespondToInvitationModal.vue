@@ -27,7 +27,7 @@ const accept = () => {
     const form = useForm({});
     form.patch(route('invitation.accept', props.invitation.id), {}, {
         preserveState: true,
-        onSuccess: () => {
+        onFinish: () => {
             emit('close');
         }
     });
@@ -37,7 +37,7 @@ const decline = () => {
     const form = useForm({});
     form.patch(route('invitation.decline', props.invitation.id), {}, {
         preserveState: true,
-        onSuccess: () => {
+        onFinish: () => {
             emit('close');
         }
     });
