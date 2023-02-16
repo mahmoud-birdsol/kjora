@@ -21,6 +21,8 @@ class MessageController extends Controller
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Pusher\ApiErrorException
      * @throws \Pusher\PusherException
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
      */
     public function store(
         MessageStoreRequest $request,
@@ -28,12 +30,16 @@ class MessageController extends Controller
         CheckIfUserIsPresentAction $checkIfUserIsPresentAction
     ): RedirectResponse
     {
-
-        $conversation->messages()->create([
+        /** @var \App\Models\Message $message */
+        $message = $conversation->messages()->create([
             'body' => $request->input('body'),
             'sender_id' => auth()->id(),
             'parent_id' => $request->input('parent_id')
         ]);
+
+        if ($request->hasFile('media')) {
+            $message->addMedia($request->file('attachments'))->toMediaCollection('attachments');
+        }
 
         $user = $conversation->users()->whereNot('id', $request->user()->id())->first();
 

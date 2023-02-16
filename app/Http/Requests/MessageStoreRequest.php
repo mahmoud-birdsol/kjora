@@ -29,6 +29,11 @@ class MessageStoreRequest extends FormRequest
             ],
             'body' => [
                 'required'
+            ],
+            'attachments' => [
+                'nullable',
+                'mimes:pdf,png,jpg,jpeg',
+                'max:1024'
             ]
         ];
     }
