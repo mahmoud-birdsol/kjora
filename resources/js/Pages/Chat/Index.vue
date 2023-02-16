@@ -6,9 +6,11 @@ import { FlagIcon } from '@heroicons/vue/24/outline'
 import ChatLayout from '../../Layouts/ChatLayout.vue';
 import ConversationsList from '../../Components/ConversationsList.vue';
 import ChatMessage from '../../Components/ChatMessage.vue';
+import Modal from '../../Components/Modal.vue';
 
 import { FaceSmileIcon, PhotoIcon, } from '@heroicons/vue/24/outline'
-import { PaperAirplaneIcon, ArrowUpCircleIcon } from '@heroicons/vue/24/solid'
+import { XMarkIcon, PaperAirplaneIcon, ArrowUpCircleIcon } from '@heroicons/vue/24/solid'
+
 const friends = [{
     name: 'friend 1', userName: '@friend1', imgUrl: null, id: 1
 }, {
@@ -38,7 +40,7 @@ const friends = [{
 const messages = [{ id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: 1215, }, { id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 124, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 124, body: 'hello how are you', read_at: '12:15 pm', parent_id: 1215, },]
 
 
-
+const showReportModal = ref(false)
 
 
 </script>
@@ -123,9 +125,37 @@ const messages = [{ id: 1, sender_id: 68, body: 'hello how are you', read_at: '1
                     <button>
                         <MagnifyingGlassIcon class="w-4 h-4 cursor-pointer hover:text-primaryDark text-primary">
                         </MagnifyingGlassIcon>
+
                     </button>
-                    <button>
+                    <button @click="showReportModal = !showReportModal">
                         <FlagIcon class="w-4 h-4 text-red-600" />
+                        <Modal :show="showReportModal" @close="showReportModal = false" max-width="sm">
+                            <div class="uppercase text-center flex   flex-col gap-y-6 p-4">
+                                <div class=" self-end">
+                                    <button @click="showReportModal = false"
+                                        class="group hover:ring hover:ring-primary p-1  rounded-full ">
+                                        <XMarkIcon class="text-black w-5 group-hover:text-primary" />
+                                    </button>
+                                </div>
+                                <div class="text-primary mb-4 font-bold">
+                                    report
+                                </div>
+                                <!-- TODO:make it radio buttons group -->
+                                <ul
+                                    class="[&_li]:px-4 [&_li]:py-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:border-gray-400 text-stone-500  flex flex-col gap-4 px-6 text-sm ">
+                                    <li>spam</li>
+                                    <li>hate speech, or uncivil</li>
+                                    <li>sexual activity</li>
+                                    <li>scam, or fraud</li>
+                                    <li>bullying or harassment</li>
+                                    <li>violence, or threats</li>
+                                    <li>racism, discrimination, or insults</li>
+                                </ul>
+                                <button
+                                    class="bg-black text-white p-2 px-6 w-full rounded-full uppercase ">report</button>
+                            </div>
+
+                        </Modal>
                     </button>
                 </div>
             </template>
