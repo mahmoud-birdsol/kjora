@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { ElRate } from 'element-plus';
 import dayjs from 'dayjs';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';

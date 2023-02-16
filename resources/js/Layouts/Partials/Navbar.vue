@@ -35,6 +35,9 @@ const logout = () => {
                         <NavLink :href="route('invitation.index')" :active="route().current('invitation.idnex')">
                             Invitation
                         </NavLink>
+                        <button @click="Inertia.post(route('logout'))" class="text-white">
+                            logout
+                        </button>
                     </div>
                 </div>
 

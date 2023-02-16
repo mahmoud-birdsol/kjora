@@ -10,8 +10,8 @@ import Modal from '../../Components/Modal.vue';
 
 import { FaceSmileIcon, PhotoIcon, } from '@heroicons/vue/24/outline'
 import { XMarkIcon, PaperAirplaneIcon, ArrowUpCircleIcon } from '@heroicons/vue/24/solid'
-
-const friends = [{
+import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
+const inTfriends = [{
     name: 'friend 1', userName: '@friend1', imgUrl: null, id: 1
 }, {
     name: 'friend 2', userName: '@friend2', imgUrl: null, id: 2
@@ -36,13 +36,34 @@ const friends = [{
 }, {
     name: 'friend 3', userName: '@friend3', imgUrl: null, id: 3
 }]
+let friends = ref(inTfriends)
 
-const messages = [{ id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: 1215, }, { id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 124, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 124, body: 'hello how are you', read_at: '12:15 pm', parent_id: 1215, },]
-
-
+const inTmessages = [{ id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: 1215, }, { id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 124, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 124, body: 'hello how are you', read_at: '12:15 pm', parent_id: 1215, }, { id: 1, sender_id: 124, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 124, body: 'hello how are you', read_at: '12:15 pm', parent_id: 1215, }, { id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: 1215, }, { id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 124, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 124, body: 'hello how are you', read_at: '12:15 pm', parent_id: 1215, }, { id: 1, sender_id: 124, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 124, body: 'hello how are you', read_at: '12:15 pm', parent_id: 1215, }, { id: 1, sender_id: 124, body: 'what you will do today', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 124, body: 'i have two schedules', read_at: '12:15 pm', parent_id: 1215, },]
+const messages = ref(inTmessages)
 const showReportModal = ref(false)
+function fetchMore() {
+    console.log('fetch next page')
+    friends.value = [...friends.value, ...inTfriends,]
+}
 
 
+const newMessageForm = useForm({
+    new_message: null
+})
+function submitNewMessage() {
+    console.log('submit new  message')
+    console.log(newMessageForm.new_message)
+}
+
+
+const searchMessagesForm = useForm({
+    query: null
+})
+const debouncedSubmitSearchMessages = window._.debounce(submitSearchMessages, 500)
+function submitSearchMessages() {
+    console.log('send query and recive fitlerd data')
+    console.log(searchMessagesForm.query)
+}
 </script>
 <template>
     <AppLayout title="chat">
@@ -108,7 +129,7 @@ const showReportModal = ref(false)
         <h1 class="text-white"> conversation page page</h1>
         <ChatLayout>
             <template #sidebar>
-                <ConversationsList :friends="friends" />
+                <ConversationsList :friends="friends" @fetch-more="fetchMore" />
             </template>
             <template #header>
                 <div class="flex-1 flex p-4 items-center gap-4 border-r-2 border-r-stone-500">
@@ -160,7 +181,8 @@ const showReportModal = ref(false)
                 </div>
             </template>
             <template #main>
-                <div class="flex flex-col gap-y-4 div max-h-[50vh] llg:max-h-[70vh] overflow-auto hideScrollBar ">
+                <div
+                    class="flex flex-col gap-y-4 div max-h-[30vh] lg:max-h-[calc(70vh-180px)] overflow-auto hideScrollBar ">
                     <template v-for="message in messages" :key="message.id">
 
                         <ChatMessage :message="message" />
@@ -169,7 +191,7 @@ const showReportModal = ref(false)
                 </div>
             </template>
             <template #footer>
-                <div class="grid p-10 bg-white gap-y-4 rounded-2xl">
+                <div class="grid p-6 bg-white gap-y-4 rounded-2xl">
                     <div class="bg-neutral-200 text-sm w-full  rounded-xl py-2 px-12">
                         <div class="text-primary capitalize font-bold ">name</div>
                         <div class="text-black">message</div>
@@ -178,10 +200,11 @@ const showReportModal = ref(false)
                         <button>
                             <FaceSmileIcon class="text-neutral-300  w-5" />
                         </button>
-                        <div class="flex-grow  ">
+                        <div class="flex-grow  flex items-center ">
                             <!-- <input class="w-full rounded-full border-none " type="text" name="newMessage"
                                 id="newMessage" placeholder="Type your Message Here"> -->
-                            <textarea name="newMessage" id="newMessage" rows="1" placeholder="Type your Message Here"
+                            <textarea v-model="newMessageForm.new_message" name="newMessage" id="newMessage" rows="1"
+                                placeholder="Type your Message Here"
                                 class="w-full rounded-full resize-none hideScrollBar p-2 px-4 border-none  placeholder:text-neutral-400 "></textarea>
                         </div>
                         <button class="relative">
@@ -191,7 +214,7 @@ const showReportModal = ref(false)
                                 <ArrowUpCircleIcon class="text-neutral-300    h-2 w-2" />
                             </div>
                         </button>
-                        <button>
+                        <button @click="submitNewMessage">
                             <PaperAirplaneIcon class="text-neutral-900  w-5" />
                         </button>
                     </div>
@@ -199,6 +222,46 @@ const showReportModal = ref(false)
             </template>
         </ChatLayout>
 
+        <h1 class="text-white"> conversation page search in messages</h1>
+        <ChatLayout>
+            <template #sidebar>
+                <ConversationsList :friends="friends" />
+            </template>
+            <template #header>
+                <div class="flex-1 flex p-4 items-center gap-4">
+                    <div class="grid items-center w-full grid-cols-1 ">
+
+                        <input v-model="searchMessagesForm.query" @input="debouncedSubmitSearchMessages" type="search"
+                            class="w-full col-start-1 row-start-1 pis-10 rounded-3xl">
+                        <div class="col-start-1 row-start-1 justify-self-start pis-3">
+                            <MagnifyingGlassIcon class="w-5 h-5 text-primary">
+                            </MagnifyingGlassIcon>
+                        </div>
+
+                    </div>
+                    <button @click="showReportModal = false"
+                        class="group hover:ring hover:ring-primary p-1  rounded-full ">
+                        <XMarkIcon class="text-black w-5 group-hover:text-primary" />
+                    </button>
+                </div>
+
+            </template>
+            <template #main>
+                <div class="flex flex-col gap-y-4 div max-h-[50vh] lg:max-h-[70vh] overflow-auto hideScrollBar ">
+                    <template v-if="messages.length">
+                        <template v-for="message in messages" :key="message.id">
+
+                            <ChatMessage :message="message" />
+
+                        </template>
+
+
+                    </template>
+
+                </div>
+            </template>
+
+        </ChatLayout>
     </AppLayout>
 </template>
 

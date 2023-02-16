@@ -1,4 +1,5 @@
 <template>
+
     <div :class="alignmentClass + parentClasses" class="w-full  ">
         <!-- avatar for non current user message -->
         <div v-if='!isCurrentUser'>
@@ -22,16 +23,20 @@
             </span>
 
         </div>
+
         <!-- options menu if message of the current user -->
         <div v-if="isCurrentUser" class="absolute top-0 right-0">
             <button @click="showOptions = !showOptions">
                 <EllipsisVerticalIcon class="w-6  text-neutral-500" />
             </button>
+            <div v-if="showOptions" class="inset-0 fixed w-full h-full z-10 cursor-pointer  "
+                @click="showOptions = false">
+            </div>
             <Transition enterFromClass="opacity-0" enterToClass="opacity-100" leaveFromClass="opacity-100"
                 leaveToClass="opacity-0" leave-active-class="transition-all duration-150 ease-in"
                 enterActiveClass="transition-all duration-150 ease-out">
                 <div v-show="showOptions"
-                    class=" text-xs bg-black text-white  rounded-xl border border-neutral-500 py-2 px-6 pie-10 z-2 absolute right-7  -top-2">
+                    class=" text-xs bg-black text-white z-20  rounded-xl border border-neutral-500 py-2 px-6 pie-10 z-2 absolute right-7  -top-2">
                     <ul class="flex flex-col gap-y-2 justify-center">
                         <button class="hover:text-gray-400 ">
                             <li class="flex gap-x-2 items-center justify-center">
