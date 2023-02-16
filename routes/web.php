@@ -5,6 +5,7 @@ use App\Http\Controllers\Actions\MarkNotificationAsRead;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\IdentityVerificationController;
 use App\Http\Controllers\JoinPlatformController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\UserProfileController;
@@ -17,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Pusher\Pusher;
 
 /*
 |--------------------------------------------------------------------------
@@ -176,7 +178,7 @@ Route::middleware([
      |--------------------------------------------------------------------------
      | Chat Routes...
      |--------------------------------------------------------------------------
-     */
+    */
 
     Route::get(
         'chats', [
@@ -184,4 +186,45 @@ Route::middleware([
         'index'
     ])->name('chats.index');
 
+
+    /*
+     |--------------------------------------------------------------------------
+     | Message Routes...
+     |--------------------------------------------------------------------------
+    */
+
+    Route::post(
+        'chats/{conversation}/messages', [
+            MessageController::class,
+            'store'
+    ])->name('messages.store');
+});
+
+
+
+Route::get('test', function () {
+    $connection = config('broadcasting.connections.pusher');
+    $pusher = new Pusher(
+        $connection['key'],
+        $connection['secret'],
+        $connection['app_id'],
+        $connection['options'] ?? []
+    );
+
+// Example 1: get all active channels
+    $user = User::first();
+
+    $channel = $pusher->getChannelInfo('private-users.1');
+
+//    $channel = $pusher->getChannelInfo('');
+
+    return $channel;
+
+// Example 2: Get all the connected users for a specific channel
+});
+
+Route::get('occupy', function () {
+    $user = User::first();
+
+    event(new \App\Events\MessageSentEvent($user));
 });
