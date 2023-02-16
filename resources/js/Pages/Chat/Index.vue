@@ -1,13 +1,16 @@
 <script setup>
 import { ref } from 'vue';
 import AppLayout from '../../Layouts/AppLayout.vue';
-import dayjs from 'dayjs';
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
 import { FlagIcon } from '@heroicons/vue/24/outline'
-import ChatFriendCard from '../../Components/ChatFriendCard.vue';
 import ChatLayout from '../../Layouts/ChatLayout.vue';
 import ConversationsList from '../../Components/ConversationsList.vue';
-const todayDate = ref(new Date().now)
+import ChatMessage from '../../Components/ChatMessage.vue';
+import Modal from '../../Components/Modal.vue';
+
+import { FaceSmileIcon, PhotoIcon, } from '@heroicons/vue/24/outline'
+import { XMarkIcon, PaperAirplaneIcon, ArrowUpCircleIcon } from '@heroicons/vue/24/solid'
+
 const friends = [{
     name: 'friend 1', userName: '@friend1', imgUrl: null, id: 1
 }, {
@@ -33,12 +36,20 @@ const friends = [{
 }, {
     name: 'friend 3', userName: '@friend3', imgUrl: null, id: 3
 }]
+
+const messages = [{ id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: 1215, }, { id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 124, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 124, body: 'hello how are you', read_at: '12:15 pm', parent_id: 1215, },]
+
+
+const showReportModal = ref(false)
+
+
 </script>
 <template>
-    <AppLayout :title="chat">
+    <AppLayout title="chat">
         <template #header>
             <p>chat</p>
         </template>
+        <h1 class="text-white">chat welcome page</h1>
         <ChatLayout>
             <template #sidebar>
                 <ConversationsList :friends="friends" />
@@ -85,11 +96,107 @@ const friends = [{
 
                 </div>
             </template>
-            <!-- <template #footer>
+            <template #footer>
                 <div class="grid p-10 bg-white place-items-center rounded-2xl">
                     <button class="py-2 text-white bg-black px-28 rounded-3xl">ok</button>
                 </div>
-            </template> -->
+            </template>
+        </ChatLayout>
+
+
+        <!-- show page -->
+        <h1 class="text-white"> conversation page page</h1>
+        <ChatLayout>
+            <template #sidebar>
+                <ConversationsList :friends="friends" />
+            </template>
+            <template #header>
+                <div class="flex-1 flex p-4 items-center gap-4 border-r-2 border-r-stone-500">
+                    <div>
+                        <img :src="'https://ui-avatars.com/api/?name=' + 'peter' + '&color=094609FF&background=E2E2E2'"
+                            alt="" class="object-cover w-10 h-10 rounded-full border-2 border-primary">
+                    </div>
+                    <div class="flex flex-col ">
+                        <h4 class="mb-2   leading-none text-primary capitalize">peter</h4>
+                        <span class="text-xs leading-none text-neutral-500"> @username </span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 p-4">
+                    <button>
+                        <MagnifyingGlassIcon class="w-4 h-4 cursor-pointer hover:text-primaryDark text-primary">
+                        </MagnifyingGlassIcon>
+
+                    </button>
+                    <button @click="showReportModal = !showReportModal">
+                        <FlagIcon class="w-4 h-4 text-red-600" />
+                        <Modal :show="showReportModal" @close="showReportModal = false" max-width="sm">
+                            <div class="uppercase text-center flex   flex-col gap-y-6 p-4">
+                                <div class=" self-end">
+                                    <button @click="showReportModal = false"
+                                        class="group hover:ring hover:ring-primary p-1  rounded-full ">
+                                        <XMarkIcon class="text-black w-5 group-hover:text-primary" />
+                                    </button>
+                                </div>
+                                <div class="text-primary mb-4 font-bold">
+                                    report
+                                </div>
+                                <!-- TODO:make it radio buttons group -->
+                                <ul
+                                    class="[&_li]:px-4 [&_li]:py-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:border-gray-400 text-stone-500  flex flex-col gap-4 px-6 text-sm ">
+                                    <li>spam</li>
+                                    <li>hate speech, or uncivil</li>
+                                    <li>sexual activity</li>
+                                    <li>scam, or fraud</li>
+                                    <li>bullying or harassment</li>
+                                    <li>violence, or threats</li>
+                                    <li>racism, discrimination, or insults</li>
+                                </ul>
+                                <button
+                                    class="bg-black text-white p-2 px-6 w-full rounded-full uppercase ">report</button>
+                            </div>
+
+                        </Modal>
+                    </button>
+                </div>
+            </template>
+            <template #main>
+                <div class="flex flex-col gap-y-4 div max-h-[50vh] llg:max-h-[70vh] overflow-auto hideScrollBar ">
+                    <template v-for="message in messages" :key="message.id">
+
+                        <ChatMessage :message="message" />
+
+                    </template>
+                </div>
+            </template>
+            <template #footer>
+                <div class="grid p-10 bg-white gap-y-4 rounded-2xl">
+                    <div class="bg-neutral-200 text-sm w-full  rounded-xl py-2 px-12">
+                        <div class="text-primary capitalize font-bold ">name</div>
+                        <div class="text-black">message</div>
+                    </div>
+                    <div class="flex flex-row items-center gap-x-2 w-full">
+                        <button>
+                            <FaceSmileIcon class="text-neutral-300  w-5" />
+                        </button>
+                        <div class="flex-grow  ">
+                            <!-- <input class="w-full rounded-full border-none " type="text" name="newMessage"
+                                id="newMessage" placeholder="Type your Message Here"> -->
+                            <textarea name="newMessage" id="newMessage" rows="1" placeholder="Type your Message Here"
+                                class="w-full rounded-full resize-none hideScrollBar p-2 px-4 border-none  placeholder:text-neutral-400 "></textarea>
+                        </div>
+                        <button class="relative">
+                            <PhotoIcon class="text-neutral-300  h-5 w-5" />
+                            <div class="bg-white absolute bottom-0 -right-[1px] rounded-full  ">
+
+                                <ArrowUpCircleIcon class="text-neutral-300    h-2 w-2" />
+                            </div>
+                        </button>
+                        <button>
+                            <PaperAirplaneIcon class="text-neutral-900  w-5" />
+                        </button>
+                    </div>
+                </div>
+            </template>
         </ChatLayout>
 
     </AppLayout>

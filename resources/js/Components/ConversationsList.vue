@@ -11,7 +11,7 @@
     </div>
     <div>
         <p class="mb-3 font-bold text-black uppercase">total (3)</p>
-        <div class="flex flex-col gap-3 hideScrollBar max-h-[50vh] overflow-auto  lg:max-h-[60vh] ">
+        <div class="flex flex-col gap-3 hideScrollBar max-h-[40vh] overflow-auto  lg:max-h-[70vh] ">
             <template v-for="friend in friends" :key="friend.id">
 
                 <ChatFriendCard :friend="friend" />
@@ -33,15 +33,5 @@ defineProps({
 </script>
 
 <style  >
-.hideScrollBar::-webkit-scrollbar {
-    display: none;
-}
 
-/* Hide scrollbar for IE, Edge and Firefox */
-.hideScrollBar {
-    -ms-overflow-style: none;
-    /* IE and Edge */
-    scrollbar-width: none;
-    /* Firefox */
-}
 </style>
