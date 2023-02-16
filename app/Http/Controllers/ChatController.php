@@ -39,4 +39,24 @@ class ChatController extends Controller
             'conversations' => $query->with('messages')->get()
         ]);
     }
+
+    /**
+     * Display a single conversation with its messages
+     *
+     * @param \App\Models\Conversation $conversation
+     * @return \Inertia\Response
+     */
+    public function show(Conversation $conversation): Response
+    {
+        $query = $conversation->messages()->orderBy('created_at', 'DESC');
+
+        if (request()->has('search')) {
+            $query->where('body', '%LIKE%', request()->input('search'));
+        }
+
+        return Inertia::render('Chat/Show', [
+            'messages' => $query->paginate(12),
+            'conversation' => $conversation
+        ]);
+    }
 }
