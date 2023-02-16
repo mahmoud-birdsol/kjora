@@ -52,7 +52,7 @@ const respondToInvitation = (invitation) => {
 
     <AppLayout title="Invitations">
         <template #header>
-            <p class="text-7xl font-black">Invitations</p>
+            <p class="text-4xl md:text-7xl font-black">Invitations</p>
         </template>
 
         <div class="py-12">

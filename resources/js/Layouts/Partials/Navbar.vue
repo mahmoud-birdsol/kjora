@@ -33,14 +33,13 @@ const logout = () => {
             <div class="flex justify-between h-16">
                 <div class="flex">
                     <!-- Navigation Links -->
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <div class="hidden space-x-4 sm:space-x-8 sm:-my-px md:flex">
                         <NavLink :href="route('home')" :active="route().current('home')" class="block">
                             <HomeIcon class="w-4 h-4 text-primary"/>
                             <span>
                                 Home
                             </span>
                         </NavLink>
-
                         <NavLink :href="route('chats.index')" :active="route().current('chats.idnex')">
                             <ChatIcon  class="w-4 h-4 text-primary"/>
                             <span>
@@ -68,9 +67,9 @@ const logout = () => {
                     </div>
                 </div>
 
-                <div class="hidden sm:flex sm:gap-x-3 sm:items-center sm:ml-6">
+                <div class="hidden md:flex md:gap-x-3 sm:items-center sm:ml-6">
                     <!-- upgrade button  -->
-                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-10">
+                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5">
                         <div class="rounded-full bg-black">
                             <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                         </div>
@@ -79,7 +78,7 @@ const logout = () => {
                     <!-- user city  -->
                     <div class="flex items-center gap-1 ">
                         <MapPinIcon class="w-4 h-4 text-primary" />
-                        <span class="text-white w-max">current user city</span>
+                        <span class="text-white w-max">egypt</span>
                     </div>
                     
                     <!-- Settings Dropdown -->
@@ -161,7 +160,7 @@ const logout = () => {
                 </div>
 
                 <!-- Hamburger -->
-                <div class="flex items-center -mr-2 space-x-2 sm:hidden">
+                <div class="flex items-center -mr-2 space-x-2 md:hidden">
                     <div class="relative ml-3">
                         <Dropdown width="96">
                             <template #trigger>
@@ -208,7 +207,7 @@ const logout = () => {
         </div>
 
         <!-- Responsive Navigation Menu -->
-        <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }" class="sm:hidden">
+        <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }" class="md:hidden transition">
             <div class="pt-2 pb-3 space-y-1">
                 <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
                     Home
@@ -232,8 +231,9 @@ const logout = () => {
             <div class="pt-4 pb-1 border-t border-gray-200">
                 <div class="flex items-center px-4">
                     <div v-if="$page.props.jetstream.managesProfilePhotos" class="mr-3 shrink-0">
-                        <img class="object-cover w-10 h-10 rounded-full" :src="'/' + $page.props.user.avatar"
-                            :alt="$page.props.user.name">
+                        <img class="object-cover w-10 h-10 rounded-full"
+                                        :src="$page.props.user.avatar ? $page.props.user.avatar_url : `https://ui-avatars.com/api/?name=${$page.props.user.first_name}${$page.props.user.last_name}'&color=094609FF&background=E2E2E2`"
+                                        :alt="$page.props.user.name">
                     </div>
 
                     <div>
