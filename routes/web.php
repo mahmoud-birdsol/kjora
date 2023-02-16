@@ -54,6 +54,8 @@ Route::middleware([
         'create',
     ])->name('identity.verification.create');
 
+
+
     Route::post('/verification/identity', [
         IdentityVerificationController::class,
         'store',
