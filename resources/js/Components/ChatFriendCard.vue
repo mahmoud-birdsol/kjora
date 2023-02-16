@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="flex w-full">
-            <p class="pis-14 text-white">most new messages from every friend</p>
+            <p class="pis-6 text-white">most new messages from every friend</p>
             <div class="mis-auto pie-3 ">
                 <TrashIcon class="w-6 h-6 text-white cursor-pointer hover:text-red-500 " />
             </div>

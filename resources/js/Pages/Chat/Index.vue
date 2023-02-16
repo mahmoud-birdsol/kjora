@@ -7,6 +7,8 @@ import ChatLayout from '../../Layouts/ChatLayout.vue';
 import ConversationsList from '../../Components/ConversationsList.vue';
 import ChatMessage from '../../Components/ChatMessage.vue';
 
+import { FaceSmileIcon, PhotoIcon, } from '@heroicons/vue/24/outline'
+import { PaperAirplaneIcon, ArrowUpCircleIcon } from '@heroicons/vue/24/solid'
 const friends = [{
     name: 'friend 1', userName: '@friend1', imgUrl: null, id: 1
 }, {
@@ -34,6 +36,11 @@ const friends = [{
 }]
 
 const messages = [{ id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: 1215, }, { id: 1, sender_id: 68, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 124, body: 'hello how are you', read_at: '12:15 pm', parent_id: null, }, { id: 1, sender_id: 124, body: 'hello how are you', read_at: '12:15 pm', parent_id: 1215, },]
+
+
+
+
+
 </script>
 <template>
     <AppLayout title="chat">
@@ -102,7 +109,16 @@ const messages = [{ id: 1, sender_id: 68, body: 'hello how are you', read_at: '1
                 <ConversationsList :friends="friends" />
             </template>
             <template #header>
-                <div class="flex-1 border-r-2 border-r-stone-500"></div>
+                <div class="flex-1 flex p-4 items-center gap-4 border-r-2 border-r-stone-500">
+                    <div>
+                        <img :src="'https://ui-avatars.com/api/?name=' + 'peter' + '&color=094609FF&background=E2E2E2'"
+                            alt="" class="object-cover w-10 h-10 rounded-full border-2 border-primary">
+                    </div>
+                    <div class="flex flex-col ">
+                        <h4 class="mb-2   leading-none text-primary capitalize">peter</h4>
+                        <span class="text-xs leading-none text-neutral-500"> @username </span>
+                    </div>
+                </div>
                 <div class="flex items-center gap-2 p-4">
                     <button>
                         <MagnifyingGlassIcon class="w-4 h-4 cursor-pointer hover:text-primaryDark text-primary">
@@ -114,7 +130,7 @@ const messages = [{ id: 1, sender_id: 68, body: 'hello how are you', read_at: '1
                 </div>
             </template>
             <template #main>
-                <div class="flex flex-col gap-y-4 div ">
+                <div class="flex flex-col gap-y-4 div max-h-[50vh] llg:max-h-[70vh] overflow-auto hideScrollBar ">
                     <template v-for="message in messages" :key="message.id">
 
                         <ChatMessage :message="message" />
@@ -123,8 +139,32 @@ const messages = [{ id: 1, sender_id: 68, body: 'hello how are you', read_at: '1
                 </div>
             </template>
             <template #footer>
-                <div class="grid p-10 bg-white place-items-center rounded-2xl">
-                    <button class="py-2 text-white bg-black px-28 rounded-3xl">ok</button>
+                <div class="grid p-10 bg-white gap-y-4 rounded-2xl">
+                    <div class="bg-neutral-200 text-sm w-full  rounded-xl py-2 px-12">
+                        <div class="text-primary capitalize font-bold ">name</div>
+                        <div class="text-black">message</div>
+                    </div>
+                    <div class="flex flex-row items-center gap-x-2 w-full">
+                        <button>
+                            <FaceSmileIcon class="text-neutral-300  w-5" />
+                        </button>
+                        <div class="flex-grow  ">
+                            <!-- <input class="w-full rounded-full border-none " type="text" name="newMessage"
+                                id="newMessage" placeholder="Type your Message Here"> -->
+                            <textarea name="newMessage" id="newMessage" rows="1" placeholder="Type your Message Here"
+                                class="w-full rounded-full resize-none hideScrollBar p-2 px-4 border-none  placeholder:text-neutral-400 "></textarea>
+                        </div>
+                        <button class="relative">
+                            <PhotoIcon class="text-neutral-300  h-5 w-5" />
+                            <div class="bg-white absolute bottom-0 -right-[1px] rounded-full  ">
+
+                                <ArrowUpCircleIcon class="text-neutral-300    h-2 w-2" />
+                            </div>
+                        </button>
+                        <button>
+                            <PaperAirplaneIcon class="text-neutral-900  w-5" />
+                        </button>
+                    </div>
                 </div>
             </template>
         </ChatLayout>
