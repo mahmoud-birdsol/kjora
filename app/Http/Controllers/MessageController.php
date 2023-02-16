@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CheckIfUserIsPresentAction;
 use App\Events\MessageSentEvent;
 use App\Http\Requests\MessageStoreRequest;
 use App\Models\Conversation;
+use App\Notifications\NotifyUserOfChatMessageNotification;
 use Illuminate\Http\RedirectResponse;
 
 class MessageController extends Controller
@@ -14,10 +16,19 @@ class MessageController extends Controller
      *
      * @param \App\Http\Requests\MessageStoreRequest $request
      * @param \App\Models\Conversation $conversation
+     * @param \App\Actions\CheckIfUserIsPresentAction $checkIfUserIsPresentAction
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Pusher\ApiErrorException
+     * @throws \Pusher\PusherException
      */
-    public function store(MessageStoreRequest $request, Conversation $conversation): RedirectResponse
+    public function store(
+        MessageStoreRequest $request,
+        Conversation $conversation,
+        CheckIfUserIsPresentAction $checkIfUserIsPresentAction
+    ): RedirectResponse
     {
+
         $conversation->messages()->create([
             'body' => $request->input('body'),
             'sender_id' => auth()->id(),
@@ -26,7 +37,13 @@ class MessageController extends Controller
 
         $user = $conversation->users()->whereNot('id', $request->user()->id())->first();
 
-        event(new MessageSentEvent($user));
+        if ($checkIfUserIsPresentAction($user)) {
+            event(new MessageSentEvent($user));
+        }
+        else{
+            $user->notify(new NotifyUserOfChatMessageNotification($user, $request->user()));
+        }
+
 
         return redirect()->back();
     }

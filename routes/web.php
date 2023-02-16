@@ -203,22 +203,7 @@ Route::middleware([
 
 
 Route::get('test', function () {
-    $connection = config('broadcasting.connections.pusher');
-    $pusher = new Pusher(
-        $connection['key'],
-        $connection['secret'],
-        $connection['app_id'],
-        $connection['options'] ?? []
-    );
 
-// Example 1: get all active channels
-    $user = User::first();
-
-    $channel = $pusher->getChannelInfo('private-users.1');
-
-//    $channel = $pusher->getChannelInfo('');
-
-    return $channel;
 
 // Example 2: Get all the connected users for a specific channel
 });
