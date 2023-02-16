@@ -1,4 +1,5 @@
 <script setup>
+import { Head } from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import DeleteUserForm from '@/Pages/Profile/Partials/DeleteUserForm.vue';
 import LogoutOtherBrowserSessionsForm from '@/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue';
@@ -6,52 +7,50 @@ import SectionBorder from '@/Components/SectionBorder.vue';
 import TwoFactorAuthenticationForm from '@/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue';
 import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue';
+import dayjs from 'dayjs';
 
 defineProps({
-    confirmsTwoFactorAuthentication: Boolean,
-    sessions: Array,
+    // confirmsTwoFactorAuthentication: Boolean,
+    // sessions: Array,
+    countries: Array,
+    positions: Array,
 });
 </script>
 
 <template>
+    <Head title="Profile"/>
+
     <AppLayout title="Profile">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Profile
-            </h2>
+            <p class="text-2xl font-light">Hello,</p>
+            <p class="text-7xl font-black">{{ $page.props.auth.user.first_name }}</p>
+            <p class="text-lg font-semibold">{{ dayjs().format('dddd, DD MMMM YYYY') }}</p>
         </template>
 
-        <div>
-            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-                <div v-if="$page.props.jetstream.canUpdateProfileInformation">
-                    <UpdateProfileInformationForm :user="$page.props.user" />
+        <UpdateProfileInformationForm :user="$page.props.user" :countries="countries" :positions="positions"/>
 
-                    <SectionBorder />
-                </div>
 
-                <div v-if="$page.props.jetstream.canUpdatePassword">
-                    <UpdatePasswordForm class="mt-10 sm:mt-0" />
+<!--            <div v-if="$page.props.jetstream.canUpdatePassword">-->
+<!--                <UpdatePasswordForm class="mt-10 sm:mt-0"/>-->
 
-                    <SectionBorder />
-                </div>
+<!--                <SectionBorder/>-->
+<!--            </div>-->
 
-                <div v-if="$page.props.jetstream.canManageTwoFactorAuthentication">
-                    <TwoFactorAuthenticationForm 
-                        :requires-confirmation="confirmsTwoFactorAuthentication"
-                        class="mt-10 sm:mt-0" 
-                    />
+<!--            <div v-if="$page.props.jetstream.canManageTwoFactorAuthentication">-->
+<!--                <TwoFactorAuthenticationForm-->
+<!--                    :requires-confirmation="confirmsTwoFactorAuthentication"-->
+<!--                    class="mt-10 sm:mt-0"-->
+<!--                />-->
 
-                    <SectionBorder />
-                </div>
+<!--                <SectionBorder/>-->
+<!--            </div>-->
 
-                <LogoutOtherBrowserSessionsForm :sessions="sessions" class="mt-10 sm:mt-0" />
+<!--            <LogoutOtherBrowserSessionsForm :sessions="sessions" class="mt-10 sm:mt-0"/>-->
 
-                <template v-if="$page.props.jetstream.hasAccountDeletionFeatures">
-                    <SectionBorder />
+<!--            <template v-if="$page.props.jetstream.hasAccountDeletionFeatures">-->
+<!--                <SectionBorder/>-->
 
-                    <DeleteUserForm class="mt-10 sm:mt-0" />
-                </template>
-            </div>
-        </div>
+<!--                <DeleteUserForm class="mt-10 sm:mt-0"/>-->
+<!--            </template>-->
     </AppLayout>
 </template>

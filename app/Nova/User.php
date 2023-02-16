@@ -2,13 +2,25 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\MarkAsVerified;
+use App\Nova\Actions\SendIdentityVerificationReminder;
+use App\Nova\Lenses\UnverifiedUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
-use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\Avatar;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Panel;
 
 class User extends Resource
 {
@@ -24,7 +36,7 @@ class User extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'username';
 
     /**
      * The columns that should be searched.
@@ -32,7 +44,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id', 'username', 'email', 'phone', 'first_name', 'last_name',
     ];
 
     /**
@@ -46,9 +58,37 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Gravatar::make()->maxWidth(50),
+            Avatar::make('Avatar')
+                ->showOnPreview()
+                ->nullable()
+                ->rules('nullable'),
 
-            Text::make('Name')
+            BelongsTo::make('Country')
+                ->showOnPreview()
+                ->showCreateRelationButton()
+                ->searchable()
+                ->filterable()
+                ->nullable()
+                ->rules('nullable'),
+
+            BelongsTo::make('Club')
+                ->showOnPreview()
+                ->showCreateRelationButton()
+                ->searchable()
+                ->filterable()
+                ->nullable()
+                ->rules('nullable'),
+
+            BelongsTo::make('Position')
+                ->showOnPreview()
+                ->showCreateRelationButton()
+                ->hideFromIndex()
+                ->searchable()
+                ->filterable()
+                ->nullable()
+                ->rules('nullable'),
+
+            Text::make('Username')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
@@ -62,6 +102,105 @@ class User extends Resource
                 ->onlyOnForms()
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),
+
+            DateTime::make('Joined Platform At')
+                ->showOnPreview()
+                ->hideWhenCreating()
+                ->hideWhenUpdating(),
+
+            /*
+             |--------------------------------------------------------------------------
+             | Profile information...
+             |--------------------------------------------------------------------------
+             */
+
+            Text::make('First name')
+                ->showOnPreview()
+                ->sortable()
+                ->hideFromIndex()
+                ->rules('required', 'max:255'),
+
+            Text::make('Last name')
+                ->showOnPreview()
+                ->sortable()
+                ->hideFromIndex()
+                ->rules('required', 'max:255'),
+
+            Text::make('Phone')
+                ->showOnPreview()
+                ->sortable()
+                ->hideFromIndex()
+                ->rules('required', 'max:255'),
+
+            Select::make('Gender')->options([
+                'male' => 'Male',
+                'female' => 'Female',
+            ])->displayUsingLabels()->showOnPreview()->sortable()->filterable()->required()->rules('required'),
+
+            Date::make('Date of birth')
+                ->showOnPreview()
+                ->filterable()
+                ->sortable()
+                ->required()
+                ->rules('required'),
+
+            Number::make('Age')
+                ->onlyOnDetail(),
+
+            Select::make('Preferred Foot')->options([
+                'left' => 'Left',
+                'right' => 'Right',
+            ])->displayUsingLabels()->showOnPreview()->sortable()->filterable()->required()->rules('required'),
+
+            Panel::make('Identity Verification', fn() => [
+                Boolean::make('Verified', 'has_verified_identity')
+                    ->filterable()
+                    ->sortable()
+                    ->hideWhenUpdating()
+                    ->hideWhenCreating(),
+
+                Select::make('Identity Issue Country')
+                    ->options(\App\Models\Country::all()->pluck('name', 'name')->toArray())
+                    ->hideFromIndex()
+                    ->displayUsingLabels()
+                    ->showOnPreview()
+                    ->sortable()
+                    ->filterable()
+                    ->required()
+                    ->rules('required'),
+
+                Select::make('Identity Type')->options([
+                    'national_id' => 'National ID',
+                    'passport' => 'Passport',
+                ])->hideFromIndex()->displayUsingLabels()->showOnPreview()->sortable()->filterable()->required()->rules('required'),
+
+                Image::make('Identity Front Image')
+                    ->hideFromIndex()
+                    ->nullable()
+                    ->rules('nullable'),
+
+                Image::make('Identity Back Image')
+                    ->hideFromIndex()
+                    ->nullable()
+                    ->rules('nullable'),
+
+                Image::make('Identity selfie Image')
+                    ->hideFromIndex()
+                    ->nullable()
+                    ->rules('nullable'),
+            ]),
+
+            // Todo after security feature is done.
+            //            'accepted_terms_and_conditions_version',
+            //            'accepted_privacy_policy_version',
+            //            'accepted_cookie_policy_version',
+            //
+            //            'accepted_terms_and_conditions_at',
+            //            'accepted_privacy_policy_at',
+            //            'accepted_cookie_policy_at',
+
+            HasMany::make('Clicks'),
+            HasMany::make('Impressions'),
         ];
     }
 
@@ -95,7 +234,9 @@ class User extends Resource
      */
     public function lenses(NovaRequest $request)
     {
-        return [];
+        return [
+            UnverifiedUsers::make(),
+        ];
     }
 
     /**
@@ -106,6 +247,24 @@ class User extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            MarkAsVerified::make()
+                ->showInline()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('verify users');
+                })
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('verify users');
+                }),
+
+            SendIdentityVerificationReminder::make()
+                ->showInline()
+                ->canSee(function ($request) {
+                    return $request->user()->hasPermissionTo('verify users');
+                })
+                ->canRun(function ($request) {
+                    return $request->user()->hasPermissionTo('verify users');
+                }),
+        ];
     }
 }

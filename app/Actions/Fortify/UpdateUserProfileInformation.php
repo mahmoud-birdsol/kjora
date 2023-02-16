@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -19,13 +20,21 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     public function update($user, array $input)
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+            'avatar' => ['nullable'],
+
+            'first_name' => ['required', 'string', 'min:3', 'max:18'],
+            'last_name' => ['required', 'string', 'min:3', 'max:18'],
+            'country_id' => ['required', 'integer', 'exists:countries,id'],
+            'club_id' => ['required', 'integer', 'exists:clubs,id'],
+            'date_of_birth' => ['required', 'date', 'before:-18 years'],
+            'position_id' => ['required', 'exists:positions,id'],
+            'gender' => ['required', Rule::in(['male', 'female'])],
         ])->validateWithBag('updateProfileInformation');
 
-        if (isset($input['photo'])) {
-            $user->updateProfilePhoto($input['photo']);
+        if (isset($input['avatar']) && request()->hasFile('avatar')) {
+            $user->updateProfilePhoto($input['avatar']);
         }
 
         if ($input['email'] !== $user->email &&
@@ -33,7 +42,11 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $this->updateVerifiedUser($user, $input);
         } else {
             $user->forceFill([
-                'name' => $input['name'],
+                'first_name' => $input['first_name'],
+                'last_name' => $input['last_name'],
+                'date_of_birth' => Carbon::parse($input['date_of_birth']),
+                'club_id' => $input['club_id'],
+                'username' => $input['username'],
                 'email' => $input['email'],
             ])->save();
         }
@@ -49,7 +62,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     protected function updateVerifiedUser($user, array $input)
     {
         $user->forceFill([
-            'name' => $input['name'],
+            'username' => $input['username'],
             'email' => $input['email'],
             'email_verified_at' => null,
         ])->save();

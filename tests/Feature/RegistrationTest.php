@@ -2,8 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Models\Club;
+use App\Models\Country;
+use App\Models\Position;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Fortify\Features;
 use Laravel\Jetstream\Jetstream;
 use Tests\TestCase;
@@ -11,6 +15,7 @@ use Tests\TestCase;
 class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
+    use WithFaker;
 
     public function test_registration_screen_can_be_rendered()
     {
@@ -41,11 +46,19 @@ class RegistrationTest extends TestCase
         }
 
         $response = $this->post('/register', [
-            'name' => 'Test User',
+            'username' => 'Test User',
+            'first_name' => 'john',
+            'last_name' => 'doe',
             'email' => 'test@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature(),
+            'country_id' => Country::factory()->create()->id,
+            'club_id' => Club::factory()->create()->id,
+            'date_of_birth' => now(),
+            'phone' => $this->faker->phoneNumber(),
+            'position_id' => Position::factory()->create()->id,
+            'gender' => 'male',
         ]);
 
         $this->assertAuthenticated();

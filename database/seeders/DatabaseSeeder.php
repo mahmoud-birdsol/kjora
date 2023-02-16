@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Rating;
+use App\Models\Stadium;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,11 +16,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call([
+            RoleSeeder::class,
+            AdminSeeder::class,
+            PositionSeeder::class,
+            CountrySeeder::class,
+            ClubSeeder::class,
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        for ($i = 1; $i++; $i <= 5) {
+            Rating::factory()->create([
+                'rating_from' => $i,
+                'rating_to' => $i + 1,
+                'hourly_rate' => $i * 10,
+            ]);
+        }
+
+        Stadium::factory()->count(10)->create();
     }
 }

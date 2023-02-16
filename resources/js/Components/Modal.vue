@@ -14,6 +14,11 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
+    position: {
+        required: false,
+        type: String,
+        default: 'center',
+    }
 });
 
 const emit = defineEmits(['close']);
@@ -69,7 +74,7 @@ const maxWidthClass = computed(() => {
                     leave-to-class="opacity-0"
                 >
                     <div v-show="show" class="fixed inset-0 transform transition-all" @click="close">
-                        <div class="absolute inset-0 bg-gray-500 opacity-75" />
+                        <div class="absolute inset-0 bg-gray-500 opacity-75"/>
                     </div>
                 </transition>
 
@@ -81,8 +86,25 @@ const maxWidthClass = computed(() => {
                     leave-from-class="opacity-100 translate-y-0 sm:scale-100"
                     leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 >
-                    <div v-show="show" class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto" :class="maxWidthClass">
-                        <slot v-if="show" />
+                    <div v-show="show">
+                        <div v-show="position == 'center'"
+                             class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
+                             :class="maxWidthClass">
+                            <slot v-if="show"/>
+                        </div>
+
+                        <div v-show="position == 'right'">
+                            <div class="w-full max-w-7xl mx-auto">
+                                <div class="flex justify-end">
+                                    <div class="w-1/2 flex justify-center">
+                                        <div class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:mx-auto"
+                                             :class="maxWidthClass">
+                                            <slot v-if="show"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </transition>
             </div>
