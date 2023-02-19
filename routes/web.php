@@ -188,6 +188,12 @@ Route::middleware([
         'index'
     ])->name('chats.index');
 
+    Route::get(
+        'chats/{conversation}', [
+        ChatController::class,
+        'show'
+    ])->name('chats.show');
+
 
     /*
      |--------------------------------------------------------------------------
