@@ -51,10 +51,12 @@ class ChatController extends Controller
      */
     public function show(Conversation $conversation): Response
     {
+        $userConversationsIds = request()->user()->conversations->pluck('id');
+
         $query = $conversation->messages()->orderBy('created_at', 'DESC');
 
-        $conversations = Conversation::query()->whereHas('users', function ($query) use ($conversation) {
-            $query->where('conversation_user.conversation_id', $conversation->id)
+        $conversations = Conversation::query()->whereHas('users', function ($query) use ($userConversationsIds) {
+            $query->whereIn('conversation_user.conversation_id', $userConversationsIds)
                 ->whereNot('conversation_user.user_id', request()->user()->id);
         })
             ->with('messages')
