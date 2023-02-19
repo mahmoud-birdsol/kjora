@@ -1,7 +1,7 @@
 <template>
     <div class="py-12 ">
         <!-- chat box -->
-        <div class="grid  w-full h-full lg:grid-cols-[1fr_2fr]  text-neutral-500 bg-stone-300 rounded-2xl ">
+        <div class="grid  w-full h-full lg:grid-cols-[1fr_2fr]  text-neutral-500 bg-white rounded-2xl ">
 
             <div v-if="$slots.sidebar"
                 class="flex flex-col gap-3 px-6 py-3 lg:border-r-2 lg:border-r-stone-500 max-lg:border-b-2 max-lg:border-b-stone-500">
@@ -18,8 +18,8 @@
                     <slot name="main"></slot>
                 </div>
                 <!-- this is empty div for acts like separation -->
-                <div v-if="$slots.main && $slots.footer" class="self-end h-2 border-y-2 border-y-stone-500">&nbsp;</div>
-                <div v-if="$slots.footer" class="self-end p-2 h-min">
+
+                <div v-if="$slots.footer" class="self-end p-2 h-min border-t-2 border-t-stone-500">
                     <!-- ok model -->
                     <slot name="footer"></slot>
                 </div>
@@ -35,6 +35,4 @@ const todayDate = ref(new Date().now)
 
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

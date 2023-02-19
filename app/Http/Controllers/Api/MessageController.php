@@ -25,8 +25,7 @@ class MessageController extends Controller
     public function index(
         Request $request,
         Conversation $conversation
-    ): AnonymousResourceCollection
-    {
+    ): AnonymousResourceCollection {
         $query = $conversation->messages()->orderBy('created_at', 'DESC');
 
         if ($request->has('search')) {
@@ -51,8 +50,7 @@ class MessageController extends Controller
         MessageStoreRequest $request,
         Conversation $conversation,
         CheckIfUserIsPresentAction $checkIfUserIsPresentAction
-    ): MessageResource
-    {
+    ): MessageResource {
         /** @var Message $message */
         $message = $conversation->messages()->create([
             'body' => $request->input('body'),
@@ -60,7 +58,7 @@ class MessageController extends Controller
             'parent_id' => $request->input('parent_id')
         ]);
 
-        if ($request->hasFile('media')) {
+        if ($request->hasFile('attachments')) {
             $message->addMedia($request->file('attachments'))->toMediaCollection('attachments');
         }
 
@@ -68,8 +66,7 @@ class MessageController extends Controller
 
         if ($checkIfUserIsPresentAction($user)) {
             event(new MessageSentEvent($user, $message));
-        }
-        else{
+        } else {
             $user->notify(new NotifyUserOfChatMessageNotification($user, $request->user(), $conversation));
         }
 

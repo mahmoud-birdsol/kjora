@@ -1,7 +1,7 @@
 <template>
     <Link :href="route('chats.show', conversation.id)">
     <div class="bg-[url(/images/player_bg_lg.png)] bg-cover relative rounded-2xl p-6 flex flex-col gap-8 items-start bg-[center_top]"
-        :class="active ? 'border-white border-2' : null">
+        :class="active ? 'border-stone-400 shadow-md border-4' : null">
 
 
         <div class="w-full flex flex-row gap-4 items-center">
