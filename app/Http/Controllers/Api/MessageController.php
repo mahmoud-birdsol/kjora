@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MessageStoreRequest;
 use App\Http\Resources\MessageResource;
 use App\Models\Conversation;
+use App\Models\Message;
 use App\Notifications\NotifyUserOfChatMessageNotification;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -52,6 +53,7 @@ class MessageController extends Controller
         CheckIfUserIsPresentAction $checkIfUserIsPresentAction
     ): MessageResource
     {
+        /** @var Message $message */
         $message = $conversation->messages()->create([
             'body' => $request->input('body'),
             'sender_id' => $request->user()->id,
@@ -65,7 +67,7 @@ class MessageController extends Controller
         $user = $conversation->users()->whereNot('conversation_user.user_id', $request->user()->id)->first();
 
         if ($checkIfUserIsPresentAction($user)) {
-            event(new MessageSentEvent($user));
+            event(new MessageSentEvent($user, $message));
         }
         else{
             $user->notify(new NotifyUserOfChatMessageNotification($user, $request->user(), $conversation));
