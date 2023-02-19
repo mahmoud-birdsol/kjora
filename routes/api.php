@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ClubController;
+use App\Http\Controllers\Api\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +24,16 @@ Route::get('clubs', [
     ClubController::class,
     'index'
 ])->name('api.clubs');
+
+Route::get(
+    'chats/{conversation}/messages', [
+        MessageController::class,
+        'index'
+    ]
+)->middleware('auth:sanctum')->name('api.messages.index');
+
+Route::post(
+    'chats/{conversation}/messages', [
+    MessageController::class,
+    'store'
+])->middleware('auth:sanctum')->name('api.messages.store');
