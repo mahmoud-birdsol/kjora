@@ -200,12 +200,6 @@ Route::middleware([
      | Message Routes...
      |--------------------------------------------------------------------------
     */
-
-    Route::post(
-        'chats/{conversation}/messages', [
-            MessageController::class,
-            'store'
-    ])->name('messages.store');
 });
 
 

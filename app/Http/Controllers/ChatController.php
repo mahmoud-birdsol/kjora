@@ -48,6 +48,7 @@ class ChatController extends Controller
      * Display a single conversation with its messages
      *
      * @param \App\Models\Conversation $conversation
+     * @param \App\Actions\MarkMessagesAsReadAction $markMessagesAsReadAction
      * @return \Inertia\Response
      */
     public function show(
@@ -56,8 +57,6 @@ class ChatController extends Controller
     ): Response
     {
         $userConversationsIds = request()->user()->conversations->pluck('id');
-
-        $query = $conversation->messages()->orderBy('created_at', 'DESC');
 
         $markMessagesAsReadAction($conversation);
 
@@ -70,12 +69,7 @@ class ChatController extends Controller
                 $query->whereNot('conversation_user.user_id', request()->user()->id);
             })->get();
 
-        if (request()->has('search')) {
-            $query->where('body', '%LIKE%', request()->input('search'));
-        }
-
         return Inertia::render('Chat/Show', [
-            'messages' => $query->paginate(12),
             'conversation' => $conversation,
             'player' => $conversation->users()->whereNot('conversation_user.user_id', request()->user()->id)->first(),
             'conversations' => $conversations
