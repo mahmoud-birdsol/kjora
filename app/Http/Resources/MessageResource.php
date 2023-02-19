@@ -20,7 +20,7 @@ class MessageResource extends JsonResource
             'parent' => MessageResource::make($this->resource->parentMessage),
             'parent_id' => $this->parent_id,
             'sender_id' => $this->sender_id,
-            'media' => $this->resource->load('media')
+            'media' => $this->resource->getFirstMedia('attachments')
         ];
     }
 }

@@ -19,36 +19,60 @@ const props = defineProps({
     // messages: null,
     player: null
 })
-Echo.private('users.chat.' + usePage().props.value.auth.user.id)
-    .listen('.message-sent', (event) => {
 
-        console.log(event)
-    });
 const showReportModal = ref(false)
 const messages = ref([])
 const messagesContainer = ref(null)
-// const MessagesReversed = computed(() => {
-//     return [...messages.value].reverse()
-// })
+const repliedMessage = ref(null);
+const isReply = ref(false)
+const isAttachment = ref(false)
+const isDisabled = ref(false)
+const attachmentsInput = ref(null)
+const filePreview = ref(null);
+const footer = ref(null);
+const currentUser = usePage().props.value.auth.user
+
+
+// function scrollToBottom() {
+//     messagesContainer.value.scrollTo({
+//         top: messagesContainer.value.scrollHeight,
+//         left: 0,
+//         behavior: 'smooth'
+//     });
+// }
+
+
+Echo.private('users.chat.' + currentUser.id)
+    .listen('.message-sent', (event) => {
+        messages.value.unshift(event)
+        setTimeout(() => {
+            messagesContainer.value.scrollTo({
+                top: messagesContainer.value.scrollHeight,
+                left: 0,
+                behavior: 'smooth'
+            });
+        }, 200);
+    });
+
 
 const page = ref(1)
 onMounted(() => {
 
     axios.get(route('api.messages.index', props.conversation), { page: page.value }).then(response => {
-        console.log(response.data)
+
         messages.value = response.data.data
 
 
     }).then(() => {
-        console.log(messagesContainer.value.scrollHeight);
+
         messagesContainer.value.scrollTo({
             top: messagesContainer.value.scrollHeight,
             left: 0,
             behavior: 'smooth'
         });
+
     })
-    // messages.value = (await axios.get(route('api.messages.index', props.conversation))).data.data;
-    // console.log('messagesObject', messages.value)
+
 
 });
 
@@ -91,7 +115,7 @@ function handleScroll(e) {
             messages.value = [...messages.value, ...response.data.data]
             // console.log(messages.value)
 
-            console.log('fetchMore')
+
         })
     }
     element.scrollTop === 0 ? getNextPage() : null
@@ -105,48 +129,86 @@ const newMessageForm = useForm({
     body: null,
     attachments: null
 })
+
+
 function submitNewMessage() {
     axios.post(route('api.messages.store', props.conversation.id), {
         body: newMessageForm.body
-        , parent_id: newMessageForm.parent_id
+        , parent_id: repliedMessage.value && repliedMessage.value.id
         , attachments: newMessageForm.attachments
+    }, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
     }).then((response) => {
-        console.log(response.data.data)
         messages.value.unshift(response.data.data);
+        isDisabled.value = true
 
-        console.log('submitted', messages.value);
     }).then(() => {
         newMessageForm.body = null
         newMessageForm.parent_id = null
         newMessageForm.attachments = null
-
+        isReply.value = false
+        isAttachment.value = false
+        filePreview.value = null
+        repliedMessage.value = null
+        isDisabled.value = false
         messagesContainer.value.scrollTo({
             top: messagesContainer.value.scrollHeight,
             left: 0,
             behavior: 'smooth'
         });
+
     }).catch((err => {
-        console.log(err)
+        console.error(err)
     }))
 
 
 }
+// attachments
 
-// onSuccess: () => {
-//     newMessageForm.reset()
+function clickFileInput() {
+    attachmentsInput.value.click()
+}
 
-//     console.log(messagesContainer.value)
-//     axios.post(route('api.messages.store', conversation.id)).
-//         messagesContainer.value.scrollTo({
-//             top: messagesContainer.value.scrollHeight,
-//             left: 0,
-//             behavior: 'smooth'
-//         });
-// },
-//     preserveScroll: true,
-//         preserveState: true,
-//     })
 
+
+
+/* -------------------------------------------------------------------------- */
+
+
+
+
+function handleFile(file) {
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+        filePreview.value = e.target.result;
+        isAttachment.value = true
+    };
+
+
+
+    reader.readAsDataURL(file);
+}
+// on photoInput change method
+const handleAttachments = (e) => {
+    const file = attachmentsInput.value.files[0];
+    newMessageForm.attachments = attachmentsInput.value.files[0]
+
+    handleFile(file)
+}
+/* -------------------------------------------------------------------------- */
+
+//handle reply
+
+function handleReply(message) {
+
+    repliedMessage.value = message
+    isReply.value = true
+}
 ///search messages functionality
 
 const searchMessagesForm = useForm({
@@ -197,7 +259,7 @@ const isSearching = ref(false)
                 <template v-else>
                     <div class="flex-1 flex p-4 items-center gap-4 border-r-2 border-r-stone-500">
                         <div>
-                            <img :src="'https://ui-avatars.com/api/?name=' + 'peter' + '&color=094609FF&background=E2E2E2'"
+                            <img :src="'https://ui-avatars.com/api/?name=' + player.name + '&color=094609FF&background=E2E2E2'"
                                 alt="" class="object-cover w-10 h-10 rounded-full border-2 border-primary">
                         </div>
                         <div class="flex flex-col ">
@@ -250,18 +312,32 @@ const isSearching = ref(false)
                     :class="isSearching ? 'lg:max-h-[calc(70vh)]' : ' lg:max-h-[calc(70vh-180px)]'">
                     <template v-for="message in [...messages].reverse()" :key="message.id">
 
-                        <ChatMessage :message="message" />
+                        <ChatMessage :message="message" @reply="handleReply" :player="player" />
 
                     </template>
                 </div>
             </template>
             <!-- new Message form  -->
             <template v-if="!isSearching" #footer>
-                <div class="grid p-6 bg-white gap-y-4 rounded-2xl">
-                    <div class="bg-neutral-200 text-sm w-full  rounded-xl py-2 px-12">
-                        <div class="text-primary capitalize font-bold ">name</div>
-                        <div class="text-black">message</div>
-                    </div>
+                <div ref="footer" class="grid p-6 bg-white gap-y-4 rounded-2xl">
+                    <Transition enterFromClass="opacity-0" enterToClass="opacity-100" leaveFromClass="opacity-100"
+                        leaveToClass="opacity-0" leave-active-class="transition-all duration-150 ease-in"
+                        enterActiveClass="transition-all duration-150 ease-out">
+                        <div v-if="isReply || isAttachment"
+                            class="bg-neutral-200 text-sm w-full flex flex-row items-center  rounded-xl py-2 px-12">
+                            <div v-if="repliedMessage">
+                                <div class="text-primary capitalize font-bold ">{{ repliedMessage.sender_id ===
+                                    currentUser.id ?
+                                    currentUser.name : player.name }}
+                                </div>
+                                <div class="text-black">{{ repliedMessage.body }}</div>
+                            </div>
+                            <div v-show="filePreview" class="ml-auto overflow-hidden ">
+                                <span class="block w-20 h-20 bg-center bg-no-repeat bg-contain rounded-lg"
+                                    :style="'background-image: url(\'' + filePreview + '\');'" />
+                            </div>
+                        </div>
+                    </Transition>
                     <div class="flex flex-row items-center gap-x-2 w-full">
                         <button>
                             <FaceSmileIcon class="text-neutral-300  w-5" />
@@ -272,14 +348,14 @@ const isSearching = ref(false)
                                 placeholder="Type your Message Here"
                                 class="w-full rounded-full resize-none hideScrollBar p-2 px-4 border-none  placeholder:text-neutral-400 "></textarea>
                         </div>
-                        <button class="relative">
+                        <button class="relative" @click="clickFileInput">
                             <PhotoIcon class="text-neutral-300  h-5 w-5" />
                             <div class="bg-white absolute bottom-0 -right-[1px] rounded-full  ">
-
+                                <input ref="attachmentsInput" type="file" class="hidden" @change="handleAttachments">
                                 <ArrowUpCircleIcon class="text-neutral-300    h-2 w-2" />
                             </div>
                         </button>
-                        <button @click="submitNewMessage">
+                        <button :disabled="isDisabled" @click="submitNewMessage">
                             <PaperAirplaneIcon class="text-neutral-900  w-5" />
                         </button>
                     </div>

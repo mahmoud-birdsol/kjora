@@ -1,8 +1,55 @@
+<script setup>
+import { computed, ref } from '@vue/reactivity';
+import ReplyIcon from './Icons/ReplyIcon.vue';
+import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid'
+import { TrashIcon } from '@heroicons/vue/24/outline'
+import { usePage } from '@inertiajs/inertia-vue3';
+import { onMounted } from 'vue';
+import dayjs from 'dayjs';
+
+
+
+const props = defineProps({
+    message: Object,
+    player: null
+})
+const emits = defineEmits(['reply'])
+onMounted(() => {
+    // props.message.media.media !== [] && console.log(props.message.media)
+})
+const currentUser = usePage().props.value.auth.user
+const showOptions = ref(false)
+
+function handleReply(e) {
+    emits('reply', props.message)
+    showOptions.value ? showOptions.value = false : null
+
+}
+
+const isCurrentUser = computed(() => { return props.message.sender_id === currentUser.id })
+const alignmentClass = computed(() => {
+    return isCurrentUser.value ? 'self-end  ' : 'self-start   ';
+})
+const parentClasses = computed(() => {
+    return isCurrentUser.value ? 'relative flex justify-end   pie-8 ' : 'flex gap-2 items-center  ';
+})
+
+const bodyClass = computed(() => {
+    return isCurrentUser.value ? ' bg-primary text-white rounded-br-none' : ' bg-stone-200 text-black rounded-bl-none';
+})
+const repliedClasses = computed(() => {
+    return isCurrentUser.value ? 'bg-white text-black  ' : 'bg-primary text-white  ';
+})
+
+
+
+</script>
+
 <template>
     <div :class="alignmentClass + parentClasses" class="w-full  ">
         <!-- avatar for non current user message -->
         <div v-if='!isCurrentUser'>
-            <div><img :src="'https://ui-avatars.com/api/?name=' + name + '&color=094609FF&background=E2E2E2'" alt=""
+            <div><img :src="'https://ui-avatars.com/api/?name=' + player.name + '&color=094609FF&background=E2E2E2'" alt=""
                     class="object-cover w-10 h-10 rounded-full border-primary border-2">
             </div>
         </div>
@@ -12,12 +59,15 @@
                 <!-- replied message -->
                 <div v-if="message.parent_id" :class="repliedClasses" class="text-xs p-3 mb-2 rounded-lg">
                     <div class="mb-2  capitalize font-semibold">
-                        <h4 v-if="isCurrentUser" class="text-primary">current user name</h4>
-                        <h4 v-else>friend name</h4>
+                        <h4 v-if="isCurrentUser" class="text-primary">{{ currentUser.name }}</h4>
+                        <h4 v-else>{{ player.name }}</h4>
                     </div>
-                    <span class="">this is replied message</span>
+                    <span class="">{{ message.parent?.body }}</span>
                 </div>
-                <span class="">
+                <div v-if="message.media">
+                    <img class="w-52 object-contain" :src="message.media.original_url" alt="">
+                </div>
+                <span class="whitespace-pre-wrap">
                     {{ message.body }}
                 </span>
             </div>
@@ -47,7 +97,7 @@
                                 <span> delete</span>
                             </li>
                         </button>
-                        <button class="hover:text-gray-400 group">
+                        <button class="hover:text-gray-400 group" @click="handleReply">
                             <li class="flex gap-x-2 items-center justify-center">
                                 <ReplyIcon
                                     class="fill-transparent group-hover:stroke-gray-400 cursor-pointer stroke-white ">
@@ -60,7 +110,7 @@
             </Transition>
         </div>
         <!-- reply icon for non current user message -->
-        <button v-if="!isCurrentUser">
+        <button v-if="!isCurrentUser" @click="handleReply">
             <ReplyIcon class="fill-transparent hover:fill-black  stroke-black "></ReplyIcon>
 
         </button>
@@ -68,42 +118,6 @@
     </div>
 </template>
 
-<script setup>
-import { computed, ref } from '@vue/reactivity';
-import ReplyIcon from './Icons/ReplyIcon.vue';
-import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid'
-import { TrashIcon } from '@heroicons/vue/24/outline'
-import { usePage } from '@inertiajs/inertia-vue3';
-import { onMounted } from 'vue';
-import dayjs from 'dayjs';
 
-
-const currentUser = usePage().props.value.auth.user
-const props = defineProps({
-    message: Object
-})
-onMounted(() => {
-    // console.log('currentuserid', currentUser.id)
-    // console.log('message', props.message)
-})
-const name = 'thomas abdallah'
-const isCurrentUser = computed(() => { return props.message.sender_id === currentUser.id })
-const alignmentClass = computed(() => {
-    return isCurrentUser.value ? 'self-end  ' : 'self-start   ';
-})
-const parentClasses = computed(() => {
-    return isCurrentUser.value ? 'relative flex justify-end   pie-8 ' : 'flex gap-2 items-center  ';
-})
-
-const bodyClass = computed(() => {
-    return isCurrentUser.value ? ' bg-primary text-white rounded-br-none' : ' bg-white text-black rounded-bl-none';
-})
-const repliedClasses = computed(() => {
-    return isCurrentUser.value ? 'bg-white text-black  ' : 'bg-primary text-white  ';
-})
-
-const showOptions = ref(false)
-
-</script>
 
 <style  scoped></style>

@@ -29,8 +29,7 @@ class MessageController extends Controller
         MessageStoreRequest $request,
         Conversation $conversation,
         CheckIfUserIsPresentAction $checkIfUserIsPresentAction
-    ): RedirectResponse
-    {
+    ): RedirectResponse {
         /** @var \App\Models\Message $message */
         $message = $conversation->messages()->create([
             'body' => $request->input('body'),
@@ -38,16 +37,15 @@ class MessageController extends Controller
             'parent_id' => $request->input('parent_id')
         ]);
 
-        if ($request->hasFile('media')) {
+        if ($request->hasFile('attachments')) {
             $message->addMedia($request->file('attachments'))->toMediaCollection('attachments');
         }
 
         $user = $conversation->users()->whereNot('conversation_user.user_id', $request->user()->id)->first();
 
         if ($checkIfUserIsPresentAction($user)) {
-            event(new MessageSentEvent($user));
-        }
-        else{
+            event(new MessageSentEvent($user, $message));
+        } else {
             $user->notify(new NotifyUserOfChatMessageNotification($user, $request->user(), $conversation));
         }
 
