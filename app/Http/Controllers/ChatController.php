@@ -44,7 +44,7 @@ class ChatController extends Controller
                     'last_message' => $conversation->messages()->where('sender_id', request()->user()->id)->latest()
                 ];
             }),
-            'last_online_at' => request()->user()->messages()?->latest()?->created_at
+            'last_online_at' => request()->user()->messages()?->latest()?->first()?->created_at
         ]);
     }
 
@@ -73,14 +73,16 @@ class ChatController extends Controller
             })->get();
 
         return Inertia::render('Chat/Show', [
-            'conversation' => $conversation->append(request()->user()->messages()->where('conversation_id', $conversation->id)->latest()),
+            'conversation' => $conversation->append([
+                'last_message' => request()->user()->messages()->where('conversation_id', $conversation->id)->latest()->first()
+            ]),
             'player' => $conversation->users()->whereNot('conversation_user.user_id', request()->user()->id)->first(),
             'conversations' => $conversations->push(function (Conversation $conversation) {
                 return [
                     'last_message' => $conversation->messages()->where('sender_id', request()->user()->id)->latest()
                 ];
             }),
-            'last_online_at' => request()->user()->messages()?->latest()?->created_at
+            'last_online_at' => request()->user()->messages()?->latest()?->first()?->created_at
         ]);
     }
 }
