@@ -17,7 +17,7 @@ defineProps({
         style="background: url('/images/player_bg_sm.png'); background-size: cover; background-position: center;">
         <div class="flex items-start justify-between">
             <div class="flex justify-start mb-2 space-x-2">
-                <img :src="$page.props.user.avatar ? $page.props.user.avatar_url : 'https://ui-avatars.com/api/?name=' + $page.props.user.first_name + ' ' + $page.props.user.last_name + '&color=094609FF&background=E2E2E2'"
+                <img :src="player.avatar ? player.avatar_url : 'https://ui-avatars.com/api/?name=' + player.name + '&color=094609FF&background=E2E2E2'"
                     :alt="player.name" class="border-2 border-white rounded-full h-14 w-14">
                 <div>
                     <Link :href="route('player.profile', player.id)">
@@ -86,6 +86,4 @@ defineProps({
 
 
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

@@ -7,31 +7,39 @@
             </div>
         </div>
         <!-- message body -->
-        <div :class="bodyClass" class=" max-w-[60%]  p-4 rounded-2xl ">
-            <!-- replied message -->
-            <div v-if="message.parent_id" :class="repliedClasses" class="text-xs p-3 mb-2 rounded-lg">
-                <div class="mb-2  capitalize font-semibold">
-                    <h4 v-if="isCurrentUser" class="text-primary">current user name</h4>
-                    <h4 v-else>friend name</h4>
+        <div class="max-w-[60%]">
+            <div :class="bodyClass" class="   p-4 rounded-2xl ">
+                <!-- replied message -->
+                <div v-if="message.parent_id" :class="repliedClasses" class="text-xs p-3 mb-2 rounded-lg">
+                    <div class="mb-2  capitalize font-semibold">
+                        <h4 v-if="isCurrentUser" class="text-primary">current user name</h4>
+                        <h4 v-else>friend name</h4>
+                    </div>
+                    <span class="">this is replied message</span>
                 </div>
-
-                <span class="">this is replied message</span>
+                <span class="">
+                    {{ message.body }}
+                </span>
             </div>
-            <span class="">
-                {{ message.body }}
-            </span>
 
+            <!-- date -->
+            <div class="text-xs mt-2 " :class="isCurrentUser ? 'text-end' : null"> <span>{{ message.read_at ?
+                dayjs(message.read_at).format('hh:mm A') : dayjs(message.created_at).format('hh:mm A') }}</span> | <span
+                    class="text-primary capitalize">{{ message.read_at ? 'r' : 's' }}</span></div>
         </div>
+
         <!-- options menu if message of the current user -->
         <div v-if="isCurrentUser" class="absolute top-0 right-0">
             <button @click="showOptions = !showOptions">
                 <EllipsisVerticalIcon class="w-6  text-neutral-500" />
             </button>
+            <div v-if="showOptions" class="inset-0 fixed w-full h-full z-10 cursor-pointer  " @click="showOptions = false">
+            </div>
             <Transition enterFromClass="opacity-0" enterToClass="opacity-100" leaveFromClass="opacity-100"
                 leaveToClass="opacity-0" leave-active-class="transition-all duration-150 ease-in"
                 enterActiveClass="transition-all duration-150 ease-out">
                 <div v-show="showOptions"
-                    class=" text-xs bg-black text-white  rounded-xl border border-neutral-500 py-2 px-6 pie-10 z-2 absolute right-7  -top-2">
+                    class=" text-xs bg-black text-white z-20  rounded-xl border border-neutral-500 py-2 px-6 pie-10 z-2 absolute right-7  -top-2">
                     <ul class="flex flex-col gap-y-2 justify-center">
                         <button class="hover:text-gray-400 ">
                             <li class="flex gap-x-2 items-center justify-center">
@@ -58,7 +66,6 @@
         </button>
 
     </div>
-
 </template>
 
 <script setup>
@@ -66,12 +73,21 @@ import { computed, ref } from '@vue/reactivity';
 import ReplyIcon from './Icons/ReplyIcon.vue';
 import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid'
 import { TrashIcon } from '@heroicons/vue/24/outline'
+import { usePage } from '@inertiajs/inertia-vue3';
+import { onMounted } from 'vue';
+import dayjs from 'dayjs';
 
+
+const currentUser = usePage().props.value.auth.user
 const props = defineProps({
     message: Object
 })
+onMounted(() => {
+    // console.log('currentuserid', currentUser.id)
+    // console.log('message', props.message)
+})
 const name = 'thomas abdallah'
-const isCurrentUser = computed(() => { return props.message.sender_id === 68 })
+const isCurrentUser = computed(() => { return props.message.sender_id === currentUser.id })
 const alignmentClass = computed(() => {
     return isCurrentUser.value ? 'self-end  ' : 'self-start   ';
 })
@@ -90,6 +106,4 @@ const showOptions = ref(false)
 
 </script>
 
-<style  scoped>
-
-</style>
+<style  scoped></style>
