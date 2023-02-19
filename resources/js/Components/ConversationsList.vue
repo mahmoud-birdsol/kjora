@@ -1,3 +1,41 @@
+<script setup >
+
+import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
+import ChatFriendCard from './ChatFriendCard.vue';
+import { onMounted, onUnmounted, ref } from 'vue';
+import { useForm } from '@inertiajs/inertia-vue3';
+
+defineProps({
+    friends: Array
+})
+const emit = defineEmits(['fetchMore'])
+const conversationList = ref(null)
+
+onMounted(() => {
+    conversationList.value ? conversationList.value.addEventListener('scroll', throttledHandleScroll) : null
+});
+onUnmounted(() => {
+    conversationList.value ? conversationList.value.removeEventListener('scroll', throttledHandleScroll) : null
+
+});
+const throttledHandleScroll = window._.throttle(handleScroll, 1000)
+function handleScroll(e) {
+    let element = e.target
+    //console.log(element.scrollTop)
+    element.scrollTop + element.offsetHeight >= element.scrollHeight ? emit('fetchMore') : null
+    element.scrollTop + element.offsetHeight >= element.scrollHeight ? console.log('fetchMore') : null
+}
+
+const searchFriendsForm = useForm({
+    query: null
+})
+const debouncedSubmitSearchFriends = window._.debounce(submitSearchFriends, 500)
+function submitSearchFriends() {
+    //console.log('send query and recive fitlerd data')
+    //console.log(searchFriendsForm.query)
+}
+</script>
+
 <template>
     <div class="flex flex-col justify-between gap-2">
         <!-- search input -->
@@ -22,44 +60,6 @@
     </div>
 </template>
 
-<script setup >
 
-import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
-import ChatFriendCard from './ChatFriendCard.vue';
-import { onMounted, onUnmounted, ref } from 'vue';
-import { useForm } from '@inertiajs/inertia-vue3';
 
-defineProps({
-    friends: Array
-})
-const emit = defineEmits(['fetchMore'])
-const conversationList = ref(null)
-
-onMounted(() => {
-    conversationList.value ? conversationList.value.addEventListener('scroll', throttledHandleScroll) : null
-});
-onUnmounted(() => {
-    conversationList.value ? conversationList.value.removeEventListener('scroll', throttledHandleScroll) : null
-
-});
-const throttledHandleScroll = window._.throttle(handleScroll, 1000)
-function handleScroll(e) {
-    let element = e.target
-    console.log(element.scrollTop)
-    element.scrollTop + element.offsetHeight >= element.scrollHeight ? emit('fetchMore') : null
-    element.scrollTop + element.offsetHeight >= element.scrollHeight ? console.log('fetchMore') : null
-}
-
-const searchFriendsForm = useForm({
-    query: null
-})
-const debouncedSubmitSearchFriends = window._.debounce(submitSearchFriends, 500)
-function submitSearchFriends() {
-    console.log('send query and recive fitlerd data')
-    console.log(searchFriendsForm.query)
-}
-</script>
-
-<style  >
-
-</style>
+<style  ></style>

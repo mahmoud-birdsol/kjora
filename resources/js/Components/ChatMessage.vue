@@ -1,5 +1,4 @@
 <template>
-
     <div :class="alignmentClass + parentClasses" class="w-full  ">
         <!-- avatar for non current user message -->
         <div v-if='!isCurrentUser'>
@@ -8,20 +7,24 @@
             </div>
         </div>
         <!-- message body -->
-        <div :class="bodyClass" class=" max-w-[60%]  p-4 rounded-2xl ">
-            <!-- replied message -->
-            <div v-if="message.parent_id" :class="repliedClasses" class="text-xs p-3 mb-2 rounded-lg">
-                <div class="mb-2  capitalize font-semibold">
-                    <h4 v-if="isCurrentUser" class="text-primary">current user name</h4>
-                    <h4 v-else>friend name</h4>
+        <div class="max-w-[60%]">
+            <div :class="bodyClass" class="   p-4 rounded-2xl ">
+                <!-- replied message -->
+                <div v-if="message.parent_id" :class="repliedClasses" class="text-xs p-3 mb-2 rounded-lg">
+                    <div class="mb-2  capitalize font-semibold">
+                        <h4 v-if="isCurrentUser" class="text-primary">current user name</h4>
+                        <h4 v-else>friend name</h4>
+                    </div>
+                    <span class="">this is replied message</span>
                 </div>
-
-                <span class="">this is replied message</span>
+                <span class="">
+                    {{ message.body }}
+                </span>
             </div>
-            <span class="">
-                {{ message.body }}
-            </span>
 
+            <!-- date -->
+            <div class="text-xs mt-2 " :class="isCurrentUser ? 'text-end' : null"> Send date | <span
+                    class="text-primary">R</span></div>
         </div>
 
         <!-- options menu if message of the current user -->
@@ -29,8 +32,7 @@
             <button @click="showOptions = !showOptions">
                 <EllipsisVerticalIcon class="w-6  text-neutral-500" />
             </button>
-            <div v-if="showOptions" class="inset-0 fixed w-full h-full z-10 cursor-pointer  "
-                @click="showOptions = false">
+            <div v-if="showOptions" class="inset-0 fixed w-full h-full z-10 cursor-pointer  " @click="showOptions = false">
             </div>
             <Transition enterFromClass="opacity-0" enterToClass="opacity-100" leaveFromClass="opacity-100"
                 leaveToClass="opacity-0" leave-active-class="transition-all duration-150 ease-in"
@@ -63,7 +65,6 @@
         </button>
 
     </div>
-
 </template>
 
 <script setup>
@@ -95,6 +96,4 @@ const showOptions = ref(false)
 
 </script>
 
-<style  scoped>
-
-</style>
+<style  scoped></style>

@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import AppLayout from '../../Layouts/AppLayout.vue';
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
 import { FlagIcon } from '@heroicons/vue/24/outline'
@@ -64,6 +64,10 @@ function submitSearchMessages() {
     console.log('send query and recive fitlerd data')
     console.log(searchMessagesForm.query)
 }
+
+
+const isSearching = ref(false)
+
 </script>
 <template>
     <AppLayout title="chat">
@@ -96,8 +100,7 @@ function submitSearchMessages() {
                         only show this message one - but please do take a few seconds to familiarize yourself
                         with these rules. This will help us ensure a safe and friendly environment in the chat .
                     </p>
-                    <ul class="text-sm
-                                [&>li_p]:before:content-['•'] [&>li_p]:before:pie-6 font-bold">
+                    <ul class="text-sm [&>li_p]:before:content-['•'] [&>li_p]:before:pie-6 font-bold">
                         <li>
                             <p>be nice and thoughtful your word can both help and hurt</p>
                         </li>
@@ -132,57 +135,76 @@ function submitSearchMessages() {
                 <ConversationsList :friends="friends" @fetch-more="fetchMore" />
             </template>
             <template #header>
-                <div class="flex-1 flex p-4 items-center gap-4 border-r-2 border-r-stone-500">
-                    <div>
-                        <img :src="'https://ui-avatars.com/api/?name=' + 'peter' + '&color=094609FF&background=E2E2E2'"
-                            alt="" class="object-cover w-10 h-10 rounded-full border-2 border-primary">
-                    </div>
-                    <div class="flex flex-col ">
-                        <h4 class="mb-2   leading-none text-primary capitalize">peter</h4>
-                        <span class="text-xs leading-none text-neutral-500"> @username </span>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2 p-4">
-                    <button>
-                        <MagnifyingGlassIcon class="w-4 h-4 cursor-pointer hover:text-primaryDark text-primary">
-                        </MagnifyingGlassIcon>
-
-                    </button>
-                    <button @click="showReportModal = !showReportModal">
-                        <FlagIcon class="w-4 h-4 text-red-600" />
-                        <Modal :show="showReportModal" @close="showReportModal = false" max-width="sm">
-                            <div class="uppercase text-center flex   flex-col gap-y-6 p-4">
-                                <div class=" self-end">
-                                    <button @click="showReportModal = false"
-                                        class="group hover:ring hover:ring-primary p-1  rounded-full ">
-                                        <XMarkIcon class="text-black w-5 group-hover:text-primary" />
-                                    </button>
-                                </div>
-                                <div class="text-primary mb-4 font-bold">
-                                    report
-                                </div>
-                                <!-- TODO:make it radio buttons group -->
-                                <ul
-                                    class="[&_li]:px-4 [&_li]:py-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:border-gray-400 text-stone-500  flex flex-col gap-4 px-6 text-sm ">
-                                    <li>spam</li>
-                                    <li>hate speech, or uncivil</li>
-                                    <li>sexual activity</li>
-                                    <li>scam, or fraud</li>
-                                    <li>bullying or harassment</li>
-                                    <li>violence, or threats</li>
-                                    <li>racism, discrimination, or insults</li>
-                                </ul>
-                                <button
-                                    class="bg-black text-white p-2 px-6 w-full rounded-full uppercase ">report</button>
+                <!-- search header -->
+                <template v-if="isSearching">
+                    <div class="flex-1 flex p-4 items-center gap-4">
+                        <div class="grid items-center w-full grid-cols-1 ">
+                            <input v-model="searchMessagesForm.query" @input="debouncedSubmitSearchMessages" type="search"
+                                class="w-full col-start-1 row-start-1 pis-10 rounded-3xl">
+                            <div class="col-start-1 row-start-1 justify-self-start pis-3">
+                                <MagnifyingGlassIcon class="w-5 h-5 text-primary">
+                                </MagnifyingGlassIcon>
                             </div>
+                        </div>
+                        <button @click="isSearching = false" class="group hover:ring hover:ring-primary p-1  rounded-full ">
+                            <XMarkIcon class="text-black w-5 group-hover:text-primary" />
+                        </button>
+                    </div>
+                </template>
+                <!-- defaultHeader -->
+                <template v-else>
+                    <div class="flex-1 flex p-4 items-center gap-4 border-r-2 border-r-stone-500">
+                        <div>
+                            <img :src="'https://ui-avatars.com/api/?name=' + 'peter' + '&color=094609FF&background=E2E2E2'"
+                                alt="" class="object-cover w-10 h-10 rounded-full border-2 border-primary">
+                        </div>
+                        <div class="flex flex-col ">
+                            <h4 class="mb-2   leading-none text-primary capitalize">peter</h4>
+                            <span class="text-xs leading-none text-neutral-500"> @username </span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 p-4">
+                        <button @click="isSearching = true">
+                            <MagnifyingGlassIcon class="w-4 h-4 cursor-pointer hover:text-primaryDark text-primary">
+                            </MagnifyingGlassIcon>
+                        </button>
+                        <button @click="showReportModal = !showReportModal">
+                            <FlagIcon class="w-4 h-4 text-red-600" />
+                            <Modal :show="showReportModal" @close="showReportModal = false" max-width="sm">
+                                <div class="uppercase text-center flex   flex-col gap-y-6 p-4">
+                                    <div class=" self-end">
+                                        <button @click="showReportModal = false"
+                                            class="group hover:ring hover:ring-primary p-1  rounded-full ">
+                                            <XMarkIcon class="text-black w-5 group-hover:text-primary" />
+                                        </button>
+                                    </div>
+                                    <div class="text-primary mb-4 font-bold">
+                                        report
+                                    </div>
+                                    <!-- TODO:make it radio buttons group -->
+                                    <ul
+                                        class="[&_li]:px-4 [&_li]:py-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:border-gray-400 text-stone-500  flex flex-col gap-4 px-6 text-sm ">
+                                        <li>spam</li>
+                                        <li>hate speech, or uncivil</li>
+                                        <li>sexual activity</li>
+                                        <li>scam, or fraud</li>
+                                        <li>bullying or harassment</li>
+                                        <li>violence, or threats</li>
+                                        <li>racism, discrimination, or insults</li>
+                                    </ul>
+                                    <button
+                                        class="bg-black text-white p-2 px-6 w-full rounded-full uppercase ">report</button>
+                                </div>
+                            </Modal>
+                        </button>
+                    </div>
+                </template>
 
-                        </Modal>
-                    </button>
-                </div>
             </template>
             <template #main>
-                <div
-                    class="flex flex-col gap-y-4 div max-h-[30vh] lg:max-h-[calc(70vh-180px)] overflow-auto hideScrollBar ">
+                <!-- main content -->
+                <div class="flex flex-col gap-y-4 div max-h-[40vh]  overflow-auto hideScrollBar "
+                    :class="isSearching ? 'lg:max-h-[calc(70vh)]' : ' lg:max-h-[calc(70vh-180px)]'">
                     <template v-for="message in messages" :key="message.id">
 
                         <ChatMessage :message="message" />
@@ -190,7 +212,8 @@ function submitSearchMessages() {
                     </template>
                 </div>
             </template>
-            <template #footer>
+            <!-- new Message form  -->
+            <template v-if="!isSearching" #footer>
                 <div class="grid p-6 bg-white gap-y-4 rounded-2xl">
                     <div class="bg-neutral-200 text-sm w-full  rounded-xl py-2 px-12">
                         <div class="text-primary capitalize font-bold ">name</div>
@@ -202,7 +225,7 @@ function submitSearchMessages() {
                         </button>
                         <div class="flex-grow  flex items-center ">
                             <!-- <input class="w-full rounded-full border-none " type="text" name="newMessage"
-                                id="newMessage" placeholder="Type your Message Here"> -->
+                                                                                                                                id="newMessage" placeholder="Type your Message Here"> -->
                             <textarea v-model="newMessageForm.new_message" name="newMessage" id="newMessage" rows="1"
                                 placeholder="Type your Message Here"
                                 class="w-full rounded-full resize-none hideScrollBar p-2 px-4 border-none  placeholder:text-neutral-400 "></textarea>
@@ -222,50 +245,9 @@ function submitSearchMessages() {
             </template>
         </ChatLayout>
 
-        <h1 class="text-white"> conversation page search in messages</h1>
-        <ChatLayout>
-            <template #sidebar>
-                <ConversationsList :friends="friends" />
-            </template>
-            <template #header>
-                <div class="flex-1 flex p-4 items-center gap-4">
-                    <div class="grid items-center w-full grid-cols-1 ">
 
-                        <input v-model="searchMessagesForm.query" @input="debouncedSubmitSearchMessages" type="search"
-                            class="w-full col-start-1 row-start-1 pis-10 rounded-3xl">
-                        <div class="col-start-1 row-start-1 justify-self-start pis-3">
-                            <MagnifyingGlassIcon class="w-5 h-5 text-primary">
-                            </MagnifyingGlassIcon>
-                        </div>
-
-                    </div>
-                    <button @click="showReportModal = false"
-                        class="group hover:ring hover:ring-primary p-1  rounded-full ">
-                        <XMarkIcon class="text-black w-5 group-hover:text-primary" />
-                    </button>
-                </div>
-
-            </template>
-            <template #main>
-                <div class="flex flex-col gap-y-4 div max-h-[50vh] lg:max-h-[70vh] overflow-auto hideScrollBar ">
-                    <template v-if="messages.length">
-                        <template v-for="message in messages" :key="message.id">
-
-                            <ChatMessage :message="message" />
-
-                        </template>
-
-
-                    </template>
-
-                </div>
-            </template>
-
-        </ChatLayout>
     </AppLayout>
 </template>
 
 
-<style  >
-
-</style>
+<style  ></style>
