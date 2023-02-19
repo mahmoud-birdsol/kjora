@@ -61,7 +61,7 @@ class ChatController extends Controller
             'messages' => $query->paginate(12),
             'conversation' => $conversation,
             'conversations' => Conversation::query()->whereHas('users', function ($query) use ($conversation) {
-                $query->whereIn('conversation_user.conversation_id', $conversation->id)
+                $query->where('conversation_user.conversation_id', $conversation->id)
                     ->whereNot('conversation_user.user_id', request()->user()->id)->with('messages')
                     ->with('users', function ($query) {
                         $query->whereNot('conversation_user.user_id', request()->user()->id);
