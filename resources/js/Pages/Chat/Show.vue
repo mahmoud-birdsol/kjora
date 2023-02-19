@@ -16,8 +16,8 @@ import axios from 'axios';
 const props = defineProps({
     conversation: null,
     conversations: null,
-    // messages: null,
-    player: null
+    player: null,
+    last_online_at: null
 })
 
 const showReportModal = ref(false)
@@ -29,17 +29,11 @@ const isAttachment = ref(false)
 const isDisabled = ref(false)
 const attachmentsInput = ref(null)
 const filePreview = ref(null);
-const footer = ref(null);
+
 const currentUser = usePage().props.value.auth.user
 
 
-// function scrollToBottom() {
-//     messagesContainer.value.scrollTo({
-//         top: messagesContainer.value.scrollHeight,
-//         left: 0,
-//         behavior: 'smooth'
-//     });
-// }
+
 
 
 Echo.private('users.chat.' + currentUser.id)
@@ -59,28 +53,18 @@ const page = ref(1)
 onMounted(() => {
 
     axios.get(route('api.messages.index', props.conversation), { page: page.value }).then(response => {
-
         messages.value = response.data.data
-
-
     }).then(() => {
-
         messagesContainer.value.scrollTo({
             top: messagesContainer.value.scrollHeight,
             left: 0,
             behavior: 'smooth'
         });
-
     })
 
 
+
 });
-
-
-
-
-
-
 
 // load next conversations page after scrolling to the end of the list
 function fetchMore() {
@@ -113,7 +97,7 @@ function handleScroll(e) {
             console.log(response)
 
             messages.value = [...messages.value, ...response.data.data]
-            // console.log(messages.value)
+
 
 
         })
@@ -132,6 +116,7 @@ const newMessageForm = useForm({
 
 
 function submitNewMessage() {
+    isDisabled.value = true
     axios.post(route('api.messages.store', props.conversation.id), {
         body: newMessageForm.body
         , parent_id: repliedMessage.value && repliedMessage.value.id
@@ -142,7 +127,7 @@ function submitNewMessage() {
         }
     }).then((response) => {
         messages.value.unshift(response.data.data);
-        isDisabled.value = true
+
 
     }).then(() => {
         newMessageForm.body = null
@@ -171,11 +156,7 @@ function clickFileInput() {
     attachmentsInput.value.click()
 }
 
-
-
-
 /* -------------------------------------------------------------------------- */
-
 
 
 
@@ -213,14 +194,15 @@ function handleReply(message) {
 
 const searchMessagesForm = useForm({
     query: null
-})
-const debouncedSubmitSearchMessages = window._.debounce(submitSearchMessages, 500)
+});
+
+const debouncedSubmitSearchMessages = window._.debounce(submitSearchMessages, 500);
 function submitSearchMessages() {
-    console.log('send query and recive fitlerd data')
-    console.log(searchMessagesForm.query)
+    console.log('send query and recive fitlerd data');
+    console.log(searchMessagesForm.query);
 }
 
-const isSearching = ref(false)
+const isSearching = ref(false);
 
 </script>
 
@@ -235,8 +217,8 @@ const isSearching = ref(false)
 
         <ChatLayout>
             <template #sidebar>
-                <ConversationsList :conversations="conversations" @fetch-more="fetchMore"
-                    :currentConvId="conversation.id" />
+                <ConversationsList :conversations="conversations" @fetch-more="fetchMore" :currentConvId="conversation.id"
+                    :last-active-at="last_online_at" />
             </template>
             <template #header>
                 <!-- search header -->
@@ -309,7 +291,7 @@ const isSearching = ref(false)
             <template #main>
                 <!-- main content -->
                 <div ref="messagesContainer" class="flex flex-col gap-y-4 div max-h-[40vh]  overflow-auto hideScrollBar "
-                    :class="isSearching ? 'lg:max-h-[calc(70vh)]' : ' lg:max-h-[calc(70vh-180px)]'">
+                    :class="isSearching ? `lg:max-h-[calc(70vh)-0px]` : `lg:max-h-[calc(70vh-150px)]`">
                     <template v-for="message in [...messages].reverse()" :key="message.id">
 
                         <ChatMessage :message="message" @reply="handleReply" :player="player" />
@@ -319,7 +301,7 @@ const isSearching = ref(false)
             </template>
             <!-- new Message form  -->
             <template v-if="!isSearching" #footer>
-                <div ref="footer" class="grid p-6 bg-white gap-y-4 rounded-2xl">
+                <div class="grid p-6 bg-white gap-y-4 rounded-2xl">
                     <Transition enterFromClass="opacity-0" enterToClass="opacity-100" leaveFromClass="opacity-100"
                         leaveToClass="opacity-0" leave-active-class="transition-all duration-150 ease-in"
                         enterActiveClass="transition-all duration-150 ease-out">
@@ -355,8 +337,9 @@ const isSearching = ref(false)
                                 <ArrowUpCircleIcon class="text-neutral-300    h-2 w-2" />
                             </div>
                         </button>
-                        <button :disabled="isDisabled" @click="submitNewMessage">
-                            <PaperAirplaneIcon class="text-neutral-900  w-5" />
+                        <button :disabled="isDisabled" class="group" @click="submitNewMessage">
+                            <PaperAirplaneIcon class="   w-5"
+                                :class="isDisabled ? 'text-neutral-400' : 'text-neutral-900'" />
                         </button>
                     </div>
                 </div>

@@ -4,10 +4,10 @@
         <div class="grid  w-full h-full lg:grid-cols-[1fr_2fr]  text-neutral-500 bg-white rounded-2xl ">
 
             <div v-if="$slots.sidebar"
-                class="flex flex-col gap-3 px-6 py-3 lg:border-r-2 lg:border-r-stone-500 max-lg:border-b-2 max-lg:border-b-stone-500">
+                class="flex flex-col gap-3 px-6 py-3 h-full lg:border-r-2 lg:border-r-stone-500 max-lg:border-b-2 max-lg:border-b-stone-500">
                 <slot name="sidebar"></slot>
             </div>
-            <div class="grid grid-flow-row auto-rows-min">
+            <div class="grid grid-flow-row  h-full">
                 <!-- header -->
                 <div v-if="$slots.header" class="flex self-start min-h-[1rem] border-b-2 border-b-stone-500">
                     <slot name="header"></slot>
