@@ -2,6 +2,8 @@
 
 namespace App\Events;
 
+use App\Http\Resources\MessageResource;
+use App\Models\Message;
 use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -14,14 +16,22 @@ class MessageSentEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    /**
+     * @var \App\Models\User
+     */
     private User $user;
+
+    /**
+     * @var \App\Models\Message
+     */
+    private Message $message;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user, Message $message)
     {
         $this->user = $user;
     }
@@ -44,5 +54,15 @@ class MessageSentEvent implements ShouldBroadcast
     public function broadcastAs(): string
     {
         return 'message-sent';
+    }
+
+    /**
+     * Get the data to broadcast.
+     *
+     * @return array<string, mixed>
+     */
+    public function broadcastWith(): array
+    {
+        return $this->message->toArray();
     }
 }
