@@ -34,7 +34,7 @@ class MessageController extends Controller
         /** @var \App\Models\Message $message */
         $message = $conversation->messages()->create([
             'body' => $request->input('body'),
-            'sender_id' => auth()->id(),
+            'sender_id' => $request->user()->id,
             'parent_id' => $request->input('parent_id')
         ]);
 
