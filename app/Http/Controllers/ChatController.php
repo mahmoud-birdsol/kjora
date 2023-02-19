@@ -36,7 +36,10 @@ class ChatController extends Controller
         }
 
         return Inertia::render('Chat/Index', [
-            'conversations' => $query->with('messages')->get()
+            'conversations' => $query->with('messages')
+                ->with('users', function ($query) use ($request) {
+                    $query->whereNot('conversation_user.user_id', $request->user()->id);
+                })->get()
         ]);
     }
 
