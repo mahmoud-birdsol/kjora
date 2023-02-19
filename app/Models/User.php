@@ -255,6 +255,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Get the user messages
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
+
+    /**
      * Get the has verified identity attribute.
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
