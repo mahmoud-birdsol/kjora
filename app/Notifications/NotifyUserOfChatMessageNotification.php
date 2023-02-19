@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use App\Data\NotificationData;
 use App\Data\RouteActionData;
+use App\Models\Conversation;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -26,14 +27,20 @@ class NotifyUserOfChatMessageNotification extends Notification implements Should
     private User $notifier;
 
     /**
+     * @var \App\Models\Conversation
+     */
+    private Conversation $conversation;
+
+    /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(User $user, $notifier)
+    public function __construct(User $user, User $notifier, Conversation $conversation)
     {
         $this->user = $user;
         $this->notifier = $notifier;
+        $this->conversation = $conversation;
     }
 
     /**
@@ -59,7 +66,7 @@ class NotifyUserOfChatMessageNotification extends Notification implements Should
             ->subject('New Chat Message Notification')
             ->line('Dear ' . $this->user->name)
             ->line('This is to notify you that a new chat message has been created on your platform.')
-            ->action('Chat Now', url(route('chats.index')))
+            ->action('Chat Now', url(route('chats.show', $this->conversation)))
             ->line('Thank you for using our application!');
     }
 
@@ -77,7 +84,7 @@ class NotifyUserOfChatMessageNotification extends Notification implements Should
             title: 'Chat Notification',
             subtitle: 'User ' . $this->notifier->name . 'has sent you a message',
             actionData: new RouteActionData(
-                route: route('chats.index'),
+                route: route('chats.show', $this->conversation),
                 text: 'Chat Now',
             ),
         ))->toArray();
