@@ -32,6 +32,31 @@ const props = defineProps(['countries', 'positions']);
     color: black;
 }
 
+.el-date-table td.current:not(.disabled) .el-date-table-cell__text {
+    color: #fff;
+    background-color: rgb(0, 100, 0) !important;
+}
+
+.el-date-table td .cell:hover {
+    color: rgb(0, 100, 0) !important;
+}
+
+.el-year-table td.current:not(.disabled) .cell {
+    color: rgb(0, 100, 0) !important;
+}
+
+.el-year-table td .cell:hover {
+    color: rgb(0, 100, 0) !important;
+}
+
+.el-month-table td.current:not(.disabled) .cell {
+    color: rgb(0, 100, 0) !important;
+}
+
+.el-month-table td .cell:hover {
+    color: rgb(0, 100, 0) !important;
+}
+
 .el-form-item__label {
     color: rgb(0, 100, 0) !important;
 }
