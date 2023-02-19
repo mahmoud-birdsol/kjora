@@ -48,7 +48,7 @@ class MessageController extends Controller
             event(new MessageSentEvent($user));
         }
         else{
-            $user->notify(new NotifyUserOfChatMessageNotification($user, $request->user()), $conversation);
+            $user->notify(new NotifyUserOfChatMessageNotification($user, $request->user(), $conversation));
         }
 
         return redirect()->back();
