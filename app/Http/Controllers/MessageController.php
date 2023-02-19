@@ -42,7 +42,7 @@ class MessageController extends Controller
             $message->addMedia($request->file('attachments'))->toMediaCollection('attachments');
         }
 
-        $user = $conversation->users()->whereNot('id', $request->user()->id())->first();
+        $user = $conversation->users()->whereNot('id', $request->user()->id)->first();
 
         if ($checkIfUserIsPresentAction($user)) {
             event(new MessageSentEvent($user));
