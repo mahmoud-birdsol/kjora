@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\MarkMessagesAsReadAction;
 use App\Models\Conversation;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -49,11 +50,16 @@ class ChatController extends Controller
      * @param \App\Models\Conversation $conversation
      * @return \Inertia\Response
      */
-    public function show(Conversation $conversation): Response
+    public function show(
+        Conversation             $conversation,
+        MarkMessagesAsReadAction $markMessagesAsReadAction
+    ): Response
     {
         $userConversationsIds = request()->user()->conversations->pluck('id');
 
         $query = $conversation->messages()->orderBy('created_at', 'DESC');
+
+        $markMessagesAsReadAction($conversation);
 
         $conversations = Conversation::query()->whereHas('users', function ($query) use ($userConversationsIds) {
             $query->whereIn('conversation_user.conversation_id', $userConversationsIds)
