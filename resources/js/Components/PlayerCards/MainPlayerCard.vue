@@ -24,6 +24,16 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
+    showInvite: {
+        required: false,
+        type: Boolean,
+        default: true,
+    },
+    showLocation: {
+        required: false,
+        type: Boolean,
+        default: true
+    }
 });
 
 const backgroundImage = computed(() => {
@@ -60,7 +70,7 @@ const backgroundImage = computed(() => {
                 </div>
             </div>
             <div>
-                <p class="text-sm font-bold text-white">$ {{ player.hourly_rate }}</p>
+                <p class="text-sm font-bold text-white">{{ player.preferred_foot === 'right' ? 'R' : 'L' }}</p>
             </div>
         </div>
 
@@ -93,12 +103,12 @@ const backgroundImage = computed(() => {
         </div>
 
         <div class="flex justify-between items-center mt-2">
-            <p class="text-white text-sm flex items-center">
+            <p class="text-white text-sm flex items-center" v-if="showLocation">
                 <MapPinIcon class="inline h-4 w-4 text-white"/>
                 Cairo
             </p>
 
-            <div class="flex space-x-2">
+            <div class="flex space-x-2" v-if="showInvite">
                 <Link :href="route('invitation.create', player.id)" class="text-sm text-white">Send Invitation
                     <ChevronDoubleRightIcon class="inline h-4 w-4 text-white"/>
                 </Link>

@@ -41,7 +41,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         'username',
         'email',
         'password',
-        'joined_platform_at,',
+        'joined_platform_at',
         // Profile information.
         'country_id',
         'club_id',
@@ -111,7 +111,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         'identity_back_image_url',
         'identity_selfie_image_url',
         'has_verified_identity',
-        'hourly_rate',
         'age',
         'name',
     ];
@@ -234,20 +233,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     {
         return Attribute::make(
             get: fn($value) => $this->hasVerifiedPersonalIdentity()
-        );
-    }
-
-    /**
-     * Get the user hourly rate.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
-     */
-    public function hourlyRate(): Attribute
-    {
-        return Attribute::make(
-            get: fn($value) => $this->rating ?
-                Rating::where('rating_from', '<=', $this->rating)->where('rating_to', '>=', $this->rating)->first()?->hourly_rate :
-                null
         );
     }
 

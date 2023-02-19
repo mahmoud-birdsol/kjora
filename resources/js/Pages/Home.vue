@@ -1,10 +1,11 @@
 <script setup>
-import { ref } from 'vue';
-import { Head, useForm, usePage } from '@inertiajs/inertia-vue3';
+import {ref} from 'vue';
+import {Head, useForm, usePage} from '@inertiajs/inertia-vue3';
+import {Inertia} from "@inertiajs/inertia";
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import Modal from '@/Components/Modal.vue';
-import { ElSlider } from 'element-plus';
+import {ElSlider} from 'element-plus';
 import InputLabel from '@/Components/InputLabel.vue';
 import Pagination from '@/Components/Pagination.vue';
 import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
@@ -47,6 +48,15 @@ const filter = () => {
         }
     });
 };
+
+const reset = () => {
+    form.position = null;
+    form.age = 18;
+    form.rating = 0;
+    form.search = '';
+    
+    filter();
+}
 </script>
 
 <template>
@@ -80,7 +90,7 @@ const filter = () => {
 
                 <!-- Current list...
                 =====================================================-->
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
+                <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
 
                     <div class="flex justify-start items-start my-6">
                         <p class="text-sm font-bold">Total ({{ players.total }})</p>
@@ -132,13 +142,6 @@ const filter = () => {
                                 </div>
 
                                 <div class="my-6">
-                                    <InputLabel>Price</InputLabel>
-                                    <div class="rounded-full px-4 py-1 mx-4 border border-white">
-                                        <el-slider v-model="form.price" :min="0" :max="500"/>
-                                    </div>
-                                </div>
-
-                                <div class="my-6">
                                     <InputLabel>Search</InputLabel>
                                     <div class="px-4">
                                         <input type="search" name="search" id="search"
@@ -164,6 +167,12 @@ const filter = () => {
 
                                 <div class="my-6 mt-4">
                                     <SecondaryButton @click="filter">Apply</SecondaryButton>
+                                </div>
+                                <div class="flex justify-center items-center mt-4">
+                                    <button class="text-primary" @click="reset">
+                                        <XMarkIcon class="h-4 w-4 inline mr-4"/>
+                                        Reset
+                                    </button>
                                 </div>
                             </form>
                         </div>

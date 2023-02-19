@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\NotifyAdminsOfVerificationRequest;
 use App\Models\Country;
+use App\Services\FlashMessage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +18,7 @@ class IdentityVerificationController extends Controller
     /**
      * Display the form to upload the user verification documents.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Inertia\Response
      */
     public function create(Request $request): Response
@@ -30,8 +31,12 @@ class IdentityVerificationController extends Controller
     /**
      * Update the user verification documents.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\InvalidBase64Data
      */
     public function store(Request $request): RedirectResponse
     {
@@ -95,6 +100,10 @@ class IdentityVerificationController extends Controller
 
         NotifyAdminsOfVerificationRequest::dispatch($request->user());
 
-        return redirect()->back();
+        FlashMessage::make()->success(
+            message: 'Your identity verification has been successfully sent. Please wait for approval.'
+        )->closeable()->send();
+
+        return redirect()->route('home');
     }
 }

@@ -17,6 +17,7 @@ import {
 } from '@heroicons/vue/24/outline';
 
 import { ElDatePicker } from 'element-plus';
+import MainPlayerCard from "@/Components/PlayerCards/MainPlayerCard.vue";
 
 const props = defineProps({
     invited: Object,
@@ -55,46 +56,7 @@ const createInvitation = () => {
                 <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div class="col-span-1">
                         <div class="bg-black rounded-xl p-6">
-                            <div class="rounded-xl p-4"
-                                 style="background: url('/images/player_bg_sm.png'); background-size: cover; background-position: center;">
-                                <div class="flex justify-between items-center mb-4">
-                                    <div>
-                                        <p class="text-sm text-white uppercase font-bold">{{ dayjs().format('d MMMM YYYY, HH:MM A') }}</p>
-                                    </div>
-                                    <div>
-                                        <div class="flex justify-center items-center rounded-full bg-black h-10 w-10">
-                                            <span class="text-xs text-white">$ {{ invited.hourly_rate }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex justify-between items-start">
-                                    <div class="flex justify-start space-x-2 mb-2">
-                                        <Avatar :image-url="invited.avatar_url" size="md" :username="invited.name" :border="true"/>
-                                        <div>
-                                            <h2 class="text-sm text-white font-bold">
-                                                {{ invited.first_name }} {{ invited.last_name }}
-                                            </h2>
-
-                                            <p class="text-xs text-white opacity-50">@{{ invited.username }}</p>
-                                            <p class="text-sm text-white flex items-center space-x-2">
-                                                <ElRate v-model="invited.rating" size="small"/>
-                                                {{ invited.rating }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="">
-                                        <p class="text-xs text-white opacity-50 text-light text-center">Position</p>
-                                        <p class="text-sm text-white text-center font-semi-bold">{{ invited.position.name }}</p>
-                                    </div>
-                                </div>
-
-                                <div class="flex justify-between items-center mt-8 mb-4 border-t border-white">
-                                    <p class="text-white text-sm flex items-center">
-                                        <MapPinIcon class="inline h-4 w-4 text-white"/>
-                                        Cairo
-                                    </p>
-                                </div>
-                            </div>
+                            <MainPlayerCard :player="invited" :show-report="false" :show-invite="false"/>
 
                             <form @submit.prevent="">
                                 <div class="my-6">

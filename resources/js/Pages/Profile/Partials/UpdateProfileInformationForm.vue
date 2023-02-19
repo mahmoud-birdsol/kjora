@@ -40,7 +40,7 @@ const showSuccessMessage = ref(false);
 const updateProfileInformation = () => {
     form.post(route('user-profile-information.update'), {
         errorBag: 'updateProfileInformation',
-        preserveScroll: true,
+        preserveScroll: false,
         onSuccess: () => {
             showSuccessMessage.value = true;
         },
@@ -87,6 +87,7 @@ const showUploadAvatarModal = ref(false);
                                    placeholder="Please enter your first name"
                                    auto-complete="given-name"
                                    aria-required="true"
+                                   :disabled="true"
                                    autofocus
                         />
                         <InputError class="mt-2" :message="form.errors.first_name"/>
@@ -98,6 +99,7 @@ const showUploadAvatarModal = ref(false);
                                    placeholder="Please enter your last name"
                                    auto-complete="sur-name"
                                    aria-required="true"
+                                   :disabled="true"
                         />
                         <InputError class="mt-2" :message="form.errors.last_name"/>
                     </div>

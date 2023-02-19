@@ -1,11 +1,20 @@
 <?php
 
 use App\Http\Controllers\Actions\MarkNotificationAsRead;
+use App\Http\Controllers\HireController;
 use App\Http\Controllers\IdentityVerificationController;
+use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\JoinPlatformController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\UserProfileController;
+use App\Models\Invitation;
+use App\Models\Stadium;
+use App\Models\User;
+use App\Notifications\InvitationAcceptedNotification;
+use App\Notifications\InvitationCreatedNotification;
+use App\Notifications\InvitationDeclinedNotification;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -84,22 +93,20 @@ Route::middleware([
          |--------------------------------------------------------------------------
          */
 
-        Route::get('invitations', function (Request $request) {
-            $invitingInvitations = \App\Models\Invitation::where('inviting_player_id',
-                $request->user()->id)->latest('date')->with('invitingPlayer')->with('invitedPlayer')->with('stadium')->get();
-            $invitedInvitations = \App\Models\Invitation::where('invited_player_id',
-                $request->user()->id)->latest('date')->with('invitingPlayer')->with('invitedPlayer')->with('stadium')->get();
+        Route::get('invitations', [
+            InvitationController::class,
+            'index'
+        ])->name('invitation.index');
 
-            return Inertia::render('Invitation/Index', [
-                'invitingInvitations' => $invitingInvitations,
-                'invitedInvitations' => $invitedInvitations,
-            ]);
-        })->name('invitation.index');
+        Route::get('hires', [
+            HireController::class,
+            'index'
+        ])->name('hire.index');
 
-        Route::get('invitations/create/{invited}', function (\App\Models\User $invited) {
+        Route::get('invitations/create/{invited}', function (User $invited) {
             return Inertia::render('Invitation/Create', [
                 'invited' => $invited,
-                'stadiums' => \App\Models\Stadium::all(),
+                'stadiums' => Stadium::all(),
             ]);
         })->name('invitation.create');
 
@@ -115,31 +122,31 @@ Route::middleware([
             $minutes = explode(':', $request->input('time'))[1];
 
             $data['inviting_player_id'] = $request->user()->id;
-            $data['date'] = \Carbon\Carbon::parse($data['date'])->setTime($hours, $minutes);
+            $data['date'] = Carbon::parse($data['date'])->setTime($hours, $minutes);
             unset($data['time']);
 
-            $invitation = \App\Models\Invitation::create($data);
+            $invitation = Invitation::create($data);
 
             // Notify the invited user
-            $invitation->invitedPlayer->notify(new \App\Notifications\InvitationCreatedNotification($invitation));
+            $invitation->invitedPlayer->notify(new InvitationCreatedNotification($invitation));
 
             return redirect()->back();
         })->name('invitation.store');
 
         // Accept invitation
-        Route::patch('invitations/{invitation}/accept', function (\App\Models\Invitation $invitation) {
+        Route::patch('invitations/{invitation}/accept', function (Invitation $invitation) {
             $invitation->forceFill(['state' => 'accepted'])->save();
 
-            $invitation->invitingPlayer->notify(new \App\Notifications\InvitationAcceptedNotification($invitation));
+            $invitation->invitingPlayer->notify(new InvitationAcceptedNotification($invitation));
 
             return redirect()->route('invitation.index');
         })->name('invitation.accept');
 
         // Decline invitation
-        Route::patch('invitations/{invitation}/decline', function (\App\Models\Invitation $invitation) {
+        Route::patch('invitations/{invitation}/decline', function (Invitation $invitation) {
             $invitation->forceFill(['state' => 'declined'])->save();
 
-            $invitation->invitingPlayer->notify(new \App\Notifications\InvitationDeclinedNotification($invitation));
+            $invitation->invitingPlayer->notify(new InvitationDeclinedNotification($invitation));
 
             return redirect()->route('invitation.index');
         })->name('invitation.decline');

@@ -107,7 +107,7 @@ const showSuccessMessage = ref(false);
 
 const save = () => {
     form.post(route('identity.verification.store'), {
-        preserveScroll: true,
+        preserveScroll: false,
         preserveState: true,
         onSuccess: () => {
             // completedFirstStep.value = true;
@@ -194,28 +194,22 @@ const save = () => {
                         <div class="h-full flex flex-col justify-between gap-2">
                             <div>
                                 <h3 class="text-black font-bold uppercase mb-8">Take Selfie Photo</h3>
-                                <h3 class="text-black text-sm font-bold capitalize">Example</h3>
                             </div>
 
                             <div>
                                 <div class="flex space-x-4">
                                     <div class="w-1/4">
                                         <button @click="showIdentitySelfieModal = true" class="relative h-full w-full">
-                                            <img :src="
-                                                        form.identity_selfie_image != null
-                                                            ? (form.identity_selfie_image.indexOf('data:image') > -1 ? form.identity_selfie_image : identitySelfieImagePreview)
-                                                            : '/images/selfie_example.png'
-                                                    " alt=""
-                                                 class="w-full h-auto">
-                                            <div
-                                                class="absolute inset-0 bg-transparent hover:bg-white hover:bg-opacity-50 h-full w-full">
-                                                <div
-                                                    class="flex flex-col justify-center items-center h-full opacity-0 hover:opacity-100">
+                                            <img v-if="form.identity_selfie_image" :src="form.identity_selfie_image" alt="" class="w-full h-auto">
+                                            <img v-if="identitySelfieImagePreview" :src="identitySelfieImagePreview" alt="" class="w-full h-auto">
+                                            <span class="absolute inset-0 bg-transparent hover:bg-white hover:bg-opacity-50 h-full w-full">
+                                                <span
+                                                    class="flex flex-col justify-center items-center h-full">
                                                     <font-awesome-icon
                                                         icon="camera"
-                                                        class="w-12 h-auto text-white text-center"/>
-                                                </div>
-                                            </div>
+                                                        class="w-12 h-auto text-black text-center"/>
+                                                </span>
+                                            </span>
                                         </button>
                                     </div>
                                     <div class="w-3/4">

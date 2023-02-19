@@ -2,7 +2,7 @@
 import {Head, Link} from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
-import InvitationCard from "./Partials/InvitationCard.vue";
+import HireCard from "@/Pages/Hire/Partials/HireCard.vue";
 
 const props = defineProps({
     invitations: Array,
@@ -22,18 +22,18 @@ const props = defineProps({
                 <div class="flex justify-end items-center space-x-4">
                     <Link :href="route('invitation.index')">
                         <SecondaryButton>
-                                    <span
-                                        :class="{'text-gray-500': !route().current('invitation.index'), 'text-black': route().current('invitation.index')}">
-                                        Invitation
-                                    </span>
+                                <span
+                                    :class="{'text-gray-500': !route().current('invitation.index'), 'text-black': route().current('invitation.index')}">
+                                    Invitation
+                                </span>
                         </SecondaryButton>
                     </Link>
                     <Link :href="route('hire.index')">
                         <SecondaryButton>
-                                    <span
-                                        :class="{'text-gray-500': !route().current('hire.index'), 'text-black': route().current('hire.index')}">
-                                        Hire
-                                    </span>
+                                <span
+                                    :class="{'text-gray-500': !route().current('hire.index'), 'text-black': route().current('hire.index')}">
+                                    Hire
+                                </span>
                         </SecondaryButton>
                     </Link>
                 </div>
@@ -41,7 +41,7 @@ const props = defineProps({
                 <div class="bg-white rounded-xl mt-4 min-h-[500px] p-6">
                     <div class="grid grid-cols-1 gap-4">
                         <template v-for="invitation in invitations" :key="invitation.id">
-                            <InvitationCard :invitation="invitation"/>
+                            <HireCard :invitation="invitation"/>
                         </template>
                     </div>
                 </div>

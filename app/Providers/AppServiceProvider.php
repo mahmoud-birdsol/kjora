@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Http\Responses\ProfileInformationUpdatedResponse as ProfileInformationUpdatedResponseCustom;
 use App\Http\Responses\RegisterResponse;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Fortify\Contracts\ProfileInformationUpdatedResponse;
 use Laravel\Fortify\Contracts\RegisterViewResponse;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->bind(RegisterViewResponse::class, RegisterResponse::class);
+        $this->app->bind(ProfileInformationUpdatedResponse::class, ProfileInformationUpdatedResponseCustom::class);
     }
 }

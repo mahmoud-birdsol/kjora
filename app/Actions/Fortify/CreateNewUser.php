@@ -17,8 +17,10 @@ class CreateNewUser implements CreatesNewUsers
     /**
      * Validate and create a newly registered user.
      *
-     * @param  array  $input
+     * @param array $input
      * @return \App\Models\User
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
      */
     public function create(array $input)
     {
@@ -46,7 +48,6 @@ class CreateNewUser implements CreatesNewUsers
             'joined_platform_at' => now(),
             'first_name' => $input['first_name'],
             'last_name' => $input['last_name'],
-            'username' => $input['username'],
             'country_id' => $input['country_id'],
             'club_id' => $input['club_id'],
             'date_of_birth' => Carbon::parse($input['date_of_birth']),
