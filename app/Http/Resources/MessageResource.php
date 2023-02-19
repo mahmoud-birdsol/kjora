@@ -17,7 +17,7 @@ class MessageResource extends JsonResource
         return [
             'id' => $this->id,
             'body' => $this->body,
-            'parent' => MessageResource::make($this->resource->parent),
+            'parent' => MessageResource::make($this->resource->parentMessage),
             'parent_id' => $this->parent_id,
             'sender_id' => $this->sender_id,
             'media' => $this->resource->load('media')
