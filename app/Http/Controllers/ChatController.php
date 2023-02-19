@@ -40,7 +40,7 @@ class ChatController extends Controller
             'conversations' => $query->with('users', function ($query) use ($request) {
                 $query->whereNot('conversation_user.user_id', $request->user()->id);
             })->get(),
-            'last_online_at' => request()->user()->messages()?->latest()?->first()?->created_at
+            'last_online_at' => request()->user()->messages()?->orderBy('created_at', 'DESC')?->first()?->created_at
         ]);
     }
 
@@ -72,7 +72,7 @@ class ChatController extends Controller
             'conversation' => $conversation,
             'player' => $conversation->users()->whereNot('conversation_user.user_id', request()->user()->id)->first(),
             'conversations' => $conversations,
-            'last_online_at' => request()->user()->messages()?->latest()?->first()?->created_at
+            'last_online_at' => request()->user()->messages()?->orderBy('created_at', 'DESC')?->first()?->created_at
         ]);
     }
 }
