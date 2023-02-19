@@ -1,18 +1,20 @@
 <script setup >
 
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
-import ChatFriendCard from './ChatFriendCard.vue';
+import ChatFriendCard from './ConversationCard.vue';
 import { onMounted, onUnmounted, ref } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 
-defineProps({
-    friends: Array
+const props = defineProps({
+    conversations: Array,
+    currentConvId: Number
 })
 const emit = defineEmits(['fetchMore'])
 const conversationList = ref(null)
 
 onMounted(() => {
     conversationList.value ? conversationList.value.addEventListener('scroll', throttledHandleScroll) : null
+    // console.log(props.conversations)
 });
 onUnmounted(() => {
     conversationList.value ? conversationList.value.removeEventListener('scroll', throttledHandleScroll) : null
@@ -52,8 +54,8 @@ function submitSearchFriends() {
             <p class=" mb-3 font-bold text-black uppercase">total (3)</p>
             <div ref="conversationList"
                 class="flex self-end flex-col gap-3 hideScrollBar max-h-[40vh] overflow-auto  lg:max-h-[70vh] ">
-                <template v-for="friend in friends" :key="friend.id">
-                    <ChatFriendCard :friend="friend" />
+                <template v-for="conversation in conversations" :key="conversation.id">
+                    <ChatFriendCard :conversation="conversation" :active="conversation.id === currentConvId" />
                 </template>
             </div>
         </div>

@@ -23,8 +23,9 @@
             </div>
 
             <!-- date -->
-            <div class="text-xs mt-2 " :class="isCurrentUser ? 'text-end' : null"> Send date | <span
-                    class="text-primary">R</span></div>
+            <div class="text-xs mt-2 " :class="isCurrentUser ? 'text-end' : null"> <span>{{ message.read_at ?
+                dayjs(message.read_at).format('hh:mm A') : dayjs(message.created_at).format('hh:mm A') }}</span> | <span
+                    class="text-primary capitalize">{{ message.read_at ? 'r' : 's' }}</span></div>
         </div>
 
         <!-- options menu if message of the current user -->
@@ -72,12 +73,21 @@ import { computed, ref } from '@vue/reactivity';
 import ReplyIcon from './Icons/ReplyIcon.vue';
 import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid'
 import { TrashIcon } from '@heroicons/vue/24/outline'
+import { usePage } from '@inertiajs/inertia-vue3';
+import { onMounted } from 'vue';
+import dayjs from 'dayjs';
 
+
+const currentUser = usePage().props.value.auth.user
 const props = defineProps({
     message: Object
 })
+onMounted(() => {
+    // console.log('currentuserid', currentUser.id)
+    // console.log('message', props.message)
+})
 const name = 'thomas abdallah'
-const isCurrentUser = computed(() => { return props.message.sender_id === 68 })
+const isCurrentUser = computed(() => { return props.message.sender_id === currentUser.id })
 const alignmentClass = computed(() => {
     return isCurrentUser.value ? 'self-end  ' : 'self-start   ';
 })
