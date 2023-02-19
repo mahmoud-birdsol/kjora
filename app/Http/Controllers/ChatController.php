@@ -70,9 +70,8 @@ class ChatController extends Controller
 
         return Inertia::render('Chat/Show', [
             'messages' => $query->paginate(12),
-            'conversation' => $conversation->load('users', function ($query) {
-                $query->whereNot('conversation_user.user_id', request()->user()->id);
-            }),
+            'conversation' => $conversation,
+            'player' => $conversation->users()->whereNot('id', request()->user()->id)->first(),
             'conversations' => $conversations
         ]);
     }
