@@ -28,7 +28,7 @@ class MessageStoreRequest extends FormRequest
                 'nullable'
             ],
             'body' => [
-                'required'
+                'required_without:attachments'
             ],
             'attachments' => [
                 'nullable',
