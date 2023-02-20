@@ -18,7 +18,7 @@ class PlayerController extends Controller
      */
     public function index(Request $request): Response
     {
-        $query = User::query();
+        $query = User::query()->whereNot('id', $request->user()->id);
 
         $request->whenFilled('position', fn() => $query->where('position_id', $request->input('position')));
         $request->whenFilled('rating',
@@ -31,6 +31,10 @@ class PlayerController extends Controller
 
         $request->whenFilled('age',
             fn() => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('age')))
+        );
+
+        $request->whenFilled('country',
+            fn() => $query->where('country_id', $request->input('country'))
         );
 
         $request->whenFilled('search', fn() => $query->where(function ($query) use ($request) {

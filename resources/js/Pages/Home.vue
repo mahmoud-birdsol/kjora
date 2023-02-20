@@ -1,6 +1,7 @@
 <script setup>
-import {ref} from 'vue';
-import {Head, useForm, usePage} from '@inertiajs/inertia-vue3';
+import { ref } from 'vue';
+import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
+import dayjs from 'dayjs';
 import {Inertia} from "@inertiajs/inertia";
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
@@ -15,6 +16,7 @@ import {
     XMarkIcon,
     AdjustmentsHorizontalIcon,
 } from '@heroicons/vue/24/outline';
+import UserCard from '../Components/UserCard.vue';
 
 const props = defineProps({
     players: Object,
@@ -54,13 +56,14 @@ const reset = () => {
     form.age = 18;
     form.rating = 0;
     form.search = '';
-    
+
     filter();
 }
 </script>
 
 <template>
-    <Head title="Home"/>
+
+    <Head title="Home" />
 
     <AppLayout title="Home">
         <template #header>
@@ -68,20 +71,20 @@ const reset = () => {
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <!-- Position Filters...
                 =====================================================-->
                 <div class="grid grid-cols-5 gap-4 my-8">
                     <SecondaryButton @click="filterByPosition(null)">
                         <span class="w-full text-center"
-                              :class="{'text-black': form.position == null, 'text-gray-400': form.position != null}">
+                            :class="{ 'text-black': form.position == null, 'text-gray-400': form.position != null }">
                             All positions
                         </span>
                     </SecondaryButton>
                     <template v-for="position in positions" :key="position.id">
                         <SecondaryButton @click="filterByPosition(position.id)">
                             <span class="w-full text-center"
-                                  :class="{'text-black': form.position == position.id, 'text-gray-400': form.position != position.id}">
+                                :class="{ 'text-black': form.position == position.id, 'text-gray-400': form.position != position.id }">
                                 {{ position.name }}
                             </span>
                         </SecondaryButton>
@@ -102,8 +105,8 @@ const reset = () => {
                         </template>
                     </div>
 
-                    <div class="flex justify-center items-center my-4">
-                        <Pagination :links="players.links"/>
+                    <div class="flex items-center justify-center my-4">
+                        <Pagination :links="players.links" />
                     </div>
                 </div>
 
@@ -111,9 +114,9 @@ const reset = () => {
                 =====================================================-->
                 <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40">
                     <button
-                        class="rounded-full h-16 w-16 bg-black shadow-xl text-center flex justify-center items-center"
-                        @click="showFiltersModal = ! showFiltersModal">
-                        <AdjustmentsHorizontalIcon class="text-white h-10 w-10"/>
+                        class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl"
+                        @click="showFiltersModal = !showFiltersModal">
+                        <AdjustmentsHorizontalIcon class="w-10 h-10 text-white" />
                     </button>
 
                     <Modal :show="showFiltersModal" max-width="sm" @close="showFiltersModal = false" :closeable="false">
@@ -122,32 +125,31 @@ const reset = () => {
                                 <p class="text-white text-sm">Filter </p>
 
                                 <button @click="showFiltersModal = false">
-                                    <XMarkIcon class="h-4 w-4 text-white"/>
+                                    <XMarkIcon class="w-4 h-4 text-white" />
                                 </button>
                             </div>
 
                             <form @submit.prevent="filter">
                                 <div class="my-6">
                                     <InputLabel>Age</InputLabel>
-                                    <div class="rounded-full px-4 py-2 mx-4 border border-white">
-                                        <el-slider v-model="form.age" :min="18" :max="70"/>
+                                    <div class="px-4 py-2 mx-4 border border-white rounded-full">
+                                        <el-slider v-model="form.age" :min="18" :max="70" />
                                     </div>
                                 </div>
 
                                 <div class="my-6">
                                     <InputLabel>Rating</InputLabel>
-                                    <div class="rounded-full px-4 py-1 mx-4 border border-white">
-                                        <el-slider v-model="form.rating" :min="0" :max="5"/>
+                                    <div class="px-4 py-1 mx-4 border border-white rounded-full">
+                                        <el-slider v-model="form.rating" :min="0" :max="5" />
                                     </div>
                                 </div>
 
                                 <div class="my-6">
                                     <InputLabel>Search</InputLabel>
                                     <div class="px-4">
-                                        <input type="search" name="search" id="search"
-                                               v-model="form.search"
-                                               class="block w-full rounded-full border-white px-4 focus:border-primary focus:ring-primary sm:text-sm bg-black text-white placeholder:center text-center"
-                                               placeholder="Search by name or username"/>
+                                        <input type="search" name="search" id="search" v-model="form.search"
+                                            class="block w-full px-4 text-center text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
+                                            placeholder="Search by name or username" />
                                     </div>
                                 </div>
 
@@ -159,7 +161,7 @@ const reset = () => {
                                                 class="mt-1 block w-full rounded-full border-white py-2 pl-3 pr-10 text-base focus:border-primary focus:outline-none focus:ring-primary sm:text-sm text-white placeholder:center text-center bg-black">
                                             <option :value="null">All Positions</option>
                                             <option v-for="position in positions" :key="position.id"
-                                                    :value="position.id">{{ position.name }}
+                                                :value="position.id">{{ position.name }}
                                             </option>
                                         </select>
                                     </div>

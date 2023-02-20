@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\AcceptInvitationController;
 use App\Http\Controllers\Actions\MarkNotificationAsRead;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\HireController;
 use App\Http\Controllers\IdentityVerificationController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\JoinPlatformController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\UserProfileController;
@@ -18,6 +21,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Pusher\Pusher;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +56,8 @@ Route::middleware([
         IdentityVerificationController::class,
         'create',
     ])->name('identity.verification.create');
+
+
 
     Route::post('/verification/identity', [
         IdentityVerificationController::class,
@@ -134,13 +140,11 @@ Route::middleware([
         })->name('invitation.store');
 
         // Accept invitation
-        Route::patch('invitations/{invitation}/accept', function (Invitation $invitation) {
-            $invitation->forceFill(['state' => 'accepted'])->save();
-
-            $invitation->invitingPlayer->notify(new InvitationAcceptedNotification($invitation));
-
-            return redirect()->route('invitation.index');
-        })->name('invitation.accept');
+        Route::patch(
+            'invitations/{invitation}/accept',
+            AcceptInvitationController::class
+        )
+            ->name('invitation.accept');
 
         // Decline invitation
         Route::patch('invitations/{invitation}/decline', function (Invitation $invitation) {
@@ -206,4 +210,43 @@ Route::middleware([
             return redirect()->back();
         })->name('upload');
     });
+
+    /*
+     |--------------------------------------------------------------------------
+     | Chat Routes...
+     |--------------------------------------------------------------------------
+    */
+
+    Route::get(
+        'chats', [
+        ChatController::class,
+        'index'
+    ])->name('chats.index');
+
+    Route::get(
+        'chats/{conversation}', [
+        ChatController::class,
+        'show'
+    ])->name('chats.show');
+
+
+    /*
+     |--------------------------------------------------------------------------
+     | Message Routes...
+     |--------------------------------------------------------------------------
+    */
+});
+
+
+
+Route::get('test', function () {
+
+
+// Example 2: Get all the connected users for a specific channel
+});
+
+Route::get('occupy', function () {
+    $user = User::first();
+
+    event(new \App\Events\MessageSentEvent($user));
 });

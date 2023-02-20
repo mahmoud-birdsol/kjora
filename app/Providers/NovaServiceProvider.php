@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Nova\Conversation;
 use App\Nova\Invitation;
 use App\Nova\Admin;
 use App\Nova\Advertisement;
@@ -19,6 +20,7 @@ use App\Nova\Lenses\ActiveAdvertisement;
 use App\Nova\Lenses\ArchivedAdvertisement;
 use App\Nova\Lenses\ExpiringAdvertisement;
 use App\Nova\Lenses\UnverifiedUsers;
+use App\Nova\Message;
 use App\Nova\Position;
 use App\Nova\PrivacyPolicy;
 use App\Nova\Rating;
@@ -93,6 +95,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(Venue::class),
                     MenuItem::resource(Invitation::class),
                 ])->icon('user-group')->collapsable(),
+
+                MenuSection::make('Chat', [
+                    MenuItem::resource(Conversation::class),
+                    MenuItem::resource(Message::class),
+                ])->icon('messages')->collapsable(),
 
                 MenuSection::make('Security', [
                     MenuItem::resource(PrivacyPolicy::class),
