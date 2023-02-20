@@ -4,7 +4,7 @@
         :class="active ? 'border-stone-400 shadow-md border-4' : null">
 
 
-        <div class="w-full flex flex-row gap-4 items-center">
+        <div class="flex flex-row items-center w-full gap-4">
             <div>
                 <img :src="user.avatar ? user.avatar_url : 'https://ui-avatars.com/api/?name=' + user.name + '&color=094609FF&background=E2E2E2'"
                     alt="" class="object-cover w-10 h-10 rounded-full">
@@ -13,14 +13,14 @@
                 <h4 class="m-0 text-lg leading-none text-white capitalize">{{ user.name }}</h4>
                 <span class="text-xs leading-none text-neutral-500"> {{ user.username }} </span>
             </div>
-            <div class=" mis-auto flex flex-col items-center gap-1  ">
-                <span class="text-neutral-500 text-xs">{{ dayjs(lastActiveAt).format('h') }} hours</span>
-                <!-- <span class="text-neutral-500 text-xs">{{ "2" }} hours</span> -->
+            <div class="flex flex-col items-center gap-1 mis-auto">
+                <span class="text-xs text-neutral-500">{{ dayjs(lastActiveAt).format('h') }} hours</span>
+                <!-- <span class="text-xs text-neutral-500">{{ "2" }} hours</span> -->
 
             </div>
         </div>
-        <div class="flex w-full">
-            <p class="pis-6 text-white">most new messages from every friend</p>
+        <div class="flex w-full gap-4">
+            <p class="text-sm text-white truncate ">most new messages from every friend ffffff</p>
             <div class="mis-auto pie-3 ">
                 <TrashIcon class="w-6 h-6 text-white cursor-pointer hover:text-red-500 " />
             </div>
