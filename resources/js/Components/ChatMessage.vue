@@ -46,61 +46,61 @@ const repliedClasses = computed(() => {
 </script>
 
 <template>
-    <div :class="alignmentClass + parentClasses" class="w-full  ">
+    <div :class="alignmentClass + parentClasses" class="w-full ">
         <!-- avatar for non current user message -->
         <div v-if='!isCurrentUser'>
             <div><img :src="'https://ui-avatars.com/api/?name=' + player.name + '&color=094609FF&background=E2E2E2'" alt=""
-                    class="object-cover w-10 h-10 rounded-full border-primary border-2">
+                    class="object-cover w-10 h-10 border-2 rounded-full border-primary">
             </div>
         </div>
         <!-- message body -->
         <div class="max-w-[60%]">
-            <div :class="bodyClass" class="   p-4 rounded-2xl ">
+            <div :class="bodyClass" class="p-4 rounded-2xl">
                 <!-- replied message -->
-                <div v-if="message.parent_id" :class="repliedClasses" class="text-xs p-3 mb-2 rounded-lg">
-                    <div class="mb-2  capitalize font-semibold">
+                <div v-if="message.parent_id" :class="repliedClasses" class="p-3 mb-2 text-xs rounded-lg">
+                    <div class="mb-2 font-semibold capitalize">
                         <h4 v-if="isCurrentUser" class="text-primary">{{ currentUser.name }}</h4>
                         <h4 v-else>{{ player.name }}</h4>
                     </div>
                     <span class="">{{ message.parent?.body }}</span>
                 </div>
                 <div v-if="message.media">
-                    <img class="w-52 object-contain" :src="message.media[0]?.original_url" alt="">
+                    <img class="object-contain w-52" :src="message.media[0]?.original_url" alt="">
                 </div>
-                <span class="whitespace-pre-wrap">
+                <span class="break-words whitespace-pre-wrap ">
                     {{ message.body }}
                 </span>
             </div>
 
             <!-- date -->
-            <div class="text-xs mt-2 " :class="isCurrentUser ? 'text-end' : null"> <span>{{ message.read_at ?
+            <div class="mt-2 text-xs " :class="isCurrentUser ? 'text-end' : null"> <span>{{ message.read_at ?
                 dayjs(message.read_at).format('hh:mm A') : dayjs(message.created_at).format('hh:mm A') }}</span> | <span
-                    class="text-primary capitalize">{{ message.read_at ? 'r' : 's' }}</span></div>
+                    class="capitalize text-primary">{{ message.read_at ? 'r' : 's' }}</span></div>
         </div>
 
         <!-- options menu if message of the current user -->
         <div v-if="isCurrentUser" class="absolute top-0 right-0">
             <button @click="showOptions = !showOptions">
-                <EllipsisVerticalIcon class="w-6  text-neutral-500" />
+                <EllipsisVerticalIcon class="w-6 text-neutral-500" />
             </button>
-            <div v-if="showOptions" class="inset-0 fixed w-full h-full z-10 cursor-pointer  " @click="showOptions = false">
+            <div v-if="showOptions" class="fixed inset-0 z-10 w-full h-full cursor-pointer " @click="showOptions = false">
             </div>
             <Transition enterFromClass="opacity-0" enterToClass="opacity-100" leaveFromClass="opacity-100"
                 leaveToClass="opacity-0" leave-active-class="transition-all duration-150 ease-in"
                 enterActiveClass="transition-all duration-150 ease-out">
                 <div v-show="showOptions"
-                    class=" text-xs bg-black text-white z-20  rounded-xl border border-neutral-500 py-2 px-6 pie-10 z-2 absolute right-7  -top-2">
-                    <ul class="flex flex-col gap-y-2 justify-center">
+                    class="absolute z-20 px-6 py-2 text-xs text-white bg-black border rounded-xl border-neutral-500 pie-10 z-2 right-7 -top-2">
+                    <ul class="flex flex-col justify-center gap-y-2">
                         <button class="hover:text-gray-400 ">
-                            <li class="flex gap-x-2 items-center justify-center">
+                            <li class="flex items-center justify-center gap-x-2">
                                 <TrashIcon class="w-4" />
                                 <span> delete</span>
                             </li>
                         </button>
                         <button class="hover:text-gray-400 group" @click="handleReply">
-                            <li class="flex gap-x-2 items-center justify-center">
+                            <li class="flex items-center justify-center gap-x-2">
                                 <ReplyIcon
-                                    class="fill-transparent group-hover:stroke-gray-400 cursor-pointer stroke-white ">
+                                    class="cursor-pointer fill-transparent group-hover:stroke-gray-400 stroke-white ">
                                 </ReplyIcon>
                                 <span>Quote</span>
                             </li>
@@ -111,7 +111,7 @@ const repliedClasses = computed(() => {
         </div>
         <!-- reply icon for non current user message -->
         <button v-if="!isCurrentUser" @click="handleReply">
-            <ReplyIcon class="fill-transparent hover:fill-black  stroke-black "></ReplyIcon>
+            <ReplyIcon class="fill-transparent hover:fill-black stroke-black "></ReplyIcon>
 
         </button>
 

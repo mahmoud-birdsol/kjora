@@ -4,12 +4,12 @@
         <div class="grid  w-full h-full lg:grid-cols-[1fr_2fr]  text-neutral-500 bg-white rounded-2xl ">
 
             <div v-if="$slots.sidebar"
-                class="flex flex-col gap-3 px-6 py-3 h-full lg:border-r-2 lg:border-r-stone-500 max-lg:border-b-2 max-lg:border-b-stone-500">
+                class="flex flex-col h-full gap-3 px-6 py-3 lg:border-r lg:border-r-stone-400 max-lg:border-b-1 max-lg:border-b-stone-400">
                 <slot name="sidebar"></slot>
             </div>
-            <div class="grid grid-flow-row  h-full">
+            <div class="grid h-full grid-flow-row">
                 <!-- header -->
-                <div v-if="$slots.header" class="flex self-start min-h-[1rem] border-b-2 border-b-stone-500">
+                <div v-if="$slots.header" class="flex self-start min-h-[1rem] border-b border-b-stone-400">
                     <slot name="header"></slot>
                 </div>
                 <div v-if="$slots.main" class="self-stretch p-4">
@@ -19,7 +19,7 @@
                 </div>
                 <!-- this is empty div for acts like separation -->
 
-                <div v-if="$slots.footer" class="self-end p-2 h-min border-t-2 border-t-stone-500">
+                <div v-if="$slots.footer" class="self-end p-2 border-t h-min border-t-stone-400">
                     <!-- ok model -->
                     <slot name="footer"></slot>
                 </div>
