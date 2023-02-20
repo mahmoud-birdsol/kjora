@@ -11,7 +11,9 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\UserProfileController;
+use App\Models\Country;
 use App\Models\Invitation;
+use App\Models\Position;
 use App\Models\Stadium;
 use App\Models\User;
 use App\Notifications\InvitationAcceptedNotification;
@@ -33,6 +35,7 @@ use Pusher\Pusher;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::redirect('/', 'login')->name('welcome');
 
 // Join platform routes...
@@ -103,6 +106,19 @@ Route::middleware([
             InvitationController::class,
             'index'
         ])->name('invitation.index');
+        Route::get('more', function () {
+            return Inertia::render('More', [
+                'countries' => Country::all(),
+                'positions' => Position::all(),
+            ]);
+        })->name('more');
+
+        Route::get('favourite', function () {
+            return Inertia::render('Favourite', [
+                'positions' => Position::all()
+            ]);
+        })->name('favourite');
+
 
         Route::get('hires', [
             HireController::class,
@@ -218,16 +234,20 @@ Route::middleware([
     */
 
     Route::get(
-        'chats', [
-        ChatController::class,
-        'index'
-    ])->name('chats.index');
+        'chats',
+        [
+            ChatController::class,
+            'index'
+        ]
+    )->name('chats.index');
 
     Route::get(
-        'chats/{conversation}', [
-        ChatController::class,
-        'show'
-    ])->name('chats.show');
+        'chats/{conversation}',
+        [
+            ChatController::class,
+            'show'
+        ]
+    )->name('chats.show');
 
 
     /*
@@ -239,14 +259,14 @@ Route::middleware([
 
 
 
-Route::get('test', function () {
+// Route::get('test', function () {
 
 
-// Example 2: Get all the connected users for a specific channel
-});
+//     // Example 2: Get all the connected users for a specific channel
+// });
 
-Route::get('occupy', function () {
-    $user = User::first();
+// Route::get('occupy', function () {
+//     $user = User::first();
 
-    event(new \App\Events\MessageSentEvent($user));
-});
+//     event(new \App\Events\MessageSentEvent($user));
+// });

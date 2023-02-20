@@ -39,25 +39,25 @@ const logout = () => {
                                 Home
                             </span>
                         </NavLink>
-                        <NavLink :href="route('chats.index')" :active="route().current('chats.idnex')">
+                        <NavLink :href="route('chats.index')" :active="route().current('chats.index')">
                             <ChatIcon class="w-4 h-4 text-primary" />
                             <span>
                                 Chat
                             </span>
                         </NavLink>
-                        <NavLink :href="route('invitation.index')" :active="route().current('invitation.idnex')">
+                        <NavLink :href="route('favourite')" :active="route().current('favourite')">
                             <HeartIcon class="w-4 h-4 text-primary" />
                             <span>
-                                Favorite
+                                Favourite
                             </span>
                         </NavLink>
-                        <NavLink :href="route('invitation.index')" :active="route().current('invitation.idnex')">
+                        <NavLink :href="route('invitation.index')" :active="route().current('invitation.index')">
                             <Cog6ToothIcon class="w-4 h-4 text-primary" />
                             <span>
                                 Invitation
                             </span>
                         </NavLink>
-                        <NavLink :href="route('invitation.index')" :active="route().current('invitation.idnex')">
+                        <NavLink :href="route('more')" :active="route().current('more')">
                             <EllipsisHorizontalCircleIcon class="w-4 h-4 text-primary" />
                             <span>
                                 More
