@@ -65,7 +65,7 @@ const repliedClasses = computed(() => {
                     <span class="">{{ message.parent?.body }}</span>
                 </div>
                 <div v-if="message.media">
-                    <img class="w-52 object-contain" :src="message.media.original_url" alt="">
+                    <img class="w-52 object-contain" :src="message.media[0]?.original_url" alt="">
                 </div>
                 <span class="whitespace-pre-wrap">
                     {{ message.body }}

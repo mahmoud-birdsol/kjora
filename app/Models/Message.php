@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -35,6 +36,16 @@ class Message extends Model implements HasMedia
      */
     protected $casts = [
         'read_at' => 'datetime'
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'attachment',
+        'parent'
     ];
 
     /**
@@ -90,6 +101,30 @@ class Message extends Model implements HasMedia
     public function replies(): HasMany
     {
         return $this->hasMany(Message::class, 'parent_id');
+    }
+
+    /**
+     * Get the first media of the message
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function attachment(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $this->getFirstMedia('attachment')
+        );
+    }
+
+    /**
+     * Get the parent message
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function parent(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $this->parentMessage
+        );
     }
 
 }

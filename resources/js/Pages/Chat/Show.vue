@@ -38,6 +38,7 @@ const currentUser = usePage().props.value.auth.user
 
 Echo.private('users.chat.' + currentUser.id)
     .listen('.message-sent', (event) => {
+        console.log(event);
         messages.value.unshift(event)
         setTimeout(() => {
             messagesContainer.value.scrollTo({
@@ -45,7 +46,7 @@ Echo.private('users.chat.' + currentUser.id)
                 left: 0,
                 behavior: 'smooth'
             });
-        }, 200);
+        }, 5000);
     });
 
 
@@ -54,6 +55,7 @@ onMounted(() => {
 
     axios.get(route('api.messages.index', props.conversation), { page: page.value }).then(response => {
         messages.value = response.data.data
+        console.log(response.data.data);
     }).then(() => {
         messagesContainer.value.scrollTo({
             top: messagesContainer.value.scrollHeight,
