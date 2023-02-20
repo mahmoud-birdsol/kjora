@@ -32,11 +32,11 @@ const logout = () => {
                             Home
                         </NavLink>
 
-                        <NavLink :href="route('invitation.index')" :active="route().current('invitation.idnex')">
+                        <NavLink :href="route('invitation.index')" :active="route().current('invitation.index')">
                             Invitation
                         </NavLink>
                         <NavLink :href="route('chats.index')" :active="route().current('chats.index')">
-                            chat
+                            Chat
                         </NavLink>
                     </div>
                 </div>
