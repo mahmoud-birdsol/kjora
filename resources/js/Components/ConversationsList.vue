@@ -42,7 +42,7 @@ function submitSearchFriends() {
 </script>
 
 <template>
-    <div class="flex flex-col justify-between h-full gap-2">
+    <div class="flex flex-col  h-full gap-2">
         <!-- search input -->
         <div class="grid items-center w-full grid-cols-1 ">
             <input type="search" v-model="searchFriendsForm.query" @input="debouncedSubmitSearchFriends"

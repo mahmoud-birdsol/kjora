@@ -25,7 +25,7 @@ const show = ref(true);
         </div>
 
         <!-- Warning Message -->
-        <div v-if="message.type === 'warning'" class="flex w-full bg-yellow-400 px-6 py-4">
+        <div v-if="message.type === 'warning'" class="flex w-full bg-yellow-300 px-6 py-4">
             <div class="flex w-full justify-between gap-y-2 flex-col md:flex-row items-center space-x-4">
                 <p class="font-bold text-gray-700">{{ message.body }}</p>
                 <Link v-if="message.action" :href="message.action.url">

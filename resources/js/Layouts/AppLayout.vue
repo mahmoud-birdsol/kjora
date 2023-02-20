@@ -12,19 +12,20 @@ defineProps({
 
 <template>
     <div>
-        <Head :title="title"/>
 
-        <SystemMessage/>
+        <Head :title="title" />
+
+        <SystemMessage />
 
         <div class="min-h-screen bg-gradient-to-b from-black to-primaryDark">
             <div class="min-h-screen flex flex-col justify-between pt-6 sm:pt-0 space-y-4">
-                <Navbar/>
+                <Navbar />
 
                 <header v-if="$slots.header" class="">
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div class="flex justify-start px-4 sm:px-6 lg:px-8">
                             <h1 class="text-2xl sm:text-7xl font-bold text-white uppercase">
-                                <slot name="header"/>
+                                <slot name="header" />
                             </h1>
                         </div>
                     </div>
@@ -32,25 +33,24 @@ defineProps({
 
                 <!-- Page Content -->
                 <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <slot/>
+                    <slot />
                 </main>
 
                 <!-- Footer -->
                 <footer>
                     <div class="h-10 flex justify-center">
-                        <CopyrightClaim/>
+                        <CopyrightClaim />
                     </div>
                 </footer>
             </div>
         </div>
     </div>
 
-    <RealtimeNotifications/>
+    <RealtimeNotifications />
 </template>
 
 
 <style>
-
 .el-input__inner {
     height: 42px !important;
     color: black;
@@ -87,7 +87,11 @@ defineProps({
     font-weight: bold !important;
 }
 
-.el-picker-panel__body-wrapper, .el-date-picker__header-label, .el-picker-panel__icon-btn, .el-picker-panel__content, .el-date-table > tbody > tr > th {
+.el-picker-panel__body-wrapper,
+.el-date-picker__header-label,
+.el-picker-panel__icon-btn,
+.el-picker-panel__content,
+.el-date-table>tbody>tr>th {
     color: green !important;
     font-weight: bold !important;
 }

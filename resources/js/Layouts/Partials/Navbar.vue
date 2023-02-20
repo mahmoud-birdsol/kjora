@@ -29,17 +29,17 @@ const logout = () => {
     <nav class="bg-transparent">
         <!-- Primary Navigation Menu -->
         <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
+            <div class="flex justify-between h-16 items-center">
                 <div class="flex">
                     <!-- Navigation Links -->
-                    <div class="hidden space-x-4 sm:space-x-8 sm:-my-px md:flex">
-                        <NavLink :href="route('home')" :active="route().current('home')" class="block">
+                    <div class="hidden space-x-4  items-center sm:space-x-8 sm:-my-px md:flex">
+                        <NavLink :href="route('home')" :active="route().current('home')" class="">
                             <HomeIcon class="w-4 h-4 text-primary" />
-                            <span>
+                            <span class="">
                                 Home
                             </span>
                         </NavLink>
-                        <NavLink :href="route('chats.index')" :active="route().current('chats.index')">
+                        <NavLink :href="route('chats.index')" :active="route().current('chats.index')" class="">
                             <ChatIcon class="w-4 h-4 text-primary" />
                             <span>
                                 Chat
