@@ -14,10 +14,8 @@
                 <span class="text-xs leading-none text-neutral-500"> {{ user.username }} </span>
             </div>
             <div class=" mis-auto flex flex-col items-center gap-1  ">
-                <div class="rounded-full bg-white aspect-square w-10 grid place-content-center ">
-                    <span class="text-primary font-bold">1</span>
-                </div>
-                <span class="text-neutral-500 text-xs">2 hours</span>
+                <span class="text-neutral-500 text-xs">{{ dayjs(lastActiveAt).format('h') }} hours</span>
+                <!-- <span class="text-neutral-500 text-xs">{{ "2" }} hours</span> -->
 
             </div>
         </div>
@@ -37,10 +35,13 @@
 <script setup>
 import { TrashIcon } from '@heroicons/vue/24/outline'
 import { Link } from '@inertiajs/inertia-vue3';
+import dayjs from 'dayjs';
 import { computed, onMounted } from 'vue';
+
 const props = defineProps({
     conversation: Object,
-    active: Boolean
+    active: Boolean,
+    lastActiveAt: null,
 })
 const user = computed(() => {
     return props.conversation?.users ? props.conversation?.users[0] : null;

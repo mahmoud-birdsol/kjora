@@ -1,13 +1,16 @@
 <script setup >
 
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
-import ChatFriendCard from './ConversationCard.vue';
+import ConversationCard from './ConversationCard.vue';
 import { onMounted, onUnmounted, ref } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
+import dayjs from 'dayjs';
+
 
 const props = defineProps({
     conversations: Array,
-    currentConvId: Number
+    currentConvId: Number,
+    lastActiveAt: null,
 })
 const emit = defineEmits(['fetchMore'])
 const conversationList = ref(null)
@@ -39,7 +42,7 @@ function submitSearchFriends() {
 </script>
 
 <template>
-    <div class="flex flex-col justify-between gap-2">
+    <div class="flex flex-col h-full justify-between gap-2">
         <!-- search input -->
         <div class="grid items-center w-full grid-cols-1 ">
             <input type="search" v-model="searchFriendsForm.query" @input="debouncedSubmitSearchFriends"
@@ -55,7 +58,8 @@ function submitSearchFriends() {
             <div ref="conversationList"
                 class="flex self-end flex-col gap-3 hideScrollBar max-h-[40vh] overflow-auto  lg:max-h-[70vh] ">
                 <template v-for="conversation in conversations" :key="conversation.id">
-                    <ChatFriendCard :conversation="conversation" :active="conversation.id === currentConvId" />
+                    <ConversationCard :conversation="conversation" :lastActiveAt="lastActiveAt"
+                        :active="conversation.id === currentConvId" />
                 </template>
             </div>
         </div>

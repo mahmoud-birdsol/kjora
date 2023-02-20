@@ -9,7 +9,7 @@ import ConversationsList from '../../Components/ConversationsList.vue';
 
 
 
-const props = defineProps(['conversations'])
+const props = defineProps(['conversations', 'last_online_at'])
 
 onMounted(() => {
     console.log(props.conversations)
@@ -27,7 +27,7 @@ onMounted(() => {
         <h1 class="text-white">chat welcome page</h1>
         <ChatLayout>
             <template #sidebar>
-                <ConversationsList :conversations="conversations" />
+                <ConversationsList :conversations="conversations" :lastActiveAt="last_online_at" />
             </template>
             <template #header>
                 <div class="flex-1 border-r-2 border-r-stone-500"></div>
