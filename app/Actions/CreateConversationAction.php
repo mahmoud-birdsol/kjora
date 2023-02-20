@@ -15,8 +15,17 @@ class CreateConversationAction
      */
     public function __invoke(Invitation $invitation): void
     {
-        $conversation = Conversation::create();
-        $invitation->invitingPlayer->conversations()->attach($conversation->id);
-        $invitation->invitedPlayer->conversations()->attach($conversation->id);
+        $conversation = Conversation::whereHas('users', function ($query) use ($invitation) {
+            $query->whereIn('user_id', [
+                $invitation->invitingPlayer->id,
+                $invitation->invitedPlayer->id
+            ]);
+        })->first();
+
+        if (is_null($conversation)) {
+            $conversation = Conversation::create();
+            $invitation->invitingPlayer->conversations()->attach($conversation->id);
+            $invitation->invitedPlayer->conversations()->attach($conversation->id);
+        }
     }
 }
