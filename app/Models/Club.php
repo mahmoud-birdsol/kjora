@@ -27,7 +27,7 @@ class Club extends Model implements Suspendable, HasMedia
      * @var array<string>
      */
     protected $fillable = [
-        'country_id',
+        'country',
         'name',
     ];
 

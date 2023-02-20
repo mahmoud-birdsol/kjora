@@ -22,7 +22,7 @@ onMounted(() => {
         })[0];
     } else {
         selected.value = props.options.filter((option) => {
-            return option[props.valueName] == 84;
+            return option[props.valueName] == 121;
         })[0];
 
         emit('update:modelValue', '+' + selected.value.calling_code);

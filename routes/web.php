@@ -3,7 +3,9 @@
 use App\Http\Controllers\AcceptInvitationController;
 use App\Http\Controllers\Actions\MarkNotificationAsRead;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\HireController;
 use App\Http\Controllers\IdentityVerificationController;
+use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\JoinPlatformController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationsController;
@@ -12,6 +14,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Models\Invitation;
 use App\Models\Stadium;
 use App\Models\User;
+use App\Notifications\InvitationAcceptedNotification;
 use App\Notifications\InvitationCreatedNotification;
 use App\Notifications\InvitationDeclinedNotification;
 use Carbon\Carbon;
@@ -96,17 +99,15 @@ Route::middleware([
          |--------------------------------------------------------------------------
          */
 
-        Route::get('invitations', function (Request $request) {
-            $invitingInvitations = Invitation::where('inviting_player_id',
-                $request->user()->id)->latest('date')->get();
-            $invitedInvitations = Invitation::where('invited_player_id',
-                $request->user()->id)->latest('date')->get();
+        Route::get('invitations', [
+            InvitationController::class,
+            'index'
+        ])->name('invitation.index');
 
-            return Inertia::render('Invitation/Index', [
-                'invitingInvitations' => $invitingInvitations,
-                'invitedInvitations' => $invitedInvitations,
-            ]);
-        })->name('invitation.index');
+        Route::get('hires', [
+            HireController::class,
+            'index'
+        ])->name('hire.index');
 
         Route::get('invitations/create/{invited}', function (User $invited) {
             return Inertia::render('Invitation/Create', [
@@ -174,6 +175,40 @@ Route::middleware([
             'notifications/{notificationId}/mark-as-read',
             MarkNotificationAsRead::class
         )->name('notification.read');
+
+        /*
+         |--------------------------------------------------------------------------
+         | Media routes...
+         |--------------------------------------------------------------------------
+         */
+
+        Route::post('upload', function (Request $request) {
+            $request->validate([
+                'model_name' => [
+                    'required',
+                    'string',
+                ],
+                'model_id' => [
+                    'required',
+                    'integer',
+                ],
+                'collection_name' => [
+                    'required',
+                    'string',
+                ],
+                'image' => [
+                    'required',
+                    'file'
+                ],
+            ]);
+
+            /** @var \Spatie\MediaLibrary\HasMedia $model */
+            $model = (new ReflectionClass($request->model_name))->newInstance()->find($request->model_id);
+
+            $model->addMediaFromRequest('image')->toMediaCollection($request->collection_name);
+
+            return redirect()->back();
+        })->name('upload');
     });
 
     /*

@@ -1,12 +1,15 @@
 <script setup>
-import { defineEmits } from 'vue';
-import { Inertia } from '@inertiajs/inertia';
+import { useForm } from "@inertiajs/inertia-vue3";
 import Modal from '@/Components/Modal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { ElRate } from 'element-plus';
+import dayjs from 'dayjs';
+import Avatar from '@/Components/Avatar.vue';
 import {
     MapPinIcon,
 } from '@heroicons/vue/24/outline';
+import MainPlayerCard from "./PlayerCards/MainPlayerCard.vue";
+import {Inertia} from "@inertiajs/inertia";
 
 const props = defineProps({
     invitation: {
@@ -22,18 +25,20 @@ const props = defineProps({
 const emit = defineEmits(['close']);
 
 const accept = () => {
-    Inertia.patch(route('invitation.accept', props.invitation.id), {}, {
+    const form = useForm({});
+    form.patch(route('invitation.accept', props.invitation.id), {
         preserveState: false,
-        onSuccess: () => {
+        onFinish: () => {
             emit('close');
         }
     });
 };
 
 const decline = () => {
-    Inertia.patch(route('invitation.decline', props.invitation.id), {}, {
+    const form = useForm({});
+    form.patch(route('invitation.decline', props.invitation.id), {
         preserveState: false,
-        onSuccess: () => {
+        onFinish: () => {
             emit('close');
         }
     });
@@ -42,50 +47,22 @@ const decline = () => {
 
 <template>
     <Modal :show="show" max-width="sm" @close="$emit('close')">
-        <div class="bg-white rounded-xl p-6 min-h-[300px]">
-            <div class="flex flex-col justify-between items-center">
-                <div class="flex justify-center my-4">
-                    <div class="w-full">
-                        <h2 class="text-xl text-primary font-bold uppercase text-center">Invitation</h2>
-                        <p class="text-sm text-gray-700 font-light text-center mt-6">You have received an invitation.</p>
-                    </div>
+        <div class="rounded-xl bg-white min-h-[300px]">
+            <div class="flex flex-col items-center justify-between px-6 pb-6">
+                <div class="w-full">
+                    <h2 class="text-center text-xl font-bold uppercase text-primary">Invitation</h2>
+                    <p class="mt-6 text-sm font-light text-gray-700">
+                        You have received an invitation from {{ invitation.inviting_player.name }}, to play a game on
+                        <strong>{{ dayjs(invitation.date).format('DD MMMM YYYY, h:m A') }}</strong> at
+                        <strong>{{ invitation.stadium.address }}, {{ invitation.stadium.city }}, {{ invitation.stadium.country }}</strong>
+                    </p>
                 </div>
 
-                <div class="max-w-sm p-6">
-                    <div class="rounded-xl p-4"
-                         style="background: url('/images/player_bg_sm.png'); background-size: cover; background-position: center;">
-                        <div class="flex justify-between items-start">
-                            <div class="flex justify-start space-x-2 mb-2">
-                                <img :src="invitation.inviting_player.avatar_url" :alt="invitation.inviting_player.name"
-                                     class="h-14 w-14 rounded-full border-2 border-white">
-                                <div>
-                                    <h2 class="text-sm text-white font-bold">
-                                        {{ invitation.inviting_player.first_name }} {{ invitation.inviting_player.last_name }}
-                                    </h2>
-
-                                    <p class="text-xs text-white opacity-50">@{{ invitation.inviting_player.username }}</p>
-                                    <p class="text-sm text-white flex items-center space-x-2">
-                                        <ElRate v-model="invitation.inviting_player.rating" size="small"/>
-                                        {{ invitation.inviting_player.rating }}
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="">
-                                <p class="text-xs text-white opacity-50 text-light text-center">Position</p>
-                                <p class="text-sm text-white text-center font-semi-bold">{{ invitation.inviting_player.position.name }}</p>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-between items-center mt-2  border-t border-white">
-                            <p class="text-white text-sm flex items-center">
-                                <MapPinIcon class="inline h-4 w-4 text-white"/>
-                                Cairo
-                            </p>
-                        </div>
-                    </div>
+                <div class="max-w-sm my-6">
+                    <MainPlayerCard :player="invitation.inviting_player" :show-invite="false" :show-location="false" :show-report="false"/>
                 </div>
 
-                <div class="flex flex-col space-y-4 w-full">
+                <div class="flex w-full flex-col space-y-4">
                     <PrimaryButton @click="accept">Accept</PrimaryButton>
                     <PrimaryButton @click="decline">Decline</PrimaryButton>
                 </div>

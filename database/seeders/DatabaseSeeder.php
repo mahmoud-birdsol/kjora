@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             ClubSeeder::class,
         ]);
 
-        for ($i = 1; $i++; $i <= 5) {
+        for ($i = 1; $i <= 5; $i++) {
             Rating::factory()->create([
                 'rating_from' => $i,
                 'rating_to' => $i + 1,

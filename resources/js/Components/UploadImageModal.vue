@@ -2,7 +2,7 @@
 import Modal from '@/Components/Modal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
-import { PlusCircleIcon } from '@heroicons/vue/24/outline';
+import { PlusCircleIcon, XMarkIcon } from '@heroicons/vue/24/outline';
 import { ref, onMounted } from 'vue';
 
 const emit = defineEmits(['close', 'update:modelValue']);
@@ -88,11 +88,16 @@ const updatePhotoPreview = () => {
                     <PlusCircleIcon class="h-5 w-5"/>
                 </button>
 
-                <button v-show="photoPreview" class="mt-2 p-20" @click.prevent="selectNewPhoto">
-                    <div class="block rounded p-20">
+                <div v-show="photoPreview" class="mt-2" >
+                    <div class="relative rounded px-20 py-8">
                         <img :src="photoPreview" alt="" class="w-full h-auto rounded-lg">
+                        <div class="absolute inset-0 bg-white opacity-30 h-full w-full">
+                            <div class="flex flex-col justify-center items-center">
+                                <XMarkIcon class="h-8 w-8 text-white"/>
+                            </div>
+                        </div>
                     </div>
-                </button>
+                </div>
             </div>
             <div>
                 <PrimaryButton @click="close">

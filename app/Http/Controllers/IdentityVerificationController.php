@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\NotifyAdminsOfVerificationRequest;
 use App\Models\Country;
+use App\Services\FlashMessage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +18,7 @@ class IdentityVerificationController extends Controller
     /**
      * Display the form to upload the user verification documents.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Inertia\Response
      */
     public function create(Request $request): Response
@@ -30,19 +31,23 @@ class IdentityVerificationController extends Controller
     /**
      * Update the user verification documents.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\InvalidBase64Data
      */
     public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
             'identity_issue_country' => [
-                'nullable',
+                'required',
                 'string',
                 Rule::in(Country::all()->pluck('name')),
             ],
             'identity_type' => [
-                'nullable',
+                'required',
                 'string',
                 Rule::in([
                     'passport',
@@ -50,13 +55,13 @@ class IdentityVerificationController extends Controller
                 ]),
             ],
             'identity_front_image' => [
-                'nullable',
+                'required',
             ],
             'identity_back_image' => [
-                'nullable',
+                'required',
             ],
             'identity_selfie_image' => [
-                'nullable',
+                'required',
             ],
         ]);
 
@@ -66,23 +71,25 @@ class IdentityVerificationController extends Controller
         unset($data['identity_back_image']);
         unset($data['identity_selfie_image']);
 
+        $request->user()->update($data);
+
         if ($request->hasFile('identity_front_image')) {
-            $data['identity_front_image'] = $request->file('identity_front_image')->store('identity-images');
+            $request->user()->addMediaFromRequest('identity_front_image')->toMediaCollection('identity_front_image');
         }
 
         if ($request->hasFile('identity_back_image')) {
-            $data['identity_back_image'] = $request->file('identity_back_image')->store('identity-images');
+            $request->user()->addMediaFromRequest('identity_back_image')->toMediaCollection('identity_back_image');
         }
 
-        $request->whenFilled('identity_selfie_image', function () use ($request, &$data) {
-            Storage::put($request->user()->email.'_selfie_image.png',
-                base64_decode(Str::replace('data:image/octet-stream;base64,', '',
-                    $request->input('identity_selfie_image'))));
-
-            $data['identity_selfie_image'] = $request->user()->email.'_selfie_image.png';
-        });
-
-        $request->user()->update($data);
+        if ($request->has('identity_selfie_image') && Str::contains($request->input('identity_selfie_image'), 'data:image')) {
+            /** @var \App\Models\User $user */
+            $user = $request->user();
+            $user
+                ->addMediaFromBase64($request->input('identity_selfie_image'))
+                ->setFileName($user->id . '_selfie_image.jpg')
+                ->withCustomProperties(['mime-type' => 'image/jpeg'])
+                ->toMediaCollection('identity_selfie_image');
+        }
 
         if ($request->user()->hasUploadedVerificationDocuments()) {
             $request->session()->flash('message', [
@@ -93,6 +100,10 @@ class IdentityVerificationController extends Controller
 
         NotifyAdminsOfVerificationRequest::dispatch($request->user());
 
-        return redirect()->back();
+        FlashMessage::make()->success(
+            message: 'Your identity verification has been successfully sent. Please wait for approval.'
+        )->closeable()->send();
+
+        return redirect()->route('home');
     }
 }

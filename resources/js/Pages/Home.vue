@@ -2,16 +2,19 @@
 import { ref } from 'vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
 import dayjs from 'dayjs';
+import {Inertia} from "@inertiajs/inertia";
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import Modal from '@/Components/Modal.vue';
-import { ElSlider } from 'element-plus';
+import {ElSlider} from 'element-plus';
 import InputLabel from '@/Components/InputLabel.vue';
 import Pagination from '@/Components/Pagination.vue';
+import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
+import HelloUserHeader from '@/Components/HelloUserHeader.vue';
+
 import {
     XMarkIcon,
     AdjustmentsHorizontalIcon,
-
 } from '@heroicons/vue/24/outline';
 import UserCard from '../Components/UserCard.vue';
 
@@ -21,9 +24,9 @@ const props = defineProps({
 });
 
 const form = useForm({
-    position: usePage().props.value.queryParams.position,
-    age: usePage().props.value.queryParams.age ?? 18,
-    rating: usePage().props.value.queryParams.rating ?? 0,
+    position: usePage().props.value.queryParams.position ?? null,
+    age: parseInt(usePage().props.value.queryParams.age ?? 18),
+    rating: parseInt(usePage().props.value.queryParams.rating ?? 0),
     search: usePage().props.value.queryParams.search ?? '',
 });
 
@@ -47,6 +50,15 @@ const filter = () => {
         }
     });
 };
+
+const reset = () => {
+    form.position = null;
+    form.age = 18;
+    form.rating = 0;
+    form.search = '';
+
+    filter();
+}
 </script>
 
 <template>
@@ -55,9 +67,7 @@ const filter = () => {
 
     <AppLayout title="Home">
         <template #header>
-            <p class="text-2xl font-light">Hello,</p>
-            <p class="font-black text-7xl">{{ $page.props.auth.user.first_name }}</p>
-            <p class="text-lg font-semibold">{{ dayjs().format('dddd, DD MMMM YYYY') }}</p>
+            <HelloUserHeader/>
         </template>
 
         <div class="py-12">
@@ -83,10 +93,15 @@ const filter = () => {
 
                 <!-- Current list...
                 =====================================================-->
-                <div class="p-6 overflow-hidden bg-white shadow-xl sm:rounded-lg" v-loading="loading">
-                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+                <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
+
+                    <div class="flex justify-start items-start my-6">
+                        <p class="text-sm font-bold">Total ({{ players.total }})</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
                         <template v-for="player in players.data" :key="player.id">
-                            <UserCard :player="player" />
+                            <MainPlayerCard :player="player"/>
                         </template>
                     </div>
 
@@ -104,10 +119,10 @@ const filter = () => {
                         <AdjustmentsHorizontalIcon class="w-10 h-10 text-white" />
                     </button>
 
-                    <Modal :show="showFiltersModal" max-width="sm" @close="showFiltersModal = false">
-                        <div class="p-6 bg-black">
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm text-white">Filter </p>
+                    <Modal :show="showFiltersModal" max-width="sm" @close="showFiltersModal = false" :closeable="false">
+                        <div class="bg-black p-6">
+                            <div class="flex justify-between items-center">
+                                <p class="text-white text-sm">Filter </p>
 
                                 <button @click="showFiltersModal = false">
                                     <XMarkIcon class="w-4 h-4 text-white" />
@@ -130,13 +145,6 @@ const filter = () => {
                                 </div>
 
                                 <div class="my-6">
-                                    <InputLabel>Price</InputLabel>
-                                    <div class="px-4 py-1 mx-4 border border-white rounded-full">
-                                        <el-slider v-model="form.price" :min="0" :max="500" />
-                                    </div>
-                                </div>
-
-                                <div class="my-6">
                                     <InputLabel>Search</InputLabel>
                                     <div class="px-4">
                                         <input type="search" name="search" id="search" v-model="form.search"
@@ -148,8 +156,9 @@ const filter = () => {
                                 <div class="my-6">
                                     <InputLabel>Position</InputLabel>
                                     <div class="px-4">
-                                        <select id="location" name="location" v-model="form.position_id"
-                                            class="block w-full py-2 pl-3 pr-10 mt-1 text-base text-center text-white bg-black border-white rounded-full focus:border-primary focus:outline-none focus:ring-primary sm:text-sm placeholder:center">
+                                        <select id="location" name="location"
+                                                v-model="form.position"
+                                                class="mt-1 block w-full rounded-full border-white py-2 pl-3 pr-10 text-base focus:border-primary focus:outline-none focus:ring-primary sm:text-sm text-white placeholder:center text-center bg-black">
                                             <option :value="null">All Positions</option>
                                             <option v-for="position in positions" :key="position.id"
                                                 :value="position.id">{{ position.name }}
@@ -160,6 +169,12 @@ const filter = () => {
 
                                 <div class="my-6 mt-4">
                                     <SecondaryButton @click="filter">Apply</SecondaryButton>
+                                </div>
+                                <div class="flex justify-center items-center mt-4">
+                                    <button class="text-primary" @click="reset">
+                                        <XMarkIcon class="h-4 w-4 inline mr-4"/>
+                                        Reset
+                                    </button>
                                 </div>
                             </form>
                         </div>

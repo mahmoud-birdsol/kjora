@@ -50,12 +50,10 @@ class Club extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make('Country')
-                ->showCreateRelationButton()
+            Text::make('Country')
                 ->showOnPreview()
                 ->sortable()
                 ->filterable()
-                ->searchable()
                 ->rules('required'),
 
             Text::make('Name')

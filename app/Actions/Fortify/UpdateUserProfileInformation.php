@@ -22,8 +22,6 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         Validator::make($input, [
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'avatar' => ['nullable'],
-
             'first_name' => ['required', 'string', 'min:3', 'max:18'],
             'last_name' => ['required', 'string', 'min:3', 'max:18'],
             'country_id' => ['required', 'integer', 'exists:countries,id'],
@@ -32,10 +30,6 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'position_id' => ['required', 'exists:positions,id'],
             'gender' => ['required', Rule::in(['male', 'female'])],
         ])->validateWithBag('updateProfileInformation');
-
-        if (isset($input['avatar']) && request()->hasFile('avatar')) {
-            $user->updateProfilePhoto($input['avatar']);
-        }
 
         if ($input['email'] !== $user->email &&
             $user instanceof MustVerifyEmail) {

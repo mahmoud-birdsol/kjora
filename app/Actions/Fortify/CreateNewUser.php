@@ -17,8 +17,10 @@ class CreateNewUser implements CreatesNewUsers
     /**
      * Validate and create a newly registered user.
      *
-     * @param  array  $input
+     * @param array $input
      * @return \App\Models\User
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
      */
     public function create(array $input)
     {
@@ -29,7 +31,7 @@ class CreateNewUser implements CreatesNewUsers
             'country_id' => ['required', 'integer', 'exists:countries,id'],
             'club_id' => ['required', 'integer', 'exists:clubs,id'],
             'date_of_birth' => ['required', 'date', 'before:-18 years'],
-            'phone' => ['required'],
+            'phone' => ['required', 'phone'],
             'position_id' => ['required', 'exists:positions,id'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -46,7 +48,6 @@ class CreateNewUser implements CreatesNewUsers
             'joined_platform_at' => now(),
             'first_name' => $input['first_name'],
             'last_name' => $input['last_name'],
-            'username' => $input['username'],
             'country_id' => $input['country_id'],
             'club_id' => $input['club_id'],
             'date_of_birth' => Carbon::parse($input['date_of_birth']),
@@ -60,7 +61,7 @@ class CreateNewUser implements CreatesNewUsers
         ]);
 
         if (isset($input['photo'])) {
-            $user->updateProfilePhoto($input['photo']);
+            $user->addMediaFromRequest('photo')->toMediaCollection('avatar');
         }
 
         return $user;

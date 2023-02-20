@@ -23,7 +23,7 @@ defineExpose({ focus: () => input.value.focus() });
 </script>
 
 <template>
-    <div class="relative mt-1 rounded-md shadow-sm">
+    <div class="relative mt-1 rounded-md">
         <input
             ref="input"
             :type="type"

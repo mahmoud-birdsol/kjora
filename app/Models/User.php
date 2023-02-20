@@ -18,8 +18,11 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Nova\Actions\Actionable;
 use Laravel\Nova\Auth\Impersonatable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, HasMedia
 {
     use HasApiTokens;
     use HasFactory;
@@ -28,6 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use TwoFactorAuthenticatable;
     use Impersonatable;
     use Actionable;
+    use InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -38,7 +42,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'username',
         'email',
         'password',
-        'joined_platform_at,',
+        'joined_platform_at',
         // Profile information.
         'country_id',
         'club_id',
@@ -50,12 +54,13 @@ class User extends Authenticatable implements MustVerifyEmail
 //        'avatar',
         'identity_issue_country',
         'identity_type',
-        'identity_front_image',
-        'identity_back_image',
-        'identity_selfie_image',
-        'accepted_terms_and_conditions_version',
-        'accepted_privacy_policy_version',
-        'accepted_cookie_policy_version',
+//        'identity_front_image',
+//        'identity_back_image',
+//        'identity_selfie_image',
+
+//        'accepted_terms_and_conditions_version',
+//        'accepted_privacy_policy_version',
+//        'accepted_cookie_policy_version',
         'date_of_birth',
         'identity_verified_at',
         'phone_verified_at',
@@ -101,13 +106,12 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $appends = [
-        'profile_photo_url',
+//        'profile_photo_url',
         'avatar_url',
         'identity_front_image_url',
         'identity_back_image_url',
         'identity_selfie_image_url',
         'has_verified_identity',
-        'hourly_rate',
         'age',
         'name',
     ];
@@ -119,8 +123,35 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $with = [
         'position',
-        'club'
+//        'club'
     ];
+
+    /**
+     * Register the model media conversions.
+     *
+     * @param  \Spatie\MediaLibrary\MediaCollections\Models\Media|null  $media
+     * @return void
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
+     */
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->width(130)
+            ->height(130);
+    }
+
+    /**
+     * Register the user media collection.
+     *
+     * @return void
+     */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')->singleFile();
+        $this->addMediaCollection('identity_front_image')->singleFile();
+        $this->addMediaCollection('identity_back_image')->singleFile();
+        $this->addMediaCollection('identity_selfie_image')->singleFile();
+    }
 
     /**
      * Get the username.
@@ -142,7 +173,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function avatarUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => Storage::url($this->avatar)
+            get: fn () => $this->getFirstMedia('avatar')?->getFullUrl()
         );
     }
 
@@ -154,7 +185,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function identityFrontImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => Storage::url($this->identity_front_image)
+            get: fn () => $this->getFirstMedia('identity_front_image')?->getFullUrl()
         );
     }
 
@@ -166,7 +197,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function identityBackImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => Storage::url($this->identity_back_image)
+            get: fn () => $this->getFirstMedia('identity_back_image')?->getFullUrl()
         );
     }
 
@@ -178,7 +209,31 @@ class User extends Authenticatable implements MustVerifyEmail
     public function identitySelfieImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => Storage::url($this->identity_selfie_image)
+            get: fn () => $this->getFirstMedia('identity_selfie_image')?->getFullUrl()
+        );
+    }
+
+    /**
+     * Get the age attribute.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function age(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $this->date_of_birth?->age,
+        );
+    }
+
+    /**
+     * Get the has verified identity attribute.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function hasVerifiedIdentity(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $this->hasVerifiedPersonalIdentity()
         );
     }
 
@@ -243,18 +298,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Get the age attribute.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
-     */
-    public function age(): Attribute
-    {
-        return Attribute::make(
-            get: fn($value) => $this->date_of_birth?->age,
-        );
-    }
-
-    /**
      * Get the user messages
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -264,17 +307,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Message::class, 'sender_id');
     }
 
-    /**
-     * Get the has verified identity attribute.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
-     */
-    public function hasVerifiedIdentity(): Attribute
-    {
-        return Attribute::make(
-            get: fn($value) => ! is_null($this->identity_verified_at)
-        );
-    }
 
     /**
      * Mark account as verified.
@@ -327,8 +359,8 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return
             ! is_null($this->identity_type) &&
-            ! is_null($this->identity_front_image) &&
-            ! is_null($this->identity_back_image);
+            ! is_null($this->getFirstMedia('identity_front_image')->exists()) &&
+            ! is_null($this->getFirstMedia('identity_back_image')->exists());
     }
 
     /**
@@ -360,19 +392,5 @@ class User extends Authenticatable implements MustVerifyEmail
     public function receivesBroadcastNotificationsOn()
     {
         return 'users.'.$this->id;
-    }
-
-    /**
-     * Get the user hourly rate.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
-     */
-    public function hourlyRate(): Attribute
-    {
-        return Attribute::make(
-            get: fn($value) => $this->rating ?
-                Rating::where('rating_from', '<=', $this->rating)->where('rating_to', '>=', $this->rating)->first()?->hourly_rate :
-                null
-        );
     }
 }
