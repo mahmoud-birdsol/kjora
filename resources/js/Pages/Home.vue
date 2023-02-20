@@ -2,11 +2,11 @@
 import { ref } from 'vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
 import dayjs from 'dayjs';
-import {Inertia} from "@inertiajs/inertia";
+import { Inertia } from "@inertiajs/inertia";
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import Modal from '@/Components/Modal.vue';
-import {ElSlider} from 'element-plus';
+import { ElSlider } from 'element-plus';
 import InputLabel from '@/Components/InputLabel.vue';
 import Pagination from '@/Components/Pagination.vue';
 import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
@@ -62,19 +62,18 @@ const reset = () => {
 </script>
 
 <template>
-
     <Head title="Home" />
 
     <AppLayout title="Home">
         <template #header>
-            <HelloUserHeader/>
+            <HelloUserHeader />
         </template>
 
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <!-- Position Filters...
-                =====================================================-->
-                <div class="grid grid-cols-5 gap-4 my-8">
+                    =====================================================-->
+                <div class="flex gap-4 my-8 overflow-x-auto hideScrollBar">
                     <SecondaryButton @click="filterByPosition(null)">
                         <span class="w-full text-center"
                             :class="{ 'text-black': form.position == null, 'text-gray-400': form.position != null }">
@@ -92,7 +91,7 @@ const reset = () => {
                 </div>
 
                 <!-- Current list...
-                =====================================================-->
+                    =====================================================-->
                 <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
 
                     <div class="flex justify-start items-start my-6">
@@ -101,7 +100,7 @@ const reset = () => {
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
                         <template v-for="player in players.data" :key="player.id">
-                            <MainPlayerCard :player="player"/>
+                            <MainPlayerCard :player="player" />
                         </template>
                     </div>
 
@@ -111,10 +110,9 @@ const reset = () => {
                 </div>
 
                 <!-- Filters Modal...
-                =====================================================-->
+                    =====================================================-->
                 <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40">
-                    <button
-                        class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl"
+                    <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl"
                         @click="showFiltersModal = !showFiltersModal">
                         <AdjustmentsHorizontalIcon class="w-10 h-10 text-white" />
                     </button>
@@ -156,12 +154,11 @@ const reset = () => {
                                 <div class="my-6">
                                     <InputLabel>Position</InputLabel>
                                     <div class="px-4">
-                                        <select id="location" name="location"
-                                                v-model="form.position"
-                                                class="mt-1 block w-full rounded-full border-white py-2 pl-3 pr-10 text-base focus:border-primary focus:outline-none focus:ring-primary sm:text-sm text-white placeholder:center text-center bg-black">
+                                        <select id="location" name="location" v-model="form.position"
+                                            class="mt-1 block w-full rounded-full border-white py-2 pl-3 pr-10 text-base focus:border-primary focus:outline-none focus:ring-primary sm:text-sm text-white placeholder:center text-center bg-black">
                                             <option :value="null">All Positions</option>
-                                            <option v-for="position in positions" :key="position.id"
-                                                :value="position.id">{{ position.name }}
+                                            <option v-for="position in positions" :key="position.id" :value="position.id">{{
+                                                position.name }}
                                             </option>
                                         </select>
                                     </div>
@@ -172,7 +169,7 @@ const reset = () => {
                                 </div>
                                 <div class="flex justify-center items-center mt-4">
                                     <button class="text-primary" @click="reset">
-                                        <XMarkIcon class="h-4 w-4 inline mr-4"/>
+                                        <XMarkIcon class="h-4 w-4 inline mr-4" />
                                         Reset
                                     </button>
                                 </div>
