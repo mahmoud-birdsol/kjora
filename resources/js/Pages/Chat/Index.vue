@@ -30,7 +30,7 @@ onMounted(() => {
                 <ConversationsList :conversations="conversations" :lastActiveAt="last_online_at" />
             </template>
             <template #header>
-                <div class="flex-1 border-r-2 border-r-stone-500"></div>
+                <div class="flex-1 border-r border-r-stone-400"></div>
                 <div class="flex items-center gap-2 p-4">
                     <button>
                         <MagnifyingGlassIcon class="w-4 h-4 cursor-pointer hover:text-primaryDark text-primary">

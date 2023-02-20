@@ -225,7 +225,7 @@ const isSearching = ref(false);
             <template #header>
                 <!-- search header -->
                 <template v-if="isSearching">
-                    <div class="flex-1 flex p-4 items-center gap-4">
+                    <div class="flex items-center flex-1 gap-4 p-4">
                         <div class="grid items-center w-full grid-cols-1 ">
                             <input v-model="searchMessagesForm.query" @input="debouncedSubmitSearchMessages" type="search"
                                 class="w-full col-start-1 row-start-1 pis-10 rounded-3xl">
@@ -234,20 +234,20 @@ const isSearching = ref(false);
                                 </MagnifyingGlassIcon>
                             </div>
                         </div>
-                        <button @click="isSearching = false" class="group hover:ring hover:ring-primary p-1  rounded-full ">
-                            <XMarkIcon class="text-black w-5 group-hover:text-primary" />
+                        <button @click="isSearching = false" class="p-1 rounded-full group hover:ring hover:ring-primary ">
+                            <XMarkIcon class="w-5 text-black group-hover:text-primary" />
                         </button>
                     </div>
                 </template>
                 <!-- defaultHeader -->
                 <template v-else>
-                    <div class="flex-1 flex p-4 items-center gap-4 border-r-2 border-r-stone-500">
+                    <div class="flex items-center flex-1 gap-4 p-4 border-r border-r-stone-400">
                         <div>
                             <img :src="'https://ui-avatars.com/api/?name=' + player.name + '&color=094609FF&background=E2E2E2'"
-                                alt="" class="object-cover w-10 h-10 rounded-full border-2 border-primary">
+                                alt="" class="object-cover w-10 h-10 border-2 rounded-full border-primary">
                         </div>
                         <div class="flex flex-col ">
-                            <h4 class="mb-2   leading-none text-primary capitalize">{{ player.name }}</h4>
+                            <h4 class="mb-2 leading-none capitalize text-primary">{{ player.name }}</h4>
                             <span class="text-xs leading-none text-neutral-500"> @{{ player.username }}
                             </span>
                         </div>
@@ -260,14 +260,14 @@ const isSearching = ref(false);
                         <button @click="showReportModal = !showReportModal">
                             <FlagIcon class="w-4 h-4 text-red-600" />
                             <Modal :show="showReportModal" @close="showReportModal = false" max-width="sm">
-                                <div class="uppercase text-center flex   flex-col gap-y-6 p-4">
-                                    <div class=" self-end">
+                                <div class="flex flex-col p-4 text-center uppercase gap-y-6">
+                                    <div class="self-end ">
                                         <button @click="showReportModal = false"
-                                            class="group hover:ring hover:ring-primary p-1  rounded-full ">
-                                            <XMarkIcon class="text-black w-5 group-hover:text-primary" />
+                                            class="p-1 rounded-full group hover:ring hover:ring-primary ">
+                                            <XMarkIcon class="w-5 text-black group-hover:text-primary" />
                                         </button>
                                     </div>
-                                    <div class="text-primary mb-4 font-bold">
+                                    <div class="mb-4 font-bold text-primary">
                                         report
                                     </div>
                                     <!-- TODO:make it radio buttons group -->
@@ -282,7 +282,7 @@ const isSearching = ref(false);
                                         <li>racism, discrimination, or insults</li>
                                     </ul>
                                     <button
-                                        class="bg-black text-white p-2 px-6 w-full rounded-full uppercase ">report</button>
+                                        class="w-full p-2 px-6 text-white uppercase bg-black rounded-full ">report</button>
                                 </div>
                             </Modal>
                         </button>
@@ -293,7 +293,7 @@ const isSearching = ref(false);
             <template #main>
                 <!-- main content -->
                 <div ref="messagesContainer" class="flex flex-col gap-y-4 div max-h-[40vh]  overflow-auto hideScrollBar "
-                    :class="isSearching ? `lg:max-h-[calc(70vh)-0px]` : `lg:max-h-[calc(70vh-150px)]`">
+                    :class="isSearching ? `lg:max-h-[calc(70vh-0px)]` : `lg:max-h-[calc(70vh-150px)]`">
                     <template v-for="message in [...messages].reverse()" :key="message.id">
 
                         <ChatMessage :message="message" @reply="handleReply" :player="player" />
@@ -308,9 +308,9 @@ const isSearching = ref(false);
                         leaveToClass="opacity-0" leave-active-class="transition-all duration-150 ease-in"
                         enterActiveClass="transition-all duration-150 ease-out">
                         <div v-if="isReply || isAttachment"
-                            class="bg-neutral-200 text-sm w-full flex flex-row items-center  rounded-xl py-2 px-12">
+                            class="flex flex-row items-center w-full px-12 py-2 text-sm bg-neutral-200 rounded-xl">
                             <div v-if="repliedMessage">
-                                <div class="text-primary capitalize font-bold ">{{ repliedMessage.sender_id ===
+                                <div class="font-bold capitalize text-primary ">{{ repliedMessage.sender_id ===
                                     currentUser.id ?
                                     currentUser.name : player.name }}
                                 </div>
@@ -322,26 +322,25 @@ const isSearching = ref(false);
                             </div>
                         </div>
                     </Transition>
-                    <div class="flex flex-row items-center gap-x-2 w-full">
+                    <div class="flex flex-row items-center w-full gap-x-3">
                         <button>
-                            <FaceSmileIcon class="text-neutral-300  w-5" />
+                            <FaceSmileIcon class="w-6 text-neutral-400" />
                         </button>
-                        <div class="flex-grow  flex items-center ">
+                        <div class="flex items-center flex-grow ">
 
                             <textarea v-model="newMessageForm.body" name="newMessage" id="newMessage" rows="1"
                                 placeholder="Type your Message Here"
-                                class="w-full rounded-full resize-none hideScrollBar p-2 px-4 border-none  placeholder:text-neutral-400 "></textarea>
+                                class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 "></textarea>
                         </div>
                         <button class="relative" @click="clickFileInput">
-                            <PhotoIcon class="text-neutral-300  h-5 w-5" />
+                            <PhotoIcon class="w-6 h-6 text-neutral-400" />
                             <div class="bg-white absolute bottom-0 -right-[1px] rounded-full  ">
                                 <input ref="attachmentsInput" type="file" class="hidden" @change="handleAttachments">
-                                <ArrowUpCircleIcon class="text-neutral-300    h-2 w-2" />
+                                <ArrowUpCircleIcon class="w-2 h-2 text-neutral-400" />
                             </div>
                         </button>
-                        <button :disabled="isDisabled" class="group" @click="submitNewMessage">
-                            <PaperAirplaneIcon class="   w-5"
-                                :class="isDisabled ? 'text-neutral-400' : 'text-neutral-900'" />
+                        <button :disabled="isDisabled" class="p-1 group " @click="submitNewMessage">
+                            <PaperAirplaneIcon class="w-5 " :class="isDisabled ? 'text-neutral-400' : 'text-neutral-900'" />
                         </button>
                     </div>
                 </div>

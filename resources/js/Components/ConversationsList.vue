@@ -42,7 +42,7 @@ function submitSearchFriends() {
 </script>
 
 <template>
-    <div class="flex flex-col h-full justify-between gap-2">
+    <div class="flex flex-col justify-between h-full gap-2">
         <!-- search input -->
         <div class="grid items-center w-full grid-cols-1 ">
             <input type="search" v-model="searchFriendsForm.query" @input="debouncedSubmitSearchFriends"
@@ -54,7 +54,7 @@ function submitSearchFriends() {
         </div>
         <!-- conversations list -->
         <div class="grid items-end gap-2">
-            <p class=" mb-3 font-bold text-black uppercase">total (3)</p>
+            <p class="mb-3 font-bold text-black uppercase ">total ({{ conversations.length }})</p>
             <div ref="conversationList"
                 class="flex self-end flex-col gap-3 hideScrollBar max-h-[40vh] overflow-auto  lg:max-h-[70vh] ">
                 <template v-for="conversation in conversations" :key="conversation.id">
