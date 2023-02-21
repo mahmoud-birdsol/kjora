@@ -13,6 +13,7 @@ import ChatMessage from '../../Components/ChatMessage.vue';
 import { Inertia } from '@inertiajs/inertia';
 import axios from 'axios';
 import FadeInTransition from '../../Components/FadeInTransition.vue';
+import { filter } from 'lodash';
 
 const props = defineProps({
     conversation: null,
@@ -23,6 +24,8 @@ const props = defineProps({
 
 const showReportModal = ref(false)
 const messages = ref([])
+const filteredMessages = ref([])
+const lastPage = ref(1)
 const messagesContainer = ref(null)
 const repliedMessage = ref(null);
 const isReply = ref(false)
@@ -32,7 +35,6 @@ const attachmentsInput = ref(null)
 const filePreview = ref(null);
 
 const currentUser = usePage().props.value.auth.user
-
 
 
 
@@ -56,8 +58,12 @@ onMounted(() => {
 
     axios.get(route('api.messages.index', props.conversation), { page: page.value }).then(response => {
         messages.value = response.data.data
-        // console.log(response.data.data);
+
+        console.log(response.data.meta.last_page)
+        lastPage.value = response.data.meta.last_page
+
     }).then(() => {
+
         messagesContainer.value.scrollTo({
             top: messagesContainer.value.scrollHeight,
             left: 0,
@@ -88,6 +94,10 @@ onUnmounted(() => {
 const throttledHandleScroll = window._.throttle(handleScroll, 1000)
 function handleScroll(e) {
     let element = e.target
+
+    if (page.value === lastPage.value) {
+        return
+    }
     function getNextPage() {
         page.value = page.value + 1;
 
@@ -96,7 +106,7 @@ function handleScroll(e) {
                 page: page.value
             }
         }).then(response => {
-            console.log(response)
+            console.log(response.data.meta.last_page)
 
             messages.value = [...messages.value, ...response.data.data]
 
@@ -202,6 +212,19 @@ const debouncedSubmitSearchMessages = window._.debounce(submitSearchMessages, 50
 function submitSearchMessages() {
     console.log('send query and recive fitlerd data');
     console.log(searchMessagesForm.query);
+    axios.get(route('api.messages.index', props.conversation), {
+        params: {
+
+            search: searchMessagesForm.query
+        }
+    }).then(response => {
+        console.log(response)
+
+        filteredMessages.value = [...response.data.data]
+
+
+
+    })
 }
 
 const isSearching = ref(false);
@@ -236,7 +259,8 @@ const isSearching = ref(false);
                                     </MagnifyingGlassIcon>
                                 </div>
                             </div>
-                            <button @click="isSearching = false"
+                            <button
+                                @click="(e) => { isSearching = false; filteredMessages = []; searchMessagesForm.query = null }"
                                 class="p-1 rounded-full group hover:ring hover:ring-primary ">
                                 <XMarkIcon class="w-5 text-black group-hover:text-primary" />
                             </button>
@@ -303,11 +327,22 @@ const isSearching = ref(false);
                 <!-- main content -->
                 <div ref="messagesContainer"
                     class="flex flex-col gap-y-4 div md:min-h-[400px] min-h-[300px] max-h-[350px] md:max-h-[450px] overflow-auto hideScrollBar relative shadow-inner p-2 ">
-                    <template v-for="message in [...messages].reverse()" :key="message.id">
+                    <!-- <FadeInTransition></FadeInTransition> -->
+                    <template v-if="!isSearching">
+                        <template v-for="message in [...messages].reverse()" :key="message.id">
+                            <ChatMessage :message="message" @reply="handleReply" :player="player" />
+                        </template>
 
-                        <ChatMessage :message="message" @reply="handleReply" :player="player" />
 
                     </template>
+                    <template v-else>
+
+                        <template v-for="message in [...filteredMessages].reverse()" :key="message.id">
+                            <ChatMessage :message="message" @reply="handleReply" :player="player" />
+                        </template>
+
+                    </template>
+
                 </div>
             </template>
             <!-- new Message form  -->
