@@ -20,20 +20,16 @@ onMounted(() => {
 const currentUser = usePage().props.value.auth.user
 const showOptions = ref(false)
 
-function handleReply(e) {
-    emits('reply', props.message)
-    showOptions.value ? showOptions.value = false : null
 
-}
 
 const isCurrentUser = computed(() => { return props.message.sender_id === currentUser.id })
+
 const alignmentClass = computed(() => {
     return isCurrentUser.value ? 'self-end  ' : 'self-start   ';
 })
 const parentClasses = computed(() => {
     return isCurrentUser.value ? 'relative flex justify-end   pie-8 ' : 'flex gap-2 items-center  ';
 })
-
 const bodyClass = computed(() => {
     return isCurrentUser.value ? ' bg-primary text-white rounded-br-none' : ' bg-stone-200 text-black rounded-bl-none';
 })
@@ -41,12 +37,19 @@ const repliedClasses = computed(() => {
     return isCurrentUser.value ? 'bg-white text-black  ' : 'bg-primary text-white  ';
 })
 
+function handleReply(e) {
+    emits('reply', props.message)
+    showOptions.value ? showOptions.value = false : null
 
+}
 
 </script>
 
 <template>
+    <div v-if="showOptions" class="absolute inset-0 z-10 w-full h-full cursor-pointer " @click="showOptions = false">
+    </div>
     <div :class="alignmentClass + parentClasses" class="w-full ">
+
         <!-- avatar for non current user message -->
         <div v-if='!isCurrentUser'>
             <div><img :src="'https://ui-avatars.com/api/?name=' + player.name + '&color=094609FF&background=E2E2E2'" alt=""
@@ -59,14 +62,16 @@ const repliedClasses = computed(() => {
                 <!-- replied message -->
                 <div v-if="message.parent_id" :class="repliedClasses" class="p-3 mb-2 text-xs rounded-lg">
                     <div class="mb-2 font-semibold capitalize">
-                        <h4 v-if="isCurrentUser" class="text-primary">{{ currentUser.name }}</h4>
-                        <h4 v-else>{{ player.name }}</h4>
+                        <h4 v-if="isCurrentUser" class="text-primary">{{ player.name }}</h4>
+                        <h4 v-else>{{ currentUser.name }}</h4>
                     </div>
                     <span class="">{{ message.parent?.body }}</span>
                 </div>
+                <!-- media message -->
                 <div v-if="message.media">
                     <img class="object-contain w-52" :src="message.media[0]?.original_url" alt="">
                 </div>
+                <!-- text message -->
                 <span class="break-words whitespace-pre-wrap ">
                     {{ message.body }}
                 </span>
@@ -83,13 +88,12 @@ const repliedClasses = computed(() => {
             <button @click="showOptions = !showOptions">
                 <EllipsisVerticalIcon class="w-6 text-neutral-500" />
             </button>
-            <div v-if="showOptions" class="fixed inset-0 z-10 w-full h-full cursor-pointer " @click="showOptions = false">
-            </div>
+
             <Transition enterFromClass="opacity-0" enterToClass="opacity-100" leaveFromClass="opacity-100"
                 leaveToClass="opacity-0" leave-active-class="transition-all duration-150 ease-in"
                 enterActiveClass="transition-all duration-150 ease-out">
                 <div v-show="showOptions"
-                    class="absolute z-20 px-6 py-2 text-xs text-white bg-black border rounded-xl border-neutral-500 pie-10 z-2 right-7 -top-2">
+                    class="absolute z-20 px-6 py-2 text-xs text-white bg-black border -top-1 rounded-xl border-neutral-500 pie-10 z-2 right-7">
                     <ul class="flex flex-col justify-center gap-y-2">
                         <button class="hover:text-gray-400 ">
                             <li class="flex items-center justify-center gap-x-2">

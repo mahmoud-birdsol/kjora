@@ -12,6 +12,7 @@ import Modal from '../../Components/Modal.vue';
 import ChatMessage from '../../Components/ChatMessage.vue';
 import { Inertia } from '@inertiajs/inertia';
 import axios from 'axios';
+import FadeInTransition from '../../Components/FadeInTransition.vue';
 
 const props = defineProps({
     conversation: null,
@@ -55,7 +56,7 @@ onMounted(() => {
 
     axios.get(route('api.messages.index', props.conversation), { page: page.value }).then(response => {
         messages.value = response.data.data
-        console.log(response.data.data);
+        // console.log(response.data.data);
     }).then(() => {
         messagesContainer.value.scrollTo({
             top: messagesContainer.value.scrollHeight,
@@ -71,7 +72,6 @@ onMounted(() => {
 // load next conversations page after scrolling to the end of the list
 function fetchMore() {
     console.log('fetch next page')
-
 }
 /* ----------------------handle loading messages on scroll to the top of the messageContainer---------------------------- */
 
@@ -223,77 +223,86 @@ const isSearching = ref(false);
                     :last-active-at="last_online_at" />
             </template>
             <template #header>
+
                 <!-- search header -->
-                <template v-if="isSearching">
-                    <div class="flex items-center flex-1 gap-4 p-4">
-                        <div class="grid items-center w-full grid-cols-1 ">
-                            <input v-model="searchMessagesForm.query" @input="debouncedSubmitSearchMessages" type="search"
-                                class="w-full col-start-1 row-start-1 pis-10 rounded-3xl">
-                            <div class="col-start-1 row-start-1 justify-self-start pis-3">
-                                <MagnifyingGlassIcon class="w-5 h-5 text-primary">
-                                </MagnifyingGlassIcon>
+                <FadeInTransition>
+                    <template v-if="isSearching">
+                        <div class="flex items-center flex-1 gap-4 p-4">
+                            <div class="grid items-center w-full grid-cols-1 ">
+                                <input v-model="searchMessagesForm.query" @input="debouncedSubmitSearchMessages"
+                                    type="search" class="w-full col-start-1 row-start-1 pis-10 rounded-3xl">
+                                <div class="col-start-1 row-start-1 justify-self-start pis-3">
+                                    <MagnifyingGlassIcon class="w-5 h-5 text-primary">
+                                    </MagnifyingGlassIcon>
+                                </div>
+                            </div>
+                            <button @click="isSearching = false"
+                                class="p-1 rounded-full group hover:ring hover:ring-primary ">
+                                <XMarkIcon class="w-5 text-black group-hover:text-primary" />
+                            </button>
+                        </div>
+                    </template>
+
+
+
+                    <!-- defaultHeader -->
+                    <template v-if="!isSearching">
+                        <div class="flex w-full">
+                            <div class="flex items-center flex-1 gap-4 p-4 border-r border-r-stone-400">
+                                <div>
+                                    <img :src="'https://ui-avatars.com/api/?name=' + player.name + '&color=094609FF&background=E2E2E2'"
+                                        alt="" class="object-cover w-10 h-10 border-2 rounded-full border-primary">
+                                </div>
+                                <div class="flex flex-col ">
+                                    <h4 class="mb-1 font-bold leading-none capitalize text-primary">{{ player.name }}</h4>
+                                    <span class="text-xs leading-none text-neutral-500"> @{{ player.username }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2 p-4">
+                                <button @click="isSearching = true">
+                                    <MagnifyingGlassIcon class="w-4 h-4 cursor-pointer hover:text-primaryDark text-primary">
+                                    </MagnifyingGlassIcon>
+                                </button>
+                                <button @click="showReportModal = !showReportModal">
+                                    <FlagIcon class="w-4 h-4 text-red-600" />
+                                    <Modal :show="showReportModal" @close="showReportModal = false" max-width="sm">
+                                        <div class="flex flex-col p-4 text-center uppercase gap-y-6">
+                                            <div class="self-end ">
+                                                <button @click="showReportModal = false"
+                                                    class="p-1 rounded-full group hover:ring hover:ring-primary ">
+                                                    <XMarkIcon class="w-5 text-black group-hover:text-primary" />
+                                                </button>
+                                            </div>
+                                            <div class="mb-4 font-bold text-primary">
+                                                report
+                                            </div>
+                                            <!-- TODO:make it radio buttons group -->
+                                            <ul
+                                                class="[&_li]:px-4 [&_li]:py-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:border-gray-400 text-stone-500  flex flex-col gap-4 px-6 text-sm ">
+                                                <li>spam</li>
+                                                <li>hate speech, or uncivil</li>
+                                                <li>sexual activity</li>
+                                                <li>scam, or fraud</li>
+                                                <li>bullying or harassment</li>
+                                                <li>violence, or threats</li>
+                                                <li>racism, discrimination, or insults</li>
+                                            </ul>
+                                            <button
+                                                class="w-full p-2 px-6 text-white uppercase bg-black rounded-full ">report</button>
+                                        </div>
+                                    </Modal>
+                                </button>
                             </div>
                         </div>
-                        <button @click="isSearching = false" class="p-1 rounded-full group hover:ring hover:ring-primary ">
-                            <XMarkIcon class="w-5 text-black group-hover:text-primary" />
-                        </button>
-                    </div>
-                </template>
-                <!-- defaultHeader -->
-                <template v-else>
-                    <div class="flex items-center flex-1 gap-4 p-4 border-r border-r-stone-400">
-                        <div>
-                            <img :src="'https://ui-avatars.com/api/?name=' + player.name + '&color=094609FF&background=E2E2E2'"
-                                alt="" class="object-cover w-10 h-10 border-2 rounded-full border-primary">
-                        </div>
-                        <div class="flex flex-col ">
-                            <h4 class="mb-2 leading-none capitalize text-primary">{{ player.name }}</h4>
-                            <span class="text-xs leading-none text-neutral-500"> @{{ player.username }}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2 p-4">
-                        <button @click="isSearching = true">
-                            <MagnifyingGlassIcon class="w-4 h-4 cursor-pointer hover:text-primaryDark text-primary">
-                            </MagnifyingGlassIcon>
-                        </button>
-                        <button @click="showReportModal = !showReportModal">
-                            <FlagIcon class="w-4 h-4 text-red-600" />
-                            <Modal :show="showReportModal" @close="showReportModal = false" max-width="sm">
-                                <div class="flex flex-col p-4 text-center uppercase gap-y-6">
-                                    <div class="self-end ">
-                                        <button @click="showReportModal = false"
-                                            class="p-1 rounded-full group hover:ring hover:ring-primary ">
-                                            <XMarkIcon class="w-5 text-black group-hover:text-primary" />
-                                        </button>
-                                    </div>
-                                    <div class="mb-4 font-bold text-primary">
-                                        report
-                                    </div>
-                                    <!-- TODO:make it radio buttons group -->
-                                    <ul
-                                        class="[&_li]:px-4 [&_li]:py-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:border-gray-400 text-stone-500  flex flex-col gap-4 px-6 text-sm ">
-                                        <li>spam</li>
-                                        <li>hate speech, or uncivil</li>
-                                        <li>sexual activity</li>
-                                        <li>scam, or fraud</li>
-                                        <li>bullying or harassment</li>
-                                        <li>violence, or threats</li>
-                                        <li>racism, discrimination, or insults</li>
-                                    </ul>
-                                    <button
-                                        class="w-full p-2 px-6 text-white uppercase bg-black rounded-full ">report</button>
-                                </div>
-                            </Modal>
-                        </button>
-                    </div>
-                </template>
+                    </template>
+                </FadeInTransition>
 
             </template>
             <template #main>
                 <!-- main content -->
-                <div ref="messagesContainer" class="flex flex-col gap-y-4 div max-h-[500px]  overflow-auto hideScrollBar "
-                    :class="isSearching ? `lg:max-h-[calc(500px-0px)]` : `lg:max-h-[calc(500px-150px)]`">
+                <div ref="messagesContainer"
+                    class="flex flex-col gap-y-4 div md:min-h-[400px] min-h-[300px] max-h-[350px] md:max-h-[450px] overflow-auto hideScrollBar relative shadow-inner p-2 ">
                     <template v-for="message in [...messages].reverse()" :key="message.id">
 
                         <ChatMessage :message="message" @reply="handleReply" :player="player" />
