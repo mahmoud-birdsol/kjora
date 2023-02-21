@@ -29,7 +29,7 @@ class MessageController extends Controller
         $query = $conversation->messages()->orderBy('created_at', 'DESC');
 
         if ($request->has('search')) {
-            $query->where('body', '%LIKE%', request()->input('search'));
+            $query->where('body', 'LIKE', '%' . request()->input('search') . '%');
         }
 
         return MessageResource::collection($query->paginate(12));
