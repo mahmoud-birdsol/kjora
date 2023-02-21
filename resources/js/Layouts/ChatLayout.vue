@@ -1,5 +1,5 @@
 <template>
-    <div class="py-12 ">
+    <div class="py-12 min-h-[500px] ">
         <!-- chat box -->
         <div class="grid  w-full h-full lg:grid-cols-[1fr_2fr]  text-neutral-500 bg-white rounded-2xl ">
 

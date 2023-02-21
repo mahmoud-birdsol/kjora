@@ -30,7 +30,7 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Log in"/>
+    <Head title="Log in" />
 
     <GuestLayout>
         <div class="w-full sm:max-w-md mt-6 px-6 py-4">
@@ -47,23 +47,19 @@ const submit = () => {
             <form @submit.prevent="submit">
                 <div class="grid grid-cols-1 gap-4">
                     <div>
-                        <InputLabel for="email" value="Sign in"/>
-                        <TextInput type="text"
-                                   v-model="form.email"
-                                   placeholder="Enter username or email"
-                                   auto-complete="email"
-                                   aria-required="true"
-                        />
-                        <InputError class="mt-2" :message="form.errors.email"/>
+                        <InputLabel for="email" value="Sign in" />
+                        <TextInput type="text" v-model="form.email" placeholder="Enter username or email"
+                            auto-complete="email" aria-required="true" />
+                        <InputError class="mt-2" :message="form.errors.email" />
                     </div>
                     <div>
-                        <InputLabel for="password" value="Password"/>
-                        <PasswordInput v-model="form.password" placeholder="Enter password"/>
-                        <InputError class="mt-2" :message="form.errors.password"/>
+                        <InputLabel for="password" value="Password" />
+                        <PasswordInput v-model="form.password" placeholder="Enter password" />
+                        <InputError class="mt-2" :message="form.errors.password" />
                     </div>
 
                     <div class="flex items-center space-x-2 my-2">
-                        <Checkbox id="remember" v-model:checked="form.remember" name="remember"/>
+                        <Checkbox id="remember" v-model:checked="form.remember" name="remember" />
                         <span class="text-xs text-white font-semibold uppercase">Remember me</span>
                     </div>
 
@@ -75,10 +71,10 @@ const submit = () => {
                 </div>
             </form>
 
-            <div class="flex justify-end">
+            <div class="flex justify-end py-2">
                 <Link v-if="canResetPassword" :href="route('password.request')"
-                      class="text-xs text-white font-bold hover:text-gray-200">
-                    Forgot your password?
+                    class="text-xs text-white font-bold hover:text-gray-200">
+                Forgot password?
                 </Link>
             </div>
 

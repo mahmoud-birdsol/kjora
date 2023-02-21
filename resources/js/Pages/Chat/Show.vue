@@ -292,8 +292,8 @@ const isSearching = ref(false);
             </template>
             <template #main>
                 <!-- main content -->
-                <div ref="messagesContainer" class="flex flex-col gap-y-4 div max-h-[40vh]  overflow-auto hideScrollBar "
-                    :class="isSearching ? `lg:max-h-[calc(70vh-0px)]` : `lg:max-h-[calc(70vh-150px)]`">
+                <div ref="messagesContainer" class="flex flex-col gap-y-4 div max-h-[500px]  overflow-auto hideScrollBar "
+                    :class="isSearching ? `lg:max-h-[calc(500px-0px)]` : `lg:max-h-[calc(500px-150px)]`">
                     <template v-for="message in [...messages].reverse()" :key="message.id">
 
                         <ChatMessage :message="message" @reply="handleReply" :player="player" />

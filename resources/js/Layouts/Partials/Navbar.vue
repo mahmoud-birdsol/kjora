@@ -1,16 +1,21 @@
 <script setup>
 import { ref } from 'vue';
-import { Inertia } from '@inertiajs/inertia';
+import { Inertia, usePage } from '@inertiajs/inertia';
 import { Link } from '@inertiajs/inertia-vue3';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import NotificationComponent from '@/Components/NotificationComponent.vue';
+import ChatIcon from '@/Components/ChatIcon.vue';
 import {
     BellIcon,
     Bars3Icon,
-    MapPinIcon,
+    MapPinIcon, HomeIcon,
+    HeartIcon,
+    Cog6ToothIcon,
+    EllipsisHorizontalCircleIcon,
+    StarIcon
 } from '@heroicons/vue/24/outline';
 
 const showingNavigationDropdown = ref(false);
@@ -24,30 +29,56 @@ const logout = () => {
     <nav class="bg-transparent">
         <!-- Primary Navigation Menu -->
         <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
+            <div class="flex justify-between h-16 items-center">
                 <div class="flex">
                     <!-- Navigation Links -->
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <NavLink :href="route('home')" :active="route().current('home')">
-                            Home
+                    <div class="hidden space-x-4  items-center sm:space-x-8 sm:-my-px md:flex">
+                        <NavLink :href="route('home')" :active="route().current('home')" class="">
+                            <HomeIcon class="w-4 h-4 text-primary" />
+                            <span class="">
+                                Home
+                            </span>
                         </NavLink>
-
-                        <NavLink :href="route('invitation.index')" :active="route().current('invitation.idnex')">
-                            Invitation
+                        <NavLink :href="route('chats.index')" :active="route().current('chats.index')" class="">
+                            <ChatIcon class="w-4 h-4 text-primary" />
+                            <span>
+                                Chat
+                            </span>
                         </NavLink>
-                        <NavLink :href="route('chats.index')" :active="route().current('chats.index')">
-                            chat
+                        <NavLink :href="route('favourite')" :active="route().current('favourite')">
+                            <HeartIcon class="w-4 h-4 text-primary" />
+                            <span>
+                                Favourite
+                            </span>
+                        </NavLink>
+                        <NavLink :href="route('invitation.index')" :active="route().current('invitation.index')">
+                            <Cog6ToothIcon class="w-4 h-4 text-primary" />
+                            <span>
+                                Invitation
+                            </span>
+                        </NavLink>
+                        <NavLink :href="route('more')" :active="route().current('more')">
+                            <EllipsisHorizontalCircleIcon class="w-4 h-4 text-primary" />
+                            <span>
+                                More
+                            </span>
                         </NavLink>
                     </div>
                 </div>
 
-                <div class="hidden sm:flex sm:gap-x-3 sm:items-center sm:ml-6">
+                <div class="hidden md:flex md:gap-x-3 sm:items-center sm:ml-6">
+                    <!-- upgrade button  -->
+                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5">
+                        <div class="rounded-full bg-black">
+                            <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
+                        </div>
+                        <span>Upgrade</span>
+                    </button>
                     <!-- user city  -->
                     <div class="flex items-center gap-1 ">
                         <MapPinIcon class="w-4 h-4 text-primary" />
-                        <span class="text-white w-max">current user city</span>
-                    </div>
-                    <!-- Settings Dropdown -->
+                        <span class="text-white w-max">{{ 'Egypt' }}</span>
+                    </div> <!-- Settings Dropdown -->
                     <div class="relative ">
                         <Dropdown align="right" width="48">
                             <template #trigger>
@@ -121,7 +152,7 @@ const logout = () => {
                 </div>
 
                 <!-- Hamburger -->
-                <div class="flex items-center -mr-2 space-x-2 sm:hidden">
+                <div class="flex items-center -mr-2 space-x-2 md:hidden">
                     <div class="relative ml-3">
                         <Dropdown width="96">
                             <template #trigger>
@@ -168,14 +199,25 @@ const logout = () => {
         </div>
 
         <!-- Responsive Navigation Menu -->
-        <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }" class="sm:hidden">
+        <!-- Responsive Navigation Menu -->
+        <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }"
+            class="md:hidden transition">
             <div class="pt-2 pb-3 space-y-1">
                 <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
                     Home
                 </ResponsiveNavLink>
 
                 <ResponsiveNavLink :href="route('invitation.index')" :active="route().current('invitation.index')">
+                    Chat
+                </ResponsiveNavLink>
+                <ResponsiveNavLink :href="route('invitation.index')" :active="route().current('invitation.index')">
                     Invitations
+                </ResponsiveNavLink>
+                <ResponsiveNavLink :href="route('invitation.index')" :active="route().current('invitation.index')">
+                    Favorite
+                </ResponsiveNavLink>
+                <ResponsiveNavLink :href="route('invitation.index')" :active="route().current('invitation.index')">
+                    More
                 </ResponsiveNavLink>
             </div>
 
@@ -183,10 +225,10 @@ const logout = () => {
             <div class="pt-4 pb-1 border-t border-gray-200">
                 <div class="flex items-center px-4">
                     <div v-if="$page.props.jetstream.managesProfilePhotos" class="mr-3 shrink-0">
-                        <img class="object-cover w-10 h-10 rounded-full" :src="'/' + $page.props.user.avatar"
+                        <img class="object-cover w-10 h-10 rounded-full"
+                            :src="$page.props.user.avatar ? $page.props.user.avatar_url : `https://ui-avatars.com/api/?name=${$page.props.user.first_name}${$page.props.user.last_name}'&color=094609FF&background=E2E2E2`"
                             :alt="$page.props.user.name">
                     </div>
-
                     <div>
                         <div class="text-base font-medium text-gray-800">
                             {{ $page.props.user.username }}

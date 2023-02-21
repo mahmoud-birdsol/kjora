@@ -10,8 +10,10 @@ defineProps({
 </script>
 
 <template>
-    <label class="block font-bold text-xs uppercase ml-4 mb-2" :class="`text-${color}`">
+    <label class="block font-medium  text-xs uppercase ml-4 mb-1" :class="`text-${color}`">
         <span v-if="value">{{ value }}</span>
-        <span v-else><slot /></span>
+        <span v-else>
+            <slot />
+        </span>
     </label>
 </template>

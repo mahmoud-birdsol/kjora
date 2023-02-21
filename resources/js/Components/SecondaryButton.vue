@@ -27,9 +27,8 @@ const sizeClasses = computed(() => {
 
 <template>
     <button :type="type"
-            class="w-full text-center items-center bg-white border border-gray-300 rounded-full font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-green-300 focus:ring focus:ring-green-200 active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition"
-            :class="sizeClasses"
-    >
-        <slot/>
+        class="w-full text-center items-center bg-white border border-gray-300 rounded-full font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-green-300 focus:border-gray-800  active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition"
+        :class="sizeClasses">
+        <slot />
     </button>
 </template>
