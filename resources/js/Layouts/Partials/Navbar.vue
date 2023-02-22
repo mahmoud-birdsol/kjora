@@ -7,7 +7,7 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import NotificationComponent from '@/Components/NotificationComponent.vue';
-import ChatIcon from '@/Components/ChatIcon.vue';
+import ChatIcon from '../../Components/Icons/ChatIcon.vue';
 import {
     BellIcon,
     Bars3Icon,
@@ -17,6 +17,8 @@ import {
     EllipsisHorizontalCircleIcon,
     StarIcon
 } from '@heroicons/vue/24/outline';
+
+
 
 const showingNavigationDropdown = ref(false);
 
@@ -29,10 +31,10 @@ const logout = () => {
     <nav class="bg-transparent">
         <!-- Primary Navigation Menu -->
         <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
+            <div class="flex items-center justify-between h-16">
                 <div class="flex">
                     <!-- Navigation Links -->
-                    <div class="hidden space-x-4  items-center sm:space-x-8 sm:-my-px md:flex">
+                    <div class="items-center hidden space-x-4 sm:space-x-8 sm:-my-px md:flex">
                         <NavLink :href="route('home')" :active="route().current('home')" class="">
                             <HomeIcon class="w-4 h-4 text-primary" />
                             <span class="">
@@ -69,7 +71,7 @@ const logout = () => {
                 <div class="hidden md:flex md:gap-x-3 sm:items-center sm:ml-6">
                     <!-- upgrade button  -->
                     <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5">
-                        <div class="rounded-full bg-black">
+                        <div class="bg-black rounded-full">
                             <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                         </div>
                         <span>Upgrade</span>
@@ -201,7 +203,7 @@ const logout = () => {
         <!-- Responsive Navigation Menu -->
         <!-- Responsive Navigation Menu -->
         <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }"
-            class="md:hidden transition">
+            class="transition md:hidden">
             <div class="pt-2 pb-3 space-y-1">
                 <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
                     Home
