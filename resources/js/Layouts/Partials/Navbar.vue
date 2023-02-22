@@ -91,7 +91,7 @@ const logout = () => {
                             </template>
 
                             <template #content>
-                                <DropdownLink :href="route('profile.edit')">
+                                <DropdownLink :href="route('profile.show')">
                                     Profile
                                 </DropdownLink>
 
