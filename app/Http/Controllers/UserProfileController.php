@@ -38,7 +38,7 @@ class UserProfileController extends Controller
         $countries = Country::active()->orderBy('name')->get();
         $positions = Position::all();
 
-        return Inertia::render('Profile/Show', [
+        return Inertia::render('Profile/Edit', [
             'user' => $user,
             'countries' => $countries,
             'positions' => $positions,

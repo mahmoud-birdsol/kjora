@@ -12,7 +12,7 @@ import ConversationsList from '../../Components/ConversationsList.vue';
 const props = defineProps(['conversations', 'last_online_at'])
 
 onMounted(() => {
-    console.log(props.conversations)
+
 })
 
 

@@ -4,8 +4,9 @@ import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
 import dayjs from 'dayjs';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import Pagination from '@/Components/Pagination.vue';
-import UserCard from '../Components/UserCard.vue';
+
 import { ref } from 'vue';
+import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
 
 defineProps(['positions']);
 
@@ -59,17 +60,17 @@ const filter = () => {
             </template>
         </div>
         <!-- Current list...
-                                                        =====================================================-->
+                                                                    =====================================================-->
         <div class="p-6 overflow-hidden bg-white shadow-xl sm:rounded-lg" v-loading="loading">
             <template v-if="players.data.length">
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                     <template v-for="player in players.data" :key="player.id">
-                        <UserCard :player="player" />
+                        <MainPlayerCard :player="player" />
                     </template>
                 </div>
             </template>
             <template v-else>
-                <div class="text-gray-500 text-center text-sm capitalize">you have not added any player in your favourite
+                <div class="text-sm text-center text-gray-500 capitalize">you have not added any player in your favourite
                     list yet</div>
             </template>
             <div class="flex items-center justify-center my-4">

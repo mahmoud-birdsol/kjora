@@ -290,14 +290,9 @@ const isSearching = ref(false);
                                 </button>
                                 <button @click="showReportModal = !showReportModal">
                                     <FlagIcon class="w-4 h-4 text-red-600" />
-                                    <Modal :show="showReportModal" @close="showReportModal = false" max-width="sm">
+                                    <Modal :show="showReportModal" @close="showReportModal = false" max-width="sm"
+                                        :closeable="true" :bodyScroll="false">
                                         <div class="flex flex-col p-4 text-center uppercase gap-y-6">
-                                            <div class="self-end ">
-                                                <button @click="showReportModal = false"
-                                                    class="p-1 rounded-full group hover:ring hover:ring-primary ">
-                                                    <XMarkIcon class="w-5 text-black group-hover:text-primary" />
-                                                </button>
-                                            </div>
                                             <div class="mb-4 font-bold text-primary">
                                                 report
                                             </div>
