@@ -21,7 +21,7 @@ class GalleryUploadController extends Controller
         /** @var \App\Models\User $user */
         $user = $request->user();
 
-        $user->addMedia($request->input('gallery'))->toMediaCollection('gallery');
+        $user->addMedia($request->file('gallery'))->toMediaCollection('gallery');
 
         return response()->json([
             'message' => 'File uploaded successfully'

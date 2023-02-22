@@ -7,6 +7,7 @@ use App\Models\Position;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class UserProfileController extends Controller
 {
@@ -18,10 +19,21 @@ class UserProfileController extends Controller
      */
     public function show(Request $request)
     {
+        /** @var \App\Models\User $user */
         $user = $request->user()->load('club');
 
+
+        $media = $user->getMedia('gallery')->map(function (Media $media) {
+            return [
+                'url' => $media->original_url,
+                'type' => $media->type,
+                'extension' => $media->extension
+            ];
+        });
+
         return Inertia::render('Profile/Show', [
-            'user' => $user
+            'user' => $user,
+            'media' => $media
         ]);
     }
 
@@ -29,7 +41,7 @@ class UserProfileController extends Controller
     /**
      * Display and edit user profile page.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Inertia\Response
      */
     public function edit(Request $request): Response
@@ -38,7 +50,7 @@ class UserProfileController extends Controller
         $countries = Country::active()->orderBy('name')->get();
         $positions = Position::all();
 
-        return Inertia::render('Profile/Show', [
+        return Inertia::render('Profile/Edit', [
             'user' => $user,
             'countries' => $countries,
             'positions' => $positions,
