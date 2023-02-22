@@ -80,6 +80,11 @@ Route::middleware([
             'show',
         ])->name('profile.show');
 
+        Route::get('/user/edit', [
+            UserProfileController::class,
+            'edit',
+        ])->name('profile.edit');
+
         /*
          |--------------------------------------------------------------------------
          | Player
