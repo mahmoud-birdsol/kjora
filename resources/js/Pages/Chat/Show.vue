@@ -1,19 +1,15 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import {computed, onMounted, onUnmounted, ref} from 'vue';
 import ConversationsList from '../../Components/ConversationsList.vue';
 import AppLayout from '../../Layouts/AppLayout.vue';
 import ChatLayout from '../../Layouts/ChatLayout.vue';
-import { FaceSmileIcon, PhotoIcon, } from '@heroicons/vue/24/outline'
-import { XMarkIcon, PaperAirplaneIcon, ArrowUpCircleIcon } from '@heroicons/vue/24/solid'
-import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
-import { FlagIcon } from '@heroicons/vue/24/outline'
+import {FaceSmileIcon, FlagIcon, PhotoIcon,} from '@heroicons/vue/24/outline'
+import {ArrowUpCircleIcon, MagnifyingGlassIcon, PaperAirplaneIcon, XMarkIcon} from '@heroicons/vue/24/solid'
+import {useForm, usePage} from '@inertiajs/inertia-vue3';
 import Modal from '../../Components/Modal.vue';
 import ChatMessage from '../../Components/ChatMessage.vue';
-import { Inertia } from '@inertiajs/inertia';
 import axios from 'axios';
 import FadeInTransition from '../../Components/FadeInTransition.vue';
-import { filter } from 'lodash';
 
 const props = defineProps({
     conversation: null,
@@ -37,8 +33,6 @@ const filePreview = ref(null);
 const currentUser = usePage().props.value.auth.user
 
 
-
-
 Echo.private('users.chat.' + currentUser.id)
     .listen('.message-sent', (event) => {
         console.log(event);
@@ -56,7 +50,7 @@ Echo.private('users.chat.' + currentUser.id)
 const page = ref(1)
 onMounted(() => {
 
-    axios.get(route('api.messages.index', props.conversation), { page: page.value }).then(response => {
+    axios.get(route('api.messages.index', props.conversation), {page: page.value}).then(response => {
         messages.value = response.data.data
 
         console.log(response.data.meta.last_page)
@@ -72,13 +66,13 @@ onMounted(() => {
     })
 
 
-
 });
 
 // load next conversations page after scrolling to the end of the list
 function fetchMore() {
     console.log('fetch next page')
 }
+
 /* ----------------------handle loading messages on scroll to the top of the messageContainer---------------------------- */
 
 
@@ -92,12 +86,14 @@ onUnmounted(() => {
 
 });
 const throttledHandleScroll = window._.throttle(handleScroll, 1000)
+
 function handleScroll(e) {
     let element = e.target
 
     if (page.value === lastPage.value) {
         return
     }
+
     function getNextPage() {
         page.value = page.value + 1;
 
@@ -111,12 +107,11 @@ function handleScroll(e) {
             messages.value = [...messages.value, ...response.data.data]
 
 
-
         })
     }
+
     element.scrollTop === 0 ? getNextPage() : null
 }
-
 
 
 //send message fuctionality
@@ -162,6 +157,7 @@ function submitNewMessage() {
 
 
 }
+
 // attachments
 
 function clickFileInput() {
@@ -169,7 +165,6 @@ function clickFileInput() {
 }
 
 /* -------------------------------------------------------------------------- */
-
 
 
 function handleFile(file) {
@@ -183,9 +178,9 @@ function handleFile(file) {
     };
 
 
-
     reader.readAsDataURL(file);
 }
+
 // on photoInput change method
 const handleAttachments = (e) => {
     const file = attachmentsInput.value.files[0];
@@ -202,6 +197,7 @@ function handleReply(message) {
     repliedMessage.value = message
     isReply.value = true
 }
+
 ///search messages functionality
 
 const searchMessagesForm = useForm({
@@ -209,6 +205,7 @@ const searchMessagesForm = useForm({
 });
 
 const debouncedSubmitSearchMessages = window._.debounce(submitSearchMessages, 500);
+
 function submitSearchMessages() {
     console.log('send query and recive fitlerd data');
     console.log(searchMessagesForm.query);
@@ -223,11 +220,39 @@ function submitSearchMessages() {
         filteredMessages.value = [...response.data.data]
 
 
-
     })
 }
 
 const isSearching = ref(false);
+
+const userIsHere = ref(false);
+const users = ref([]);
+
+const conversationId = computed(() => props.conversation.id);
+
+let twoUsersArePresent = ref(false);
+
+Echo.join('chat.' + conversationId.value)
+    .here(function (currentUsers) {
+        users.value = currentUsers;
+        console.log(users.value);
+        twoUsersArePresent.value = (Object.keys(users.value).length === 2); // update flag variable
+
+        console.log('here');
+    })
+    .joining(function (user) {
+        users.value.push(user);
+        twoUsersArePresent.value = (Object.keys(users.value).length === 2); // update flag variable
+
+        console.log(users.value);
+        console.log('joining');
+    })
+    .leaving(function (currentUser) {
+        console.log('current user' , currentUser)
+        users.value = users.value.filter(u => (u.id !== currentUser.id));
+        twoUsersArePresent.value = (Object.keys(users.value).length === 2); // update flag variable
+    });
+
 
 </script>
 
@@ -237,13 +262,18 @@ const isSearching = ref(false);
             <p>chat</p>
         </template>
 
+        <span class="text-red-900 text-7xl" >{{twoUsersArePresent}}</span>
+
+
+
 
         <!-- show page -->
 
         <ChatLayout>
             <template #sidebar>
-                <ConversationsList :conversations="conversations" @fetch-more="fetchMore" :currentConvId="conversation.id"
-                    :last-active-at="last_online_at" />
+                <ConversationsList :conversations="conversations" @fetch-more="fetchMore"
+                                   :currentConvId="conversation.id"
+                                   :last-active-at="last_online_at"/>
             </template>
             <template #header>
 
@@ -253,7 +283,7 @@ const isSearching = ref(false);
                         <div class="flex items-center flex-1 gap-4 p-4">
                             <div class="grid items-center w-full grid-cols-1 ">
                                 <input v-model="searchMessagesForm.query" @input="debouncedSubmitSearchMessages"
-                                    type="search" class="w-full col-start-1 row-start-1 pis-10 rounded-3xl">
+                                       type="search" class="w-full col-start-1 row-start-1 pis-10 rounded-3xl">
                                 <div class="col-start-1 row-start-1 justify-self-start pis-3">
                                     <MagnifyingGlassIcon class="w-5 h-5 text-primary">
                                     </MagnifyingGlassIcon>
@@ -262,11 +292,10 @@ const isSearching = ref(false);
                             <button
                                 @click="(e) => { isSearching = false; filteredMessages = []; searchMessagesForm.query = null }"
                                 class="p-1 rounded-full group hover:ring hover:ring-primary ">
-                                <XMarkIcon class="w-5 text-black group-hover:text-primary" />
+                                <XMarkIcon class="w-5 text-black group-hover:text-primary"/>
                             </button>
                         </div>
                     </template>
-
 
 
                     <!-- defaultHeader -->
@@ -274,28 +303,32 @@ const isSearching = ref(false);
                         <div class="flex w-full">
                             <div class="flex items-center flex-1 gap-4 p-4 border-r border-r-stone-400">
                                 <div>
-                                    <img :src="'https://ui-avatars.com/api/?name=' + player.name + '&color=094609FF&background=E2E2E2'"
+                                    <img
+                                        :src="'https://ui-avatars.com/api/?name=' + player.name + '&color=094609FF&background=E2E2E2'"
                                         alt="" class="object-cover w-10 h-10 border-2 rounded-full border-primary">
                                 </div>
                                 <div class="flex flex-col ">
-                                    <h4 class="mb-1 font-bold leading-none capitalize text-primary">{{ player.name }}</h4>
+                                    <h4 class="mb-1 font-bold leading-none capitalize text-primary">{{
+                                            player.name
+                                        }}</h4>
                                     <span class="text-xs leading-none text-neutral-500"> @{{ player.username }}
                                     </span>
                                 </div>
                             </div>
                             <div class="flex items-center gap-2 p-4">
                                 <button @click="isSearching = true">
-                                    <MagnifyingGlassIcon class="w-4 h-4 cursor-pointer hover:text-primaryDark text-primary">
+                                    <MagnifyingGlassIcon
+                                        class="w-4 h-4 cursor-pointer hover:text-primaryDark text-primary">
                                     </MagnifyingGlassIcon>
                                 </button>
                                 <button @click="showReportModal = !showReportModal">
-                                    <FlagIcon class="w-4 h-4 text-red-600" />
+                                    <FlagIcon class="w-4 h-4 text-red-600"/>
                                     <Modal :show="showReportModal" @close="showReportModal = false" max-width="sm">
                                         <div class="flex flex-col p-4 text-center uppercase gap-y-6">
                                             <div class="self-end ">
                                                 <button @click="showReportModal = false"
-                                                    class="p-1 rounded-full group hover:ring hover:ring-primary ">
-                                                    <XMarkIcon class="w-5 text-black group-hover:text-primary" />
+                                                        class="p-1 rounded-full group hover:ring hover:ring-primary ">
+                                                    <XMarkIcon class="w-5 text-black group-hover:text-primary"/>
                                                 </button>
                                             </div>
                                             <div class="mb-4 font-bold text-primary">
@@ -313,7 +346,9 @@ const isSearching = ref(false);
                                                 <li>racism, discrimination, or insults</li>
                                             </ul>
                                             <button
-                                                class="w-full p-2 px-6 text-white uppercase bg-black rounded-full ">report</button>
+                                                class="w-full p-2 px-6 text-white uppercase bg-black rounded-full ">
+                                                report
+                                            </button>
                                         </div>
                                     </Modal>
                                 </button>
@@ -326,11 +361,11 @@ const isSearching = ref(false);
             <template #main>
                 <!-- main content -->
                 <div ref="messagesContainer"
-                    class="flex flex-col gap-y-4 div md:min-h-[400px] min-h-[300px] max-h-[350px] md:max-h-[450px] overflow-auto hideScrollBar relative shadow-inner p-2 ">
+                     class="flex flex-col gap-y-4 div md:min-h-[400px] min-h-[300px] max-h-[350px] md:max-h-[450px] overflow-auto hideScrollBar relative shadow-inner p-2 ">
                     <!-- <FadeInTransition></FadeInTransition> -->
                     <template v-if="!isSearching">
                         <template v-for="message in [...messages].reverse()" :key="message.id">
-                            <ChatMessage :message="message" @reply="handleReply" :player="player" />
+                            <ChatMessage :message="message" @reply="handleReply" :player="player"/>
                         </template>
 
 
@@ -338,7 +373,7 @@ const isSearching = ref(false);
                     <template v-else>
 
                         <template v-for="message in [...filteredMessages].reverse()" :key="message.id">
-                            <ChatMessage :message="message" @reply="handleReply" :player="player" />
+                            <ChatMessage :message="message" @reply="handleReply" :player="player"/>
                         </template>
 
                     </template>
@@ -349,42 +384,45 @@ const isSearching = ref(false);
             <template v-if="!isSearching" #footer>
                 <div class="grid p-6 bg-white gap-y-4 rounded-2xl">
                     <Transition enterFromClass="opacity-0" enterToClass="opacity-100" leaveFromClass="opacity-100"
-                        leaveToClass="opacity-0" leave-active-class="transition-all duration-150 ease-in"
-                        enterActiveClass="transition-all duration-150 ease-out">
+                                leaveToClass="opacity-0" leave-active-class="transition-all duration-150 ease-in"
+                                enterActiveClass="transition-all duration-150 ease-out">
                         <div v-if="isReply || isAttachment"
-                            class="flex flex-row items-center w-full px-12 py-2 text-sm bg-neutral-200 rounded-xl">
+                             class="flex flex-row items-center w-full px-12 py-2 text-sm bg-neutral-200 rounded-xl">
                             <div v-if="repliedMessage">
-                                <div class="font-bold capitalize text-primary ">{{ repliedMessage.sender_id ===
-                                    currentUser.id ?
-                                    currentUser.name : player.name }}
+                                <div class="font-bold capitalize text-primary ">{{
+                                        repliedMessage.sender_id ===
+                                        currentUser.id ?
+                                            currentUser.name : player.name
+                                    }}
                                 </div>
                                 <div class="text-black">{{ repliedMessage.body }}</div>
                             </div>
                             <div v-show="filePreview" class="ml-auto overflow-hidden ">
                                 <span class="block w-20 h-20 bg-center bg-no-repeat bg-contain rounded-lg"
-                                    :style="'background-image: url(\'' + filePreview + '\');'" />
+                                      :style="'background-image: url(\'' + filePreview + '\');'"/>
                             </div>
                         </div>
                     </Transition>
                     <div class="flex flex-row items-center w-full gap-x-3">
                         <button>
-                            <FaceSmileIcon class="w-6 text-neutral-400" />
+                            <FaceSmileIcon class="w-6 text-neutral-400"/>
                         </button>
                         <div class="flex items-center flex-grow ">
 
                             <textarea v-model="newMessageForm.body" name="newMessage" id="newMessage" rows="1"
-                                placeholder="Type your Message Here"
-                                class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 "></textarea>
+                                      placeholder="Type your Message Here"
+                                      class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 "></textarea>
                         </div>
                         <button class="relative" @click="clickFileInput">
-                            <PhotoIcon class="w-6 h-6 text-neutral-400" />
+                            <PhotoIcon class="w-6 h-6 text-neutral-400"/>
                             <div class="bg-white absolute bottom-0 -right-[1px] rounded-full  ">
                                 <input ref="attachmentsInput" type="file" class="hidden" @change="handleAttachments">
-                                <ArrowUpCircleIcon class="w-2 h-2 text-neutral-400" />
+                                <ArrowUpCircleIcon class="w-2 h-2 text-neutral-400"/>
                             </div>
                         </button>
                         <button :disabled="isDisabled" class="p-1 group " @click="submitNewMessage">
-                            <PaperAirplaneIcon class="w-5 " :class="isDisabled ? 'text-neutral-400' : 'text-neutral-900'" />
+                            <PaperAirplaneIcon class="w-5 "
+                                               :class="isDisabled ? 'text-neutral-400' : 'text-neutral-900'"/>
                         </button>
                     </div>
                 </div>
@@ -396,5 +434,4 @@ const isSearching = ref(false);
 </template>
 
 
-
-<style  scoped></style>
+<style scoped></style>

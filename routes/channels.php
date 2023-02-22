@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -22,6 +23,12 @@ Broadcast::channel('users.chat.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('online', function ($user) {
+    if (auth()->check()) {
+        return $user->toArray();
+    }
+});
+
+Broadcast::channel('chat.{id}', function (User $user, $conversationId) {
     if (auth()->check()) {
         return $user->toArray();
     }
