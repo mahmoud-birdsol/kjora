@@ -32,10 +32,10 @@ const emit = defineEmits(['close']);
 watch(() => props.show, () => {
     if (props.show && !props.bodyScroll) {
 
-        console.log('hidden')
+
         document.body.style.overflow = 'hidden';
     } else {
-        console.log('scroll')
+
         document.body.style.overflow = null;
     }
 });
