@@ -18,16 +18,16 @@ const props = defineProps({
 </script>
 
 <template>
-    <Head title="Home"/>
+    <Head title="Home" />
 
     <AppLayout title="Home">
         <template #header>
-            <HelloUserHeader/>
+            <HelloUserHeader />
         </template>
 
         <div class="py-12">
             <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
-                <MainPlayerCard :player="player" size="lg" :show-report="false"/>
+                <MainPlayerCard :player="player" size="lg" :show-report="false" />
             </div>
         </div>
     </AppLayout>

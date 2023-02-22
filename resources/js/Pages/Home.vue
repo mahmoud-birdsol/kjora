@@ -16,7 +16,7 @@ import {
     XMarkIcon,
     AdjustmentsHorizontalIcon,
 } from '@heroicons/vue/24/outline';
-import UserCard from '../Components/UserCard.vue';
+
 
 const props = defineProps({
     players: Object,
@@ -72,7 +72,7 @@ const reset = () => {
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <!-- Position Filters...
-                    =====================================================-->
+                            =====================================================-->
                 <div class="flex gap-4 my-8 overflow-x-auto hideScrollBar">
                     <SecondaryButton @click="filterByPosition(null)">
                         <span class="w-full text-center"
@@ -91,14 +91,14 @@ const reset = () => {
                 </div>
 
                 <!-- Current list...
-                    =====================================================-->
+                            =====================================================-->
                 <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
 
-                    <div class="flex justify-start items-start my-6">
+                    <div class="flex items-start justify-start my-6">
                         <p class="text-sm font-bold">Total ({{ players.total }})</p>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                         <template v-for="player in players.data" :key="player.id">
                             <MainPlayerCard :player="player" />
                         </template>
@@ -110,7 +110,7 @@ const reset = () => {
                 </div>
 
                 <!-- Filters Modal...
-                    =====================================================-->
+                            =====================================================-->
                 <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40">
                     <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl"
                         @click="showFiltersModal = !showFiltersModal">
@@ -118,9 +118,9 @@ const reset = () => {
                     </button>
 
                     <Modal :show="showFiltersModal" max-width="sm" @close="showFiltersModal = false" :closeable="false">
-                        <div class="bg-black p-6">
-                            <div class="flex justify-between items-center">
-                                <p class="text-white text-sm">Filter </p>
+                        <div class="p-6 bg-black">
+                            <div class="flex items-center justify-between">
+                                <p class="text-sm text-white">Filter </p>
 
                                 <button @click="showFiltersModal = false">
                                     <XMarkIcon class="w-4 h-4 text-white" />
@@ -155,7 +155,7 @@ const reset = () => {
                                     <InputLabel>Position</InputLabel>
                                     <div class="px-4">
                                         <select id="location" name="location" v-model="form.position"
-                                            class="mt-1 block w-full rounded-full border-white py-2 pl-3 pr-10 text-base focus:border-primary focus:outline-none focus:ring-primary sm:text-sm text-white placeholder:center text-center bg-black">
+                                            class="block w-full py-2 pl-3 pr-10 mt-1 text-base text-center text-white bg-black border-white rounded-full focus:border-primary focus:outline-none focus:ring-primary sm:text-sm placeholder:center">
                                             <option :value="null">All Positions</option>
                                             <option v-for="position in positions" :key="position.id" :value="position.id">{{
                                                 position.name }}
@@ -167,9 +167,9 @@ const reset = () => {
                                 <div class="my-6 mt-4">
                                     <SecondaryButton @click="filter">Apply</SecondaryButton>
                                 </div>
-                                <div class="flex justify-center items-center mt-4">
+                                <div class="flex items-center justify-center mt-4">
                                     <button class="text-primary" @click="reset">
-                                        <XMarkIcon class="h-4 w-4 inline mr-4" />
+                                        <XMarkIcon class="inline w-4 h-4 mr-4" />
                                         Reset
                                     </button>
                                 </div>
