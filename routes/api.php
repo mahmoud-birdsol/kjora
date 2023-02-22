@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ClubController;
+use App\Http\Controllers\Api\GalleryUploadController;
 use App\Http\Controllers\Api\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,3 +38,9 @@ Route::post(
     MessageController::class,
     'store'
 ])->middleware('auth:sanctum')->name('api.messages.store');
+
+
+Route::post(
+    'gallery/upload',
+    GalleryUploadController::class
+)->middleware('auth:sanctum')->name('api.gallery.upload');

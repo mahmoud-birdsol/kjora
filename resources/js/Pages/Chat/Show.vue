@@ -3,17 +3,13 @@ import { computed, onMounted, onUnmounted, ref } from 'vue';
 import ConversationsList from '../../Components/ConversationsList.vue';
 import AppLayout from '../../Layouts/AppLayout.vue';
 import ChatLayout from '../../Layouts/ChatLayout.vue';
-import { FaceSmileIcon, PhotoIcon, } from '@heroicons/vue/24/outline'
-import { XMarkIcon, PaperAirplaneIcon, ArrowUpCircleIcon } from '@heroicons/vue/24/solid'
-import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
-import { FlagIcon } from '@heroicons/vue/24/outline'
+import { FaceSmileIcon, FlagIcon, PhotoIcon, } from '@heroicons/vue/24/outline'
+import { ArrowUpCircleIcon, MagnifyingGlassIcon, PaperAirplaneIcon, XMarkIcon } from '@heroicons/vue/24/solid'
+import { useForm, usePage } from '@inertiajs/inertia-vue3';
 import Modal from '../../Components/Modal.vue';
 import ChatMessage from '../../Components/ChatMessage.vue';
-import { Inertia } from '@inertiajs/inertia';
 import axios from 'axios';
 import FadeInTransition from '../../Components/FadeInTransition.vue';
-import { filter } from 'lodash';
 
 const props = defineProps({
     conversation: null,
@@ -35,8 +31,6 @@ const attachmentsInput = ref(null)
 const filePreview = ref(null);
 
 const currentUser = usePage().props.value.auth.user
-
-
 
 
 Echo.private('users.chat.' + currentUser.id)
@@ -72,13 +66,13 @@ onMounted(() => {
     })
 
 
-
 });
 
 // load next conversations page after scrolling to the end of the list
 function fetchMore() {
     console.log('fetch next page')
 }
+
 /* ----------------------handle loading messages on scroll to the top of the messageContainer---------------------------- */
 
 
@@ -92,12 +86,14 @@ onUnmounted(() => {
 
 });
 const throttledHandleScroll = window._.throttle(handleScroll, 1000)
+
 function handleScroll(e) {
     let element = e.target
 
     if (page.value === lastPage.value) {
         return
     }
+
     function getNextPage() {
         page.value = page.value + 1;
 
@@ -111,12 +107,11 @@ function handleScroll(e) {
             messages.value = [...messages.value, ...response.data.data]
 
 
-
         })
     }
+
     element.scrollTop === 0 ? getNextPage() : null
 }
-
 
 
 //send message fuctionality
@@ -162,6 +157,7 @@ function submitNewMessage() {
 
 
 }
+
 // attachments
 
 function clickFileInput() {
@@ -169,7 +165,6 @@ function clickFileInput() {
 }
 
 /* -------------------------------------------------------------------------- */
-
 
 
 function handleFile(file) {
@@ -183,9 +178,9 @@ function handleFile(file) {
     };
 
 
-
     reader.readAsDataURL(file);
 }
+
 // on photoInput change method
 const handleAttachments = (e) => {
     const file = attachmentsInput.value.files[0];
@@ -202,6 +197,7 @@ function handleReply(message) {
     repliedMessage.value = message
     isReply.value = true
 }
+
 ///search messages functionality
 
 const searchMessagesForm = useForm({
@@ -209,6 +205,7 @@ const searchMessagesForm = useForm({
 });
 
 const debouncedSubmitSearchMessages = window._.debounce(submitSearchMessages, 500);
+
 function submitSearchMessages() {
     console.log('send query and recive fitlerd data');
     console.log(searchMessagesForm.query);
@@ -223,11 +220,39 @@ function submitSearchMessages() {
         filteredMessages.value = [...response.data.data]
 
 
-
     })
 }
 
 const isSearching = ref(false);
+
+const userIsHere = ref(false);
+const users = ref([]);
+
+const conversationId = computed(() => props.conversation.id);
+
+let twoUsersArePresent = ref(false);
+
+Echo.join('chat.' + conversationId.value)
+    .here(function (currentUsers) {
+        users.value = currentUsers;
+        console.log(users.value);
+        twoUsersArePresent.value = (Object.keys(users.value).length === 2); // update flag variable
+
+        console.log('here');
+    })
+    .joining(function (user) {
+        users.value.push(user);
+        twoUsersArePresent.value = (Object.keys(users.value).length === 2); // update flag variable
+
+        console.log(users.value);
+        console.log('joining');
+    })
+    .leaving(function (currentUser) {
+        console.log('current user', currentUser)
+        users.value = users.value.filter(u => (u.id !== currentUser.id));
+        twoUsersArePresent.value = (Object.keys(users.value).length === 2); // update flag variable
+    });
+
 
 </script>
 
@@ -236,6 +261,10 @@ const isSearching = ref(false);
         <template #header>
             <p>chat</p>
         </template>
+
+        <span class="text-red-900 text-7xl">{{ twoUsersArePresent }}</span>
+
+
 
 
         <!-- show page -->
@@ -268,7 +297,6 @@ const isSearching = ref(false);
                     </template>
 
 
-
                     <!-- defaultHeader -->
                     <template v-if="!isSearching">
                         <div class="flex w-full">
@@ -278,7 +306,9 @@ const isSearching = ref(false);
                                         alt="" class="object-cover w-10 h-10 border-2 rounded-full border-primary">
                                 </div>
                                 <div class="flex flex-col ">
-                                    <h4 class="mb-1 font-bold leading-none capitalize text-primary">{{ player.name }}</h4>
+                                    <h4 class="mb-1 font-bold leading-none capitalize text-primary">{{
+                                        player.name
+                                    }}</h4>
                                     <span class="text-xs leading-none text-neutral-500"> @{{ player.username }}
                                     </span>
                                 </div>
@@ -307,8 +337,9 @@ const isSearching = ref(false);
                                                 <li>violence, or threats</li>
                                                 <li>racism, discrimination, or insults</li>
                                             </ul>
-                                            <button
-                                                class="w-full p-2 px-6 text-white uppercase bg-black rounded-full ">report</button>
+                                            <button class="w-full p-2 px-6 text-white uppercase bg-black rounded-full ">
+                                                report
+                                            </button>
                                         </div>
                                     </Modal>
                                 </button>
@@ -349,9 +380,11 @@ const isSearching = ref(false);
                         <div v-if="isReply || isAttachment"
                             class="flex flex-row items-center w-full px-12 py-2 text-sm bg-neutral-200 rounded-xl">
                             <div v-if="repliedMessage">
-                                <div class="font-bold capitalize text-primary ">{{ repliedMessage.sender_id ===
+                                <div class="font-bold capitalize text-primary ">{{
+                                    repliedMessage.sender_id ===
                                     currentUser.id ?
-                                    currentUser.name : player.name }}
+                                    currentUser.name : player.name
+                                }}
                                 </div>
                                 <div class="text-black">{{ repliedMessage.body }}</div>
                             </div>
@@ -391,5 +424,4 @@ const isSearching = ref(false);
 </template>
 
 
-
-<style  scoped></style>
+<style scoped></style>
