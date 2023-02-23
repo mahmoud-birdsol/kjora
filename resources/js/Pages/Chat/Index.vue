@@ -1,15 +1,16 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted , ref } from 'vue';
 import AppLayout from '../../Layouts/AppLayout.vue';
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
 import { FlagIcon } from '@heroicons/vue/24/outline'
 import ChatLayout from '../../Layouts/ChatLayout.vue';
 import ConversationsList from '../../Components/ConversationsList.vue';
-
+import ReportModal from '../../Components/ReportModal.vue';
 
 
 
 const props = defineProps(['conversations', 'last_online_at'])
+let showReport = ref(true)
 
 onMounted(() => {
     console.log(props.conversations)
@@ -36,9 +37,13 @@ onMounted(() => {
                         <MagnifyingGlassIcon class="w-4 h-4 cursor-pointer hover:text-primaryDark text-primary">
                         </MagnifyingGlassIcon>
                     </button>
-                    <button>
-                        <FlagIcon class="w-4 h-4 text-red-600" />
-                    </button>
+                    <ReportModal v-if="showReport" :reportable-id="1" :reportable-type="'App\\Models\\Chat'">
+                        <template #trigger>
+                            <button>
+                                <FlagIcon class="h-4 w-4 text-red-500" />
+                            </button>
+                        </template>
+                    </ReportModal>
                 </div>
             </template>
             <template #main>

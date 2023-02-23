@@ -1,8 +1,11 @@
 <script setup>
 import Modal from '@/Components/Modal.vue';
-import {ref} from 'vue';
+import {ref , onMounted} from 'vue';
 import {useForm, usePage} from "@inertiajs/inertia-vue3";
-
+import {
+    RadioGroup,
+    RadioGroupOption,
+} from '@headlessui/vue'
 const props = defineProps({
     reportableType: {
         required: true,
@@ -16,13 +19,11 @@ const props = defineProps({
 
 const options = usePage().props.value.reportOptions;
 const show = ref(false);
-
 const form = useForm({
     reportable_type: props.reportableType,
     reportable_id: props.reportableId,
-    report_option_id: null,
+    report_option_id:null,
 });
-
 const submit = () => {
     form.post(route('report.store'), {
         preserveState: false,
@@ -37,6 +38,28 @@ const submit = () => {
     </div>
 
     <Modal :show="show" @close="show = false" max-width="sm">
-        <p v-for="option in options">{{ option.body }}</p>
+
+        <div class="flex flex-col p-4 text-center uppercase gap-y-6">
+        <div class="mb-4 font-bold text-primary">
+            report
+        </div>
+            <!-- TODO:make it radio buttons group -->
+            <form @submit.prevent="submit()">
+                <ul>
+                    <RadioGroup v-model="form.report_option_id"
+                        class=" [&_li]:py-3 [&_li]:rounded-full [&_li]:border-2 text-stone-500  flex flex-col gap-4 text-sm font-medium cursor-pointer">
+                        <template v-for="option in options">
+                            <RadioGroupOption v-slot="{ checked }" :value="option.id">
+                                <li :class="checked ? 'border-primary text-primary' : 'border-gray-400'">{{ option.body }}</li>
+                            </RadioGroupOption>
+                        </template>
+                    </RadioGroup>
+                </ul>
+                <button class="w-full p-2 px-6 text-white uppercase bg-black rounded-full my-4">
+                    report
+                </button>
+            </form>
+
+    </div>
     </Modal>
 </template>
