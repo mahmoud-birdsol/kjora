@@ -1,9 +1,10 @@
 <script setup>
 import { onMounted } from 'vue';
-import { DocumentArrowUpIcon } from '@heroicons/vue/24/outline'
+import { ArrowDownCircleIcon, DocumentArrowUpIcon } from '@heroicons/vue/24/outline'
 const props = defineProps({
     fileType: String,
     filePreview: String
+    , fileName: String
 })
 </script>
 <template>
@@ -14,11 +15,17 @@ const props = defineProps({
             <source :src="filePreview" :type="fileType">
         </video>
     </div>
-    <div v-else-if="fileType.endsWith('document')" class="block w-20 h-20 rounded-lg">
-        <img class="h-full" src="/images/doc.png"/>
+
+
+    <div v-else-if="fileType.endsWith('.document') || fileType.startsWith('application/msword')"
+        class="flex justify-between gap-2 items-center">
+        <img class="w-5 h-7 object-contain" src="/images/doc.png" />
+        <p class="truncate">{{ fileName }}</p>
+
     </div>
-    <div v-else-if="fileType.startsWith('application')" class="block w-20 h-20 rounded-lg">
-        <img class="h-full" src="/images/pdf.png"/>
+    <div v-else-if="fileType.startsWith('application/pdf')" class="flex justify-between gap-2 items-center">
+        <img class="w-7 h-7 object-contain" src="/images/pdf.png" />
+        <p class="truncate">{{ fileName }}</p>
+
     </div>
-    
 </template>

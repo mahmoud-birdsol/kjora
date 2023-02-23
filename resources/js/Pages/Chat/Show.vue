@@ -169,10 +169,14 @@ function clickFileInput() {
 
 /* -------------------------------------------------------------------------- */
 let fileType = ref(null)
+let fileName = ref(null)
 
 function handleFile(file) {
     if (!file) return;
-    fileType = file.type
+    fileType.value = file.type
+    fileName.value = file.name
+    console.log(file
+    )
     const reader = new FileReader();
 
     reader.onload = (e) => {
@@ -392,7 +396,7 @@ Echo.join('chat.' + conversationId.value)
                                 <div class="text-black">{{ repliedMessage.body }}</div>
                             </div>
                             <div v-show="filePreview" class="ml-auto overflow-hidden ">
-                                <MediaPreview :fileType="fileType" :filePreview="filePreview"/>
+                                <MediaPreview :fileType="fileType" :filePreview="filePreview" :fileName="fileName" />
                             </div>
                         </div>
                     </Transition>

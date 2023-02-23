@@ -1,26 +1,20 @@
 <template>
     <div class="">
-
-        <FilePreview v-if="fileToPreview" :show="showFilePreviewModal" @close="showFilePreviewModal = false"
-            :file="fileToPreview">
-        </FilePreview>
         <div class="grid grid-cols-2 gap-4 overflow-auto sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 hideScrollBar ">
-
-
             <template v-if="shouldPreview == 'photos'">
 
                 <template v-for="(file, index) in media.filter(f => f.type == 'image' || f.type == 'webp') " :key="index">
                     <FadeInTransition>
-                        <div @click="openFilePreview(file.id)"
+                        <Link :href="route('gallery.show', file.id)"
                             class=" relative w-full h-full rounded-lg overflow-hidden aspect-square">
-                            <img :src="file.url" alt="" class="object-cover w-full h-full ">
-                            <button @click.prevent.stop="removeItem(file.id)"
-                                class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
-                                <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
-                                    <XMarkIcon class="w-5 h-5 text-stone-800" />
-                                </div>
-                            </button>
-                        </div>
+                        <img :src="file.url" alt="" class="object-cover w-full h-full ">
+                        <button @click.prevent.stop="removeItem(file.id)"
+                            class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                            <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
+                                <XMarkIcon class="w-5 h-5 text-stone-800" />
+                            </div>
+                        </button>
+                        </Link>
                     </FadeInTransition>
                 </template>
 
@@ -29,15 +23,16 @@
             <template v-if="shouldPreview == 'videos'">
                 <template v-for="(file, index) in media.filter(f => f.type == 'video')" :key="index">
                     <FadeInTransition>
-                        <div class=" relative w-full h-full rounded-md overflow-hidden aspect-video">
-                            <video :src="file.url" alt="" class="object-cover w-full h-full " controls />
-                            <button @click.prevent.stop="removeItem(file.id)"
-                                class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
-                                <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
-                                    <XMarkIcon class="w-5 h-5 text-stone-800" />
-                                </div>
-                            </button>
-                        </div>
+                        <Link :href="route('gallery.show', file.id)"
+                            class=" relative w-full h-full rounded-md overflow-hidden aspect-video">
+                        <video :src="file.url" alt="" class="object-cover w-full h-full " controls />
+                        <button @click.prevent.stop="removeItem(file.id)"
+                            class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                            <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
+                                <XMarkIcon class="w-5 h-5 text-stone-800" />
+                            </div>
+                        </button>
+                        </Link>
                     </FadeInTransition>
                 </template>
             </template>
@@ -67,6 +62,7 @@ import axios from 'axios';
 import FadeInTransition from './FadeInTransition.vue';
 import ListGroupTransition from './ListGroupTransition.vue';
 import FilePreview from './FilePreview.vue';
+import { Link } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({
     user: {
@@ -76,9 +72,10 @@ const props = defineProps({
     shouldPreview: null
 })
 defineEmits(['reload'])
+
+
 const showUploadFileModal = ref(false)
-const showFilePreviewModal = ref(false)
-const fileToPreview = ref(null)
+
 
 onMounted(() => {
 
@@ -86,10 +83,7 @@ onMounted(() => {
 function getFileFromId(id) {
     return props.media.filter(item => item.id == id)[0]
 }
-function openFilePreview(id) {
-    fileToPreview.value = getFileFromId(id)
-    showFilePreviewModal.value = true
-}
+
 // function seturl
 function removeItem(id) {
     let file = getFileFromId(id)
