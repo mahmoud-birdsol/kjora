@@ -53,5 +53,9 @@ Route::delete(
 )->middleware('auth:sanctum')->name('api.gallery.destroy');
 
 Route::get('gallery/comments', [CommentController::class, 'index'])
-    ->name('auth:sanctum')
+    ->middleware('auth:sanctum')
     ->name('api.gallery.comments');
+
+Route::post('gallery/comments', [CommentController::class, 'store'])
+    ->middleware('auth:sanctum')
+    ->name('api.gallery.comments.store');
