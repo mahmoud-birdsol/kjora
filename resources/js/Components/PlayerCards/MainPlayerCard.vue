@@ -1,8 +1,9 @@
 <script setup>
-import { computed } from 'vue';
-import { Link } from '@inertiajs/inertia-vue3';
-import { ElRate } from 'element-plus';
+import {computed} from 'vue';
+import {Link} from '@inertiajs/inertia-vue3';
+import {ElRate} from 'element-plus';
 import Avatar from '@/Components/Avatar.vue';
+import ReportModal from "@/Components/ReportModal.vue";
 import {
     MapPinIcon,
     ChevronDoubleRightIcon,
@@ -117,9 +118,13 @@ const backgroundImage = computed(() => {
 
         <div class="flex justify-between items-center mt-6">
             <div></div>
-            <div v-if="showReport">
-                <FlagIcon class="h-4 w-4 text-red-500"/>
-            </div>
+            <ReportModal v-if="showReport" :reportable-id="player.id" :reportable-type="'App\\Models\\User'">
+                <template #trigger>
+                    <button>
+                        <FlagIcon class="h-4 w-4 text-red-500"/>
+                    </button>
+                </template>
+            </ReportModal>
         </div>
     </div>
 </template>

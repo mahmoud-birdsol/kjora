@@ -14,7 +14,7 @@ const props = defineProps({
     }
 });
 
-const options = usePage().props.reportOptions;
+const options = usePage().props.value.reportOptions;
 const show = ref(false);
 
 const form = useForm({
@@ -32,11 +32,11 @@ const submit = () => {
 </script>
 
 <template>
-    <div>
-        <slot name="trigger" :show="show"/>
+    <div @click="show = true">
+        <slot name="trigger"/>
     </div>
 
-    <Modal :show="show">
-        <!-- Add modal content here -->
+    <Modal :show="show" @close="show = false" max-width="sm">
+        <p v-for="option in options">{{ option.body }}</p>
     </Modal>
 </template>
