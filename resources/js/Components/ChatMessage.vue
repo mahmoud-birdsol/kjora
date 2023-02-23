@@ -2,7 +2,7 @@
 import { computed, ref } from '@vue/reactivity';
 import ReplyIcon from './Icons/ReplyIcon.vue';
 import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid'
-import { TrashIcon } from '@heroicons/vue/24/outline'
+import { TrashIcon , ArrowDownCircleIcon } from '@heroicons/vue/24/outline'
 import { usePage } from '@inertiajs/inertia-vue3';
 import { onMounted } from 'vue';
 import dayjs from 'dayjs';
@@ -69,7 +69,24 @@ function handleReply(e) {
                 </div>
                 <!-- media message -->
                 <div v-if="message.media">
-                    <img class="object-contain w-52" :src="message.media[0]?.original_url" alt="">
+                    <div v-if="message.media[0]?.mime_type.startsWith('image')">
+                        <img class="object-contain w-52" :src="message.media[0]?.original_url" alt="">
+                    </div>
+                    <div v-else-if="message.media[0]?.mime_type.startsWith('video')">
+                        <video controls class="h-full">
+                            <source :src="message.media[0].original_url" :type="message.media[0].mime_type">
+                        </video>
+                    </div>
+                    <div v-else-if="message.media[0]?.mime_type.endsWith('document')" class="flex justify-between gap-2 items-center">
+                        <img class="w-5 h-7" src="/images/doc.png"/>
+                        <p class="truncate">{{ message.media[0].file_name }}</p>
+                        <a :href="message.media[0].original_url" download><ArrowDownCircleIcon class="w-10 h-10 cursor-pointer"/></a>
+                    </div>
+                    <div v-else-if="message.media[0]?.mime_type.startsWith('application/pdf')" class="flex justify-between gap-2 items-center">
+                        <img class="w-7 h-7" src="/images/pdf.png"/>
+                        <p class="truncate">{{ message.media[0].file_name }}</p>
+                        <a :href="message.media[0].original_url" download><ArrowDownCircleIcon class="w-10 h-10 cursor-pointer"/></a>
+                    </div>
                 </div>
                 <!-- text message -->
                 <span class="break-words whitespace-pre-wrap ">
