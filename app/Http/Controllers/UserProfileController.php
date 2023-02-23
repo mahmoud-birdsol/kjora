@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Country;
+use App\Models\MediaLibrary;
 use App\Models\Position;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -23,14 +24,16 @@ class UserProfileController extends Controller
         $user = $request->user()->load('club');
 
 
-        $media = $user->getMedia('gallery')->map(function (Media $media) {
+        $media = $user->getMedia('gallery')->map(function (MediaLibrary $media) {
             return [
                 'id' => $media->id,
                 'url' => $media->original_url,
                 'type' => $media->type,
-                'extension' => $media->extension
+                'extension' => $media->extension,
+                'comments' => $media->comments?->load('replies')
             ];
         });
+
 
         return Inertia::render('Profile/Show', [
             'user' => $user,
