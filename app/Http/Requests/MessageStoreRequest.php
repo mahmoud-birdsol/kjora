@@ -32,7 +32,7 @@ class MessageStoreRequest extends FormRequest
             ],
             'attachments' => [
                 'nullable',
-                'max:2048'
+                'max:2084'
             ]
         ];
     }

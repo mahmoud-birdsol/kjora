@@ -275,3 +275,15 @@ Route::middleware([
 
 //     event(new \App\Events\MessageSentEvent($user));
 // });
+
+Route::get('gallery/{mediaLibrary}', function (\App\Models\MediaLibrary $mediaLibrary) {
+
+    $userId = \App\Models\MediaLibrary::where('model_type', User::class)->where('id', $mediaLibrary->id)->first()->model_id;
+
+    $user = User::find($userId);
+
+    return Inertia::render('Gallery/Show', [
+        'media' => $mediaLibrary,
+        'user' => $user
+    ]);
+})->name('gallery.show');

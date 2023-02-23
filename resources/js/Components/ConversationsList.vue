@@ -59,9 +59,7 @@ function submitSearchFriends(e) {
             <p class="mb-3 font-bold text-black uppercase ">total ({{ conversations.length }})</p>
             <div ref="conversationList"
                 class="flex self-end flex-col gap-3 hideScrollBar max-h-[500px] overflow-auto  lg:max-h-[50pxx] ">
-                <ListGroupTransition name="list">
-
-
+                <ListGroupTransition>
                     <template v-for="conversation in filteredConversations" :key="conversation.id">
                         <ConversationCard :conversation="conversation" :lastActiveAt="lastActiveAt"
                             :active="conversation.id === currentConvId" />
