@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Models\User;
+use App\Models\Report;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -10,29 +10,29 @@ use Illuminate\Notifications\Notification;
 use Laravel\Nova\Notifications\NovaChannel;
 use Laravel\Nova\Notifications\NovaNotification;
 
-class IdentityVerificationRequest extends Notification implements ShouldQueue
+class ReportSubmittedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
     /**
-     * @var \App\Models\User
+     * @var \App\Models\Report
      */
-    private User $user;
+    private Report $report;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(Report $report)
     {
-        $this->user = $user;
+        $this->report = $report;
     }
 
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -43,15 +43,15 @@ class IdentityVerificationRequest extends Notification implements ShouldQueue
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject($this->user->name.' has uploaded their identification documents.')
-            ->line($this->user->name.' has uploaded their identification documents and are waiting for review.')
-            ->action('Review', url('/nova/resources/users/'.$this->user->id))
+            ->subject('New report submitted ⚠️')
+            ->line($this->report->user->name . ' has submitted a report.')
+            ->action('Review', '/resources/reports/' . $this->report->id)
             ->line('Thank you for using our application!');
     }
 
@@ -63,8 +63,8 @@ class IdentityVerificationRequest extends Notification implements ShouldQueue
     public function toNova(): NovaNotification
     {
         return (new NovaNotification)
-            ->message($this->user->name.' has uploaded their identification documents.')
-            ->action('Review', '/resources/users/'.$this->user->id)
+            ->message($this->report->user->name . ' has submitted a report.')
+            ->action('Review', '/resources/reports/' . $this->report->id)
             ->icon('check')
             ->type('success');
     }

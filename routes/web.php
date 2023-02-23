@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\MessageSentEvent;
 use App\Http\Controllers\AcceptInvitationController;
 use App\Http\Controllers\Actions\MarkNotificationAsRead;
 use App\Http\Controllers\ChatController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\JoinPlatformController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserProfileController;
 use App\Models\Invitation;
 use App\Models\Stadium;
@@ -56,7 +58,6 @@ Route::middleware([
         IdentityVerificationController::class,
         'create',
     ])->name('identity.verification.create');
-
 
 
     Route::post('/verification/identity', [
@@ -229,6 +230,16 @@ Route::middleware([
         'show'
     ])->name('chats.show');
 
+    /*
+     |--------------------------------------------------------------------------
+     | Report routes...
+     |--------------------------------------------------------------------------
+    */
+
+    Route::post('report', [
+        ReportController::class,
+        'store'
+    ])->name('report.store');
 
     /*
      |--------------------------------------------------------------------------
@@ -236,7 +247,6 @@ Route::middleware([
      |--------------------------------------------------------------------------
     */
 });
-
 
 
 Route::get('test', function () {
@@ -248,5 +258,5 @@ Route::get('test', function () {
 Route::get('occupy', function () {
     $user = User::first();
 
-    event(new \App\Events\MessageSentEvent($user));
+    event(new MessageSentEvent($user));
 });

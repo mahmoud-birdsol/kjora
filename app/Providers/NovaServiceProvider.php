@@ -25,6 +25,8 @@ use App\Nova\Position;
 use App\Nova\PrivacyPolicy;
 use App\Nova\Rating;
 use App\Nova\RatingCategory;
+use App\Nova\Report;
+use App\Nova\ReportOption;
 use App\Nova\Social;
 use App\Nova\Stadium;
 use App\Nova\TermsAndConditions;
@@ -105,7 +107,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(PrivacyPolicy::class),
                     MenuItem::resource(TermsAndConditions::class),
                     MenuItem::resource(CookiePolicy::class),
-                ])->icon('lock')->collapsable(),
+                ])->icon('lock-closed')->collapsable(),
 
                 MenuSection::make('Settings', [
                     MenuItem::resource(Country::class),
@@ -117,6 +119,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(Label::class),
                     MenuItem::resource(Social::class),
                 ])->icon('cog')->collapsable(),
+
+                MenuSection::make('Reports', [
+                    MenuItem::resource(ReportOption::class),
+                    MenuItem::resource(Report::class),
+                ])->icon('exclamation')->collapsable(),
             ];
         });
 
