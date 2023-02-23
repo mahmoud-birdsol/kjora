@@ -35,7 +35,7 @@ class ReportRequest extends FormRequest
                 'integer',
             ],
             'report_option_id' => [
-                'nullable',
+                'required',
                 'exists:report_options:id',
             ],
             'body' => [
