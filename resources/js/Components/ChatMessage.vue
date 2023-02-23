@@ -69,6 +69,7 @@ function handleReply(e) {
                 </div>
                 <!-- media message -->
                 <div v-if="message.media">
+
                     <img class="object-contain w-52" :src="message.media[0]?.original_url" alt="">
                 </div>
                 <!-- text message -->

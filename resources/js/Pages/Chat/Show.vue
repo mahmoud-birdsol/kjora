@@ -153,6 +153,8 @@ function submitNewMessage() {
 
     }).catch((err => {
         console.error(err)
+        isDisabled.value = false
+
     }))
 
 
@@ -407,7 +409,8 @@ Echo.join('chat.' + conversationId.value)
                         <button class="relative" @click="clickFileInput">
                             <PhotoIcon class="w-6 h-6 text-neutral-400" />
                             <div class="bg-white absolute bottom-0 -right-[1px] rounded-full  ">
-                                <input ref="attachmentsInput" type="file" class="hidden" @change="handleAttachments">
+                                <input ref="attachmentsInput" type="file" accept="image/*,video/*,.pdf,.doc,.docx"
+                                    class="hidden" @change="handleAttachments">
                                 <ArrowUpCircleIcon class="w-2 h-2 text-neutral-400" />
                             </div>
                         </button>
