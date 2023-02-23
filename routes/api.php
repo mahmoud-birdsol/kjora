@@ -55,3 +55,7 @@ Route::delete(
 Route::get('gallery/comments', [CommentController::class, 'index'])
     ->name('auth:sanctum')
     ->name('api.gallery.comments');
+
+Route::post('gallery/comments', [CommentController::class, 'store'])
+    ->name('auth:sanctum')
+    ->name('api.gallery.comments.store');

@@ -13,6 +13,7 @@ use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\UserProfileController;
 use App\Models\Country;
 use App\Models\Invitation;
+use App\Models\MediaLibrary;
 use App\Models\Position;
 use App\Models\Stadium;
 use App\Models\User;
@@ -276,9 +277,9 @@ Route::middleware([
 //     event(new \App\Events\MessageSentEvent($user));
 // });
 
-Route::get('gallery/{mediaLibrary}', function (\App\Models\MediaLibrary $mediaLibrary) {
+Route::get('gallery/{mediaLibrary}', function (MediaLibrary $mediaLibrary) {
 
-    $userId = \App\Models\MediaLibrary::where('model_type', User::class)->where('id', $mediaLibrary->id)->first()->model_id;
+    $userId = MediaLibrary::where('model_type', User::class)->where('id', $mediaLibrary->id)->first()->model_id;
 
     $user = User::find($userId);
 
