@@ -25,6 +25,7 @@ class UserProfileController extends Controller
 
         $media = $user->getMedia('gallery')->map(function (Media $media) {
             return [
+                'id' => $media->id,
                 'url' => $media->original_url,
                 'type' => $media->type,
                 'extension' => $media->extension
