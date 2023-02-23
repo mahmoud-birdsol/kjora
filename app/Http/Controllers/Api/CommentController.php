@@ -24,8 +24,7 @@ class CommentController extends Controller
      */
     public function index(Request $request): AnonymousResourceCollection
     {
-        /** @var Model $modelType */
-        $modelType = new ReflectionClass($request->input('commentable_type'));
+        $modelType = (new ReflectionClass($request->input('commentable_type')))->newInstance();
 
         $model = $modelType->findOrFail($request->input('commentable_id'));
 
