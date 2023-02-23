@@ -47,5 +47,5 @@ Route::post(
 
 Route::delete(
     'gallery/{mediaLibrary}/delete',
-    GalleryUploadController::class
+    \App\Http\Controllers\Api\DeleteGalleryController::class
 )->middleware('auth:sanctum')->name('api.gallery.destroy');

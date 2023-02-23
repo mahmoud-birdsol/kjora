@@ -25,7 +25,7 @@ class CommentStoreRequest extends FormRequest
     {
         return [
             'parent_id' => [
-                'required',
+                'nullable',
                 'exists:comments,id'
             ],
             'user_id' => [

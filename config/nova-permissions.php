@@ -648,5 +648,131 @@ return [
             'description' => 'Can activate socials',
             'group' => 'Social',
         ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Conversation.
+        |--------------------------------------------------------------------------
+        */
+
+        'view conversations' => [
+            'display_name' => 'View conversations',
+            'description' => 'Can view conversations',
+            'group' => 'Chat',
+        ],
+
+        'create conversations' => [
+            'display_name' => 'Create conversations',
+            'description' => 'Can create conversations',
+            'group' => 'Chat',
+        ],
+
+        'edit conversations' => [
+            'display_name' => 'Edit conversations',
+            'description' => 'Can edit conversations',
+            'group' => 'Chat',
+        ],
+
+        'delete conversations' => [
+            'display_name' => 'Delete conversations',
+            'description' => 'Can delete conversations',
+            'group' => 'Chat',
+        ],
+
+        'suspend conversations' => [
+            'display_name' => 'Suspend conversations',
+            'description' => 'Can suspend conversations',
+            'group' => 'Chat',
+        ],
+
+        'activate conversations' => [
+            'display_name' => 'Activate conversations',
+            'description' => 'Can activate conversations',
+            'group' => 'Chat',
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Messages.
+        |--------------------------------------------------------------------------
+        */
+
+        'view messages' => [
+            'display_name' => 'View messages',
+            'description' => 'Can view messages',
+            'group' => 'Message',
+        ],
+
+        'create messages' => [
+            'display_name' => 'Create messages',
+            'description' => 'Can create messages',
+            'group' => 'Message',
+        ],
+
+        'edit messages' => [
+            'display_name' => 'Edit messages',
+            'description' => 'Can edit messages',
+            'group' => 'Message',
+        ],
+
+        'delete messages' => [
+            'display_name' => 'Delete messages',
+            'description' => 'Can delete messages',
+            'group' => 'Message',
+        ],
+
+        'suspend messages' => [
+            'display_name' => 'Suspend messages',
+            'description' => 'Can suspend messages',
+            'group' => 'Message',
+        ],
+
+        'activate messages' => [
+            'display_name' => 'Activate messages',
+            'description' => 'Can activate messages',
+            'group' => 'Message',
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Comments.
+        |--------------------------------------------------------------------------
+        */
+
+        'view comments' => [
+            'display_name' => 'View comments',
+            'description' => 'Can view comments',
+            'group' => 'Message',
+        ],
+
+        'create comments' => [
+            'display_name' => 'Create comments',
+            'description' => 'Can create comments',
+            'group' => 'Message',
+        ],
+
+        'edit comments' => [
+            'display_name' => 'Edit comments',
+            'description' => 'Can edit comments',
+            'group' => 'Message',
+        ],
+
+        'delete comments' => [
+            'display_name' => 'Delete comments',
+            'description' => 'Can delete comments',
+            'group' => 'Message',
+        ],
+
+        'suspend comments' => [
+            'display_name' => 'Suspend comments',
+            'description' => 'Can suspend comments',
+            'group' => 'Message',
+        ],
+
+        'activate comments' => [
+            'display_name' => 'Activate comments',
+            'description' => 'Can activate comments',
+            'group' => 'Message',
+        ],
     ],
 ];
