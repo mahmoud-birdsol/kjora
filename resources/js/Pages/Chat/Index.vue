@@ -1,23 +1,13 @@
 <script setup>
-import { onMounted } from 'vue';
 import AppLayout from '../../Layouts/AppLayout.vue';
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
 import { FlagIcon } from '@heroicons/vue/24/outline'
 import ChatLayout from '../../Layouts/ChatLayout.vue';
 import ConversationsList from '../../Components/ConversationsList.vue';
-
-
-
-
+import ModalReport from '../../Components/ModalReport.vue';
+import {ref} from 'vue'
 const props = defineProps(['conversations', 'last_online_at'])
-
-onMounted(() => {
-
-})
-
-
-
-
+let showReportModal = ref(false)
 </script>
 <template>
     <AppLayout title="chat">
@@ -37,7 +27,8 @@ onMounted(() => {
                         </MagnifyingGlassIcon>
                     </button>
                     <button>
-                        <FlagIcon class="w-4 h-4 text-red-600" />
+                        <FlagIcon class="w-4 h-4 text-red-600" @click="showReportModal = true"/>
+                        <ModalReport v-model:showReportModal="showReportModal"/>
                     </button>
                 </div>
             </template>
