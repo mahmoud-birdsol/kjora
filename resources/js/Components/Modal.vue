@@ -24,6 +24,11 @@ const props = defineProps({
         required: false,
         type: Boolean,
         default: false,
+    },
+    showCLoseIcon: {
+        required: false,
+        type: Boolean,
+        default: true,
     }
 });
 
@@ -66,6 +71,7 @@ const maxWidthClass = computed(() => {
         'lg': 'sm:max-w-lg',
         'xl': 'sm:max-w-xl',
         '2xl': 'sm:max-w-2xl',
+        '90': 'sm:max-w-2xl',
     }[props.maxWidth];
 });
 </script>
@@ -73,7 +79,7 @@ const maxWidthClass = computed(() => {
 <template>
     <teleport to="body">
         <transition leave-active-class="duration-200">
-            <div v-show="show" class="fixed inset-0 z-50 px-4 py-6 overflow-y-auto sm:px-0" scroll-region>
+            <div v-show="show" class="fixed inset-0 z-50 px-4  py-6 overflow-y-auto sm:px-0" scroll-region>
                 <transition enter-active-class="duration-300 ease-out" enter-from-class="opacity-0"
                     enter-to-class="opacity-100" leave-active-class="duration-200 ease-in" leave-from-class="opacity-100"
                     leave-to-class="opacity-0">
@@ -91,7 +97,7 @@ const maxWidthClass = computed(() => {
                         <div v-show="position == 'center'"
                             class="mb-6 overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:w-full sm:mx-auto"
                             :class="maxWidthClass">
-                            <div class="flex justify-end px-6 py-6" v-if="closeable">
+                            <div class="flex justify-end px-6 py-6" v-if="closeable && showCLoseIcon">
                                 <button @click="$emit('close')">
                                     <XMarkIcon class="w-4 h-4 text-gray-900 hover:text-gray=500" />
                                 </button>

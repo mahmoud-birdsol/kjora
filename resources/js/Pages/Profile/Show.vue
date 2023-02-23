@@ -5,26 +5,34 @@ import HelloUserHeader from '@/Components/HelloUserHeader.vue';
 import PerformanceTab from '@/Components/PerformanceTab.vue';
 import ProfileGallery from '@/Components/ProfileGallery.vue';
 import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+import { Inertia } from '@inertiajs/inertia'
+import FadeInTransition from '../../Components/FadeInTransition.vue';
+
 
 const props = defineProps({
     user: null,
     media: Array
 });
 
-// const media = [{ id: 1, type: "photo", url: '' }]
-const tabs = [
-    { name: 'performance', id: 1, component: PerformanceTab },
-    {
-        name: 'photos', id: 2, component: ProfileGallery, compProps:
-            { user: props.user, media: props.media, shouldPreview: 'photos' }
-    },
-    {
-        name: 'videos', id: 3, component: ProfileGallery, compProps:
-            { user: props.user, media: props.media, shouldPreview: 'videos' }
-    }]
 const currentTabId = ref(2)
 
+const tabs = computed(() => {
+    return [
+        { name: 'performance', id: 1, component: PerformanceTab },
+        {
+            name: 'photos', id: 2, component: ProfileGallery, compProps:
+                { user: props.user, media: props.media, shouldPreview: 'photos' }
+        },
+        {
+            name: 'videos', id: 3, component: ProfileGallery, compProps:
+                { user: props.user, media: props.media, shouldPreview: 'videos' }
+        }]
+})
+
+function reloadMedia() {
+    Inertia.reload({ only: ['media'] })
+}
 </script>
 
 <template>
@@ -48,12 +56,13 @@ const currentTabId = ref(2)
 
                 </div>
                 <div>
-                    <template v-for="(tab, index) in tabs" :key="index">
-                        <div v-if="tab.id === currentTabId">
-                            <component v-bind="tab.compProps" :is="tab.component"></component>
-                        </div>
-                    </template>
-                    <!-- <component :user="user" :is="tab.component"></component> -->
+                    <FadeInTransition>
+                        <template v-for="(tab, index) in tabs" :key="index">
+                            <div v-if="tab.id === currentTabId">
+                                <component v-bind="tab.compProps" :is="tab.component" @reload="reloadMedia"></component>
+                            </div>
+                        </template>
+                    </FadeInTransition>
                 </div>
 
             </div>
