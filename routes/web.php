@@ -280,4 +280,4 @@ Route::get('gallery/{mediaLibrary}', function (\App\Models\MediaLibrary $mediaLi
     return Inertia::render('Gallery/Show', [
         'media' => $mediaLibrary
     ]);
-});
+})->name('gallery.show');
