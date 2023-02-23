@@ -275,3 +275,9 @@ Route::middleware([
 
 //     event(new \App\Events\MessageSentEvent($user));
 // });
+
+Route::get('gallery/{mediaLibrary}', function (\App\Models\MediaLibrary $mediaLibrary) {
+    return Inertia::render('Gallery/Show', [
+        'media' => $mediaLibrary
+    ]);
+});
