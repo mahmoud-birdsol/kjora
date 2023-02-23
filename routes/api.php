@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\ClubController;
+use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\DeleteGalleryController;
 use App\Http\Controllers\Api\GalleryUploadController;
 use App\Http\Controllers\Api\MessageController;
 use Illuminate\Http\Request;
@@ -47,5 +49,9 @@ Route::post(
 
 Route::delete(
     'gallery/{mediaLibrary}/delete',
-    \App\Http\Controllers\Api\DeleteGalleryController::class
+    DeleteGalleryController::class
 )->middleware('auth:sanctum')->name('api.gallery.destroy');
+
+Route::get('gallery/comments', [CommentController::class, 'index'])
+    ->name('auth:sanctum')
+    ->name('api.gallery.comments');
