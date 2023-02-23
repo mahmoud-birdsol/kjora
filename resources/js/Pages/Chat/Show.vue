@@ -36,7 +36,7 @@ const currentUser = usePage().props.value.auth.user
 
 Echo.private('users.chat.' + currentUser.id)
     .listen('.message-sent', (event) => {
-        console.log(event);
+
         messages.value.unshift(event)
         setTimeout(() => {
             messagesContainer.value.scrollTo({
@@ -54,7 +54,7 @@ onMounted(() => {
     axios.get(route('api.messages.index', props.conversation), { page: page.value }).then(response => {
         messages.value = response.data.data
 
-        console.log(response.data.meta.last_page)
+
         lastPage.value = response.data.meta.last_page
 
     }).then(() => {
@@ -69,16 +69,10 @@ onMounted(() => {
 
 });
 
-// load next conversations page after scrolling to the end of the list
-function fetchMore() {
-    console.log('fetch next page')
-}
-
 /* ----------------------handle loading messages on scroll to the top of the messageContainer---------------------------- */
 
 
 onMounted(() => {
-
     messagesContainer.value ? messagesContainer.value.addEventListener('scroll', throttledHandleScroll) : null
 
 });
@@ -103,11 +97,7 @@ function handleScroll(e) {
                 page: page.value
             }
         }).then(response => {
-            console.log(response.data.meta.last_page)
-
             messages.value = [...messages.value, ...response.data.data]
-
-
         })
     }
 
@@ -175,8 +165,7 @@ function handleFile(file) {
     if (!file) return;
     fileType.value = file.type
     fileName.value = file.name
-    console.log(file
-    )
+
     const reader = new FileReader();
 
     reader.onload = (e) => {
@@ -214,15 +203,12 @@ const searchMessagesForm = useForm({
 const debouncedSubmitSearchMessages = window._.debounce(submitSearchMessages, 500);
 
 function submitSearchMessages() {
-    console.log('send query and recive fitlerd data');
-    console.log(searchMessagesForm.query);
     axios.get(route('api.messages.index', props.conversation), {
         params: {
 
             search: searchMessagesForm.query
         }
     }).then(response => {
-        console.log(response)
 
         filteredMessages.value = [...response.data.data]
 
@@ -278,7 +264,7 @@ Echo.join('chat.' + conversationId.value)
 
         <ChatLayout>
             <template #sidebar>
-                <ConversationsList :conversations="conversations" @fetch-more="fetchMore" :currentConvId="conversation.id"
+                <ConversationsList :conversations="conversations" :currentConvId="conversation.id"
                     :last-active-at="last_online_at" />
             </template>
             <template #header>

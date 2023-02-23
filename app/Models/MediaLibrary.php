@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -15,10 +16,10 @@ class MediaLibrary extends Media
     /**
      * Get the media comments
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function comments(): MorphTo
+    public function comments(): MorphMany
     {
-        return $this->morphTo(Comment::class);
+        return $this->morphMany(Comment::class, 'commentable');
     }
 }

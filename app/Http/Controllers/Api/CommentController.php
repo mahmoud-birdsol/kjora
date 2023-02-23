@@ -28,7 +28,7 @@ class CommentController extends Controller
 
         $model = $modelType->findOrFail($request->input('commentable_id'));
 
-        return CommentResource::collection($model->comments()->paginate(12)->load('replies'));
+        return CommentResource::collection($model->comments->load('user')->load('replies'));
     }
 
     /**

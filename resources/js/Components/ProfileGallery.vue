@@ -61,7 +61,7 @@ import { onMounted, ref } from 'vue';
 import axios from 'axios';
 import FadeInTransition from './FadeInTransition.vue';
 import ListGroupTransition from './ListGroupTransition.vue';
-import FilePreview from './FilePreview.vue';
+
 import { Link } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({
