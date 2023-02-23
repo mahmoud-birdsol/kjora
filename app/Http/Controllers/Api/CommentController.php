@@ -27,7 +27,7 @@ class CommentController extends Controller
         /** @var Model $modelType */
         $modelType = new ReflectionClass($request->input('commentable_type'));
 
-        $model = $modelType::findOrFail($request->input('commentable_id'));
+        $model = $modelType->findOrFail($request->input('commentable_id'));
 
         return CommentResource::collection($model->comments()->paginate(12)->load('replies'));
     }
