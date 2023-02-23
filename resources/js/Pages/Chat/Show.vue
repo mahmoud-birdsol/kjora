@@ -10,6 +10,7 @@ import Modal from '../../Components/Modal.vue';
 import ChatMessage from '../../Components/ChatMessage.vue';
 import axios from 'axios';
 import FadeInTransition from '../../Components/FadeInTransition.vue';
+import MediaPreview from '../../Components/MediaPreview.vue';
 
 const props = defineProps({
     conversation: null,
@@ -167,11 +168,11 @@ function clickFileInput() {
 }
 
 /* -------------------------------------------------------------------------- */
-
+let fileType = ref(null)
 
 function handleFile(file) {
     if (!file) return;
-
+    fileType = file.type
     const reader = new FileReader();
 
     reader.onload = (e) => {
@@ -391,8 +392,7 @@ Echo.join('chat.' + conversationId.value)
                                 <div class="text-black">{{ repliedMessage.body }}</div>
                             </div>
                             <div v-show="filePreview" class="ml-auto overflow-hidden ">
-                                <span class="block w-20 h-20 bg-center bg-no-repeat bg-contain rounded-lg"
-                                    :style="'background-image: url(\'' + filePreview + '\');'" />
+                                <MediaPreview :fileType="fileType" :filePreview="filePreview"/>
                             </div>
                         </div>
                     </Transition>
