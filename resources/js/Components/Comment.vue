@@ -1,13 +1,13 @@
 <template>
     <!-- comment  -->
-    <div class="grid grid-cols-[min-content_1fr] gap-4">
+    <div class="grid grid-cols-[min-content_1fr] gap-4" :class="comment.parent_id ? 'bg-white' : ''">
         <!-- image col 1 -->
-        <div class="min-w-max ">
+        <div class="min-w-max z-[10] relative  " :class="guidesClassesAfter2">
             <Avatar :username="comment.user.name" :image-url="comment.user.avatar_url" :size="'md'" :border="true"
                 border-color="primary" />
         </div>
         <!-- comment information col 2 -->
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-col gap-1 relative isolate  z-[5] " :class="[guidesClassesBefore, guidesClassesAfter]">
             <!-- user information & comment time row 1-->
             <div class="flex w-full justify-between">
                 <!-- user information -->
@@ -41,7 +41,7 @@
             </div>
             <!-- view replies button row 4 -->
             <button v-show="hasReplies" @click="toggleRepliesView"
-                class="flex w-full text-sm gap-2 justify-start text-stone-500 enabled:hover:underline hover:underline-offset-4 transition-all duration-300  ">
+                class="flex w-full text-sm gap-2 justify-start  text-stone-500 enabled:hover:underline hover:underline-offset-4 transition-all duration-300  ">
                 {{ showReplies ? 'hide' : 'view' }} {{ comment.replies?.length }} replies
             </button>
 
@@ -100,6 +100,15 @@ watch(() => props.comment.replies.length, (newLength, oldLength) => {
     showReplies.value = true
 })
 
+const guidesClassesBefore = computed(() => {
+    return hasReplies.value ? 'before:absolute  before:-left-9   before:w-px   before:bg-stone-200  before:z-[1] before:top-0 before:bottom-[8px]   '
+        : ' '
+}); const guidesClassesAfter = computed(() => {
+    return (hasReplies.value) ? !showReplies.value ? ' after:absolute after:h-px after:w-8  after:bg-stone-200  after:z-[-1] after:-left-9 after:bottom-[8px] ' : 'after:absolute after:h-px after:w-[50%]  after:bg-stone-200  after:z-[-1] after:-left-9 after:bottom-[8px]' : '';
+}); const guidesClassesAfter2 = computed(() => {
+    return props.comment.parent_id ?
+        ' after:absolute after:h-px after:w-8  after:bg-stone-200  after:z-[-1] after:-left-9 after:top-5 ' : '';
+});
 function toggleRepliesView() {
     showReplies.value = !showReplies.value
 }
