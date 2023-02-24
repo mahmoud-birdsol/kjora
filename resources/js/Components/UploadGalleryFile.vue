@@ -100,12 +100,8 @@ const upload = () => {
     isDisabled.value = true;
 
     Array.from(photoInput.value.files).forEach((file, i) => {
-        axios.post(route('api.gallery.upload'), {
+        axios.postForm(route('api.gallery.upload'), {
             gallery: file
-        }, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
         }).catch(err => console.error(err)).finally(() => {
             if (i === photoInput.value.files.length - 1) {
                 reset()

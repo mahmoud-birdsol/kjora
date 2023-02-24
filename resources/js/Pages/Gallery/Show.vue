@@ -8,7 +8,7 @@
             <div class="w-full grid lg:grid-cols-2 gap-3  border rounded-2xl border-stone-400   ">
 
                 <!-- image and caption left col -->
-                <div class="grid  gap-4 p-3 ">
+                <div class=" flex flex-col gap-6   p-3 ">
                     <!-- image -->
                     <div class="rounded-3xl w-full aspect-video overflow-hidden">
                         <img v-if="media.mime_type.startsWith('image') || media.mime_type.startsWith('webp')"
@@ -75,11 +75,9 @@
                     </div>
                     <!-- comments -->
                     <div class="self-stretch p-3 px-6 h-full ">
-                        <div class="flex flex-col gap-4">
-
-                            <template v-for="comment in comments" :key="comment.id">
-
-                                <Comment :comment="comment"></Comment>
+                        <div class="flex flex-col gap-4" v-if="comments">
+                            <template v-for="comment in comments.filter(c => !c.parent_id)" :key="comment.id">
+                                <Comment @addedReply="handleAddedReply" :comment="comment"></Comment>
                             </template>
                         </div>
                     </div>
@@ -140,9 +138,7 @@ function getComments() {
 onMounted(() => {
     getComments()
 });
-
-function addComment(e) {
-    console.log(newComment.value)
+function sendComment() {
     axios.post(route('api.gallery.comments.store'), {
         commentable_id: props.media.id,
         commentable_type: 'App\\Models\\MediaLibrary',
@@ -154,6 +150,13 @@ function addComment(e) {
         getComments()
 
     }).catch(err => console.error(err))
+}
+function addComment(e) {
+    if (!newComment.value || newComment.value.trim() === '') return
+    sendComment()
+}
+function handleAddedReply() {
+    getComments();
 }
 </script>
 
