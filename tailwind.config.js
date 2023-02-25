@@ -20,6 +20,10 @@ module.exports = {
                 primaryDark: "rgb(9, 70, 9)",
             },
         },
+        screens: {
+            xs: "475px",
+            ...defaultTheme.screens,
+        },
     },
 
     plugins: [

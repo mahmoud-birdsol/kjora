@@ -9,9 +9,9 @@
         <!-- comment information col 2 -->
         <div class="flex flex-col gap-1 relative isolate  z-[5] " :class="[guidesClassesBefore, guidesClassesAfter]">
             <!-- user information & comment time row 1-->
-            <div class="flex w-full justify-between">
+            <div class="flex flex-col xs:flex-row w-full justify-between">
                 <!-- user information -->
-                <div class="flex  gap-1 ">
+                <div class="flex flex-col xs:flex-row  gap-1 ">
                     <div class="flex flex-row gap-2">
                         <h3 class="font-bold m-0 text-lg text-stone-800 leading-none  capitalize ">{{
                             comment.user.first_name }} </h3>

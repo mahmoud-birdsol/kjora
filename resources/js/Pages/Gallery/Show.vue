@@ -4,20 +4,20 @@
             <p v-if="media.mime_type.startsWith('image') || media.mime_type.startsWith('webp')">Photo</p>
             <p v-if="media.mime_type.startsWith('video')">video</p>
         </template>
-        <div class="bg-white rounded-3xl px-8 py-6">
+        <div class="bg-white rounded-3xl px-2 xs:px-8 py-6">
             <div class="w-full grid lg:grid-cols-2 gap-3  border rounded-2xl border-stone-400   ">
 
                 <!-- image and caption left col -->
-                <div class=" flex flex-col gap-6   p-3 ">
+                <div class=" flex flex-col gap-6 max-w-full  p-3 ">
                     <!-- image -->
-                    <div class="rounded-3xl w-full aspect-video overflow-hidden">
+                    <div class="rounded-3xl  sm:aspect-video overflow-hidden">
                         <img v-if="media.mime_type.startsWith('image') || media.mime_type.startsWith('webp')"
-                            :src="media.original_url" alt="" class="object-cover w-full h-full ">
+                            :src="media.original_url" alt="" class="object-cover  ">
                         <video v-if="media.mime_type.startsWith('video')" controls :src="media.original_url" alt=""
-                            class="object-cover w-full h-full " />
+                            class="object-cover   " />
                     </div>
                     <!-- information -->
-                    <div class="grid grid-cols-[min-content_1fr] gap-4">
+                    <div class="grid xs:grid-cols-[min-content_1fr] gap-4">
                         <!-- col 1 -->
                         <div class="min-w-max ">
                             <Avatar :username="user.name" :image-url="user.avatar_url" :size="'lg'" :border="true"
