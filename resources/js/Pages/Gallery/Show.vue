@@ -71,7 +71,8 @@
                 <!-- comment and replies right col -->
                 <div class="flex flex-col gap-2 h-full max-lg:border-t lg:border-l border-stone-300">
                     <!-- header -->
-                    <div class=" pt-5 p-3 text-sm border-b border-stone-300">comments {{ comments && comments?.length }}
+                    <div class=" pt-5 p-3 text-sm border-b border-stone-300">comments {{ comments && comments.filter(c =>
+                        !c.parent_id)?.length }}
                     </div>
                     <!-- comments -->
                     <div class="self-stretch p-3 px-6 h-full ">
