@@ -10,13 +10,21 @@ import CardContent from "@/Components/CardContent.vue";
     <GuestLayout>
         <GuestTwoColumnLayout>
             <Card>
-                <CardContent title="about">
-                    <template #body>
-                            <div class="border border-gray-600  rounded-2xl w-full h-96 text-justify p-16 text-gray-600 mb-9" >
-                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Excepturi hic laboriosam facere, voluptas ipsum at sint accusantium iste velit facilis, porro nostrum accusamus eveniet dolorem sapiente id autem dignissimos soluta dicta voluptate fugit tempora repellat eius. In cum iure distinctio?
-                            </div>
-                    </template>
-                </CardContent>
+                <div class="min-h-[500px] flex flex-col justify-start gap-y-8 ">
+
+                    <div class="flex justify-center my-4">
+                        <h2 class="text-xl text-primary font-bold uppercase">About</h2>
+                    </div>
+
+                    <div class="mx-8">
+                        <div class="border border-gray-600  rounded-2xl w-full  text-justify p-16 text-gray-600 mb-9">
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Excepturi hic laboriosam facere,
+                            voluptas ipsum at sint accusantium iste velit facilis, porro nostrum accusamus eveniet dolorem
+                            sapiente id autem dignissimos soluta dicta voluptate fugit tempora repellat eius. In cum iure
+                            distinctio?
+                        </div>
+                    </div>
+                </div>
             </Card>
         </GuestTwoColumnLayout>
     </GuestLayout>
