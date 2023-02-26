@@ -379,7 +379,13 @@ Echo.join('chat.' + conversationId.value)
                                     currentUser.name : player.name
                                 }}
                                 </div>
-                                <div class="text-black">{{ repliedMessage.body }}</div>
+                                <div class="text-black">
+                                    <div>{{ repliedMessage.body }} </div>
+                                    <div v-if="repliedMessage.media.length">
+                                        <MediaPreview :fileType="repliedMessage.media[0].mime_type" :filePreview="repliedMessage.media[0].original_url" :fileName="repliedMessage.media[0].name" />
+                                    </div>
+                                
+                                </div>
                             </div>
                             <div v-if="filePreview" class="ml-auto overflow-hidden ">
                                 <MediaPreview :fileType="fileType" :filePreview="filePreview" :fileName="fileName" />

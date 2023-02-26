@@ -6,7 +6,7 @@ import { TrashIcon, ArrowDownCircleIcon } from '@heroicons/vue/24/outline'
 import { usePage } from '@inertiajs/inertia-vue3';
 import { onMounted } from 'vue';
 import dayjs from 'dayjs';
-
+import MediaPreview from '@/Components/MediaPreview.vue';
 
 
 const props = defineProps({
@@ -66,6 +66,7 @@ function handleReply(e) {
                         <h4 v-else>{{ currentUser.name }}</h4>
                     </div>
                     <span class="">{{ message.parent?.body }}</span>
+                    <MediaPreview :fileType="message.parent.media[0].mime_type" :filePreview="message.parent.media[0].original_url" :fileName="message.parent.media[0].name" />
                 </div>
                 <!-- media message -->
                 <div v-if="message.media" :class="isCurrentUser ? 'text-white' : 'text-stone-800'">
