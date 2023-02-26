@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { Inertia, usePage } from '@inertiajs/inertia';
 import { Link } from '@inertiajs/inertia-vue3';
 import Dropdown from '@/Components/Dropdown.vue';
@@ -8,6 +8,7 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import NotificationComponent from '@/Components/NotificationComponent.vue';
 import ChatIcon from '../../Components/Icons/ChatIcon.vue';
+import FootBallIcon from '../../Components/Icons/FootBallIcon.vue';
 import {
     BellIcon,
     Bars3Icon,
@@ -54,7 +55,8 @@ const logout = () => {
                             </span>
                         </NavLink>
                         <NavLink :href="route('invitation.index')" :active="route().current('invitation.index')">
-                            <Cog6ToothIcon class="w-4 h-4 text-primary" />
+                            <FootBallIcon class="fill-primary" />
+
                             <span>
                                 Invitation
                             </span>
@@ -206,20 +208,25 @@ const logout = () => {
             class="transition md:hidden">
             <div class="pt-2 pb-3 space-y-1">
                 <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
-                    Home
+                    <HomeIcon class="w-4 h-4 text-primary" />
+                    <span>Home</span>
                 </ResponsiveNavLink>
 
-                <ResponsiveNavLink :href="route('invitation.index')" :active="route().current('invitation.index')">
-                    Chat
+                <ResponsiveNavLink :href="route('chats.index')" :active="route().current('chats.index')">
+                    <ChatIcon class="w-4 h-4 text-primary" />
+                    <span>Chat</span>
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('invitation.index')" :active="route().current('invitation.index')">
-                    Invitations
+                    <FootBallIcon class="fill-primary" />
+                    <span>Invitations</span>
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('invitation.index')" :active="route().current('invitation.index')">
-                    Favorite
+                <ResponsiveNavLink :href="route('favorites.index')" :active="route().current('favorites.index')">
+                    <HeartIcon class="w-4 h-4 text-primary" />
+                    <span>Favorite</span>
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('invitation.index')" :active="route().current('invitation.index')">
-                    More
+                <ResponsiveNavLink :href="route('more')" :active="route().current('more')">
+                    <EllipsisHorizontalCircleIcon class="w-4 h-4 text-primary" />
+                    <span>More</span>
                 </ResponsiveNavLink>
             </div>
 

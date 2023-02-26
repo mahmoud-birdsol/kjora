@@ -61,8 +61,9 @@ function handleReply(e) {
             <div :class="bodyClass" class="p-4 rounded-2xl">
                 <!-- replied message -->
                 <div v-if="message.parent_id" :class="repliedClasses" class="p-3 mb-2 text-xs rounded-lg">
-                    <div class="mb-2 font-semibold capitalize">
-                        <h4 v-if="isCurrentUser" class="text-primary">{{ player.name }}</h4>
+                    <!-- name -->
+                    <div class="mb-2 font-semibold capitalize" :class="isCurrentUser ? 'text-primary' : 'text-white'">
+                        <h4 v-if="message.parent?.sender_id === player.id">{{ player.name }}</h4>
                         <h4 v-else>{{ currentUser.name }}</h4>
                     </div>
                     <span class="">{{ message.parent?.body }}</span>

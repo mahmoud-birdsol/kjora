@@ -21,8 +21,8 @@ const classes = computed(() => {
             <slot />
         </button>
 
-        <Link v-else :href="href" :class="classes">
-            <slot />
+        <Link v-else :href="href" class="flex gap-2 items-center" :class="classes">
+        <slot />
         </Link>
     </div>
 </template>
