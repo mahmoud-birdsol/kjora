@@ -66,7 +66,8 @@ function handleReply(e) {
                         <h4 v-else>{{ currentUser.name }}</h4>
                     </div>
                     <span class="">{{ message.parent?.body }}</span>
-                    <MediaPreview :fileType="message.parent.media[0].mime_type" :filePreview="message.parent.media[0].original_url" :fileName="message.parent.media[0].name" />
+                    <MediaPreview v-if="message.parent.media[0]" :fileType="message.parent.media[0].mime_type"
+                        :filePreview="message.parent.media[0].original_url" :fileName="message.parent.media[0].name" />
                 </div>
                 <!-- media message -->
                 <div v-if="message.media" :class="isCurrentUser ? 'text-white' : 'text-stone-800'">
