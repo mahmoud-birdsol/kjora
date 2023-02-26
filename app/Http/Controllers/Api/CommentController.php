@@ -10,6 +10,7 @@ use App\Models\MediaLibrary;
 use App\Models\User;
 use App\Notifications\CommentCreatedNotification;
 use App\Notifications\ReplyCreatedNotification;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

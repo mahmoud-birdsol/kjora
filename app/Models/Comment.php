@@ -66,6 +66,6 @@ class Comment extends Model
         return $this->hasMany(Comment::class, 'parent_id')
             ->with('replies')
             ->with('user')
-            ->orderBy('created_at','DESC');
+            ->orderBy('created_at');
     }
 }
