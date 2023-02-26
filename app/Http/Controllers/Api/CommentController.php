@@ -7,6 +7,10 @@ use App\Http\Requests\CommentStoreRequest;
 use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use App\Models\MediaLibrary;
+use App\Models\User;
+use App\Notifications\CommentCreatedNotification;
+use App\Notifications\ReplyCreatedNotification;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -36,10 +40,24 @@ class CommentController extends Controller
      *
      * @param \App\Http\Requests\CommentStoreRequest $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \ReflectionException
      */
     public function store(CommentStoreRequest $request): JsonResponse
     {
-        Comment::create($request->validated());
+        $comment = Comment::create($request->validated());
+
+        $modelType = (new ReflectionClass($request->input('commentable_type')))->newInstance();
+
+        $media = $modelType->findOrFail($request->input('commentable_id'));
+
+        $user = User::find($media->model_id);
+
+
+        $comment->user->notify(new CommentCreatedNotification($user, $request->user(), $media));
+
+        if ($request->has('parent_id') && ! is_null($request->input('parent_id'))) {
+            Comment::find($request->input('parent_id'))->user->notify(new ReplyCreatedNotification($user, $request->user(), $media));
+        }
 
         return response()->json([
             'message' => 'Comment Added Successfully'
