@@ -3,6 +3,7 @@
 use App\Http\Controllers\AcceptInvitationController;
 use App\Http\Controllers\Actions\MarkNotificationAsRead;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HireController;
 use App\Http\Controllers\IdentityVerificationController;
 use App\Http\Controllers\InvitationController;
@@ -62,7 +63,6 @@ Route::middleware([
     ])->name('identity.verification.create');
 
 
-
     Route::post('/verification/identity', [
         IdentityVerificationController::class,
         'store',
@@ -112,19 +112,13 @@ Route::middleware([
             InvitationController::class,
             'index'
         ])->name('invitation.index');
+
         Route::get('more', function () {
             return Inertia::render('More', [
                 'countries' => Country::all(),
                 'positions' => Position::all(),
             ]);
         })->name('more');
-
-        Route::get('favourite', function () {
-            return Inertia::render('Favourite', [
-                'positions' => Position::all()
-            ]);
-        })->name('favourite');
-
 
         Route::get('hires', [
             HireController::class,
@@ -235,6 +229,27 @@ Route::middleware([
 
     /*
      |--------------------------------------------------------------------------
+     | Favorites routes...
+     |--------------------------------------------------------------------------
+    */
+
+    Route::get('favourites', [
+        FavoriteController::class,
+        'index'
+    ])->name('favorites.index');
+
+    Route::post('favorites/{favorite}', [
+        FavoriteController::class,
+        'store'
+    ])->name('favorites.store');
+
+    Route::delete('favorites/{favorite}', [
+        FavoriteController::class,
+        'destroy'
+    ])->name('favorites.destroy');
+
+    /*
+     |--------------------------------------------------------------------------
      | Chat Routes...
      |--------------------------------------------------------------------------
     */
@@ -262,7 +277,6 @@ Route::middleware([
      |--------------------------------------------------------------------------
     */
 });
-
 
 
 // Route::get('test', function () {
