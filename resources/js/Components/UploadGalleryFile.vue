@@ -69,19 +69,16 @@ const selectNewPhoto = () => {
 };
 
 const updatePhotoPreview = () => {
-
     if (!photoInput.value.files.length) {
         return
     };
+
     Array.from(photoInput.value.files).forEach((file, i) => {
-
         const reader = new FileReader();
-
         reader.onload = (e) => {
             previewImageUrls.value.push(e.target.result);
             showPreview.value = true;
         };
-
         reader.readAsDataURL(file);
     })
 };
@@ -100,14 +97,18 @@ const upload = () => {
     isDisabled.value = true;
 
     Array.from(photoInput.value.files).forEach((file, i) => {
-        axios.postForm(route('api.gallery.upload'), {
-            gallery: file
-        }).catch(err => console.error(err)).finally(() => {
-            if (i === photoInput.value.files.length - 1) {
-                reset()
-                emit('reload');
-            }
-        })
+        console.log(file)
+        if (file.type.startsWith("image") || file.type.startsWith('video')) {
+
+            axios.postForm(route('api.gallery.upload'), {
+                gallery: file
+            }).then(() => console.log('uploded')).catch(err => console.error(err)).finally(() => {
+                if (i === photoInput.value.files.length - 1) {
+                    reset()
+                    emit('reload');
+                }
+            })
+        }
     })
 };
 
@@ -146,7 +147,8 @@ function reset(e) {
                 <div v-show="showPreview" class="relative overflow-auto hideScrollBar max-h-80">
                     <div class="relative grid grid-cols-3 gap-2">
                         <template v-for="(fileUrl, index) in previewImageUrls" :key="index">
-                            <div class="relative">
+                            <div v-if="fileUrl.startsWith('data:image') || fileUrl.startsWith('data:video')"
+                                class="relative">
                                 <img v-if="fileUrl.startsWith('data:image')" :src="fileUrl" alt=""
                                     class="object-contain w-full h-full rounded-lg aspect-square">
                                 <video v-if="fileUrl.startsWith('data:video')" :src="fileUrl" alt=""
@@ -177,8 +179,9 @@ function reset(e) {
                 </div>
 
             </div>
-
             <div>
+                <div class="justify-self-end text-sm mb-2 text-primary text-center">only videos and images with max size
+                    (2MB) are allowed </div>
                 <PrimaryButton @click.prevent="upload" :disabled="isDisabled">
                     Upload
                 </PrimaryButton>

@@ -1,10 +1,10 @@
 <script setup>
-import {computed} from 'vue';
-import {Link, useForm, usePage} from '@inertiajs/inertia-vue3';
-import {ElRate} from 'element-plus';
+import { computed } from 'vue';
+import { Link, useForm, usePage } from '@inertiajs/inertia-vue3';
+import { ElRate } from 'element-plus';
 import Avatar from '@/Components/Avatar.vue';
-import {PencilIcon, HeartIcon} from '@heroicons/vue/20/solid'
-import {HeartIcon as HeartIconOutline} from '@heroicons/vue/24/outline';
+import { PencilIcon, HeartIcon } from '@heroicons/vue/20/solid'
+import { HeartIcon as HeartIconOutline } from '@heroicons/vue/24/outline';
 import {
     MapPinIcon,
     ChevronDoubleRightIcon,
@@ -51,7 +51,7 @@ const isCurrentUser = props.player.id === currentUser.id
 const addToFavorites = () => {
     const form = useForm({});
 
-    form.post(route('favorites.store', {favorite: props.player.id}), {
+    form.post(route('favorites.store', { favorite: props.player.id }), {
         preserveState: false,
         preserveScroll: true,
     });
@@ -60,7 +60,7 @@ const addToFavorites = () => {
 const removeFromFavorites = () => {
     const form = useForm({});
 
-    form.delete(route('favorites.destroy', {favorite: props.player.id}), {
+    form.delete(route('favorites.destroy', { favorite: props.player.id }), {
         preserveState: false,
         preserveScroll: true,
     });
@@ -69,14 +69,14 @@ const removeFromFavorites = () => {
 
 <template>
     <div class="rounded-xl"
-         :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
+        :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
         <div class="flex justify-end">
             <span class="rounded-lg rounded-bl-3xl bg-white p-2 -mt-0.5 -mr-0.5">
                 <a href="javascript:;" @click="addToFavorites" v-if="!player.is_favorite">
-                    <HeartIconOutline class="h-4 w-4 text-primary"/>
+                    <HeartIconOutline class="h-5 w-5 text-primary" />
                 </a>
                 <a href="javascript:;" @click="removeFromFavorites" v-if="player.is_favorite">
-                    <HeartIcon class="h-4 w-4 text-primary"/>
+                    <HeartIcon class="h-5 w-5 text-primary" />
                 </a>
             </span>
         </div>
@@ -85,24 +85,26 @@ const removeFromFavorites = () => {
                 <div class="flex justify-start mb-2" :class="{ 'space-x-2': size == 'sm', 'space-x-8': size == 'lg' }">
                     <div class="relative ">
                         <Link :href="route('profile.edit')" v-if="isCurrentUser"
-                              class="absolute bottom-0 right-0 p-1 bg-white rounded-full hover:text-primary "
-                              title="Edit your profile">
-                            <PencilIcon class="w-3 " title="Edit your profile"/>
+                            class="absolute bottom-0 right-0 p-1 bg-white rounded-full hover:text-primary "
+                            title="Edit your profile">
+                        <PencilIcon class="w-3 " title="Edit your profile" />
                         </Link>
-                        <Avatar :image-url="player.avatar_url" :size="size" :username="player.name" :border="true"/>
+                        <Avatar :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true" />
                     </div>
 
                     <div>
                         <Link :href="route('player.profile', player.id)">
-                            <h2 class="text-sm font-bold text-white">
-                                {{ player.first_name }} {{ player.last_name }}
-                            </h2>
+                        <h2 class="text-sm font-bold text-white">
+                            {{ player.first_name }} {{ player.last_name }}
+                        </h2>
                         </Link>
 
                         <p class="text-xs text-white opacity-50">@{{ player.username }}</p>
                         <p class="flex items-center space-x-2 text-sm text-white">
-                            <ElRate v-model="player.rating" size="small"/>
+                        <div class="scale-[0.7] origin-left flex items-center gap-x-1">
+                            <ElRate v-model="player.rating" size="small" />
                             {{ player.rating }}
+                        </div>
                         </p>
                     </div>
                 </div>
@@ -112,11 +114,11 @@ const removeFromFavorites = () => {
             </div>
 
             <div class="grid gap-4 border-b border-white"
-                 :class="{ 'grid-cols-4 pb-4 mt-2': size == 'sm', 'grid-cols-5 pb-8 mt-6': size == 'lg' }">
+                :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' }">
                 <div v-if="size == 'lg'">
                     <p class="text-xs text-center text-white opacity-50 text-light">Favorite Club</p>
                     <div class="flex justify-center item-center">
-                        <img :src="player.club?.logo_thumb" class="w-5 h-5 border-2 border-white rounded-full"/>
+                        <img :src="player.club?.logo_thumb" class="w-5 h-5 border-2 border-white rounded-full" />
                     </div>
                 </div>
                 <div>
@@ -139,13 +141,13 @@ const removeFromFavorites = () => {
 
             <div class="flex items-center justify-between mt-2">
                 <p class="flex items-center text-sm text-white" v-if="showLocation">
-                    <MapPinIcon class="inline w-4 h-4 text-white"/>
+                    <MapPinIcon class="inline w-4 h-4 text-white" />
                     Cairo
                 </p>
 
                 <div class="flex space-x-2" v-if="showInvite">
                     <Link :href="route('invitation.create', player.id)" class="text-sm text-white">Send Invitation
-                        <ChevronDoubleRightIcon class="inline w-4 h-4 text-white"/>
+                    <ChevronDoubleRightIcon class="inline w-4 h-4 text-white" />
                     </Link>
                 </div>
             </div>
@@ -153,7 +155,7 @@ const removeFromFavorites = () => {
             <div class="flex items-center justify-between mt-6">
                 <div></div>
                 <div v-if="showReport">
-                    <FlagIcon class="w-4 h-4 text-red-500"/>
+                    <FlagIcon class="w-4 h-4 text-red-500" />
                 </div>
             </div>
         </div>

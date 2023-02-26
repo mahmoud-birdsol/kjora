@@ -72,7 +72,7 @@ const reset = () => {
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <!-- Position Filters...
-                            =====================================================-->
+                                                            =====================================================-->
                 <div class="flex gap-4 my-8 overflow-x-auto hideScrollBar">
                     <SecondaryButton @click="filterByPosition(null)">
                         <span class="w-full text-center"
@@ -91,7 +91,7 @@ const reset = () => {
                 </div>
 
                 <!-- Current list...
-                            =====================================================-->
+                                                            =====================================================-->
                 <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
 
                     <div class="flex items-start justify-start my-6">
@@ -110,7 +110,7 @@ const reset = () => {
                 </div>
 
                 <!-- Filters Modal...
-                            =====================================================-->
+                                                            =====================================================-->
                 <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40">
                     <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl"
                         @click="showFiltersModal = !showFiltersModal">
@@ -130,8 +130,8 @@ const reset = () => {
                             <form @submit.prevent="filter">
                                 <div class="my-6">
                                     <InputLabel>Age</InputLabel>
-                                    <div class="px-4 py-2 mx-4 border border-white rounded-full">
-                                        <el-slider v-model="form.age" :min="18" :max="70" />
+                                    <div class="px-4 py-2 mx-4 border border-white  rounded-full">
+                                        <el-slider v-model="form.age" class="" :min="18" :max="70" />
                                     </div>
                                 </div>
 
@@ -169,7 +169,7 @@ const reset = () => {
                                 </div>
                                 <div class="flex items-center justify-center mt-4">
                                     <button class="text-primary" @click="reset">
-                                        <XMarkIcon class="inline w-4 h-4 mr-4" />
+                                        <!-- <XMarkIcon class="inline w-4 h-4 mr-4" /> -->
                                         Reset
                                     </button>
                                 </div>

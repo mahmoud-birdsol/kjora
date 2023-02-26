@@ -7,6 +7,7 @@
                 border-color="primary" />
         </div>
         <!-- comment information col 2 -->
+        <!-- TODO:  HIEGHT OF THE After element equal to offset between comment image and image of last reply on this comment  -->
         <div class="flex flex-col gap-1 relative isolate  z-[5] " :class="[guidesClassesBefore, guidesClassesAfter]">
             <!-- user information & comment time row 1-->
             <div class="flex flex-col xs:flex-row w-full justify-between">
@@ -119,9 +120,11 @@ function addReply() {
     emit('addedReply')
 }
 const isParentComment = !props.comment.parent_id
-function getParentId() {
-    return isParentComment ? props.comment.id : props.comment.parent_id
-}
+
+// function getParentId() {
+//     return isParentComment ? props.comment.id : props.comment.parent_id
+// }
+
 function sendReply() {
     axios.post(route('api.gallery.comments.store'), {
         commentable_id: props.comment.commentable_id,
@@ -129,9 +132,7 @@ function sendReply() {
         body: newReply.value,
         user_id: currentUser.id,
         //infinte depth
-        // parent_id: props.comment.id
-        //max depth 2
-        parent_id: getParentId()
+        parent_id: props.comment.id
     }).then(res => {
         newReply.value = ''
     }).catch(err => console.error(err))

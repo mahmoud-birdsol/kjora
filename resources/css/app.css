@@ -12990,7 +12990,7 @@
     --el-slider-height: 6px;
     --el-slider-button-size: 20px;
     --el-slider-button-wrapper-size: 36px;
-    --el-slider-button-wrapper-offset: -15px;
+    --el-slider-button-wrapper-offset: -16.5px;
 }
 
 .el-slider {
@@ -13103,8 +13103,8 @@
     width: var(--el-slider-button-size);
     height: var(--el-slider-button-size);
     vertical-align: middle;
-    border: solid 2px var(--el-slider-main-bg-color);
-    background-color: var(--el-color-white);
+    border: solid 1.5px white !important ;
+    background-color: green;
     border-radius: 50%;
     box-sizing: border-box;
     transition: var(--el-transition-duration-fast);
