@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link , useForm} from '@inertiajs/inertia-vue3';
+import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import GuestTwoColumnLayout from '@/Layouts/Partials/GuestTwoColumnLayout.vue';
 import Card from "@/Components/Card.vue";
@@ -20,7 +20,7 @@ const form = useForm({
 });
 </script>
 <template>
-    <Head title="About" />
+    <Head title="Contact" />
     <GuestLayout>
         <GuestTwoColumnLayout>
             <Card>
@@ -50,17 +50,17 @@ const form = useForm({
                                 <InputLabel color="text-primary"> message </InputLabel>
 
                                 <textarea placeholder="please write a message or briefly what happen" class="
-                        block
-                        w-full
-                        rounded-2xl
-                        border-gray-300
-                        px-4
-                        shadow-sm
-                        focus:border-primary focus:ring-primary
-                        sm:text-sm
-                        disabled:bg-gray-100
-                        h-[20ch]
-                      " v-model="message"></textarea>
+                                block
+                                w-full
+                                rounded-2xl
+                                border-gray-300
+                                px-4
+                                shadow-sm
+                                focus:border-primary focus:ring-primary
+                                sm:text-sm
+                                disabled:bg-gray-100
+                                h-[20ch]
+                              " v-model="form.message"></textarea>
                                 <div class="absolute bottom-0 right-0 ">
                                     <PlusCircleIcon
                                         class="w-8 h-8 m-2 rounded-full text-white bg-black p-1 cursor-pointer" />
