@@ -114,6 +114,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         'has_verified_identity',
         'age',
         'name',
+        'is_favorite',
     ];
 
     /**
@@ -129,7 +130,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     /**
      * Register the model media conversions.
      *
-     * @param  \Spatie\MediaLibrary\MediaCollections\Models\Media|null  $media
+     * @param \Spatie\MediaLibrary\MediaCollections\Models\Media|null $media
      * @return void
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
@@ -162,7 +163,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     public function name(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->first_name.' '.$this->last_name
+            get: fn() => $this->first_name . ' ' . $this->last_name
         );
     }
 
@@ -174,7 +175,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     public function avatarUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMedia('avatar')?->getFullUrl()
+            get: fn() => $this->getFirstMedia('avatar')?->getFullUrl()
         );
     }
 
@@ -186,7 +187,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     public function identityFrontImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMedia('identity_front_image')?->getFullUrl()
+            get: fn() => $this->getFirstMedia('identity_front_image')?->getFullUrl()
         );
     }
 
@@ -198,7 +199,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     public function identityBackImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMedia('identity_back_image')?->getFullUrl()
+            get: fn() => $this->getFirstMedia('identity_back_image')?->getFullUrl()
         );
     }
 
@@ -210,7 +211,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     public function identitySelfieImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMedia('identity_selfie_image')?->getFullUrl()
+            get: fn() => $this->getFirstMedia('identity_selfie_image')?->getFullUrl()
         );
     }
 
@@ -239,6 +240,20 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     }
 
     /**
+     * Check if the user is favofited by the currently authenticated user.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function isFavorite(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => Auth::check() && Auth::user() instanceof User
+                ? Auth::user()->favorites->contains($this)
+                : false,
+        );
+    }
+
+    /**
      * Get the advertisement clicks.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -246,6 +261,21 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     public function clicks(): HasMany
     {
         return $this->hasMany(Click::class);
+    }
+
+    /**
+     * Get the user favorites.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function favorites(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            related: User::class,
+            table: 'favorites',
+            foreignPivotKey: 'user_id',
+            relatedPivotKey: 'favorite_id'
+        )->using(Favorite::class);
     }
 
     /**
@@ -338,7 +368,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
      */
     public function hasVerifiedPhone(): bool
     {
-        return ! is_null($this->phone_verified_at);
+        return !is_null($this->phone_verified_at);
     }
 
     /**
@@ -348,7 +378,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
      */
     public function hasVerifiedPersonalIdentity(): bool
     {
-        return ! is_null($this->identity_verified_at);
+        return !is_null($this->identity_verified_at);
     }
 
     /**
@@ -359,15 +389,15 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     public function hasUploadedVerificationDocuments(): bool
     {
         return
-            ! is_null($this->identity_type) &&
-            ! is_null($this->getFirstMedia('identity_front_image')?->exists()) &&
-            ! is_null($this->getFirstMedia('identity_back_image')?->exists());
+            !is_null($this->identity_type) &&
+            !is_null($this->getFirstMedia('identity_front_image')?->exists()) &&
+            !is_null($this->getFirstMedia('identity_back_image')?->exists());
     }
 
     /**
      * Update the user's profile photo.
      *
-     * @param  \Illuminate\Http\UploadedFile  $photo
+     * @param \Illuminate\Http\UploadedFile $photo
      * @return void
      */
     public function updateProfilePhoto(UploadedFile $photo)
@@ -392,6 +422,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
      */
     public function receivesBroadcastNotificationsOn()
     {
-        return 'users.'.$this->id;
+        return 'users.' . $this->id;
     }
 }

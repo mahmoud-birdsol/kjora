@@ -47,10 +47,10 @@ const logout = () => {
                                 Chat
                             </span>
                         </NavLink>
-                        <NavLink :href="route('favourite')" :active="route().current('favourite')">
+                        <NavLink :href="route('favorites.index')" :active="route().current('favorites.index')">
                             <HeartIcon class="w-4 h-4 text-primary" />
                             <span>
-                                Favourite
+                                Favorites
                             </span>
                         </NavLink>
                         <NavLink :href="route('invitation.index')" :active="route().current('invitation.index')">
