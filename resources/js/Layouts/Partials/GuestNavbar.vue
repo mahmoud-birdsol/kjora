@@ -21,8 +21,8 @@ const showMobileMenu = ref(false);
                     <NavLink :href="route('welcome')" :active="route().current('login') || route().current('welcome')">
                         Home
                     </NavLink>
-                    <NavLink href="#">About</NavLink>
-                    <NavLink href="#">Contact</NavLink>
+                    <NavLink :href="route('about')" :active="route().current('about')">About</NavLink>
+                    <NavLink :href="route('contact')" :active="route().current('contact')">Contact</NavLink>
                 </div>
                 <div class="-mr-2 flex items-center sm:hidden">
                     <!-- Mobile menu button -->
@@ -50,8 +50,8 @@ const showMobileMenu = ref(false);
                 <ResponsiveNavLink :href="route('welcome')"
                     :active="route().current('login') || route().current('welcome')">Home
                 </ResponsiveNavLink>
-                <ResponsiveNavLink href="#">About</ResponsiveNavLink>
-                <ResponsiveNavLink href="#">Contact</ResponsiveNavLink>
+                <ResponsiveNavLink :href="route('about')">About</ResponsiveNavLink>
+                <ResponsiveNavLink :href="route('conatact')">Contact</ResponsiveNavLink>
             </div>
         </div>
     </nav>

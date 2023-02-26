@@ -382,9 +382,11 @@ Echo.join('chat.' + conversationId.value)
                                 <div class="text-black">
                                     <div>{{ repliedMessage.body }} </div>
                                     <div v-if="repliedMessage.media.length">
-                                        <MediaPreview :fileType="repliedMessage.media[0].mime_type" :filePreview="repliedMessage.media[0].original_url" :fileName="repliedMessage.media[0].name" />
+                                        <MediaPreview :fileType="repliedMessage.media[0].mime_type"
+                                            :filePreview="repliedMessage.media[0].original_url"
+                                            :fileName="repliedMessage.media[0].name" />
                                     </div>
-                                
+
                                 </div>
                             </div>
                             <div v-if="filePreview" class="ml-auto overflow-hidden ">
@@ -398,8 +400,8 @@ Echo.join('chat.' + conversationId.value)
                         </button>
                         <div class="flex items-center flex-grow ">
 
-                            <textarea v-model="newMessageForm.body" name="newMessage" id="newMessage" rows="1"
-                                placeholder="Type your Message Here"
+                            <textarea v-model="newMessageForm.body" @keydown.enter="submitNewMessage" name="newMessage"
+                                id="newMessage" rows="1" placeholder="Type your Message Here"
                                 class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 "></textarea>
                         </div>
                         <button class="relative" @click="clickFileInput">

@@ -302,3 +302,10 @@ Route::get('gallery/{mediaLibrary}', function (MediaLibrary $mediaLibrary) {
         'user' => $user
     ]);
 })->name('gallery.show');
+
+Route::get('about', function(){
+    return Inertia::render('About');
+})->name('about');
+Route::get('contact', function(){
+    return Inertia::render('Contact');
+})->name('contact');
