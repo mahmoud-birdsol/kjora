@@ -118,14 +118,20 @@ function addReply() {
     showReplyInput.value = false
     emit('addedReply')
 }
-
+const isParentComment = !props.comment.parent_id
+function getParentId() {
+    return isParentComment ? props.comment.id : props.comment.parent_id
+}
 function sendReply() {
     axios.post(route('api.gallery.comments.store'), {
         commentable_id: props.comment.commentable_id,
         commentable_type: props.comment.commentable_type,
         body: newReply.value,
         user_id: currentUser.id,
-        parent_id: props.comment.id
+        //infinte depth
+        // parent_id: props.comment.id
+        //max depth 2
+        parent_id: getParentId()
     }).then(res => {
         newReply.value = ''
     }).catch(err => console.error(err))
@@ -135,12 +141,11 @@ function handleReplyClicked(e) {
     setTimeout(() => {
         replyInput.value.focus()
     }, 0)
-
 }
 
 function handleAddedReply() {
     emit('addedReply')
-    showReplies.value = true
+    // showReplies.value = true
 }
 
 
