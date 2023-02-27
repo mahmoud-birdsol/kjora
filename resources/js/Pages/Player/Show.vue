@@ -1,14 +1,17 @@
 <script setup>
-import { Head } from '@inertiajs/inertia-vue3';
+import { Head, useForm } from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import HelloUserHeader from '@/Components/HelloUserHeader.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
 import PerformanceTab from '@/Components/PerformanceTab.vue';
 import ProfileGallery from '@/Components/ProfileGallery.vue';
 import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
 import { computed, ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia'
 import FadeInTransition from '../../Components/FadeInTransition.vue';
-
+import Modal from '../../Components/Modal.vue';
+import { ElSlider } from 'element-plus';
+import InputLabel from '@/Components/InputLabel.vue';
 
 const props = defineProps({
     player: null,
@@ -16,7 +19,7 @@ const props = defineProps({
 });
 
 const currentTabId = ref(2)
-
+const showReviewModal = ref(true)
 const tabs = computed(() => {
     return [
         { name: 'performance', id: 1, component: PerformanceTab },
@@ -29,10 +32,22 @@ const tabs = computed(() => {
                 { user: props.player, media: props.media, shouldPreview: 'videos' }
         }]
 })
-
+const ratingForm = useForm({
+    agility: null,
+    stamina: null,
+    strength: null,
+    passing: null,
+    shooting: null,
+    pace: null,
+})
+function submitRatingForm() {
+    console.log(ratingForm)
+}
 function reloadMedia() {
     Inertia.reload({ only: ['media'] })
 }
+
+
 </script>
 
 <template>
@@ -67,6 +82,55 @@ function reloadMedia() {
 
             </div>
         </div>
+
+        <Modal :show="showReviewModal" :closeable="true" max-width="sm" :show-close-icon="false"
+            @close="showReviewModal = false">
+            <div class="bg-black h-full p-6">
+                <h2 class="text-white mb-4 text-center px-4">Rating</h2>
+                <form @submit.prevent="submitRatingForm" class="flex flex-col gap-4">
+                    <div class="flex flex-col gap-2">
+                        <InputLabel>Agility</InputLabel>
+                        <div class="px-4 py-1 mx-4 border border-white rounded-full">
+                            <el-slider v-model="ratingForm.agility" :step="0.5" :min="0" :max="5" />
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <InputLabel>Stamina</InputLabel>
+                        <div class="px-4 py-1 mx-4 border border-white rounded-full">
+                            <el-slider v-model="ratingForm.stamina" :step="0.5" :min="0" :max="5" />
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <InputLabel>Strength</InputLabel>
+                        <div class="px-4 py-1 mx-4 border border-white rounded-full">
+                            <el-slider v-model="ratingForm.strength" :step="0.5" :min="0" :max="5" />
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <InputLabel>Passing</InputLabel>
+                        <div class="px-4 py-1 mx-4 border border-white rounded-full">
+                            <el-slider v-model="ratingForm.passing" :step="0.5" :min="0" :max="5" />
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <InputLabel>Shooting</InputLabel>
+                        <div class="px-4 py-1 mx-4 border border-white rounded-full">
+                            <el-slider v-model="ratingForm.shooting" :step="0.5" :min="0" :max="5" />
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <InputLabel>pace</InputLabel>
+                        <div class="px-4 py-1 mx-4 border border-white rounded-full">
+                            <el-slider v-model="ratingForm.pace" :step="0.5" :min="0" :max="5" />
+                        </div>
+                    </div>
+
+                    <SecondaryButton type="submit"> Send</SecondaryButton>
+
+                </form>
+            </div>
+
+        </Modal>
     </AppLayout>
 </template>
 
