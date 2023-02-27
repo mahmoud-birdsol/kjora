@@ -17514,3 +17514,6 @@
     scrollbar-width: none;
     /* Firefox */
 }
+.removeEyeIcon::-ms-reveal {
+    display: none;
+}

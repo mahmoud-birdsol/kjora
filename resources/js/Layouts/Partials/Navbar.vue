@@ -18,6 +18,7 @@ import {
     EllipsisHorizontalCircleIcon,
     StarIcon
 } from '@heroicons/vue/24/outline';
+import Avatar from '../../Components/Avatar.vue';
 
 
 
@@ -35,7 +36,7 @@ const logout = () => {
             <div class="flex items-center justify-between h-16">
                 <div class="flex">
                     <!-- Navigation Links -->
-                    <div class="items-center hidden space-x-4 sm:space-x-8 sm:-my-px md:flex">
+                    <div class="items-center hidden gap-2 lg:gap-8 sm:-my-px md:flex">
                         <NavLink :href="route('home')" :active="route().current('home')" class="">
                             <HomeIcon class="w-4 h-4 text-primary" />
                             <span class="">
@@ -70,7 +71,7 @@ const logout = () => {
                     </div>
                 </div>
 
-                <div class="hidden md:flex md:gap-x-3 sm:items-center sm:ml-6">
+                <div class="hidden md:flex md:gap-x-3 sm:items-center lg:ml-6">
                     <!-- upgrade button  -->
                     <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5">
                         <div class="bg-black rounded-full">
@@ -88,9 +89,10 @@ const logout = () => {
                             <template #trigger>
                                 <button
                                     class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
-                                    <img class="object-cover w-10 h-10 rounded-full"
-                                        :src="$page.props.user.avatar ? $page.props.user.avatar_url : `https://ui-avatars.com/api/?name=${$page.props.user.first_name}${$page.props.user.last_name}'&color=094609FF&background=E2E2E2`"
-                                        :alt="$page.props.user.name">
+                                    <div v-if="$page.props.jetstream.managesProfilePhotos" class="min-w-max">
+                                        <Avatar :image-url="$page.props.user.avatar_url" :size="'md'"
+                                            :username="$page.props.user.name" :border="true" />
+                                    </div>
                                 </button>
                             </template>
 
@@ -233,10 +235,9 @@ const logout = () => {
             <!-- Responsive Settings Options -->
             <div class="pt-4 pb-1 border-t border-gray-200">
                 <div class="flex items-center px-4">
-                    <div v-if="$page.props.jetstream.managesProfilePhotos" class="mr-3 shrink-0">
-                        <img class="object-cover w-10 h-10 rounded-full"
-                            :src="$page.props.user.avatar ? $page.props.user.avatar_url : `https://ui-avatars.com/api/?name=${$page.props.user.first_name}${$page.props.user.last_name}'&color=094609FF&background=E2E2E2`"
-                            :alt="$page.props.user.name">
+                    <div v-if="$page.props.jetstream.managesProfilePhotos" class="mr-3 shrink-0 min-w-max">
+                        <Avatar :image-url="$page.props.user.avatar_url" :size="'lg'" :username="$page.props.user.name"
+                            :border="true" />
                     </div>
                     <div>
                         <div class="text-base font-medium text-gray-800">
