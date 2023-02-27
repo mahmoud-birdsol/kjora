@@ -41,7 +41,7 @@
 
         </div>
     </div>
-    <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40">
+    <div v-if="currentUser.id === user.id" class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40">
         <button class="flex items-center justify-center text-center bg-black rounded-full shadow-xl w-14 aspect-square"
             @click="showUploadFileModal = true">
             <PlusCircleIcon class="w-5 text-white" />
