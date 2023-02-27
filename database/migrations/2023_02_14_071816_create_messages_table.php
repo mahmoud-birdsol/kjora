@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('parent_id')->references('id')->on('messages')->cascadeOnDelete();
             $table->foreignId('sender_id')->references('id')->on('users')->cascadeOnDelete();
             $table->timestamp('read_at')->nullable();
-            $table->text('body');
+            $table->text('body')->nullable();
             $table->timestamps();
         });
     }

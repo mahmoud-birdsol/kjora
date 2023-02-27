@@ -49,6 +49,15 @@ class Message extends Model implements HasMedia
     ];
 
     /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = [
+        'sender',
+    ];
+
+    /**
      * Register the media collections.
      *
      * @return void
@@ -101,6 +110,16 @@ class Message extends Model implements HasMedia
     public function replies(): HasMany
     {
         return $this->hasMany(Message::class, 'parent_id');
+    }
+
+    /**
+     * Get the message sender.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function sender(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'sender_id');
     }
 
     /**

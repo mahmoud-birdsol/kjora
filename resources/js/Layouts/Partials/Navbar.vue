@@ -18,6 +18,7 @@ import {
     EllipsisHorizontalCircleIcon,
     StarIcon
 } from '@heroicons/vue/24/outline';
+import Avatar from "../../Components/Avatar.vue";
 
 
 
@@ -88,9 +89,12 @@ const logout = () => {
                             <template #trigger>
                                 <button
                                     class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
-                                    <img class="object-cover w-10 h-10 rounded-full"
-                                        :src="$page.props.user.avatar ? $page.props.user.avatar_url : `https://ui-avatars.com/api/?name=${$page.props.user.first_name}${$page.props.user.last_name}'&color=094609FF&background=E2E2E2`"
-                                        :alt="$page.props.user.name">
+                                    <Avatar :image-url="$page.props.auth.user.avatar_url"
+                                            :username="$page.props.auth.user.name"
+                                            :border="true"
+                                            border-color="primary"
+                                            size="sm"
+                                    />
                                 </button>
                             </template>
 

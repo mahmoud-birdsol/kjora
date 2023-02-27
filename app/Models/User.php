@@ -72,6 +72,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'accepted_cookie_policy_at',
         'preferred_foot',
         'rating',
+        'last_seen_at',
     ];
 
     /**
@@ -101,6 +102,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'accepted_privacy_policy_at' => 'datetime',
         'accepted_cookie_policy_at' => 'datetime',
         'rating' => 'float',
+        'last_seen_at' => 'datetime',
     ];
 
     /**
