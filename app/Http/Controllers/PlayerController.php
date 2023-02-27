@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MediaLibrary;
 use App\Models\Position;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -61,8 +62,19 @@ class PlayerController extends Controller
     {
         $user->load('club');
 
+        $media = $user->getMedia('gallery')->map(function (MediaLibrary $media) {
+            return [
+                'id' => $media->id,
+                'url' => $media->original_url,
+                'type' => $media->type,
+                'extension' => $media->extension,
+                'comments' => $media->comments?->load('replies')
+            ];
+        });
+
         return Inertia::render('Player/Show', [
             'player' => $user,
+            'media' => $media
         ]);
     }
 }
