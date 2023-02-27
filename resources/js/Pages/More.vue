@@ -1,4 +1,5 @@
 <script setup>
+import { Head, Link } from '@inertiajs/inertia-vue3';
 import AppLayout from "@/Layouts/AppLayout.vue";
 import dayjs from "dayjs";
 import Card from "@/Components/Card.vue";
@@ -14,6 +15,7 @@ let paymentForm = useForm({
 })
 </script>
 <template>
+    <Head title="More" />
     <AppLayout>
         <template #header>
             <p class="text-7xl">More</p>
