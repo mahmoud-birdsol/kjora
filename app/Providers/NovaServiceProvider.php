@@ -20,6 +20,7 @@ use App\Nova\Lenses\ActiveAdvertisement;
 use App\Nova\Lenses\ArchivedAdvertisement;
 use App\Nova\Lenses\ExpiringAdvertisement;
 use App\Nova\Lenses\UnverifiedUsers;
+use App\Nova\MediaLibrary;
 use App\Nova\Message;
 use App\Nova\Position;
 use App\Nova\PrivacyPolicy;
@@ -118,6 +119,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(RatingCategory::class),
                     MenuItem::resource(Label::class),
                     MenuItem::resource(Social::class),
+                    MenuItem::resource(MediaLibrary::class),
                 ])->icon('cog')->collapsable(),
 
                 MenuSection::make('Reports', [
