@@ -160,4 +160,5 @@ const removeFromFavorites = () => {
                 </ReportModal>
             </div>
         </div>
+    </div>
 </template>

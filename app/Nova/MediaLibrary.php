@@ -24,7 +24,7 @@ class MediaLibrary extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -54,7 +54,7 @@ class MediaLibrary extends Resource
                 Advertisement::class,
                 Message::class,
                 Social::class
-            ])->rules('required')->sortable()->showOnPreview(),
+            ])->rules('required')->sortable()->showOnPreview()->filterable(),
 
             Text::make('Name')->rules('required')->sortable()->showOnPreview(),
 
