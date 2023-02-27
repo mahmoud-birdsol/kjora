@@ -108,6 +108,12 @@ Route::middleware([
                 'show'
             ])->name('player.review.show');
 
+        Route::post(
+            'player/review/{review}', [
+                PlayerReviewController::class,
+                'store'
+            ])->name('player.review.store');
+
         /*
          |--------------------------------------------------------------------------
          | Invitation
