@@ -7,7 +7,6 @@
                 border-color="primary" />
         </div>
         <!-- comment information col 2 -->
-        <!-- TODO:  HIEGHT OF THE After element equal to offset between comment image and image of last reply on this comment  -->
         <div class="flex flex-col gap-1 relative isolate  z-[5] " :class="[guidesClassesBefore, guidesClassesAfter]">
             <!-- user information & comment time row 1-->
             <div class="flex flex-col xs:flex-row w-full justify-between">
@@ -40,7 +39,7 @@
                 <button
                     class="p-1 enabled:hover:underline hover:underline-offset-4 transition-all duration-150">Like</button>
             </div>
-            
+
             <!-- replies related to this comment row 5 -->
             <div v-show="showReplies" class="mt-2">
                 <template v-for="(reply, index) in comment.replies" :key="reply.id">

@@ -115,6 +115,7 @@ import Comment from '../../Components/Comment.vue';
 import { HeartIcon } from '@heroicons/vue/24/solid';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
+import { usePage } from '@inertiajs/inertia-vue3';
 onBeforeMount(() => {
 
     dayjs.extend(relativeTime)
@@ -125,6 +126,7 @@ const props = defineProps({
 })
 const comments = ref(null);
 const newComment = ref(null);
+const currentUser = usePage().props.value.auth.user
 function getComments() {
     axios.get(route('api.gallery.comments'), {
         params: {
@@ -144,7 +146,7 @@ function sendComment() {
         commentable_id: props.media.id,
         commentable_type: 'App\\Models\\MediaLibrary',
         body: newComment.value,
-        user_id: props.user.id,
+        user_id: currentUser.id,
         parent_id: null
     }).then(res => {
         newComment.value = ''
