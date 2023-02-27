@@ -16,7 +16,7 @@ class PlayerReviewController extends Controller
      * @param \App\Models\Review $review
      * @return \Inertia\Response
      */
-    public function index(Request $request, Review $review)
+    public function show(Request $request, Review $review)
     {
         return Inertia::render('Reviews/Show', [
             'review' => $review,
