@@ -29,7 +29,7 @@
                             <div class="flex w-full justify-between">
                                 <div class="flex flex-col gap-1 ">
                                     <div class="flex flex-row gap-2">
-                                        <h3 class="font-bold m-0 text-lg leading-none  capitalize ">{{ 'peter emad' }} </h3>
+                                        <h3 class="font-bold m-0 text-lg leading-none  capitalize ">{{ user.name }} </h3>
                                         <span v-if="false">star icon</span>
                                     </div>
                                     <span class="text-xs text-stone-400 ">@{{ 'username' }} </span>

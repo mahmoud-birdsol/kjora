@@ -6,11 +6,11 @@
                 <template v-for="(file, index) in media.filter(f => f.type == 'image' || f.type == 'webp') " :key="index">
                     <FadeInTransition>
                         <Link :href="route('gallery.show', file.id)"
-                            class=" relative w-full h-full rounded-lg overflow-hidden aspect-square">
+                            class=" relative w-full h-full rounded-lg overflow-hidden aspect-square group">
                         <img :src="file.url" alt="" class="object-cover w-full h-full ">
                         <button @click.prevent.stop="removeItem(file.id)"
-                            class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
-                            <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
+                            class=" hidden group-hover:block absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                            <div class="flex flex-col items-start justify-center h-full p-1 opacity-100 ">
                                 <XMarkIcon class="w-5 h-5 text-stone-800" />
                             </div>
                         </button>
@@ -24,10 +24,10 @@
                 <template v-for="(file, index) in media.filter(f => f.type == 'video')" :key="index">
                     <FadeInTransition>
                         <Link :href="route('gallery.show', file.id)"
-                            class=" relative w-full h-full rounded-md overflow-hidden aspect-video">
+                            class="group relative w-full h-full rounded-md overflow-hidden aspect-video">
                         <video :src="file.url" alt="" class="object-cover w-full h-full " controls />
                         <button @click.prevent.stop="removeItem(file.id)"
-                            class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                            class="hidden group-hover:block  absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
                             <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
                                 <XMarkIcon class="w-5 h-5 text-stone-800" />
                             </div>
