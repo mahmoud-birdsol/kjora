@@ -30,13 +30,17 @@ class ReportRequest extends FormRequest
                 'required',
                 Rule::in([User::class,]),
             ],
+            'user_id' => [
+                'required',
+                'exists:users,id'
+            ],
             'reportable_id' => [
                 'required',
                 'integer',
             ],
             'report_option_id' => [
                 'required',
-                'exists:report_options:id',
+                'exists:report_options,id',
             ],
             'body' => [
                 'nullable',

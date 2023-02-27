@@ -20,6 +20,7 @@ const props = defineProps({
 const options = usePage().props.value.reportOptions;
 const show = ref(false);
 const form = useForm({
+    user_id: usePage().props.value.auth.user.id,
     reportable_type: props.reportableType,
     reportable_id: props.reportableId,
     report_option_id:null,
