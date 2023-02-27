@@ -314,3 +314,6 @@ Route::get('about', function () {
 Route::get('contact', function () {
     return Inertia::render('Contact');
 })->name('contact');
+Route::get('upgrade', function () {
+    return Inertia::render('Upgrade');
+})->name('upgrade');
