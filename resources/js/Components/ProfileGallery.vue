@@ -8,7 +8,7 @@
                         <Link :href="route('gallery.show', file.id)"
                             class=" relative w-full h-full rounded-lg overflow-hidden aspect-square group">
                         <img :src="file.url" alt="" class="object-cover w-full h-full ">
-                        <button @click.prevent.stop="removeItem(file.id)"
+                        <button v-if="currentUser.id === user.id" @click.prevent.stop="removeItem(file.id)"
                             class=" hidden group-hover:block absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
                             <div class="flex flex-col items-start justify-center h-full p-1 opacity-100 ">
                                 <XMarkIcon class="w-5 h-5 text-stone-800" />
@@ -26,7 +26,7 @@
                         <Link :href="route('gallery.show', file.id)"
                             class="group relative w-full h-full rounded-md overflow-hidden aspect-video">
                         <video :src="file.url" alt="" class="object-cover w-full h-full " controls />
-                        <button @click.prevent.stop="removeItem(file.id)"
+                        <button v-if="currentUser.id === user.id" @click.prevent.stop="removeItem(file.id)"
                             class="hidden group-hover:block  absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
                             <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
                                 <XMarkIcon class="w-5 h-5 text-stone-800" />
@@ -62,11 +62,11 @@ import axios from 'axios';
 import FadeInTransition from './FadeInTransition.vue';
 import ListGroupTransition from './ListGroupTransition.vue';
 
-import { Link } from '@inertiajs/inertia-vue3';
+import { Link, usePage } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({
     user: {
-        required: false,
+        required: true,
     }
     , media: null,
     shouldPreview: null
@@ -75,6 +75,7 @@ defineEmits(['reload'])
 
 
 const showUploadFileModal = ref(false)
+const currentUser = usePage().props.value.auth.user
 
 
 onMounted(() => {
