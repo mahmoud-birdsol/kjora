@@ -55,7 +55,7 @@ Route::middleware('guest')->resource(
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
-    'player.review'
+//    'player.review'
 ])->group(function () {
     Route::get('/verification/identity', [
         IdentityVerificationController::class,

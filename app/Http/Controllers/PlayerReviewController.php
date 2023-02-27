@@ -27,6 +27,8 @@ class PlayerReviewController extends Controller
             ];
         });
 
+//        dd($ratingCategory);
+
         return Inertia::render('Reviews/Show', [
             'review' => $review->load('player'),
             'ratingCategories' => RatingCategory::whereHas('positions', function (Builder $query) use ($review) {
@@ -37,22 +39,23 @@ class PlayerReviewController extends Controller
 
     public function store(Request $request, Review $review)
     {
+//        dd($request->all());
         $value = 0;
-        foreach ($request->input('rating_categories') as $ratingCategory) {
+        foreach ($request->input('ratingCategory') as $ratingCategory) {
             $value += $ratingCategory['value'];
-            $review->ratingCategories()->attach([
-                'rating_category_id' => $ratingCategory['id'],
+            $review->ratingCategories()->sync([$ratingCategory['id'] => [
                 'value' => $ratingCategory['value']
-            ]);
+            ]]);
         }
 
-        $review->update([
-            'reviewed_at' => now()
-        ]);
+//        $review->update([
+//            'reviewed_at' => now()
+//        ]);
 
-        FlashMessage::make()->success(
-            message: 'Review submitted successfully'
-        )->closeable()->send();
+        $request->session()->flash('message', [
+            'type' => 'success',
+            'body' => 'Review Submitted Successfully',
+        ]);
 
         $request->user()->update([
             'rating' => $value / RatingCategory::whereHas('positions', function (Builder $query) use ($review) {
