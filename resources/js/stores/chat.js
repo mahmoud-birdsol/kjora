@@ -98,7 +98,7 @@ export const useChat = defineStore('chat', {
 
                 this.page === 1
                     ? this.scrollToMessagesBottom()
-                    : this.scrollToMessagesTop();
+                    : null;
             } catch (error) {
                 this.loading = false;
                 return error;
