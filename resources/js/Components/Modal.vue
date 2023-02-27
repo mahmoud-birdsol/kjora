@@ -25,7 +25,7 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
-    showCLoseIcon: {
+    showCloseIcon: {
         required: false,
         type: Boolean,
         default: true,
@@ -97,7 +97,7 @@ const maxWidthClass = computed(() => {
                         <div v-show="position == 'center'"
                             class="mb-6 overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:w-full sm:mx-auto"
                             :class="maxWidthClass">
-                            <div class="flex justify-end px-6 py-6" v-if="closeable && showCLoseIcon">
+                            <div class="flex justify-end px-6 py-6" v-if="closeable && showCloseIcon">
                                 <button @click="$emit('close')">
                                     <XMarkIcon class="w-4 h-4 text-gray-900 hover:text-gray=500" />
                                 </button>

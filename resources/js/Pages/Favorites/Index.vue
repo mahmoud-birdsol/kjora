@@ -72,18 +72,18 @@ const reset = () => {
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <!-- Position Filters...
-                            =====================================================-->
+                                    =====================================================-->
                 <div class="flex gap-4 my-8 overflow-x-auto hideScrollBar">
                     <SecondaryButton @click="filterByPosition(null)">
                         <span class="w-full text-center"
-                              :class="{ 'text-black': form.position == null, 'text-gray-400': form.position != null }">
+                            :class="{ 'text-black': form.position == null, 'text-gray-400': form.position != null }">
                             All positions
                         </span>
                     </SecondaryButton>
                     <template v-for="position in positions" :key="position.id">
                         <SecondaryButton @click="filterByPosition(position.id)">
                             <span class="w-full text-center"
-                                  :class="{ 'text-black': form.position == position.id, 'text-gray-400': form.position != position.id }">
+                                :class="{ 'text-black': form.position == position.id, 'text-gray-400': form.position != position.id }">
                                 {{ position.name }}
                             </span>
                         </SecondaryButton>
@@ -91,7 +91,7 @@ const reset = () => {
                 </div>
 
                 <!-- Current list...
-                            =====================================================-->
+                                    =====================================================-->
                 <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
 
                     <div class="flex items-start justify-start my-6">
@@ -110,10 +110,10 @@ const reset = () => {
                 </div>
 
                 <!-- Filters Modal...
-                            =====================================================-->
+                                    =====================================================-->
                 <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40">
                     <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl"
-                            @click="showFiltersModal = !showFiltersModal">
+                        @click="showFiltersModal = !showFiltersModal">
                         <AdjustmentsHorizontalIcon class="w-10 h-10 text-white" />
                     </button>
 
@@ -146,8 +146,8 @@ const reset = () => {
                                     <InputLabel>Search</InputLabel>
                                     <div class="px-4">
                                         <input type="search" name="search" id="search" v-model="form.search"
-                                               class="block w-full px-4 text-center text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
-                                               placeholder="Search by name or username" />
+                                            class="block w-full px-4 text-center text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
+                                            placeholder="Search by name or username" />
                                     </div>
                                 </div>
 
@@ -155,10 +155,10 @@ const reset = () => {
                                     <InputLabel>Position</InputLabel>
                                     <div class="px-4">
                                         <select id="location" name="location" v-model="form.position"
-                                                class="block w-full py-2 pl-3 pr-10 mt-1 text-base text-center text-white bg-black border-white rounded-full focus:border-primary focus:outline-none focus:ring-primary sm:text-sm placeholder:center">
+                                            class="block w-full py-2 pl-3 pr-10 mt-1 text-base text-center text-white bg-black border-white rounded-full focus:border-primary focus:outline-none focus:ring-primary sm:text-sm placeholder:center">
                                             <option :value="null">All Positions</option>
                                             <option v-for="position in positions" :key="position.id" :value="position.id">{{
-                                                    position.name }}
+                                                position.name }}
                                             </option>
                                         </select>
                                     </div>
@@ -169,7 +169,6 @@ const reset = () => {
                                 </div>
                                 <div class="flex items-center justify-center mt-4">
                                     <button class="text-primary" @click="reset">
-                                        <XMarkIcon class="inline w-4 h-4 mr-4" />
                                         Reset
                                     </button>
                                 </div>

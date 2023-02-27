@@ -10,6 +10,7 @@ use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\JoinPlatformController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\PlayerReviewController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserProfileController;
 use App\Models\Country;
@@ -99,6 +100,12 @@ Route::middleware([
             PlayerController::class,
             'show',
         ])->name('player.profile');
+
+        Route::get(
+            'player/review/{review}', [
+                PlayerReviewController::class,
+                'show'
+            ])->name('player.review.show');
 
         /*
          |--------------------------------------------------------------------------
