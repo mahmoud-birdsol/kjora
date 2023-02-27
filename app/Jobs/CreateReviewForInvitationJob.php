@@ -32,29 +32,32 @@ class CreateReviewForInvitationJob implements ShouldQueue
     public function handle()
     {
         $invitations = Invitation::whereDoesntHave('reviews')
-            ->where('date', now()->addHours(2))
+//            ->where('date', now()->addHours(2))
             ->get()->each(function (Invitation $invitation) {
-                $invitation->reviews()->create([
+                $firstReview = $invitation->reviews()->create([
                     'reviewer_id' => $invitation->invitingPlayer->id,
                     'player_id' => $invitation->invitedPlayer->id
-                ]);
-
-                $invitation->reviews()->create([
-                    'reviewer_id' => $invitation->invitedPlayer->id,
-                    'player_id' => $invitation->invitingPlayer->id
                 ]);
 
                 $invitation->invitingPlayer->notify(
                     new NotifyPlayerOfReviewNotification(
                         $invitation->invitingPlayer,
-                        $invitation->invitedPlayer
+                        $invitation->invitedPlayer,
+                        $firstReview
                     )
                 );
+
+                $secondReview = $invitation->reviews()->create([
+                    'reviewer_id' => $invitation->invitedPlayer->id,
+                    'player_id' => $invitation->invitingPlayer->id
+                ]);
+
 
                 $invitation->invitedPlayer->notify(
                     new NotifyPlayerOfReviewNotification(
                         $invitation->invitedPlayer,
-                        $invitation->invitingPlayer
+                        $invitation->invitingPlayer,
+                        $secondReview
                     )
                 );
             });
