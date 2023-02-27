@@ -16,9 +16,10 @@ import {
     HeartIcon,
     Cog6ToothIcon,
     EllipsisHorizontalCircleIcon,
-    StarIcon
+    StarIcon,
 } from '@heroicons/vue/24/outline';
 import Avatar from '../../Components/Avatar.vue';
+import { XMarkIcon } from '@heroicons/vue/20/solid';
 
 
 
@@ -201,7 +202,7 @@ const logout = () => {
                         <Link :href="route('upgrade')">Upgrade</Link>
                     </button>
                     <button
-                        class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500"
+                        class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none hover:bg-transparent focus:text-gray-500"
                         @click="showingNavigationDropdown = !showingNavigationDropdown">
                         <Bars3Icon class="w-6 h-6" />
                     </button>
@@ -212,13 +213,52 @@ const logout = () => {
         <!-- Responsive Navigation Menu -->
         <!-- Responsive Navigation Menu -->
         <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }"
-            class="transition md:hidden">
-            <div class="pt-2 pb-3 space-y-1">
+            class="transition md:hidden relative overflow-hidden">
+            <div class="fixed top-0 right-0 left-0 bottom-0 bg-black bg-opacity-50"
+                @click="showingNavigationDropdown = false"></div>
+            <div class="pt-2 pb-3 space-y-1 fixed top-0 transition-all duration-1000 bg-primaryDark h-full w-[max(20em,50%)]">
+                <XMarkIcon class="w-5 absolute right-0 m-3 text-white"
+                    @click="showingNavigationDropdown = false" />
+                <!-- Responsive Settings Options -->
+                <div class="pt-4 pb-1 border-t border-gray-200">
+                    <div class="flex items-center justify-center px-4">
+                        <div v-if="$page.props.jetstream.managesProfilePhotos" class="mr-3 shrink-0 min-w-max">
+                            <Avatar :image-url="$page.props.auth.user.avatar_url" :size="'lg'"
+                                :username="$page.props.auth.user.name" :border="true" />
+                        </div>
+                        <div>
+                            <div class="text-base font-medium text-gray-800">
+                                {{ $page.props.auth.user.username }}
+                            </div>
+                            <div class="text-sm font-medium text-gray-500">
+                                {{ $page.props.auth.user.email }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 space-y-1">
+                        <ResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')">
+                            Profile
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink :href="route('identity.verification.create')"
+                            :active="route().current('identity.verification.create')">
+                            Identity Verification
+                        </ResponsiveNavLink>
+
+                        <div class="border-t border-gray-100" />
+
+                        <form method="POST" @submit.prevent="logout">
+                            <ResponsiveNavLink as="button">
+                                Log Out
+                            </ResponsiveNavLink>
+                        </form>
+                    </div>
+                </div>
                 <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
                     <HomeIcon class="w-4 h-4 text-primary" />
                     <span>Home</span>
                 </ResponsiveNavLink>
-
                 <ResponsiveNavLink :href="route('chats.index')" :active="route().current('chats.index')">
                     <ChatIcon class="w-4 h-4 text-primary" />
                     <span>Chat</span>
@@ -235,44 +275,9 @@ const logout = () => {
                     <EllipsisHorizontalCircleIcon class="w-4 h-4 text-primary" />
                     <span>More</span>
                 </ResponsiveNavLink>
+
             </div>
 
-            <!-- Responsive Settings Options -->
-            <div class="pt-4 pb-1 border-t border-gray-200">
-                <div class="flex items-center px-4">
-                    <div v-if="$page.props.jetstream.managesProfilePhotos" class="mr-3 shrink-0 min-w-max">
-                        <Avatar :image-url="$page.props.auth.user.avatar_url" :size="'lg'"
-                            :username="$page.props.auth.user.name" :border="true" />
-                    </div>
-                    <div>
-                        <div class="text-base font-medium text-gray-800">
-                            {{ $page.props.auth.user.username }}
-                        </div>
-                        <div class="text-sm font-medium text-gray-500">
-                            {{ $page.props.auth.user.email }}
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-3 space-y-1">
-                    <ResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')">
-                        Profile
-                    </ResponsiveNavLink>
-
-                    <ResponsiveNavLink :href="route('identity.verification.create')"
-                        :active="route().current('identity.verification.create')">
-                        Identity Verification
-                    </ResponsiveNavLink>
-
-                    <div class="border-t border-gray-100" />
-
-                    <form method="POST" @submit.prevent="logout">
-                        <ResponsiveNavLink as="button">
-                            Log Out
-                        </ResponsiveNavLink>
-                    </form>
-                </div>
-            </div>
         </div>
     </nav>
 </template>
