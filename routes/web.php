@@ -8,9 +8,9 @@ use App\Http\Controllers\HireController;
 use App\Http\Controllers\IdentityVerificationController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\JoinPlatformController;
-use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserProfileController;
 use App\Models\Country;
 use App\Models\Invitation;
@@ -18,14 +18,12 @@ use App\Models\MediaLibrary;
 use App\Models\Position;
 use App\Models\Stadium;
 use App\Models\User;
-use App\Notifications\InvitationAcceptedNotification;
 use App\Notifications\InvitationCreatedNotification;
 use App\Notifications\InvitationDeclinedNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Pusher\Pusher;
 
 /*
 |--------------------------------------------------------------------------
@@ -270,6 +268,16 @@ Route::middleware([
         ]
     )->name('chats.show');
 
+    /*
+     |--------------------------------------------------------------------------
+     | Report routes...
+     |--------------------------------------------------------------------------
+    */
+
+    Route::post('report', [
+        ReportController::class,
+        'store'
+    ])->name('report.store');
 
     /*
      |--------------------------------------------------------------------------
@@ -277,9 +285,6 @@ Route::middleware([
      |--------------------------------------------------------------------------
     */
 });
-
-
-// Route::get('test', function () {
 
 
 //     // Example 2: Get all the connected users for a specific channel
@@ -303,9 +308,9 @@ Route::get('gallery/{mediaLibrary}', function (MediaLibrary $mediaLibrary) {
     ]);
 })->name('gallery.show');
 
-Route::get('about', function(){
+Route::get('about', function () {
     return Inertia::render('About');
 })->name('about');
-Route::get('contact', function(){
+Route::get('contact', function () {
     return Inertia::render('Contact');
 })->name('contact');

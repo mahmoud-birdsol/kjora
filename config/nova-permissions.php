@@ -650,6 +650,7 @@ return [
         ],
 
         /*
+<<<<<<< HEAD
         |--------------------------------------------------------------------------
         | Conversation.
         |--------------------------------------------------------------------------
@@ -774,5 +775,72 @@ return [
             'description' => 'Can activate comments',
             'group' => 'Message',
         ],
-    ],
+
+
+        /*
+       |--------------------------------------------------------------------------
+       | Report Options.
+       |--------------------------------------------------------------------------
+       */
+
+        'view report option' => [
+            'display_name' => 'View report option',
+            'description' => 'Can view report option',
+            'group' => 'Report Option',
+        ],
+
+        'create report option' => [
+            'display_name' => 'Create report option',
+            'description' => 'Can create report option',
+            'group' => 'Report Option',
+        ],
+
+        'edit report option' => [
+            'display_name' => 'Edit report option',
+            'description' => 'Can edit report option',
+            'group' => 'Report Option',
+        ],
+
+        'delete report option' => [
+            'display_name' => 'Delete report option',
+            'description' => 'Can delete report option',
+            'group' => 'Report Option',
+        ],
+
+        /*
+      |--------------------------------------------------------------------------
+      | Reports.
+      |--------------------------------------------------------------------------
+      */
+
+        'view report' => [
+            'display_name' => 'View report',
+            'description' => 'Can view report',
+            'group' => 'Report',
+        ],
+
+        'create report' => [
+            'display_name' => 'Create report',
+            'description' => 'Can create report',
+            'group' => 'Report',
+        ],
+
+        'edit report' => [
+            'display_name' => 'Edit report',
+            'description' => 'Can edit report',
+            'group' => 'Report',
+        ],
+
+        'delete report' => [
+            'display_name' => 'Delete report',
+            'description' => 'Can delete report',
+            'group' => 'Report',
+        ],
+
+        'resolve report' => [
+            'display_name' => 'Resolve report',
+            'description' => 'Can resolve report',
+            'group' => 'Report',
+        ],
+    ]
 ];

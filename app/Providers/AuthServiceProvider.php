@@ -27,6 +27,8 @@ class AuthServiceProvider extends ServiceProvider
         \App\Models\PrivacyPolicy::class => \App\Policies\PrivacyPolicyPolicy::class,
         \App\Models\RatingCategory::class => \App\Policies\RatingCategoryPolicy::class,
         \App\Models\Rating::class => \App\Policies\RatingPolicy::class,
+        \App\Models\ReportOption::class => \App\Policies\ReportOptionPolicy::class,
+        \App\Models\Report::class => \App\Policies\ReportPolicy::class,
         \Pktharindu\NovaPermissions\Role::class => \App\Policies\RolePolicy::class,
         \App\Models\TermsAndConditions::class => \App\Policies\TermsAndConditionsPolicy::class,
         \App\Models\User::class => \App\Policies\UserPolicy::class,
