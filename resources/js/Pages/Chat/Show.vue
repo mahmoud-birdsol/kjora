@@ -16,7 +16,7 @@ provide('conversation', props.conversation);
 </script>
 
 <template>
-    <AppLayout title="chat">
+    <AppLayout title="Chat">
         <template #header>
             Chat
         </template>
