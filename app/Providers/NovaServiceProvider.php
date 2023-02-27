@@ -28,6 +28,7 @@ use App\Nova\Rating;
 use App\Nova\RatingCategory;
 use App\Nova\Report;
 use App\Nova\ReportOption;
+use App\Nova\Review;
 use App\Nova\Social;
 use App\Nova\Stadium;
 use App\Nova\TermsAndConditions;
@@ -97,6 +98,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::lens(User::class, UnverifiedUsers::class),
                     MenuItem::resource(Venue::class),
                     MenuItem::resource(Invitation::class),
+                    MenuItem::resource(Review::class),
                 ])->icon('user-group')->collapsable(),
 
                 MenuSection::make('Chat', [
