@@ -90,8 +90,8 @@ const logout = () => {
                                 <button
                                     class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
                                     <div v-if="$page.props.jetstream.managesProfilePhotos" class="min-w-max">
-                                        <Avatar :image-url="$page.props.user.avatar_url" :size="'md'"
-                                            :username="$page.props.user.name" :border="true" />
+                                        <Avatar :image-url="$page.props.auth.user.avatar_url" :size="'md'"
+                                            :username="$page.props.auth.user.name" :border="true" />
                                     </div>
                                 </button>
                             </template>
@@ -236,15 +236,15 @@ const logout = () => {
             <div class="pt-4 pb-1 border-t border-gray-200">
                 <div class="flex items-center px-4">
                     <div v-if="$page.props.jetstream.managesProfilePhotos" class="mr-3 shrink-0 min-w-max">
-                        <Avatar :image-url="$page.props.user.avatar_url" :size="'lg'" :username="$page.props.user.name"
-                            :border="true" />
+                        <Avatar :image-url="$page.props.auth.user.avatar_url" :size="'lg'"
+                            :username="$page.props.auth.user.name" :border="true" />
                     </div>
                     <div>
                         <div class="text-base font-medium text-gray-800">
-                            {{ $page.props.user.username }}
+                            {{ $page.props.auth.user.username }}
                         </div>
                         <div class="text-sm font-medium text-gray-500">
-                            {{ $page.props.user.email }}
+                            {{ $page.props.auth.user.email }}
                         </div>
                     </div>
                 </div>
