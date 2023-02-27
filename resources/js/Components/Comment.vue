@@ -40,19 +40,19 @@
                 <button
                     class="p-1 enabled:hover:underline hover:underline-offset-4 transition-all duration-150">Like</button>
             </div>
-            <!-- view replies button row 4 -->
-            <button v-show="hasReplies" @click="toggleRepliesView"
-                class="flex w-full text-sm gap-2 justify-start  text-stone-500 enabled:hover:underline hover:underline-offset-4 transition-all duration-300  ">
-                {{ showReplies ? 'hide' : 'view' }} {{ comment.replies?.length }} replies
-            </button>
-
-
+            
             <!-- replies related to this comment row 5 -->
             <div v-show="showReplies" class="mt-2">
                 <template v-for="(reply, index) in comment.replies" :key="reply.id">
                     <Comment @addedReply="handleAddedReply" :comment="reply" />
                 </template>
             </div>
+
+            <!-- view replies button row 4 -->
+            <button v-show="hasReplies" @click="toggleRepliesView"
+                class="flex w-full text-sm gap-2 justify-start  text-stone-500 enabled:hover:underline hover:underline-offset-4 transition-all duration-300  ">
+                {{ showReplies ? 'hide' : 'view' }} {{ comment.replies?.length }} replies
+            </button>
             <!-- new reply form row 6 -->
             <div v-show="showReplyInput" class="flex flex-row p-3 items-center self-end w-full gap-x-3 ">
                 <button>
@@ -105,7 +105,7 @@ const guidesClassesBefore = computed(() => {
     return hasReplies.value ? 'before:absolute  before:-left-9   before:w-px   before:bg-stone-200  before:z-[1] before:top-0 before:bottom-[8px]   '
         : ' '
 }); const guidesClassesAfter = computed(() => {
-    return (hasReplies.value) ? !showReplies.value ? ' after:absolute after:h-px after:w-8  after:bg-stone-200  after:z-[-1] after:-left-9 after:bottom-[8px] ' : 'after:absolute after:h-px after:w-[50%]  after:bg-stone-200  after:z-[-1] after:-left-9 after:bottom-[8px]' : '';
+    return (hasReplies.value) ? !showReplies.value ? ' after:absolute after:h-px after:w-8  after:bg-stone-200  after:z-[-1] after:-left-9 after:bottom-[8px] ' : 'after:absolute after:h-px after:w-8  after:bg-stone-200  after:z-[-1] after:-left-9 after:bottom-[8px]' : '';
 }); const guidesClassesAfter2 = computed(() => {
     return props.comment.parent_id ?
         ' after:absolute after:h-px after:w-8  after:bg-stone-200  after:z-[-1] after:-left-9 after:top-5 ' : '';
