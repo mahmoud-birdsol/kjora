@@ -2,22 +2,22 @@
 
 namespace App\Nova;
 
-use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\MorphMany;
+use Laravel\Nova\Fields\MorphTo;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Message extends Resource
+class MediaLibrary extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Message>
+     * @var class-string<\App\Models\MediaLibrary>
      */
-    public static $model = \App\Models\Message::class;
+    public static $model = \App\Models\MediaLibrary::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -46,35 +46,27 @@ class Message extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make('Conversation')
-                ->sortable()
-                ->filterable()
-                ->showOnPreview()
-                ->rules('required'),
+            Text::make('Collection Name')->rules('required')->sortable()->showOnPreview(),
 
-            BelongsTo::make('Parent', 'parent', Message::class)
-                ->nullable()
-                ->filterable()
-                ->showOnPreview()
-                ->sortable(),
+            MorphTo::make('Model')->types([
+                User::class,
+                Club::class,
+                Advertisement::class,
+                Message::class,
+                Social::class
+            ])->rules('required')->sortable()->showOnPreview(),
 
-            BelongsTo::make('Sender', 'sender', User::class)
-                ->sortable()
-                ->filterable()
-                ->showOnPreview()
-                ->rules('required'),
+            Text::make('Name')->rules('required')->sortable()->showOnPreview(),
 
-            DateTime::make('Read At')
-                ->nullable()
-                ->sortable()
-                ->showOnPreview()
-                ->filterable(),
+            Text::make('File Name')->rules('required')->sortable()->showOnPreview(),
 
-            Textarea::make('Body')
-                ->rules('required'),
+            Text::make('Mime Type')->rules('required')->sortable()->showOnPreview(),
 
-            Images::make('Attachments')->nullable()
+            Text::make('Disk')->rules('required')->sortable()->showOnPreview(),
 
+            Text::make('Conversions Disk')->nullable()->sortable()->showOnPreview(),
+
+            Number::make('Size')->rules('required')->sortable()->showOnPreview(),
 
         ];
     }

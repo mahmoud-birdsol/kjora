@@ -25,10 +25,10 @@ class MessagePolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\Admin  $user
-     * @param  \App\Models\User  $model
+     * @param  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(Admin $user, User $model)
+    public function view(Admin $user, $model)
     {
         return $user->hasPermissionTo('view messages');
     }
@@ -48,10 +48,10 @@ class MessagePolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\Admin  $user
-     * @param  \App\Models\User  $model
+     * @param  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(Admin $user, User $model)
+    public function update(Admin $user, $model)
     {
         return $user->hasPermissionTo('edit messages');
     }
@@ -60,10 +60,10 @@ class MessagePolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\Admin  $user
-     * @param  \App\Models\User  $model
+     * @param  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(Admin $user, User $model)
+    public function delete(Admin $user, $model)
     {
         return $user->hasPermissionTo('delete messages');
     }
@@ -71,11 +71,11 @@ class MessagePolicy
     /**
      * Determine whether the user can restore the model.
      *
-     * @param  \App\Models\Admin  $user
-     * @param  \App\Models\User  $model
+     * @param \App\Models\Admin $user
+     * @param $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(Admin $user, User $model)
+    public function restore(Admin $user, $model)
     {
         return $user->hasPermissionTo('delete messages');
     }
@@ -83,11 +83,11 @@ class MessagePolicy
     /**
      * Determine whether the user can permanently delete the model.
      *
-     * @param  \App\Models\Admin  $user
-     * @param  \App\Models\User  $model
+     * @param \App\Models\Admin $user
+     * @param $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(Admin $user, User $model)
+    public function forceDelete(Admin $user, $model)
     {
         return $user->hasPermissionTo('delete messages');
     }
