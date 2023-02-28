@@ -10,15 +10,16 @@ import RatingChart from '../../Components/RatingChart.vue';
 import Avatar from '../../Components/Avatar.vue';
 const props = defineProps({
     review: null,
-    ratingCategories: Array
+    ratingCategories: Array,
+    playerRating: Array
 });
 
-const labels = props.ratingCategories.map(c => c.name)
+const data = props.playerRating.map(r => r.value)
+const labels = props.playerRating.map(r => r.ratingCategory)
 
-const rating = ref(4)
-const data = [4, 3, 4.5, 1.5, 2, 2.5]
+const rating = ref(props.review.player.rating)
 const ratingCategory = props.ratingCategories.map(cat => {
-    return { id: cat.id, value: null }
+    return { id: cat.id, value: 0 }
 })
 const ratingForm = useForm(
     {
@@ -66,40 +67,41 @@ function submitRatingForm() {
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-col gap1">
-                    <ElRate v-model="rating" disabled size="large" />
-                    <p class="flex items-center font-bold text-sm text-primary">
-                        {{ rating }} out of 5
-                    </p>
-                    <span class="text-stone-400 text-xs">based on 245 players rating</span>
-                </div>
-            </div>
+                                    <div class="flex flex-col gap1 ">
+                                        <ElRate v-model="rating" disabled size="large" />
+                                        <p class="flex items-center font-bold text-sm text-primary">
+                                            {{ rating }} out of 5
+                                        </p>
+                                        <span class="text-stone-400 text-xs">based on 245 players rating</span>
+                                    </div>
+                                </div>
 
-            <div class="grid md:grid-cols-[1fr_2fr] gap-4">
-                <form @submit.prevent="submitRatingForm" class="flex flex-col gap-4">
-                    <template v-for="item in  ratingCategories" :key="item.id">
-                        <div class="flex flex-col gap-2 ">
-                            <InputLabel class="text-black">{{ item.name }}</InputLabel>
-                            <div class="px-6 py-1 mx-4 bg-black border border-white rounded-full">
-                                <el-slider v-model="ratingForm.ratingCategory.filter(c => c.id === item.id)[0].value"
-                                    :step="0.5" :min="0" :max="5" />
+                                <div class="grid md:grid-cols-[1fr_2fr] gap-4">
+                                    <form @submit.prevent="submitRatingForm" class="flex flex-col gap-4">
+                                        <template v-for="item in  ratingCategories" :key="item.id">
+                                            <div class="flex flex-col gap-2 ">
+                                                <InputLabel class="text-black">{{ item.name }}</InputLabel>
+                                                <div class="px-6 py-1 mx-4 bg-black border border-white rounded-full">
+                                                    <el-slider v-model="ratingForm.ratingCategory.filter(c => c.id === item.id)[0].value"
+                                                        :step="0.5" :min="0" :max="5" />
+                                                </div>
+                                            </div>
+                                        </template>
+
+                                    </form>
+                                    <div class="md:w-2/3 md:justify-self-end h-full flex flex-col justify-between ">
+                                        <div class=" p-2 ">
+                                            <RatingChart :data="data" :labels="labels" theme="rgb(0,100,0)" overlay='rgba(0,100,0,0.2)' />
+                                        </div>
+                                        <button @click="submitRatingForm" class="bg-black p-3 px-6 mt-4  w-full text-white rounded-full">
+                                            Rate
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </template>
-
-                </form>
-                <div class="md:w-2/3 md:justify-self-end h-full flex flex-col justify-between ">
-                    <div class=" p-2 ">
-                        <RatingChart :data="data" :labels="labels" theme="rgb(0,100,0)" overlay='rgba(0,100,0,0.2)' />
-                    </div>
-                    <button @click="submitRatingForm" class="bg-black p-3 px-6 mt-4  w-full text-white rounded-full">
-                        Rate
-                    </button>
-                </div>
-            </div>
-        </div>
 
 
-    </AppLayout>
+                        </AppLayout>
 </template>
 
+<style></style>
