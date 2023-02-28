@@ -7,7 +7,7 @@ import { usePage } from '@inertiajs/inertia-vue3';
 import { onMounted } from 'vue';
 import dayjs from 'dayjs';
 import MediaPreview from '@/Components/MediaPreview.vue';
-import {useChat} from "../../stores/chat";
+import { useChat } from "../../stores/chat";
 
 const chat = useChat();
 
@@ -48,7 +48,7 @@ function handleReply(e) {
 </script>
 
 <template>
-        <div v-if="showOptions" class="fixed inset-0 z-10 w-full h-full cursor-pointer " @click="showOptions = false">
+    <div v-if="showOptions" class="fixed inset-0 z-10 w-full h-full cursor-pointer " @click="showOptions = false">
     </div>
     <div :class="alignmentClass + parentClasses" class="w-full ">
 
@@ -73,28 +73,28 @@ function handleReply(e) {
                         :filePreview="message.parent.media[0].original_url" :fileName="message.parent.media[0].name" />
                 </div>
                 <!-- media message -->
-                <div v-if="message.media" :class="isCurrentUser ? 'text-white' : 'text-stone-800'">
-                    <div v-if="message.media[0]?.mime_type.startsWith('image')">
-                        <img class="object-contain w-52" :src="message.media[0]?.original_url" alt="">
+                <div v-if="message.attachments" :class="isCurrentUser ? 'text-white' : 'text-stone-800'">
+                    <div v-if="message.attachments[0]?.mime_type.startsWith('image')">
+                        <img class="object-contain w-52" :src="message.attachments[0]?.original_url" alt="">
                     </div>
-                    <div v-else-if="message.media[0]?.mime_type.startsWith('video')">
+                    <div v-else-if="message.attachments[0]?.mime_type.startsWith('video')">
                         <video controls class="h-full">
-                            <source :src="message.media[0].original_url" :type="message.media[0].mime_type">
+                            <source :src="message.attachments[0].original_url" :type="message.attachments[0].mime_type">
                         </video>
                     </div>
-                    <div v-else-if="message.media[0]?.mime_type.endsWith('.document') || message.media[0]?.mime_type.startsWith('application/msword')"
+                    <div v-else-if="message.attachments[0]?.mime_type.endsWith('.document') || message.attachments[0]?.mime_type.startsWith('application/msword')"
                         class="flex justify-between gap-2 items-center" :class="isCurrentUser ? 'flex-row-reverse' : null">
                         <img class="w-5 h-7 object-contain" src="/images/doc.png" />
-                        <p class="truncate">{{ message.media[0].file_name }}</p>
+                        <p class="truncate">{{ message.attachments[0].file_name }}</p>
                         <a :href="message.media[0].original_url" download>
                             <ArrowDownCircleIcon class="w-10 h-10 cursor-pointer" />
                         </a>
                     </div>
-                    <div v-else-if="message.media[0]?.mime_type.startsWith('application/pdf')"
+                    <div v-else-if="message.attachments[0]?.mime_type.startsWith('application/pdf')"
                         class="flex justify-between gap-2 items-center" :class="isCurrentUser ? 'flex-row-reverse' : null">
                         <img class="w-7 h-7 object-contain" src="/images/pdf.png" />
-                        <p class="truncate">{{ message.media[0].file_name }}</p>
-                        <a :href="message.media[0].original_url" download>
+                        <p class="truncate">{{ message.attachments[0].file_name }}</p>
+                        <a :href="message.attachments[0].original_url" download>
                             <ArrowDownCircleIcon class="w-10 h-10 cursor-pointer" />
                         </a>
                     </div>
