@@ -10,7 +10,7 @@ import {
 import axios from "axios";
 import {useForm} from "@inertiajs/inertia-vue3";
 import Avatar from "../Avatar.vue";
-
+import UplaodChatFile from './UplaodChatFile.vue';
 const props = defineProps({
     conversation: {
         required: true,
@@ -25,7 +25,7 @@ const props = defineProps({
 const chat = useChat();
 const hasAttachement = ref(false);
 const loading = ref(false);
-
+let openModual = ref(false);
 const form = useForm({
     parent_id: null,
     body: '',
@@ -145,12 +145,11 @@ const handleAttachments = (e) => {
             leave-from-class="opacity-100"
             leave-to-class="opacity-0"
         >
-            <div v-if="hasAttachement && filePreview"
-                 class="flex w-full flex-row items-center rounded-xl bg-neutral-200 px-12 py-2 text-sm">
-                <div v-if="filePreview" class="ml-auto overflow-hidden">
-                    <MediaPreview :fileType="fileType" :filePreview="filePreview" :fileName="fileName"/>
+                <div v-if="form.attachments" class="ml-auto overflow-hidden grid grid-cols-4 gap-2">
+                    <template v-for="attachment in form.attachments">
+                        <MediaPreview :fileType="attachment.type" :filePreview="attachment.url" :fileName="attachment.name"/>
+                    </template>
                 </div>
-            </div>
         </transition>
         <div class="flex w-full flex-row items-center gap-x-3">
             <!--            <button>-->
@@ -166,11 +165,10 @@ const handleAttachments = (e) => {
                     placeholder="Type your Message Here"
                     class="w-full resize-none rounded-full border-none bg-stone-100 p-2 px-4 placeholder:text-neutral-400 text-stone-700 hideScrollBar"></textarea>
             </div>
-            <button class="relative" @click="clickFileInput">
+            <button class="relative" @click="openModual = true">
                 <PhotoIcon class="h-6 w-6 text-neutral-400"/>
                 <span class="absolute bottom-0 rounded-full bg-white -right-[1px]">
-                    <input ref="attachmentsInput" type="file" accept="image/*,video/*,.pdf,.doc,.docx"
-                           class="hidden" @change="handleAttachments">
+                    <UplaodChatFile :show="openModual" @close="openModual = false" :should-upload="true" v-model="form.attachments"/>
                     <ArrowUpCircleIcon class="h-2 w-2 text-neutral-400"/>
                 </span>
             </button>
