@@ -60,8 +60,9 @@ class MessageController extends Controller
         ]);
 
         $request->whenFilled('attachments', function () use ($request, $message) {
-            $message->addMedia($request->file('attachments'))->toMediaCollection('attachments');
-
+            foreach ($request->input('attachments') as $attachment) {
+                $message->addMedia($attachment)->toMediaCollection('attachments');
+            }
         });
 
         $user = $conversation->users()->whereNot('conversation_user.user_id', $request->user()->id)->first();
