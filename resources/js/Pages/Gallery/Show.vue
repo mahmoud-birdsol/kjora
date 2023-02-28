@@ -94,9 +94,10 @@
                                 class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:right-1 focus:ring-primary  "></textarea>
                         </div>
 
-                        <button @click="addComment" :disabled="false" class="p-1 group ">
+                        <button @click="addComment" :disabled="isSending" class="p-1 group ">
 
-                            <PaperAirplaneIcon class="w-5 " :class="false ? 'text-neutral-400' : 'text-neutral-900'" />
+                            <PaperAirplaneIcon class="w-5 group-hover:text-neutral-700"
+                                :class="isSending ? 'text-neutral-200' : 'text-neutral-400'" />
                         </button>
                     </div>
                 </div>
@@ -108,7 +109,8 @@
 <script setup>
 import AppLayout from '../../Layouts/AppLayout.vue';
 import Avatar from '../../Components/Avatar.vue';
-import { FaceSmileIcon, PaperAirplaneIcon, EllipsisHorizontalIcon } from '@heroicons/vue/24/outline';
+import { FaceSmileIcon, EllipsisHorizontalIcon } from '@heroicons/vue/24/outline';
+import { PaperAirplaneIcon } from '@heroicons/vue/24/solid';
 import axios from 'axios';
 import { onMounted, onBeforeMount, ref } from 'vue';
 import Comment from '../../Components/Comment.vue';
@@ -126,6 +128,7 @@ const props = defineProps({
 })
 const comments = ref(null);
 const newComment = ref(null);
+const isSending = ref(false);
 const currentUser = usePage().props.value.auth.user
 function getComments() {
     axios.get(route('api.gallery.comments'), {
@@ -150,12 +153,14 @@ function sendComment() {
         parent_id: null
     }).then(res => {
         newComment.value = ''
+        isSending.value = false
         getComments()
 
     }).catch(err => console.error(err))
 }
 function addComment(e) {
     if (!newComment.value || newComment.value.trim() === '') return
+    isSending.value = true
     sendComment()
 }
 function handleAddedReply() {
