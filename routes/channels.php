@@ -15,25 +15,23 @@ use Illuminate\Support\Facades\Broadcast;
 */
 
 Broadcast::channel('users.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+    return (int)$user->id === (int)$id;
 });
 
 Broadcast::channel('users.chat.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+    return (int)$user->id === (int)$id;
 });
 
 Broadcast::channel('users.comment.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+    return (int)$user->id === (int)$id;
 });
 
-Broadcast::channel('online', function ($user) {
-    if (auth()->check()) {
-        return $user->toArray();
-    }
-});
+//Broadcast::channel('chat', function ($user) {
+//    if (auth()->check()) {
+//        return $user->toArray();
+//    }
+//});
 
-Broadcast::channel('chat.{id}', function (User $user, $conversationId) {
-    if (auth()->check()) {
-        return $user->toArray();
-    }
+Broadcast::channel('chat.{id}', function ($user, $id) {
+    return (int)$user->id === (int)$id;
 });

@@ -1,13 +1,15 @@
 <script setup>
 import { computed, ref } from '@vue/reactivity';
-import ReplyIcon from './Icons/ReplyIcon.vue';
+import ReplyIcon from '../Icons/ReplyIcon.vue';
 import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid'
 import { TrashIcon, ArrowDownCircleIcon } from '@heroicons/vue/24/outline'
 import { usePage } from '@inertiajs/inertia-vue3';
 import { onMounted } from 'vue';
 import dayjs from 'dayjs';
 import MediaPreview from '@/Components/MediaPreview.vue';
+import {useChat} from "../../stores/chat";
 
+const chat = useChat();
 
 const props = defineProps({
     message: Object,
@@ -40,7 +42,6 @@ const repliedClasses = computed(() => {
 function handleReply(e) {
     emits('reply', props.message)
     showOptions.value ? showOptions.value = false : null
-
 }
 
 </script>
@@ -140,9 +141,8 @@ function handleReply(e) {
             </Transition>
         </div>
         <!-- reply icon for non current user message -->
-        <button v-if="!isCurrentUser" @click="handleReply">
+        <button v-if="!isCurrentUser" @click="chat.setMessageToReplyTo(message)">
             <ReplyIcon class="fill-transparent hover:fill-black stroke-black "></ReplyIcon>
-
         </button>
 
     </div>
