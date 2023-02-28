@@ -13,6 +13,7 @@ class CheckIfUserIsPresentAction
      * Check if user is present or not
      *
      * @param \App\Models\User $user
+     * @param \App\Models\Conversation $conversation
      * @return bool
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Pusher\ApiErrorException

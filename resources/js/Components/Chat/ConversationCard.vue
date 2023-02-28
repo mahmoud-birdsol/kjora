@@ -48,7 +48,7 @@ const active = computed(() => {
                 </div>
             </div>
             <div class="flex w-full gap-4">
-                <p class="text-sm text-white truncate ">{{ conversation.latest_message.body }}</p>
+                <p class="text-sm text-white truncate ">{{ conversation.latest_message?.body }}</p>
             </div>
         </div>
     </Link>

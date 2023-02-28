@@ -19,7 +19,7 @@ Broadcast::channel('users.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('users.chat.{id}', function ($user, $id) {
-    return (int)$user->id === (int)$id;
+    return auth()->check();
 });
 
 Broadcast::channel('users.comment.{id}', function ($user, $id) {
