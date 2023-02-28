@@ -142,7 +142,8 @@ class Message extends Model implements HasMedia
             get: fn($value) => $this->getMedia('attachments')->map(function (MediaLibrary $media) {
                 return [
                     'original_url' => $media->original_url,
-                    'mime_type' => $media->type
+                    'mime_type' => $media->type,
+                    'file_name' => $media->file_name
                 ];
             })
         );
