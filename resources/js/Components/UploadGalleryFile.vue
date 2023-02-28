@@ -1,9 +1,9 @@
 <script setup>
-import { useForm } from '@inertiajs/inertia-vue3';
+import {useForm} from '@inertiajs/inertia-vue3';
 import Modal from '@/Components/Modal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { XMarkIcon, PlusCircleIcon } from '@heroicons/vue/24/outline';
-import { ref, onMounted, watch } from 'vue';
+import {XMarkIcon, PlusCircleIcon} from '@heroicons/vue/24/outline';
+import {ref, onMounted, watch} from 'vue';
 import InputError from '@/Components/InputError.vue';
 import FadeInTransition from './FadeInTransition.vue';
 
@@ -63,7 +63,6 @@ const isLoading = ref(false);
 const isDisabled = ref(false);
 
 
-
 const selectNewPhoto = () => {
     photoInput.value.click();
 };
@@ -71,7 +70,8 @@ const selectNewPhoto = () => {
 const updatePhotoPreview = () => {
     if (!photoInput.value.files.length) {
         return
-    };
+    }
+    ;
 
     Array.from(photoInput.value.files).forEach((file, i) => {
         const reader = new FileReader();
@@ -92,7 +92,8 @@ const removePhoto = (i) => {
 const upload = () => {
     if (!photoInput.value.files.length) {
         return
-    };
+    }
+
     isLoading.value = true;
     isDisabled.value = true;
 
@@ -132,13 +133,13 @@ function reset(e) {
                 <!-- input -->
                 <div class="max-w-[300px] sm:px-20 w-full">
                     <input ref="photoInput" type="file" multiple accept="video/*,image/*" class="hidden"
-                        @change="updatePhotoPreview">
+                           @change="updatePhotoPreview">
 
                     <div class="flex items-center justify-center mb-6">
                         <button type="button" :disabled="isDisabled"
-                            class="inline-flex items-center p-4 text-white bg-black border border-transparent rounded-full shadow-sm enabled: enabled:hover:bg-black enabled:focus:outline-none enabled:focus:ring-2 enabled:focus:ring-black enabled:focus:ring-offset-2 disabled:bg-stone-500"
-                            @click.prevent="selectNewPhoto">
-                            <PlusCircleIcon class="w-5 h-5" />
+                                class="inline-flex items-center p-4 text-white bg-black border border-transparent rounded-full shadow-sm enabled: enabled:hover:bg-black enabled:focus:outline-none enabled:focus:ring-2 enabled:focus:ring-black enabled:focus:ring-offset-2 disabled:bg-stone-500"
+                                @click.prevent="selectNewPhoto">
+                            <PlusCircleIcon class="w-5 h-5"/>
                         </button>
                     </div>
                 </div>
@@ -148,15 +149,15 @@ function reset(e) {
                     <div class="relative grid grid-cols-3 gap-2">
                         <template v-for="(fileUrl, index) in previewImageUrls" :key="index">
                             <div v-if="fileUrl.startsWith('data:image') || fileUrl.startsWith('data:video')"
-                                class="relative">
+                                 class="relative">
                                 <img v-if="fileUrl.startsWith('data:image')" :src="fileUrl" alt=""
-                                    class="object-contain w-full h-full rounded-lg aspect-square">
+                                     class="object-contain w-full h-full rounded-lg aspect-square">
                                 <video v-if="fileUrl.startsWith('data:video')" :src="fileUrl" alt=""
-                                    class="object-cover w-full h-full rounded-lg aspect-square" controls />
+                                       class="object-cover w-full h-full rounded-lg aspect-square" controls/>
                                 <button @click.prevent="removePhoto(index)"
-                                    class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                                        class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
                                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
-                                        <XMarkIcon class="w-5 h-5 text-stone-800" />
+                                        <XMarkIcon class="w-5 h-5 text-stone-800"/>
                                     </div>
                                 </button>
                             </div>
@@ -164,7 +165,7 @@ function reset(e) {
                         </template>
                         <FadeInTransition>
                             <div v-if="isLoading"
-                                class="absolute inset-0 z-20 grid w-full h-full p-4 bg-stone-400/50 place-content-center ">
+                                 class="absolute inset-0 z-20 grid w-full h-full p-4 bg-stone-400/50 place-content-center ">
 
                             </div>
                         </FadeInTransition>
@@ -181,7 +182,8 @@ function reset(e) {
             </div>
             <div>
                 <div class="justify-self-end text-sm mb-2 text-primary text-center">only videos and images with max size
-                    (2MB) are allowed </div>
+                    (2MB) are allowed
+                </div>
                 <PrimaryButton @click.prevent="upload" :disabled="isDisabled">
                     Upload
                 </PrimaryButton>

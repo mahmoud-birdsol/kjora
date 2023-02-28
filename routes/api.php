@@ -59,3 +59,10 @@ Route::get('gallery/comments', [CommentController::class, 'index'])
 Route::post('gallery/comments', [CommentController::class, 'store'])
     ->middleware('auth:sanctum')
     ->name('api.gallery.comments.store');
+
+
+Route::post('/elvis-has-left-the-building', function (Request $request) {
+    $request->user()->forceFill([
+        'last_seen_at' => now(),
+    ])->save();
+})->middleware('auth:sanctum')->name('api.user.left');

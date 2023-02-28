@@ -72,6 +72,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'accepted_cookie_policy_at',
         'preferred_foot',
         'rating',
+        'last_seen_at',
     ];
 
     /**
@@ -101,6 +102,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'accepted_privacy_policy_at' => 'datetime',
         'accepted_cookie_policy_at' => 'datetime',
         'rating' => 'float',
+        'last_seen_at' => 'datetime',
     ];
 
     /**
@@ -416,6 +418,26 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
                 Storage::disk($this->profilePhotoDisk())->delete($previous);
             }
         });
+    }
+
+    /**
+     * Get the users reviews to other players
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reviewerReviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'reviewer_id');
+    }
+
+    /**
+     * Get the users reviews to other players
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function playerReviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'player_id');
     }
 
     /**

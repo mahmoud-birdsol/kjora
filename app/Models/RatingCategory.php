@@ -46,6 +46,6 @@ class RatingCategory extends Model
             table: 'review_rating_category',
             foreignPivotKey: 'rating_category_id',
             relatedPivotKey: 'review_id'
-        )->using(ReviewRatingCategory::class);
+        )->using(ReviewRatingCategory::class)->withPivot('value');
     }
 }

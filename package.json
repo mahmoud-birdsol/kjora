@@ -37,6 +37,7 @@
         "dayjs": "^1.11.7",
         "element-plus": "^2.2.27",
         "notiwind": "^1.2.6",
+        "pinia": "^2.0.32",
         "unplugin-auto-import": "^0.12.1",
         "unplugin-vue-components": "^0.22.12",
         "vue-chartjs": "^5.2.0"

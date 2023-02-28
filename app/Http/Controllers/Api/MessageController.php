@@ -28,9 +28,9 @@ class MessageController extends Controller
     ): AnonymousResourceCollection {
         $query = $conversation->messages()->orderBy('created_at', 'DESC');
 
-        if ($request->has('search')) {
+        $request->whenFilled('search', function () use ($request, $query) {
             $query->where('body', 'LIKE', '%' . request()->input('search') . '%');
-        }
+        });
 
         return MessageResource::collection($query->paginate(12));
     }
@@ -64,7 +64,7 @@ class MessageController extends Controller
 
         $user = $conversation->users()->whereNot('conversation_user.user_id', $request->user()->id)->first();
 
-        if ($checkIfUserIsPresentAction($user)) {
+        if ($checkIfUserIsPresentAction($user, $conversation)) {
             event(new MessageSentEvent($user, $message));
         } else {
             $user->notify(new NotifyUserOfChatMessageNotification($user, $request->user(), $conversation));

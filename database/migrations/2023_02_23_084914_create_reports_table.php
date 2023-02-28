@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('report_option_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('report_option_id')->nullable()->constrained()->references('id')->on('report_options')->nullOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->morphs('reportable');
             $table->text('body')->nullable();
