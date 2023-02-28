@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\RatingCategory;
 use App\Models\Review;
 use App\Models\ReviewRatingCategory;
+use App\Notifications\NotifyUserOfRatingSubmittedNotification;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -28,8 +30,7 @@ class PlayerReviewController extends Controller
                     'ratingCategory' => $ratingCategory->first()->name,
                     'value' => (double)$ratingCategory->sum('pivot.value') / $ratingCategoriesCount
                 ];
-            });
-
+            })->values();
 
         return Inertia::render('Reviews/Show', [
             'review' => $review->load('player'),
@@ -40,7 +41,12 @@ class PlayerReviewController extends Controller
         ]);
     }
 
-    public function store(Request $request, Review $review)
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Review $review
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request, Review $review): RedirectResponse
     {
         $value = 0;
         $review->ratingCategories()->detach();
@@ -60,11 +66,13 @@ class PlayerReviewController extends Controller
             'body' => 'Review Submitted Successfully',
         ]);
 
-        $request->user()->update([
+        $review->player->update([
             'rating' => $value / RatingCategory::whereHas('positions', function (Builder $query) use ($review) {
                     $query->where('positions.id', $review->player->position_id);
                 })->count()
         ]);
+
+        $review->player->notify(new NotifyUserOfRatingSubmittedNotification($review->reviewer, $review->player, $review));
 
         return redirect()->back();
     }
