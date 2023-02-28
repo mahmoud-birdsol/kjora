@@ -23,6 +23,16 @@ class UserProfileController extends Controller
         /** @var \App\Models\User $user */
         $user = $request->user()->load('club');
 
+        $ratingCategoriesCount = $request->user()->playerReviews->count();
+
+        $playerRating = $request->user()->playerReviews->flatMap->ratingCategories->groupBy('name')
+            ->map(function ($ratingCategory) use ($ratingCategoriesCount) {
+                return [
+                    'ratingCategory' => $ratingCategory->first()->name,
+                    'value' => (double)$ratingCategory->sum('pivot.value') / $ratingCategoriesCount
+                ];
+            })->values();
+
 
         $media = $user->getMedia('gallery')->map(function (MediaLibrary $media) {
             return [
@@ -37,7 +47,8 @@ class UserProfileController extends Controller
 
         return Inertia::render('Profile/Show', [
             'user' => $user,
-            'media' => $media
+            'media' => $media,
+            'playerRating' => $playerRating
         ]);
     }
 

@@ -74,9 +74,20 @@ class PlayerController extends Controller
             ];
         });
 
+        $ratingCategoriesCount = $user->playerReviews->count();
+
+        $playerRating = $user->playerReviews->flatMap->ratingCategories->groupBy('name')
+            ->map(function ($ratingCategory) use ($ratingCategoriesCount) {
+                return [
+                    'ratingCategory' => $ratingCategory->first()->name,
+                    'value' => (double)$ratingCategory->sum('pivot.value') / $ratingCategoriesCount
+                ];
+            })->values();
+
         return Inertia::render('Player/Show', [
             'player' => $user,
-            'media' => $media
+            'media' => $media,
+            'playerRating' => $playerRating
         ]);
     }
 }
