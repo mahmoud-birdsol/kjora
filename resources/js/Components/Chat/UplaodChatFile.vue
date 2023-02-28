@@ -53,10 +53,10 @@ const props = defineProps({
     }
 });
 
-const emit = defineEmits(['close', 'update:modelValue', 'reload']);
+const emit = defineEmits(['close', 'update:modelValue', 'reload','upload']);
 
 const showPreview = ref(false);
-const previewImageUrls = ref([]);
+const filesData = ref([]);
 const photoInput = ref(null);
 const isLoading = ref(false);
 const isDisabled = ref(false);
@@ -72,12 +72,11 @@ const updatePhotoPreview = () => {
     }
     ;
     files.value = Array.from(photoInput.value.files)
-
     files.value.forEach((file, i) => {
         const reader = new FileReader();
         reader.onload = (e) => {
 
-            previewImageUrls.value.push({
+            filesData.value.push({
                 url:e.target.result,
                 name:file.name,
                 type:file.type
@@ -90,11 +89,9 @@ const updatePhotoPreview = () => {
 
 const removePhoto = (i) => {
 
-    previewImageUrls.value.splice(i, 1)
-    console.log(files.value)
+    filesData.value.splice(i, 1)
     files.value.splice(i, 1)
-    console.log(files.value)
-    previewImageUrls.value.length === 0 ? showPreview.value = false : null;
+    filesData.value.length === 0 ? showPreview.value = false : null;
 };
 
 const upload = () => {
@@ -104,14 +101,7 @@ const upload = () => {
 
     isLoading.value = true;
     isDisabled.value = true;
-    console.log(props.modelValue)
-    if(props.modelValue){
-        emit('update:modelValue' ,[...props.modelValue,...previewImageUrls.value] )
-        
-    }else{
-        emit('update:modelValue' ,previewImageUrls.value )
-    }
-
+    emit('upload',files.value ,filesData.value )
     reset()
     // files.value.forEach((file, i) => {
     //     if (file.type.startsWith("image") || file.type.startsWith('video')) {
@@ -129,7 +119,7 @@ const upload = () => {
 };
 
 function reset(e) {
-    previewImageUrls.value = []
+    filesData.value = []
     files.value = []
     isLoading.value = false
     isDisabled.value = false;
@@ -161,7 +151,7 @@ function reset(e) {
                 <!-- preview -->
                 <div v-show="showPreview" class="relative overflow-auto hideScrollBar max-h-80"  v-loading="isLoading">
                  <div class="relative grid grid-cols-3 gap-2">
-                     <template v-for="(fileUrl, index) in previewImageUrls" :key="index">
+                     <template v-for="(fileUrl, index) in filesData" :key="index">
                          <div v-if="fileUrl.url.startsWith('data:image') || fileUrl.url.startsWith('data:video')"
                               class="relative">
                              <img v-if="fileUrl.url.startsWith('data:image')" :src="fileUrl.url" alt=""
