@@ -91,11 +91,8 @@ const logout = () => {
                                 <button
                                     class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
                                     <Avatar :image-url="$page.props.auth.user.avatar_url"
-                                            :username="$page.props.auth.user.name"
-                                            :border="true"
-                                            border-color="primary"
-                                            size="sm"
-                                    />
+                                        :username="$page.props.auth.user.name" :border="true" border-color="primary"
+                                        size="sm" />
                                 </button>
                             </template>
 
@@ -214,16 +211,17 @@ const logout = () => {
 
         <!-- Responsive Navigation Menu -->
         <!-- Responsive Navigation Menu -->
-        <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }"
-            class="transition md:hidden relative overflow-hidden z-50">
-            <div class="fixed top-0 right-0 left-0 bottom-0 bg-black bg-opacity-50"
-                @click="showingNavigationDropdown = false"></div>
-            <div class="pt-2 pb-3 space-y-1 fixed top-0 transition-all duration-1000 bg-primaryDark h-full w-[max(20em,50%)]">
-                <XMarkIcon class="w-5 absolute right-0 m-3 text-white"
-                    @click="showingNavigationDropdown = false" />
+        <div class="fixed top-0 right-0 left-0 bottom-0 bg-black bg-opacity-50 z-40"
+            :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }"
+            @click="showingNavigationDropdown = false"></div>
+        <Transition enter-from-class="-left-full" enter-to-class="left-0" enter-active-class="transition-all duration-700"
+            leave-to-class="-left-full" leave-from-class="left-0" leave-active-class="transition-all duration-700s">
+            <div class="pt-2 pb-3 space-y-1 fixed top-0  bg-black h-full w-[max(20em,50%)] z-50"
+                v-if="showingNavigationDropdown">
+                <XMarkIcon class="w-5 absolute right-0 m-3 text-white" @click="showingNavigationDropdown = false" />
                 <!-- Responsive Settings Options -->
-                <div class="pt-4 pb-1 border-t border-gray-200">
-                    <div class="flex items-center justify-center px-4">
+                <div class="pt-4 pb-1 border-gray-200">
+                    <div class="flex px-4">
                         <div v-if="$page.props.jetstream.managesProfilePhotos" class="mr-3 shrink-0 min-w-max">
                             <Avatar :image-url="$page.props.auth.user.avatar_url" :size="'lg'"
                                 :username="$page.props.auth.user.name" :border="true" />
@@ -248,13 +246,13 @@ const logout = () => {
                             Identity Verification
                         </ResponsiveNavLink>
 
-                        <div class="border-t border-gray-100" />
 
                         <form method="POST" @submit.prevent="logout">
                             <ResponsiveNavLink as="button">
                                 Log Out
                             </ResponsiveNavLink>
                         </form>
+                        <div class="border-t border-gray-100" />
                     </div>
                 </div>
                 <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
@@ -279,7 +277,6 @@ const logout = () => {
                 </ResponsiveNavLink>
 
             </div>
-
-        </div>
+        </Transition>
     </nav>
 </template>
