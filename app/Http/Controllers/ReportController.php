@@ -18,7 +18,7 @@ class ReportController extends Controller
      */
     public function store(ReportRequest $request): RedirectResponse
     {
-        $report = Report::make($request->validated())
+        $report = Report::create($request->validated())
             ->user()
             ->associate($request->user())
             ->save();

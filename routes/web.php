@@ -10,6 +10,7 @@ use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\JoinPlatformController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\PlayerReviewController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserProfileController;
 use App\Models\Country;
@@ -54,6 +55,7 @@ Route::middleware('guest')->resource(
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
+//    'player.review'
 ])->group(function () {
     Route::get('/verification/identity', [
         IdentityVerificationController::class,
@@ -99,6 +101,18 @@ Route::middleware([
             PlayerController::class,
             'show',
         ])->name('player.profile');
+
+        Route::get(
+            'player/review/{review}', [
+                PlayerReviewController::class,
+                'show'
+            ])->name('player.review.show');
+
+        Route::post(
+            'player/review/{review}', [
+                PlayerReviewController::class,
+                'store'
+            ])->name('player.review.store');
 
         /*
          |--------------------------------------------------------------------------
@@ -314,3 +328,6 @@ Route::get('about', function () {
 Route::get('contact', function () {
     return Inertia::render('Contact');
 })->name('contact');
+Route::get('upgrade', function () {
+    return Inertia::render('Upgrade');
+})->name('upgrade');

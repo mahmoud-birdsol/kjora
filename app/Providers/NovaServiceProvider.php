@@ -20,6 +20,7 @@ use App\Nova\Lenses\ActiveAdvertisement;
 use App\Nova\Lenses\ArchivedAdvertisement;
 use App\Nova\Lenses\ExpiringAdvertisement;
 use App\Nova\Lenses\UnverifiedUsers;
+use App\Nova\MediaLibrary;
 use App\Nova\Message;
 use App\Nova\Position;
 use App\Nova\PrivacyPolicy;
@@ -27,6 +28,7 @@ use App\Nova\Rating;
 use App\Nova\RatingCategory;
 use App\Nova\Report;
 use App\Nova\ReportOption;
+use App\Nova\Review;
 use App\Nova\Social;
 use App\Nova\Stadium;
 use App\Nova\TermsAndConditions;
@@ -96,6 +98,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::lens(User::class, UnverifiedUsers::class),
                     MenuItem::resource(Venue::class),
                     MenuItem::resource(Invitation::class),
+                    MenuItem::resource(Review::class),
                 ])->icon('user-group')->collapsable(),
 
                 MenuSection::make('Chat', [
@@ -118,6 +121,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(RatingCategory::class),
                     MenuItem::resource(Label::class),
                     MenuItem::resource(Social::class),
+                    MenuItem::resource(MediaLibrary::class),
                 ])->icon('cog')->collapsable(),
 
                 MenuSection::make('Reports', [

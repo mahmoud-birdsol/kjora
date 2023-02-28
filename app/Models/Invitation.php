@@ -6,6 +6,7 @@ use App\Events\InvitationCreatedEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Invitation extends Model
 {
@@ -75,5 +76,15 @@ class Invitation extends Model
     public function invitedPlayer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'invited_player_id');
+    }
+
+    /**
+     * Get the invitations reviews
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'invitation_id');
     }
 }

@@ -3,28 +3,28 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class RatingCategory extends Resource
+class Review extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\RatingCategory>
+     * @var class-string<\App\Models\Review>
      */
-    public static $model = \App\Models\RatingCategory::class;
+    public static $model = \App\Models\Review::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -32,7 +32,7 @@ class RatingCategory extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name',
+        'id',
     ];
 
     /**
@@ -46,20 +46,40 @@ class RatingCategory extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Name')
+            BelongsTo::make('Reviewer', 'reviewer', User::class)
                 ->showOnPreview()
                 ->sortable()
-                ->required()
-                ->rules('required', 'string', 'max:255'),
+                ->filterable()
+                ->rules([
+                    'required',
+                    'exists:users,id'
+                ]),
 
-            Textarea::make('Description')
+            BelongsTo::make('Player', 'player', User::class)
                 ->showOnPreview()
+                ->sortable()
+                ->filterable()
+                ->rules([
+                    'required',
+                    'exists:users,id'
+                ]),
+
+            BelongsTo::make('Invitation', 'invitation', Invitation::class)
+                ->showOnPreview()
+                ->sortable()
+                ->filterable()
+                ->rules([
+                    'required',
+                    'exists:invitations,id'
+                ]),
+
+            DateTime::make('Reviewed At')
                 ->nullable()
-                ->rules('nullable'),
+                ->sortable()
+                ->filterable()
+                ->showOnPreview(),
 
-            BelongsToMany::make('Positions'),
-
-            BelongsToMany::make('Reviews')->fields(function () {
+            BelongsToMany::make('Rating Categories')->fields(function () {
                 return [
                     Number::make('Value')
                         ->rules([

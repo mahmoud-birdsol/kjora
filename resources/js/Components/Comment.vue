@@ -7,7 +7,6 @@
                 border-color="primary" />
         </div>
         <!-- comment information col 2 -->
-        <!-- TODO:  HIEGHT OF THE After element equal to offset between comment image and image of last reply on this comment  -->
         <div class="flex flex-col gap-1 relative isolate  z-[5] " :class="[guidesClassesBefore, guidesClassesAfter]">
             <!-- user information & comment time row 1-->
             <div class="flex flex-col xs:flex-row w-full justify-between">
@@ -40,20 +39,14 @@
                 <button
                     class="p-1 enabled:hover:underline hover:underline-offset-4 transition-all duration-150">Like</button>
             </div>
-            <!-- view replies button row 4 -->
-            <button v-show="hasReplies" @click="toggleRepliesView"
-                class="flex w-full text-sm gap-2 justify-start  text-stone-500 enabled:hover:underline hover:underline-offset-4 transition-all duration-300  ">
-                {{ showReplies ? 'hide' : 'view' }} {{ comment.replies?.length }} replies
-            </button>
 
-
-            <!-- replies related to this comment row 5 -->
+            <!-- replies related to this comment row 4 -->
             <div v-show="showReplies" class="mt-2">
                 <template v-for="(reply, index) in comment.replies" :key="reply.id">
                     <Comment @addedReply="handleAddedReply" :comment="reply" />
                 </template>
             </div>
-            <!-- new reply form row 6 -->
+            <!-- new reply form row 5 -->
             <div v-show="showReplyInput" class="flex flex-row p-3 items-center self-end w-full gap-x-3 ">
                 <button>
                     <FaceSmileIcon class="w-6 text-neutral-400" />
@@ -65,11 +58,18 @@
                         class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:right-1 focus:ring-primary  "></textarea>
                 </div>
 
-                <button @click="addReply" :disabled="false" class="p-1 group ">
+                <button @click="addReply" :disabled="isSending" class="p-1 group ">
 
-                    <PaperAirplaneIcon class="w-5 " :class="false ? 'text-neutral-400' : 'text-neutral-900'" />
+                    <PaperAirplaneIcon class="w-5 group-hover:text-neutral-700"
+                        :class="isSending ? 'text-neutral-200' : 'text-neutral-400'" />
                 </button>
             </div>
+            <!-- view replies button row 6 -->
+            <button v-show="hasReplies" @click="toggleRepliesView"
+                class="flex w-full text-sm gap-2 justify-start  text-stone-500 enabled:hover:underline hover:underline-offset-4 transition-all duration-300  ">
+                {{ showReplies ? 'hide' : 'view' }} {{ comment.replies?.length }} replies
+            </button>
+
         </div>
     </div>
 </template>
@@ -79,7 +79,8 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 import Avatar from './Avatar.vue';
 import { computed, onBeforeMount, ref, watch } from 'vue';
-import { FaceSmileIcon, PaperAirplaneIcon } from '@heroicons/vue/24/outline';
+import { FaceSmileIcon } from '@heroicons/vue/24/outline';
+import { PaperAirplaneIcon } from '@heroicons/vue/24/solid';
 import { usePage } from '@inertiajs/inertia-vue3';
 const props = defineProps(['comment'])
 onBeforeMount(() => {
@@ -93,6 +94,7 @@ const showReplies = ref(false)
 const hasReplies = computed(() => props.comment.replies && props.comment.replies.length > 0);
 const newReply = ref(null)
 const showReplyInput = ref(false)
+const isSending = ref(false)
 defineExpose({
     showReplies
 })
@@ -105,7 +107,7 @@ const guidesClassesBefore = computed(() => {
     return hasReplies.value ? 'before:absolute  before:-left-9   before:w-px   before:bg-stone-200  before:z-[1] before:top-0 before:bottom-[8px]   '
         : ' '
 }); const guidesClassesAfter = computed(() => {
-    return (hasReplies.value) ? !showReplies.value ? ' after:absolute after:h-px after:w-8  after:bg-stone-200  after:z-[-1] after:-left-9 after:bottom-[8px] ' : 'after:absolute after:h-px after:w-[50%]  after:bg-stone-200  after:z-[-1] after:-left-9 after:bottom-[8px]' : '';
+    return (hasReplies.value) ? !showReplies.value ? ' after:absolute after:h-px after:w-8  after:bg-stone-200  after:z-[-1] after:-left-9 after:bottom-[8px] ' : 'after:absolute after:h-px after:w-8  after:bg-stone-200  after:z-[-1] after:-left-9 after:bottom-[8px]' : '';
 }); const guidesClassesAfter2 = computed(() => {
     return props.comment.parent_id ?
         ' after:absolute after:h-px after:w-8  after:bg-stone-200  after:z-[-1] after:-left-9 after:top-5 ' : '';
@@ -115,6 +117,7 @@ function toggleRepliesView() {
 }
 function addReply() {
     if (!newReply.value || newReply.value.trim() === '') return
+    isSending.value = true;
     sendReply()
     showReplyInput.value = false
     emit('addedReply')
@@ -135,6 +138,7 @@ function sendReply() {
         parent_id: props.comment.id
     }).then(res => {
         newReply.value = ''
+        isSending.value = false;
     }).catch(err => console.error(err))
 }
 function handleReplyClicked(e) {

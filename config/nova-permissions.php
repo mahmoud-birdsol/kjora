@@ -842,5 +842,41 @@ return [
             'description' => 'Can resolve report',
             'group' => 'Report',
         ],
+
+        /*
+      |--------------------------------------------------------------------------
+      | Reviews.
+      |--------------------------------------------------------------------------
+      */
+
+        'view reviews' => [
+            'display_name' => 'View reviews',
+            'description' => 'Can view reviews',
+            'group' => 'Review',
+        ],
+
+        'create reviews' => [
+            'display_name' => 'Create reviews',
+            'description' => 'Can create reviews',
+            'group' => 'Review',
+        ],
+
+        'edit reviews' => [
+            'display_name' => 'Edit reviews',
+            'description' => 'Can edit reviews',
+            'group' => 'Review',
+        ],
+
+        'delete reviews' => [
+            'display_name' => 'Delete reviews',
+            'description' => 'Can delete reviews',
+            'group' => 'Review',
+        ],
+
+        'resolve reviews' => [
+            'display_name' => 'Resolve reviews',
+            'description' => 'Can resolve reviews',
+            'group' => 'Review',
+        ],
     ]
 ];

@@ -3,21 +3,21 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\MorphMany;
+use Laravel\Nova\Fields\MorphTo;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class RatingCategory extends Resource
+class MediaLibrary extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\RatingCategory>
+     * @var class-string<\App\Models\MediaLibrary>
      */
-    public static $model = \App\Models\RatingCategory::class;
+    public static $model = \App\Models\MediaLibrary::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -32,7 +32,7 @@ class RatingCategory extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name',
+        'id',
     ];
 
     /**
@@ -46,28 +46,28 @@ class RatingCategory extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Name')
-                ->showOnPreview()
-                ->sortable()
-                ->required()
-                ->rules('required', 'string', 'max:255'),
+            Text::make('Collection Name')->rules('required')->sortable()->showOnPreview(),
 
-            Textarea::make('Description')
-                ->showOnPreview()
-                ->nullable()
-                ->rules('nullable'),
+            MorphTo::make('Model')->types([
+                User::class,
+                Club::class,
+                Advertisement::class,
+                Message::class,
+                Social::class
+            ])->rules('required')->sortable()->showOnPreview()->filterable(),
 
-            BelongsToMany::make('Positions'),
+            Text::make('Name')->rules('required')->sortable()->showOnPreview(),
 
-            BelongsToMany::make('Reviews')->fields(function () {
-                return [
-                    Number::make('Value')
-                        ->rules([
-                            'required',
-                            'max:5'
-                        ])
-                ];
-            })
+            Text::make('File Name')->rules('required')->sortable()->showOnPreview(),
+
+            Text::make('Mime Type')->rules('required')->sortable()->showOnPreview(),
+
+            Text::make('Disk')->rules('required')->sortable()->showOnPreview(),
+
+            Text::make('Conversions Disk')->nullable()->sortable()->showOnPreview(),
+
+            Number::make('Size')->rules('required')->sortable()->showOnPreview(),
+
         ];
     }
 

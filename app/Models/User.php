@@ -245,7 +245,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     }
 
     /**
-     * Check if the user is favofited by the currently authenticated user.
+     * Check if the user is favorited by the currently authenticated user.
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
@@ -405,7 +405,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
      * @param \Illuminate\Http\UploadedFile $photo
      * @return void
      */
-    public function updateProfilePhoto(UploadedFile $photo)
+    public function updateProfilePhoto(UploadedFile $photo): void
     {
         tap($this->profile_photo_path, function ($previous) use ($photo) {
             $this->forceFill([
@@ -421,11 +421,31 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     }
 
     /**
+     * Get the users reviews to other players
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reviewerReviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'reviewer_id');
+    }
+
+    /**
+     * Get the users reviews to other players
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function playerReviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'player_id');
+    }
+
+    /**
      * The channels the user receives notification broadcasts on.
      *
      * @return string
      */
-    public function receivesBroadcastNotificationsOn()
+    public function receivesBroadcastNotificationsOn(): string
     {
         return 'users.' . $this->id;
     }

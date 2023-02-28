@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'verified.email' => \App\Http\Middleware\EnsureEmailIsVerified::class,
 //            \App\Http\Middleware\EnsurePhoneIsVerified::class,
         'verified.identity' => \App\Http\Middleware\EnsureUploadedIdentityVerificationDocuments::class,
+        'player.review' => \App\Http\Middleware\ReviewUserMiddleware::class,
     ];
 }

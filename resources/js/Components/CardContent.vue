@@ -5,7 +5,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="min-h-[500px] flex flex-col justify-between ">
+    <div class="min-h-[500px] flex flex-col gap-4 ">
         <div v-if="props.title">
             <div class="flex justify-center my-4">
                 <h2 class="text-xl text-primary font-bold uppercase">{{ props.title }}</h2>

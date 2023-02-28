@@ -1,14 +1,17 @@
 <script setup>
-import { Head } from '@inertiajs/inertia-vue3';
+import { Head, useForm } from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import HelloUserHeader from '@/Components/HelloUserHeader.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
 import PerformanceTab from '@/Components/PerformanceTab.vue';
 import ProfileGallery from '@/Components/ProfileGallery.vue';
 import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
 import { computed, ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia'
 import FadeInTransition from '../../Components/FadeInTransition.vue';
-
+import Modal from '../../Components/Modal.vue';
+import { ElSlider } from 'element-plus';
+import InputLabel from '@/Components/InputLabel.vue';
 
 const props = defineProps({
     player: null,
@@ -33,6 +36,8 @@ const tabs = computed(() => {
 function reloadMedia() {
     Inertia.reload({ only: ['media'] })
 }
+
+
 </script>
 
 <template>
@@ -67,6 +72,8 @@ function reloadMedia() {
 
             </div>
         </div>
+
+
     </AppLayout>
 </template>
 
