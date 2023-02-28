@@ -28,7 +28,6 @@ class MessageController extends Controller
     ): AnonymousResourceCollection {
         $query = $conversation->messages()->orderBy('created_at', 'DESC');
 
-
         $request->whenFilled('search', function () use ($request, $query) {
             $query->where('body', 'LIKE', '%' . request()->input('search') . '%');
         });

@@ -47,7 +47,7 @@ class Message extends Model implements HasMedia
 //        'attachment',
         'parent',
         'attachments',
-        'user_sender'
+        'message_sender'
     ];
 
     /**
@@ -148,7 +148,7 @@ class Message extends Model implements HasMedia
             })
         );
     }
-    public function userSender(): Attribute
+    public function messageSender(): Attribute
     {
         return Attribute::make(
             get: fn($value) => [
