@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\RatingCategory;
 use App\Models\Review;
+use App\Models\ReviewRatingCategory;
 use App\Services\FlashMessage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -38,13 +39,16 @@ class PlayerReviewController extends Controller
 
     public function store(Request $request, Review $review)
     {
-//        dd($request->all());
         $value = 0;
+        $review->ratingCategories()->detach();
         foreach ($request->input('ratingCategory') as $ratingCategory) {
             $value += $ratingCategory['value'];
-            $review->ratingCategories()->sync([$ratingCategory['id'] => [
+
+            ReviewRatingCategory::create([
+                'review_id' => $review->id,
+                'rating_category_id' => $ratingCategory['id'],
                 'value' => $ratingCategory['value']
-            ]]);
+            ]);
         }
 
 //        $review->update([
