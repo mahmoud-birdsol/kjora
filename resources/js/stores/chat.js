@@ -93,6 +93,7 @@ export const useChat = defineStore('chat', {
                 });
 
                 this.messages = this.messages.concat(response.data.data);
+                console.log(this.messages);
                 this.lastPage = response.data.meta.last_page;
                 this.loading = false;
 

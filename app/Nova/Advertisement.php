@@ -47,8 +47,9 @@ class Advertisement extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
      * @return array
+     * @throws \Exception
      */
     public function fields(NovaRequest $request)
     {
