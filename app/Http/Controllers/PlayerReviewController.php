@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\RatingCategory;
 use App\Models\Review;
 use App\Models\ReviewRatingCategory;
-use App\Services\FlashMessage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -21,12 +20,16 @@ class PlayerReviewController extends Controller
      */
     public function show(Request $request, Review $review)
     {
-        $playerRating = $review->player->playerReviews->flatMap->ratingCategories->map(function (RatingCategory $ratingCategory) {
-            return [
-                'ratingCategory' => $ratingCategory->name,
-                'value' => (double)$ratingCategory->pivot->avg('value')
-            ];
-        });
+        $ratingCategoriesCount = $review->player->playerReviews->count();
+
+        $playerRating = $review->player->playerReviews->flatMap->ratingCategories->groupBy('name')
+            ->map(function ($ratingCategory) use ($ratingCategoriesCount) {
+                return [
+                    'ratingCategory' => $ratingCategory->first()->name,
+                    'value' => (double)$ratingCategory->sum('pivot.value') / $ratingCategoriesCount
+                ];
+            });
+
 
         return Inertia::render('Reviews/Show', [
             'review' => $review->load('player'),
@@ -51,9 +54,6 @@ class PlayerReviewController extends Controller
             ]);
         }
 
-//        $review->update([
-//            'reviewed_at' => now()
-//        ]);
 
         $request->session()->flash('message', [
             'type' => 'success',
