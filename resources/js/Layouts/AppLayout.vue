@@ -4,10 +4,34 @@ import SystemMessage from '@/Components/SystemMessage.vue';
 import CopyrightClaim from '@/Components/CopyrightClaim.vue';
 import Navbar from '@/Layouts/Partials/Navbar.vue';
 import RealtimeNotifications from '@/Layouts/Partials/RealtimeNotifications.vue';
+import { Splide, SplideSlide } from "@splidejs/vue-splide";
+
 
 defineProps({
     title: String,
 });
+
+
+const options = {
+    arrows: false,
+    // rewind: true,
+    pagination: true,
+    // drag: "free",
+    type: "loop",
+    focus: "center",
+    perPage: 1,
+    perMove: 1,
+    snap: true,
+    autoplay: true,
+    interval: 2000,
+    autoScroll: {
+        speed: 10,
+        pagination: false,
+    },
+    breakpoints: {
+
+    },
+};
 </script>
 
 <template>
@@ -23,10 +47,22 @@ defineProps({
 
                 <header v-if="$slots.header" class="">
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div class="flex justify-start px-4 sm:px-6 lg:px-8">
+                        <div class="flex flex-col md:flex-row items-center  px-4 sm:px-6 lg:px-8 gap-6">
                             <h1 class="text-2xl sm:text-7xl font-bold text-white uppercase">
                                 <slot name="header" />
                             </h1>
+                            <div class="h-24 w-[28rem]  overflow-hidden rounded-full  bg-red-700 md:ml-auto ">
+
+                                <Splide dir="ltr" class="w-full h-full" :options="options">
+                                    <template v-for="(img, i) in 5" :key="i">
+                                        <SplideSlide>
+                                            <img class="object-cover w-full h-full object-center"
+                                                src="/images/selfie_example.png" alt="">
+                                        </SplideSlide>
+                                    </template>
+                                </Splide>
+
+                            </div>
                         </div>
                     </div>
                 </header>
