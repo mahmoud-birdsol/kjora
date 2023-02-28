@@ -213,7 +213,7 @@ const logout = () => {
         <!-- Responsive Navigation Menu -->
         <!-- Responsive Navigation Menu -->
         <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }"
-            class="transition md:hidden relative overflow-hidden">
+            class="transition md:hidden relative overflow-hidden z-50">
             <div class="fixed top-0 right-0 left-0 bottom-0 bg-black bg-opacity-50"
                 @click="showingNavigationDropdown = false"></div>
             <div class="pt-2 pb-3 space-y-1 fixed top-0 transition-all duration-1000 bg-primaryDark h-full w-[max(20em,50%)]">
