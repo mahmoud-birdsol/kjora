@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer utilities{
+    .contain {
+    contain: paint;
+}
+}
 @charset "UTF-8";
 
 [type="checkbox"],
