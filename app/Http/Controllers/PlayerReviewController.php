@@ -20,20 +20,19 @@ class PlayerReviewController extends Controller
      */
     public function show(Request $request, Review $review)
     {
-        $ratingCategory = $review->player->playerReviews->flatMap->ratingCategories->map(function (RatingCategory $ratingCategory) {
+        $playerRating = $review->player->playerReviews->flatMap->ratingCategories->map(function (RatingCategory $ratingCategory) {
             return [
                 'ratingCategory' => $ratingCategory->name,
-                'value' => $ratingCategory->pivot->value
+                'value' => (double)$ratingCategory->pivot->avg('value')
             ];
         });
-
-//        dd($ratingCategory);
 
         return Inertia::render('Reviews/Show', [
             'review' => $review->load('player'),
             'ratingCategories' => RatingCategory::whereHas('positions', function (Builder $query) use ($review) {
                 $query->where('positions.id', $review->player->position_id);
-            })->get()
+            })->get(),
+            'playerRating' => $playerRating
         ]);
     }
 
