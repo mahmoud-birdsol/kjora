@@ -28,6 +28,7 @@ class MessageController extends Controller
     ): AnonymousResourceCollection {
         $query = $conversation->messages()->orderBy('created_at', 'DESC');
 
+
         $request->whenFilled('search', function () use ($request, $query) {
             $query->where('body', 'LIKE', '%' . request()->input('search') . '%');
         });
@@ -50,7 +51,7 @@ class MessageController extends Controller
         MessageStoreRequest $request,
         Conversation $conversation,
         CheckIfUserIsPresentAction $checkIfUserIsPresentAction
-    ): MessageResource {
+    ) {
         /** @var Message $message */
         $message = $conversation->messages()->create([
             'body' => $request->input('body'),
@@ -58,9 +59,10 @@ class MessageController extends Controller
             'parent_id' => $request->input('parent_id')
         ]);
 
-        if ($request->hasFile('attachments')) {
+        $request->whenFilled('attachments', function () use ($request, $message) {
             $message->addMedia($request->file('attachments'))->toMediaCollection('attachments');
-        }
+
+        });
 
         $user = $conversation->users()->whereNot('conversation_user.user_id', $request->user()->id)->first();
 
