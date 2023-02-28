@@ -98,7 +98,7 @@ const removeFromFavorites = () => {
                         <p class="text-xs text-white opacity-50">@{{ player.username }}</p>
                         <p class="flex items-center space-x-2 text-sm text-white">
                             <span class="scale-[0.7] origin-left flex items-center gap-x-1">
-                                <ElRate v-model="player.rating" size="small" />
+                                <ElRate disabled v-model="player.rating" size="small" />
                                 {{ player.rating }}
                             </span>
                         </p>

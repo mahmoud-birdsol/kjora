@@ -51,7 +51,7 @@ const options = {
                             <h1 class="text-2xl sm:text-7xl font-bold text-white uppercase">
                                 <slot name="header" />
                             </h1>
-                            <div class="h-24 w-[28rem]  overflow-hidden rounded-full  bg-red-700 md:ml-auto ">
+                            <div class="h-24 w-[28rem] max-w-full overflow-hidden rounded-full   md:ml-auto ">
 
                                 <Splide dir="ltr" class="w-full h-full" :options="options">
                                     <template v-for="(img, i) in 5" :key="i">
