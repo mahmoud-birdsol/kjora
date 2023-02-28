@@ -15,14 +15,16 @@ import InputLabel from '@/Components/InputLabel.vue';
 
 const props = defineProps({
     player: null,
-    media: Array
+    media: Array,
+    playerRating: Array
+
 });
 
 const currentTabId = ref(2)
 
 const tabs = computed(() => {
     return [
-        { name: 'performance', id: 1, component: PerformanceTab },
+        { name: 'performance', id: 1, component: PerformanceTab, compProps: { playerRating: props.playerRating } },
         {
             name: 'photos', id: 2, component: ProfileGallery, compProps:
                 { user: props.player, media: props.media, shouldPreview: 'photos' }
