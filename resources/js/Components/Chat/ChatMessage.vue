@@ -40,14 +40,15 @@ const repliedClasses = computed(() => {
 })
 
 function handleReply(e) {
-    emits('reply', props.message)
+    // emits('reply', props.message)
+    chat.setMessageToReplyTo(props.message)
     showOptions.value ? showOptions.value = false : null
 }
 
 </script>
 
 <template>
-    <div v-if="showOptions" class="absolute inset-0 z-10 w-full h-full cursor-pointer " @click="showOptions = false">
+        <div v-if="showOptions" class="fixed inset-0 z-10 w-full h-full cursor-pointer " @click="showOptions = false">
     </div>
     <div :class="alignmentClass + parentClasses" class="w-full ">
 

@@ -46,7 +46,7 @@ const submit = () => {
     }).then((response) => {
         chat.pushNewMessage(response.data.data);
     }).catch(error => {
-        console.log(error.response)
+        console.error(error.response)
     }).finally(() => {
         loading.value = false;
         filePreview.value = null;

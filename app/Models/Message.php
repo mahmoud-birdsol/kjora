@@ -130,7 +130,7 @@ class Message extends Model implements HasMedia
     public function attachment(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->getFirstMedia('attachment')
+            get: fn($value) => $this->getFirstMedia('attachments')
         );
     }
 

@@ -62,7 +62,9 @@ class PlayerController extends Controller
     {
         $user->load('club');
 
-        $media = $user->getMedia('gallery')->map(function (MediaLibrary $media) {
+        $media = $user->getMedia('gallery')->filter(function (MediaLibrary $mediaLibrary) {
+            return $mediaLibrary->whereNull('suspended_at');
+        })->map(function (MediaLibrary $media) {
             return [
                 'id' => $media->id,
                 'url' => $media->original_url,
