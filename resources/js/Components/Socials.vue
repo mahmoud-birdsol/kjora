@@ -14,9 +14,13 @@ let showSocials = ref(false)
 let show = ref(false)
 let url = usePage().props.value.ziggy.url + '/player/' + props.id
 function copy() {
-    navigator.clipboard.writeText(url)
-    show.value = true
-    setTimeout(() => { show.value = false }, 500)
+    navigator.clipboard.writeText(url).then((
+
+    ) => {
+        show.value = true
+
+        setTimeout(() => { show.value = false }, 1000)
+    })
 }
 </script>
 <template>
@@ -37,7 +41,7 @@ function copy() {
 
                 </a>
                 <div class="relative">
-                    <LinkIcon class="h-4 w-4 text-white" @click="copy()" />
+                    <LinkIcon class="h-4 w-4 text-white" @click="copy" />
                     <span class="bg-white text-black text-[8px] font-bold rounded absolute bottom-full p-1"
                         v-if="show">Copied!</span>
                 </div>
