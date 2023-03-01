@@ -21,8 +21,9 @@ defineProps({
 
         <SystemMessage />
 
-        <div class="min-h-screen bg-gradient-to-b from-black to-primaryDark">
-            <div class="min-h-screen flex flex-col justify-between pt-6 sm:pt-0 space-y-4">
+        <div
+            class="min-h-screen bg-gradient-to-b from-black to-primaryDark before:bg-[url(/images/ballkjoura.png)]  relative before:absolute before:inset-0 before:bg-no-repeat before:mix-blend-overlay isolate before:-z-10">
+            <div class="min-h-screen flex flex-col justify-between pt-6 sm:pt-0 space-y-4 ">
                 <Navbar />
 
                 <header v-if="$slots.header" class="">
@@ -31,7 +32,7 @@ defineProps({
                             <h1 class="text-2xl sm:text-7xl font-bold text-white uppercase">
                                 <slot name="header" />
                             </h1>
-                            <slot name="ads" />
+                            <slot v-if="$slots.ads" name="ads" />
                         </div>
                     </div>
                 </header>

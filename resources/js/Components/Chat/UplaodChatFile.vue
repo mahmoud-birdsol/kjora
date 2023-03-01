@@ -176,7 +176,8 @@ function reset(e) {
                                     </div>
                                 </button>
                             </div>
-                            <div v-else-if="fileUrl.type.endsWith('.document')" class="relative flex flex-col gap-4">
+                            <div v-else-if="fileUrl.type.endsWith('.document') || fileUrl.type.startsWith('application/msword')"
+                                class="relative flex flex-col gap-4">
                                 <img class="mx-auto h-52" src="/images/doc.png" />
                                 <p class="truncate text-xs text-gray-400 text-center">{{ fileUrl.name }}</p>
                                 <button @click.prevent="removePhoto(index)"
@@ -194,12 +195,12 @@ function reset(e) {
                         </FadeInTransition>
                     </div>
                     <!-- <FadeInTransition>
-                             <div v-if="isLoading" class="absolute inset-0 top-4 z-20 grid p-4 place-content-center ">
-                                 <div
-                                     class="h-12 border-4 rounded-full border-primary border-t-white aspect-square animate-spin">
-                                 </div>
-                             </div>
-                         </FadeInTransition> -->
+                                     <div v-if="isLoading" class="absolute inset-0 top-4 z-20 grid p-4 place-content-center ">
+                                         <div
+                                             class="h-12 border-4 rounded-full border-primary border-t-white aspect-square animate-spin">
+                                         </div>
+                                     </div>
+                                 </FadeInTransition> -->
                 </div>
 
             </div>

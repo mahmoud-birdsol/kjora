@@ -35,11 +35,14 @@ const props = defineProps({
   }, user: Object
 })
 const emits = defineEmits(['close'])
-const slides = ["01", "02", "03"];
+
 const main = ref();
 const thumbs = ref();
 let showSavePanel = ref(false)
-let showGallery = ref(true)
+const currentMediaUrl = ref(props.media[0].original_url)
+const currentMediaName = ref(props.media[0].file_name)
+
+
 const mainOptions = {
   type: "loop",
   perPage: 1,
@@ -66,16 +69,17 @@ onMounted(() => {
   if (thumbsSplide) {
     main.value?.sync(thumbsSplide);
   }
+
 });
+function handleSplideActive(e) {
+  currentMediaUrl.value = props.media[e.index].original_url
+  currentMediaName.value = props.media[e.index].file_name
+}
 </script>
 <style scoped>
 [some-slider] li.is-active {
   transform: scale(0.9);
   outline: 1px solid rgb(0, 100, 0)
-}
-
-ul {
-  perspective: 500px;
 }
 </style>
 <template>
@@ -92,12 +96,15 @@ ul {
           </div>
         </div>
         <div class="flex gap-2">
-          <ArrowDownTrayIcon class="text-black w-6 cursor-pointer" @click="showSavePanel = true" />
+          <a :href="currentMediaUrl" :download="currentMediaName">
+            <ArrowDownTrayIcon class="text-black w-6 cursor-pointer" @click="showSavePanel = true" />
+          </a>
           <XMarkIcon class="text-black w-6 cursor-pointer" @click="$emit('close')" />
         </div>
       </div>
       <div class="my-4">
-        <Splide aria-labelledby="thumbnail-example-heading" :options="mainOptions" ref="main" :has-track="false">
+        <Splide @splide:moved="handleSplideActive" aria-labelledby="thumbnail-example-heading" :options="mainOptions"
+          ref="main" :has-track="false">
           <div class="splide__arrows">
             <button class="splide__arrow splide__arrow--prev" style="background-color: black !important; opacity: 1"
               aria-label="Next slide" aria-controls="splide01-track">
