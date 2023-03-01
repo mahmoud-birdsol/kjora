@@ -53,7 +53,7 @@ const props = defineProps({
     }
 });
 
-const emit = defineEmits(['close', 'update:modelValue', 'reload','upload']);
+const emit = defineEmits(['close', 'update:modelValue', 'reload', 'upload']);
 
 const showPreview = ref(false);
 const filesData = ref([]);
@@ -77,9 +77,9 @@ const updatePhotoPreview = () => {
         reader.onload = (e) => {
 
             filesData.value.push({
-                url:e.target.result,
-                name:file.name,
-                type:file.type
+                url: e.target.result,
+                name: file.name,
+                type: file.type
             });
             showPreview.value = true;
         };
@@ -101,7 +101,7 @@ const upload = () => {
 
     isLoading.value = true;
     isDisabled.value = true;
-    emit('upload',files.value ,filesData.value )
+    emit('upload', files.value, filesData.value)
     reset()
     // files.value.forEach((file, i) => {
     //     if (file.type.startsWith("image") || file.type.startsWith('video')) {
@@ -111,7 +111,7 @@ const upload = () => {
     //         }).then(() => console.log('uploded')).catch(err => console.error(err)).finally(() => {
     //             if (i === files.value.length - 1) {
     //                 reset()
-    //                 
+    //
     //             }
     //         })
     //     }
@@ -149,61 +149,63 @@ function reset(e) {
                     </div>
                 </div>
                 <!-- preview -->
-                <div v-show="showPreview" class="relative overflow-auto hideScrollBar max-h-80"  v-loading="isLoading">
-                 <div class="relative grid grid-cols-3 gap-2">
-                     <template v-for="(fileUrl, index) in filesData" :key="index">
-                         <div v-if="fileUrl.url.startsWith('data:image') || fileUrl.url.startsWith('data:video')"
-                              class="relative">
-                             <img v-if="fileUrl.url.startsWith('data:image')" :src="fileUrl.url" alt=""
-                                  class="object-cover w-full h-full rounded-lg aspect-square ">
-                             <video v-if="fileUrl.url.startsWith('data:video')" :src="fileUrl.url" alt=""
-                                    class="object-cover w-full h-full rounded-lg aspect-square" controls/>
-                             <button @click.prevent="removePhoto(index)"
-                                     class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
-                                 <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
-                                     <XMarkIcon class="w-5 h-5 text-stone-800"/>
+                <div v-show="showPreview" class="relative overflow-auto hideScrollBar max-h-80" v-loading="isLoading">
+                    <div class="relative grid grid-cols-3 gap-2">
+                        <template v-for="(fileUrl, index) in filesData" :key="index">
+                            <div v-if="fileUrl.url.startsWith('data:image') || fileUrl.url.startsWith('data:video')"
+                                class="relative">
+                                <img v-if="fileUrl.url.startsWith('data:image')" :src="fileUrl.url" alt=""
+                                    class="object-cover w-full h-full rounded-lg aspect-square ">
+                                <video v-if="fileUrl.url.startsWith('data:video')" :src="fileUrl.url" alt=""
+                                    class="object-cover w-full h-full rounded-lg aspect-square" controls />
+                                <button @click.prevent="removePhoto(index)"
+                                    class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                                    <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
+                                        <XMarkIcon class="w-5 h-5 text-stone-800" />
+                                    </div>
+                                </button>
+                            </div>
+                            <div v-else-if="fileUrl.url.startsWith('data:application/pdf')"
+                                class="relative flex flex-col gap-4 ">
+                                <img class="mx-auto h-52" src="/images/pdf.png" />
+                                <p class="truncate text-xs text-gray-400 text-center">{{ fileUrl.name }}</p>
+                                <button @click.prevent="removePhoto(index)"
+                                    class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                                    <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
+                                        <XMarkIcon class="w-5 h-5 text-stone-800" />
+                                    </div>
+                                </button>
+                            </div>
+                            <div v-else-if="fileUrl.type.endsWith('.document')" class="relative flex flex-col gap-4">
+                                <img class="mx-auto h-52" src="/images/doc.png" />
+                                <p class="truncate text-xs text-gray-400 text-center">{{ fileUrl.name }}</p>
+                                <button @click.prevent="removePhoto(index)"
+                                    class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                                    <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
+                                        <XMarkIcon class="w-5 h-5 text-stone-800" />
+                                    </div>
+                                </button>
+                            </div>
+                        </template>
+                        <FadeInTransition>
+                            <div v-if="isLoading"
+                                class="absolute inset-0 z-20 grid w-full h-full p-4 bg-stone-400/50  place-content-center ">
+                            </div>
+                        </FadeInTransition>
+                    </div>
+                    <!-- <FadeInTransition>
+                             <div v-if="isLoading" class="absolute inset-0 top-4 z-20 grid p-4 place-content-center ">
+                                 <div
+                                     class="h-12 border-4 rounded-full border-primary border-t-white aspect-square animate-spin">
                                  </div>
-                             </button>
-                         </div>
-                         <div v-else-if="fileUrl.url.startsWith('data:application/pdf')" class="relative flex flex-col gap-4 ">
-                            <img class="mx-auto h-52" src="/images/pdf.png" />
-                            <p class="truncate text-xs text-gray-400 text-center">{{ fileUrl.name }}</p>
-                            <button @click.prevent="removePhoto(index)"
-                                     class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
-                                 <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
-                                     <XMarkIcon class="w-5 h-5 text-stone-800"/>
-                                 </div>
-                             </button>
-                         </div>
-                         <div v-else-if="fileUrl.type.endsWith('.document')" class="relative flex flex-col gap-4">
-                            <img class="mx-auto h-52" src="/images/doc.png" />
-                            <p class="truncate text-xs text-gray-400 text-center">{{ fileUrl.name }}</p>
-                            <button @click.prevent="removePhoto(index)"
-                                     class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
-                                 <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
-                                     <XMarkIcon class="w-5 h-5 text-stone-800"/>
-                                 </div>
-                             </button>
-                         </div>
-                     </template>
-                     <FadeInTransition>
-                         <div v-if="isLoading"
-                              class="absolute inset-0 z-20 grid w-full h-full p-4 bg-stone-400/50  place-content-center ">
-                         </div>
-                     </FadeInTransition>
-                 </div>
-                 <!-- <FadeInTransition>
-                     <div v-if="isLoading" class="absolute inset-0 top-4 z-20 grid p-4 place-content-center ">
-                         <div
-                             class="h-12 border-4 rounded-full border-primary border-t-white aspect-square animate-spin">
-                         </div>
-                     </div>
-                 </FadeInTransition> -->
+                             </div>
+                         </FadeInTransition> -->
                 </div>
 
             </div>
             <div>
-                <div class="justify-self-end text-sm mb-2 text-primary text-center">only videos and images with max size
+                <div class="justify-self-end text-sm mb-2 text-primary text-center">video, images, PDFs and docs are allowed
+                    with max size
                     (2MB) are allowed
                 </div>
                 <PrimaryButton @click.prevent="upload" :disabled="isDisabled">

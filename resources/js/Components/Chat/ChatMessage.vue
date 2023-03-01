@@ -8,7 +8,9 @@ import { onMounted } from 'vue';
 import dayjs from 'dayjs';
 import MediaPreview from '@/Components/MediaPreview.vue';
 import { useChat } from "../../stores/chat";
-
+import ChatGallery from './ChatGallery.vue';
+import SingleMediaPreview from './SingleMediaPreview.vue';
+import MediaThumbnails from './MediaThumbnails.vue';
 const chat = useChat();
 
 const props = defineProps({
@@ -21,7 +23,7 @@ onMounted(() => {
 })
 const currentUser = usePage().props.value.auth.user
 const showOptions = ref(false)
-
+const showChatGallery = ref(false)
 
 
 const isCurrentUser = computed(() => { return props.message.sender_id === currentUser.id })
@@ -44,6 +46,8 @@ function handleReply(e) {
     chat.setMessageToReplyTo(props.message)
     showOptions.value ? showOptions.value = false : null
 }
+const imagesVideosOnly = props.message.attachments.filter(a => a.mime_type.startsWith('image') || a.mime_type.startsWith('video'))
+const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith('image') && !a.mime_type.startsWith('video'))
 
 </script>
 
@@ -69,36 +73,37 @@ function handleReply(e) {
                         <h4 v-else>{{ currentUser.name }}</h4>
                     </div>
                     <span class="">{{ message.parent?.body }}</span>
-                    <MediaPreview v-if="message.parent.media[0]" :fileType="message.parent.media[0].mime_type"
-                        :filePreview="message.parent.media[0].original_url" :fileName="message.parent.media[0].name" />
+                    <MediaPreview v-if="message.parent.attachments[0]" :fileType="message.parent.attachments[0].mime_type"
+                        :filePreview="message.parent.attachments[0].original_url"
+                        :fileName="message.parent.attachments[0].name" />
                 </div>
                 <!-- media message -->
-                <div v-if="message.attachments" :class="isCurrentUser ? 'text-white' : 'text-stone-800'">
-                    <div v-if="message.attachments[0]?.mime_type.startsWith('image')">
-                        <img class="object-contain w-52" :src="message.attachments[0]?.original_url" alt="">
+                <template v-if="message.attachments && message.attachments.length === 1">
+                    <SingleMediaPreview :media="message.attachments[0]" :is-current-user="isCurrentUser" />
+                </template>
+                <!-- message.attachments && message.attachments.length > 1 -->
+                <template v-if="message.attachments.length > 1">
+                    <!-- images and videos -->
+                    <div v-if="imagesVideosOnly.length" class="grid grid-cols-2 grid-rows-2 gap-2 place-items-center ">
+                        <MediaThumbnails :media="imagesVideosOnly[0]" />
+                        <MediaThumbnails :media="imagesVideosOnly[1]" />
+                        <MediaThumbnails :media="imagesVideosOnly[2]" />
+                        <div class="relative w-28 aspect-square" @click="showChatGallery = true">
+                            <MediaThumbnails :media="imagesVideosOnly[4]" />
+                            <div
+                                class="absolute inset-0 bg-stone-700/70  text-white font-bold rounded-md grid place-items-center cursor-pointer">
+                                + {{ imagesVideosOnly.length - 3 }} more... </div>
+                        </div>
                     </div>
-                    <div v-else-if="message.attachments[0]?.mime_type.startsWith('video')">
-                        <video controls class="h-full">
-                            <source :src="message.attachments[0].original_url" :type="message.attachments[0].mime_type">
-                        </video>
+                    <!-- docs and PDFs   -->
+                    <div v-if="otherMedia.length" class="flex flex-col gap-1 mt-2">
+                        <template v-for="(item, index) in otherMedia" :key="item.id">
+                            <SingleMediaPreview :media="item" :is-current-user="isCurrentUser" />
+                        </template>
                     </div>
-                    <div v-else-if="message.attachments[0]?.mime_type.endsWith('.document') || message.attachments[0]?.mime_type.startsWith('application/msword')"
-                        class="flex justify-between gap-2 items-center" :class="isCurrentUser ? 'flex-row-reverse' : null">
-                        <img class="w-5 h-7 object-contain" src="/images/doc.png" />
-                        <p class="truncate">{{ message.attachments[0].file_name }}</p>
-                        <a :href="message.media[0].original_url" download>
-                            <ArrowDownCircleIcon class="w-10 h-10 cursor-pointer" />
-                        </a>
-                    </div>
-                    <div v-else-if="message.attachments[0]?.mime_type.startsWith('application/pdf')"
-                        class="flex justify-between gap-2 items-center" :class="isCurrentUser ? 'flex-row-reverse' : null">
-                        <img class="w-7 h-7 object-contain" src="/images/pdf.png" />
-                        <p class="truncate">{{ message.attachments[0].file_name }}</p>
-                        <a :href="message.attachments[0].original_url" download>
-                            <ArrowDownCircleIcon class="w-10 h-10 cursor-pointer" />
-                        </a>
-                    </div>
-                </div>
+                    <ChatGallery :show="showChatGallery" @close="showChatGallery = false" :media="imagesVideosOnly"
+                        :user="message.message_sender" />
+                </template>
                 <!-- text message -->
                 <span class="break-words whitespace-pre-wrap ">
                     {{ message.body }}
