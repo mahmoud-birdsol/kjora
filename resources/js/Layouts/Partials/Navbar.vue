@@ -215,7 +215,7 @@ const logout = () => {
             :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }"
             @click="showingNavigationDropdown = false"></div>
         <Transition enter-from-class="-left-full" enter-to-class="left-0" enter-active-class="transition-all duration-700"
-            leave-to-class="-left-full" leave-from-class="left-0" leave-active-class="transition-all duration-700s">
+            leave-to-class="-left-full" leave-from-class="left-0" leave-active-class="transition-all duration-700">
             <div class="pt-2 pb-3 space-y-1 fixed top-0  bg-black h-full w-[max(20em,50%)] z-50"
                 v-if="showingNavigationDropdown">
                 <XMarkIcon class="w-5 absolute right-0 m-3 text-white" @click="showingNavigationDropdown = false" />

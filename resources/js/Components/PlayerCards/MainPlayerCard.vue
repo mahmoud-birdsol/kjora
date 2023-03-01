@@ -1,11 +1,12 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { Link, useForm, usePage } from '@inertiajs/inertia-vue3';
 import { ElRate } from 'element-plus';
 import Avatar from '@/Components/Avatar.vue';
 import { HeartIcon, PencilIcon } from '@heroicons/vue/20/solid'
 import { ChevronDoubleRightIcon, FlagIcon, HeartIcon as HeartIconOutline, MapPinIcon } from '@heroicons/vue/24/outline';
 import ReportModal from "@/Components/ReportModal.vue";
+import Socials from '@/Components/Socials.vue';
 
 const props = defineProps({
     player: {
@@ -104,7 +105,13 @@ const removeFromFavorites = () => {
                         </p>
                     </div>
                 </div>
-                <div>
+
+                <div class="flex flex-col gap-1 items-center">
+                    <div class="flex space-x-2 text-white bg-transparent" v-if="showInvite">
+                        <Link :href="route('invitation.create', player.id)" class="text-sm text-white">Send Invitation
+                        <ChevronDoubleRightIcon class="inline w-4 h-4 text-white" />
+                        </Link>
+                    </div>
                     <p class="text-sm font-bold text-white">{{ player.preferred_foot === 'right' ? 'R' : 'L' }}</p>
                 </div>
             </div>
@@ -140,12 +147,7 @@ const removeFromFavorites = () => {
                     <MapPinIcon class="inline w-4 h-4 text-white" />
                     Cairo
                 </p>
-
-                <div class="flex space-x-2" v-if="showInvite">
-                    <Link :href="route('invitation.create', player.id)" class="text-sm text-white">Send Invitation
-                    <ChevronDoubleRightIcon class="inline w-4 h-4 text-white" />
-                    </Link>
-                </div>
+                <Socials :id="player.id" />
             </div>
 
 
@@ -156,8 +158,10 @@ const removeFromFavorites = () => {
                         <button>
                             <FlagIcon class="h-4 w-4 text-red-500" />
                         </button>
+
                     </template>
                 </ReportModal>
+
             </div>
         </div>
     </div>
