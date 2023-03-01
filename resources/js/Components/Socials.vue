@@ -5,6 +5,7 @@ import Facebook from "@/Components/Icons/Facebook.vue";
 import Twitter from "@/Components/Icons/Twitter.vue";
 import Linkedin from "@/Components/Icons/Linkedin.vue";
 import { ShareIcon, LinkIcon } from '@heroicons/vue/24/outline'
+
 let props = defineProps({
     id: {
         required: true,
