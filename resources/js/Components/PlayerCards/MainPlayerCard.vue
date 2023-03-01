@@ -142,10 +142,10 @@ const removeFromFavorites = () => {
                     <MapPinIcon class="inline w-4 h-4 text-white" />
                     Cairo
                 </p>
-                <div class="flex gap-2 items-center">
+                <div class="flex gap-4 items-center">
                     <div class="flex space-x-2 text-white bg-transparent" v-if="showInvite">
                         <Link :href="route('invitation.create', player.id)" class="text-sm text-white">Send Invitation
-                        <ChevronDoubleRightIcon class="inline w-4 h-4 text-white" />
+                        <!-- <ChevronDoubleRightIcon class="inline w-4 h-4 text-white" /> -->
                         </Link>
                     </div>
                     <Socials :id="player.id" />
