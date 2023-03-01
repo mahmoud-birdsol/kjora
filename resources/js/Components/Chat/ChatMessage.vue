@@ -79,7 +79,8 @@ const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith
                 </div>
                 <!-- media message -->
                 <template v-if="message.attachments && message.attachments.length === 1">
-                    <SingleMediaPreview :media="message.attachments[0]" :is-current-user="isCurrentUser" />
+                    <SingleMediaPreview @click="showChatGallery = true" :media="message.attachments[0]"
+                        :is-current-user="isCurrentUser" />
                 </template>
                 <!-- message.attachments && message.attachments.length > 1 -->
                 <template v-if="message.attachments.length > 1">
