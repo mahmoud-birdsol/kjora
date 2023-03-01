@@ -141,8 +141,9 @@ class Message extends Model implements HasMedia
         return Attribute::make(
             get: fn($value) => $this->getMedia('attachments')->map(function (MediaLibrary $media) {
                 return [
+                    'id' => $media->id,
                     'original_url' => $media->original_url,
-                    'mime_type' => $media->type,
+                    'mime_type' => $media->mime_type,
                     'file_name' => $media->file_name
                 ];
             })

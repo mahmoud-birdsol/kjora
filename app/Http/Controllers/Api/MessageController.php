@@ -45,6 +45,8 @@ class MessageController extends Controller
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Pusher\ApiErrorException
      * @throws \Pusher\PusherException
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
      */
     public function store(
         MessageStoreRequest $request,
@@ -58,11 +60,12 @@ class MessageController extends Controller
             'parent_id' => $request->input('parent_id')
         ]);
 
-        $request->whenFilled('attachments', function () use ($request, $message) {
-            foreach ($request->input('attachments') as $attachment) {
+
+        if (!is_null($request->attachments)) {
+            foreach ($request->attachments as $attachment) {
                 $message->addMedia($attachment)->toMediaCollection('attachments');
             }
-        });
+        }
 
         $user = $conversation->users()->whereNot('conversation_user.user_id', $request->user()->id)->first();
 
