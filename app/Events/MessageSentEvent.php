@@ -64,7 +64,10 @@ class MessageSentEvent implements ShouldBroadcast
      */
     public function broadcastWith(): array
     {
-        $data = $this->message;
+        $data = $this->message->withoutEagerLoad([
+            'media',
+            'sender'
+        ])->first();
 
         return $data->toArray();
     }
