@@ -71,6 +71,7 @@ const maxWidthClass = computed(() => {
         'lg': 'sm:max-w-lg',
         'xl': 'sm:max-w-xl',
         '2xl': 'sm:max-w-2xl',
+        '6xl': 'sm:max-w-6xl',
         '90': 'sm:max-w-2xl',
     }[props.maxWidth];
 });
@@ -78,7 +79,7 @@ const maxWidthClass = computed(() => {
 
 <template>
     <teleport to="body">
-        <transition leave-active-class="duration-200">
+        <transition leave-active-class="duration-200 ">
             <div v-show="show" class="fixed inset-0 z-50 px-4  py-6 overflow-y-auto sm:px-0" scroll-region>
                 <transition enter-active-class="duration-300 ease-out" enter-from-class="opacity-0"
                     enter-to-class="opacity-100" leave-active-class="duration-200 ease-in" leave-from-class="opacity-100"
