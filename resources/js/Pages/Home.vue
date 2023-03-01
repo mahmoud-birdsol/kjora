@@ -22,6 +22,7 @@ import {
 const props = defineProps({
     players: Object,
     positions: Array,
+    advertisements: Array
 });
 
 const form = useForm({
@@ -66,7 +67,7 @@ const options = {
     // rewind: true,
     pagination: true,
     // drag: "free",
-    type: "loop",
+    type: props.advertisements.length > 1 ? "loop" : 'slide',
     focus: "center",
     perPage: 1,
     perMove: 1,
@@ -92,10 +93,10 @@ const options = {
         </template>
         <template #ads>
 
-            <Splide dir="ltr" class=" h-[4rem] w-[32rem] max-w-full self-end  rounded-full md:ml-auto" :options="options">
-                <template v-for="(img, i) in 5" :key="i">
+            <Splide dir="ltr" class=" h-[4rem] w-[32rem] max-w-full self-end overflow-hidden  rounded-full md:ml-auto" :options="options">
+                <template v-for="(advertisement, i) in advertisements" :key="i">
                     <SplideSlide class="h-full">
-                        <img class="object-cover h-full " src="/images/redbull.png" alt="">
+                        <img class="object-cover h-full " :src="advertisement" alt="">
                     </SplideSlide>
                 </template>
             </Splide>
