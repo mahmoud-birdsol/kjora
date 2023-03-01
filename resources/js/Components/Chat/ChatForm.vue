@@ -114,17 +114,18 @@ const removePhoto = (i) => {
 <template>
     <div class="grid gap-y-4 rounded-2xl bg-white p-6">
         <!--
-                                The gray section to display attachment or a message I am replying to.
-                                 -->
+                                                                                                                        The gray section to display attachment or a message I am replying to.
+                                                                                                                         -->
         <Transition enter-from-class="opacity-0" enter-to-class="opacity-100"
             enter-active-class="transition-all duration-150 ease-out"
             leave-active-class="transition-all duration-150 ease-in" leave-from-class="opacity-100"
             leave-to-class="opacity-0">
             <div v-if="chat.repliedMessage"
-                class="flex w-full flex-row items-center justify-between rounded-xl bg-gray-100 px-12 py-2 text-sm">
+                class="flex w-full flex-row items-center group justify-between relative rounded-xl bg-gray-100 px-2 py-2 text-sm">
                 <div v-if="chat.repliedMessage" class="flex justify-start items-center space-x-4">
-                    <Avatar :image-url="chat.repliedMessage.sender.avatar_url" :username="chat.repliedMessage.sender.name"
-                        :border="true" border-color="primary" size="sm" />
+                    <Avatar :image-url="chat.repliedMessage.message_sender.avatar_url"
+                        :username="chat.repliedMessage.message_sender.name" :border="true" border-color="primary"
+                        size="sm" />
                     <div class="font-bold capitalize text-primary">
 
                         {{
@@ -132,21 +133,31 @@ const removePhoto = (i) => {
                             ? $page.props.auth.user.name
                             : player.name
                         }}
-                        <p class="text-gray-600 text-xs font-normal ">@{{ $page.props.auth.user.username }}</p>
+                        <p class="text-gray-600 text-xs font-normal ">@{{ chat.repliedMessage.message_sender.username }}</p>
 
                     </div>
-
+                    <!-- <div class="max-w-[70ch] truncate">{{ chat.repliedMessage.body }}</div> -->
+                    <div class="max-w-[40ch] break-words truncate">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Sed tempore
+                        mollitia nisi perspiciatis, minus voluptate corrupti maxime cumque! Corrupti provident incidunt
+                        delectus illo saepe fugiat labore velit veniam quae in?</div>
                 </div>
                 <div>
-                    <div class="text-black">
+                    <div class="text-black max-w-[15rem]">
                         <div v-if="chat.repliedMessage.media.length">
                             <MediaPreview :fileType="chat.repliedMessage.media[0].mime_type"
                                 :filePreview="chat.repliedMessage.media[0].original_url"
                                 :fileName="chat.repliedMessage.media[0].name" />
                         </div>
-                        <div>{{ chat.repliedMessage.body }}</div>
+
                     </div>
                 </div>
+                <button @click.prevent="chat.setMessageToReplyTo(null)"
+                    class="absolute group-hover:block hidden top-0 left-0 bg-white bg-opacity-90 rounded-br-xl">
+                    <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
+                        <XMarkIcon class="w-5 h-5 text-stone-800" />
+                    </div>
+                </button>
             </div>
         </Transition>
 
