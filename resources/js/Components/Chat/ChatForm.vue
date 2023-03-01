@@ -40,7 +40,7 @@ const submit = () => {
     if (chat.repliedMessage) {
         form.parent_id = chat.repliedMessage.id;
     }
-
+    console.log(form.attachments)
     axios.post(route('api.messages.store', props.conversation.id), form.data(), {
         headers: {
             'Content-Type': 'multipart/form-data'
@@ -53,6 +53,7 @@ const submit = () => {
         loading.value = false;
         filePreview.value = null;
         form.reset();
+        filesData.value = []
     });
 };
 
@@ -95,14 +96,14 @@ const handleAttachments = (e) => {
     handleFile(file)
 }
 function addFiles(files, filesUrls) {
-    if(form.attachments ){
-        form.attachments = [...form.attachments , ...files]
-        filesData.value = [...filesData.value , ...filesUrls]
-    }else{
+    if (form.attachments) {
+        form.attachments = [...form.attachments, ...files]
+        filesData.value = [...filesData.value, ...filesUrls]
+    } else {
         form.attachments = files
         filesData.value = filesUrls
     }
-    
+
 }
 const removePhoto = (i) => {
     filesData.value.splice(i, 1)
@@ -113,8 +114,8 @@ const removePhoto = (i) => {
 <template>
     <div class="grid gap-y-4 rounded-2xl bg-white p-6">
         <!--
-                The gray section to display attachment or a message I am replying to.
-                 -->
+                                The gray section to display attachment or a message I am replying to.
+                                 -->
         <Transition enter-from-class="opacity-0" enter-to-class="opacity-100"
             enter-active-class="transition-all duration-150 ease-out"
             leave-active-class="transition-all duration-150 ease-in" leave-from-class="opacity-100"
@@ -153,17 +154,18 @@ const removePhoto = (i) => {
             enter-active-class="transition-all duration-150 ease-out"
             leave-active-class="transition-all duration-150 ease-in" leave-from-class="opacity-100"
             leave-to-class="opacity-0">
-            <div v-if="filesData" class="ml-auto overflow-hidden grid grid-cols-4 gap-2 overflow-y-auto max-h-80 hideScrollBar place-items-center">
+            <div v-if="filesData"
+                class="ml-auto overflow-hidden grid grid-cols-4 gap-2 overflow-y-auto max-h-32 hideScrollBar place-items-center">
                 <!-- {{ form.attachments }} -->
-                <template v-for="(file , index) in filesData">
-                    <div class="relative w-full"> 
+                <template v-for="(file, index) in filesData">
+                    <div class="relative w-full">
                         <MediaPreview :fileType="file.type" :filePreview="file.url" :fileName="file.name" />
                         <button @click.prevent="removePhoto(index)"
-                                     class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
-                                 <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
-                                     <XMarkIcon class="w-5 h-5 text-stone-800"/>
-                                 </div>
-                             </button>
+                            class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                            <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
+                                <XMarkIcon class="w-5 h-5 text-stone-800" />
+                            </div>
+                        </button>
                     </div>
                 </template>
             </div>
