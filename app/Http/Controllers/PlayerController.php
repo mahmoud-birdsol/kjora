@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advertisement;
 use App\Models\MediaLibrary;
 use App\Models\Position;
 use App\Models\User;
@@ -48,6 +49,7 @@ class PlayerController extends Controller
         return Inertia::render('Home', [
             'players' => $query->paginate(20),
             'positions' => Position::all(),
+            'advertisements' => Advertisement::with('media')->get()
         ]);
     }
 
