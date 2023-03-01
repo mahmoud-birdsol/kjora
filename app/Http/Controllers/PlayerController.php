@@ -49,7 +49,9 @@ class PlayerController extends Controller
         return Inertia::render('Home', [
             'players' => $query->paginate(20),
             'positions' => Position::all(),
-            'advertisements' => Advertisement::with('media')->get()
+            'advertisements' => Advertisement::all()->map(function(Advertisement $advertisement){
+                return $advertisement->getFirstMediaUrl('main');
+            })
         ]);
     }
 
