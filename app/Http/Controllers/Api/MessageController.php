@@ -45,6 +45,8 @@ class MessageController extends Controller
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Pusher\ApiErrorException
      * @throws \Pusher\PusherException
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
      */
     public function store(
         MessageStoreRequest $request,
