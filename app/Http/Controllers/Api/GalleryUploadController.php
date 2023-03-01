@@ -18,6 +18,11 @@ class GalleryUploadController extends Controller
      */
     public function __invoke(Request $request): JsonResponse
     {
+        $request->validate([
+            'gallery' => [
+                'max:10240'
+            ]
+        ]);
         /** @var \App\Models\User $user */
         $user = $request->user();
 
