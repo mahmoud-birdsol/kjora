@@ -11,6 +11,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import Pagination from '@/Components/Pagination.vue';
 import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
 import HelloUserHeader from '@/Components/HelloUserHeader.vue';
+import { Splide, SplideSlide } from "@splidejs/vue-splide";
 
 import {
     XMarkIcon,
@@ -51,6 +52,7 @@ const filter = () => {
     });
 };
 
+
 const reset = () => {
     form.position = null;
     form.age = 18;
@@ -59,6 +61,26 @@ const reset = () => {
 
     filter();
 }
+const options = {
+    arrows: false,
+    // rewind: true,
+    pagination: true,
+    // drag: "free",
+    type: "loop",
+    focus: "center",
+    perPage: 1,
+    perMove: 1,
+    snap: true,
+    autoplay: true,
+    interval: 2000,
+    autoScroll: {
+        speed: 10,
+        pagination: false,
+    },
+    breakpoints: {
+
+    },
+};
 </script>
 
 <template>
@@ -68,11 +90,22 @@ const reset = () => {
         <template #header>
             <HelloUserHeader />
         </template>
-
+        <template #ads>
+            <div class="h-24 w-[28rem] max-w-full overflow-hidden rounded-full md:ml-auto ">
+                <Splide dir="ltr" class="w-full h-full" :options="options">
+                    <template v-for="(img, i) in 5" :key="i">
+                        <SplideSlide>
+                            <img class="object-cover w-full h-full object-center" src="/images/selfie_example.png" alt="">
+                        </SplideSlide>
+                    </template>
+                </Splide>
+    
+            </div>
+        </template>
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <!-- Position Filters...
-                                                            =====================================================-->
+                                                                =====================================================-->
                 <div class="flex gap-4 my-8 overflow-x-auto hideScrollBar">
                     <SecondaryButton @click="filterByPosition(null)">
                         <span class="w-full text-center"
@@ -91,7 +124,7 @@ const reset = () => {
                 </div>
 
                 <!-- Current list...
-                                                            =====================================================-->
+                                                                =====================================================-->
                 <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
 
                     <div class="flex items-start justify-start my-6">
@@ -110,7 +143,7 @@ const reset = () => {
                 </div>
 
                 <!-- Filters Modal...
-                                                            =====================================================-->
+                                                                =====================================================-->
                 <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40">
                     <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl"
                         @click="showFiltersModal = !showFiltersModal">
