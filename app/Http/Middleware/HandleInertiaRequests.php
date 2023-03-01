@@ -51,6 +51,8 @@ class HandleInertiaRequests extends Middleware
                 ]);
             },
 
+            'url' => url(),
+
             'socials' => fn() => Social::active()->get(),
 
             'notifications' => fn() => $request->user() ? $request->user()->unreadNotifications : [],
