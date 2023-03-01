@@ -67,7 +67,7 @@ const removeFromFavorites = () => {
 <template>
     <div class="rounded-xl"
         :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
-        <div class="flex justify-end">
+        <div v-if="player.id !== $page.props.auth.user.id" class="flex justify-end">
             <span class="rounded-lg rounded-bl-3xl bg-white p-2 -mt-0.5 -mr-0.5">
                 <a href="javascript:;" @click="addToFavorites" v-if="!player.is_favorite">
                     <HeartIconOutline class="h-5 w-5 text-primary" />
@@ -143,7 +143,8 @@ const removeFromFavorites = () => {
                     Cairo
                 </p>
                 <div class="flex gap-2 items-center">
-                    <div class="flex space-x-2 text-white bg-transparent" v-if="showInvite">
+                    <div class="flex space-x-2 text-white bg-transparent"
+                        v-if="showInvite && player.id !== $page.props.auth.user.id">
                         <Link :href="route('invitation.create', player.id)" class="text-sm text-white">Send Invitation
                         <ChevronDoubleRightIcon class="inline w-4 h-4 text-white" />
                         </Link>
