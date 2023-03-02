@@ -66,7 +66,6 @@ class MessageSentEvent implements ShouldBroadcast
     {
         $data = $this->message;
 
-
         return $data->toArray();
     }
 }

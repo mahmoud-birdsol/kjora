@@ -72,7 +72,7 @@ class Message extends Model implements HasMedia
     /**
      * Register the media conversions.
      *
-     * @param  \Spatie\MediaLibrary\MediaCollections\Models\Media|null  $media
+     * @param \Spatie\MediaLibrary\MediaCollections\Models\Media|null $media
      * @return void
      *
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
@@ -139,23 +139,28 @@ class Message extends Model implements HasMedia
     public function attachments(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->getMedia('attachments')->map(function (MediaLibrary $media) {
-                return [
-                    'id' => $media->id,
-                    'original_url' => $media->original_url,
-                    'mime_type' => $media->mime_type,
-                    'file_name' => $media->file_name
-                ];
-            })
+            get: fn($value) => MediaLibrary::where('model_type', Message::class)
+                ->where('model_id', $this->id)
+                ->where('collection_name', 'attachments')
+                ->get()
+                ->map(function (MediaLibrary $media) {
+                    return [
+                        'id' => $media->id,
+                        'original_url' => $media->original_url,
+                        'mime_type' => $media->mime_type,
+                        'file_name' => $media->file_name
+                    ];
+                })
         );
     }
+
     public function messageSender(): Attribute
     {
         return Attribute::make(
             get: fn($value) => [
-                'name' => $this->sender->name,
-                'username' => $this->sender->username,
-                'avatar_url' => $this->sender->avatar_url
+                'name' => User::find($this->sender_id)->name,
+                'username' => User::find($this->sender_id)->username,
+                'avatar_url' => User::find($this->sender_id)->avatar_url
             ]
         );
     }
