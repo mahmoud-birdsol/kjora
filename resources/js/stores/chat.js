@@ -1,7 +1,7 @@
-import {defineStore} from 'pinia'
+import { defineStore } from "pinia";
 import axios from "axios";
 
-export const useChat = defineStore('chat', {
+export const useChat = defineStore("chat", {
     state() {
         return {
             messages: [],
@@ -10,9 +10,10 @@ export const useChat = defineStore('chat', {
             loading: false,
             container: null,
             conversation: null,
-            search: '',
+            search: "",
             replyToMessage: null,
-        }
+            currentUserId: null,
+        };
     },
 
     getters: {
@@ -54,7 +55,7 @@ export const useChat = defineStore('chat', {
          */
         repliedMessage(state) {
             return state.replyToMessage;
-        }
+        },
     },
 
     actions: {
@@ -65,10 +66,10 @@ export const useChat = defineStore('chat', {
          * @param messagesContainer
          * @private
          */
-        initialize({conversation, container}) {
+        initialize({ conversation, container, currentUserId }) {
             this.conversation = conversation;
-            this.container = container
-
+            this.container = container;
+            this.currentUserId = currentUserId;
             this.subscribeToConversation();
             this.fetchMessages();
 
@@ -85,20 +86,21 @@ export const useChat = defineStore('chat', {
         async fetchMessages() {
             this.loading = true;
             try {
-                let response = await axios.get(route(`api.messages.index`, this.conversation), {
-                    params: {
-                        page: this.page,
-                        search: this.search
+                let response = await axios.get(
+                    route(`api.messages.index`, this.conversation),
+                    {
+                        params: {
+                            page: this.page,
+                            search: this.search,
+                        },
                     }
-                });
+                );
 
                 this.messages = this.messages.concat(response.data.data);
                 this.lastPage = response.data.meta.last_page;
                 this.loading = false;
 
-                this.page === 1
-                    ? this.scrollToMessagesBottom()
-                    : null;
+                this.page === 1 ? this.scrollToMessagesBottom() : null;
             } catch (error) {
                 this.loading = false;
                 return error;
@@ -120,13 +122,15 @@ export const useChat = defineStore('chat', {
          * Subscribe to the conversation channel.
          */
         subscribeToConversation() {
-            Echo.private(`users.chat.${this.conversation.id}`)
-                .listen('.message-sent', (event) => {
-                    console.log('message from event is ' , event)
-                    this.messages.unshift(event)
-
-                    this.scrollToMessagesBottom();
-                });
+            Echo.private(`users.chat.${this.conversation.id}`).listen(
+                ".message-sent",
+                (event) => {
+                    if (this.currentUserId !== event.sender_id) {
+                        this.messages.unshift(event);
+                        this.scrollToMessagesBottom();
+                    }
+                }
+            );
         },
 
         /**
@@ -134,8 +138,8 @@ export const useChat = defineStore('chat', {
          */
         registerScrollListener() {
             this.container
-                ? this.container.addEventListener('scroll', this.handleScroll)
-                : null
+                ? this.container.addEventListener("scroll", this.handleScroll)
+                : null;
         },
 
         /**
@@ -143,8 +147,11 @@ export const useChat = defineStore('chat', {
          */
         unRegisterScrollListener() {
             this.container
-                ? this.container.removeEventListener('scroll', this.handleScroll)
-                : null
+                ? this.container.removeEventListener(
+                      "scroll",
+                      this.handleScroll
+                  )
+                : null;
         },
 
         /**
@@ -178,7 +185,7 @@ export const useChat = defineStore('chat', {
                 vm.container.scrollTo({
                     top: vm.container.scrollHeight,
                     left: 0,
-                    behavior: 'smooth'
+                    behavior: "smooth",
                 });
             }, 200);
         },
@@ -189,13 +196,13 @@ export const useChat = defineStore('chat', {
                 vm.container.scrollTo({
                     top: 0,
                     left: 0,
-                    behavior: 'smooth'
+                    behavior: "smooth",
                 });
             }, 200);
         },
 
         handleScroll(e) {
-            let element = e.target
+            let element = e.target;
 
             if (this.lastPageReached) {
                 // Do nothing.
@@ -206,6 +213,6 @@ export const useChat = defineStore('chat', {
                 this.page++;
                 this.fetchMessages();
             }
-        }
-    }
+        },
+    },
 });
