@@ -27,7 +27,7 @@ let form = useForm({
                         <h1 class="text-7xl">Upgrade account</h1>
                     </template>
                     <template #body>
-                        <ul class="flex flex-col gap-3 items-center text-xs text-gray-500">
+                        <ul class="flex flex-col gap-3 items-center text-xs text-gray-800">
                             <li class="flex gap-5">
                                 <CheckIcon class="w-5 text-primary" />
                                 <span>Lorem ipsum dolor sit amet </span>
@@ -54,7 +54,7 @@ let form = useForm({
                             <RadioGroupOption v-slot="{ checked }" value="10"
                                 class="[&_li]:py-3 [&_li]:pl-6 [&_li]:pr-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:list-none text-stone-500  flex flex-col  text-sm font-medium cursor-pointer">
                                 <InputLabel value="six month" color="primary" />
-                                <li :class="checked ? 'border-primary text-primary' : 'border-gray-400'" class="flex justify-between items-center">
+                                <li  class="flex justify-between items-center">
                                     <span>$10</span>
                                     <CheckIcon class="w-6 text-black rounded-full p-1 bg-primary" v-if="form.plan == '10'"/>
                                 </li>
@@ -62,7 +62,7 @@ let form = useForm({
                             <RadioGroupOption v-slot="{ checked }" value="25"
                                 class="[&_li]:py-3 [&_li]:pl-6 [&_li]:pr-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:list-none text-stone-500  flex flex-col  text-sm font-medium cursor-pointer">
                                 <InputLabel value="six month" color="primary" />
-                                <li :class="checked ? 'border-primary text-primary' : 'border-gray-400'" class="flex justify-between items-center">
+                                <li  class="flex justify-between items-center">
                                     <span>$25</span>
                                     <CheckIcon class="w-6 text-black rounded-full p-1 bg-golden" v-if="form.plan == '25'"/>
                                 </li>
@@ -70,7 +70,7 @@ let form = useForm({
                             <RadioGroupOption v-slot="{ checked }" value="55"
                                 class="[&_li]:py-3 [&_li]:pl-6 [&_li]:pr-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:list-none text-stone-500  flex flex-col  text-sm font-medium cursor-pointer">
                                 <InputLabel value="six month" color="primary" />
-                                <li :class="checked ? 'border-primary text-primary' : 'border-gray-400'" class="flex justify-between items-center">
+                                <li  class="flex justify-between items-center">
                                     <span>$55</span>
                                     <CheckIcon class="w-6 text-black rounded-full p-1 bg-golden" v-if="form.plan == '55'"/>
                                 </li>
