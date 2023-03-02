@@ -122,6 +122,7 @@ export const useChat = defineStore('chat', {
         subscribeToConversation() {
             Echo.private(`users.chat.${this.conversation.id}`)
                 .listen('.message-sent', (event) => {
+                    console.log('message from event is ' , event)
                     this.messages.unshift(event)
 
                     this.scrollToMessagesBottom();
@@ -161,6 +162,7 @@ export const useChat = defineStore('chat', {
          * @param message
          */
         pushNewMessage(message) {
+            console.log(message);
             this.messages.unshift(message);
             this.scrollToMessagesBottom();
             this.replyToMessage = null;

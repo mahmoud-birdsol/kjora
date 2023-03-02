@@ -46,6 +46,7 @@ const submit = () => {
             'Content-Type': 'multipart/form-data'
         }
     }).then((response) => {
+        console.log('the response is ' + response);
         chat.pushNewMessage(response.data.data);
     }).catch(error => {
         console.error(error.response)
