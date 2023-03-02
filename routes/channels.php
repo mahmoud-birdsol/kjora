@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -14,15 +15,31 @@ use Illuminate\Support\Facades\Broadcast;
 */
 
 Broadcast::channel('users.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+    return (int)$user->id === (int)$id;
 });
 
 Broadcast::channel('users.chat.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+    return true;
+//    return (int)$user->id === (int)$id;
 });
 
-Broadcast::channel('online', function ($user) {
-    if (auth()->check()) {
-        return $user->toArray();
-    }
+
+Broadcast::channel('presence-chat.{id}', function ($user, $id) {
+    return true;
+//    return (int)$user->id === (int)$id;
+});
+
+Broadcast::channel('users.comment.{id}', function ($user, $id) {
+    return (int)$user->id === (int)$id;
+});
+
+//Broadcast::channel('chat', function ($user) {
+//    if (auth()->check()) {
+//        return $user->toArray();
+//    }
+//});
+
+Broadcast::channel('chat.{id}', function ($user, $id) {
+    return true;
+//    return (int)$user->id === (int)$id;
 });

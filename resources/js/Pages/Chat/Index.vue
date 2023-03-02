@@ -1,49 +1,26 @@
 <script setup>
-import { onMounted } from 'vue';
+import {ref} from 'vue';
 import AppLayout from '../../Layouts/AppLayout.vue';
-import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
-import { FlagIcon } from '@heroicons/vue/24/outline'
+import {MagnifyingGlassIcon} from '@heroicons/vue/24/solid'
+import {FlagIcon} from '@heroicons/vue/24/outline'
 import ChatLayout from '../../Layouts/ChatLayout.vue';
-import ConversationsList from '../../Components/ConversationsList.vue';
-
-
+import ReportModal from '../../Components/ReportModal.vue';
 
 
 const props = defineProps(['conversations', 'last_online_at'])
 
-onMounted(() => {
-    console.log(props.conversations)
-})
-
-
-
-
+let showReport = ref(true)
 </script>
 <template>
-    <AppLayout title="chat">
+    <AppLayout title="Chat">
         <template #header>
-            <p>chat</p>
+            Chat
         </template>
-        <h1 class="text-white">chat welcome page</h1>
-        <ChatLayout>
-            <template #sidebar>
-                <ConversationsList :conversations="conversations" :lastActiveAt="last_online_at" />
-            </template>
-            <template #header>
-                <div class="flex-1 border-r border-r-stone-400"></div>
-                <div class="flex items-center gap-2 p-4">
-                    <button>
-                        <MagnifyingGlassIcon class="w-4 h-4 cursor-pointer hover:text-primaryDark text-primary">
-                        </MagnifyingGlassIcon>
-                    </button>
-                    <button>
-                        <FlagIcon class="w-4 h-4 text-red-600" />
-                    </button>
-                </div>
-            </template>
+
+        <ChatLayout :conversations="conversations">
             <template #main>
                 <div class="flex flex-col gap-4 p-8">
-                    <h2 class="text-2xl font-bold capitalize">welcome to chat!</h2>
+                    <h2 class="text-2xl font-bold capitalize">Welcome to chat!</h2>
 
                     <p class="text-sm font-bold">Beofre you proceed, please read thse ground rules. Don't worry,
                         we'll
@@ -78,11 +55,5 @@ onMounted(() => {
         </ChatLayout>
 
 
-
-
-
     </AppLayout>
 </template>
-
-
-<style  ></style>

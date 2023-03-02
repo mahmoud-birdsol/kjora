@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\ReportOption;
 use App\Models\Social;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -19,7 +20,7 @@ class HandleInertiaRequests extends Middleware
     /**
      * Determine the current asset version.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return string|null
      */
     public function version(Request $request)
@@ -30,7 +31,7 @@ class HandleInertiaRequests extends Middleware
     /**
      * Define the props that are shared by default.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function share(Request $request)
@@ -50,9 +51,13 @@ class HandleInertiaRequests extends Middleware
                 ]);
             },
 
-            'socials' => fn () => Social::active()->get(),
+            'url' => url(),
 
-            'notifications' => fn () => $request->user() ? $request->user()->unreadNotifications : [],
+            'socials' => fn() => Social::active()->get(),
+
+            'notifications' => fn() => $request->user() ? $request->user()->unreadNotifications : [],
+
+            'reportOptions' => fn() => ReportOption::all(),
         ]);
     }
 }

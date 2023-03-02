@@ -3,25 +3,28 @@
 use App\Http\Controllers\AcceptInvitationController;
 use App\Http\Controllers\Actions\MarkNotificationAsRead;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HireController;
 use App\Http\Controllers\IdentityVerificationController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\JoinPlatformController;
-use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\PlayerReviewController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserProfileController;
+use App\Models\Country;
 use App\Models\Invitation;
+use App\Models\MediaLibrary;
+use App\Models\Position;
 use App\Models\Stadium;
 use App\Models\User;
-use App\Notifications\InvitationAcceptedNotification;
 use App\Notifications\InvitationCreatedNotification;
 use App\Notifications\InvitationDeclinedNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Pusher\Pusher;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +36,7 @@ use Pusher\Pusher;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::redirect('/', 'login')->name('welcome');
 
 // Join platform routes...
@@ -51,12 +55,12 @@ Route::middleware('guest')->resource(
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
+//    'player.review'
 ])->group(function () {
     Route::get('/verification/identity', [
         IdentityVerificationController::class,
         'create',
     ])->name('identity.verification.create');
-
 
 
     Route::post('/verification/identity', [
@@ -77,6 +81,11 @@ Route::middleware([
             'show',
         ])->name('profile.show');
 
+        Route::get('/user/edit', [
+            UserProfileController::class,
+            'edit',
+        ])->name('profile.edit');
+
         /*
          |--------------------------------------------------------------------------
          | Player
@@ -93,6 +102,18 @@ Route::middleware([
             'show',
         ])->name('player.profile');
 
+        Route::get(
+            'player/review/{review}', [
+                PlayerReviewController::class,
+                'show'
+            ])->name('player.review.show');
+
+        Route::post(
+            'player/review/{review}', [
+                PlayerReviewController::class,
+                'store'
+            ])->name('player.review.store');
+
         /*
          |--------------------------------------------------------------------------
          | Invitation
@@ -103,6 +124,13 @@ Route::middleware([
             InvitationController::class,
             'index'
         ])->name('invitation.index');
+
+        Route::get('more', function () {
+            return Inertia::render('More', [
+                'countries' => Country::all(),
+                'positions' => Position::all(),
+            ]);
+        })->name('more');
 
         Route::get('hires', [
             HireController::class,
@@ -213,22 +241,57 @@ Route::middleware([
 
     /*
      |--------------------------------------------------------------------------
+     | Favorites routes...
+     |--------------------------------------------------------------------------
+    */
+
+    Route::get('favourites', [
+        FavoriteController::class,
+        'index'
+    ])->name('favorites.index');
+
+    Route::post('favorites/{favorite}', [
+        FavoriteController::class,
+        'store'
+    ])->name('favorites.store');
+
+    Route::delete('favorites/{favorite}', [
+        FavoriteController::class,
+        'destroy'
+    ])->name('favorites.destroy');
+
+    /*
+     |--------------------------------------------------------------------------
      | Chat Routes...
      |--------------------------------------------------------------------------
     */
 
     Route::get(
-        'chats', [
-        ChatController::class,
-        'index'
-    ])->name('chats.index');
+        'chats',
+        [
+            ChatController::class,
+            'index'
+        ]
+    )->name('chats.index');
 
     Route::get(
-        'chats/{conversation}', [
-        ChatController::class,
-        'show'
-    ])->name('chats.show');
+        'chats/{conversation}',
+        [
+            ChatController::class,
+            'show'
+        ]
+    )->name('chats.show');
 
+    /*
+     |--------------------------------------------------------------------------
+     | Report routes...
+     |--------------------------------------------------------------------------
+    */
+
+    Route::post('report', [
+        ReportController::class,
+        'store'
+    ])->name('report.store');
 
     /*
      |--------------------------------------------------------------------------
@@ -238,15 +301,33 @@ Route::middleware([
 });
 
 
+//     // Example 2: Get all the connected users for a specific channel
+// });
 
-Route::get('test', function () {
+// Route::get('occupy', function () {
+//     $user = User::first();
 
+//     event(new \App\Events\MessageSentEvent($user));
+// });
 
-// Example 2: Get all the connected users for a specific channel
-});
+Route::get('gallery/{mediaLibrary}', function (MediaLibrary $mediaLibrary) {
 
-Route::get('occupy', function () {
-    $user = User::first();
+    $userId = MediaLibrary::where('model_type', User::class)->where('id', $mediaLibrary->id)->first()->model_id;
 
-    event(new \App\Events\MessageSentEvent($user));
-});
+    $user = User::find($userId);
+
+    return Inertia::render('Gallery/Show', [
+        'media' => $mediaLibrary,
+        'user' => $user
+    ]);
+})->name('gallery.show');
+
+Route::get('about', function () {
+    return Inertia::render('About');
+})->name('about');
+Route::get('contact', function () {
+    return Inertia::render('Contact');
+})->name('contact');
+Route::get('upgrade', function () {
+    return Inertia::render('Upgrade');
+})->name('upgrade');

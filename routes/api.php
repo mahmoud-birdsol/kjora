@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\ClubController;
+use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\DeleteGalleryController;
+use App\Http\Controllers\Api\GalleryUploadController;
 use App\Http\Controllers\Api\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,3 +40,29 @@ Route::post(
     MessageController::class,
     'store'
 ])->middleware('auth:sanctum')->name('api.messages.store');
+
+
+Route::post(
+    'gallery/upload',
+    GalleryUploadController::class
+)->middleware('auth:sanctum')->name('api.gallery.upload');
+
+Route::delete(
+    'gallery/{mediaLibrary}/delete',
+    DeleteGalleryController::class
+)->middleware('auth:sanctum')->name('api.gallery.destroy');
+
+Route::get('gallery/comments', [CommentController::class, 'index'])
+    ->middleware('auth:sanctum')
+    ->name('api.gallery.comments');
+
+Route::post('gallery/comments', [CommentController::class, 'store'])
+    ->middleware('auth:sanctum')
+    ->name('api.gallery.comments.store');
+
+
+Route::post('/elvis-has-left-the-building', function (Request $request) {
+    $request->user()->forceFill([
+        'last_seen_at' => now(),
+    ])->save();
+})->middleware('auth:sanctum')->name('api.user.left');

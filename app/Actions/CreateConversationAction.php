@@ -22,10 +22,10 @@ class CreateConversationAction
             ]);
         })->first();
 
-        if (is_null($conversation)) {
+//        if (is_null($conversation)) {
             $conversation = Conversation::create();
             $invitation->invitingPlayer->conversations()->attach($conversation->id);
             $invitation->invitedPlayer->conversations()->attach($conversation->id);
-        }
+//        }
     }
 }

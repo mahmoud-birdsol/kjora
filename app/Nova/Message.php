@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
@@ -51,13 +52,13 @@ class Message extends Resource
                 ->showOnPreview()
                 ->rules('required'),
 
-            BelongsTo::make('Parent')
+            BelongsTo::make('Parent', 'parent', Message::class)
                 ->nullable()
                 ->filterable()
                 ->showOnPreview()
                 ->sortable(),
 
-            BelongsTo::make('Sender')
+            BelongsTo::make('Sender', 'sender', User::class)
                 ->sortable()
                 ->filterable()
                 ->showOnPreview()
@@ -70,7 +71,9 @@ class Message extends Resource
                 ->filterable(),
 
             Textarea::make('Body')
-                ->rules('required')
+                ->rules('required'),
+
+            Images::make('Attachments')->nullable()
 
 
         ];

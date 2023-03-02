@@ -44,8 +44,19 @@ class Message extends Model implements HasMedia
      * @var array
      */
     protected $appends = [
-        'attachment',
-        'parent'
+//        'attachment',
+        'parent',
+        'attachments',
+        'message_sender'
+    ];
+
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = [
+//        'sender',
     ];
 
     /**
@@ -104,6 +115,16 @@ class Message extends Model implements HasMedia
     }
 
     /**
+     * Get the message sender.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function sender(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'sender_id');
+    }
+
+    /**
      * Get the first media of the message
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
@@ -112,6 +133,30 @@ class Message extends Model implements HasMedia
     {
         return Attribute::make(
             get: fn($value) => $this->getFirstMedia('attachment')
+        );
+    }
+
+    public function attachments(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $this->getMedia('attachments')->map(function (MediaLibrary $media) {
+                return [
+                    'id' => $media->id,
+                    'original_url' => $media->original_url,
+                    'mime_type' => $media->mime_type,
+                    'file_name' => $media->file_name
+                ];
+            })
+        );
+    }
+    public function messageSender(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => [
+                'name' => $this->sender->name,
+                'username' => $this->sender->username,
+                'avatar_url' => $this->sender->avatar_url
+            ]
         );
     }
 

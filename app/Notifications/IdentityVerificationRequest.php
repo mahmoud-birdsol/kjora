@@ -58,9 +58,9 @@ class IdentityVerificationRequest extends Notification implements ShouldQueue
     /**
      * Get the nova representation of the notification
      *
-     * @return array
+     * @return NovaNotification
      */
-    public function toNova()
+    public function toNova(): NovaNotification
     {
         return (new NovaNotification)
             ->message($this->user->name.' has uploaded their identification documents.')

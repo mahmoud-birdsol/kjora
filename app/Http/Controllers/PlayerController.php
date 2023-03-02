@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advertisement;
+use App\Models\MediaLibrary;
 use App\Models\Position;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -47,6 +49,9 @@ class PlayerController extends Controller
         return Inertia::render('Home', [
             'players' => $query->paginate(20),
             'positions' => Position::all(),
+            'advertisements' => Advertisement::orderBy('priority')->get()->map(function(Advertisement $advertisement){
+                return $advertisement->getFirstMediaUrl('main');
+            })
         ]);
     }
 
@@ -61,8 +66,32 @@ class PlayerController extends Controller
     {
         $user->load('club');
 
+        $media = $user->getMedia('gallery')->filter(function (MediaLibrary $mediaLibrary) {
+            return $mediaLibrary->whereNull('suspended_at');
+        })->map(function (MediaLibrary $media) {
+            return [
+                'id' => $media->id,
+                'url' => $media->original_url,
+                'type' => $media->type,
+                'extension' => $media->extension,
+                'comments' => $media->comments?->load('replies')
+            ];
+        });
+
+        $ratingCategoriesCount = $user->playerReviews->count();
+
+        $playerRating = $user->playerReviews->flatMap->ratingCategories->groupBy('name')
+            ->map(function ($ratingCategory) use ($ratingCategoriesCount) {
+                return [
+                    'ratingCategory' => $ratingCategory->first()->name,
+                    'value' => (double)$ratingCategory->sum('pivot.value') / $ratingCategoriesCount
+                ];
+            })->values();
+
         return Inertia::render('Player/Show', [
             'player' => $user,
+            'media' => $media,
+            'playerRating' => $playerRating
         ]);
     }
 }

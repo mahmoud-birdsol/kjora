@@ -33,4 +33,19 @@ class RatingCategory extends Model
             ->belongsToMany(Position::class)
             ->withTimestamps();
     }
+
+    /**
+     * Get the rating category reviews
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function reviews(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            related: Review::class,
+            table: 'review_rating_category',
+            foreignPivotKey: 'rating_category_id',
+            relatedPivotKey: 'review_id'
+        )->using(ReviewRatingCategory::class)->withPivot('value');
+    }
 }

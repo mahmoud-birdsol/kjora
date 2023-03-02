@@ -28,9 +28,9 @@ class MessageController extends Controller
     ): AnonymousResourceCollection {
         $query = $conversation->messages()->orderBy('created_at', 'DESC');
 
-        if ($request->has('search')) {
-            $query->where('body', '%LIKE%', request()->input('search'));
-        }
+        $request->whenFilled('search', function () use ($request, $query) {
+            $query->where('body', 'LIKE', '%' . request()->input('search') . '%');
+        });
 
         return MessageResource::collection($query->paginate(12));
     }
@@ -45,12 +45,14 @@ class MessageController extends Controller
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Pusher\ApiErrorException
      * @throws \Pusher\PusherException
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
+     * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
      */
     public function store(
         MessageStoreRequest $request,
         Conversation $conversation,
         CheckIfUserIsPresentAction $checkIfUserIsPresentAction
-    ): MessageResource {
+    ) {
         /** @var Message $message */
         $message = $conversation->messages()->create([
             'body' => $request->input('body'),
@@ -58,13 +60,16 @@ class MessageController extends Controller
             'parent_id' => $request->input('parent_id')
         ]);
 
-        if ($request->hasFile('attachments')) {
-            $message->addMedia($request->file('attachments'))->toMediaCollection('attachments');
+
+        if (!is_null($request->attachments)) {
+            foreach ($request->attachments as $attachment) {
+                $message->addMedia($attachment)->toMediaCollection('attachments');
+            }
         }
 
         $user = $conversation->users()->whereNot('conversation_user.user_id', $request->user()->id)->first();
 
-        if ($checkIfUserIsPresentAction($user)) {
+        if ($checkIfUserIsPresentAction($user, $conversation)) {
             event(new MessageSentEvent($user, $message));
         } else {
             $user->notify(new NotifyUserOfChatMessageNotification($user, $request->user(), $conversation));

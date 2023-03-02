@@ -118,68 +118,58 @@ const save = () => {
 </script>
 
 <template>
-    <Head title="Identity Verification"/>
+    <Head title="Identity Verification" />
 
     <AppLayout>
         <template #header>Verification</template>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+        <div class="grid grid-cols-1 gap-4 mt-8 sm:grid-cols-2">
             <!-- Step 1...
-            =====================================================-->
+                =====================================================-->
             <Card>
                 <CardContent title="Verify Identity">
                     <template #body>
-                        <div class="h-full flex flex-col justify-between gap-8">
+                        <div class="flex flex-col justify-between h-full gap-8">
                             <div>
-                                <h3 class="text-gray-900 text-lg font-bold mb-4">Use a valid government-issued document</h3>
-                                <p class="text-gray-500 text-xs">Only the following documents listed below will be accepted, all other documents will be rejected.</p>
+                                <h3 class="mb-4 text-lg font-bold text-gray-900">Use a valid government-issued document</h3>
+                                <p class="text-xs text-gray-500">Only the following documents listed below will be accepted,
+                                    all other documents will be rejected.</p>
                             </div>
 
                             <div class="mt-4">
-                                <InputLabel color="primary" for="country" value="Country of issue"/>
-                                <RichSelectInput :options="countries"
-                                                 value-name="name"
-                                                 text-name="name"
-                                                 image-name="flag"
-                                                 v-model="form.identity_issue_country"/>
-                                <InputError class="mt-2" :message="form.errors.identity_issue_country"/>
+                                <InputLabel color="primary" for="country" value="Country of issue" />
+                                <RichSelectInput :options="countries" value-name="name" text-name="name" image-name="flag"
+                                    v-model="form.identity_issue_country" />
+                                <InputError class="mt-2" :message="form.errors.identity_issue_country" />
                             </div>
 
                             <div>
-                                <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <MegaButton
-                                        :active="form.identity_type == 'passport'"
-                                        @click="form.identity_type = 'passport'"
-                                    >
+                            <div class="grid grid-cols-1 gap-4 mt-12 sm:grid-cols-2">
+                                    <MegaButton :active="form.identity_type == 'passport'"
+                                        @click="form.identity_type = 'passport'">
                                         <template #icon>
-                                            <font-awesome-icon
-                                                icon="passport"
-                                                class="w-12 h-auto text-white text-center"/>
+                                            <font-awesome-icon icon="passport" class="w-12 h-auto text-center text-white" />
                                         </template>
                                         Passport
                                     </MegaButton>
 
-                                    <MegaButton
-                                        :active="form.identity_type == 'national_id'"
-                                        @click="form.identity_type = 'national_id'"
-                                    >
+                                    <MegaButton :active="form.identity_type == 'national_id'"
+                                        @click="form.identity_type = 'national_id'">
                                         <template #icon>
-                                            <font-awesome-icon
-                                                icon="address-card"
-                                                class="w-12 h-auto text-white text-center"/>
+                                            <font-awesome-icon icon="address-card"
+                                                class="w-12 h-auto text-center text-white" />
                                         </template>
                                         Government issue id
                                     </MegaButton>
                                 </div>
-                                <InputError class="mt-2" :message="form.errors.identity_type"/>
+                                <InputError class="mt-2" :message="form.errors.identity_type" />
                             </div>
                         </div>
                     </template>
                     <template #footer>
                         <PrimaryButton v-show="completedFirstStep == false" :class="{ 'opacity-25': form.processing }"
-                                       :disabled="form.processing || form.identity_type == null || form.identity_issue_country == null"
-                                       @click="completedFirstStep = true"
-                        >
+                            :disabled="form.processing || form.identity_type == null || form.identity_issue_country == null"
+                            @click="completedFirstStep = true">
                             Continue
                         </PrimaryButton>
                     </template>
@@ -187,93 +177,83 @@ const save = () => {
             </Card>
 
             <!-- Step 2...
-            =====================================================-->
+                =====================================================-->
             <Card>
                 <CardContent title="Upload Identity">
                     <template #body>
-                        <div class="h-full flex flex-col justify-between gap-2">
+                        <div class="flex flex-col justify-between h-full gap-2">
                             <div>
-                                <h3 class="text-black font-bold uppercase mb-8">Take Selfie Photo</h3>
+                                <h3 class="mb-8 font-bold text-black uppercase">Take Selfie Photo</h3>
                             </div>
 
                             <div>
                                 <div class="flex space-x-4">
                                     <div class="w-1/4">
-                                        <button @click="showIdentitySelfieModal = true" class="relative h-full w-full">
-                                            <img v-if="form.identity_selfie_image" :src="form.identity_selfie_image" alt="" class="w-full h-auto">
-                                            <img v-if="identitySelfieImagePreview" :src="identitySelfieImagePreview" alt="" class="w-full h-auto">
-                                            <span class="absolute inset-0 bg-transparent hover:bg-white hover:bg-opacity-50 h-full w-full">
-                                                <span
-                                                    class="flex flex-col justify-center items-center h-full">
-                                                    <font-awesome-icon
-                                                        icon="camera"
-                                                        class="w-12 h-auto text-black text-center"/>
+                                        <button @click="showIdentitySelfieModal = true" class="relative w-full h-full">
+                                            <img v-if="form.identity_selfie_image" :src="form.identity_selfie_image" alt=""
+                                                class="w-full h-auto">
+                                            <img v-if="identitySelfieImagePreview" :src="identitySelfieImagePreview" alt=""
+                                                class="w-full h-auto">
+                                            <span
+                                                class="absolute inset-0 w-full h-full bg-transparent hover:bg-white hover:bg-opacity-50">
+                                                <span class="flex flex-col items-center justify-center h-full">
+                                                    <font-awesome-icon icon="camera"
+                                                        class="w-12 h-auto text-center text-black" />
                                                 </span>
                                             </span>
                                         </button>
                                     </div>
                                     <div class="w-3/4">
                                         <CorrectText>Take a selfie of your self with a natural expression.</CorrectText>
-                                        <CorrectText>Make sure your whole face is visible, centered and your eyes are open.</CorrectText>
+                                        <CorrectText>Make sure your whole face is visible, centered and your eyes are open.
+                                        </CorrectText>
                                         <InCorrectText>Do not copy your ID or use screenshots of your ID.</InCorrectText>
-                                        <InCorrectText>Do not hide or alter pars of your face (No hats/beauty images/filters/headgear).</InCorrectText>
+                                        <InCorrectText>Do not hide or alter pars of your face (No hats/beauty
+                                            images/filters/headgear).</InCorrectText>
                                     </div>
                                 </div>
-                                <InputError class="mt-2" :message="form.errors.identity_selfie_image"/>
+                                <InputError class="mt-2" :message="form.errors.identity_selfie_image" />
                             </div>
                             <div>
-                                <p class="text-sm text-black font-bold mt-2">
+                                <p class="mt-2 text-sm font-bold text-black">
                                     File size must be between 10KB and 5120KB in jpg/jpeg/png format.
                                 </p>
                             </div>
-                            <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 gap-4 mt-8 sm:grid-cols-2">
                                 <div>
                                     <MegaButton @click="showIdentityFrontImageModal = true">
                                         <template #icon>
-                                            <img
-                                                v-if="identityFrontImagePreview"
-                                                :src="identityFrontImagePreview"
-                                                class="h-full w-auto max-h-[110px]"
-                                            >
-                                            <font-awesome-icon
-                                                v-else
-                                                icon="camera"
-                                                class="w-12 h-auto text-white text-center"/>
+                                            <img v-if="identityFrontImagePreview" :src="identityFrontImagePreview"
+                                                class="h-full w-auto max-h-[110px]">
+                                            <font-awesome-icon v-else icon="camera"
+                                                class="w-12 h-auto text-center text-white" />
                                         </template>
                                         Front
                                     </MegaButton>
 
-                                    <InputError class="mt-2" :message="form.errors.identity_front_image"/>
+                                    <InputError class="mt-2" :message="form.errors.identity_front_image" />
                                 </div>
 
                                 <div>
                                     <MegaButton @click="showIdentityBackImageModal = true">
                                         <template #icon>
-                                            <img
-                                                v-if="identityBackImagePreview"
-                                                :src="identityBackImagePreview"
-                                                class="h-full w-auto max-h-[110px]"
-                                            >
-                                            <font-awesome-icon
-                                                v-else
-                                                icon="camera"
-                                                class="w-12 h-auto text-white text-center"/>
+                                            <img v-if="identityBackImagePreview" :src="identityBackImagePreview"
+                                                class="h-full w-auto max-h-[110px]">
+                                            <font-awesome-icon v-else icon="camera"
+                                                class="w-12 h-auto text-center text-white" />
                                         </template>
                                         Back
                                     </MegaButton>
 
-                                    <InputError class="mt-2" :message="form.errors.identity_back_image"/>
+                                    <InputError class="mt-2" :message="form.errors.identity_back_image" />
                                 </div>
                             </div>
                         </div>
                     </template>
                     <template #footer>
                         <div class="mt-4">
-                            <PrimaryButton v-show="completedFirstStep == true"
-                                           :class="{ 'opacity-25': form.processing }"
-                                           :disabled="form.processing"
-                                           @click="save()"
-                            >
+                            <PrimaryButton v-show="completedFirstStep == true" :class="{ 'opacity-25': form.processing }"
+                                :disabled="form.processing" @click="save()">
                                 Verify
                             </PrimaryButton>
                         </div>
@@ -283,37 +263,21 @@ const save = () => {
         </div>
 
         <!-- Upload image Modals...
-        =====================================================-->
+            =====================================================-->
 
-        <UploadImageField
-            :should-upload="false"
-            :show="showIdentityFrontImageModal"
-            :current-image-url="identityFrontImagePreview"
-            v-model="form.identity_front_image"
-            @close="showIdentityFrontImageModal = false"
-            @selected="setIdentityFrontImagePreview"
-        />
+        <UploadImageField :should-upload="false" :show="showIdentityFrontImageModal"
+            :current-image-url="identityFrontImagePreview" v-model="form.identity_front_image"
+            @close="showIdentityFrontImageModal = false" @selected="setIdentityFrontImagePreview" />
 
-        <UploadImageField
-            :should-upload="false"
-            :show="showIdentityBackImageModal"
-            :current-image-url="identityBackImagePreview"
-            v-model="form.identity_back_image"
-            @close="showIdentityBackImageModal = false"
-            @selected="setIdentityBackImagePreview"
-        />
+        <UploadImageField :should-upload="false" :show="showIdentityBackImageModal"
+            :current-image-url="identityBackImagePreview" v-model="form.identity_back_image"
+            @close="showIdentityBackImageModal = false" @selected="setIdentityBackImagePreview" />
 
-        <UploadSelfieModal
-            :show="showIdentitySelfieModal"
-            @close="showIdentitySelfieModal = false"
-            v-model="form.identity_selfie_image"
-        />
+        <UploadSelfieModal :show="showIdentitySelfieModal" @close="showIdentitySelfieModal = false"
+            v-model="form.identity_selfie_image" />
 
-        <SuccessMessageModal
-            title="Congratulations"
+        <SuccessMessageModal title="Congratulations"
             message="Your identity verification has been successfully sent. Please wait for approval."
-            :show="showSuccessMessage"
-            @close="showSuccessMessage = false"
-        />
+            :show="showSuccessMessage" @close="showSuccessMessage = false" />
     </AppLayout>
 </template>

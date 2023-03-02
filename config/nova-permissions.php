@@ -648,5 +648,235 @@ return [
             'description' => 'Can activate socials',
             'group' => 'Social',
         ],
-    ],
+
+        /*
+<<<<<<< HEAD
+        |--------------------------------------------------------------------------
+        | Conversation.
+        |--------------------------------------------------------------------------
+        */
+
+        'view conversations' => [
+            'display_name' => 'View conversations',
+            'description' => 'Can view conversations',
+            'group' => 'Chat',
+        ],
+
+        'create conversations' => [
+            'display_name' => 'Create conversations',
+            'description' => 'Can create conversations',
+            'group' => 'Chat',
+        ],
+
+        'edit conversations' => [
+            'display_name' => 'Edit conversations',
+            'description' => 'Can edit conversations',
+            'group' => 'Chat',
+        ],
+
+        'delete conversations' => [
+            'display_name' => 'Delete conversations',
+            'description' => 'Can delete conversations',
+            'group' => 'Chat',
+        ],
+
+        'suspend conversations' => [
+            'display_name' => 'Suspend conversations',
+            'description' => 'Can suspend conversations',
+            'group' => 'Chat',
+        ],
+
+        'activate conversations' => [
+            'display_name' => 'Activate conversations',
+            'description' => 'Can activate conversations',
+            'group' => 'Chat',
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Messages.
+        |--------------------------------------------------------------------------
+        */
+
+        'view messages' => [
+            'display_name' => 'View messages',
+            'description' => 'Can view messages',
+            'group' => 'Message',
+        ],
+
+        'create messages' => [
+            'display_name' => 'Create messages',
+            'description' => 'Can create messages',
+            'group' => 'Message',
+        ],
+
+        'edit messages' => [
+            'display_name' => 'Edit messages',
+            'description' => 'Can edit messages',
+            'group' => 'Message',
+        ],
+
+        'delete messages' => [
+            'display_name' => 'Delete messages',
+            'description' => 'Can delete messages',
+            'group' => 'Message',
+        ],
+
+        'suspend messages' => [
+            'display_name' => 'Suspend messages',
+            'description' => 'Can suspend messages',
+            'group' => 'Message',
+        ],
+
+        'activate messages' => [
+            'display_name' => 'Activate messages',
+            'description' => 'Can activate messages',
+            'group' => 'Message',
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Comments.
+        |--------------------------------------------------------------------------
+        */
+
+        'view comments' => [
+            'display_name' => 'View comments',
+            'description' => 'Can view comments',
+            'group' => 'Message',
+        ],
+
+        'create comments' => [
+            'display_name' => 'Create comments',
+            'description' => 'Can create comments',
+            'group' => 'Message',
+        ],
+
+        'edit comments' => [
+            'display_name' => 'Edit comments',
+            'description' => 'Can edit comments',
+            'group' => 'Message',
+        ],
+
+        'delete comments' => [
+            'display_name' => 'Delete comments',
+            'description' => 'Can delete comments',
+            'group' => 'Message',
+        ],
+
+        'suspend comments' => [
+            'display_name' => 'Suspend comments',
+            'description' => 'Can suspend comments',
+            'group' => 'Message',
+        ],
+
+        'activate comments' => [
+            'display_name' => 'Activate comments',
+            'description' => 'Can activate comments',
+            'group' => 'Message',
+        ],
+
+
+        /*
+       |--------------------------------------------------------------------------
+       | Report Options.
+       |--------------------------------------------------------------------------
+       */
+
+        'view report option' => [
+            'display_name' => 'View report option',
+            'description' => 'Can view report option',
+            'group' => 'Report Option',
+        ],
+
+        'create report option' => [
+            'display_name' => 'Create report option',
+            'description' => 'Can create report option',
+            'group' => 'Report Option',
+        ],
+
+        'edit report option' => [
+            'display_name' => 'Edit report option',
+            'description' => 'Can edit report option',
+            'group' => 'Report Option',
+        ],
+
+        'delete report option' => [
+            'display_name' => 'Delete report option',
+            'description' => 'Can delete report option',
+            'group' => 'Report Option',
+        ],
+
+        /*
+      |--------------------------------------------------------------------------
+      | Reports.
+      |--------------------------------------------------------------------------
+      */
+
+        'view report' => [
+            'display_name' => 'View report',
+            'description' => 'Can view report',
+            'group' => 'Report',
+        ],
+
+        'create report' => [
+            'display_name' => 'Create report',
+            'description' => 'Can create report',
+            'group' => 'Report',
+        ],
+
+        'edit report' => [
+            'display_name' => 'Edit report',
+            'description' => 'Can edit report',
+            'group' => 'Report',
+        ],
+
+        'delete report' => [
+            'display_name' => 'Delete report',
+            'description' => 'Can delete report',
+            'group' => 'Report',
+        ],
+
+        'resolve report' => [
+            'display_name' => 'Resolve report',
+            'description' => 'Can resolve report',
+            'group' => 'Report',
+        ],
+
+        /*
+      |--------------------------------------------------------------------------
+      | Reviews.
+      |--------------------------------------------------------------------------
+      */
+
+        'view reviews' => [
+            'display_name' => 'View reviews',
+            'description' => 'Can view reviews',
+            'group' => 'Review',
+        ],
+
+        'create reviews' => [
+            'display_name' => 'Create reviews',
+            'description' => 'Can create reviews',
+            'group' => 'Review',
+        ],
+
+        'edit reviews' => [
+            'display_name' => 'Edit reviews',
+            'description' => 'Can edit reviews',
+            'group' => 'Review',
+        ],
+
+        'delete reviews' => [
+            'display_name' => 'Delete reviews',
+            'description' => 'Can delete reviews',
+            'group' => 'Review',
+        ],
+
+        'resolve reviews' => [
+            'display_name' => 'Resolve reviews',
+            'description' => 'Can resolve reviews',
+            'group' => 'Review',
+        ],
+    ]
 ];
