@@ -126,7 +126,6 @@ export const useChat = defineStore("chat", {
                 ".message-sent",
                 (event) => {
                     if (this.currentUserId !== event.sender_id) {
-                        console.log("message from event is ", event);
                         this.messages.unshift(event);
                         this.scrollToMessagesBottom();
                     }

@@ -20,7 +20,7 @@ const chat = useChat();
 const messagesContainer = ref(null);
 onMounted(() => {
     const currentUser = usePage().props.value.auth.user
-    console.log(currentUser.id)
+
     chat.initialize({
         conversation: props.conversation,
         container: messagesContainer.value,

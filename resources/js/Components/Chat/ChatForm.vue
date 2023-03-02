@@ -40,7 +40,7 @@ const submit = () => {
     if (chat.repliedMessage) {
         form.parent_id = chat.repliedMessage.id;
     }
-    console.log(form.data())
+
     axios.post(route('api.messages.store', props.conversation.id), form.data(), {
         headers: {
             'Content-Type': 'multipart/form-data'
