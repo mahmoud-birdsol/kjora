@@ -182,7 +182,7 @@ const removePhoto = (i) => {
             <!--                <FaceSmileIcon class="w-6 text-neutral-400"/>-->
             <!--            </button>-->
             <div class="flex flex-grow items-center">
-                <textarea v-model="form.body" @keydown.enter="submit" name="body" id="body" rows="1"
+                <textarea v-model="form.body" @keydown.enter.prevent="submit" name="body" id="body" rows="1"
                     placeholder="Type your Message Here"
                     class="w-full resize-none rounded-full border-none bg-stone-100 p-2 px-4 placeholder:text-neutral-400 text-stone-700 hideScrollBar"></textarea>
             </div>
