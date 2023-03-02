@@ -1,15 +1,11 @@
 <script setup>
-import {ref} from 'vue';
-import AppLayout from '../../Layouts/AppLayout.vue';
-import {MagnifyingGlassIcon} from '@heroicons/vue/24/solid'
-import {FlagIcon} from '@heroicons/vue/24/outline'
-import ChatLayout from '../../Layouts/ChatLayout.vue';
-import ReportModal from '../../Components/ReportModal.vue';
-
+import {provide} from 'vue';
+import AppLayout from '@/Layouts/AppLayout.vue';
+import ChatLayout from '@/Layouts/ChatLayout.vue';
 
 const props = defineProps(['conversations', 'last_online_at'])
 
-let showReport = ref(true)
+provide('conversation', props.conversation);
 </script>
 <template>
     <AppLayout title="Chat">
@@ -53,7 +49,5 @@ let showReport = ref(true)
                 </div>
             </template>
         </ChatLayout>
-
-
     </AppLayout>
 </template>
