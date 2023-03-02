@@ -125,6 +125,7 @@ const loadMore = () => {
 
 <template>
     <div>
+        <div class="fixed top-0 left-0 w-full h-full z-20" @click="showDropDown = false" v-if="showDropDown"></div>
         <div class="relative mt-1">
             <button type="button" @click="showDropDown = ! showDropDown"
                     class="relative w-full cursor-pointer rounded-full border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
@@ -149,7 +150,7 @@ const loadMore = () => {
                 <ul v-if="showDropDown"
                     v-infinite-scroll="loadMore"
                     v-loading="loading"
-                    class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                    class="absolute z-30 mt-1 max-h-56 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                     tabindex="-1" role="listbox" aria-labelledby="listbox-label"
                     aria-activedescendant="listbox-option-3">
                     <li>
