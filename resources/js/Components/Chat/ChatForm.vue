@@ -40,13 +40,13 @@ const submit = () => {
     if (chat.repliedMessage) {
         form.parent_id = chat.repliedMessage.id;
     }
-    console.log(form.attachments)
+
     axios.post(route('api.messages.store', props.conversation.id), form.data(), {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
     }).then((response) => {
-        console.log('the response is ' + response);
+        console.log('currentuserid', chat.currentUserId)
         chat.pushNewMessage(response.data.data);
     }).catch(error => {
         console.error(error.response)
@@ -114,9 +114,7 @@ const removePhoto = (i) => {
 
 <template>
     <div class="grid gap-y-4 rounded-2xl bg-white p-6">
-        <!--
-                                                                                                                        The gray section to display attachment or a message I am replying to.
-                                                                                                                         -->
+        <!--The gray section to display attachment or a message I am replying to. -->
         <Transition enter-from-class="opacity-0" enter-to-class="opacity-100"
             enter-active-class="transition-all duration-150 ease-out"
             leave-active-class="transition-all duration-150 ease-in" leave-from-class="opacity-100"
@@ -137,18 +135,15 @@ const removePhoto = (i) => {
                         <p class="text-gray-600 text-xs font-normal ">@{{ chat.repliedMessage.message_sender.username }}</p>
 
                     </div>
-                    <!-- <div class="max-w-[70ch] truncate">{{ chat.repliedMessage.body }}</div> -->
-                    <div class="max-w-[40ch] break-words truncate">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Sed tempore
-                        mollitia nisi perspiciatis, minus voluptate corrupti maxime cumque! Corrupti provident incidunt
-                        delectus illo saepe fugiat labore velit veniam quae in?</div>
+                    <div class="max-w-[70ch] truncate">{{ chat.repliedMessage.body }}</div>
+
                 </div>
                 <div>
                     <div class="text-black max-w-[15rem]">
                         <div v-if="chat.repliedMessage.attachments.length">
                             <MediaPreview :fileType="chat.repliedMessage.attachments[0].mime_type"
                                 :filePreview="chat.repliedMessage.attachments[0].original_url"
-                                :fileName="chat.repliedMessage.attachments[0].name" />
+                                :fileName="chat.repliedMessage.attachments[0].file_name" />
                         </div>
 
                     </div>
