@@ -4,9 +4,9 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 import GuestTwoColumnLayout from '@/Layouts/Partials/GuestTwoColumnLayout.vue';
 import Card from "@/Components/Card.vue";
 import CardContent from "@/Components/CardContent.vue";
-import InputLabel from "@/components/InputLabel.vue";
-import TextInput from "@/components/TextInput.vue";
-import PrimaryButton from "@/components/PrimaryButton.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import TextInput from "@/Components/TextInput.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {
     PlusCircleIcon,
     CameraIcon

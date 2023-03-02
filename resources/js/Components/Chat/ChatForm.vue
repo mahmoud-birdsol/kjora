@@ -46,6 +46,7 @@ const submit = () => {
             'Content-Type': 'multipart/form-data'
         }
     }).then((response) => {
+        console.log('the response is ' + response);
         chat.pushNewMessage(response.data.data);
     }).catch(error => {
         console.error(error.response)
@@ -144,10 +145,10 @@ const removePhoto = (i) => {
                 </div>
                 <div>
                     <div class="text-black max-w-[15rem]">
-                        <div v-if="chat.repliedMessage.media.length">
-                            <MediaPreview :fileType="chat.repliedMessage.media[0].mime_type"
-                                :filePreview="chat.repliedMessage.media[0].original_url"
-                                :fileName="chat.repliedMessage.media[0].name" />
+                        <div v-if="chat.repliedMessage.attachments.length">
+                            <MediaPreview :fileType="chat.repliedMessage.attachments[0].mime_type"
+                                :filePreview="chat.repliedMessage.attachments[0].original_url"
+                                :fileName="chat.repliedMessage.attachments[0].name" />
                         </div>
 
                     </div>
