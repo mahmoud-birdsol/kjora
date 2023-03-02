@@ -1,10 +1,9 @@
 <template>
-    <div :class="isCurrentUser ? 'text-white' : 'text-stone-800'" class="rounded-md overflow-hidden w-full h-full"
-        @click="$emit('click')">
-        <div v-if="media?.mime_type.startsWith('image')">
+    <div :class="isCurrentUser ? 'text-white' : 'text-stone-800'" class="rounded-md overflow-hidden w-full h-full">
+        <div @click="$emit('showGallery')" v-if="media?.mime_type.startsWith('image')">
             <img class="object-contain w-52 max-w-full" :src="media?.original_url" alt="">
         </div>
-        <div v-else-if="media?.mime_type.startsWith('video')">
+        <div @click="$emit('showGallery')" v-else-if="media?.mime_type.startsWith('video')">
             <video controls class="w-full h-full object-contain  max-w-full">
                 <source :src="media.original_url" :type="media.mime_type">
             </video>
@@ -22,14 +21,11 @@
                 <ArrowDownCircleIcon class="w-10 h-10 cursor-pointer" />
             </a>
         </div>
-
     </div>
 </template>
-
 <script setup>
 import { ArrowDownCircleIcon } from '@heroicons/vue/24/outline'
 defineProps(['media', 'isCurrentUser'])
-defineEmits(["click"])
+defineEmits(["showGallery"])
 </script>
-
 <style lang="scss" scoped></style>

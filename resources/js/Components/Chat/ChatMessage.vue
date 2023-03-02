@@ -12,7 +12,6 @@ import ChatGallery from './ChatGallery.vue';
 import SingleMediaPreview from './SingleMediaPreview.vue';
 import MediaThumbnails from './MediaThumbnails.vue';
 const chat = useChat();
-
 const props = defineProps({
     message: Object,
     player: null
@@ -24,10 +23,8 @@ onMounted(() => {
 const currentUser = usePage().props.value.auth.user
 const showOptions = ref(false)
 const showChatGallery = ref(false)
-
-
+const showSingleMediaGallery = ref(false)
 const isCurrentUser = computed(() => { return props.message.sender_id === currentUser.id })
-
 const alignmentClass = computed(() => {
     return isCurrentUser.value ? 'self-end  ' : 'self-start   ';
 })
@@ -40,7 +37,6 @@ const bodyClass = computed(() => {
 const repliedClasses = computed(() => {
     return isCurrentUser.value ? 'bg-white text-black  ' : 'bg-primary text-white  ';
 })
-
 function handleReply(e) {
     // emits('reply', props.message)
     chat.setMessageToReplyTo(props.message)
@@ -48,14 +44,11 @@ function handleReply(e) {
 }
 const imagesVideosOnly = props.message.attachments.filter(a => a.mime_type.startsWith('image') || a.mime_type.startsWith('video'))
 const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith('image') && !a.mime_type.startsWith('video'))
-
 </script>
-
 <template>
     <div v-if="showOptions" class="fixed inset-0 z-10 w-full h-full cursor-pointer " @click="showOptions = false">
     </div>
     <div :class="alignmentClass + parentClasses" class="w-full ">
-
         <!-- avatar for non current user message -->
         <div v-if='!isCurrentUser'>
             <div><img :src="'https://ui-avatars.com/api/?name=' + player.name + '&color=094609FF&background=E2E2E2'" alt=""
@@ -79,21 +72,35 @@ const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith
                 </div>
                 <!-- media message -->
                 <template v-if="message.attachments && message.attachments.length === 1">
-                    <SingleMediaPreview @click="showChatGallery = true" :media="message.attachments[0]"
-                        :is-current-user="isCurrentUser" />
+                    <SingleMediaPreview @showGallery="showSingleMediaGallery = true" :media="message.attachments[0]"
+                        :is-current-user="isCurrentUser" class="cursor-pointer" />
+                    <ChatGallery :show="showSingleMediaGallery" @close="showSingleMediaGallery = false"
+                        :media="message.attachments" :user="message.message_sender" />
                 </template>
                 <!-- message.attachments && message.attachments.length > 1 -->
                 <template v-if="message.attachments.length > 1">
                     <!-- images and videos -->
-                    <div v-if="imagesVideosOnly.length" class="grid grid-cols-2 grid-rows-2 gap-2 place-items-center ">
+                    <div v-if="imagesVideosOnly.length" class="grid grid-cols-2  gap-2 place-items-center "
+                        :class="imagesVideosOnly.length > 2 ? 'grid-rows-2' : ''">
                         <MediaThumbnails :media="imagesVideosOnly[0]" />
-                        <MediaThumbnails :media="imagesVideosOnly[1]" />
-                        <MediaThumbnails :media="imagesVideosOnly[2]" />
-                        <div class="relative w-28 aspect-square" @click="showChatGallery = true">
+                        <MediaThumbnails v-if="imagesVideosOnly.length > 2" :media="imagesVideosOnly[1]" />
+                        <div v-if="imagesVideosOnly.length == 2" class="relative w-28 aspect-square"
+                            @click="showChatGallery = true">
+                            <MediaThumbnails :media="imagesVideosOnly[1]" />
+                            <div
+                                class="absolute inset-0 bg-stone-700/70  text-white font-bold rounded-md grid place-items-center cursor-pointer">
+                                show all
+                            </div>
+                        </div>
+                        <MediaThumbnails v-if="imagesVideosOnly[2]" :media="imagesVideosOnly[2]" />
+                        <div v-if="imagesVideosOnly.length >= 3" class="relative w-28 aspect-square"
+                            @click="showChatGallery = true">
                             <MediaThumbnails :media="imagesVideosOnly[4]" />
                             <div
                                 class="absolute inset-0 bg-stone-700/70  text-white font-bold rounded-md grid place-items-center cursor-pointer">
-                                + {{ imagesVideosOnly.length - 3 }} more... </div>
+                                {{ imagesVideosOnly.length > 3 ? `+ ${imagesVideosOnly.length - 3} + more...` : 'show all'
+                                }}
+                            </div>
                         </div>
                     </div>
                     <!-- docs and PDFs   -->
@@ -110,19 +117,16 @@ const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith
                     {{ message.body }}
                 </span>
             </div>
-
             <!-- date -->
             <div class="mt-2 text-xs " :class="isCurrentUser ? 'text-end' : null"> <span>{{ message.read_at ?
                 dayjs(message.read_at).format('hh:mm A') : dayjs(message.created_at).format('hh:mm A') }}</span> | <span
                     class="capitalize text-primary">{{ message.read_at ? 'r' : 's' }}</span></div>
         </div>
-
         <!-- options menu if message of the current user -->
         <div v-if="isCurrentUser" class="absolute top-0 right-0">
             <button @click="showOptions = !showOptions">
                 <EllipsisVerticalIcon class="w-6 text-neutral-500" />
             </button>
-
             <Transition enterFromClass="opacity-0" enterToClass="opacity-100" leaveFromClass="opacity-100"
                 leaveToClass="opacity-0" leave-active-class="transition-all duration-150 ease-in"
                 enterActiveClass="transition-all duration-150 ease-out">
@@ -151,10 +155,6 @@ const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith
         <button v-if="!isCurrentUser" @click="chat.setMessageToReplyTo(message)">
             <ReplyIcon class="fill-transparent hover:fill-black stroke-black "></ReplyIcon>
         </button>
-
     </div>
 </template>
-
-
-
 <style  scoped></style>
