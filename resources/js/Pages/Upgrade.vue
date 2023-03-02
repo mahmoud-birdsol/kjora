@@ -15,6 +15,14 @@ import PrimaryButton from '@/Components/PrimaryButton.vue'
 let form = useForm({
     plan: null
 })
+const date = new Date();
+
+let day = date.getDate();
+let month = date.getMonth() ;
+let year = date.getFullYear();
+let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+const currentDate = `${day} ${months[month]} ${year}`
+const expaireDate = `${day} ${months[month+3]} ${year}`
 </script>
 <template>
     <Head title="upgrade" />
@@ -53,15 +61,15 @@ let form = useForm({
                         <RadioGroup v-model="form.plan" class="flex flex-col gap-2">
                             <RadioGroupOption v-slot="{ checked }" value="10"
                                 class="[&_li]:py-3 [&_li]:pl-6 [&_li]:pr-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:list-none text-stone-500  flex flex-col  text-sm font-medium cursor-pointer">
-                                <InputLabel value="six month" color="primary" />
+                                <InputLabel value="one month" color="primary" />
                                 <li  class="flex justify-between items-center">
                                     <span>$10</span>
-                                    <CheckIcon class="w-6 text-black rounded-full p-1 bg-primary" v-if="form.plan == '10'"/>
+                                    <CheckIcon class="w-6 rounded-full p-1 bg-golden text-black" v-if="form.plan == '10'"/>
                                 </li>
                             </RadioGroupOption>
                             <RadioGroupOption v-slot="{ checked }" value="25"
                                 class="[&_li]:py-3 [&_li]:pl-6 [&_li]:pr-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:list-none text-stone-500  flex flex-col  text-sm font-medium cursor-pointer">
-                                <InputLabel value="six month" color="primary" />
+                                <InputLabel value="three months" color="primary" />
                                 <li  class="flex justify-between items-center">
                                     <span>$25</span>
                                     <CheckIcon class="w-6 text-black rounded-full p-1 bg-golden" v-if="form.plan == '25'"/>
@@ -69,7 +77,7 @@ let form = useForm({
                             </RadioGroupOption>
                             <RadioGroupOption v-slot="{ checked }" value="55"
                                 class="[&_li]:py-3 [&_li]:pl-6 [&_li]:pr-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:list-none text-stone-500  flex flex-col  text-sm font-medium cursor-pointer">
-                                <InputLabel value="six month" color="primary" />
+                                <InputLabel value="six months" color="primary" />
                                 <li  class="flex justify-between items-center">
                                     <span>$55</span>
                                     <CheckIcon class="w-6 text-black rounded-full p-1 bg-golden" v-if="form.plan == '55'"/>
@@ -86,25 +94,27 @@ let form = useForm({
                         <h1 class="text-7xl">subscription</h1>
                     </template>
                     <template #body>
-                            <div class="relative bg-[url('/images/player_bg_sm.png')] rounded-xl mx-auto w-full bg-no-repeat bg-cover max-w-sm text-sm">
+                            <div class="relative  rounded-xl mx-auto w-full bg-no-repeat bg-cover max-w-sm text-sm text-black"
+                            >
+                                <img src="/images/gold.png" class="absolute top-0 left-0 w-full h-full" />
                                 <div class="bg-black rounded-full absolute top-0 right-0 m-4">
-                                    <StarIcon class="w-4 h-4 fill-primary " :class="form.plan=='55' ? 'fill-' : form.plan=='25' ? 'fill-golden' : 'fill-primary' " />
+                                    <StarIcon class="w-4 h-4 fill-golden" />
                                 </div>
-                                <div class="p-8 font-bold">
+                                <div class="p-8 font-bold z-10 relative">
                                     <div class="mt-5 mb-16">
                                         <h2 class="uppercase text-primary" v-if="form.plan=='25'">three months plan</h2>
                                         <h2 class="uppercase text-primary" v-else-if="form.plan=='25'">three months plan</h2>
-                                        <h2 class="uppercase text-primary" v-else="form.plan=='10'">one month plan</h2>
+                                        <h2 class="uppercase text-primary" v-else="form.plan=='10'">six months plan</h2>
                                         <span v-text="form.plan == 25 ? '$25':form.plan == 55 ? '$55':'$10'"></span>
                                     </div>
                                     <div class="flex justify-between">
                                         <div>
                                             <div class="uppercase text-primary">start</div>
-                                            <div>1 november 2021</div>
+                                            <div>{{ currentDate }}</div>
                                         </div>
                                         <div>
                                             <div class="uppercase text-primary">end</div>
-                                            <div>1 februar 2022</div>
+                                            <div>{{ expaireDate }}</div>
                                         </div>
                                     </div>
                                 </div>
