@@ -19,7 +19,7 @@ Broadcast::channel('users.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('users.chat.{id}', function ($user, $id) {
-    return $user->conversations()->where('id', $id)->count();
+    return $user->conversations()->where('conversations.id', $id)->count();
 //    return (int)$user->id === (int)$id;
 });
 
