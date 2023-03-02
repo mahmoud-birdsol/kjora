@@ -29,7 +29,7 @@
             </div>
             <!-- comment or reply body  row 2-->
             <div class="w-full">
-                <p class="w-full text-sm text-stone-800 break-words whitespace-pre-line">
+                <p class="w-full text-sm text-stone-800 break-all whitespace-pre-wrap">
                     {{ comment.body }}
                 </p>
             </div>
@@ -54,9 +54,10 @@
                 </button>
                 <div class="flex items-center flex-grow ">
 
-                    <textarea ref="replyInput" @keydown.enter="addReply" @blur="handleBlur" @keydown.esc="handleEsc"
-                        v-model="newReply" name="newReply" id="newReply" rows="1" placeholder="Add a comment..."
-                        class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:right-1 focus:ring-primary  "></textarea>
+                    <textarea ref="replyInput" @keypress.enter.exact.prevent="addReply" @blur="handleBlur"
+                        @keydown.esc="handleEsc" v-model="newReply" name="newReply" id="newReply" rows="1"
+                        placeholder="Add a comment..."
+                        class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary  "></textarea>
                 </div>
 
                 <button @click="addReply" :disabled="isSending" class="p-1 group ">

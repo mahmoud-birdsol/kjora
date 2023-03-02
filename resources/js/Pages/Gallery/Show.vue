@@ -89,7 +89,7 @@
                         </button>
                         <div class="flex items-center flex-grow ">
 
-                            <textarea @keypress.enter.prevent.exact="addComment" v-model="newComment" name="newComment"
+                            <textarea @keypress.enter.exact.prevent="addComment" v-model="newComment" name="newComment"
                                 id="newComment" rows="1" placeholder="Add a comment..."
                                 class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary  "></textarea>
                         </div>
@@ -153,10 +153,12 @@ function sendComment() {
         parent_id: null
     }).then(res => {
         newComment.value = ''
-        isSending.value = false
+
         getComments()
 
-    }).catch(err => console.error(err))
+    }).catch(err => console.error(err)).finally(() => {
+        isSending.value = false
+    })
 }
 function addComment(e) {
     if (!newComment.value || newComment.value.trim() === '') return

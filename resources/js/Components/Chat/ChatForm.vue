@@ -46,7 +46,7 @@ const submit = () => {
             'Content-Type': 'multipart/form-data'
         }
     }).then((response) => {
-        console.log('currentuserid', chat.currentUserId)
+
         chat.pushNewMessage(response.data.data);
     }).catch(error => {
         console.error(error.response)
@@ -182,9 +182,9 @@ const removePhoto = (i) => {
             <!--                <FaceSmileIcon class="w-6 text-neutral-400"/>-->
             <!--            </button>-->
             <div class="flex flex-grow items-center">
-                <textarea v-model="form.body" @keydown.enter.prevent="submit" name="body" id="body" rows="1"
+                <textarea v-model="form.body" @keypress.enter.exact.prevent="submit" name="body" id="body" rows="1"
                     placeholder="Type your Message Here"
-                    class="w-full resize-none rounded-full border-none bg-stone-100 p-2 px-4 placeholder:text-neutral-400 text-stone-700 hideScrollBar"></textarea>
+                    class="w-full resize-none rounded-full border-none focus:ring-primary bg-stone-100 p-2 px-4 placeholder:text-neutral-400 text-stone-700 hideScrollBar"></textarea>
             </div>
             <button class="relative" @click="openModual = true">
                 <PhotoIcon class="h-6 w-6 text-neutral-400" />
