@@ -115,7 +115,7 @@ const removeFromFavorites = () => {
                 :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' }">
                 <div v-if="size == 'lg'">
                     <p class="text-xs text-center text-white opacity-50 text-light">Favorite Club</p>
-                    <div class="flex justify-center item-center">
+                    <div class="flex justify-center item-center" :title="player.club?.name">
                         <img :src="player.club?.logo_thumb" class="w-5 h-5 border-2 border-white rounded-full" />
                     </div>
                 </div>
