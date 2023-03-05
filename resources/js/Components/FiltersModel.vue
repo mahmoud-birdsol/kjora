@@ -14,7 +14,8 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 const props = defineProps({
     positions: Array,
     form: Object,
-    showFiltersModal: Boolean
+    showFiltersModal: Boolean,
+    countries: Array
 })
 let emit = defineEmits(['filter', 'reset', 'update:form'])
 
@@ -25,9 +26,7 @@ function filter() {
 function reset() {
     emit('reset')
 }
-let countries = [
-    { id: 1, name: "egypt", img: "/images/logo.png" }
-]
+
 
 const distances = [5, 10, 20, 30, 40, 50];
 
