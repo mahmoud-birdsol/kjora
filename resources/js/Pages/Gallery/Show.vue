@@ -35,7 +35,7 @@
                                     <Link :href="route('player.profile', user.id)" class="text-xs text-stone-400 ">@{{
                                         user.username }}</Link>
                                 </div>
-                                <div v-if="isCurrentUser" class="relative">
+                                <div class="relative">
                                     <button class="p-1" @click="showOptions = !showOptions">
                                         <EllipsisHorizontalIcon class="w-6" />
                                     </button>
@@ -44,13 +44,13 @@
                                         <div v-show="showOptions"
                                             class="absolute z-20 px-6 py-2 text-xs text-white top-0 right-8 bg-black border rounded-xl border-neutral-500 pie-10 z-2 ">
                                             <ul class="flex flex-col justify-center gap-y-2">
-                                                <button class="hover:text-gray-400 group" @click="editCaption">
+                                                <button class="hover:text-gray-400 group" @click="editCaption" v-if="isCurrentUser" >
                                                     <li class="flex items-center  gap-x-2">
                                                         <PencilIcon class=" w-4" />
                                                         <span>Edit</span>
                                                     </li>
                                                 </button>
-                                                <button @click="openRemoveMediaModal" class="hover:text-gray-400 ">
+                                                <button @click="openRemoveMediaModal" class="hover:text-gray-400 " v-if="isCurrentUser" >
                                                     <li class="flex items-center justify-center gap-x-2">
                                                         <TrashIcon class="w-4" />
                                                         <span> Delete</span>
