@@ -7,7 +7,9 @@ use App\Models\Country;
 use App\Models\MediaLibrary;
 use App\Models\Position;
 use App\Models\User;
+use App\Services\Geolocator\IpInfo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -16,7 +18,7 @@ class PlayerController extends Controller
     /**
      * Display the home page.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Inertia\Response
      */
     public function index(Request $request): Response
@@ -42,15 +44,26 @@ class PlayerController extends Controller
 
         $request->whenFilled('search', fn() => $query->where(function ($query) use ($request) {
             $query
-                ->where('first_name', 'LIKE', '%'.$request->input('search').'%')
-                ->orWhere('last_name', 'LIKE', '%'.$request->input('search').'%')
-                ->orWhere('username', 'LIKE', '%'.$request->input('search').'%');
+                ->where('first_name', 'LIKE', '%' . $request->input('search') . '%')
+                ->orWhere('last_name', 'LIKE', '%' . $request->input('search') . '%')
+                ->orWhere('username', 'LIKE', '%' . $request->input('search') . '%');
         }));
+
+
+        $request->whenFilled('location', fn() => $query->having('distance', '<', $request->input('location'))
+            ->select(DB::raw("*,
+                     (3959 * ACOS(COS(RADIANS({$request->user()->current_latitude}))
+                           * COS(RADIANS(current_latitude))
+                           * COS(RADIANS({$request->user()->current_longitude}) - RADIANS(current_longitude))
+                           + SIN(RADIANS({$request->user()->current_latitude}))
+                           * SIN(RADIANS(current_latitude)))) AS distance")
+            ));
+
 
         return Inertia::render('Home', [
             'players' => $query->paginate(20),
             'positions' => Position::all(),
-            'advertisements' => Advertisement::orderBy('priority')->get()->map(function(Advertisement $advertisement){
+            'advertisements' => Advertisement::orderBy('priority')->get()->map(function (Advertisement $advertisement) {
                 return $advertisement->getFirstMediaUrl('main');
             }),
             'countries' => Country::active()->orderBy('name')->get()
@@ -60,8 +73,8 @@ class PlayerController extends Controller
     /**
      * Display the player profile page.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\User $user
      * @return \Inertia\Response
      */
     public function show(Request $request, User $user): Response

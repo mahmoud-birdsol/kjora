@@ -30,7 +30,7 @@ const form = useForm({
     rating: parseInt(usePage().props.value.queryParams.rating ?? 0),
     search: usePage().props.value.queryParams.search ?? '',
     location: usePage().props.value.queryParams.location ?? null,
-    country_id: parseInt(usePage().props.value.queryParams.country_id) ?? null
+    country_id: usePage().props.value.queryParams.country_id ?? null
 });
 
 const loading = ref(false);

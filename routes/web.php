@@ -96,7 +96,7 @@ Route::middleware([
         Route::get('home', [
             PlayerController::class,
             'index',
-        ])->name('home');
+        ])->middleware('detect.location')->name('home');
 
         Route::get('player/{user}', [
             PlayerController::class,
