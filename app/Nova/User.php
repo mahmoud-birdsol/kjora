@@ -194,38 +194,38 @@ class User extends Resource
                     ->nullable()
                     ->rules('nullable'),
             ]),
-            Text::make('last_known_ip')
+            Text::make('Last Known Ip')
                 ->showOnPreview()
                 ->sortable()
                 ->hideFromIndex()
                 ->rules('nullable'),
 
-            Text::make('current_country')
+            Text::make('Current country')
                 ->showOnPreview()
                 ->sortable()
                 ->hideFromIndex()
                 ->rules('nullable'),
 
 
-            Text::make('current_region')
+            Text::make('Current Region')
                 ->showOnPreview()
                 ->sortable()
                 ->hideFromIndex()
                 ->rules('nullable'),
 
-            Text::make('current_city')
+            Text::make('Current City')
                 ->showOnPreview()
                 ->sortable()
                 ->hideFromIndex()
                 ->rules('nullable'),
 
-            Text::make('current_latitude')
+            Text::make('Current Latitude')
                 ->showOnPreview()
                 ->sortable()
                 ->hideFromIndex()
                 ->rules('nullable'),
 
-            Text::make('current_longitude')
+            Text::make('Current Longitude')
                 ->showOnPreview()
                 ->sortable()
                 ->hideFromIndex()

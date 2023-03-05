@@ -13,7 +13,7 @@ class IPGeolocationApi implements GeoLocatorApiInterface
     }
     public  function getDetails()
     {
-        $ipInfo = Http::get("http://ip-api.com/json/{$this->ip}");
+        $ipInfo = Http::get(config('services.ip_api_geolocation_url') . $this->ip);
         return $ipInfo->json($key = null);
 
     }
