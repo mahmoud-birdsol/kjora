@@ -43,13 +43,14 @@ class FavoriteController extends Controller
         }));
 
         $request->whenFilled('location', fn() => $query->having('distance', '<', $request->input('location'))
-            ->select(DB::raw("*,
+            ->select(DB::raw("
                      (3959 * ACOS(COS(RADIANS({$request->user()->current_latitude}))
                            * COS(RADIANS(current_latitude))
                            * COS(RADIANS({$request->user()->current_longitude}) - RADIANS(current_longitude))
                            + SIN(RADIANS({$request->user()->current_latitude}))
                            * SIN(RADIANS(current_latitude)))) AS distance")
             ));
+
 
         return Inertia::render('Favorites/Index', [
             'players' => $query->paginate(20),
