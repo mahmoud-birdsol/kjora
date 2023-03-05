@@ -19,14 +19,12 @@ Broadcast::channel('users.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('users.chat.{id}', function ($user, $id) {
-    return true;
-//    return (int)$user->id === (int)$id;
+    return $user->conversations()->where('conversations.id', $id)->count();
 });
 
 
 Broadcast::channel('presence-chat.{id}', function ($user, $id) {
-    return true;
-//    return (int)$user->id === (int)$id;
+    return (int)$user->id === (int)$id;
 });
 
 Broadcast::channel('users.comment.{id}', function ($user, $id) {
@@ -40,6 +38,7 @@ Broadcast::channel('users.comment.{id}', function ($user, $id) {
 //});
 
 Broadcast::channel('chat.{id}', function ($user, $id) {
-    return true;
-//    return (int)$user->id === (int)$id;
+    if (auth()->check()) {
+        return $user->toArray();
+    }
 });

@@ -195,19 +195,19 @@ function reset(e) {
                         </FadeInTransition>
                     </div>
                     <!-- <FadeInTransition>
-                                     <div v-if="isLoading" class="absolute inset-0 top-4 z-20 grid p-4 place-content-center ">
-                                         <div
-                                             class="h-12 border-4 rounded-full border-primary border-t-white aspect-square animate-spin">
-                                         </div>
-                                     </div>
-                                 </FadeInTransition> -->
+                                             <div v-if="isLoading" class="absolute inset-0 top-4 z-20 grid p-4 place-content-center ">
+                                                 <div
+                                                     class="h-12 border-4 rounded-full border-primary border-t-white aspect-square animate-spin">
+                                                 </div>
+                                             </div>
+                                         </FadeInTransition> -->
                 </div>
 
             </div>
             <div>
                 <div class="justify-self-end text-sm mb-2 text-primary text-center">video, images, PDFs and docs are allowed
                     with max size
-                    (2MB) are allowed
+                    (10 MB) are allowed
                 </div>
                 <PrimaryButton @click.prevent="upload" :disabled="isDisabled">
                     Upload

@@ -1,13 +1,14 @@
 <template>
     <!-- comment  -->
-    <div class="grid grid-cols-[min-content_1fr] gap-4" :class="comment.parent_id ? 'bg-white' : ''">
+    <div class="grid grid-cols-[min-content_1fr] w-full justify-start gap-4" :class="comment.parent_id ? 'bg-white' : ''">
         <!-- image col 1 -->
         <div class="min-w-max z-[10] relative  " :class="guidesClassesAfter2">
             <Avatar :username="comment.user.name" :image-url="comment.user.avatar_url" :size="'md'" :border="true"
                 border-color="primary" />
         </div>
         <!-- comment information col 2 -->
-        <div class="flex flex-col gap-1 relative isolate  z-[5] " :class="[guidesClassesBefore, guidesClassesAfter]">
+        <div class="flex flex-col gap-1 relative isolate  z-[5] max-w-full "
+            :class="[guidesClassesBefore, guidesClassesAfter]">
             <!-- user information & comment time row 1-->
             <div class="flex flex-col xs:flex-row w-full justify-between">
                 <!-- user information -->
@@ -27,8 +28,8 @@
                 </div>
             </div>
             <!-- comment or reply body  row 2-->
-            <div>
-                <p class="text-sm text-stone-800">
+            <div class="w-full">
+                <p class="w-full text-sm text-stone-800 break-all whitespace-pre-wrap">
                     {{ comment.body }}
                 </p>
             </div>
@@ -53,9 +54,10 @@
                 </button>
                 <div class="flex items-center flex-grow ">
 
-                    <textarea ref="replyInput" @keydown.enter="addReply" @blur="handleBlur" @keydown.esc="handleEsc"
-                        v-model="newReply" name="newReply" id="newReply" rows="1" placeholder="Add a comment..."
-                        class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:right-1 focus:ring-primary  "></textarea>
+                    <textarea ref="replyInput" @keypress.enter.exact.prevent="addReply" @blur="handleBlur"
+                        @keydown.esc="handleEsc" v-model="newReply" name="newReply" id="newReply" rows="1"
+                        placeholder="Add a comment..."
+                        class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary  "></textarea>
                 </div>
 
                 <button @click="addReply" :disabled="isSending" class="p-1 group ">

@@ -10,9 +10,9 @@
                 <!-- image and caption left col -->
                 <div class=" flex flex-col gap-6 max-w-full  p-3 ">
                     <!-- image -->
-                    <div class="rounded-3xl  sm:aspect-video overflow-hidden">
+                    <div class="rounded-3xl  sm:aspect-video overflow-hidden flex justify-center">
                         <img v-if="media.mime_type.startsWith('image') || media.mime_type.startsWith('webp')"
-                            :src="media.original_url" alt="" class="object-cover  ">
+                            :src="media.original_url" alt="" class="h-full  object-contain  ">
                         <video v-if="media.mime_type.startsWith('video')" controls :src="media.original_url" alt=""
                             class="object-cover   " />
                     </div>
@@ -91,7 +91,7 @@
                     </div>
                     <!-- comments -->
                     <div class="self-stretch p-3 px-6 h-full ">
-                        <div class="flex flex-col gap-4" v-if="comments">
+                        <div class="flex flex-col gap-4 w-full" v-if="comments">
                             <template v-for="comment in comments.filter(c => !c.parent_id)" :key="comment.id">
                                 <Comment @addedReply="handleAddedReply" :comment="comment"></Comment>
                             </template>
@@ -104,9 +104,9 @@
                         </button>
                         <div class="flex items-center flex-grow ">
 
-                            <textarea @keypress.enter="addComment" v-model="newComment" name="newComment" id="newComment"
-                                rows="1" placeholder="Add a comment..."
-                                class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:right-1 focus:ring-primary  "></textarea>
+                            <textarea @keypress.enter.exact.prevent="addComment" v-model="newComment" name="newComment"
+                                id="newComment" rows="1" placeholder="Add a comment..."
+                                class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary  "></textarea>
                         </div>
 
                         <button @click="addComment" :disabled="isSending" class="p-1 group ">
@@ -173,10 +173,12 @@ function sendComment() {
         parent_id: null
     }).then(res => {
         newComment.value = ''
-        isSending.value = false
+
         getComments()
 
-    }).catch(err => console.error(err))
+    }).catch(err => console.error(err)).finally(() => {
+        isSending.value = false
+    })
 }
 function addComment(e) {
     if (!newComment.value || newComment.value.trim() === '') return

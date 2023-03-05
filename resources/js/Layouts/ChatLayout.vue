@@ -18,11 +18,13 @@ const showSideBar = ref(false);
 props.conversations.forEach((conversation) => {
     Echo.join('chat.' + conversation.id)
         .here(function (users) {
+            console.log(users);
             users.forEach(user => {
                 updateConversationUserStatus(user, true);
             });
         })
         .joining(function (user) {
+            console.log('joining');
             updateConversationUserStatus(user, true);
         })
         .leaving(function (user) {

@@ -169,7 +169,6 @@ export const useChat = defineStore("chat", {
          * @param message
          */
         pushNewMessage(message) {
-            console.log(message);
             this.messages.unshift(message);
             this.scrollToMessagesBottom();
             this.replyToMessage = null;

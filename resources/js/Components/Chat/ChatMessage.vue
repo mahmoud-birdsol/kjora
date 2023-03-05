@@ -57,7 +57,8 @@ const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith
         </div>
         <!-- message body -->
         <div class="max-w-[60%]">
-            <div :class="bodyClass" class="p-4 rounded-2xl">
+
+            <div :class="bodyClass" class="p-4 rounded-2xl max-w-full ">
                 <!-- replied message -->
                 <div v-if="message.parent_id" :class="repliedClasses" class="p-3 mb-2 text-xs rounded-lg">
                     <!-- name -->
@@ -113,9 +114,10 @@ const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith
                         :user="message.message_sender" />
                 </template>
                 <!-- text message -->
-                <span class="break-words whitespace-pre-wrap ">
+
+                <div class="break-all whitespace-pre-wrap ">
                     {{ message.body }}
-                </span>
+                </div>
             </div>
             <!-- date -->
             <div class="mt-2 text-xs " :class="isCurrentUser ? 'text-end' : null"> <span>{{ message.read_at ?
