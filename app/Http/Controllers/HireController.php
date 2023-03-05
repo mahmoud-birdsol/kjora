@@ -17,14 +17,23 @@ class HireController extends Controller
      */
     public function index(Request $request): Response
     {
-        $invitations = Invitation::where('inviting_player_id', $request->user()->id)
+        $query = Invitation::where('inviting_player_id', $request->user()->id)
             ->latest('date')
             ->with('invitedPlayer')
-            ->with('stadium')
-            ->get();
+            ->with('stadium');
+
+        $request->whenFilled('search', fn() => $query->where(function ($query) use ($request) {
+            $query->whereHas('invitedPlayer' , function ($q) use ($request){
+                $q->where('first_name', 'LIKE', '%'.$request->input('search').'%')
+                    ->orWhere('last_name', 'LIKE', '%'.$request->input('search').'%')
+                    ->orWhere('username', 'LIKE', '%'.$request->input('search').'%');
+            });
+
+        }));
 
         return Inertia::render('Hire/Index', [
-            'invitations' => $invitations,
+            'invitations' => $query->get(),
         ]);
     }
+    
 }

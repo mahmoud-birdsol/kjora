@@ -17,14 +17,27 @@ class InvitationController extends Controller
      */
     public function index(Request $request): Response
     {
-        $invitations = Invitation::where('invited_player_id', $request->user()->id)
+        $query = Invitation::where('invited_player_id', $request->user()->id)
             ->latest('date')
             ->with('invitingPlayer')
-            ->with('stadium')
-            ->get();
+            ->with('stadium');
+
+        $request->whenFilled('search', fn() => $query->where(function ($query) use ($request) {
+            $query->whereHas('invitingPlayer' , function ($q) use ($request){
+                $q->where('first_name', 'LIKE', '%'.$request->input('search').'%')
+                    ->orWhere('last_name', 'LIKE', '%'.$request->input('search').'%')
+                    ->orWhere('username', 'LIKE', '%'.$request->input('search').'%');
+            });
+
+        }));
 
         return Inertia::render('Invitation/Index', [
-            'invitations' => $invitations,
+            'invitations' => $query->get(),
         ]);
     }
 }
+
+
+
+
+
