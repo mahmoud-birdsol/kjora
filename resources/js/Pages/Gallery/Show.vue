@@ -55,6 +55,7 @@
                                                         <TrashIcon class="w-4" />
                                                         <span> delete</span>
                                                     </li>
+                                                    <!-- confirm delete media modal -->
                                                     <Modal :show="showDeleteMediaModal"
                                                         @close="showDeleteMediaModal = false" :closeable="true"
                                                         :show-close-icon="false" :max-width="'sm'">
@@ -98,16 +99,11 @@
                             <!-- caption row 3 -->
                             <div>
                                 <p class="text-sm text-stone-500" v-show="!isEditingCaption">
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempora repellendus earum
-                                    magni quia fugiat, enim deserunt labore tenetur praesentium. Impedit neque nihil ullam
-                                    perferendis praesentium eos, molestiae amet deleniti sequi?
+                                    {{ caption }}
                                 </p>
                                 <div v-show="isEditingCaption" class="flex">
-                                    <input type="text" value="aml walaed"
-                                        class="text-sm text-stone-500 w-full ring-1 focus:ring-primary focus:shadow-none focus:border-none border-none ring-gray-300 rounded-full" />
-                                    <button class="p-1 group" @click="submit">
-                                        <PaperAirplaneIcon class="text-neutral-900 w-5" />
-                                    </button>
+                                    <textarea rows="4" type="text" :value="caption" @blur="submit"
+                                        class="text-sm text-stone-500 w-full ring-1 focus:ring-primary focus:shadow-none focus:border-none border-none ring-gray-300 hideScrollBar" />
                                 </div>
                             </div>
 
@@ -183,6 +179,8 @@ let isEditingCaption = ref(false);
 const currentUser = usePage().props.value.auth.user
 const isCurrentUser = currentUser.id === props.user.id
 const showDeleteMediaModal = ref(false);
+const caption = ref('Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempora repellendus earum magni quia fugiat, enim deserunt labore tenetur praesentium.Impedit neque nihil ullam perferendis praesentium eos, molestiae amet deleniti sequi  ')
+
 
 //comment logic
 
@@ -241,6 +239,7 @@ function editCaption() {
     isEditingCaption.value = true
 }
 function submit() {
+    isEditingCaption.value = false
     console.log('has submit')
 }
 </script>
