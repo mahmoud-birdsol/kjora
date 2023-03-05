@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/inertia-vue3';
+import { Head, useForm , Link } from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import Modal from '../../Components/Modal.vue';
@@ -62,7 +62,7 @@ function submitRatingForm() {
                     </div>
                     <div class="flex-col flex gap-0">
                         <h3 class="capitalize font-bold text-lg text-primary">{{ review.player.name }}</h3>
-                        <span>@{{ review.player.username }} {{ 'cairo' }}</span>
+                        <Link :href="route('player.profile', review.player.id)">@{{ review.player.username }} {{ 'cairo' }}</Link>
                         <div class="text-stone-400 text-xs flex gap-2 flex-wrap">
                             <span>Age: {{ review.player.age }}</span>
                             <span>Played: {{ '24' }}</span>

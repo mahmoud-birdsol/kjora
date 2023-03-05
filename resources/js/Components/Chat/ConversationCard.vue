@@ -33,7 +33,7 @@ const active = computed(() => {
                 </div>
                 <div class="flex flex-col ">
                     <h4 class="m-0 text-lg leading-none text-white capitalize">{{ user.name }}</h4>
-                    <span class="text-xs leading-none text-neutral-500"> {{ user.username }} </span>
+                    <Link :href="route('player.profile', user.id)"  class="text-xs leading-none text-neutral-500"> @{{ user.username }} </Link>
                 </div>
                 <div class="mis-auto -mt-2">
                     <p class="text-xs text-gray-300" v-if="!user.online">Last seen</p>

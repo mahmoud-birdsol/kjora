@@ -96,7 +96,7 @@ const removeFromFavorites = () => {
                         </h2>
                         </Link>
 
-                        <p class="text-xs text-white opacity-50">@{{ player.username }}</p>
+                        <Link class="text-xs text-white opacity-50" :href="route('player.profile', player.id)">@{{ player.username }}</Link>
                         <p class="flex items-center space-x-2 text-sm text-white">
                             <span class="scale-[0.7] origin-left flex items-center gap-x-1">
                                 <ElRate disabled v-model="player.rating" size="small" />

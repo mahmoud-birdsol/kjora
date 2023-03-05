@@ -9,7 +9,7 @@ import {
     XMarkIcon
 } from '@heroicons/vue/24/solid'
 import axios from "axios";
-import { useForm } from "@inertiajs/inertia-vue3";
+import { useForm , Link } from "@inertiajs/inertia-vue3";
 import Avatar from "../Avatar.vue";
 import UplaodChatFile from './UplaodChatFile.vue';
 const props = defineProps({
@@ -132,7 +132,8 @@ const removePhoto = (i) => {
                             ? $page.props.auth.user.name
                             : player.name
                         }}
-                        <p class="text-gray-600 text-xs font-normal ">@{{ chat.repliedMessage.message_sender.username }}</p>
+
+                        <Link class="text-gray-600 text-xs font-normal " :href="route('player.profile', chat.repliedMessage.message_sender.id)">@{{ chat.repliedMessage.message_sender.username }}</Link>
 
                     </div>
                     <div class="max-w-[70ch] truncate">{{ chat.repliedMessage.body }}</div>

@@ -10,7 +10,7 @@ import {
     XMarkIcon,
 } from '@heroicons/vue/24/outline'
 import TextInput from "../TextInput.vue";
-
+import { Link } from "@inertiajs/inertia-vue3";
 const props = defineProps({
     conversation: {
         required: true,
@@ -54,9 +54,9 @@ watch(() => chat.search, () => {
                     <h4 class="mb-1 font-bold capitalize leading-none text-primary">
                         {{ player.name }}
                     </h4>
-                    <span class="text-xs leading-none text-neutral-500">
+                    <Link class="text-xs leading-none text-neutral-500" :href="route('player.profile', player.id)">
                         @{{ player.username }}
-                    </span>
+                    </Link>
                 </div>
             </div>
             <div class="flex items-center gap-4 p-4">
