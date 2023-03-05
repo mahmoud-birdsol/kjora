@@ -17,14 +17,21 @@ class HireController extends Controller
      */
     public function index(Request $request): Response
     {
-        $invitations = Invitation::where('inviting_player_id', $request->user()->id)
+        $query = Invitation::where('inviting_player_id', $request->user()->id)
             ->latest('date')
             ->with('invitedPlayer')
-            ->with('stadium')
-            ->get();
+            ->with('stadium');
+
+        $request->whenFilled('dateFrom',
+            fn() => $query->where('date', '>=', \Carbon\Carbon::parse($request->input('dateFrom'))->toDatetimeString())
+        );
+        $request->whenFilled('dateTo',
+            fn() => $query->where('date', '<=', \Carbon\Carbon::parse($request->input('dateTo'))->toDatetimeString() )
+        );
+
 
         return Inertia::render('Hire/Index', [
-            'invitations' => $invitations,
+            'invitations' => $query->get(),
         ]);
     }
 }
