@@ -194,6 +194,42 @@ class User extends Resource
                     ->nullable()
                     ->rules('nullable'),
             ]),
+            Text::make('last_known_ip')
+                ->showOnPreview()
+                ->sortable()
+                ->hideFromIndex()
+                ->rules('nullable'),
+
+            Text::make('current_country')
+                ->showOnPreview()
+                ->sortable()
+                ->hideFromIndex()
+                ->rules('nullable'),
+
+
+            Text::make('current_region')
+                ->showOnPreview()
+                ->sortable()
+                ->hideFromIndex()
+                ->rules('nullable'),
+
+            Text::make('current_city')
+                ->showOnPreview()
+                ->sortable()
+                ->hideFromIndex()
+                ->rules('nullable'),
+
+            Text::make('current_latitude')
+                ->showOnPreview()
+                ->sortable()
+                ->hideFromIndex()
+                ->rules('nullable'),
+
+            Text::make('current_longitude')
+                ->showOnPreview()
+                ->sortable()
+                ->hideFromIndex()
+                ->rules('nullable'),
 
             // Todo after security feature is done.
             //            'accepted_terms_and_conditions_version',

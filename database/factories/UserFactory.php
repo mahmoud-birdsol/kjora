@@ -58,6 +58,13 @@ class UserFactory extends Factory
             'accepted_cookie_policy_at' => now(),
             'preferred_foot' => $this->faker->randomElement(['left', 'right']),
             'rating' => $this->faker->randomFloat(2, 0, 5),
+            'last_known_ip' => $this->faker->ipv4(),
+            'current_country' => $this->faker->country(),
+            'current_region' => $this->faker->region,
+            'current_city' => $this->faker->city(),
+            'current_latitude' => $this->faker->latitude(),
+            'current_longitude' => $this->faker->longitude(),
+
         ];
     }
 
