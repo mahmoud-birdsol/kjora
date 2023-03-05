@@ -10,18 +10,20 @@ import Modal from '@/Components/Modal.vue';
 import { ElSlider } from 'element-plus';
 import InputLabel from '@/Components/InputLabel.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
-import { emit } from 'process';
-const showFiltersModal = ref(false);
+import { concat } from 'lodash';
+
 const props = defineProps({
     positions: Array,
     form:Object,
 })
-const emit = defineEmits(['filter', 'reset' , 'update:form'  ])
+let emit = defineEmits(['filter', 'reset' , 'update:form'  ])
 let countries = [
     { id: 1, name: "egypt", img: "/images/logo.png" }
 ]
 function filter(){
-    emit('update:',
+    console.log(props.form)
+    emit('update:form', props.form)
+    emit('filter')
 }
 
 </script>
