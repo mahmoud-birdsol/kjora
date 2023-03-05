@@ -116,7 +116,7 @@ const options = {
                     </SecondaryButton>
                     <template v-for="position in positions" :key="position.id">
                         <SecondaryButton @click="filterByPosition(position.id)">
-                            <span class="w-full text-center"
+                            <span class="w-full text-center text-sm"
                                 :class="{ 'text-black': form.position == position.id, 'text-gray-400': form.position != position.id }">
                                 {{ position.name }}
                             </span>
