@@ -95,12 +95,12 @@ const reset = () => {
                         <div class="my-6">
                             <InputLabel>Date From : </InputLabel>
                             <ElDatePicker v-model="form.dateFrom" class="w-full" type="datetime" placeholder="Pick a Date"
-                                format="YYYY/MM/DD hh:mm:ss" value-format="YYYY-MM-DD h:m:s a" />
+                            format="YYYY/MM/DD hh:mm:ss" value-format="YYYY/MM/DD HH:mm:ss"  />
                         </div>
                         <div class="my-6">
                             <InputLabel>Date To :</InputLabel>
                             <ElDatePicker v-model="form.dateTo" class="w-full" type="datetime" placeholder="Pick a Date"
-                                format="YYYY/MM/DD hh:mm:ss" value-format="YYYY-MM-DD h:m:s a" />
+                            format="YYYY/MM/DD hh:mm:ss" value-format="YYYY/MM/DD HH:mm:ss"  />
                         </div>
 
                         <div class="my-6 mt-4">
