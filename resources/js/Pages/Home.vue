@@ -9,9 +9,7 @@ import Pagination from '@/Components/Pagination.vue';
 import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
 import HelloUserHeader from '@/Components/HelloUserHeader.vue';
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
-
 import FiltersModel from '@/Components/FiltersModel.vue';
-
 
 
 const props = defineProps({
@@ -26,17 +24,10 @@ const form = useForm({
     rating: parseInt(usePage().props.value.queryParams.rating ?? 0),
     search: usePage().props.value.queryParams.search ?? '',
 });
-
 const loading = ref(false);
-
-const filterByPosition = (position) => {
-    form.position = position;
-    filter();
-};
 
 const filter = () => {
     loading.value = true;
-
     form.get(route('home'), {
         preserveState: true,
         preserveScroll: true,
@@ -46,8 +37,6 @@ const filter = () => {
         }
     });
 };
-
-
 const reset = () => {
     form.position = null;
     form.age = 18;
@@ -56,6 +45,7 @@ const reset = () => {
 
     filter();
 }
+
 const options = {
     arrows: false,
     // rewind: true,
@@ -76,9 +66,12 @@ const options = {
 
     },
 };
-let countries = [
-    { id: 1, name: "egypt", img: "/images/logo.png" }
-]
+const filterByPosition = (position) => {
+    form.position = position;
+    filter();
+};
+
+
 </script>
 
 <template>
@@ -143,7 +136,7 @@ let countries = [
 
                 <!-- Filters Modal...
                                                                                                       =====================================================-->
-                <FiltersModel :showFiltersModal="showFiltersModal" />
+                <FiltersModel :positions="positions" v-model:form="form" @reset="reset" @filter="filter"/>
                 <!-- <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40">
                     <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl"
                         @click="showFiltersModal = !showFiltersModal">
