@@ -17,14 +17,19 @@ class InvitationController extends Controller
      */
     public function index(Request $request): Response
     {
-        $invitations = Invitation::where('invited_player_id', $request->user()->id)
+        $query = Invitation::where('invited_player_id', $request->user()->id)
             ->latest('date')
             ->with('invitingPlayer')
-            ->with('stadium')
-            ->get();
+            ->with('stadium');
 
+         $request->whenFilled('dateFrom',
+            fn() => $query->where('date', '>=', \Carbon\Carbon::parse($request->input('dateFrom'))->toDatetimeString())
+        );
+        $request->whenFilled('dateTo',
+            fn() => $query->where('date', '<=', \Carbon\Carbon::parse($request->input('dateTo'))->toDatetimeString() )
+        );
         return Inertia::render('Invitation/Index', [
-            'invitations' => $invitations,
+            'invitations' => $query->get(),
         ]);
     }
 }
