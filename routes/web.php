@@ -104,15 +104,15 @@ Route::middleware([
 
         Route::get(
             'player/review/{review}', [
-                PlayerReviewController::class,
-                'show'
-            ])->name('player.review.show');
+            PlayerReviewController::class,
+            'show'
+        ])->name('player.review.show');
 
         Route::post(
             'player/review/{review}', [
-                PlayerReviewController::class,
-                'store'
-            ])->name('player.review.store');
+            PlayerReviewController::class,
+            'store'
+        ])->name('player.review.store');
 
         /*
          |--------------------------------------------------------------------------
@@ -298,6 +298,16 @@ Route::middleware([
      | Message Routes...
      |--------------------------------------------------------------------------
     */
+
+
+    /*
+     |--------------------------------------------------------------------------
+     | Likes Routes...
+     |--------------------------------------------------------------------------
+    */
+
+    Route::post('like', [\App\Http\Controllers\LikeController::class, 'store'])->name('like.store');
+    Route::delete('like', [\App\Http\Controllers\LikeController::class, 'destroy'])->name('like.destroy');
 });
 
 
