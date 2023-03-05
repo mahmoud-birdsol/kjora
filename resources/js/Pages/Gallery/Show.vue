@@ -34,10 +34,21 @@
                                     </div>
                                     <span class="text-xs text-stone-400 ">@{{ 'username' }} </span>
                                 </div>
-                                <div>
-                                    <button class="p-1">
+                                <div class="relative">
+                                    <button class="p-1" @click="showOptions = !showOptions">
                                         <EllipsisHorizontalIcon class="w-6" />
                                     </button>
+                                    <div v-show="showOptions"
+                                        class="absolute top-1/2 left-0 shadow-lg p-2 rounded-lg cursor-pointer bg-white">
+                                        <div class="fixed top-0 left-0 w-full h-full" @click="showOptions = false">
+                                        </div>
+                                        <div class="w-full relative z-20 text-sm text-gray-500 whitespace-nowrap text-center divide-y">
+                                            <div @click="contenteditable = true">Edit</div>
+                                            <div>remove photo</div>
+
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                             <!-- date and time and likes row 2-->
@@ -57,12 +68,16 @@
                             </div>
                             <!-- caption row 3 -->
                             <div>
-                                <p class="text-sm text-stone-500">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio officiis et nisi hic eos
-                                    recusandae quasi assumenda cupiditate blanditiis, iure autem praesentium perferendis
-                                    velit
-                                    molestias error nemo iste temporibus at!
+                                <p class="text-sm text-stone-500" v-show="!contenteditable">
+                                    aml walaed
                                 </p>
+                                <div v-show="contenteditable" class="flex">
+                                    <input type="text" value="aml walaed" class="text-sm text-stone-500 w-full ring-1 focus:ring-primary focus:shadow-none focus:border-none border-none ring-gray-300 rounded-full" />
+                                    <button class="p-1 group" @click="submit">
+                                        <PaperAirplaneIcon
+                                            class="text-neutral-900 w-5" />
+                                    </button>
+                                </div>
                             </div>
 
                         </div>
@@ -129,6 +144,8 @@ const props = defineProps({
 const comments = ref(null);
 const newComment = ref(null);
 const isSending = ref(false);
+let showOptions = ref(false)
+let contenteditable = ref(false);
 const currentUser = usePage().props.value.auth.user
 function getComments() {
     axios.get(route('api.gallery.comments'), {
@@ -139,6 +156,9 @@ function getComments() {
     }).then(res => {
         comments.value = res.data.data
     }).catch(err => console.error(err))
+}
+function submit(){
+    console.log('has submit')
 }
 
 onMounted(() => {
