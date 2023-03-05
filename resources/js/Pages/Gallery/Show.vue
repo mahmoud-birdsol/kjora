@@ -32,7 +32,8 @@
                                         <h3 class="font-bold m-0 text-lg leading-none  capitalize ">{{ user.name }} </h3>
                                         <span v-if="false">star icon</span>
                                     </div>
-                                    <Link :href="route('player.profile', user.id)" class="text-xs text-stone-400 ">@{{ user.username }} </Link>
+                                    <Link :href="route('player.profile', user.id)" class="text-xs text-stone-400 ">@{{
+                                        user.username }} </Link>
                                 </div>
                                 <div class="relative">
                                     <button class="p-1" @click="showOptions = !showOptions">
@@ -42,7 +43,8 @@
                                         class="absolute top-1/2 left-0 shadow-lg p-2 rounded-lg cursor-pointer bg-white">
                                         <div class="fixed top-0 left-0 w-full h-full" @click="showOptions = false">
                                         </div>
-                                        <div class="w-full relative z-20 text-sm text-gray-500 whitespace-nowrap text-center divide-y">
+                                        <div
+                                            class="w-full relative z-20 text-sm text-gray-500 whitespace-nowrap text-center divide-y">
                                             <div @click="contenteditable = true">Edit</div>
                                             <div>remove photo</div>
 
@@ -59,11 +61,12 @@
                                     <span>{{ dayjs(media.created_at).format('hh:mm A') }}</span>
 
                                 </div>
-                                <div class="flex items-center gap-1"><span class="text-sm">{{ '10' }}</span>
-                                    <button class="p-1">
-                                        <HeartIcon
-                                            class="w-5 text-primary hover:fill-current fill-transparent stroke-current stroke-2" />
-                                    </button>
+                                <div class="flex items-center gap-1"><span class="text-sm">{{ media?.like_count }}</span>
+                                    <LikeButton :likeable_id="media.id" :likeable_type="'\\App\\Models\\MediaLibrary'"
+                                        #button="{ isLiked }">
+                                        <HeartIcon class="w-5 text-primary stroke-current stroke-2"
+                                            :class="isLiked ? 'fill-current' : 'fill-transparent'" />
+                                    </LikeButton>
                                 </div>
                             </div>
                             <!-- caption row 3 -->
@@ -72,10 +75,10 @@
                                     aml walaed
                                 </p>
                                 <div v-show="contenteditable" class="flex">
-                                    <input type="text" value="aml walaed" class="text-sm text-stone-500 w-full ring-1 focus:ring-primary focus:shadow-none focus:border-none border-none ring-gray-300 rounded-full" />
+                                    <input type="text" value="aml walaed"
+                                        class="text-sm text-stone-500 w-full ring-1 focus:ring-primary focus:shadow-none focus:border-none border-none ring-gray-300 rounded-full" />
                                     <button class="p-1 group" @click="submit">
-                                        <PaperAirplaneIcon
-                                            class="text-neutral-900 w-5" />
+                                        <PaperAirplaneIcon class="text-neutral-900 w-5" />
                                     </button>
                                 </div>
                             </div>
@@ -132,7 +135,8 @@ import Comment from '../../Components/Comment.vue';
 import { HeartIcon } from '@heroicons/vue/24/solid';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
-import { usePage , Link} from '@inertiajs/inertia-vue3';
+import { usePage, Link } from '@inertiajs/inertia-vue3';
+import LikeButton from '../../Components/LikeButton.vue';
 onBeforeMount(() => {
 
     dayjs.extend(relativeTime)
@@ -157,7 +161,7 @@ function getComments() {
         comments.value = res.data.data
     }).catch(err => console.error(err))
 }
-function submit(){
+function submit() {
     console.log('has submit')
 }
 
@@ -188,6 +192,10 @@ function addComment(e) {
 function handleAddedReply() {
     getComments();
 }
+
+
+
+
 </script>
 
 <style lang="scss" scoped></style>
