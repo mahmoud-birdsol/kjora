@@ -85,9 +85,9 @@ const distances = [5, 10, 20, 30, 40, 50];
                         </div>
                     </div>
                     <div class="my-6">
-                        <InputLabel>nationality</InputLabel>
+                        <InputLabel>Nationality</InputLabel>
                         <div class="px-4 py-1">
-                            <RichSelectInput :options="countries" value-name="id" text-name="name" image-name="img"
+                            <RichSelectInput :options="countries" value-name="id" text-name="name" image-name="flag"
                                 v-model="form.country_id" bgColor="black" txtColor="white" />
                         </div>
                     </div>

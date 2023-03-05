@@ -29,6 +29,8 @@ const form = useForm({
     age: parseInt(usePage().props.value.queryParams.age ?? 18),
     rating: parseInt(usePage().props.value.queryParams.rating ?? 0),
     search: usePage().props.value.queryParams.search ?? '',
+    location: usePage().props.value.queryParams.location ?? null,
+    country_id: parseInt(usePage().props.value.queryParams.country_id) ?? null
 });
 
 const loading = ref(false);
@@ -73,7 +75,7 @@ const reset = () => {
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <!-- Position Filters...
-                                                =====================================================-->
+                                                    =====================================================-->
                 <div class="flex gap-4 my-8 overflow-x-auto hideScrollBar">
                     <SecondaryButton @click="filterByPosition(null)">
                         <span class="w-full text-center"
@@ -92,7 +94,7 @@ const reset = () => {
                 </div>
 
                 <!-- Current list...
-                                                =====================================================-->
+                                                    =====================================================-->
                 <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
 
                     <div class="flex items-start justify-start my-6">
@@ -111,7 +113,7 @@ const reset = () => {
                 </div>
 
                 <!-- Filters Modal...
-                                                =====================================================-->
+                                                    =====================================================-->
                 <FiltersModel :positions="positions" :countries="countries" v-model:form="form" @reset="reset"
                     @filter="filter" :showFiltersModal="showFiltersModal" />
             </div>
