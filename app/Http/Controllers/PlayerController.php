@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Advertisement;
+use App\Models\Country;
 use App\Models\MediaLibrary;
 use App\Models\Position;
 use App\Models\User;
@@ -35,8 +36,8 @@ class PlayerController extends Controller
             fn() => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('age')))
         );
 
-        $request->whenFilled('country',
-            fn() => $query->where('country_id', $request->input('country'))
+        $request->whenFilled('country_id',
+            fn() => $query->where('country_id', $request->input('country_id'))
         );
 
         $request->whenFilled('search', fn() => $query->where(function ($query) use ($request) {
@@ -51,6 +52,13 @@ class PlayerController extends Controller
             'positions' => Position::all(),
             'advertisements' => Advertisement::orderBy('priority')->get()->map(function(Advertisement $advertisement){
                 return $advertisement->getFirstMediaUrl('main');
+            }),
+            'countries' => Country::all()->map(function (Country $country) {
+                return [
+                    'id' => $country->id,
+                    'name' => $country->name,
+                    'flag' => $country->getFirstMediaUrl('flag')
+                ];
             })
         ]);
     }
