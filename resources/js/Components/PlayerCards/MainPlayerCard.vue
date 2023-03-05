@@ -90,12 +90,9 @@ const removeFromFavorites = () => {
                     </div>
 
                     <div>
-                        <Link :href="route('player.profile', player.id)">
                         <h2 class="text-sm font-bold text-white">
                             {{ player.first_name }} {{ player.last_name }}
                         </h2>
-                        </Link>
-
                         <Link class="text-xs text-white opacity-50" :href="route('player.profile', player.id)">@{{ player.username }}</Link>
                         <p class="flex items-center space-x-2 text-sm text-white">
                             <span class="scale-[0.7] origin-left flex items-center gap-x-1">
