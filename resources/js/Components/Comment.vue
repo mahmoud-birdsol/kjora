@@ -18,7 +18,7 @@
                             comment.user.first_name }} </h3>
                         <span v-if="false">star icon</span>
                     </div>
-                    <span class="text-xs text-stone-400 ">@{{ comment.user.username }} </span>
+                    <Link class="text-xs text-stone-400 " :href="route('player.profile', comment.user.id)">@{{ comment.user.username }} </Link>
                 </div>
                 <!-- date and time -->
                 <div class="flex flex-row gap-2 text-neutral-400/90 text-xs">
@@ -83,7 +83,7 @@ import Avatar from './Avatar.vue';
 import { computed, onBeforeMount, ref, watch } from 'vue';
 import { FaceSmileIcon } from '@heroicons/vue/24/outline';
 import { PaperAirplaneIcon } from '@heroicons/vue/24/solid';
-import { usePage } from '@inertiajs/inertia-vue3';
+import { usePage , Link } from '@inertiajs/inertia-vue3';
 const props = defineProps(['comment'])
 onBeforeMount(() => {
     dayjs.extend(relativeTime)

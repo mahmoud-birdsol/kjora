@@ -32,7 +32,7 @@
                                         <h3 class="font-bold m-0 text-lg leading-none  capitalize ">{{ user.name }} </h3>
                                         <span v-if="false">star icon</span>
                                     </div>
-                                    <span class="text-xs text-stone-400 ">@{{ 'username' }} </span>
+                                    <Link :href="route('player.profile', user.id)" class="text-xs text-stone-400 ">@{{ user.username }} </Link>
                                 </div>
                                 <div class="relative">
                                     <button class="p-1" @click="showOptions = !showOptions">
@@ -132,7 +132,7 @@ import Comment from '../../Components/Comment.vue';
 import { HeartIcon } from '@heroicons/vue/24/solid';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
-import { usePage } from '@inertiajs/inertia-vue3';
+import { usePage , Link} from '@inertiajs/inertia-vue3';
 onBeforeMount(() => {
 
     dayjs.extend(relativeTime)
