@@ -3,7 +3,6 @@
 namespace App\Models\Concerns;
 
 use App\Models\Like;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +12,7 @@ trait CanBeLiked
     public function bootLikeable()
     {
         $this->appends[] = 'is_liked';
+        $this->with[] = 'likes_count';
     }
 
     public function likes(): MorphMany
