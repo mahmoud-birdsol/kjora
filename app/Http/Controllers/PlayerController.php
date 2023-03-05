@@ -53,13 +53,7 @@ class PlayerController extends Controller
             'advertisements' => Advertisement::orderBy('priority')->get()->map(function(Advertisement $advertisement){
                 return $advertisement->getFirstMediaUrl('main');
             }),
-            'countries' => Country::all()->map(function (Country $country) {
-                return [
-                    'id' => $country->id,
-                    'name' => $country->name,
-                    'flag' => $country->getFirstMediaUrl('flag')
-                ];
-            })
+            'countries' => Country::active()->orderBy('name')->get()
         ]);
     }
 

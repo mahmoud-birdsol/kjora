@@ -44,14 +44,7 @@ class FavoriteController extends Controller
         return Inertia::render('Favorites/Index', [
             'players' => $query->paginate(20),
             'positions' => Position::all(),
-
-            'countries' => Country::all()->map(function (Country $country) {
-                return [
-                    'id' => $country->id,
-                    'name' => $country->name,
-                    'flag' => $country->getFirstMediaUrl('flag')
-                ];
-            })
+            'countries' => Country::active()->orderBy('name')->get()
         ]);
     }
 
