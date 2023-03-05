@@ -21,6 +21,7 @@ import {
 const props = defineProps({
     players: Object,
     positions: Array,
+    countries: Array,
 });
 
 const form = useForm({
@@ -72,7 +73,7 @@ const reset = () => {
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <!-- Position Filters...
-                                        =====================================================-->
+                                                =====================================================-->
                 <div class="flex gap-4 my-8 overflow-x-auto hideScrollBar">
                     <SecondaryButton @click="filterByPosition(null)">
                         <span class="w-full text-center"
@@ -91,7 +92,7 @@ const reset = () => {
                 </div>
 
                 <!-- Current list...
-                                        =====================================================-->
+                                                =====================================================-->
                 <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
 
                     <div class="flex items-start justify-start my-6">
@@ -110,9 +111,9 @@ const reset = () => {
                 </div>
 
                 <!-- Filters Modal...
-                                        =====================================================-->
-                <FiltersModel :positions="positions" v-model:form="form" @reset="reset" @filter="filter"
-                    :showFiltersModal="showFiltersModal" />
+                                                =====================================================-->
+                <FiltersModel :positions="positions" :countries="countries" v-model:form="form" @reset="reset"
+                    @filter="filter" :showFiltersModal="showFiltersModal" />
             </div>
         </div>
     </AppLayout>
