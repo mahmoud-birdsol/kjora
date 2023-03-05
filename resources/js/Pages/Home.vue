@@ -5,18 +5,13 @@ import dayjs from 'dayjs';
 import { Inertia } from "@inertiajs/inertia";
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
-import Modal from '@/Components/Modal.vue';
-import { ElSlider } from 'element-plus';
-import InputLabel from '@/Components/InputLabel.vue';
 import Pagination from '@/Components/Pagination.vue';
 import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
 import HelloUserHeader from '@/Components/HelloUserHeader.vue';
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
 
-import {
-    XMarkIcon,
-    AdjustmentsHorizontalIcon,
-} from '@heroicons/vue/24/outline';
+import FiltersModel from '@/Components/FiltersModel.vue';
+
 
 
 const props = defineProps({
@@ -33,7 +28,6 @@ const form = useForm({
 });
 
 const loading = ref(false);
-const showFiltersModal = ref(false);
 
 const filterByPosition = (position) => {
     form.position = position;
@@ -82,6 +76,9 @@ const options = {
 
     },
 };
+let countries = [
+    { id: 1, name: "egypt", img: "/images/logo.png" }
+]
 </script>
 
 <template>
@@ -93,7 +90,8 @@ const options = {
         </template>
         <template #ads>
 
-            <Splide dir="ltr" class=" h-[4rem] w-[32rem] max-w-full self-end overflow-hidden  rounded-full md:ml-auto" :options="options">
+            <Splide dir="ltr" class=" h-[4rem] w-[32rem] max-w-full self-end overflow-hidden  rounded-full md:ml-auto"
+                :options="options">
                 <template v-for="(advertisement, i) in advertisements" :key="i">
                     <SplideSlide class="h-full">
                         <img class="object-cover h-full " :src="advertisement" alt="">
@@ -106,7 +104,7 @@ const options = {
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <!-- Position Filters...
-                                                                                                    =====================================================-->
+                                                                                                            =====================================================-->
                 <div class="flex gap-4 my-8 overflow-x-auto hideScrollBar">
                     <SecondaryButton @click="filterByPosition(null)">
                         <span class="w-full text-center"
@@ -125,7 +123,7 @@ const options = {
                 </div>
 
                 <!-- Current list...
-                                                                                                    =====================================================-->
+                                                                                                            =====================================================-->
                 <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
 
                     <div class="flex items-start justify-start my-6">
@@ -144,8 +142,9 @@ const options = {
                 </div>
 
                 <!-- Filters Modal...
-                                                                                                    =====================================================-->
-                <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40">
+                                                                                                      =====================================================-->
+                <FiltersModel :showFiltersModal="showFiltersModal" />
+                <!-- <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40">
                     <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl"
                         @click="showFiltersModal = !showFiltersModal">
                         <AdjustmentsHorizontalIcon class="w-10 h-10 text-white" />
@@ -184,7 +183,13 @@ const options = {
                                             placeholder="Search by name or username" />
                                     </div>
                                 </div>
-
+                                <div class="my-6">
+                                    <InputLabel>nationality</InputLabel>
+                                    <div class="px-4 py-1">
+                                        <RichSelectInput :options="countries" value-name="id" text-name="name"
+                                            image-name="img" v-model="form.country_id" bgColor="black" txtColor="white" />
+                                    </div>
+                                </div>
                                 <div class="my-6">
                                     <InputLabel>Position</InputLabel>
                                     <div class="px-4">
@@ -203,14 +208,14 @@ const options = {
                                 </div>
                                 <div class="flex items-center justify-center mt-4">
                                     <button class="text-primary" @click="reset">
-                                        <!-- <XMarkIcon class="inline w-4 h-4 mr-4" /> -->
+                                         <XMarkIcon class="inline w-4 h-4 mr-4" /> 
                                         Reset
                                     </button>
                                 </div>
                             </form>
                         </div>
                     </Modal>
-                </div>
+                </div> -->
             </div>
         </div>
     </AppLayout>
