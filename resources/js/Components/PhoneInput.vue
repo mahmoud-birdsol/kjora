@@ -72,6 +72,7 @@ const type = (event) => {
 
 <template>
     <div>
+        <div class="fixed top-0 left-0 w-full h-full z-20 " @click="showDropDown = false" v-if="showDropDown"></div>
         <div class="relative mt-1">
             <button type="button"
                     class="relative w-full cursor-pointer rounded-full border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
@@ -80,7 +81,7 @@ const type = (event) => {
                     <img :src="selected[imageName]" alt="" class="h-6 w-6 flex-shrink-0 rounded cursor-pointer"
                          @click="showDropDown = ! showDropDown">
                     <input type="text" :value="modelValue" @input="type"
-                           class="block w-full px-4 mx-4 py-0 my-0 border-none sm:text-sm disabled:bg-gray-100 focus:ring-none focus:border-none ring-transparent">
+                           class="block w-full px-4 py-0 my-0 border-none text-sm disabled:bg-gray-100 focus:ring-none focus:border-none ring-transparent">
                 </span>
                 <span class="cursor-pointer absolute inset-y-0 right-0 ml-3 flex items-center pr-2"
                       @click="showDropDown = ! showDropDown">
@@ -97,7 +98,7 @@ const type = (event) => {
                 leave-to-class="opacity-0"
             >
                 <ul v-if="showDropDown"
-                    class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                    class="absolute z-30 mt-1 max-h-56 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                     tabindex="-1" role="listbox" aria-labelledby="listbox-label"
                     aria-activedescendant="listbox-option-3">
                     <li>
