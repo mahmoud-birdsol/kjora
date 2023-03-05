@@ -10,7 +10,6 @@ import Modal from '@/Components/Modal.vue';
 import { ElSlider } from 'element-plus';
 import InputLabel from '@/Components/InputLabel.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
-import { concat } from 'lodash';
 
 const props = defineProps({
     positions: Array,

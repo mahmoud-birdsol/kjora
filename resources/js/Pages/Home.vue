@@ -10,7 +10,7 @@ import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
 import HelloUserHeader from '@/Components/HelloUserHeader.vue';
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
 import FiltersModel from '@/Components/FiltersModel.vue';
-
+const showFiltersModal = ref(false);
 
 const props = defineProps({
     players: Object,
@@ -136,7 +136,7 @@ const filterByPosition = (position) => {
 
                 <!-- Filters Modal...
                                                                                                       =====================================================-->
-                <FiltersModel :positions="positions" v-model:form="form" @reset="reset" @filter="filter"/>
+                <FiltersModel :positions="positions" v-model:form="form" @reset="reset" @filter="filter" :showFiltersModal="showFiltersModal"/>
                 <!-- <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40">
                     <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl"
                         @click="showFiltersModal = !showFiltersModal">
