@@ -25,7 +25,6 @@ const form = useForm({
     search: usePage().props.value.queryParams.search ?? '',
 });
 const loading = ref(false);
-
 const filter = () => {
     loading.value = true;
     form.get(route('home'), {
