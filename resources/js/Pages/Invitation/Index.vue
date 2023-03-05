@@ -9,12 +9,13 @@ import {
 } from '@heroicons/vue/24/outline';
 import Modal from '@/Components/Modal.vue';
 import { ref } from 'vue'
-import { ElDatePicker, ElTimePicker } from 'element-plus';
+import { ElDatePicker } from 'element-plus';
 import InputLabel from '@/Components/InputLabel.vue';
 import { useForm, usePage } from '@inertiajs/inertia-vue3';
 const props = defineProps({
     invitations: Array,
 });
+let loading = ref(false);
 let showFiltersModal = ref(false)
 const form = useForm({
     dateFrom: null,
@@ -23,8 +24,7 @@ const form = useForm({
 
 const filter = () => {
     loading.value = true;
-
-    form.get(route('invitations'), {
+    form.get(route('invitation.index'), {
         preserveState: true,
         preserveScroll: true,
         onSuccess: () => {
@@ -33,6 +33,12 @@ const filter = () => {
         }
     });
 };
+const reset = () => {
+    form.dateFrom = null,
+        form.dateTo = null,
+
+        filter();
+}
 </script>
 
 <template>
@@ -96,7 +102,7 @@ const filter = () => {
                         </div>
                         <div class="my-6">
                             <InputLabel>Date To :</InputLabel>
-                            <ElDatePicker v-model="form.dateFrom" class="w-full" type="datetime" placeholder="Pick a Date"
+                            <ElDatePicker v-model="form.dateTo" class="w-full" type="datetime" placeholder="Pick a Date"
                                 format="YYYY/MM/DD hh:mm:ss" value-format="YYYY-MM-DD h:m:s a" />
                         </div>
 
@@ -116,12 +122,13 @@ const filter = () => {
     </AppLayout>
 </template>
 <style>
-.el-input__wrapper  {
+.el-input__wrapper {
     background-color: black;
     color: white;
 }
-.el-input__inner{
+
+.el-input__inner {
     color: white;
-    
+
 }
 </style>
