@@ -53,7 +53,7 @@
                                                 <button @click="openRemoveMediaModal" class="hover:text-gray-400 ">
                                                     <li class="flex items-center justify-center gap-x-2">
                                                         <TrashIcon class="w-4" />
-                                                        <span> delete</span>
+                                                        <span> Delete</span>
                                                     </li>
                                                     <!-- confirm delete media modal -->
                                                     <Modal :show="showDeleteMediaModal"
@@ -73,6 +73,21 @@
                                                             </div>
                                                         </div>
                                                     </Modal>
+                                                </button>
+                                                <button class="hover:text-gray-400 group" >
+                                                    <li >
+                                                        <ReportModal :reportable-id="media.id"
+                                                            :reportable-type="'App\\Models\\User'">
+                                                            <template #trigger>
+                                                                <button class="flex items-center  gap-x-2">
+                                                                    <FlagIcon class="w-4" />
+                                                                    <span>Report</span>
+                                                                </button>
+
+                                                            </template>
+                                                        </ReportModal>
+                                                    </li>
+
                                                 </button>
 
                                             </ul>
@@ -151,7 +166,7 @@
 <script setup>
 import AppLayout from '../../Layouts/AppLayout.vue';
 import Avatar from '../../Components/Avatar.vue';
-import { FaceSmileIcon, EllipsisHorizontalIcon, TrashIcon, PencilIcon } from '@heroicons/vue/24/outline';
+import { FaceSmileIcon, EllipsisHorizontalIcon, TrashIcon, PencilIcon , FlagIcon} from '@heroicons/vue/24/outline';
 import { PaperAirplaneIcon } from '@heroicons/vue/24/solid';
 import axios from 'axios';
 import { onMounted, onBeforeMount, ref } from 'vue';
@@ -162,7 +177,7 @@ import relativeTime from 'dayjs/plugin/relativeTime.js';
 import { usePage, Link } from '@inertiajs/inertia-vue3';
 import FadeInTransition from '../../Components/FadeInTransition.vue';
 import Modal from '../../Components/Modal.vue';
-
+import ReportModal from '@/Components/ReportModal.vue';
 
 onBeforeMount(() => {
     dayjs.extend(relativeTime)
