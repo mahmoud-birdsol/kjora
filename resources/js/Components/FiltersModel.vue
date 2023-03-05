@@ -13,21 +13,25 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 
 const props = defineProps({
     positions: Array,
-    form:Object,
-    showFiltersModal:Boolean
+    form: Object,
+    showFiltersModal: Boolean
 })
-let emit = defineEmits(['filter', 'reset' , 'update:form'  ])
+let emit = defineEmits(['filter', 'reset', 'update:form'])
 
-function filter(){
+function filter() {
     emit('update:form', props.form)
     emit('filter')
 }
-function reset(){
+function reset() {
     emit('reset')
 }
 let countries = [
     { id: 1, name: "egypt", img: "/images/logo.png" }
 ]
+
+const distances = [5, 10, 20, 30, 40, 50];
+
+
 </script>
 <template>
     <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40">
@@ -67,6 +71,18 @@ let countries = [
                             <input type="search" name="search" id="search" v-model="form.search"
                                 class="block w-full px-4 text-center text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
                                 placeholder="Search by name or username" />
+                        </div>
+                    </div>
+                    <div class="my-6">
+                        <InputLabel>Location</InputLabel>
+                        <div class="px-4">
+                            <select id="location" name="location" v-model="form.location"
+                                class="block w-full py-2 pl-3 pr-10 mt-1 text-base text-center text-white bg-black border-white rounded-full focus:border-primary focus:outline-none focus:ring-primary sm:text-sm placeholder:center">
+                                <option :value="null">Distance</option>
+                                <option v-for="distance in distances" :key="distance" :value="distance">{{
+                                    distance }} Km
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <div class="my-6">
