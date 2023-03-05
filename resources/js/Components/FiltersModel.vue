@@ -13,21 +13,20 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 
 const props = defineProps({
     positions: Array,
-    form:Object,
-    showFiltersModal:Boolean
+    form: Object,
+    showFiltersModal: Boolean,
+    countries: Array
 })
-let emit = defineEmits(['filter', 'reset' , 'update:form'  ])
+let emit = defineEmits(['filter', 'reset', 'update:form'])
 
-function filter(){
+function filter() {
     emit('update:form', props.form)
     emit('filter')
 }
-function reset(){
+function reset() {
     emit('reset')
 }
-let countries = [
-    { id: 1, name: "egypt", img: "/images/logo.png" }
-]
+
 </script>
 <template>
     <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40">
@@ -70,7 +69,7 @@ let countries = [
                         </div>
                     </div>
                     <div class="my-6">
-                        <InputLabel>nationality</InputLabel>
+                        <InputLabel>Nationality</InputLabel>
                         <div class="px-4 py-1">
                             <RichSelectInput :options="countries" value-name="id" text-name="name" image-name="img"
                                 v-model="form.country_id" bgColor="black" txtColor="white" />
