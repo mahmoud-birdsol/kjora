@@ -32,12 +32,13 @@ class PlayerController extends Controller
                 $query->where('rating', '<=', $request->input('ratingTo'));
             })
         );
+
         $request->whenFilled('ageFrom',
-            fn() => $query->whereDate('date_of_birth', '>=', now()->subYears($request->input('ageFrom')))
+            fn() => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('ageFrom')))
         );
 
         $request->whenFilled('ageTo',
-            fn() => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('ageTo')))
+            fn() => $query->whereDate('date_of_birth', '>=', now()->subYears($request->input('ageTo')))
         );
 
         $request->whenFilled('country_id',
