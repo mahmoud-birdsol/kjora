@@ -9,6 +9,7 @@ import TextInput from "@/Components/TextInput.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import RichSelectInput from "@/Components/RichSelectInput.vue";
 import PhoneInput from "@/Components/PhoneInput.vue";
+import MoreBtn from "@/Components/MoreBtn.vue";
 const props = defineProps(['countries', 'positions']);
 let paymentForm = useForm({
     merchant: null
@@ -82,21 +83,15 @@ let paymentForm = useForm({
                         <div class="flex flex-col gap-4">
                             <div>
                                 <InputLabel color="black">update profile</InputLabel>
-                                <input type="text"
-                                    class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    placeholder="update details" />
+                                <MoreBtn>update details</MoreBtn>
                             </div>
                             <div>
                                 <InputLabel color="black">update password</InputLabel>
-                                <input type="text"
-                                    class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    placeholder="update password" />
+                                <MoreBtn @clicked="()=>route('update.password')">update password</MoreBtn>
                             </div>
                             <div>
                                 <InputLabel color="black">update email</InputLabel>
-                                <input type="text"
-                                    class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    placeholder="update email address" />
+                                <MoreBtn>update email</MoreBtn>
                             </div>
                             <div>
                                 <InputLabel color="black">update phone</InputLabel>

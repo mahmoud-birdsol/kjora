@@ -333,4 +333,8 @@ Route::get('upgrade', function () {
     return Inertia::render('Upgrade');
 })->name('upgrade');
 
+Route::get('update-password', function () {
+    return Inertia::render('Auth/UpdatePassword');
+})->name('update.password');
+
 
