@@ -87,7 +87,7 @@ let paymentForm = useForm({
                             </div>
                             <div>
                                 <InputLabel color="black">update password</InputLabel>
-                                <MoreBtn @clicked="()=>route('update.password')">update password</MoreBtn>
+                                <MoreBtn :url="route('password.edit')">update password</MoreBtn>
                             </div>
                             <div>
                                 <InputLabel color="black">update email</InputLabel>
