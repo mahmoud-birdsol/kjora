@@ -108,7 +108,9 @@ const options = {
                 <!-- Position Filters...
                                                                                                     =====================================================-->
                 <div class="flex gap-4 my-8 overflow-x-auto hideScrollBar">
-                    <button @click="filterByPosition(null)" class="py-2 w-full text-center items-center bg-white border-2 border-gray-300 rounded-full font-semibold text-xs lg:text-[0.875rem] text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition">
+                    <button @click="filterByPosition(null)" class="py-2 w-full text-center items-center bg-white border-2 border-gray-300 rounded-full font-semibold text-xs lg:text-[0.875rem] text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition"
+                    :class="{ 'border-primary': form.position == null, 'border-none': form.position != null }"
+                    >
                         <span class="w-full text-center"
                             :class="{ 'text-black': form.position == null, 'text-gray-400': form.position != null }">
                             All positions
