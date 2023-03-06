@@ -46,11 +46,11 @@ function submit() {
                             <div>
                                 <InputLabel value="new password" color="primary" />
                                 <PasswordInput v-model="form.new_password" placeholder="enter your new password" />
-                                <InputError class="mt-2" :message="form.errors.new_password" />
-                                <div class="text-gray-400 text-xs m-2" v-if="!form.password && !form.errors.password">
+                                <div class="text-gray-400 text-xs m-2">
                                     The password must be at least 8 characters and at least one uppercase, one lowercase
                                     letter , one symbol and one number
                                 </div>
+                                <InputError class="mt-2" :message="form.errors.new_password" />
                             </div>
                         </div>
                     </template>
