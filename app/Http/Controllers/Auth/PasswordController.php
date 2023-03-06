@@ -60,6 +60,6 @@ class PasswordController extends Controller
             'type' => 'success',
             'body' => 'Password changed successfully',
         ]);
-        return back();
+        return redirect()->route('home');
     }
 }
