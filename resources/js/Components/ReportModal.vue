@@ -29,6 +29,9 @@ const submit = () => {
     form.post(route('report.store'), {
         preserveState: false,
         preserveScroll: false,
+        onSuccess: () => {
+            show.value = false;
+        }
     });
 }
 </script>

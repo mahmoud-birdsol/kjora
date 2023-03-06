@@ -35,6 +35,7 @@
                                     <Link :href="route('player.profile', user.id)" class="text-xs text-stone-400 ">@{{
                                         user.username }}</Link>
                                 </div>
+                                <div class="fixed top-0 left-0 w-full h-full" v-show="showOptions" @click="showOptions =false"></div>
                                 <div class="relative">
                                     <button class="p-1" @click="showOptions = !showOptions">
                                         <EllipsisHorizontalIcon class="w-6" />
@@ -75,9 +76,9 @@
                                                     </Modal>
                                                 </button>
                                                 <button class="hover:text-gray-400 group" >
-                                                    <li >
+                                                    <li v-if="!isCurrentUser">
                                                         <ReportModal :reportable-id="media.id"
-                                                            :reportable-type="'App\\Models\\User'">
+                                                            :reportable-type="'App\\Models\\Report'">
                                                             <template #trigger>
                                                                 <button class="flex items-center  gap-x-2">
                                                                     <FlagIcon class="w-4" />
