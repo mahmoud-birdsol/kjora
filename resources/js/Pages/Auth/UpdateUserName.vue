@@ -20,6 +20,9 @@ function submit() {
         preserveScroll: true,
         onSuccess: () => {
             loading.value = false;
+        },
+        onError: () => {
+            loading.value = false;
         }
     })
 }
