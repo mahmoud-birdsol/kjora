@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AcceptInvitationController;
 use App\Http\Controllers\Actions\MarkNotificationAsRead;
+use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HireController;
@@ -105,15 +106,15 @@ Route::middleware([
 
         Route::get(
             'player/review/{review}', [
-                PlayerReviewController::class,
-                'show'
-            ])->name('player.review.show');
+            PlayerReviewController::class,
+            'show'
+        ])->name('player.review.show');
 
         Route::post(
             'player/review/{review}', [
-                PlayerReviewController::class,
-                'store'
-            ])->name('player.review.store');
+            PlayerReviewController::class,
+            'store'
+        ])->name('player.review.store');
 
         /*
          |--------------------------------------------------------------------------
@@ -296,9 +297,16 @@ Route::middleware([
 
     /*
      |--------------------------------------------------------------------------
-     | Message Routes...
+     | Advertisement Routes...
      |--------------------------------------------------------------------------
     */
+
+    Route::get(
+        'advertisements/{advertisement}', [
+            AdvertisementController::class,
+            'show'
+        ]
+    )->name('advertisements.show');
 });
 
 
