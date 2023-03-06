@@ -49,6 +49,7 @@ function submit() {
                                     <PasswordInput v-model="form.password" />
                                     <InputError class="mt-2" :message="form.errors.password" />
                                 </div>
+                                <Link href="" class="text-primary text-center underline my-10">try another way</Link>
                             </div>
                     </template>
                     <template #footer>
