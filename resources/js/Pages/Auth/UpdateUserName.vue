@@ -18,10 +18,7 @@ function submit() {
     form.patch(route('username.update'), {
         preserveState: true,
         preserveScroll: true,
-        onSuccess: () => {
-            loading.value = false;
-        },
-        onError: () => {
+        onFinish: () => {
             loading.value = false;
         }
     })
