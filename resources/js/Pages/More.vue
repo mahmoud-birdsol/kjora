@@ -82,8 +82,8 @@ let paymentForm = useForm({
                     <template #body>
                         <div class="flex flex-col gap-4">
                             <div>
-                                <InputLabel color="black">update profile</InputLabel>
-                                <MoreBtn>update details</MoreBtn>
+                                <InputLabel color="black">update username</InputLabel>
+                                <MoreBtn :url="route('username.edit')">update username</MoreBtn>
                             </div>
                             <div>
                                 <InputLabel color="black">update password</InputLabel>

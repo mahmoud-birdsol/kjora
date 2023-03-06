@@ -43,7 +43,7 @@ class UserNameController extends Controller
             return redirect()->back();
         }
         $user = Auth::user();
-        $user->update([
+         $user->update([
             'username' => $request->get('username')
         ]);
         $request->session()->flash('message', [
