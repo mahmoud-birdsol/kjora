@@ -9,9 +9,11 @@ import {
     XMarkIcon
 } from '@heroicons/vue/24/solid'
 import axios from "axios";
-import { useForm , Link } from "@inertiajs/inertia-vue3";
+import { useForm, Link } from "@inertiajs/inertia-vue3";
 import Avatar from "../Avatar.vue";
 import UplaodChatFile from './UplaodChatFile.vue';
+import EmojiPickerElement from '../EmojiPickerElement.vue';
+
 const props = defineProps({
     conversation: {
         required: true,
@@ -110,18 +112,32 @@ const removePhoto = (i) => {
     filesData.value.splice(i, 1)
     form.attachments.splice(i, 1)
 };
+
+function onSelectEmoji(emoji) {
+    console.log(emoji)
+    /*
+      // result
+      {
+          i: "😚",
+          n: ["kissing face"],
+          r: "1f61a", // with skin tone
+          t: "neutral", // skin tone
+          u: "1f61a" // without tone
+      }
+      */
+}
 </script>
 
 <template>
-    <div class="grid gap-y-4 rounded-2xl bg-white p-6">
+    <div class="grid p-6 bg-white gap-y-4 rounded-2xl">
         <!--The gray section to display attachment or a message I am replying to. -->
         <Transition enter-from-class="opacity-0" enter-to-class="opacity-100"
             enter-active-class="transition-all duration-150 ease-out"
             leave-active-class="transition-all duration-150 ease-in" leave-from-class="opacity-100"
             leave-to-class="opacity-0">
             <div v-if="chat.repliedMessage"
-                class="flex w-full flex-row items-center group justify-between relative rounded-xl bg-gray-100 px-2 py-2 text-sm">
-                <div v-if="chat.repliedMessage" class="flex justify-start items-center space-x-4">
+                class="relative flex flex-row items-center justify-between w-full px-2 py-2 text-sm bg-gray-100 group rounded-xl">
+                <div v-if="chat.repliedMessage" class="flex items-center justify-start space-x-4">
                     <Avatar :image-url="chat.repliedMessage.message_sender.avatar_url"
                         :username="chat.repliedMessage.message_sender.name" :border="true" border-color="primary"
                         size="sm" />
@@ -133,7 +149,9 @@ const removePhoto = (i) => {
                             : player.name
                         }}
 
-                        <Link class="text-gray-600 text-xs font-normal " :href="route('player.profile', chat.repliedMessage.message_sender.id)">@{{ chat.repliedMessage.message_sender.username }}</Link>
+                        <Link class="text-xs font-normal text-gray-600 "
+                            :href="route('player.profile', chat.repliedMessage.message_sender.id)">@{{
+                                chat.repliedMessage.message_sender.username }}</Link>
 
                     </div>
                     <div class="max-w-[70ch] truncate">{{ chat.repliedMessage.body }}</div>
@@ -150,7 +168,7 @@ const removePhoto = (i) => {
                     </div>
                 </div>
                 <button @click.prevent="chat.setMessageToReplyTo(null)"
-                    class="absolute group-hover:block hidden top-0 left-0 bg-white bg-opacity-90 rounded-br-xl">
+                    class="absolute top-0 left-0 hidden bg-white group-hover:block bg-opacity-90 rounded-br-xl">
                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
                         <XMarkIcon class="w-5 h-5 text-stone-800" />
                     </div>
@@ -163,7 +181,7 @@ const removePhoto = (i) => {
             leave-active-class="transition-all duration-150 ease-in" leave-from-class="opacity-100"
             leave-to-class="opacity-0">
             <div v-if="filesData"
-                class="ml-auto overflow-hidden grid grid-cols-4 gap-2 overflow-y-auto max-h-32 hideScrollBar place-items-center">
+                class="grid grid-cols-4 gap-2 ml-auto overflow-hidden overflow-y-auto max-h-32 hideScrollBar place-items-center">
                 <!-- {{ form.attachments }} -->
                 <template v-for="(file, index) in filesData">
                     <div class="relative w-full">
@@ -178,21 +196,26 @@ const removePhoto = (i) => {
                 </template>
             </div>
         </transition>
-        <div class="flex w-full flex-row items-center gap-x-3">
+
+
+
+
+
+        <div class="flex flex-row items-center w-full gap-x-3">
             <!--            <button>-->
             <!--                <FaceSmileIcon class="w-6 text-neutral-400"/>-->
             <!--            </button>-->
-            <div class="flex flex-grow items-center">
+            <div class="flex items-center flex-grow">
                 <textarea v-model="form.body" @keypress.enter.exact.prevent="submit" name="body" id="body" rows="1"
                     placeholder="Type your Message Here"
-                    class="w-full resize-none rounded-full border-none focus:ring-primary bg-stone-100 p-2 px-4 placeholder:text-neutral-400 text-stone-700 hideScrollBar"></textarea>
+                    class="w-full p-2 px-4 border-none rounded-full resize-none focus:ring-primary bg-stone-100 placeholder:text-neutral-400 text-stone-700 hideScrollBar"></textarea>
             </div>
             <button class="relative" @click="openModual = true">
-                <PhotoIcon class="h-6 w-6 text-neutral-400" />
+                <PhotoIcon class="w-6 h-6 text-neutral-400" />
                 <span class="absolute bottom-0 rounded-full bg-white -right-[1px]">
                     <UplaodChatFile :show="openModual" @close="openModual = false" :should-upload="true"
                         @upload="addFiles" />
-                    <ArrowUpCircleIcon class="h-2 w-2 text-neutral-400" />
+                    <ArrowUpCircleIcon class="w-2 h-2 text-neutral-400" />
                 </span>
             </button>
             <button :disabled="loading" class="p-1 group" @click="submit">
