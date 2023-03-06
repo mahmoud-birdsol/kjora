@@ -29,6 +29,7 @@ const form = useForm({
     age: parseInt(usePage().props.value.queryParams.age ?? 18),
     rating: parseInt(usePage().props.value.queryParams.rating ?? 0),
     search: usePage().props.value.queryParams.search ?? '',
+    country_id: usePage().props.value.queryParams.country_id ?? null
 });
 
 const loading = ref(false);
@@ -57,6 +58,7 @@ const reset = () => {
     form.age = 18;
     form.rating = 0;
     form.search = '';
+    form.country_id=null;
 
     filter();
 }
