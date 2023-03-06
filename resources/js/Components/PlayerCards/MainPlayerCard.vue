@@ -96,7 +96,8 @@ const removeFromFavorites = () => {
                         </h2>
                         </Link>
 
-                        <Link class="text-xs text-white opacity-50" :href="route('player.profile', player.id)">@{{ player.username }}</Link>
+                        <Link class="text-xs text-white opacity-50" :href="route('player.profile', player.id)">@{{
+                            player.username }}</Link>
                         <p class="flex items-center space-x-2 text-sm text-white">
                             <span class="scale-[0.7] origin-left flex items-center gap-x-1">
                                 <ElRate disabled v-model="player.rating" size="small" />
@@ -140,7 +141,7 @@ const removeFromFavorites = () => {
             <div class="flex items-center justify-between mt-2">
                 <p class="flex items-center text-sm text-white" v-if="showLocation">
                     <MapPinIcon class="inline w-4 h-4 text-white" />
-                    Cairo
+                    {{ player.current_city }}
                 </p>
                 <div class="flex gap-4 items-center">
                     <div class="flex space-x-2 text-white bg-transparent"

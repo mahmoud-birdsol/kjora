@@ -30,5 +30,5 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-
+    'ip_api_geolocation_url' => env('IP_Geolocation_Api', 'http://ip-api.com/json/')
 ];
