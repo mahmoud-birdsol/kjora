@@ -44,7 +44,7 @@ class UserNameController extends Controller
         }
         $user = Auth::user();
          $user->update([
-            'username' => $request->get('username')
+            'username' => preg_replace('/[^\p{L}\p{N}\s]/u', '',  $request->get('username'))
         ]);
         $request->session()->flash('message', [
             'type' => 'success',
