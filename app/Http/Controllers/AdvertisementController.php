@@ -26,6 +26,6 @@ class AdvertisementController extends Controller
             'user_id' => $request->user()->id
         ]);
 
-        return Redirect::to($advertisement->link);
+        return redirect()->away($advertisement->link);
     }
 }
