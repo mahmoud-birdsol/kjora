@@ -321,10 +321,7 @@ Route::middleware([
 // });
 
 Route::get('gallery/{mediaLibrary}', function (MediaLibrary $mediaLibrary) {
-
-    $userId = MediaLibrary::where('model_type', User::class)->where('id', $mediaLibrary->id)->first()->model_id;
-
-    $user = User::find($userId);
+    $user = $mediaLibrary->owner();
 
     return Inertia::render('Gallery/Show', [
         'media' => $mediaLibrary,

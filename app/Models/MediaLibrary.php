@@ -61,9 +61,13 @@ class MediaLibrary extends Media implements Suspendable, Likeable
         ]);
     }
 
-    public function owner(): User
+    public function owner(): User|null
     {
-        return $this->user;
+        if($this->collection_name === 'gallery'){
+            return $this->model;
+        }
+
+        return null;
     }
 
     public function url(): string

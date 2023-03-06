@@ -61,9 +61,9 @@
                                     <span>{{ dayjs(media.created_at).format('hh:mm A') }}</span>
 
                                 </div>
-                                <div class="flex items-center gap-1"><span class="text-sm">{{ media?.like_count }}</span>
+                                <div class="flex items-center gap-1"><span class="text-sm">{{ media?.likes_count }}</span>
                                     <LikeButton :isLiked="media?.is_liked" :likeable_id="media.id"
-                                        :likeable_type="'\\App\\Models\\MediaLibrary'">
+                                        :likeable_type="'App\\Models\\MediaLibrary'">
                                         <template v-slot="{ isLiked }">
                                             <HeartIcon class="w-5 stroke-current stroke-2 text-primary"
                                                 :class="isLiked ? 'fill-current' : 'fill-transparent'" />
@@ -138,7 +138,7 @@ import { HeartIcon } from '@heroicons/vue/24/solid';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 import { usePage, Link } from '@inertiajs/inertia-vue3';
-import LikeButton from '../../Components/LikeButton.vue';
+import LikeButton from '@/Components/LikeButton.vue';
 onBeforeMount(() => {
 
     dayjs.extend(relativeTime)

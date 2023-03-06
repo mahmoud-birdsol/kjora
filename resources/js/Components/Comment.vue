@@ -39,7 +39,7 @@
                 <button @click="handleReplyClicked"
                     class="p-1 transition-all duration-150 pis-0 enabled:hover:underline hover:underline-offset-4">Reply</button>
                 <LikeButton :isLiked="comment?.is_liked" :likeable_id="comment.id"
-                    :likeable_type="'\\App\\Models\\Comment'">
+                    :likeable_type="'App\\Models\\Comment'">
                     <template v-slot="{ isLiked }">
                         <button class="p-1 transition-all duration-150 enabled:hover:underline hover:underline-offset-4"
                             :class="isLiked ? 'text-primary' : ''">Like</button>
