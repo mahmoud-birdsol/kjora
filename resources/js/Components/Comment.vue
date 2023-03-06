@@ -50,9 +50,9 @@
             </div>
             <!-- new reply form row 5 -->
             <div v-show="showReplyInput" class="flex flex-row items-center self-end w-full p-3 gap-x-3 ">
-                <div class="relative">
-                    <button @click="showEmojiPicker = !showEmojiPicker">
-                        <FaceSmileIcon class="w-4 text-neutral-400" />
+                <div class="relative flex items-center">
+                    <button @click="showEmojiPicker = !showEmojiPicker" :data-cancel-blur="true">
+                        <FaceSmileIcon class="w-6 text-neutral-400" />
                     </button>
                     <div class="absolute bottom-full left-full " v-show="showEmojiPicker">
                         <EmojiPickerElement @selected-emoji="onSelectEmoji" />
@@ -101,7 +101,7 @@ const currentUser = usePage().props.value.auth.user
 const replyInput = ref(null)
 const showReplies = ref(false)
 const hasReplies = computed(() => props.comment.replies && props.comment.replies.length > 0);
-const newReply = ref(null)
+const newReply = ref('')
 const showReplyInput = ref(false)
 const isSending = ref(false)
 const showEmojiPicker = ref(false)
@@ -164,14 +164,15 @@ function handleAddedReply() {
 }
 function onSelectEmoji(emoji) {
     newReply.value += emoji
+    showReplyInput.value = true
 }
 
 // hide the input field when blur if it is empty
 function handleBlur(e) {
     !newReply.value || newReply.value === '' ? showReplyInput.value = false : null
+
 }
 function handleEsc(e) {
-    console.log('esc')
     !newReply.value || newReply.value === '' ? showReplyInput.value = false : null
 }
 </script>
