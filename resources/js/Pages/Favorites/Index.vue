@@ -113,9 +113,9 @@ const reset = () => {
                 </div>
 
                 <!-- Filters Modal...
-                                                    =====================================================-->
                 <FiltersModel :positions="positions" :countries="countries" v-model:form="form" @reset="reset"
                     @filter="filter" :showFiltersModal="showFiltersModal" />
+
             </div>
         </div>
     </AppLayout>
