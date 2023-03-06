@@ -44,7 +44,7 @@ class UserNameController extends Controller
         }
         $user = Auth::user();
         $user->update([
-            'password' => Hash::make($request->get('new_password'))
+            'username' => $request->get('username')
         ]);
         $request->session()->flash('message', [
             'type' => 'success',
