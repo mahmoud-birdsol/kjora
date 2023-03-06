@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
 
 class UserNameController extends Controller
@@ -27,6 +30,27 @@ class UserNameController extends Controller
      */
     public function update(Request $request)
     {
+        $request->validate([
+            'password' => ['required', 'current_password'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
+        ]);
+        #Match The Old Password
+        if(!Hash::check($request->password, auth()->user()->password)){
+            $request->session()->flash('message', [
+                'type' => 'error',
+                'body' => "Password Doesn't match!",
+            ]);
+            return redirect()->back();
+        }
+        $user = Auth::user();
+        $user->update([
+            'password' => Hash::make($request->get('new_password'))
+        ]);
+        $request->session()->flash('message', [
+            'type' => 'success',
+            'body' => 'User name changed successfully',
+        ]);
+        return redirect()->route('home');
 
     }
 }
