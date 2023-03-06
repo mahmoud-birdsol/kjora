@@ -91,7 +91,7 @@ let paymentForm = useForm({
                             </div>
                             <div>
                                 <InputLabel color="black">update email</InputLabel>
-                                <MoreBtn>update email</MoreBtn>
+                                <MoreBtn :url="route('email.edit')">update email</MoreBtn>
                             </div>
                             <div>
                                 <InputLabel color="black">update phone</InputLabel>
