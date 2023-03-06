@@ -32,7 +32,11 @@ class PlayerController extends Controller
                 : fn() => null
         );
 
-        $request->whenFilled('age',
+        $request->whenFilled('ageFrom',
+            fn() => $query->whereDate('date_of_birth', '>=', now()->subYears($request->input('age')))
+        );
+
+        $request->whenFilled('ageTo',
             fn() => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('age')))
         );
 
