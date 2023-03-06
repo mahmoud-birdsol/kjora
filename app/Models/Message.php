@@ -44,7 +44,7 @@ class Message extends Model implements HasMedia
      * @var array
      */
     protected $appends = [
-//        'attachment',
+        //        'attachment',
         'parent',
         'attachments',
         'message_sender'
@@ -56,7 +56,7 @@ class Message extends Model implements HasMedia
      * @var array
      */
     protected $with = [
-//        'sender',
+        //        'sender',
     ];
 
     /**
@@ -132,14 +132,14 @@ class Message extends Model implements HasMedia
     public function attachment(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->getFirstMedia('attachment')
+            get: fn ($value) => $this->getFirstMedia('attachment')
         );
     }
 
     public function attachments(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => MediaLibrary::where('model_type', Message::class)
+            get: fn ($value) => MediaLibrary::where('model_type', Message::class)
                 ->where('model_id', $this->id)
                 ->where('collection_name', 'attachments')
                 ->get()
@@ -157,8 +157,9 @@ class Message extends Model implements HasMedia
     public function messageSender(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => [
+            get: fn ($value) => [
                 'name' => User::find($this->sender_id)->name,
+                'user_id' => User::find($this->sender_id)->id,
                 'username' => User::find($this->sender_id)->username,
                 'avatar_url' => User::find($this->sender_id)->avatar_url
             ]
@@ -173,8 +174,7 @@ class Message extends Model implements HasMedia
     public function parent(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->parentMessage
+            get: fn ($value) => $this->parentMessage
         );
     }
-
 }
