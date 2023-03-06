@@ -42,7 +42,7 @@ function submit() {
                             <div class="flex flex-col gap-4 my-10">
                                 <div>
                                     <InputLabel value="username" color="primary" />
-                                    <TextInput  v-model="form.username" placeholder="@example" />
+                                    <TextInput  v-model="form.username" placeholder="username" />
                                     <InputError class="mt-2" :message="form.errors.username" />
 
                                 </div>
