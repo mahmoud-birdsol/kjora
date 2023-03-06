@@ -3,8 +3,7 @@ import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import InvitationCard from "./Partials/InvitationCard.vue";
-import { ref } from 'vue'
-import { useForm, usePage } from '@inertiajs/inertia-vue3';
+
 import InvitationsFilter from '@/Components/InvitationsFilter.vue';
 const props = defineProps({
     invitations: Array,
@@ -42,10 +41,7 @@ const props = defineProps({
                 </div>
 
                 <div class="bg-white rounded-xl mt-4 min-h-[500px] p-6">
-                    <div class="">
-                        <TextInput type="search" v-model="form.search" placeholder="Search" />
-                    </div>
-                    <div class="grid grid-cols-1 gap-4" v-loading="loading">
+                    <div class="grid grid-cols-1 gap-4">
                         <template v-for="invitation in invitations" :key="invitation.id">
                             <InvitationCard :invitation="invitation" />
                         </template>
@@ -53,7 +49,7 @@ const props = defineProps({
                 </div>
             </div>
         </div>
-        <InvitationsFilter />
+        <InvitationsFilter form_route="invitation.index" />
     </AppLayout>
 </template>
 <style>
