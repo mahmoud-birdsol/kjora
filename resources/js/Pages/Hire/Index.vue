@@ -1,22 +1,22 @@
 <script setup>
-import {Head, Link} from '@inertiajs/inertia-vue3';
+import {Head, Link , useForm} from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import HireCard from "@/Pages/Hire/Partials/HireCard.vue";
-
+import {ref} from 'vue'
+import InvitationsFilter from '@/Components/InvitationsFilter.vue';
 const props = defineProps({
     invitations: Array,
 });
+
 </script>
 
 <template>
     <Head title="Invitations"/>
-
     <AppLayout title="Invitations">
         <template #header>
             <p class="text-7xl font-black">Invitations</p>
         </template>
-
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex justify-end items-center space-x-4">
@@ -47,5 +47,6 @@ const props = defineProps({
                 </div>
             </div>
         </div>
+        <InvitationsFilter />
     </AppLayout>
 </template>

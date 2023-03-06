@@ -3,33 +3,13 @@ import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import InvitationCard from "./Partials/InvitationCard.vue";
-import TextInput from '../../Components/TextInput.vue';
-import { ref, watch } from 'vue';
-
-
+import { ref } from 'vue'
+import { useForm, usePage } from '@inertiajs/inertia-vue3';
+import InvitationsFilter from '@/Components/InvitationsFilter.vue';
 const props = defineProps({
     invitations: Array,
 });
 
-const loading = ref(false);
-const form = useForm({
-    search: null,
-
-})
-function searchInvitations() {
-    loading.value = true;
-    form.get(route('invitation.index'), {
-        preserveState: true,
-        preserveScroll: true,
-        onSuccess: () => {
-            loading.value = false;
-        }
-    })
-}
-
-watch(() => form.search, () => {
-    _.debounce(searchInvitations, 500)();
-});
 </script>
 
 <template>
@@ -73,5 +53,17 @@ watch(() => form.search, () => {
                 </div>
             </div>
         </div>
+        <InvitationsFilter />
     </AppLayout>
 </template>
+<style>
+.el-input__wrapper {
+    background-color: black;
+    color: white;
+}
+
+.el-input__inner {
+    color: white;
+
+}
+</style>
