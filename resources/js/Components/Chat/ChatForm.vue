@@ -13,6 +13,8 @@ import { useForm, Link } from "@inertiajs/inertia-vue3";
 import Avatar from "../Avatar.vue";
 import UplaodChatFile from './UplaodChatFile.vue';
 import EmojiPickerElement from '../EmojiPickerElement.vue';
+import { FaceSmileIcon } from '@heroicons/vue/24/outline';
+import { fromPairs } from 'lodash';
 
 const props = defineProps({
     conversation: {
@@ -24,7 +26,7 @@ const props = defineProps({
         type: Object,
     }
 });
-
+const showEmojiPicker = ref(false)
 const chat = useChat();
 const hasAttachement = ref(false);
 const loading = ref(false);
@@ -115,17 +117,12 @@ const removePhoto = (i) => {
 
 function onSelectEmoji(emoji) {
     console.log(emoji)
-    /*
-      // result
-      {
-          i: "😚",
-          n: ["kissing face"],
-          r: "1f61a", // with skin tone
-          t: "neutral", // skin tone
-          u: "1f61a" // without tone
-      }
-      */
+    console.log(form.body)
+    form.body += emoji
+    console.log(form.body)
+
 }
+
 </script>
 
 <template>
@@ -198,10 +195,15 @@ function onSelectEmoji(emoji) {
         </transition>
 
         <div class="flex flex-row items-center w-full gap-x-3">
-            <EmojiPickerElement />
-            <!--            <button>-->
-            <!--                <FaceSmileIcon class="w-6 text-neutral-400"/>-->
-            <!--            </button>-->
+
+            <div class="relative">
+                <button @click="showEmojiPicker = !showEmojiPicker">
+                    <FaceSmileIcon class="w-6 text-neutral-400" />
+                </button>
+                <div class="absolute bottom-full left-full " v-show="showEmojiPicker">
+                    <EmojiPickerElement @selected-emoji="onSelectEmoji" />
+                </div>
+            </div>
             <div class="flex items-center flex-grow">
                 <textarea v-model="form.body" @keypress.enter.exact.prevent="submit" name="body" id="body" rows="1"
                     placeholder="Type your Message Here"

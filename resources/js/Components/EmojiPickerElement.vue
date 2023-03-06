@@ -1,13 +1,13 @@
 <template>
-    <div>
-        <EmojiPicker @select="onSelectEmoji" />
-    </div>
+    <EmojiPicker @select="onSelectEmoji" />
 </template>
 
 <script setup>
+const emits = defineEmits(['selectedEmoji'])
 // import '../../../node_modules/vue3-emoji-picker/dist/style.css'
 const onSelectEmoji = (e) => {
-    console.log(e);
+    console.log(e.i);
+    emits('selectedEmoji', e.i)
 }
 </script>
 
