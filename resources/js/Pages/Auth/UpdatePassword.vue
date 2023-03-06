@@ -7,6 +7,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import PasswordInput from '@/Components/PasswordInput.vue';
 import { ref } from 'vue';
 let loading = ref(false)
 const form = useForm({
@@ -39,13 +40,13 @@ function submit() {
                             <div class="flex flex-col gap-4 my-10">
                                 <div>
                                     <InputLabel value="current password" color="primary" />
-                                    <TextInput type="password" v-model="form.current_password" placeholder="enter your current password"/>
+                                    <PasswordInput  v-model="form.current_password" placeholder="enter your current password"/>
                                     <InputError class="mt-2" :message="form.errors.current_password" />
 
                                 </div>
                                 <div>
                                     <InputLabel value="new password" color="primary" />
-                                    <TextInput type="password" v-model="form.new_password" placeholder="enter your new password"/>
+                                    <PasswordInput v-model="form.new_password" placeholder="enter your new password"/>
                                     <InputError class="mt-2" :message="form.errors.new_password" />
                                 </div>
                             </div>
