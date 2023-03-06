@@ -24,19 +24,13 @@ class PlayerController extends Controller
         $query = User::query()->whereNot('id', $request->user()->id);
 
         $request->whenFilled('position', fn() => $query->where('position_id', $request->input('position')));
-        $request->whenFilled('ratingFrom',
-            $request->input('ratingFrom') > 0
-                ? fn() => $query->where(function ($query) use ($request) {
+        $request->whenFilled('ratingFrom',fn() => $query->where(function ($query) use ($request) {
                 $query->where('rating', '>=', $request->input('ratingFrom'));
             })
-                : fn() => null
         );
-        $request->whenFilled('ratingTo',
-            $request->input('ratingTo') > 0
-                ? fn() => $query->where(function ($query) use ($request) {
+        $request->whenFilled('ratingTo',fn() => $query->where(function ($query) use ($request) {
                 $query->where('rating', '<=', $request->input('ratingTo'));
             })
-                : fn() => null
         );
         $request->whenFilled('ageFrom',
             fn() => $query->whereDate('date_of_birth', '>=', now()->subYears($request->input('age')))
