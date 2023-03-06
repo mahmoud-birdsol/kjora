@@ -79,7 +79,7 @@ Route::middleware([
         'edit',
     ])->name('username.edit');
 
-    Route::post('/user-name/update', [
+    Route::patch('/user-name/update', [
         UserNameController::class,
         'update',
     ])->name('username.update');
