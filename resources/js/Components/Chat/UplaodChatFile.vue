@@ -40,7 +40,7 @@ const props = defineProps({
     },
     maxWidth: {
         type: String,
-        default: 'xl',
+        default: 'lg',
     },
     closeable: {
         type: Boolean,
