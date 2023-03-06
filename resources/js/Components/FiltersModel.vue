@@ -51,7 +51,7 @@ function reset() {
                     <div class="my-6">
                         <InputLabel>Rating</InputLabel>
                         <div class="px-4 py-1 mx-4 border border-white rounded-full">
-                            <el-slider v-model="rating" range :min="0" :max="5"  @change="form.ratingFrom = age[0]; form.ratingto = age[1]  " />
+                            <el-slider v-model="rating" range :min="0" :max="5"  @change="form.ratingFrom = age[0]; form.ratingTo = age[1]  " />
                         </div>
                     </div>
                     <div class="my-6">

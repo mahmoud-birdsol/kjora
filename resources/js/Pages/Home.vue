@@ -22,7 +22,7 @@ const form = useForm({
     ageFrom: 18,
     ageTo: 60,
     ratingFrom: 0,
-    ratingTo: 0,
+    ratingTo: 5,
     search: usePage().props.value.queryParams.search ?? '',
     country_id: usePage().props.value.queryParams.country_id ?? null
 });

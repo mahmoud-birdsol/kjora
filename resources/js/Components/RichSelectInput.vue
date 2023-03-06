@@ -23,10 +23,10 @@ const props = defineProps({
         type: Object,
     },
     bgColor:{
-        default:'black'
+        default:'white'
     },
     txtColor:{
-        default:'white'
+        default:'black'
     }
 });
 
