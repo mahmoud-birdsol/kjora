@@ -14,6 +14,7 @@ const form = useForm({
     current_password: null
 })
 function submit() {
+    loading.value=true
     form.patch(route('password.update'), {
         preserveState: true,
         preserveScroll: true,
@@ -38,13 +39,13 @@ function submit() {
                             <div class="flex flex-col gap-4 my-10">
                                 <div>
                                     <InputLabel value="current password" color="primary" />
-                                    <TextInput type="password" v-model="form.current_password" />
+                                    <TextInput type="password" v-model="form.current_password" placeholder="enter your current password"/>
                                     <InputError class="mt-2" :message="form.errors.current_password" />
 
                                 </div>
                                 <div>
                                     <InputLabel value="new password" color="primary" />
-                                    <TextInput type="password" v-model="form.new_password" />
+                                    <TextInput type="password" v-model="form.new_password" placeholder="enter your new password"/>
                                     <InputError class="mt-2" :message="form.errors.new_password" />
                                 </div>
                             </div>
