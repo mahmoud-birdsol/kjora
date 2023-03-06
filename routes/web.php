@@ -70,8 +70,8 @@ Route::middleware([
         'store',
     ])->name('identity.verification.store');
 
-    Route::get('/change-password' ,PasswordController::class)->name('password.edit');
-    Route::patch('/change-password' ,PasswordController::class)->name('password.update');
+    Route::get('/change-password' ,[PasswordController::class , 'edit'])->name('password.edit');
+    Route::patch('/change-password' ,[PasswordController::class , 'update'])->name('password.update');
 
     Route::middleware([
         'verified.email',
