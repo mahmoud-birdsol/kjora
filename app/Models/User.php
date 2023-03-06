@@ -73,6 +73,12 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'preferred_foot',
         'rating',
         'last_seen_at',
+        'last_known_ip',
+        'current_country',
+        'current_region',
+        'current_city',
+        'current_latitude',
+        'current_longitude'
     ];
 
     /**

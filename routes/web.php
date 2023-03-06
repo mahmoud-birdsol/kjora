@@ -54,6 +54,7 @@ Route::middleware('guest')->resource(
 // Authenticated user routes...
 Route::middleware([
     'auth:sanctum',
+    'location.detect',
     config('jetstream.auth_session'),
 //    'player.review'
 ])->group(function () {
@@ -331,3 +332,5 @@ Route::get('contact', function () {
 Route::get('upgrade', function () {
     return Inertia::render('Upgrade');
 })->name('upgrade');
+
+
