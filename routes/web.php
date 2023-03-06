@@ -71,7 +71,7 @@ Route::middleware([
     ])->name('identity.verification.store');
 
     Route::get('/change-password' ,PasswordController::class)->name('password.edit');
-    Route::post('/change-password' ,PasswordController::class)->name('password.update');
+    Route::patch('/change-password' ,PasswordController::class)->name('password.update');
 
     Route::middleware([
         'verified.email',
