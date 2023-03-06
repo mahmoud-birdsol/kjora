@@ -95,7 +95,7 @@ let paymentForm = useForm({
                             </div>
                             <div>
                                 <InputLabel color="black">update phone</InputLabel>
-                                <PhoneInput :options="countries" value-name="id" text-name="name" image-name="flag" />
+                                <MoreBtn :url="route('phone.edit')">update phone</MoreBtn>
                             </div>
                             <div>
                                 <InputLabel color="black">language</InputLabel>
