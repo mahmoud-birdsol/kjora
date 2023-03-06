@@ -1,26 +1,14 @@
 <template>
     <div>
-        <EmojiPicker :native="true" @select="onSelectEmoji" />
+        <EmojiPicker @select="onSelectEmoji" />
     </div>
 </template>
 
-<script>
-import EmojiPicker from "vue3-emoji-picker";
-// import 'vue3-emoji-picker/css'
+<script setup>
 // import '../../../node_modules/vue3-emoji-picker/dist/style.css'
-export default {
-    setup() {
-        const onSelectEmoji = (e) => {
-            console.log(e);
-        };
-        return {
-            onSelectEmoji,
-        };
-    },
-    components: {
-        EmojiPicker,
-    },
-};
+const onSelectEmoji = (e) => {
+    console.log(e);
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

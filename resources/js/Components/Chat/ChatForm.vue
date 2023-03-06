@@ -197,11 +197,8 @@ function onSelectEmoji(emoji) {
             </div>
         </transition>
 
-
-
-
-
         <div class="flex flex-row items-center w-full gap-x-3">
+            <EmojiPickerElement />
             <!--            <button>-->
             <!--                <FaceSmileIcon class="w-6 text-neutral-400"/>-->
             <!--            </button>-->
