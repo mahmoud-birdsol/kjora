@@ -13,6 +13,7 @@ use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerReviewController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\Auth\PasswordController;
 use App\Models\Country;
 use App\Models\Invitation;
 use App\Models\MediaLibrary;
@@ -68,6 +69,9 @@ Route::middleware([
         IdentityVerificationController::class,
         'store',
     ])->name('identity.verification.store');
+
+    Route::get('/change-password' ,PasswordController::class)->name('password.edit');
+    Route::post('/change-password' ,PasswordController::class)->name('password.update');
 
     Route::middleware([
         'verified.email',
