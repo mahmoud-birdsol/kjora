@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\AcceptInvitationController;
 use App\Http\Controllers\Actions\MarkNotificationAsRead;
+use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Auth\UserEmailController;
+use App\Http\Controllers\Auth\UserNameController;
+use App\Http\Controllers\Auth\UserPhoneController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HireController;
@@ -13,9 +17,6 @@ use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerReviewController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\Auth\UserNameController;
-use App\Http\Controllers\Auth\UserEmailController;
 use App\Models\Country;
 use App\Models\Invitation;
 use App\Models\MediaLibrary;
@@ -90,10 +91,20 @@ Route::middleware([
         'edit',
     ])->name('email.edit');
 
-    Route::patch('/user-name/update', [
+    Route::patch('/email/update', [
         UserEmailController::class,
         'update',
     ])->name('email.update');
+
+    Route::get('/phone/edit', [
+        UserPhoneController::class,
+        'edit',
+    ])->name('phone.edit');
+
+    Route::patch('/phone/update', [
+        UserPhoneController::class,
+        'update',
+    ])->name('phone.update');
 
 
     Route::middleware([

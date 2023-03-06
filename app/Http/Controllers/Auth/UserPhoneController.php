@@ -8,21 +8,21 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
-class UserEmailController extends Controller
+class UserPhoneController extends Controller
 {
     /**
-     * Display the update  user name view.
+     * Display the update  user phone view.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Inertia\Response
      */
     public function edit(Request $request)
     {
-        return Inertia::render('Auth/UpdateEmail');
+        return Inertia::render('Auth/UpdatePhone');
 
     }
     /**
-     * Update the user's password.
+     * Update the user's phone.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
@@ -31,8 +31,8 @@ class UserEmailController extends Controller
     {
         $request->validate([
             'password' => ['required', 'current_password'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        ]);
+            'phone' => ['required', 'phone']
+            ]);
         #Match The Old Password
         if(!Hash::check($request->password, auth()->user()->password)){
             $request->session()->flash('message', [
@@ -43,15 +43,14 @@ class UserEmailController extends Controller
         }
         $user = Auth::user();
         $user->update([
-            'email' => $request->get('email'),
-            'email_verified_at'=>null
+            'phone' => $request->get('phone'),
+            'phone_verified_at'=>null
         ]);
-        $user->sendEmailVerificationNotification();
 
-        $request->session()->flash('message', [
-            'type' => 'success',
-            'body' => 'Email changed successfully please verify your mail',
-        ]);
+//        $request->session()->flash('message', [
+//            'type' => 'success',
+//            'body' => 'User name changed successfully',
+//        ]);
         return redirect()->route('home');
 
     }
