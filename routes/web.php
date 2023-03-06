@@ -15,6 +15,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\UserNameController;
+use App\Http\Controllers\Auth\UserEmailController;
 use App\Models\Country;
 use App\Models\Invitation;
 use App\Models\MediaLibrary;
@@ -83,6 +84,17 @@ Route::middleware([
         UserNameController::class,
         'update',
     ])->name('username.update');
+
+    Route::get('/email/edit', [
+        UserEmailController::class,
+        'edit',
+    ])->name('email.edit');
+
+    Route::patch('/user-name/update', [
+        UserEmailController::class,
+        'update',
+    ])->name('email.update');
+
 
     Route::middleware([
         'verified.email',
