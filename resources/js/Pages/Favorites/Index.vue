@@ -112,7 +112,7 @@ const reset = () => {
                     </div>
                 </div>
 
-                <!-- Filters Modal...
+
                 <FiltersModel :positions="positions" :countries="countries" v-model:form="form" @reset="reset"
                     @filter="filter" :showFiltersModal="showFiltersModal" />
 
