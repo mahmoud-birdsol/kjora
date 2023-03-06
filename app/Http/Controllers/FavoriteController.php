@@ -18,19 +18,13 @@ class FavoriteController extends Controller
 
         $request->whenFilled('position', fn() => $query->where('position_id', $request->input('position')));
 
-        $request->whenFilled('ratingFrom',
-            $request->input('ratingFrom') > 0
-                ? fn() => $query->where(function ($query) use ($request) {
-                $query->where('rating', '>=', $request->input('ratingFrom'));
-            })
-                : fn() => null
+        $request->whenFilled('ratingFrom',fn() => $query->where(function ($query) use ($request) {
+            $query->where('rating', '>=', $request->input('ratingFrom'));
+        })
         );
-        $request->whenFilled('ratingTo',
-            $request->input('ratingTo') > 0
-                ? fn() => $query->where(function ($query) use ($request) {
-                $query->where('rating', '<=', $request->input('ratingTo'));
-            })
-                : fn() => null
+        $request->whenFilled('ratingTo',fn() => $query->where(function ($query) use ($request) {
+            $query->where('rating', '<=', $request->input('ratingTo'));
+        })
         );
         $request->whenFilled('ageFrom',
             fn() => $query->whereDate('date_of_birth', '>=', now()->subYears($request->input('age')))
