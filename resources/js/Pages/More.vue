@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Head, Link, usePage } from '@inertiajs/inertia-vue3';
 import AppLayout from "@/Layouts/AppLayout.vue";
 import dayjs from "dayjs";
 import Card from "@/Components/Card.vue";
@@ -9,10 +9,13 @@ import TextInput from "@/Components/TextInput.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import RichSelectInput from "@/Components/RichSelectInput.vue";
 import PhoneInput from "@/Components/PhoneInput.vue";
+import { identity } from 'lodash';
 const props = defineProps(['countries', 'positions']);
 let paymentForm = useForm({
     merchant: null
 })
+
+const currentUser = usePage().props.value.auth.user
 </script>
 <template>
     <Head title="More" />
@@ -23,7 +26,7 @@ let paymentForm = useForm({
                 {{ dayjs().format("dddd, DD MMMM YYYY") }}
             </p>
         </template>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-3">
+        <div class="grid grid-cols-1 gap-5 my-3 md:grid-cols-2 lg:grid-cols-3">
             <Card>
                 <CardContent title="payment">
                     <template #body>
@@ -31,13 +34,13 @@ let paymentForm = useForm({
                             <div>
                                 <InputLabel color="black">merchant account</InputLabel>
                                 <input type="text"
-                                    class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
+                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
                                     placeholder="Update merchant account" />
                             </div>
                             <div>
                                 <InputLabel color="black">payment details</InputLabel>
                                 <input type="text"
-                                    class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
+                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
                                     placeholder="payment overflow" />
                             </div>
                         </div>
@@ -48,28 +51,27 @@ let paymentForm = useForm({
                 <CardContent title="security">
                     <template #body>
                         <div class="flex flex-col gap-4">
-                            <div>
-                                <InputLabel color="black">verification</InputLabel>
-                                <input type="text"
-                                    class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    placeholder="verified" />
+                            <InputLabel color="black">verification</InputLabel>
+                            <div
+                                class="w-full p-2 border border-gray-500 rounded-full text-stone-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100">
+                                {{ currentUser.identity_status }}
                             </div>
                             <div>
                                 <InputLabel color="black">terms of service</InputLabel>
                                 <input type="text"
-                                    class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
+                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
                                     placeholder="place read" />
                             </div>
                             <div>
                                 <InputLabel color="black">privacy policy</InputLabel>
                                 <input type="text"
-                                    class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
+                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
                                     placeholder="place read" />
                             </div>
                             <div>
                                 <InputLabel color="black">cookie use</InputLabel>
                                 <input type="text"
-                                    class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
+                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
                                     placeholder="place read" />
                             </div>
                         </div>
@@ -83,19 +85,19 @@ let paymentForm = useForm({
                             <div>
                                 <InputLabel color="black">update profile</InputLabel>
                                 <input type="text"
-                                    class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
+                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
                                     placeholder="update details" />
                             </div>
                             <div>
                                 <InputLabel color="black">update password</InputLabel>
                                 <input type="text"
-                                    class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
+                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
                                     placeholder="update password" />
                             </div>
                             <div>
                                 <InputLabel color="black">update email</InputLabel>
                                 <input type="text"
-                                    class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
+                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
                                     placeholder="update email address" />
                             </div>
                             <div>
@@ -109,7 +111,7 @@ let paymentForm = useForm({
                             <div>
                                 <InputLabel color="black">help</InputLabel>
                                 <input type="text"
-                                    class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
+                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
                                     placeholder="breifly explain what happened" />
                             </div>
                         </div>
