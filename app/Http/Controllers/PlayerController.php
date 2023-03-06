@@ -33,11 +33,11 @@ class PlayerController extends Controller
             })
         );
         $request->whenFilled('ageFrom',
-            fn() => $query->whereDate('date_of_birth', '>=', now()->subYears($request->input('age')))
+            fn() => $query->whereDate('date_of_birth', '>=', now()->subYears($request->input('ageFrom')))
         );
 
         $request->whenFilled('ageTo',
-            fn() => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('age')))
+            fn() => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('ageTo')))
         );
 
         $request->whenFilled('country_id',
