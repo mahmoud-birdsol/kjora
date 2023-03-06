@@ -46,6 +46,8 @@ class UserEmailController extends Controller
             'email' => $request->get('email'),
             'email_verified_at'=>null
         ]);
+        $user->sendEmailVerificationNotification();
+
 //        $request->session()->flash('message', [
 //            'type' => 'success',
 //            'body' => 'User name changed successfully',
