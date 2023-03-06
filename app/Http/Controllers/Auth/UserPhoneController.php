@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -18,7 +19,12 @@ class UserPhoneController extends Controller
      */
     public function edit(Request $request)
     {
-        return Inertia::render('Auth/UpdatePhone');
+        $countries = Country::active()->orderBy('name')->get();
+
+        return Inertia::render('Auth/UpdatePhone',[
+            'countries' => $countries,
+
+        ]);
 
     }
     /**
