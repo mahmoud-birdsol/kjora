@@ -49,14 +49,14 @@ function reset() {
                     <div class="my-6">
                         <InputLabel>Age</InputLabel>
                         <div class="px-4 py-2 mx-4 border border-white  rounded-full">
-                            <el-slider v-model="form.age" class="" :min="18" :max="70" />
+                            <el-slider v-model="form.age" range class="" :min="18" :max="70" />
                         </div>
                     </div>
 
                     <div class="my-6">
                         <InputLabel>Rating</InputLabel>
                         <div class="px-4 py-1 mx-4 border border-white rounded-full">
-                            <el-slider v-model="form.rating" :min="0" :max="5" />
+                            <el-slider v-model="form.rating" range :min="0" :max="5" />
                         </div>
                     </div>
 
