@@ -19,10 +19,10 @@ function submit() {
     form.patch(route('password.update'), {
         preserveState: true,
         preserveScroll: true,
-        onSuccess: () => {
+        onFinish: () => {
+            loading.value = false;
         }
     })
-    loading.value = false;
 }
 </script>
 <template>
