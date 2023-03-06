@@ -1,5 +1,5 @@
 <template>
-    <button @click="toggleLike" class="p-1">
+    <button @click="toggleLike" :disabled="isPending" class="p-1">
         <slot :isLiked="isLiked" />
     </button>
 </template>
@@ -23,25 +23,35 @@ const props = defineProps({
         default: false,
     }
 })
-const emits = defineEmits(['toggleLike'])
-const isLiked = ref(props.isLiked)
 
+const isLiked = ref(props.isLiked)
+const isPending = ref(false)
 const form = useForm({
     likeable_id: props.likeable_id,
     likeable_type: props.likeable_type
 })
 function toggleLike() {
+    if (isPending.value) return
+    console.log('sending request')
     if (!isLiked.value) {
         isLiked.value = true
+        isPending.value = true
         form.post(route('like.store'), {
             preserveState: false,
             preserveScroll: true,
+            onSuccess: () => {
+                isPending.value = false
+            }
         });
     } else {
         isLiked.value = false
-        form.post(route('like.store'), {
+        isPending.value = true
+        form.delete(route('like.destroy'), {
             preserveState: false,
             preserveScroll: true,
+            onSuccess: () => {
+                isPending.value = false
+            }
         });
     }
 }

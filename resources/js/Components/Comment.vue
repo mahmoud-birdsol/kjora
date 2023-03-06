@@ -35,17 +35,22 @@
                 </p>
             </div>
             <!-- add reply & like buttons row 3 -->
-            <div class="flex justify-start w-full gap-2 mb-2 text-sm font-semibold text-stone-700">
+            <div class="flex justify-start w-full gap-2 mb-2 text-sm font-semibold text-stone-700 items-center">
                 <button @click="handleReplyClicked"
                     class="p-1 transition-all duration-150 pis-0 enabled:hover:underline hover:underline-offset-4">Reply</button>
-                <LikeButton :isLiked="comment?.is_liked" :likeable_id="comment.id"
-                    :likeable_type="'App\\Models\\Comment'">
-                    <template v-slot="{ isLiked }">
-                        <button class="p-1 transition-all duration-150 enabled:hover:underline hover:underline-offset-4"
-                            :class="isLiked ? 'text-primary' : ''">Like</button>
-                    </template>
-                </LikeButton>
-                <span>{{ comment.like_count }}</span>
+
+                <div class="flex  items-center">
+                    <div>{{ comment.likes_count }}</div>
+                    <LikeButton :isLiked="comment?.is_liked" :likeable_id="comment.id"
+                        :likeable_type="'App\\Models\\Comment'">
+                        <template v-slot="{ isLiked }">
+                            <div class="transition-all duration-150 enabled:hover:underline hover:underline-offset-4"
+                                :class="isLiked ? 'text-primary' : ''">Like</div>
+                        </template>
+                    </LikeButton>
+                </div>
+
+
             </div>
 
             <!-- replies related to this comment row 4 -->
