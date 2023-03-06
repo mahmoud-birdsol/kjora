@@ -32,7 +32,7 @@ class UserNameController extends Controller
     {
         $request->validate([
             'password' => ['required', 'current_password'],
-            'username' => ['required', 'string', 'max:255', 'unique:users'],
+            'username' => ['required', 'string', 'max:255', 'unique:users','regex:/^[\w-]*$/'],
         ]);
         #Match The Old Password
         if(!Hash::check($request->password, auth()->user()->password)){
