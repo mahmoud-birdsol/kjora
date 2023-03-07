@@ -24,8 +24,6 @@ class RatingCategory extends Model
 
     /**
      * Get the rating category positions.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function positions(): BelongsToMany
     {
@@ -36,8 +34,6 @@ class RatingCategory extends Model
 
     /**
      * Get the rating category reviews
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function reviews(): BelongsToMany
     {

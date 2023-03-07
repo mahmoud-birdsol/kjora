@@ -44,8 +44,6 @@ class Country extends Model implements Suspendable, HasMedia
     /**
      * Register the model media conversions.
      *
-     * @param  \Spatie\MediaLibrary\MediaCollections\Models\Media|null  $media
-     * @return void
      *
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
@@ -58,8 +56,6 @@ class Country extends Model implements Suspendable, HasMedia
 
     /**
      * Register the model media collections.
-     *
-     * @return void
      */
     public function registerMediaCollections(): void
     {
@@ -68,8 +64,6 @@ class Country extends Model implements Suspendable, HasMedia
 
     /**
      * Get the country flag.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function flag(): Attribute
     {
@@ -80,8 +74,6 @@ class Country extends Model implements Suspendable, HasMedia
 
     /**
      * Get the country flag thumb.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function flagThumb(): Attribute
     {
@@ -92,8 +84,6 @@ class Country extends Model implements Suspendable, HasMedia
 
     /**
      * Get the country advertisement.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function advertisements(): HasMany
     {
@@ -102,8 +92,6 @@ class Country extends Model implements Suspendable, HasMedia
 
     /**
      * Get the country clubs.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function clubs(): HasMany
     {
@@ -112,8 +100,6 @@ class Country extends Model implements Suspendable, HasMedia
 
     /**
      * Get the country users.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function users(): HasMany
     {

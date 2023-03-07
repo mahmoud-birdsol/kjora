@@ -55,13 +55,12 @@ Route::middleware('guest')->resource(
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
-//    'player.review'
+    //    'player.review'
 ])->group(function () {
     Route::get('/verification/identity', [
         IdentityVerificationController::class,
         'create',
     ])->name('identity.verification.create');
-
 
     Route::post('/verification/identity', [
         IdentityVerificationController::class,
@@ -105,13 +104,13 @@ Route::middleware([
         Route::get(
             'player/review/{review}', [
                 PlayerReviewController::class,
-                'show'
+                'show',
             ])->name('player.review.show');
 
         Route::post(
             'player/review/{review}', [
                 PlayerReviewController::class,
-                'store'
+                'store',
             ])->name('player.review.store');
 
         /*
@@ -122,7 +121,7 @@ Route::middleware([
 
         Route::get('invitations', [
             InvitationController::class,
-            'index'
+            'index',
         ])->name('invitation.index');
 
         Route::get('more', function () {
@@ -134,7 +133,7 @@ Route::middleware([
 
         Route::get('hires', [
             HireController::class,
-            'index'
+            'index',
         ])->name('hire.index');
 
         Route::get('invitations/create/{invited}', function (User $invited) {
@@ -226,7 +225,7 @@ Route::middleware([
                 ],
                 'image' => [
                     'required',
-                    'file'
+                    'file',
                 ],
             ]);
 
@@ -247,17 +246,17 @@ Route::middleware([
 
     Route::get('favourites', [
         FavoriteController::class,
-        'index'
+        'index',
     ])->name('favorites.index');
 
     Route::post('favorites/{favorite}', [
         FavoriteController::class,
-        'store'
+        'store',
     ])->name('favorites.store');
 
     Route::delete('favorites/{favorite}', [
         FavoriteController::class,
-        'destroy'
+        'destroy',
     ])->name('favorites.destroy');
 
     /*
@@ -270,7 +269,7 @@ Route::middleware([
         'chats',
         [
             ChatController::class,
-            'index'
+            'index',
         ]
     )->name('chats.index');
 
@@ -278,7 +277,7 @@ Route::middleware([
         'chats/{conversation}',
         [
             ChatController::class,
-            'show'
+            'show',
         ]
     )->name('chats.show');
 
@@ -290,7 +289,7 @@ Route::middleware([
 
     Route::post('report', [
         ReportController::class,
-        'store'
+        'store',
     ])->name('report.store');
 
     /*
@@ -299,7 +298,6 @@ Route::middleware([
      |--------------------------------------------------------------------------
     */
 });
-
 
 //     // Example 2: Get all the connected users for a specific channel
 // });
@@ -311,14 +309,13 @@ Route::middleware([
 // });
 
 Route::get('gallery/{mediaLibrary}', function (MediaLibrary $mediaLibrary) {
-
     $userId = MediaLibrary::where('model_type', User::class)->where('id', $mediaLibrary->id)->first()->model_id;
 
     $user = User::find($userId);
 
     return Inertia::render('Gallery/Show', [
         'media' => $mediaLibrary,
-        'user' => $user
+        'user' => $user,
     ]);
 })->name('gallery.show');
 

@@ -18,7 +18,7 @@ class ClubController extends Controller
     {
         $query = Club::query();
 
-        $request->whenFilled('search', fn() => $query->where('name', 'LIKE', '%'.$request->input('search').'%'));
+        $request->whenFilled('search', fn () => $query->where('name', 'LIKE', '%'.$request->input('search').'%'));
 
         return new ClubResource($query->paginate());
     }

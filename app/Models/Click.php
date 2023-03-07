@@ -26,8 +26,6 @@ class Click extends Model
 
     /**
      * Get the click user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -36,8 +34,6 @@ class Click extends Model
 
     /**
      * Get the click advertisement.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function advertisement(): BelongsTo
     {

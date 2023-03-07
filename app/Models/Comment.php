@@ -41,8 +41,6 @@ class Comment extends Model implements Reportable
 
     /**
      * The type of the polymorphic relation.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function commentable(): MorphTo
     {
@@ -51,8 +49,6 @@ class Comment extends Model implements Reportable
 
     /**
      * Get the user associated with this comment
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -61,8 +57,6 @@ class Comment extends Model implements Reportable
 
     /**
      * Get the replies associated with this comment
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function replies(): HasMany
     {

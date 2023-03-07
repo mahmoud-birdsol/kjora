@@ -15,9 +15,6 @@ class InvitationDeclinedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    /**
-     * @var \App\Models\Invitation
-     */
     private Invitation $invitation;
 
     /**
@@ -50,7 +47,7 @@ class InvitationDeclinedNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject($this->invitation->invitedPlayer->name . ' declined your invitation. ❌')
+            ->subject($this->invitation->invitedPlayer->name.' declined your invitation. ❌')
             ->line('Your invitation for **'.$this->invitation->invitedPlayer->name.'** to play a football match on **'.$this->invitation->date->toDateTimeString().'** at **'.$this->invitation->stadium->name.'** was declined.')
             ->action('View Invitation', url(route('invitation.index')))
             ->line('Thank you for using our application!');
@@ -68,7 +65,7 @@ class InvitationDeclinedNotification extends Notification implements ShouldQueue
             displayType: 'simple',
             state: 'danger',
             title: 'Invitation',
-            subtitle: 'Your invitation to ' . $this->invitation->invitedPlayer->name . ' was declined',
+            subtitle: 'Your invitation to '.$this->invitation->invitedPlayer->name.' was declined',
             actionData: new RouteActionData(
                 route: route('invitation.index'),
                 text: 'View Invitation',

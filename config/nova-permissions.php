@@ -776,7 +776,6 @@ return [
             'group' => 'Message',
         ],
 
-
         /*
        |--------------------------------------------------------------------------
        | Report Options.
@@ -878,5 +877,5 @@ return [
             'description' => 'Can resolve reviews',
             'group' => 'Review',
         ],
-    ]
+    ],
 ];
