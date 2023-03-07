@@ -9,8 +9,6 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import NotificationComponent from '@/Components/NotificationComponent.vue';
 import ChatIcon from '../../Components/Icons/ChatIcon.vue';
 import FootBallIcon from '../../Components/Icons/FootBallIcon.vue';
-import LanguageSelector from "../../Shared/LanguageSelector.vue";
-
 import {
     BellIcon,
     Bars3Icon,
@@ -156,7 +154,6 @@ const logout = () => {
                             </template>
                         </Dropdown>
                     </div>
-                    <language-selector class="mx-4"/>
 
                 </div>
 

@@ -11,6 +11,8 @@ import RichSelectInput from "@/Components/RichSelectInput.vue";
 import PhoneInput from "@/Components/PhoneInput.vue";
 import MoreBtn from "@/Components/MoreBtn.vue";
 const props = defineProps(['countries', 'positions']);
+import LanguageSelector from "../Shared/LanguageSelector.vue";
+
 let paymentForm = useForm({
     merchant: null
 })
@@ -107,6 +109,8 @@ let paymentForm = useForm({
                                     class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
                                     placeholder="breifly explain what happened" />
                             </div>
+                            <language-selector class="mx-4"/>
+
                         </div>
                     </template>
                 </CardContent>

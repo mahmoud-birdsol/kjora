@@ -1,10 +1,31 @@
+<script setup>
+import { ref } from 'vue'
+
+const value = ref('')
+
+const languages = [
+    {
+        value: 'en',
+        label: 'English',
+    },
+    {
+        value: 'ar',
+        label: 'العربيه',
+    },
+
+]
+</script>
 <template>
-    <div class=" text-white">
-        <button @click="setLocale">
-<!--            <icon :lang="selectable_locale" class="w-5 h-5" :name="selectable_locale" />-->
-            <span class="font-semibold" v-if="selectable_locale == 'ar'">العربية</span>
-            <span class="font-semibold" v-if="selectable_locale == 'en'">EN</span>
-        </button>
+    <div class="ml-4 rtl:mr-4">
+        <el-select v-model="selectedLocale" class="m-2" placeholder="Select" @change="setLocale" size="large">
+            <el-option
+                v-for="item in languages"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+            />
+        </el-select>
+
     </div>
 </template>
 
@@ -18,9 +39,14 @@ export default {
         Icon,
         Link
     },
+    data(){
+        return{
+            selectedLocale : this.$page.props.locale
+        }
+    },
     methods:{
         setLocale() {
-            Inertia.post(route('language', [this.selectable_locale]) , {}, {
+            Inertia.post(route('language', [this.selectedLocale]) , {}, {
                 preserveState:false,
                 preserveScroll:false,
                 onSuccess : () => {
@@ -32,13 +58,6 @@ export default {
 
     mounted() {
     },
-    computed: {
-        selectable_locale() {
-            if(this.$page.props.locale == 'ar') {
-                return 'en';
-            }
-            return 'ar';
-        }
-    },
+
 }
 </script>
