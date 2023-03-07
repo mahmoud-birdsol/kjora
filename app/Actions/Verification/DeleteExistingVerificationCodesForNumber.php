@@ -2,6 +2,7 @@
 
 namespace App\Actions\Verification;
 
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class DeleteExistingVerificationCodesForNumber
@@ -9,13 +10,13 @@ class DeleteExistingVerificationCodesForNumber
     /**
      * Delete the verification code for this phone number if it exists
      *
-     * @param string $phone
+     * @param \App\Models\User $user
      * @return void
      */
-    public function __invoke(string $phone): void
+    public function __invoke(User $user): void
     {
         DB::table(config('verification.verification_codes_table'))
-            ->where('phone', $phone)
+            ->where('user_id', $user->id)
             ->delete();
     }
 }

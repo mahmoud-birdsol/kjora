@@ -6,6 +6,7 @@ use App\Actions\Verification\DeleteExistingVerificationCodesForNumber;
 use App\Actions\Verification\GenerateRandomCodeNumber;
 use App\Actions\Verification\SendVerificationCodeSMSNotification;
 use App\Actions\Verification\StoreVerificationCodeInDatabase;
+use App\Models\User;
 
 class CreateVerificationCode
 {
@@ -29,16 +30,16 @@ class CreateVerificationCode
     /**
      * Create a verification code for the mobile number
      *
-     * @param string $phone
+     * @param User $user
      * @return void
      * @throws \Exception
      */
-    public function __invoke(string $phone): void
+    public function __invoke(User $user): void
     {
         $code = ($this->generateRandomCodeNumber)();
 
-        ($this->deleteExistingVerificationCodesForNumber)($phone);
-        ($this->storeVerificationCodeInDatabase)($phone, $code);
-        ($this->sendVerificationCodeSMSNotification)($phone, $code);
+        ($this->deleteExistingVerificationCodesForNumber)($user);
+        ($this->storeVerificationCodeInDatabase)($user, $code);
+        ($this->sendVerificationCodeSMSNotification)($code, $user);
     }
 }
