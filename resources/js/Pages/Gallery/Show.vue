@@ -78,7 +78,7 @@
                                                 <button class="hover:text-gray-400 group" >
                                                     <li v-if="!isCurrentUser">
                                                         <ReportModal :reportable-id="media.id"
-                                                            :reportable-type="'App\\Models\\Report'">
+                                                            :reportable-type="'App\\Models\\MediaLibrary'">
                                                             <template #trigger>
                                                                 <button class="flex items-center  gap-x-2">
                                                                     <FlagIcon class="w-4" />
