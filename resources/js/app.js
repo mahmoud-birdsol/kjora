@@ -12,6 +12,8 @@ import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 import { createPinia } from "pinia";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import {i18nVue} from "laravel-vue-i18n";
+
 library.add();
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
@@ -28,6 +30,9 @@ createInertiaApp({
     setup({ el, app, props, plugin }) {
         return createApp({ render: () => h(app, props) })
             .use(plugin)
+            .use(i18nVue, {
+                resolve: (lang) => import(`../../lang/${lang}.json`)
+            })
             .use(ZiggyVue, Ziggy)
             .use(pinia)
             .component("font-awesome-icon", FontAwesomeIcon)

@@ -58,6 +58,8 @@ class HandleInertiaRequests extends Middleware
             'notifications' => fn() => $request->user() ? $request->user()->unreadNotifications : [],
 
             'reportOptions' => fn() => ReportOption::all(),
+
+            'locale' => app()->getLocale()
         ]);
     }
 }

@@ -111,7 +111,7 @@ const options = {
                     <SecondaryButton @click="filterByPosition(null)">
                         <span class="w-full text-center"
                             :class="{ 'text-black': form.position == null, 'text-gray-400': form.position != null }">
-                            All positions
+                             {{ $t('All positions') }}
                         </span>
                     </SecondaryButton>
                     <template v-for="position in positions" :key="position.id">
