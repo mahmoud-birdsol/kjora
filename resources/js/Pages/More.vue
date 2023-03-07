@@ -52,10 +52,16 @@ const currentUser = usePage().props.value.auth.user
                     <template #body>
                         <div class="flex flex-col gap-4">
                             <InputLabel color="black">verification</InputLabel>
-                            <div
+                            <Link :href="route('identity.verification.create')"
+                                v-if="currentUser.identity_status === 'Waiting for documents'"
+                                class="w-full p-2 border border-gray-500 rounded-full text-stone-500 active:border-primary hover:border-primary hover:text-primary sm:text-sm disabled:bg-gray-100 cursor-pointer ">
+                            {{ currentUser.identity_status }}
+                            </Link>
+                            <div v-else
                                 class="w-full p-2 border border-gray-500 rounded-full text-stone-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100">
                                 {{ currentUser.identity_status }}
                             </div>
+
                             <div>
                                 <InputLabel color="black">terms of service</InputLabel>
                                 <input type="text"
