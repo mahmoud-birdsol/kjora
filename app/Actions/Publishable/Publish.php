@@ -9,10 +9,6 @@ class Publish
 {
     /**
      * Mark the publishable as published on the specified date.
-     *
-     * @param  \App\Models\Contracts\Publishable  $publishable
-     * @param  \Illuminate\Support\Carbon|null  $date
-     * @return void
      */
     public function __invoke(Publishable $publishable, ?Carbon $date = null): void
     {

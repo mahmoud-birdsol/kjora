@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Http\Resources\MessageResource;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Broadcasting\Channel;
@@ -16,14 +15,8 @@ class MessageSentEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    /**
-     * @var \App\Models\User
-     */
     private User $user;
 
-    /**
-     * @var \App\Models\Message
-     */
     private Message $message;
 
     /**
@@ -39,8 +32,6 @@ class MessageSentEvent implements ShouldBroadcast
 
     /**
      * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|\Illuminate\Broadcasting\PrivateChannel|array
      */
     public function broadcastOn(): Channel|PrivateChannel|array
     {
@@ -49,8 +40,6 @@ class MessageSentEvent implements ShouldBroadcast
 
     /**
      * The event's broadcast name.
-     *
-     * @return string
      */
     public function broadcastAs(): string
     {

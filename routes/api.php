@@ -25,22 +25,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('clubs', [
     ClubController::class,
-    'index'
+    'index',
 ])->name('api.clubs');
 
 Route::get(
     'chats/{conversation}/messages', [
         MessageController::class,
-        'index'
+        'index',
     ]
 )->middleware('auth:sanctum')->name('api.messages.index');
 
 Route::post(
     'chats/{conversation}/messages', [
-    MessageController::class,
-    'store'
-])->middleware('auth:sanctum')->name('api.messages.store');
-
+        MessageController::class,
+        'store',
+    ])->middleware('auth:sanctum')->name('api.messages.store');
 
 Route::post(
     'gallery/upload',
@@ -59,7 +58,6 @@ Route::get('gallery/comments', [CommentController::class, 'index'])
 Route::post('gallery/comments', [CommentController::class, 'store'])
     ->middleware('auth:sanctum')
     ->name('api.gallery.comments.store');
-
 
 Route::post('/elvis-has-left-the-building', function (Request $request) {
     $request->user()->forceFill([

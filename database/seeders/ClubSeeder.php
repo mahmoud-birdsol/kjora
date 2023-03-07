@@ -25,47 +25,47 @@ class ClubSeeder extends Seeder
 
         $clubCountries = [
             'england',
-//            'spain',
-//            'italy',
-//            'germany',
-//            'france',
-//            'saudi-arabia',
-//            'kuwait',
-//            'scotland',
-//            'argentina',
-//            'australia',
-//            'japan',
-//            'usa',
-//            'netherlands',
-//            'portugal',
-//            'turkey',
-//            'qatar',
-//            'united-arab-emirates',
-//            'bahrain',
-//            'oman',
-//            'egypt',
-//            'brazil',
-//            'russia',
-//            'denmark',
-//            'ukraine',
-//            'czech-republic',
-//            'greece',
-//            'india',
-//            'pakistan',
-//            'switzerland',
-//            'ireland',
-//            'venezuela',
-//            'mexico',
-//            'belgium',
-//            'china',
-//            'croatia',
-//            'cyprus',
-//            'austria',
+            //            'spain',
+            //            'italy',
+            //            'germany',
+            //            'france',
+            //            'saudi-arabia',
+            //            'kuwait',
+            //            'scotland',
+            //            'argentina',
+            //            'australia',
+            //            'japan',
+            //            'usa',
+            //            'netherlands',
+            //            'portugal',
+            //            'turkey',
+            //            'qatar',
+            //            'united-arab-emirates',
+            //            'bahrain',
+            //            'oman',
+            //            'egypt',
+            //            'brazil',
+            //            'russia',
+            //            'denmark',
+            //            'ukraine',
+            //            'czech-republic',
+            //            'greece',
+            //            'india',
+            //            'pakistan',
+            //            'switzerland',
+            //            'ireland',
+            //            'venezuela',
+            //            'mexico',
+            //            'belgium',
+            //            'china',
+            //            'croatia',
+            //            'cyprus',
+            //            'austria',
         ];
 
         foreach ($clubCountries as $clubCountry) {
             $this->command->info('#######################');
-            $this->command->info('Loading: '. $clubCountry);
+            $this->command->info('Loading: '.$clubCountry);
             $this->command->info('#######################');
 
             $clubs = $this->collectClubs(
@@ -78,7 +78,7 @@ class ClubSeeder extends Seeder
 
                 $club = Club::create(collect($data['team'])->only('name', 'country')->toArray());
 
-                $this->command->info('Loading club: '. $club->name);
+                $this->command->info('Loading club: '.$club->name);
 
                 if (array_key_exists('logo', $data['team'])) {
                     try {
@@ -93,10 +93,6 @@ class ClubSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
     }
 
-    /**
-     * @param  string  $clubsFile
-     * @return \Illuminate\Support\Collection
-     */
     private function collectClubs(string $clubsFile): Collection
     {
         return collect(json_decode(file_get_contents($clubsFile), true));

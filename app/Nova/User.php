@@ -15,7 +15,6 @@ use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Select;
@@ -51,7 +50,6 @@ class User extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
     public function fields(NovaRequest $request)
@@ -59,10 +57,10 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-//            Avatar::make('Avatar')
-//                ->showOnPreview()
-//                ->nullable()
-//                ->rules('nullable'),
+            //            Avatar::make('Avatar')
+            //                ->showOnPreview()
+            //                ->nullable()
+            //                ->rules('nullable'),
 
             Images::make('Avatar')
                 ->nullable()
@@ -157,7 +155,7 @@ class User extends Resource
                 'right' => 'Right',
             ])->displayUsingLabels()->showOnPreview()->sortable()->filterable()->required()->rules('required'),
 
-            Panel::make('Identity Verification', fn() => [
+            Panel::make('Identity Verification', fn () => [
                 Boolean::make('Verified', 'has_verified_identity')
                     ->filterable()
                     ->sortable()
@@ -212,7 +210,6 @@ class User extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
     public function cards(NovaRequest $request)
@@ -223,7 +220,6 @@ class User extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
     public function filters(NovaRequest $request)
@@ -234,7 +230,6 @@ class User extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
     public function lenses(NovaRequest $request)
@@ -247,7 +242,6 @@ class User extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
     public function actions(NovaRequest $request)

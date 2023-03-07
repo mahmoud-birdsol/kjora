@@ -35,7 +35,7 @@ class Message extends Model implements HasMedia
      * @var array
      */
     protected $casts = [
-        'read_at' => 'datetime'
+        'read_at' => 'datetime',
     ];
 
     /**
@@ -44,10 +44,10 @@ class Message extends Model implements HasMedia
      * @var array
      */
     protected $appends = [
-//        'attachment',
+        //        'attachment',
         'parent',
         'attachments',
-        'message_sender'
+        'message_sender',
     ];
 
     /**
@@ -56,13 +56,11 @@ class Message extends Model implements HasMedia
      * @var array
      */
     protected $with = [
-//        'sender',
+        //        'sender',
     ];
 
     /**
      * Register the media collections.
-     *
-     * @return void
      */
     public function registerMediaCollections(): void
     {
@@ -72,8 +70,6 @@ class Message extends Model implements HasMedia
     /**
      * Register the media conversions.
      *
-     * @param \Spatie\MediaLibrary\MediaCollections\Models\Media|null $media
-     * @return void
      *
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
@@ -86,8 +82,6 @@ class Message extends Model implements HasMedia
 
     /**
      * Get the message conversation
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function conversation(): BelongsTo
     {
@@ -96,8 +90,6 @@ class Message extends Model implements HasMedia
 
     /**
      * Get the parent message
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function parentMessage(): BelongsTo
     {
@@ -106,8 +98,6 @@ class Message extends Model implements HasMedia
 
     /**
      * Get the message replies
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function replies(): HasMany
     {
@@ -116,8 +106,6 @@ class Message extends Model implements HasMedia
 
     /**
      * Get the message sender.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function sender(): BelongsTo
     {
@@ -126,20 +114,18 @@ class Message extends Model implements HasMedia
 
     /**
      * Get the first media of the message
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function attachment(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->getFirstMedia('attachment')
+            get: fn ($value) => $this->getFirstMedia('attachment')
         );
     }
 
     public function attachments(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => MediaLibrary::where('model_type', Message::class)
+            get: fn ($value) => MediaLibrary::where('model_type', Message::class)
                 ->where('model_id', $this->id)
                 ->where('collection_name', 'attachments')
                 ->get()
@@ -148,7 +134,7 @@ class Message extends Model implements HasMedia
                         'id' => $media->id,
                         'original_url' => $media->original_url,
                         'mime_type' => $media->mime_type,
-                        'file_name' => $media->file_name
+                        'file_name' => $media->file_name,
                     ];
                 })
         );
@@ -157,24 +143,21 @@ class Message extends Model implements HasMedia
     public function messageSender(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => [
+            get: fn ($value) => [
                 'name' => User::find($this->sender_id)->name,
                 'username' => User::find($this->sender_id)->username,
-                'avatar_url' => User::find($this->sender_id)->avatar_url
+                'avatar_url' => User::find($this->sender_id)->avatar_url,
             ]
         );
     }
 
     /**
      * Get the parent message
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function parent(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->parentMessage
+            get: fn ($value) => $this->parentMessage
         );
     }
-
 }

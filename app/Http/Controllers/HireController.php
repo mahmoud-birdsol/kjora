@@ -11,9 +11,6 @@ class HireController extends Controller
 {
     /**
      * Display the invitations index page.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Inertia\Response
      */
     public function index(Request $request): Response
     {

@@ -35,12 +35,12 @@ class ReportRequest extends FormRequest
                     User::class,
                     MediaLibrary::class,
                     Conversation::class,
-                    Comment::class
+                    Comment::class,
                 ]),
             ],
             'user_id' => [
                 'required',
-                'exists:users,id'
+                'exists:users,id',
             ],
             'reportable_id' => [
                 'required',

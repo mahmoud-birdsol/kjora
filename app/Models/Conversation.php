@@ -26,8 +26,6 @@ class Conversation extends Model implements Reportable
 
     /**
      * Get the conversation users
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users(): BelongsToMany
     {
@@ -36,8 +34,6 @@ class Conversation extends Model implements Reportable
 
     /**
      * Get the conversation messages
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function messages(): HasMany
     {
@@ -46,13 +42,11 @@ class Conversation extends Model implements Reportable
 
     /**
      * Get the conversation latest message.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function latestMessage(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->messages()->latest()->first()
+            get: fn () => $this->messages()->latest()->first()
         );
     }
 }

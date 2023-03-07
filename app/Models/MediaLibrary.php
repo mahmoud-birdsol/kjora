@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class MediaLibrary extends Media implements Suspendable, Reportable
@@ -17,11 +16,8 @@ class MediaLibrary extends Media implements Suspendable, Reportable
     use HasFactory;
     use CanBeReported;
 
-
     /**
      * Get the media comments
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function comments(): MorphMany
     {
@@ -30,8 +26,6 @@ class MediaLibrary extends Media implements Suspendable, Reportable
 
     /**
      * Get the user associated with this media
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -40,25 +34,21 @@ class MediaLibrary extends Media implements Suspendable, Reportable
 
     /**
      * Suspend the model.
-     *
-     * @return void
      */
     public function suspend(): void
     {
         $this->update([
-            'suspended_at' => now()
+            'suspended_at' => now(),
         ]);
     }
 
     /**
      * Activate the model.
-     *
-     * @return void
      */
     public function activate(): void
     {
         $this->update([
-            'suspended_at' => null
+            'suspended_at' => null,
         ]);
     }
 }
