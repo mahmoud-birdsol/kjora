@@ -128,6 +128,7 @@ export const useChat = defineStore("chat", {
                     if (this.currentUserId !== event.sender_id) {
                         this.messages.unshift(event);
                         this.scrollToMessagesBottom();
+                        axios.post(route("api.message.mark-as-read", event.id));
                     }
                 }
             );
