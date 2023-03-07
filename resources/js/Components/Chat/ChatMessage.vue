@@ -41,7 +41,7 @@ const repliedClasses = computed(() => {
     return isCurrentUser.value ? 'bg-white text-black  ' : 'bg-primary text-white  ';
 })
 const newMessageClasses = computed(() => {
-    return props.message?.new ? 'border-t-2    border-green-400 relative before:content-["New"] before:absolute before:-top-3 before:bg-white before:right-3 before:text-sm before:text-green-700  ' : '';
+    return props.message?.new ? 'border-t-2    border-green-400 relative before:content-["New"] before:absolute before:-top-3 before:bg-white before:right-3 before:text-sm before:text-green-700 before:px-1 ' : '';
 })
 function handleReply(e) {
     // emits('reply', props.message)
