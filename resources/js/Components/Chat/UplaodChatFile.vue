@@ -6,7 +6,7 @@ import { XMarkIcon, PlusCircleIcon } from '@heroicons/vue/24/outline';
 import { ref, onMounted, watch } from 'vue';
 import InputError from '@/Components/InputError.vue';
 import FadeInTransition from '@/Components/FadeInTransition.vue';
-
+import Crop from '@/Components/Crop.vue';
 const props = defineProps({
     modelValue: {
         required: false,
@@ -79,7 +79,8 @@ const updatePhotoPreview = () => {
             filesData.value.push({
                 url: e.target.result,
                 name: file.name,
-                type: file.type
+                type: file.type,
+                id:_.uniqueId
             });
             showPreview.value = true;
         };
@@ -125,6 +126,13 @@ function reset(e) {
     isDisabled.value = false;
     emit('close');
 }
+function changeFiles(file , url){
+    let index = files.value.findIndex((f)=> f.id === file.id)
+    files.value.splice(index, 1, file)
+    console.log(index)
+    filesData.value[index].url = url
+
+}
 </script>
 
 <template>
@@ -164,6 +172,8 @@ function reset(e) {
                                         <XMarkIcon class="w-5 h-5 text-stone-800" />
                                     </div>
                                 </button>
+                                <Crop :img="fileUrl" @crop="changeFiles"/>
+                                
                             </div>
                             <div v-else-if="fileUrl.url.startsWith('data:application/pdf')"
                                 class="relative flex flex-col gap-4 ">
