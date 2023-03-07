@@ -3,6 +3,7 @@
 use App\Http\Controllers\AcceptInvitationController;
 use App\Http\Controllers\Actions\MarkNotificationAsRead;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HireController;
 use App\Http\Controllers\IdentityVerificationController;
@@ -303,6 +304,15 @@ Route::middleware([
      | Message Routes...
      |--------------------------------------------------------------------------
     */
+
+
+
+
+
+
+
+
+    Route::post('contacts', [ContactController::class, 'store'])->name('contacts.store');
 });
 
 

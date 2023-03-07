@@ -910,9 +910,9 @@ return [
             'group' => 'Contacts',
         ],
 
-        'recieve contact notifications' => [
-            'display_name' => 'Resolve contacts',
-            'description' => 'Can resolve contacts',
+        'receive contact notifications' => [
+            'display_name' => 'Receive contact notifications',
+            'description' => 'Can Receive contact notifications',
             'group' => 'Contacts',
         ],
     ]
