@@ -35,7 +35,7 @@ class VerifyPhoneRequest extends FormRequest
                 // todo refactor rule.
                 function ($attribute, $value, $fail) {
                     $verificationCode = DB::table(config('verification.verification_codes_table'))
-                        ->where('phone', $this->user_id)
+                        ->where('user_id', $this->user_id)
                         ->where('code', $this->code)
                         ->first();
 
