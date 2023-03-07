@@ -13,6 +13,7 @@ export const useChat = defineStore("chat", {
             search: "",
             replyToMessage: null,
             currentUserId: null,
+            interval: null,
         };
     },
 
@@ -72,7 +73,7 @@ export const useChat = defineStore("chat", {
             this.currentUserId = currentUserId;
             this.subscribeToConversation();
             this.fetchMessages();
-
+            this.interval = setInterval(this.fetchNewMessages, 30000);
             // Add event listener for the container
             // scroll to load more messages.
             this.registerScrollListener();
@@ -106,7 +107,32 @@ export const useChat = defineStore("chat", {
                 return error;
             }
         },
-
+        /**
+         * Fetch the new conversation  messages from api .
+         *
+         * @returns {Promise<*>}
+         */
+        async fetchNewMessages() {
+            // this.loading = true;
+            try {
+                let response = await axios.get(
+                    route(`api.messages.new`, this.conversation)
+                );
+                console.log(response.data.data);
+                let newMessages = response.data.data;
+                newMessages.forEach((newM) => {
+                    if (!this.messages.some((m) => m.id === newM.id)) {
+                        this.messages.unshift(newM);
+                    }
+                });
+                // this.messages = this.messages.concat(response.data.data);
+                // this.loading = false;
+                this.page === 1 ? this.scrollToMessagesBottom() : null;
+            } catch (error) {
+                this.loading = false;
+                return error;
+            }
+        },
         /**
          * Search conversation messages.
          *
@@ -152,6 +178,12 @@ export const useChat = defineStore("chat", {
                       this.handleScroll
                   )
                 : null;
+        },
+        /**
+         * clear fetch new message interval.
+         */
+        clearFetchNewMessages() {
+            clearInterval(this.interval);
         },
 
         /**

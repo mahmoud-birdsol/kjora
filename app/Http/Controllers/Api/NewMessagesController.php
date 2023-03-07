@@ -23,7 +23,8 @@ class NewMessagesController extends Controller
         $messages = Message::whereNot('sender_id', $request->user()->id)
             ->where('conversation_id', $conversation->id)
             ->whereNull('read_at')
-            ->where('created_at', '>=', now()->addMinute())->get();
+            ->where('created_at', '<=', now()->addMinute())->get();
+
 
         return MessageResource::collection($messages);
     }
