@@ -24,7 +24,7 @@ class MarkMessageAsReadController extends Controller
             'read_at' => now()
         ]);
 
-        event(new MessageReadEvent($message));
+        event(new MessageReadEvent($message->refresh()));
 
         return response()->json([
             'message' => 'The message has been read'
