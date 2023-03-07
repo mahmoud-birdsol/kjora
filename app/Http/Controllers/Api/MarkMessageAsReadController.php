@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\MessageReadEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MessageResource;
 use App\Models\Message;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class MarkMessageAsReadController extends Controller
@@ -14,14 +16,18 @@ class MarkMessageAsReadController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Message $message
-     * @return \App\Http\Resources\MessageResource
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function __invoke(Request $request, Message $message)
+    public function __invoke(Request $request, Message $message): JsonResponse
     {
         $message->forceFill([
             'read_at' => now()
         ]);
 
-        return MessageResource::make($message->refresh());
+        event(new MessageReadEvent($message));
+
+        return response()->json([
+            'message' => 'The message has been read'
+        ]);
     }
 }
