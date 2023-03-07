@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\CanBeReported;
+use App\Models\Contracts\Reportable;
 use App\Models\Contracts\Suspendable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class MediaLibrary extends Media implements Suspendable
+class MediaLibrary extends Media implements Suspendable, Reportable
 {
     use HasFactory;
     use CanBeReported;

@@ -51,7 +51,8 @@ class Report extends Resource
 
             MorphTo::make('Reportable')->types([
                 User::class,
-                MediaLibrary::class
+                MediaLibrary::class,
+                Conversation::class,
             ])->filterable(),
 
             BelongsTo::make(
