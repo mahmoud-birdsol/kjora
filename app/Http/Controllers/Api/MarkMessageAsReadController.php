@@ -20,9 +20,10 @@ class MarkMessageAsReadController extends Controller
      */
     public function __invoke(Request $request, Message $message): JsonResponse
     {
-        $message->forceFill([
+        $message->update([
             'read_at' => now()
         ]);
+
 
         event(new MessageReadEvent($message->refresh()));
 
