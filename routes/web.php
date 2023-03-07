@@ -59,6 +59,7 @@ Route::middleware([
     'auth:sanctum',
     'location.detect',
     config('jetstream.auth_session'),
+    'phone.verified'
 //    'player.review'
 ])->group(function () {
     Route::get('/verification/identity', [
