@@ -70,7 +70,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
                 </div>
                 <InputError :message="form.errors.code" />
                 <div class="flex justify-center gap-2">
-                    <Link :href="route('verification.phone.send')" method="post"
+                    <Link :href="route('verification.phone.send')"
                         class="underline text-sm text-gray-600 hover:text-gray-900">
                     Resend Code</Link>
 
