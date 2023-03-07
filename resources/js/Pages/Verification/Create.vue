@@ -1,13 +1,10 @@
 <template>
-
+    <VerifyPhone></VerifyPhone>
 </template>
 
-<script>
-export default {
-    name: "Create"
-}
+<script setup>
+import VerifyPhone from '../Auth/VerifyPhone.vue';
+
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
