@@ -48,7 +48,7 @@ const makeRange = (start, end) => {
   return result
 }
 const disabledDate = (time) => {
-    return time.getTime() > Date.now()
+    return dayjs(time).isBefore(dayjs().subtract(1, 'day'));
 }
 const disabledHours = () => {
     let hour = d.getHours();
