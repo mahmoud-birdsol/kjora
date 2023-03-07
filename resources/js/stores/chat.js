@@ -114,8 +114,8 @@ export const useChat = defineStore("chat", {
                 (m) => m.id === message.id
             )[0];
             let oldMessageIndex = this.messages.indexOf(oldMessage);
-
-            this.messages.splice(oldMessageIndex, 1, message);
+            this.messages[oldMessageIndex].read_at = message.read_at;
+            // this.messages.splice(oldMessageIndex, 1, message);
         },
         /**
          * Search conversation messages.
