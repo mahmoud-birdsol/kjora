@@ -12,6 +12,7 @@ use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerReviewController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ResendVerificationCodeController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\VerificationCodeController;
@@ -343,5 +344,11 @@ Route::get('update-password', function () {
 })->name('update.password');
 
 Route::get('phone/verify' , [VerificationCodeController::class, 'create'])->name('phone.verify');
+
+Route::post('phone/verify', [VerificationCodeController::class, 'store'])->name('phone.verify.store');
+
+
+Route::post('phone/resend-verification', ResendVerificationCodeController::class)
+    ->name('verification.phone.send');
 
 

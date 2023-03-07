@@ -455,4 +455,16 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     {
         return 'users.' . $this->id;
     }
+
+    /**
+     * Verify the user phone
+     *
+     * @return void
+     */
+    public function verifyPhone(): void
+    {
+        $this->forceFill([
+            'phone_verified_at' => now()
+        ])->save();
+    }
 }
