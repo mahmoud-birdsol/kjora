@@ -74,6 +74,6 @@ class PlayerReviewController extends Controller
 
         $review->player->notify(new NotifyUserOfRatingSubmittedNotification($review->reviewer, $review->player, $review));
 
-        return redirect()->back();
+        return redirect()->route('home');
     }
 }
