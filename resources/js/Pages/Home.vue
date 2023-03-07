@@ -96,9 +96,9 @@ const options = {
             <Splide dir="ltr" class=" h-full w-[32rem] max-w-full self-end overflow-hidden  rounded-full md:ml-auto" :options="options">
                 <template v-for="(advertisement, i) in advertisements" :key="i">
                     <SplideSlide class="h-full">
-                        <Link :href="route('advertisements.show', advertisement)" class="block">
+                        <a :href="route('advertisements.show', advertisement)" class="block" target="_blank">
                             <img class="object-cover h-full " :src="advertisement.media[0].original_url" alt="">
-                        </Link>
+                        </a>
                     </SplideSlide>
                 </template>
             </Splide>

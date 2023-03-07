@@ -20,7 +20,7 @@ class AdvertisementController extends Controller
     public function show(Request $request, Advertisement $advertisement): RedirectResponse
     {
         Click::create([
-            'advertisement_id' => $advertisement,
+            'advertisement_id' => $advertisement->id,
             'ip' => $request->user()->last_known_ip,
             'source' => $request->input('source'),
             'user_id' => $request->user()->id
