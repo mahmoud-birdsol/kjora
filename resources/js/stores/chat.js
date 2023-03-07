@@ -106,7 +106,17 @@ export const useChat = defineStore("chat", {
                 return error;
             }
         },
+        /**
+         *
+         */
+        setMessageAsRead(message) {
+            let oldMessage = this.messages.filter(
+                (m) => m.id === message.id
+            )[0];
+            let oldMessageIndex = this.messages.indexOf(oldMessage);
 
+            this.messages.splice(oldMessageIndex, 1, message);
+        },
         /**
          * Search conversation messages.
          *
@@ -122,16 +132,19 @@ export const useChat = defineStore("chat", {
          * Subscribe to the conversation channel.
          */
         subscribeToConversation() {
-            Echo.private(`users.chat.${this.conversation.id}`).listen(
-                ".message-sent",
-                (event) => {
+            Echo.private(`users.chat.${this.conversation.id}`)
+                .listen(".message-sent", (event) => {
                     if (this.currentUserId !== event.sender_id) {
                         this.messages.unshift(event);
                         this.scrollToMessagesBottom();
                         axios.post(route("api.message.mark-as-read", event.id));
                     }
-                }
-            );
+                })
+                .listen(".message-read", (event) => {
+                    console.log("message-read");
+                    console.log(event);
+                    this.setMessageAsRead(event);
+                });
         },
 
         /**
