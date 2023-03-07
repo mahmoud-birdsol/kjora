@@ -137,7 +137,7 @@ export const useChat = defineStore("chat", {
                 let newMessages = response.data.data;
                 newMessages.forEach((newM) => {
                     if (!this.messages.some((m) => m.id === newM.id)) {
-                        this.messages.unshift(newM);
+                        this.messages.unshift({ ...newM, new: true });
                     }
                 });
                 // this.messages = this.messages.concat(response.data.data);
@@ -166,9 +166,10 @@ export const useChat = defineStore("chat", {
             Echo.private(`users.chat.${this.conversation.id}`)
                 .listen(".message-sent", (event) => {
                     if (this.currentUserId !== event.sender_id) {
-                        this.messages.unshift(event);
+                        this.messages.unshift({ ...event, new: true });
                         this.scrollToMessagesBottom();
                         axios.post(route("api.message.mark-as-read", event.id));
+                        console.log("event message sent occured");
                     }
                 })
                 .listen(".message-read", (event) => {
@@ -197,6 +198,13 @@ export const useChat = defineStore("chat", {
                       this.handleScroll
                   )
                 : null;
+        },
+        /**
+         * Unsubscribe from chat channel.
+         */
+        UnsubscribeFromChatChannel() {
+            Echo.leave(`users.chat.${this.conversation.id}`);
+            console.log("leave chat channel");
         },
         /**
          * clear fetch new message interval.
