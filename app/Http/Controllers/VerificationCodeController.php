@@ -16,7 +16,7 @@ class VerificationCodeController extends Controller
      */
     public function create(Request $request)
     {
-        return Inertia::render('Verification/Create', [
+        return Inertia::render('Auth/VerifyPhone', [
             'user' => $request->user()
         ]);
     }
