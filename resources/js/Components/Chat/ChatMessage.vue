@@ -46,8 +46,6 @@ const imagesVideosOnly = props.message.attachments.filter(a => a.mime_type.start
 const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith('image') && !a.mime_type.startsWith('video'))
 </script>
 <template>
-    <div v-if="showOptions" class="fixed inset-0 z-10 w-full h-full cursor-pointer " @click="showOptions = false">
-    </div>
     <div :class="alignmentClass + parentClasses" class="w-full ">
         <!-- avatar for non current user message -->
         <div v-if='!isCurrentUser'>
@@ -58,7 +56,7 @@ const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith
         <!-- message body -->
         <div class="max-w-[60%]">
 
-            <div :class="bodyClass" class="p-4 rounded-2xl max-w-full ">
+            <div :class="bodyClass" class="max-w-full p-4 rounded-2xl ">
                 <!-- replied message -->
                 <div v-if="message.parent_id" :class="repliedClasses" class="p-3 mb-2 text-xs rounded-lg">
                     <!-- name -->
@@ -81,7 +79,7 @@ const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith
                 <!-- message.attachments && message.attachments.length > 1 -->
                 <template v-if="message.attachments.length > 1">
                     <!-- images and videos -->
-                    <div v-if="imagesVideosOnly.length" class="grid grid-cols-2  gap-2 place-items-center "
+                    <div v-if="imagesVideosOnly.length" class="grid grid-cols-2 gap-2 place-items-center "
                         :class="imagesVideosOnly.length > 2 ? 'grid-rows-2' : ''">
                         <MediaThumbnails :media="imagesVideosOnly[0]" />
                         <MediaThumbnails v-if="imagesVideosOnly.length > 2" :media="imagesVideosOnly[1]" />
@@ -89,7 +87,7 @@ const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith
                             @click="showChatGallery = true">
                             <MediaThumbnails :media="imagesVideosOnly[1]" />
                             <div
-                                class="absolute inset-0 bg-stone-700/70  text-white font-bold rounded-md grid place-items-center cursor-pointer">
+                                class="absolute inset-0 grid font-bold text-white rounded-md cursor-pointer bg-stone-700/70 place-items-center">
                                 show all
                             </div>
                         </div>
@@ -98,7 +96,7 @@ const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith
                             @click="showChatGallery = true">
                             <MediaThumbnails :media="imagesVideosOnly[4]" />
                             <div
-                                class="absolute inset-0 bg-stone-700/70  text-white font-bold rounded-md grid place-items-center cursor-pointer">
+                                class="absolute inset-0 grid font-bold text-white rounded-md cursor-pointer bg-stone-700/70 place-items-center">
                                 {{ imagesVideosOnly.length > 3 ? `+ ${imagesVideosOnly.length - 3} + more...` : 'show all'
                                 }}
                             </div>
@@ -129,29 +127,31 @@ const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith
             <button @click="showOptions = !showOptions">
                 <EllipsisVerticalIcon class="w-6 text-neutral-500" />
             </button>
-            <Transition enterFromClass="opacity-0" enterToClass="opacity-100" leaveFromClass="opacity-100"
-                leaveToClass="opacity-0" leave-active-class="transition-all duration-150 ease-in"
-                enterActiveClass="transition-all duration-150 ease-out">
-                <div v-show="showOptions"
-                    class="absolute z-20 px-6 py-2 text-xs text-white bg-black border -top-1 rounded-xl border-neutral-500 pie-10 z-2 right-7">
-                    <ul class="flex flex-col justify-center gap-y-2">
-                        <button class="hover:text-gray-400 ">
-                            <li class="flex items-center justify-center gap-x-2">
-                                <TrashIcon class="w-4" />
-                                <span> delete</span>
-                            </li>
-                        </button>
-                        <button class="hover:text-gray-400 group" @click="handleReply">
-                            <li class="flex items-center justify-center gap-x-2">
-                                <ReplyIcon
-                                    class="cursor-pointer fill-transparent group-hover:stroke-gray-400 stroke-white ">
-                                </ReplyIcon>
-                                <span>Quote</span>
-                            </li>
-                        </button>
-                    </ul>
-                </div>
-            </Transition>
+            <OnClickOutside @trigger="showOptions = false">
+                <Transition enterFromClass="opacity-0" enterToClass="opacity-100" leaveFromClass="opacity-100"
+                    leaveToClass="opacity-0" leave-active-class="transition-all duration-150 ease-in"
+                    enterActiveClass="transition-all duration-150 ease-out">
+                    <div v-show="showOptions"
+                        class="absolute z-20 px-6 py-2 text-xs text-white bg-black border -top-1 rounded-xl border-neutral-500 pie-10 z-2 right-7">
+                        <ul class="flex flex-col justify-center gap-y-2">
+                            <button class="hover:text-gray-400 ">
+                                <li class="flex items-center justify-center gap-x-2">
+                                    <TrashIcon class="w-4" />
+                                    <span> delete</span>
+                                </li>
+                            </button>
+                            <button class="hover:text-gray-400 group" @click="handleReply">
+                                <li class="flex items-center justify-center gap-x-2">
+                                    <ReplyIcon
+                                        class="cursor-pointer fill-transparent group-hover:stroke-gray-400 stroke-white ">
+                                    </ReplyIcon>
+                                    <span>Quote</span>
+                                </li>
+                            </button>
+                        </ul>
+                    </div>
+                </Transition>
+            </OnClickOutside>
         </div>
         <!-- reply icon for non current user message -->
         <button v-if="!isCurrentUser" @click="chat.setMessageToReplyTo(message)">

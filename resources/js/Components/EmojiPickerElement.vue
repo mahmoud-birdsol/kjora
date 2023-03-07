@@ -6,7 +6,6 @@
 const emits = defineEmits(['selectedEmoji'])
 // import '../../../node_modules/vue3-emoji-picker/dist/style.css'
 const onSelectEmoji = (e) => {
-    console.log(e.i);
     emits('selectedEmoji', e.i)
 }
 </script>

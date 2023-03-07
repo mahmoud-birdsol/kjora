@@ -101,14 +101,16 @@
                     </div>
                     <!-- new comment form -->
                     <div class="flex flex-row items-center self-end w-full p-3 border-t gap-x-3 border-stone-300">
-                        <div class="relative flex items-center">
-                            <button @click="showEmojiPicker = !showEmojiPicker">
-                                <FaceSmileIcon class="w-6 text-neutral-400" />
-                            </button>
-                            <div class="absolute z-20 bottom-full left-full " v-show="showEmojiPicker">
-                                <EmojiPickerElement @selected-emoji="onSelectEmoji" />
+                        <OnClickOutside @trigger="showEmojiPicker = false">
+                            <div class="relative flex items-center">
+                                <button @click="showEmojiPicker = !showEmojiPicker" :data-cancel-blur="true">
+                                    <FaceSmileIcon class="w-6 text-neutral-400" />
+                                </button>
+                                <div class="absolute z-20 bottom-full left-full " v-show="showEmojiPicker">
+                                    <EmojiPickerElement @selected-emoji="onSelectEmoji" />
+                                </div>
                             </div>
-                        </div>
+                        </OnClickOutside>
                         <div class="flex items-center flex-grow ">
 
                             <textarea @keypress.enter.exact.prevent="addComment" v-model="newComment" name="newComment"

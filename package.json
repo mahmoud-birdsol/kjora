@@ -34,6 +34,8 @@
         "@headlessui/vue": "^1.7.11",
         "@heroicons/vue": "^2.0.13",
         "@splidejs/vue-splide": "^0.6.12",
+        "@vueuse/components": "^9.13.0",
+        "@vueuse/core": "^9.13.0",
         "chart.js": "^4.2.1",
         "dayjs": "^1.11.7",
         "element-plus": "^2.2.27",

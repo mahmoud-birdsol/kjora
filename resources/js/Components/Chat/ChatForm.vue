@@ -196,14 +196,16 @@ function onSelectEmoji(emoji) {
 
         <div class="flex flex-row items-center w-full gap-x-3">
 
-            <div class="relative">
-                <button @click="showEmojiPicker = !showEmojiPicker">
-                    <FaceSmileIcon class="w-6 text-neutral-400" />
-                </button>
-                <div class="absolute bottom-full left-full " v-show="showEmojiPicker">
-                    <EmojiPickerElement @selected-emoji="onSelectEmoji" />
+            <OnClickOutside @trigger="showEmojiPicker = false">
+                <div class="relative flex items-center">
+                    <button @click="showEmojiPicker = !showEmojiPicker" :data-cancel-blur="true">
+                        <FaceSmileIcon class="w-6 text-neutral-400" />
+                    </button>
+                    <div class="absolute z-20 bottom-full left-full " v-show="showEmojiPicker">
+                        <EmojiPickerElement @selected-emoji="onSelectEmoji" />
+                    </div>
                 </div>
-            </div>
+            </OnClickOutside>
             <div class="flex items-center flex-grow">
                 <textarea v-model="form.body" @keypress.enter.exact.prevent="submit" name="body" id="body" rows="1"
                     placeholder="Type your Message Here"

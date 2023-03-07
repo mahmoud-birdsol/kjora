@@ -49,29 +49,31 @@
                 </template>
             </div>
             <!-- new reply form row 5 -->
-            <div v-show="showReplyInput" class="flex flex-row items-center self-end w-full p-3 gap-x-3 ">
-                <div class="relative flex items-center">
-                    <button @click="showEmojiPicker = !showEmojiPicker" :data-cancel-blur="true">
-                        <FaceSmileIcon class="w-6 text-neutral-400" />
-                    </button>
-                    <div class="absolute bottom-full left-full " v-show="showEmojiPicker">
-                        <EmojiPickerElement @selected-emoji="onSelectEmoji" />
+            <OnClickOutside @trigger="handleBlur">
+                <div v-show="showReplyInput" class="flex flex-row items-center self-end w-full p-3 gap-x-3 ">
+                    <OnClickOutside @trigger="showEmojiPicker = false">
+                        <div class="relative flex items-center">
+                            <button @click="showEmojiPicker = !showEmojiPicker" :data-cancel-blur="true">
+                                <FaceSmileIcon class="w-6 text-neutral-400" />
+                            </button>
+                            <div class="absolute z-20 bottom-full left-full " v-show="showEmojiPicker">
+                                <EmojiPickerElement @selected-emoji="onSelectEmoji" />
+                            </div>
+                        </div>
+                    </OnClickOutside>
+                    <div class="flex items-center flex-grow ">
+                        <textarea ref="replyInput" @keypress.enter.exact.prevent="addReply" v-model="newReply"
+                            name="newReply" id="newReply" rows="1" placeholder="Add a comment..."
+                            class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary "></textarea>
                     </div>
+
+                    <button @click="addReply" :disabled="isSending" class="p-1 group ">
+
+                        <PaperAirplaneIcon class="w-5 group-hover:text-neutral-700"
+                            :class="isSending ? 'text-neutral-200' : 'text-neutral-400'" />
+                    </button>
                 </div>
-                <div class="flex items-center flex-grow ">
-
-                    <textarea ref="replyInput" @keypress.enter.exact.prevent="addReply" @blur="handleBlur"
-                        @keydown.esc="handleEsc" v-model="newReply" name="newReply" id="newReply" rows="1"
-                        placeholder="Add a comment..."
-                        class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary "></textarea>
-                </div>
-
-                <button @click="addReply" :disabled="isSending" class="p-1 group ">
-
-                    <PaperAirplaneIcon class="w-5 group-hover:text-neutral-700"
-                        :class="isSending ? 'text-neutral-200' : 'text-neutral-400'" />
-                </button>
-            </div>
+            </OnClickOutside>
             <!-- view replies button row 6 -->
             <button v-show="hasReplies" @click="toggleRepliesView"
                 class="flex justify-start w-full gap-2 text-sm transition-all duration-300 text-stone-500 enabled:hover:underline hover:underline-offset-4 ">
@@ -91,6 +93,8 @@ import { FaceSmileIcon } from '@heroicons/vue/24/outline';
 import { PaperAirplaneIcon } from '@heroicons/vue/24/solid';
 import { usePage, Link } from '@inertiajs/inertia-vue3';
 import EmojiPickerElement from './EmojiPickerElement.vue';
+
+
 const props = defineProps(['comment'])
 onBeforeMount(() => {
     dayjs.extend(relativeTime)
@@ -105,6 +109,8 @@ const newReply = ref('')
 const showReplyInput = ref(false)
 const isSending = ref(false)
 const showEmojiPicker = ref(false)
+
+
 defineExpose({
     showReplies
 })
@@ -169,12 +175,12 @@ function onSelectEmoji(emoji) {
 
 // hide the input field when blur if it is empty
 function handleBlur(e) {
-    !newReply.value || newReply.value === '' ? showReplyInput.value = false : null
+    if (showReplyInput.value = true) {
+        !newReply.value || newReply.value === '' ? showReplyInput.value = false : null
+    }
 
 }
-function handleEsc(e) {
-    !newReply.value || newReply.value === '' ? showReplyInput.value = false : null
-}
+
 </script>
 
 <style  scoped></style>
