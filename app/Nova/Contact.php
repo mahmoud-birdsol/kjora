@@ -4,6 +4,8 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Contact extends Resource
@@ -20,7 +22,7 @@ class Contact extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'subject';
 
     /**
      * The columns that should be searched.
@@ -28,7 +30,7 @@ class Contact extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id', 'first_name', 'last_name', 'subject', 'email'
     ];
 
     /**
@@ -41,6 +43,34 @@ class Contact extends Resource
     {
         return [
             ID::make()->sortable(),
+
+            Text::make('First Name')
+                ->sortable()
+                ->rules('required')
+                ->showOnPreview(),
+
+            Text::make('Last Name')
+                ->sortable()
+                ->rules('required')
+                ->showOnPreview(),
+
+            Text::make('Email')
+                ->sortable()
+                ->rules([
+                    'required',
+                    'email'
+                ])
+                ->showOnPreview(),
+
+            Text::make('Subject')
+                ->sortable()
+                ->rules([
+                    'required',
+                ])
+                ->showOnPreview(),
+
+            Textarea::make('Message')
+                ->rules('required')
         ];
     }
 
