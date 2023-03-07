@@ -110,10 +110,14 @@ export const useChat = defineStore("chat", {
          *
          */
         setMessageAsRead(message) {
-            let oldMessage = this.messages.filter(
+            // let oldMessage = this.messages.filter(
+            //     (m) => m.id === message.id
+            // )[0];
+            // let oldMessageIndex = this.messages.indexOf(oldMessage);
+            let oldMessageIndex = this.messages.findIndex(
                 (m) => m.id === message.id
-            )[0];
-            let oldMessageIndex = this.messages.indexOf(oldMessage);
+            );
+
             this.messages[oldMessageIndex].read_at = message.read_at;
             // this.messages.splice(oldMessageIndex, 1, message);
         },
