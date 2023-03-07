@@ -30,6 +30,7 @@ onMounted(() => {
 
 onUnmounted(() => {
     chat.unRegisterScrollListener();
+    chat.clearFetchNewMessages();
 });
 </script>
 

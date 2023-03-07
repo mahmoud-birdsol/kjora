@@ -6,6 +6,10 @@ use App\Http\Controllers\Api\DeleteGalleryController;
 use App\Http\Controllers\Api\GalleryUploadController;
 use App\Http\Controllers\Api\MarkMessageAsReadController;
 use App\Http\Controllers\Api\MessageController;
+use App\Http\Controllers\Api\NewMessagesController;
+use App\Http\Resources\MessageResource;
+use App\Models\Conversation;
+use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,17 +34,20 @@ Route::get('clubs', [
 ])->name('api.clubs');
 
 Route::get(
-    'chats/{conversation}/messages', [
+    'chats/{conversation}/messages',
+    [
         MessageController::class,
         'index'
     ]
 )->middleware('auth:sanctum')->name('api.messages.index');
 
 Route::post(
-    'chats/{conversation}/messages', [
-    MessageController::class,
-    'store'
-])->middleware('auth:sanctum')->name('api.messages.store');
+    'chats/{conversation}/messages',
+    [
+        MessageController::class,
+        'store'
+    ]
+)->middleware('auth:sanctum')->name('api.messages.store');
 
 
 Route::post(
@@ -72,3 +79,5 @@ Route::post('/elvis-has-left-the-building', function (Request $request) {
 Route::post('message/{message}/mark-as-read', MarkMessageAsReadController::class)
     ->middleware('auth:sanctum')
     ->name('api.message.mark-as-read');
+Route::get('chats/{conversation}/new-messages', NewMessagesController::class)
+    ->name('api.messages.new');
