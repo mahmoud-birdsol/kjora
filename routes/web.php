@@ -14,6 +14,7 @@ use App\Http\Controllers\PlayerReviewController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\VerificationCodeController;
 use App\Models\Country;
 use App\Models\Invitation;
 use App\Models\MediaLibrary;
@@ -340,5 +341,7 @@ Route::get('upgrade', function () {
 Route::get('update-password', function () {
     return Inertia::render('Auth/UpdatePassword');
 })->name('update.password');
+
+Route::get('phone/verify' , [VerificationCodeController::class, 'create'])->name('phone.verify');
 
 
