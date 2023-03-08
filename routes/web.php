@@ -312,7 +312,6 @@ Route::middleware([
 
 
 
-    Route::post('contacts', [ContactController::class, 'store'])->name('contacts.store');
 });
 
 
@@ -350,5 +349,8 @@ Route::get('upgrade', function () {
 Route::get('update-password', function () {
     return Inertia::render('Auth/UpdatePassword');
 })->name('update.password');
+
+Route::post('contacts', [ContactController::class, 'store'])->name('contacts.store');
+
 
 
