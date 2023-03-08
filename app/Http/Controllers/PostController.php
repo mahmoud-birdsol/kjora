@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Services\FlashMessage;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class PostController extends Controller
 {
@@ -31,7 +32,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $post->media->delete();
+        $post->getMedia('gallery')?->each(function (Media $media) {
+            $media?->delete();
+        });
 
         $post->delete();
 
