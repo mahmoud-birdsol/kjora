@@ -6,6 +6,7 @@ use App\Actions\Verification\CreateVerificationCode;
 use App\Http\Controllers\Controller;
 use App\Models\Country;
 use App\Notifications\VerificationCodeNotification;
+use App\Services\FlashMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -55,11 +56,10 @@ class UserPhoneController extends Controller
             'phone_verified_at'=>null
         ]);
         ($createVerificationCode)($user);
+        FlashMessage::make()->success(
+            message: 'Phone changed successfully'
+        )->closeable()->send();
 
-        $request->session()->flash('message', [
-            'type' => 'success',
-            'body' => 'Phone changed successfully',
-        ]);
         return redirect()->route('phone.verify');
 
     }

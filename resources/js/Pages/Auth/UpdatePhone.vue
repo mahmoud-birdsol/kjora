@@ -53,7 +53,7 @@ function submit() {
                             </div>
                     </template>
                     <template #footer>
-                        <PrimaryButton @click="submit" class="align-bottom">Upload</PrimaryButton>
+                        <PrimaryButton @click="submit" class="align-bottom">Update</PrimaryButton>
                     </template>
                 </CardContent>
             </Card>
