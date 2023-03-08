@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Actions\Verification\CreateVerificationCode;
 use App\Http\Controllers\Controller;
 use App\Models\Country;
+use App\Notifications\VerificationCodeNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -33,11 +35,11 @@ class UserPhoneController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request)
+    public function update(Request $request , CreateVerificationCode $createVerificationCode )
     {
         $request->validate([
             'password' => ['required', 'current_password'],
-            'phone' => ['required', 'phone']
+            'phone' => ['required', 'phone', 'unique:users,phone,'. auth()->user()->id ]
             ]);
         #Match The Old Password
         if(!Hash::check($request->password, auth()->user()->password)){
@@ -52,12 +54,13 @@ class UserPhoneController extends Controller
             'phone' => $request->get('phone'),
             'phone_verified_at'=>null
         ]);
+        ($createVerificationCode)($user);
 
-//        $request->session()->flash('message', [
-//            'type' => 'success',
-//            'body' => 'User name changed successfully',
-//        ]);
-        return redirect()->route('home');
+        $request->session()->flash('message', [
+            'type' => 'success',
+            'body' => 'Phone changed successfully',
+        ]);
+        return redirect()->route('phone.verify');
 
     }
 }
