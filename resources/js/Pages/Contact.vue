@@ -24,32 +24,32 @@ const form = useForm({
     <GuestLayout>
         <GuestTwoColumnLayout>
             <Card>
-                <CardContent title="contact">
+                <CardContent :title="$t('contact')">
                     <template #body>
                         <form class="grid grid-cols-2 gap-4">
                             <div class="col-span-1">
-                                <InputLabel color="text-primary"> first name </InputLabel>
-                                <TextInput type="text" v-model="form.firstName" placeholder="first name"
+                                <InputLabel color="text-primary"> {{$t('first-name')}} </InputLabel>
+                                <TextInput type="text" v-model="form.firstName" :placeholder="$t('enter') + $t('first-name')"
                                     auto-complete="given-name" aria-required="true" />
                             </div>
                             <div class="col-span-1">
-                                <InputLabel color="text-primary"> surname </InputLabel>
-                                <TextInput type="text" v-model="form.surName" placeholder="enter surname"
+                                <InputLabel color="text-primary"> {{$t('last-name')}} </InputLabel>
+                                <TextInput type="text" v-model="form.surName" :placeholder="$t('enter') + $t('last-name')"
                                     auto-complete="family-name" aria-required="true" />
                             </div>
                             <div class="col-span-2">
-                                <InputLabel color="text-primary"> email </InputLabel>
-                                <TextInput type="text" v-model="form.email" placeholder="enter email" auto-complete="email"
+                                <InputLabel color="text-primary"> {{$t('email')}} </InputLabel>
+                                <TextInput type="text" v-model="form.email" :placeholder="$t('enter') + $t('email')" auto-complete="email"
                                     aria-required="true" />
                             </div>
                             <div class="col-span-2">
-                                <InputLabel color="text-primary"> subject </InputLabel>
-                                <TextInput type="text" v-model="form.subject" placeholder="enter subject" />
+                                <InputLabel color="text-primary"> {{$t('subject')}} </InputLabel>
+                                <TextInput type="text" v-model="form.subject" :placeholder="$t('enter') + $t('subject')" />
                             </div>
                             <div class="col-span-2 relative">
-                                <InputLabel color="text-primary"> message </InputLabel>
+                                <InputLabel color="text-primary"> {{$t('message')}} </InputLabel>
 
-                                <textarea placeholder="please write a message or briefly what happen" class="
+                                <textarea :placeholder="$t('please write a message or briefly what happen')" class="
                                 block
                                 w-full
                                 rounded-2xl
@@ -67,7 +67,7 @@ const form = useForm({
                                     <CameraIcon class="w-8 h-8 m-2 rounded-full text-white bg-black p-1 cursor-pointer" />
                                 </div>
                             </div>
-                            <PrimaryButton class="col-span-2">submit</PrimaryButton>
+                            <PrimaryButton class="col-span-2">{{$t('submit')}}</PrimaryButton>
                         </form>
                     </template>
                 </CardContent>

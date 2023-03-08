@@ -1,3 +1,11 @@
 {
-"All positions" :  "All positions"
+    "please write a message or briefly what happen":"please write a message or briefly what happen",
+    "enter":"Enter ",
+    "contact":"Contact",
+    "subject":"Subject",
+    "email":"Email",
+    "message":"Message",
+    "last-name": "Last Name",
+    "first-name":"First Name",
+    "All positions" :  "All positions"
 }
