@@ -35,11 +35,17 @@ const props = defineProps({
     }
 });
 
+const state = props.player.state_name
 const backgroundImage = computed(() => {
-    return {
-        'sm': '/images/player_bg_sm.png',
-        'lg': '/images/player_bg_lg.png',
-    }[props.size];
+    if(state=='Premium'){
+        return '/images/gold.png';
+    }
+    if(state=='Free') {
+        return {
+            'sm': '/images/player_bg_sm.png',
+            'lg': '/images/player_bg_lg.png',
+        }[props.size];
+    } 
 });
 
 const currentUser = usePage().props.value.auth.user
