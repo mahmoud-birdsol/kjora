@@ -18,7 +18,7 @@ class LikePolicy
      */
     public function viewAny(Admin $user)
     {
-        return true;
+        return $user->hasPermissionTo('view likes');
     }
 
     /**
@@ -30,7 +30,7 @@ class LikePolicy
      */
     public function view(Admin $user, Like $like)
     {
-        return true;
+        return $user->hasPermissionTo('view likes');
     }
 
     /**
@@ -41,7 +41,7 @@ class LikePolicy
      */
     public function create(Admin $user)
     {
-        return true;
+        return $user->hasPermissionTo('create likes');
     }
 
     /**
@@ -53,7 +53,7 @@ class LikePolicy
      */
     public function update(Admin $user, Like $like)
     {
-        return true;
+        return $user->hasPermissionTo('edit likes');
     }
 
     /**
@@ -65,7 +65,7 @@ class LikePolicy
      */
     public function delete(Admin $user, Like $like)
     {
-        return true;
+        return $user->hasPermissionTo('delete likes');
     }
 
     /**
@@ -77,7 +77,7 @@ class LikePolicy
      */
     public function restore(Admin $user, Like $like)
     {
-        return true;
+        return $user->hasPermissionTo('delete likes');
     }
 
     /**
@@ -89,6 +89,6 @@ class LikePolicy
      */
     public function forceDelete(Admin $user, Like $like)
     {
-        return true;
+        return $user->hasPermissionTo('delete likes');
     }
 }
