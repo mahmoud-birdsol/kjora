@@ -40,7 +40,7 @@ const backgroundImage = computed(() => {
     if(state=='Premium'){
         return '/images/gold.png';
     }
-    if(state=='Free') {
+    else if(state =='Free') {
         return {
             'sm': '/images/player_bg_sm.png',
             'lg': '/images/player_bg_lg.png',
