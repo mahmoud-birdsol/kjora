@@ -57,6 +57,7 @@ const emit = defineEmits(['close', 'update:modelValue', 'reload', 'upload']);
 
 const showPreview = ref(false);
 const filesData = ref([]);
+const croppedFilesData = ref([]);
 const photoInput = ref(null);
 const isLoading = ref(false);
 const isDisabled = ref(false);
@@ -80,7 +81,7 @@ const updatePhotoPreview = () => {
                 url: e.target.result,
                 name: file.name,
                 type: file.type,
-                id:_.uniqueId
+                id: _.uniqueId("f")
             });
             showPreview.value = true;
         };
@@ -126,11 +127,23 @@ function reset(e) {
     isDisabled.value = false;
     emit('close');
 }
-function changeFiles(file , url){
-    let index = files.value.findIndex((f)=> f.id === file.id)
-    files.value.splice(index, 1, file)
-    console.log(index)
-    filesData.value[index].url = url
+function changeFiles(file, url, id) {
+    console.log('data after crop happened file:', file);
+    console.log('data after crop happened url:', url);
+    console.log('data after crop happened id:', id);
+
+    // let index = files.value.findIndex((f) => f.id === id)
+    // files.value.splice(index, 1, file)
+
+    // let fileUrlIndex = filesData.value.findIndex((f) => f.id === id)
+    // filesData.value[fileUrlIndex].url = url
+
+    // croppedFilesData.value.push({
+    //     url: url,
+    //     name: file.name,
+    //     type: file.type,
+    //     id: id,
+    // });
 
 }
 </script>
@@ -163,7 +176,7 @@ function changeFiles(file , url){
                             <div v-if="fileUrl.url.startsWith('data:image') || fileUrl.url.startsWith('data:video')"
                                 class="relative">
                                 <img v-if="fileUrl.url.startsWith('data:image')" :src="fileUrl.url" alt=""
-                                    class="object-cover w-full h-full rounded-lg aspect-square ">
+                                    class="object-contain w-full h-full rounded-lg aspect-square ">
                                 <video v-if="fileUrl.url.startsWith('data:video')" :src="fileUrl.url" alt=""
                                     class="object-cover w-full h-full rounded-lg aspect-square" controls />
                                 <button @click.prevent="removePhoto(index)"
@@ -172,8 +185,8 @@ function changeFiles(file , url){
                                         <XMarkIcon class="w-5 h-5 text-stone-800" />
                                     </div>
                                 </button>
-                                <Crop :img="fileUrl" @crop="changeFiles"/>
-                                
+                                <Crop :img="fileUrl" @crop="changeFiles" />
+
                             </div>
                             <div v-else-if="fileUrl.url.startsWith('data:application/pdf')"
                                 class="relative flex flex-col gap-4 ">
@@ -198,19 +211,52 @@ function changeFiles(file , url){
                                 </button>
                             </div>
                         </template>
+                        <!--
+                            <template v-for="(fileUrl, index) in croppedFilesData" :key="index">
+                                <div v-if="fileUrl.url.startsWith('data:image') || fileUrl.url.startsWith('data:video')"
+                                    class="relative">
+                                    <img v-if="fileUrl.url.startsWith('data:image')" :src="fileUrl.url" alt=""
+                                        class="object-contain w-full h-full rounded-lg aspect-square ">
+                                    <video v-if="fileUrl.url.startsWith('data:video')" :src="fileUrl.url" alt=""
+                                        class="object-cover w-full h-full rounded-lg aspect-square" controls />
+                                    <button @click.prevent="removePhoto(index)"
+                                        class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                                        <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
+                                            <XMarkIcon class="w-5 h-5 text-stone-800" />
+                                        </div>
+                                    </button>
+                                    <Crop :img="fileUrl" @crop="changeFiles" />
+
+                                </div>
+                                <div v-else-if="fileUrl.url.startsWith('data:application/pdf')"
+                                    class="relative flex flex-col gap-4 ">
+                                    <img class="mx-auto h-52" src="/images/pdf.png" />
+                                    <p class="truncate text-xs text-gray-400 text-center">{{ fileUrl.name }}</p>
+                                    <button @click.prevent="removePhoto(index)"
+                                        class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                                        <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
+                                            <XMarkIcon class="w-5 h-5 text-stone-800" />
+                                        </div>
+                                    </button>
+                                </div>
+                                <div v-else-if="fileUrl.type.endsWith('.document') || fileUrl.type.startsWith('application/msword')"
+                                    class="relative flex flex-col gap-4">
+                                    <img class="mx-auto h-52" src="/images/doc.png" />
+                                    <p class="truncate text-xs text-gray-400 text-center">{{ fileUrl.name }}</p>
+                                    <button @click.prevent="removePhoto(index)"
+                                        class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                                        <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
+                                            <XMarkIcon class="w-5 h-5 text-stone-800" />
+                                        </div>
+                                    </button>
+                                </div>
+                            </template> -->
                         <FadeInTransition>
                             <div v-if="isLoading"
                                 class="absolute inset-0 z-20 grid w-full h-full p-4 bg-stone-400/50  place-content-center ">
                             </div>
                         </FadeInTransition>
                     </div>
-                    <!-- <FadeInTransition>
-                                             <div v-if="isLoading" class="absolute inset-0 top-4 z-20 grid p-4 place-content-center ">
-                                                 <div
-                                                     class="h-12 border-4 rounded-full border-primary border-t-white aspect-square animate-spin">
-                                                 </div>
-                                             </div>
-                                         </FadeInTransition> -->
                 </div>
 
             </div>
