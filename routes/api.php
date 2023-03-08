@@ -41,6 +41,23 @@ Route::post(
     'store'
 ])->middleware('auth:sanctum')->name('api.messages.store');
 
+Route::post('posts', function (Request $request) {
+    $post = \App\Models\Post::create([
+        'user_id' => $request->user()->id,
+        'caption' => $request->input('caption')
+    ]);
+
+    $cover = $post->addMedia($request->file('cover'))->toMediaCollection('gallery');
+
+    $post->update([
+        'cover_id' => $cover->id
+    ]);
+
+    return response()->json([
+        'message' => 'Post created successfully'
+    ]);
+});
+
 
 Route::post(
     'gallery/upload',

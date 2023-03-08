@@ -275,6 +275,16 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     }
 
     /**
+     * Get the user posts
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    /**
      * Get the user favorites.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
