@@ -346,8 +346,6 @@ Route::any('language/{language}', function (Request $request, $language) {
     if(\Illuminate\Support\Facades\Auth::check()){
         auth()->user()->update(['locale' => $language] );
     }
-    $request->session()->put('locale', $language);
-    session()->put('locale', $language);
 
     return redirect()->back();
 })->name('language');

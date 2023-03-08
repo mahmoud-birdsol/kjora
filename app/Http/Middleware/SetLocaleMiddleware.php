@@ -20,10 +20,9 @@ class SetLocaleMiddleware
         app()->setLocale(config('app.locale'));
         if(Auth::check()){
             app()->setLocale(auth()->user()->locale);
+            
         }
-        else if($request->session()->has('locale')) {
-            app()->setLocale($request->session()->get('locale'));
-        }
+
 
         return $next($request);
     }
