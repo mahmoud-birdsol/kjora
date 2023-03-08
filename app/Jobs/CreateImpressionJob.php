@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Advertisement;
 use App\Models\Impression;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,9 +18,9 @@ class CreateImpressionJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * @var \Illuminate\Http\Request
+     * @var \App\Models\User
      */
-    private Request $request;
+    private User $user;
 
     /**
      * @var \App\Models\Advertisement
@@ -31,9 +32,9 @@ class CreateImpressionJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Request $request, Advertisement $advertisement)
+    public function __construct(User $user, Advertisement $advertisement)
     {
-        $this->request = $request;
+        $this->user = $user;
         $this->advertisement = $advertisement;
     }
 
@@ -45,9 +46,9 @@ class CreateImpressionJob implements ShouldQueue
     public function handle()
     {
         Impression::create([
-            'user_id' => $this->request->user()->id,
+            'user_id' => $this->user->id,
             'advertisement_id' => $this->advertisement->id,
-            'ip' => $this->request->user()->last_known_ip,
+            'ip' => $this->user->last_known_ip,
             'source' => route('home')
         ]);
     }

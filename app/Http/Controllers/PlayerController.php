@@ -50,10 +50,10 @@ class PlayerController extends Controller
 
         $advertisements = Advertisement::active()->orderBy('priority')
             ->with('media')
-            ->get();
-            // ->each(function (Advertisement $advertisement) use ($request) {
-            //     CreateImpressionJob::dispatch($request, $advertisement);
-            // });
+            ->get()
+             ->each(function (Advertisement $advertisement) use ($request) {
+                 CreateImpressionJob::dispatch($request->user(), $advertisement);
+             });
 
         return Inertia::render('Home', [
             'players' => $query->paginate(20),
