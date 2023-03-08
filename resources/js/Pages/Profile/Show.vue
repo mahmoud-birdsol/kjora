@@ -22,13 +22,10 @@ const tabs = computed(() => {
     return [
         { name: 'performance', id: 1, component: PerformanceTab, compProps: { playerRating: props.playerRating } },
         {
-            name: 'photos', id: 2, component: ProfileGallery, compProps:
-                { user: props.user, posts: props.posts, shouldPreview: 'photos' }
+            name: 'gallery', id: 2, component: ProfileGallery, compProps:
+                { user: props.user, posts: props.posts, }
         },
-        {
-            name: 'videos', id: 3, component: ProfileGallery, compProps:
-                { user: props.user, posts: props.posts, shouldPreview: 'videos' }
-        }]
+    ]
 })
 
 function reloadMedia() {

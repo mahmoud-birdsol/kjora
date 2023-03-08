@@ -3,11 +3,11 @@
         <div class="grid grid-cols-2 gap-4 overflow-auto sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 hideScrollBar ">
 
 
-            <template v-for="(post, index) in posts " :key="index">
+            <template v-for="(post, index) in posts " :key="post.id">
                 <FadeInTransition>
-                    <Link :href="route('gallery.show', post.id)"
+                    <Link :href="route('posts.show', post.id)"
                         class="relative w-full h-full overflow-hidden rounded-lg aspect-square group">
-                    <img :src="post.url" alt="" class="object-cover w-full h-full ">
+                    <img :src="post.cover_photo.original_url" alt="" class="object-cover w-full h-full ">
                     <button v-if="currentUser.id === user.id" @click.prevent.stop="showDeleteMediaModal = true"
                         class="absolute top-0 right-0 hidden bg-white group-hover:block bg-opacity-90 rounded-bl-xl">
                         <div class="flex flex-col items-start justify-center h-full p-1 opacity-100 ">
@@ -96,6 +96,7 @@ import ListGroupTransition from './ListGroupTransition.vue';
 
 import { Link, usePage } from '@inertiajs/inertia-vue3';
 import Modal from './Modal.vue';
+import { Inertia } from '@inertiajs/inertia';
 
 const props = defineProps({
     user: {
@@ -116,17 +117,20 @@ onMounted(() => {
 
 });
 function getFileFromId(id) {
-    return props.media.filter(item => item.id == id)[0]
+    return props.posts.filter(item => item.id == id)[0]
 }
 
 // function seturl
 function removeItem(id) {
     let file = getFileFromId(id)
-    let index = props.media.indexOf(file);
+    let index = props.posts.indexOf(file);
 
-    props.media.splice(index, 1)
+    props.posts.splice(index, 1)
     showDeleteMediaModal.value = false
-    axios.delete(route('api.gallery.destroy', id)).then((res) => console.log(res))
+    Inertia.delete(route('posts.destroy', id), {
+        preserveState: true,
+        preserveScroll: true,
+    })
 }
 
 </script>

@@ -102,26 +102,30 @@ const upload = () => {
     isLoading.value = true;
     isDisabled.value = true;
 
+    let postId
 
     axios.postForm(route('api.posts.store'), {
         cover: files.value[0],
         caption: caption.value
-    })
+    }).then((res) => {
+        postId = res.data.id
+        console.log(postId);
+        files.value.slice(1).forEach((file, i) => {
+            if (file.type.startsWith("image") || file.type.startsWith('video')) {
+                axios.postForm(route('api.gallery.upload', postId), {
+                    gallery: file,
+
+                }).then().catch(err => console.error(err)).finally(() => {
+                    if (i === files.value.length - 2) {
+                        reset()
+                        emit('reload');
+                    }
+                })
+            }
+        })
+    });
 
 
-    files.value.forEach((file, i) => {
-        console.log(file)
-        if (file.type.startsWith("image") || file.type.startsWith('video')) {
-            axios.postForm(route('api.gallery.upload'), {
-                gallery: file
-            }).then().catch(err => console.error(err)).finally(() => {
-                if (i === files.value.length - 1) {
-                    reset()
-                    emit('reload');
-                }
-            })
-        }
-    })
 };
 
 function reset(e) {

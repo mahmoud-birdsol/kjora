@@ -61,7 +61,7 @@ Route::post('posts', function (Request $request) {
 
 
 Route::post(
-    'gallery/upload',
+    'gallery/upload/{post}',
     GalleryUploadController::class
 )->middleware('auth:sanctum')->name('api.gallery.upload');
 
