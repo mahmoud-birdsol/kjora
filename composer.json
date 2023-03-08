@@ -27,6 +27,7 @@
         "laravel/telescope": "^4.9",
         "laravel/tinker": "^2.7",
         "naif/address_autocomplete": "^1.4",
+        "outl1ne/nova-settings": "^5.0",
         "pktharindu/nova-permissions": "^3.0",
         "propaganistas/laravel-phone": "^5.0",
         "pusher/pusher-php-server": "^7.2",
