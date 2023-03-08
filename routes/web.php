@@ -153,7 +153,10 @@ Route::middleware([
             $data = $request->validate([
                 'stadium_id' => ['required', 'integer', 'exists:stadia,id'],
                 'invited_player_id' => ['required', 'integer', 'exists:users,id'],
-                'date' => ['required'],
+                'date' => [
+                    'required',
+                    'after_or_equal:today'
+                ],
                 'time' => ['required'],
             ]);
 
