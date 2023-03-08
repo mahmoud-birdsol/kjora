@@ -1,3 +1,9 @@
 {
-    "All positions" :  "جميع المراكز"
+    "total":"المجموع",
+    "Goalkeeper":"حارس مرمى",
+    "Defender":"مدافع",
+    "Midfielder":"لاعب وسط",
+    "Forward":"أمامي",
+    "all-positions" :  "جميع المراكز",
+    "favorites":"المفضلة"
 }

@@ -1,3 +1,9 @@
 {
-"All positions" :  "All positions"
+    "total":"Total",
+    "Goalkeeper":"Goalkeeper",
+    "Defender":"Defender",
+    "Midfielder":"Midfielder",
+    "Forward":"Forward",
+    "all-positions":"All Positions",
+    "favorites":"favorites"
 }

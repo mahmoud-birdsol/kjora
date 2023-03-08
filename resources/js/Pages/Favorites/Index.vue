@@ -62,11 +62,11 @@ const reset = () => {
 </script>
 
 <template>
-    <Head title="Home" />
+    <Head :title="$t('home')" />
 
-    <AppLayout title="Home">
+    <AppLayout :title="$t('home')">
         <template #header>
-            <p class="font-black text-7xl">Favorites</p>
+            <p class="font-black text-7xl">{{$t('favorites')}}</p>
         </template>
 
         <div class="py-12">
@@ -77,14 +77,14 @@ const reset = () => {
                     <SecondaryButton @click="filterByPosition(null)">
                         <span class="w-full text-center"
                             :class="{ 'text-black': form.position == null, 'text-gray-400': form.position != null }">
-                            All positions
+                            {{$t('all-positions')}}
                         </span>
                     </SecondaryButton>
                     <template v-for="position in positions" :key="position.id">
                         <SecondaryButton @click="filterByPosition(position.id)">
                             <span class="w-full text-center"
                                 :class="{ 'text-black': form.position == position.id, 'text-gray-400': form.position != position.id }">
-                                {{ position.name }}
+                                {{ $t(position.name) }}
                             </span>
                         </SecondaryButton>
                     </template>
@@ -95,7 +95,7 @@ const reset = () => {
                 <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
 
                     <div class="flex items-start justify-start my-6">
-                        <p class="text-sm font-bold">Total ({{ players.total }})</p>
+                        <p class="text-sm font-bold">{{$t('total')}} ({{ players.total }})</p>
                     </div>
 
                     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
