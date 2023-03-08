@@ -20,6 +20,7 @@ use App\Nova\Lenses\ActiveAdvertisement;
 use App\Nova\Lenses\ArchivedAdvertisement;
 use App\Nova\Lenses\ExpiringAdvertisement;
 use App\Nova\Lenses\UnverifiedUsers;
+use App\Nova\Like;
 use App\Nova\MediaLibrary;
 use App\Nova\Message;
 use App\Nova\Position;
@@ -99,6 +100,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(Venue::class),
                     MenuItem::resource(Invitation::class),
                     MenuItem::resource(Review::class),
+                    MenuItem::resource(Like::class),
                 ])->icon('user-group')->collapsable(),
 
                 MenuSection::make('Chat', [
