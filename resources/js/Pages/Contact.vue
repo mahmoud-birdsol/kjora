@@ -25,11 +25,15 @@ function submit(){
     form.post(route('contacts.store'), {
         preserveState: true,
         preserveScroll: true,
+        onSuccess:()=>{
+            form.reset()
+        },
         onFinish: () => {
             loading.value = false;
         }
     });
 }
+
 </script>
 <template>
     <Head title="Contact" />
