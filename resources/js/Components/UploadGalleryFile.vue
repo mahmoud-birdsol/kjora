@@ -101,7 +101,12 @@ const upload = () => {
 
     isLoading.value = true;
     isDisabled.value = true;
-    console.log(files.value)
+
+
+    // axios.postForm(route('api.posts.store').{
+    //     cover: files[0],
+    //     caption: caption.value
+    // })
     files.value.forEach((file, i) => {
         console.log(file)
         if (file.type.startsWith("image") || file.type.startsWith('video')) {
@@ -138,7 +143,7 @@ function reset(e) {
                 <InputLabel :value="'Caption'" class="text-primary" />
                 <div class="flex items-center flex-grow ">
                     <textarea v-model="caption" name="caption" id="caption" rows="1" placeholder="Please write caption"
-                        class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400  text-stone-700 ring-1 focus:ring-primary ring-stone-400 "></textarea>
+                        class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 text-stone-700 ring-1 focus:ring-primary ring-stone-400 "></textarea>
                 </div>
             </div>
             <!-- v-loading="" -->
@@ -176,22 +181,16 @@ function reset(e) {
                         </template>
                         <FadeInTransition>
                             <div v-if="isLoading"
-                                class="absolute inset-0 z-20 grid w-full h-full p-4 bg-stone-400/50  place-content-center ">
+                                class="absolute inset-0 z-20 grid w-full h-full p-4 bg-stone-400/50 place-content-center ">
                             </div>
                         </FadeInTransition>
                     </div>
-                    <!-- <FadeInTransition>
-                                                                                                         <div v-if="isLoading" class="absolute inset-0 top-4 z-20 grid p-4 place-content-center ">
-                                                                                                             <div
-                                                                                                                 class="h-12 border-4 rounded-full border-primary border-t-white aspect-square animate-spin">
-                                                                                                             </div>
-                                                                                                         </div>
-                                                                                                     </FadeInTransition> -->
+
                 </div>
 
             </div>
             <div>
-                <div class="justify-self-end text-sm mb-2 text-primary text-center">only videos and images with max size
+                <div class="mb-2 text-sm text-center justify-self-end text-primary">only videos and images with max size
                     (2MB) are allowed
                 </div>
                 <PrimaryButton @click.prevent="upload" :disabled="isDisabled">
