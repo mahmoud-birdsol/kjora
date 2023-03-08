@@ -63,7 +63,7 @@ class CommentCreatedNotification extends Notification
             ->subject('Comment Notification')
             ->line('Dear ' . $this->user->name)
             ->line('This is to notify you that a new comment has been created')
-            ->action('Chat Now', url(route('gallery.show', $this->commentable)))
+            ->action('Chat Now', url(route('posts.show', $this->commentable)))
             ->line('Thank you for using our application!');
     }
 
@@ -81,7 +81,7 @@ class CommentCreatedNotification extends Notification
             title: 'Comment Notification',
             subtitle: 'User ' . $this->notifier->name . ' commented on your post',
             actionData: new RouteActionData(
-                route: route('gallery.show', $this->commentable),
+                route: route('posts.show', $this->commentable),
                 text: 'View Now',
             ),
         ))->toArray();
