@@ -31,7 +31,7 @@ class CreateNewUser implements CreatesNewUsers
             'country_id' => ['required', 'integer', 'exists:countries,id'],
             'club_id' => ['required', 'integer', 'exists:clubs,id'],
             'date_of_birth' => ['required', 'date', 'before:-18 years'],
-            'phone' => ['required', 'phone' , 'unique:users'],
+            'phone' => ['required', 'phone' , 'unique:users,phone'],
             'position_id' => ['required', 'exists:positions,id'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
