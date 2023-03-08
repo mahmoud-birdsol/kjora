@@ -29,17 +29,20 @@ Route::get('clubs', [
 ])->name('api.clubs');
 
 Route::get(
-    'chats/{conversation}/messages', [
+    'chats/{conversation}/messages',
+    [
         MessageController::class,
         'index'
     ]
 )->middleware('auth:sanctum')->name('api.messages.index');
 
 Route::post(
-    'chats/{conversation}/messages', [
-    MessageController::class,
-    'store'
-])->middleware('auth:sanctum')->name('api.messages.store');
+    'chats/{conversation}/messages',
+    [
+        MessageController::class,
+        'store'
+    ]
+)->middleware('auth:sanctum')->name('api.messages.store');
 
 Route::post('posts', function (Request $request) {
     $post = \App\Models\Post::create([
@@ -56,7 +59,7 @@ Route::post('posts', function (Request $request) {
     return response()->json([
         'message' => 'Post created successfully'
     ]);
-});
+})->name('api.posts.store');
 
 
 Route::post(

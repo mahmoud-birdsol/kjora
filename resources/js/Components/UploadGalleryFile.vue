@@ -103,14 +103,15 @@ const upload = () => {
     isDisabled.value = true;
 
 
-    // axios.postForm(route('api.posts.store').{
-    //     cover: files[0],
-    //     caption: caption.value
-    // })
+    axios.postForm(route('api.posts.store'), {
+        cover: files.value[0],
+        caption: caption.value
+    })
+
+
     files.value.forEach((file, i) => {
         console.log(file)
         if (file.type.startsWith("image") || file.type.startsWith('video')) {
-
             axios.postForm(route('api.gallery.upload'), {
                 gallery: file
             }).then().catch(err => console.error(err)).finally(() => {

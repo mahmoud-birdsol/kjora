@@ -12,7 +12,7 @@ import FadeInTransition from '../../Components/FadeInTransition.vue';
 
 const props = defineProps({
     user: null,
-    media: Array,
+    posts: Array,
     playerRating: Array
 });
 
@@ -23,16 +23,16 @@ const tabs = computed(() => {
         { name: 'performance', id: 1, component: PerformanceTab, compProps: { playerRating: props.playerRating } },
         {
             name: 'photos', id: 2, component: ProfileGallery, compProps:
-                { user: props.user, media: props.media, shouldPreview: 'photos' }
+                { user: props.user, posts: props.posts, shouldPreview: 'photos' }
         },
         {
             name: 'videos', id: 3, component: ProfileGallery, compProps:
-                { user: props.user, media: props.media, shouldPreview: 'videos' }
+                { user: props.user, posts: props.posts, shouldPreview: 'videos' }
         }]
 })
 
 function reloadMedia() {
-    Inertia.reload({ only: ['media'] })
+    Inertia.reload({ only: ['posts'] })
 }
 </script>
 
