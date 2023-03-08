@@ -2,10 +2,13 @@
 
 namespace App\Notifications;
 
+use App\Data\NotificationData;
+use App\Data\RouteActionData;
 use App\Models\Comment;
 use App\Models\Contracts\Likeable;
 use App\Models\Like;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -42,7 +45,7 @@ class LikeCreatedNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database', 'broadcast'];
     }
 
     /**
@@ -54,8 +57,8 @@ class LikeCreatedNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject($this->like->user->name . ' liked your ' . get_class($this->likeable) == Comment::class ? 'comment!' : 'post!')
-            ->line($this->like->user->name . ' liked your ' . get_class($this->likeable) == Comment::class ? 'comment!' : 'post!')
+            ->subject($this->like->user->name . ' liked your ' . (get_class($this->likeable) == Comment::class ? 'comment!' : 'post!'))
+            ->line($this->like->user->name . ' liked your ' . (get_class($this->likeable) == Comment::class ? 'comment!' : 'post!'))
             ->action('View', $this->likeable->url())
             ->line('Thank you for using our application!');
     }
@@ -63,13 +66,31 @@ class LikeCreatedNotification extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array
      */
     public function toArray($notifiable)
     {
-        return [
-            //
-        ];
+        return (new NotificationData(
+            displayType: 'simple',
+            state: 'success',
+            title: 'Like Notification',
+            subtitle: $this->like->user->name . ' liked your ' . (get_class($this->likeable) == Comment::class ? 'comment!' : 'post!'),
+            actionData: new RouteActionData(
+                route: $this->likeable->url(),
+                text: 'View ' . (get_class($this->likeable) == Comment::class ? 'comment!' : 'post!'),
+            ),
+        ))->toArray();
+    }
+
+    /**
+     * Get the broadcastable representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return BroadcastMessage
+     */
+    public function toBroadcast($notifiable)
+    {
+        return new BroadcastMessage($this->toArray($notifiable));
     }
 }
