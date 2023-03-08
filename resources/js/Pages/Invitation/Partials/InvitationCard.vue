@@ -41,12 +41,12 @@ const showInvitationNotificationModal = ref(false);
 
                 <button v-if="invitation.state == 'accepted'"
                     class="w-full flex justify-center items-center px-4 py-2 bg-black  border border-transparent rounded-full font-bold text-xs text-green-500 text-center uppercase tracking-widest hover:bg-primaryDark active:bg-primaryDark focus:outline-none hover:text-white focus:border-primaryDark focus:ring-1 focus:ring-primary transition">
-                    Message
+                    {{$t('message')}}
                 </button>
 
                 <button v-if="invitation.state == 'declined'" :disabled="true"
                     class="w-full flex justify-center items-center px-4 py-2 bg-stone-300  border border-transparent rounded-full font-bold text-xs text-red-500 hover:cursor-not-allowed text-center uppercase tracking-widest focus:outline-none focus:ring transition">
-                    Declined
+                    {{$t('declined')}}
                 </button>
 
                 <PrimaryButton v-if="invitation.state == null" @click="showInvitationNotificationModal = true">Respond

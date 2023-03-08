@@ -1,3 +1,9 @@
 {
-"All positions" :  "All positions"
+    "you-have-received-an-invitation-from- :name ,-to-play-a-game-on":"you have received an Invitation from :name , to Play a Game on",
+    "invitation":"Invitation",
+    "decline":"Decline",
+    "accept":"Accept",
+    "declined":"Declined",
+    "messMage": "Message",
+    "All positions": "All positions"
 }
