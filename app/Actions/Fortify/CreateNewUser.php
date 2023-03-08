@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\States\Free;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -54,7 +55,7 @@ class CreateNewUser implements CreatesNewUsers
             'phone' => $input['phone'],
             'position_id' => $input['position_id'],
             'gender' => $input['gender'],
-
+            'state' => Free::class,
             'accepted_terms_and_conditions_at' => now(),
             'accepted_privacy_policy_at' => now(),
             'accepted_cookie_policy_at' => now(),

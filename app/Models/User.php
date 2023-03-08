@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Concerns\CanBeReported;
 use App\Models\Contracts\Reportable;
+use App\Models\States\UserPremiumState;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -78,7 +79,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'current_region',
         'current_city',
         'current_latitude',
-        'current_longitude'
+        'current_longitude',
+        'state'
     ];
 
     /**
@@ -109,6 +111,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'accepted_cookie_policy_at' => 'datetime',
         'rating' => 'float',
         'last_seen_at' => 'datetime',
+        'state' => UserPremiumState::class
     ];
 
     /**
@@ -126,6 +129,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'age',
         'name',
         'is_favorite',
+        'state_name'
     ];
 
     /**
@@ -454,5 +458,17 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function receivesBroadcastNotificationsOn(): string
     {
         return 'users.' . $this->id;
+    }
+
+    /**
+     *
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function stateName(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $this->state->name()
+        );
     }
 }

@@ -12,6 +12,7 @@ use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerReviewController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UpgradeMembershipController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Models\Country;
@@ -298,11 +299,15 @@ Route::middleware([
         'store'
     ])->name('report.store');
 
+
     /*
      |--------------------------------------------------------------------------
      | Message Routes...
      |--------------------------------------------------------------------------
     */
+
+
+    Route::post('membership/upgrade', UpgradeMembershipController::class)->name('membership.upgrade');
 });
 
 
