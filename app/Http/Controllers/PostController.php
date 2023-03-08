@@ -39,7 +39,7 @@ class PostController extends Controller
         $post->delete();
 
         FlashMessage::make()->success(
-            message: 'The Post has beend deleted'
+            message: 'The Post has been deleted'
         )->closeable()->send();
 
         return redirect()->back();

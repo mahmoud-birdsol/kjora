@@ -115,13 +115,13 @@
                                     </button>
                                     <div class="flex items-center flex-grow ">
 
-                                        <textarea @keypress.enter.exact.prevent="addComment(media.media.id)"
+                                        <textarea @keypress.enter.exact.prevent="(e) => addComment(media.media.id)"
                                             v-model="newComment" name="newComment" id="newComment" rows="1"
                                             placeholder="Add a comment..."
                                             class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary  "></textarea>
                                     </div>
 
-                                    <button @click="addComment" :disabled="isSending" class="p-1 group ">
+                                    <button @click="(e) => addComment(media.media.id)" :disabled="isSending" class="p-1 group ">
 
                                         <PaperAirplaneIcon class="w-5 group-hover:text-neutral-700"
                                             :class="isSending ? 'text-neutral-200' : 'text-neutral-400'" />
@@ -221,6 +221,7 @@ function sendComment(mediaId) {
     })
 }
 function addComment(mediaId) {
+    console.log(mediaId);
     if (!newComment.value || newComment.value.trim() === '') return
     isSending.value = true
     sendComment(mediaId)
