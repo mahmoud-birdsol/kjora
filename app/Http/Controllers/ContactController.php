@@ -6,6 +6,7 @@ use App\Http\Requests\ContactRequest;
 use App\Models\Admin;
 use App\Models\Contact;
 use App\Notifications\AdminCreatedNotification;
+use App\Services\FlashMessage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
@@ -20,5 +21,11 @@ class ContactController extends Controller
                 $admin->notify(new AdminCreatedNotification($contact));
             }
         });
+
+        FlashMessage::make()->success(
+            message: 'Your contact request has reached us and we will review it shortly.'
+        )->closeable()->send();
+
+        return redirect()->back();
     }
 }
