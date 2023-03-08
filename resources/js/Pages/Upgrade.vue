@@ -13,8 +13,11 @@ import { CheckIcon, StarIcon  } from '@heroicons/vue/24/outline';
 import { CheckCircleIcon } from  "@heroicons/vue/20/solid"
 import PrimaryButton from '@/Components/PrimaryButton.vue'
 let form = useForm({
-    plan: null
+    payment_plan: null
 })
+function send(){
+    form.post(route('membership.upgrade'))
+}
 const date = new Date();
 
 let day = date.getDate();
@@ -58,33 +61,25 @@ const expaireDate = `${day} ${months[month+3]} ${year}`
                             </li>
                         </ul>
                         <div class="text-gray-600 text-sm font-bold my-3 ">CHOOSE PLAN</div>
-                        <RadioGroup v-model="form.plan" class="flex flex-col gap-2">
-                            <RadioGroupOption v-slot="{ checked }" value="10"
+                        <RadioGroup v-model="form.payment_plan" class="flex flex-col gap-2">
+                            <RadioGroupOption v-slot="{ checked }" value="monthly"
                                 class="[&_li]:py-3 [&_li]:pl-6 [&_li]:pr-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:list-none text-stone-500  flex flex-col  text-sm font-medium cursor-pointer">
-                                <InputLabel value="one month" color="primary" />
+                                <InputLabel value="monthly" color="primary" />
                                 <li  class="flex justify-between items-center">
                                     <span>$10</span>
-                                    <CheckIcon class="w-6 rounded-full p-1 bg-golden text-black" v-if="form.plan == '10'"/>
+                                    <CheckIcon class="w-6 rounded-full p-1 bg-golden text-black" v-if="form.payment_plan == 'monthly'"/>
                                 </li>
                             </RadioGroupOption>
-                            <RadioGroupOption v-slot="{ checked }" value="25"
+                            <RadioGroupOption v-slot="{ checked }" value="yearly"
                                 class="[&_li]:py-3 [&_li]:pl-6 [&_li]:pr-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:list-none text-stone-500  flex flex-col  text-sm font-medium cursor-pointer">
-                                <InputLabel value="three months" color="primary" />
+                                <InputLabel value="yearly" color="primary" />
                                 <li  class="flex justify-between items-center">
                                     <span>$25</span>
-                                    <CheckIcon class="w-6 text-black rounded-full p-1 bg-golden" v-if="form.plan == '25'"/>
-                                </li>
-                            </RadioGroupOption>
-                            <RadioGroupOption v-slot="{ checked }" value="55"
-                                class="[&_li]:py-3 [&_li]:pl-6 [&_li]:pr-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:list-none text-stone-500  flex flex-col  text-sm font-medium cursor-pointer">
-                                <InputLabel value="six months" color="primary" />
-                                <li  class="flex justify-between items-center">
-                                    <span>$55</span>
-                                    <CheckIcon class="w-6 text-black rounded-full p-1 bg-golden" v-if="form.plan == '55'"/>
+                                    <CheckIcon class="w-6 text-black rounded-full p-1 bg-golden" v-if="form.payment_plan == 'yearly'"/>
                                 </li>
                             </RadioGroupOption>
                         </RadioGroup>
-                        <PrimaryButton class="my-3">upgrade</PrimaryButton>
+                        <PrimaryButton class="my-3" @click="send">upgrade</PrimaryButton>
                     </template>
                 </CardContent>
             </Card>
@@ -102,10 +97,9 @@ const expaireDate = `${day} ${months[month+3]} ${year}`
                                 </div>
                                 <div class="p-8 font-bold z-10 relative">
                                     <div class="mt-5 mb-16">
-                                        <h2 class="uppercase text-primary" v-if="form.plan=='25'">three months plan</h2>
-                                        <h2 class="uppercase text-primary" v-else-if="form.plan=='25'">three months plan</h2>
-                                        <h2 class="uppercase text-primary" v-else="form.plan=='10'">six months plan</h2>
-                                        <span v-text="form.plan == 25 ? '$25':form.plan == 55 ? '$55':'$10'"></span>
+                                        <h2 class="uppercase text-primary" v-if="form.payment_plan=='monthly'">monthly</h2>
+                                        <h2 class="uppercase text-primary" v-else-if="form.payment_plan=='yearly'">yearly</h2>
+                                        <span v-text="form.payment_plan == 'monthly' ? '$10': '$25'"></span>
                                     </div>
                                     <div class="flex justify-between">
                                         <div>

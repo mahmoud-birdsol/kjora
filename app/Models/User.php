@@ -468,7 +468,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function stateName(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->state->name()
+            get: fn($value) => $this->state?->name()
         );
     }
 }
