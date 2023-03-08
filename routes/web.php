@@ -315,14 +315,15 @@ Route::middleware([
 //     event(new \App\Events\MessageSentEvent($user));
 // });
 
-Route::get('gallery/{mediaLibrary}', function (MediaLibrary $mediaLibrary) {
+Route::get('gallery/{post}', function (\App\Models\Post $post) {
 
-    $userId = MediaLibrary::where('model_type', User::class)->where('id', $mediaLibrary->id)->first()->model_id;
+    $mediaPosts = $post->getMedia('gallery');
 
-    $user = User::find($userId);
+    $user = $post->user;
 
     return Inertia::render('Gallery/Show', [
-        'media' => $mediaLibrary,
+        'post' => $post,
+        '$mediaPosts' => $mediaPosts,
         'user' => $user
     ]);
 })->name('gallery.show');
