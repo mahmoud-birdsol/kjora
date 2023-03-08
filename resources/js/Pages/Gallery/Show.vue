@@ -1,8 +1,8 @@
 <template>
     <AppLayout title="gallery">
         <template #header>
-            <p v-if="media.mime_type.startsWith('image') || media.mime_type.startsWith('webp')">Photo</p>
-            <p v-if="media.mime_type.startsWith('video')">video</p>
+            <p v-if="media.mime_type.startsWith('image') || media.mime_type.startsWith('webp')">{{$t('photo')}}</p>
+            <p v-if="media.mime_type.startsWith('video')">{{$t('video')}}</p>
         </template>
         <div class="bg-white rounded-3xl px-2 xs:px-8 py-6">
             <div class="w-full grid lg:grid-cols-2 gap-3  border rounded-2xl border-stone-400   ">
@@ -43,8 +43,8 @@
                                         <div class="fixed top-0 left-0 w-full h-full" @click="showOptions = false">
                                         </div>
                                         <div class="w-full relative z-20 text-sm text-gray-500 whitespace-nowrap text-center divide-y">
-                                            <div @click="contenteditable = true">Edit</div>
-                                            <div>remove photo</div>
+                                            <div @click="contenteditable = true">{{$t('edit')}}</div>
+                                            <div>{{$t('remove photo')}}</div>
 
                                         </div>
                                     </div>
@@ -69,7 +69,7 @@
                             <!-- caption row 3 -->
                             <div>
                                 <p class="text-sm text-stone-500" v-show="!contenteditable">
-                                    aml walaed
+                                    aml walaed 
                                 </p>
                                 <div v-show="contenteditable" class="flex">
                                     <input type="text" value="aml walaed" class="text-sm text-stone-500 w-full ring-1 focus:ring-primary focus:shadow-none focus:border-none border-none ring-gray-300 rounded-full" />
@@ -86,8 +86,7 @@
                 <!-- comment and replies right col -->
                 <div class="flex flex-col gap-2 h-full max-lg:border-t lg:border-l border-stone-300">
                     <!-- header -->
-                    <div class=" pt-5 p-3 text-sm border-b border-stone-300">comments {{ comments && comments.filter(c =>
-                        !c.parent_id)?.length }}
+                    <div class=" pt-5 p-3 text-sm border-b border-stone-300"> {{ $t('comments ( :count )', {count: numComments})  }}
                     </div>
                     <!-- comments -->
                     <div class="self-stretch p-3 px-6 h-full ">
@@ -127,7 +126,7 @@ import Avatar from '../../Components/Avatar.vue';
 import { FaceSmileIcon, EllipsisHorizontalIcon } from '@heroicons/vue/24/outline';
 import { PaperAirplaneIcon } from '@heroicons/vue/24/solid';
 import axios from 'axios';
-import { onMounted, onBeforeMount, ref } from 'vue';
+import { onMounted, onBeforeMount, ref  , computed} from 'vue';
 import Comment from '../../Components/Comment.vue';
 import { HeartIcon } from '@heroicons/vue/24/solid';
 import dayjs from 'dayjs';
@@ -188,6 +187,7 @@ function addComment(e) {
 function handleAddedReply() {
     getComments();
 }
+let numComments  =computed(()=> comments.value ? comments.value.filter(c => !c.parent_id )?.length : 0 )
 </script>
 
 <style lang="scss" scoped></style>

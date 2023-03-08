@@ -1,3 +1,13 @@
 {
+    "view":"View",
+    "hide":"Hide",
+    "replies":"Replies",
+    "like":"Like",
+    "reply":"Reply",
+    "comments( :count )":"Comments (:count)",
+    "edit":"Edit",
+    "remove photo":"remove photo",
+    "video":"video",
+    "photo":"photo",
 "All positions" :  "All positions"
 }
