@@ -56,9 +56,7 @@ Route::post('posts', function (Request $request) {
         'cover_id' => $cover->id
     ]);
 
-    return response()->json([
-        'message' => 'Post created successfully'
-    ]);
+    return $post->toArray();
 })->name('api.posts.store');
 
 

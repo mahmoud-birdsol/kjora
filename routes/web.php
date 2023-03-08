@@ -11,6 +11,7 @@ use App\Http\Controllers\JoinPlatformController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerReviewController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\Auth\PasswordController;
@@ -315,18 +316,8 @@ Route::middleware([
 //     event(new \App\Events\MessageSentEvent($user));
 // });
 
-Route::get('gallery/{post}', function (\App\Models\Post $post) {
-
-    $mediaPosts = $post->getMedia('gallery');
-
-    $user = $post->user;
-
-    return Inertia::render('Gallery/Show', [
-        'post' => $post,
-        '$mediaPosts' => $mediaPosts,
-        'user' => $user
-    ]);
-})->name('gallery.show');
+Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::delete('posts/{post}/delete', [PostController::class, 'destroy'])->name('posts.destroy');
 
 Route::get('about', function () {
     return Inertia::render('About');
