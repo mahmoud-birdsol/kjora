@@ -11,7 +11,6 @@ import RichSelectInput from "@/Components/RichSelectInput.vue";
 import PhoneInput from "@/Components/PhoneInput.vue";
 import MoreBtn from "@/Components/MoreBtn.vue";
 const props = defineProps(['countries', 'positions']);
-import LanguageSelector from "../Shared/LanguageSelector.vue";
 
 let paymentForm = useForm({
     merchant: null
@@ -28,86 +27,86 @@ let paymentForm = useForm({
         </template>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-3">
             <Card>
-                <CardContent title="payment">
+                <CardContent :title="$t('payment')">
                     <template #body>
                         <div class="flex flex-col gap-4">
                             <div>
-                                <InputLabel color="black">merchant account</InputLabel>
+                                <InputLabel color="black">{{$t('merchant-account')}}</InputLabel>
                                 <input type="text"
                                     class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    placeholder="Update merchant account" />
+                                    :placeholder="$t('update-merchant-account')" />
                             </div>
                             <div>
-                                <InputLabel color="black">payment details</InputLabel>
+                                <InputLabel color="black">{{$t('payment-details')}}</InputLabel>
                                 <input type="text"
                                     class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    placeholder="payment overflow" />
+                                    :placeholder="$t('payment-overflow')" />
                             </div>
                         </div>
                     </template>
                 </CardContent>
             </Card>
             <Card>
-                <CardContent title="security">
+                <CardContent :title="$t('security')">
                     <template #body>
                         <div class="flex flex-col gap-4">
                             <div>
-                                <InputLabel color="black">verification</InputLabel>
+                                <InputLabel color="black">{{ $t('verification') }}</InputLabel>
                                 <input type="text"
                                     class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    placeholder="verified" />
+                                    :placeholder="$t('verified')" />
                             </div>
                             <div>
-                                <InputLabel color="black">terms of service</InputLabel>
+                                <InputLabel color="black">{{$t('terms-of-service')}}</InputLabel>
                                 <input type="text"
                                     class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    placeholder="place read" />
+                                    :placeholder="$t('pleace-read')" />
                             </div>
                             <div>
-                                <InputLabel color="black">privacy policy</InputLabel>
+                                <InputLabel color="black">{{$t('privacy-policy')}}</InputLabel>
                                 <input type="text"
                                     class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    placeholder="place read" />
+                                    :placeholder="$t('pleace-read')" />
                             </div>
                             <div>
-                                <InputLabel color="black">cookie use</InputLabel>
+                                <InputLabel color="black">{{$t('cookie-use')}}</InputLabel>
                                 <input type="text"
                                     class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    placeholder="place read" />
+                                    :placeholder="$t('pleace-read')" />
                             </div>
-                        </div>
+                        </div>s
                     </template>
                 </CardContent>
             </Card>
             <Card>
-                <CardContent title="account">
+                <CardContent :title="$t('account')">
                     <template #body>
                         <div class="flex flex-col gap-4">
                             <div>
-                                <InputLabel color="black">update profile</InputLabel>
-                                <MoreBtn>update details</MoreBtn>
+                                <InputLabel color="black">{{$t('update-profile')}}</InputLabel>
+                                <MoreBtn>{{$t('update-details')}}</MoreBtn>
                             </div>
                             <div>
-                                <InputLabel color="black">update password</InputLabel>
-                                <MoreBtn :url="route('password.edit')">update password</MoreBtn>
+                                <InputLabel color="black">{{$t('update-password')}}</InputLabel>
+                                <MoreBtn :url="route('password.edit')">{{$t('update-password')}}</MoreBtn>
                             </div>
                             <div>
-                                <InputLabel color="black">update email</InputLabel>
-                                <MoreBtn>update email</MoreBtn>
+                                <InputLabel color="black">{{$t('update-email')}}</InputLabel>
+                                <MoreBtn>{{$t('update-email')}}</MoreBtn>
                             </div>
                             <div>
-                                <InputLabel color="black">update phone</InputLabel>
+                                <InputLabel color="black">{{$t('update-phone')}}</InputLabel>
                                 <PhoneInput :options="countries" value-name="id" text-name="name" image-name="flag" />
                             </div>
                             <div>
-                                <InputLabel color="black">language</InputLabel>
+                                <InputLabel color="black">{{$t('language')}}</InputLabel>
                                 <RichSelectInput :options="countries" value-name="id" text-name="name" image-name="flag" />
                             </div>
                             <div>
-                                <InputLabel color="black">help</InputLabel>
+                                <InputLabel color="black">{{$t('help')}}</InputLabel>
                                 <input type="text"
                                     class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    placeholder="breifly explain what happened" />
+                                    :placeholder="$t('breifly-explain-what-happened')" />
                             </div>
                             <language-selector class="mx-4"/>
 
