@@ -17,12 +17,12 @@ const showMobileMenu = ref(false);
                     <img class="hidden h-20 mt-8 w-auto lg:block" src="/images/logo.png" alt="Your Company">
                 </div>
 
-                <div class="hidden min-h-[2rem] sm:w-1/3 sm:ml-6 sm:flex sm:justify-end sm:space-x-8">
+                <div class="hidden min-h-[2rem] sm:w-1/3 sm:ml-6 sm:flex sm:justify-end sm:gap-8">
                     <NavLink :href="route('welcome')" :active="route().current('login') || route().current('welcome')">
-                        Home
+                        {{$t('home')}}
                     </NavLink>
-                    <NavLink :href="route('about')" :active="route().current('about')">About</NavLink>
-                    <NavLink :href="route('contact')" :active="route().current('contact')">Contact</NavLink>
+                    <NavLink :href="route('about')" :active="route().current('about')">{{$t('about')}}</NavLink>
+                    <NavLink :href="route('contact')" :active="route().current('contact')">{{$t('contact')}}</NavLink>
                 </div>
                 <div class="-mr-2 flex items-center sm:hidden">
                     <!-- Mobile menu button -->
@@ -48,10 +48,10 @@ const showMobileMenu = ref(false);
         <div class="sm:hidden" id="mobile-menu" v-if="showMobileMenu">
             <div class="space-y-1 pt-2 pb-3 mt-8 bg-black">
                 <ResponsiveNavLink :href="route('welcome')"
-                    :active="route().current('login') || route().current('welcome')">Home
+                    :active="route().current('login') || route().current('welcome')">{{$t('home')}}
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('about')">About</ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('conatact')">Contact</ResponsiveNavLink>
+                <ResponsiveNavLink :href="route('about')">{{$t('about')}}</ResponsiveNavLink>
+                <ResponsiveNavLink :href="route('conatact')">{{$t('contact')}}</ResponsiveNavLink>
             </div>
         </div>
     </nav>

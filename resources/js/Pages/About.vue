@@ -13,7 +13,7 @@ import CardContent from "@/Components/CardContent.vue";
                 <div class="min-h-[500px] flex flex-col justify-start gap-y-8 ">
 
                     <div class="flex justify-center my-4">
-                        <h2 class="text-xl text-primary font-bold uppercase">About</h2>
+                        <h2 class="text-xl text-primary font-bold uppercase">{{$t('about')}}</h2>
                     </div>
 
                     <div class="mx-8">
