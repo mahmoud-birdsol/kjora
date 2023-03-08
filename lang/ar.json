@@ -1,3 +1,14 @@
 {
+    "Welcome to":"مرحبا بك",
+    "Don't have an account":"ليس لديك حساب",
+    "sign up":"تسجيل",
+    "forgot":"نسيت",
+    "email":"البريد الالكترونى ",
+    "or":"او " ,
+    "username":"اسم المستخدم ",
+    "enter":"ادخل ",
+    "password":"الرقم السرى",
+    "remember me":"تذكرنى",
+    "sign in":"تسجيل دخول",
     "All positions" :  "جميع المراكز"
 }
