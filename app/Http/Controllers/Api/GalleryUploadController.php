@@ -22,14 +22,14 @@ class GalleryUploadController extends Controller
     {
         $request->validate([
             'gallery' => [
-                'max:10240'
-            ]
+                'max:10240',
+            ],
         ]);
 
         $post->addMedia($request->file('gallery'))->toMediaCollection('gallery');
 
         return response()->json([
-            'message' => 'File uploaded successfully'
+            'message' => 'File uploaded successfully',
         ]);
     }
 }

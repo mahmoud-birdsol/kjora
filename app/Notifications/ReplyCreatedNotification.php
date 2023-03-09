@@ -6,7 +6,6 @@ use App\Data\NotificationData;
 use App\Data\RouteActionData;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -14,14 +13,8 @@ class ReplyCreatedNotification extends Notification
 {
     use Queueable;
 
-    /**
-     * @var \App\Models\User
-     */
     private User $user;
 
-    /**
-     * @var \App\Models\User
-     */
     private User $notifier;
 
     private $commentable;
@@ -37,7 +30,6 @@ class ReplyCreatedNotification extends Notification
         $this->notifier = $notifier;
         $this->commentable = $commentable;
     }
-
 
     /**
      * Get the notification's delivery channels.
@@ -61,8 +53,8 @@ class ReplyCreatedNotification extends Notification
     {
         return (new MailMessage)
             ->subject('Comment Notification')
-            ->line('Dear ' . $this->user->name)
-            ->line($this->notifier->username . ' Has replied to your comment')
+            ->line('Dear '.$this->user->name)
+            ->line($this->notifier->username.' Has replied to your comment')
             ->action('Chat Now', url(route('gallery.show', $this->commentable)))
             ->line('Thank you for using our application!');
     }
@@ -79,7 +71,7 @@ class ReplyCreatedNotification extends Notification
             displayType: 'simple',
             state: 'success',
             title: 'Comment Notification',
-            subtitle: 'User ' . $this->notifier->name . ' has replied to your comment',
+            subtitle: 'User '.$this->notifier->name.' has replied to your comment',
             actionData: new RouteActionData(
                 route: route('gallery.show', $this->commentable),
                 text: 'View Now',

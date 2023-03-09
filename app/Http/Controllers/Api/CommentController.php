@@ -11,7 +11,6 @@ use App\Models\Post;
 use App\Models\User;
 use App\Notifications\CommentCreatedNotification;
 use App\Notifications\ReplyCreatedNotification;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -23,8 +22,6 @@ class CommentController extends Controller
     /**
      * Load the comments of the model
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      * @throws \ReflectionException
      */
     public function index(Request $request): AnonymousResourceCollection
@@ -39,8 +36,6 @@ class CommentController extends Controller
     /**
      * Store a new Comment
      *
-     * @param \App\Http\Requests\CommentStoreRequest $request
-     * @return \Illuminate\Http\JsonResponse
      * @throws \ReflectionException
      */
     public function store(CommentStoreRequest $request): JsonResponse
@@ -68,7 +63,7 @@ class CommentController extends Controller
         }
 
         return response()->json([
-            'message' => 'Comment Added Successfully'
+            'message' => 'Comment Added Successfully',
         ]);
     }
 }

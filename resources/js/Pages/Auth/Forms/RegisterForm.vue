@@ -46,11 +46,6 @@ const setAvatarPreview = (photo) => {
     avatarPreview.value = photo;
 };
 
-
-onMounted(() => {
-    console.log('The default club is');
-    console.log(defaultChosenClub.value)
-})
 const submit = () => {
     form.post(route('register'), {
         onFinish: () => form.reset('password'),
@@ -89,10 +84,9 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.email"/>
             </div>
             <div>
-                <InputLabel color="primary" for="username" value="Username"/>
-                <TextInput type="text" v-model="form.username" placeholder="@" auto-complete="username"
-                           aria-required="true"/>
-                <InputError class="mt-2" :message="form.errors.username"/>
+                <InputLabel color="primary" for="password" value="Password"/>
+                <PasswordInput v-model="form.password"/>
+                <InputError class="mt-2" :message="form.errors.password"/>
             </div>
             <div>
                 <InputLabel color="primary" for="country" value="Country"/>
@@ -118,14 +112,12 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.phone"/>
             </div>
             <div class="sm:col-span-2">
-                <!-- TODO: change the icon  -->
-                <InputLabel color="primary" for="password" value="Password"/>
-                <PasswordInput v-model="form.password"/>
-                <div class="text-gray-400 text-xs m-2" v-if="!form.password && !form.errors.password">
-                    The password must be at least 8 characters and at least one uppercase, one lowercase letter , one
-                    symbol and one number
+                <div>
+                    <InputLabel color="primary" for="username" value="Username"/>
+                    <TextInput type="text" v-model="form.username" placeholder="@" auto-complete="username"
+                               aria-required="true"/>
+                    <InputError class="mt-2" :message="form.errors.username"/>
                 </div>
-                <InputError class="mt-2" :message="form.errors.password"/>
             </div>
         </div>
 

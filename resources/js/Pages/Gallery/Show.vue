@@ -67,17 +67,19 @@
                                         }} </h3>
                                         <span v-if="false">star icon</span>
                                     </div>
-                                    <Link :href="route('player.profile', user.id)" class="text-xs text-stone-400 ">
-                                    @{{
+                                    <Link :href="route('player.profile', user.id)" class="text-xs text-stone-400 ">@{{
+                                                                        <<<<<<<< <Temporary merge branch 1 user.username }}</Link>
+                                        =========
                                         user.username }} </Link>
-
+                                        >>>>>>>>> Temporary merge branch 2
                                 </div>
-                                <div v-if="isCurrentUser" class="relative">
+                                <div class="fixed top-0 left-0 w-full h-full" v-show="showOptions"
+                                    @click="showOptions = false"></div>
+                                <div class="relative">
                                     <button class="p-1" @click="showOptions = !showOptions">
                                         <EllipsisHorizontalIcon class="w-6" />
                                     </button>
-
-                                    <FadeInTransition>
+                                    <<<<<<<<< Temporary merge branch 1 <FadeInTransition>
                                         <!-- media option menu -->
                                         <div v-show="showOptions"
                                             class="absolute top-0 z-20 px-6 py-2 text-xs text-white bg-black border right-8 rounded-xl border-neutral-500 pie-10 z-2 ">
@@ -88,10 +90,11 @@
                                                         <span>Edit</span>
                                                     </li>
                                                 </button>
-                                                <button @click="openRemoveMediaModal" class="hover:text-gray-400 ">
+                                                <button @click="openRemoveMediaModal" class="hover:text-gray-400 "
+                                                    v-if="isCurrentUser">
                                                     <li class="flex items-center justify-center gap-x-2">
                                                         <TrashIcon class="w-4" />
-                                                        <span> delete</span>
+                                                        <span> Delete</span>
                                                     </li>
                                                     <!-- confirm delete media modal -->
                                                     <Modal :show="showDeleteMediaModal"
@@ -107,15 +110,41 @@
                                                                 <button
                                                                     class="p-2 px-8 text-white bg-red-800 border-2 border-red-800 rounded-full hover:bg-transparent hover:text-red-800 active:scale-95 "
                                                                     @click="removeMedia">Delete</button>
+                                                                =========
+                                                                <div v-show="showOptions"
+                                                                    class="absolute left-0 p-2 bg-white rounded-lg shadow-lg cursor-pointer top-1/2">
+                                                                    <div class="fixed top-0 left-0 w-full h-full"
+                                                                        @click="showOptions = false">
+                                                                    </div>
+                                                                    <div
+                                                                        class="relative z-20 w-full text-sm text-center text-gray-500 divide-y whitespace-nowrap">
+                                                                        <div @click="contenteditable = true">Edit</div>
+                                                                        <div>remove photo</div>
+                                                                        >>>>>>>>> Temporary merge branch 2
 
-                                                            </div>
-                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                     </Modal>
+                                                </button>
+                                                <button class="hover:text-gray-400 group">
+                                                    <li v-if="!isCurrentUser">
+                                                        <ReportModal :reportable-id="media.id"
+                                                            :reportable-type="'App\\Models\\MediaLibrary'">
+                                                            <template #trigger>
+                                                                <button class="flex items-center gap-x-2">
+                                                                    <FlagIcon class="w-4" />
+                                                                    <span>Report</span>
+                                                                </button>
+
+                                                            </template>
+                                                        </ReportModal>
+                                                    </li>
+
                                                 </button>
 
                                             </ul>
                                         </div>
-                                    </FadeInTransition>
+                                        </FadeInTransition>
 
 
                                 </div>
@@ -146,12 +175,18 @@
                                 <p class="text-sm text-stone-500" v-show="!isEditingCaption">
                                     {{ caption }}
                                 </p>
-
-                                <div v-show="isEditingCaption" class="flex">
+                                <<<<<<<<< Temporary merge branch 1 <div v-show="isEditingCaption" class="flex">
                                     <textarea rows="4" type="text" :value="caption" @blur="submit"
                                         class="w-full text-sm border-none text-stone-500 ring-1 focus:ring-primary focus:shadow-none focus:border-none ring-gray-300 hideScrollBar" />
-
-                                </div>
+                                    =========
+                                    <div v-show="contenteditable" class="flex">
+                                        <input type="text" value="aml walaed"
+                                            class="w-full text-sm border-none rounded-full text-stone-500 ring-1 focus:ring-primary focus:shadow-none focus:border-none ring-gray-300" />
+                                        <button class="p-1 group" @click="submit">
+                                            <PaperAirplaneIcon class="w-5 text-neutral-900" />
+                                        </button>
+                                        >>>>>>>>> Temporary merge branch 2
+                                    </div>
                             </div>
 
                         </div>
@@ -205,7 +240,7 @@
 import AppLayout from '../../Layouts/AppLayout.vue';
 import Avatar from '../../Components/Avatar.vue';
 
-import { FaceSmileIcon, EllipsisHorizontalIcon, TrashIcon, PencilIcon } from '@heroicons/vue/24/outline';
+import { FaceSmileIcon, EllipsisHorizontalIcon, TrashIcon, PencilIcon, FlagIcon } from '@heroicons/vue/24/outline';
 import { PaperAirplaneIcon, XMarkIcon } from '@heroicons/vue/24/solid';
 
 import axios from 'axios';
@@ -215,9 +250,10 @@ import { HeartIcon } from '@heroicons/vue/24/solid';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 import { usePage, Link } from '@inertiajs/inertia-vue3';
-
+<<<<<<<< < Temporary merge branch 1
 import FadeInTransition from '../../Components/FadeInTransition.vue';
 import Modal from '../../Components/Modal.vue';
+import ReportModal from '@/Components/ReportModal.vue';
 import { Inertia } from '@inertiajs/inertia';
 import LikeButton from '@/Components/LikeButton.vue';
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
@@ -272,7 +308,11 @@ function getPostComments() {
     }).then(res => {
         comments.value = res.data.data
     }).catch(err => console.error(err))
-
+}
+<<<<<<<< < Temporary merge branch 1
+=========
+function submit() {
+    console.log('has submit')
 }
 
 // store new comments in database
@@ -316,7 +356,7 @@ function scrollToCommentsBottom() {
 }
 
 
-
+<<<<<<<<< Temporary merge branch 1
 // option menu logic
 // delete media
 function removeMedia() {

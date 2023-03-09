@@ -2,12 +2,11 @@
 
 namespace App\Providers;
 
-use App\Nova\Conversation;
-use App\Nova\Invitation;
 use App\Nova\Admin;
 use App\Nova\Advertisement;
 use App\Nova\Click;
 use App\Nova\Club;
+use App\Nova\Conversation;
 use App\Nova\CookiePolicy;
 use App\Nova\Country;
 use App\Nova\Dashboards\AdminDashboard;
@@ -15,6 +14,7 @@ use App\Nova\Dashboards\AdvertisementDashboard;
 use App\Nova\Dashboards\Main;
 use App\Nova\Dashboards\UserDashboard;
 use App\Nova\Impression;
+use App\Nova\Invitation;
 use App\Nova\Label;
 use App\Nova\Lenses\ActiveAdvertisement;
 use App\Nova\Lenses\ArchivedAdvertisement;

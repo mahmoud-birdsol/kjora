@@ -56,8 +56,6 @@ class Advertisement extends Model implements HasMedia
 
     /**
      * Get the advertisement country.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function country(): BelongsTo
     {
@@ -66,8 +64,6 @@ class Advertisement extends Model implements HasMedia
 
     /**
      * Get the advertisement clicks.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function clicks(): HasMany
     {
@@ -76,8 +72,6 @@ class Advertisement extends Model implements HasMedia
 
     /**
      * Get the advertisement impressions.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function impressions(): HasMany
     {
@@ -87,8 +81,6 @@ class Advertisement extends Model implements HasMedia
     /**
      * Register the media conversions.
      *
-     * @param  \Spatie\MediaLibrary\MediaCollections\Models\Media|null  $media
-     * @return void
      *
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
@@ -101,8 +93,6 @@ class Advertisement extends Model implements HasMedia
 
     /**
      * Register the media collections.
-     *
-     * @return void
      */
     public function registerMediaCollections(): void
     {

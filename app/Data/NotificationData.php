@@ -7,9 +7,13 @@ use Spatie\LaravelData\Data;
 class NotificationData extends Data
 {
     public string $displayType;
+
     public string $state;
+
     public string $title;
+
     public string $subtitle;
+
     /**
      * @var \App\Data\RouteActionData
      */

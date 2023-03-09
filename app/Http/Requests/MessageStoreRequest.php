@@ -8,8 +8,6 @@ class MessageStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -25,15 +23,15 @@ class MessageStoreRequest extends FormRequest
     {
         return [
             'parent_id' => [
-                'nullable'
+                'nullable',
             ],
             'body' => [
-                'required_without:attachments'
+                'required_without:attachments',
             ],
             'attachments' => [
                 'nullable',
-                'max:2084'
-            ]
+                'max:2084',
+            ],
         ];
     }
 }
