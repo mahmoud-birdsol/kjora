@@ -4,7 +4,6 @@ namespace App\Http\Responses;
 
 class RegisterSuccessfulResponse implements \Laravel\Fortify\Contracts\RegisterResponse
 {
-
     /**
      * {@inheritDoc}
      */
