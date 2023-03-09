@@ -61,9 +61,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 //        'identity_back_image',
 //        'identity_selfie_image',
 
-//        'accepted_terms_and_conditions_version',
-//        'accepted_privacy_policy_version',
-//        'accepted_cookie_policy_version',
+        'accepted_terms_and_conditions_version',
+        'accepted_privacy_policy_version',
+        'accepted_cookie_policy_version',
         'date_of_birth',
         'identity_verified_at',
         'phone_verified_at',

@@ -49,7 +49,7 @@ const setAvatarPreview = (photo) => {
 
 onMounted(() => {
     console.log('The default club is');
-    console.log(defaultChosenClub.value)
+    // console.log(defaultChosenClub.value)
 })
 const submit = () => {
     form.post(route('register'), {
