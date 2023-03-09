@@ -2,6 +2,11 @@
 
 use App\Http\Controllers\AcceptInvitationController;
 use App\Http\Controllers\Actions\MarkNotificationAsRead;
+use App\Http\Controllers\AdvertisementController;
+use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Auth\UserEmailController;
+use App\Http\Controllers\Auth\UserNameController;
+use App\Http\Controllers\Auth\UserPhoneController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FavoriteController;
@@ -13,8 +18,9 @@ use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerReviewController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ResendVerificationCodeController;
 use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\VerificationCodeController;
 use App\Models\Country;
 use App\Models\Invitation;
 use App\Models\MediaLibrary;
@@ -58,21 +64,54 @@ Route::middleware([
     'auth:sanctum',
     'location.detect',
     config('jetstream.auth_session'),
-//    'player.review'
+    'verified.phone',
+    'verified.email',
+    'verified.identity',
+    'player.review'
 ])->group(function () {
     Route::get('/verification/identity', [
         IdentityVerificationController::class,
         'create',
     ])->name('identity.verification.create');
 
-
     Route::post('/verification/identity', [
         IdentityVerificationController::class,
         'store',
     ])->name('identity.verification.store');
 
-    Route::get('/change-password' ,[PasswordController::class , 'edit'])->name('password.edit');
-    Route::patch('/change-password' ,[PasswordController::class , 'update'])->name('password.update');
+    Route::get('/change-password', [PasswordController::class, 'edit'])->name('password.edit');
+    Route::patch('/change-password', [PasswordController::class, 'update'])->name('password.update');
+
+    Route::get('/user-name/edit', [
+        UserNameController::class,
+        'edit',
+    ])->name('username.edit');
+
+    Route::patch('/user-name/update', [
+        UserNameController::class,
+        'update',
+    ])->name('username.update');
+
+    Route::get('/email/edit', [
+        UserEmailController::class,
+        'edit',
+    ])->name('email.edit');
+
+    Route::patch('/email/update', [
+        UserEmailController::class,
+        'update',
+    ])->name('email.update');
+
+    Route::get('/phone/edit', [
+        UserPhoneController::class,
+        'edit',
+    ])->name('phone.edit');
+
+    Route::patch('/phone/update', [
+        UserPhoneController::class,
+        'update',
+    ])->name('phone.update');
+
 
     Route::middleware([
         'verified.email',
@@ -110,15 +149,15 @@ Route::middleware([
 
         Route::get(
             'player/review/{review}', [
-                PlayerReviewController::class,
-                'show'
-            ])->name('player.review.show');
+            PlayerReviewController::class,
+            'show',
+        ])->name('player.review.show');
 
         Route::post(
             'player/review/{review}', [
-                PlayerReviewController::class,
-                'store'
-            ])->name('player.review.store');
+            PlayerReviewController::class,
+            'store',
+        ])->name('player.review.store');
 
         /*
          |--------------------------------------------------------------------------
@@ -128,7 +167,7 @@ Route::middleware([
 
         Route::get('invitations', [
             InvitationController::class,
-            'index'
+            'index',
         ])->name('invitation.index');
 
         Route::get('more', function () {
@@ -140,7 +179,7 @@ Route::middleware([
 
         Route::get('hires', [
             HireController::class,
-            'index'
+            'index',
         ])->name('hire.index');
 
         Route::get('invitations/create/{invited}', function (User $invited) {
@@ -154,7 +193,10 @@ Route::middleware([
             $data = $request->validate([
                 'stadium_id' => ['required', 'integer', 'exists:stadia,id'],
                 'invited_player_id' => ['required', 'integer', 'exists:users,id'],
-                'date' => ['required'],
+                'date' => [
+                    'required',
+                    'after_or_equal:today'
+                ],
                 'time' => ['required'],
             ]);
 
@@ -232,7 +274,7 @@ Route::middleware([
                 ],
                 'image' => [
                     'required',
-                    'file'
+                    'file',
                 ],
             ]);
 
@@ -253,17 +295,17 @@ Route::middleware([
 
     Route::get('favourites', [
         FavoriteController::class,
-        'index'
+        'index',
     ])->name('favorites.index');
 
     Route::post('favorites/{favorite}', [
         FavoriteController::class,
-        'store'
+        'store',
     ])->name('favorites.store');
 
     Route::delete('favorites/{favorite}', [
         FavoriteController::class,
-        'destroy'
+        'destroy',
     ])->name('favorites.destroy');
 
     /*
@@ -276,7 +318,7 @@ Route::middleware([
         'chats',
         [
             ChatController::class,
-            'index'
+            'index',
         ]
     )->name('chats.index');
 
@@ -284,7 +326,7 @@ Route::middleware([
         'chats/{conversation}',
         [
             ChatController::class,
-            'show'
+            'show',
         ]
     )->name('chats.show');
 
@@ -296,24 +338,31 @@ Route::middleware([
 
     Route::post('report', [
         ReportController::class,
-        'store'
+        'store',
     ])->name('report.store');
 
     /*
      |--------------------------------------------------------------------------
-     | Message Routes...
+     | Advertisement Routes...
      |--------------------------------------------------------------------------
     */
 
+    Route::get(
+        'advertisements/{advertisement}', [
+            AdvertisementController::class,
+            'show'
+        ]
+    )->name('advertisements.show');
 
+    /*
+     |--------------------------------------------------------------------------
+     | Likes Routes...
+     |--------------------------------------------------------------------------
+    */
 
-
-
-
-
-
+    Route::post('like', [\App\Http\Controllers\LikeController::class, 'store'])->name('like.store');
+    Route::delete('like', [\App\Http\Controllers\LikeController::class, 'destroy'])->name('like.destroy');
 });
-
 
 //     // Example 2: Get all the connected users for a specific channel
 // });
@@ -325,14 +374,11 @@ Route::middleware([
 // });
 
 Route::get('gallery/{mediaLibrary}', function (MediaLibrary $mediaLibrary) {
-
-    $userId = MediaLibrary::where('model_type', User::class)->where('id', $mediaLibrary->id)->first()->model_id;
-
-    $user = User::find($userId);
+    $user = $mediaLibrary->owner();
 
     return Inertia::render('Gallery/Show', [
         'media' => $mediaLibrary,
-        'user' => $user
+        'user' => $user,
     ]);
 })->name('gallery.show');
 
@@ -352,5 +398,16 @@ Route::get('update-password', function () {
 
 Route::post('contacts', [ContactController::class, 'store'])->name('contacts.store');
 
+Route::get('phone/verify', [VerificationCodeController::class, 'create'])->name('phone.verify');
+Route::post('phone/verify', [VerificationCodeController::class, 'store'])->name('phone.verify.store');
+Route::get('phone/resend-verification', ResendVerificationCodeController::class)->name('verification.phone.send');
 
 
+Route::get('test', function () {
+    $response = Http::withHeaders([
+        'x-rapidapi-host' => 'v3.football.api-sports.io',
+        'x-rapidapi-key' => '303758e6ae860e914bb0755664b4caf0',
+    ])->get('https://v3.football.api-sports.io/teams?country=England&league=39&season=2022');
+
+    dd($response->json());
+});

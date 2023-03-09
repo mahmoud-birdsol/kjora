@@ -9,6 +9,7 @@ use App\Nova\Admin;
 use App\Nova\Advertisement;
 use App\Nova\Click;
 use App\Nova\Club;
+use App\Nova\Conversation;
 use App\Nova\CookiePolicy;
 use App\Nova\Country;
 use App\Nova\Dashboards\AdminDashboard;
@@ -16,11 +17,13 @@ use App\Nova\Dashboards\AdvertisementDashboard;
 use App\Nova\Dashboards\Main;
 use App\Nova\Dashboards\UserDashboard;
 use App\Nova\Impression;
+use App\Nova\Invitation;
 use App\Nova\Label;
 use App\Nova\Lenses\ActiveAdvertisement;
 use App\Nova\Lenses\ArchivedAdvertisement;
 use App\Nova\Lenses\ExpiringAdvertisement;
 use App\Nova\Lenses\UnverifiedUsers;
+use App\Nova\Like;
 use App\Nova\MediaLibrary;
 use App\Nova\Message;
 use App\Nova\Position;
@@ -38,11 +41,13 @@ use App\Nova\Venue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Menu\MenuGroup;
 use Laravel\Nova\Menu\MenuItem;
 use Laravel\Nova\Menu\MenuSection;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Outl1ne\NovaSettings\NovaSettings;
 use Pktharindu\NovaPermissions\Nova\Role;
 use Pktharindu\NovaPermissions\NovaPermissions;
 
@@ -64,9 +69,15 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 MenuSection::dashboard(Main::class)->icon('chart-bar'),
 
                 MenuSection::make('Dashboards', [
-                    MenuItem::dashboard(AdvertisementDashboard::class),
-                    MenuItem::dashboard(AdminDashboard::class),
-                    MenuItem::dashboard(UserDashboard::class),
+                    MenuItem::dashboard(AdvertisementDashboard::class)->canSee(function (Request $request) {
+                        return $request->user();
+                    }),
+                    MenuItem::dashboard(AdminDashboard::class)->canSee(function (Request $request) {
+                        return $request->user();
+                    }),
+                    MenuItem::dashboard(UserDashboard::class)->canSee(function (Request $request) {
+                        return $request->user();
+                    }),
                 ])->icon('view-grid')->collapsable(),
 
                 MenuSection::make('Advertisements', [
@@ -94,6 +105,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(Venue::class),
                     MenuItem::resource(Invitation::class),
                     MenuItem::resource(Review::class),
+                    MenuItem::resource(Like::class),
                 ])->icon('user-group')->collapsable(),
 
                 MenuSection::make('Chat', [
@@ -108,6 +120,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 ])->icon('lock-closed')->collapsable(),
 
                 MenuSection::make('Settings', [
+                    MenuItem::link('Settings', 'nova-settings/general'),
                     MenuItem::resource(Country::class),
                     MenuItem::resource(Club::class),
                     MenuItem::resource(Stadium::class),
@@ -134,6 +147,16 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             </div>
         ');
         });
+
+        NovaSettings::addSettingsFields([
+            Select::make(__('Default Country'), 'default_country')->options(function () {
+                return \App\Models\Country::all()->pluck('name', 'id');
+            })->displayUsingLabels()->searchable(),
+
+            Select::make(__('Default Club'), 'default_club')->options(function () {
+                return \App\Models\Club::all()->pluck('name', 'id');
+            })->displayUsingLabels()->searchable()
+        ]);
     }
 
     /**
@@ -158,8 +181,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function gate()
     {
-        Gate::define('viewNova', function (Admin $user) {
-            return $user->hasPermissionTo('access nova');
+        Gate::define('viewNova', function (\App\Models\Admin $user) {
+            return $user;
         });
     }
 
@@ -173,14 +196,20 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             Main::make(),
             AdvertisementDashboard::make()
-                ->showRefreshButton(),
-
+                ->showRefreshButton()
+                ->canSee(function (Request $request) {
+                    return $request->user();
+                }),
             AdminDashboard::make()
-                ->showRefreshButton(),
-
+                ->showRefreshButton()
+                ->canSee(function (Request $request) {
+                    return $request->user();
+                }),
             UserDashboard::make()
-                ->showRefreshButton(),
-
+                ->showRefreshButton()
+                ->canSee(function (Request $request) {
+                    return $request->user();
+                }),
         ];
     }
 
@@ -193,6 +222,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             NovaPermissions::make(),
+            NovaSettings::make()
         ];
     }
 

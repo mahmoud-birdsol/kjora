@@ -9,25 +9,14 @@ use Illuminate\Support\Facades\DB;
 
 class Token
 {
-    /**
-     * @var string
-     */
     private string $table;
 
-    /**
-     * @var string
-     */
     private string $token;
 
-    /**
-     * @var \Illuminate\Contracts\Auth\Authenticatable
-     */
     private Authenticatable $authenticatable;
 
     /**
      * Create a new token instance.
-     *
-     * @param  string  $table
      */
     public function __construct(string $table)
     {
@@ -37,7 +26,6 @@ class Token
     /**
      * Create a new token instance.
      *
-     * @param  string  $table
      * @return \App\Repositories\Token
      */
     public static function make(string $table): Token
@@ -48,8 +36,6 @@ class Token
     /**
      * Create an authenticatable token.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @param  string  $token
      * @return bool
      */
     public function create(Authenticatable $user, string $token)
@@ -64,9 +50,6 @@ class Token
 
     /**
      * Validate an authenticatable token.
-     *
-     * @param  string  $token
-     * @return bool
      */
     public function validate(string $token): bool
     {
@@ -76,7 +59,6 @@ class Token
     /**
      * Find the authenticatable model from token.
      *
-     * @param  string  $token
      * @return $this|null
      */
     public function find(string $token): Token|null
@@ -98,8 +80,6 @@ class Token
 
     /**
      * Get the authenticatable model.
-     *
-     * @return \Illuminate\Contracts\Auth\Authenticatable
      */
     public function authenticatable(): Authenticatable
     {
@@ -108,8 +88,6 @@ class Token
 
     /**
      * Get the authenticatable guard.
-     *
-     * @return string
      */
     public function guard(): string
     {
@@ -118,8 +96,6 @@ class Token
 
     /**
      * Save the newly generated token to DB.
-     *
-     * @return void
      */
     private function save(): void
     {
