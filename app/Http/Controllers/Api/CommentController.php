@@ -51,9 +51,7 @@ class CommentController extends Controller
 
         $user = User::find($post->user->id);
 
-        if ($user->id != $request->user()->id) {
-            $comment->user->notify(new CommentCreatedNotification($user, $request->user(), $media));
-        }
+        $user->notify(new CommentCreatedNotification($user, $request->user(), $media));
 
         if ($request->has('parent_id') && !is_null($request->input('parent_id'))) {
             $parentComment = Comment::find($request->input('parent_id'));
