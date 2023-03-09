@@ -36,7 +36,7 @@
                                                         @click="showDeleteMediaModal = false">Cancel</button>
                                                     <button
                                                         class="p-2 px-8 text-white bg-red-800 border-2 border-red-800 rounded-full hover:bg-transparent hover:text-red-800 active:scale-95 "
-                                                        @click="removeMedia(media.id)">Delete</button>
+                                                        @click="removeSingleMedia(media.id)">Delete Media</button>
 
                                                 </div>
                                             </div>
@@ -94,19 +94,18 @@
                                                         <span> Delete</span>
                                                     </li>
                                                     <!-- confirm delete media modal -->
-                                                    <Modal :show="showDeleteMediaModal"
-                                                        @close="showDeleteMediaModal = false" :closeable="true"
-                                                        :show-close-icon="false" :max-width="'sm'">
+                                                    <Modal :show="showDeletePostModal" @close="showDeletePostModal = false"
+                                                        :closeable="true" :show-close-icon="false" :max-width="'sm'">
                                                         <div class="flex flex-col justify-center p-6 text-stone-800 ">
                                                             <p class="mb-3 text-lg">Are you sure you want delete this
                                                                 media?</p>
                                                             <div class="flex justify-center w-full gap-4">
                                                                 <button
                                                                     class="p-2 px-8 border-2 rounded-full border-primary hover:bg-primary text-primary hover:text-white active:scale-95 "
-                                                                    @click="showDeleteMediaModal = false">Cancel</button>
+                                                                    @click="showDeletePostModal = false">Cancel</button>
                                                                 <button
                                                                     class="p-2 px-8 text-white bg-red-800 border-2 border-red-800 rounded-full hover:bg-transparent hover:text-red-800 active:scale-95 "
-                                                                    @click="removeMedia">Delete</button>
+                                                                    @click="removePost">Delete Post</button>
 
                                                                 <div v-show="showOptions"
                                                                     class="absolute left-0 p-2 bg-white rounded-lg shadow-lg cursor-pointer top-1/2">
@@ -115,7 +114,7 @@
                                                                     </div>
                                                                     <div
                                                                         class="relative z-20 w-full text-sm text-center text-gray-500 divide-y whitespace-nowrap">
-                                                                        <div @click="contenteditable = true">Edit</div>
+                                                                        <div @click="isEditingCaption = true">Edit</div>
                                                                         <div>remove photo</div>
                                                                     </div>
                                                                 </div>
@@ -278,6 +277,7 @@ let isEditingCaption = ref(false);
 const currentUser = usePage().props.value.auth.user
 const isCurrentUser = currentUser.id === props.user.id
 const showDeleteMediaModal = ref(false);
+const showDeletePostModal = ref(false);
 const caption = ref('Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempora repellendus earum magni quia fugiat, enim deserunt labore tenetur praesentium.Impedit neque nihil ullam perferendis praesentium eos, molestiae amet deleniti sequi  ')
 
 //comment logic
@@ -297,9 +297,6 @@ function getPostComments() {
     }).catch(err => console.error(err))
 }
 
-function submit() {
-    console.log('has submit')
-}
 
 // store new comments in database
 function sendComment() {
@@ -345,14 +342,18 @@ function scrollToCommentsBottom() {
 
 // option menu logic
 // delete media
-function removeMedia() {
-    axios.delete(route('api.gallery.destroy', props.media.id)).then((res) => console.log(res))
-    Inertia.get(route('profile.show'))
+function removeSingleMedia(id) {
+    axios.delete(route('api.gallery.destroy', id)).then((res) => console.log(res))
+
+    showDeleteMediaModal.value = false
+    Inertia.reload({
+        only: ['post'],
+    });
 }
 
 function openRemoveMediaModal() {
     showOptions.value = false
-    showDeleteMediaModal.value = true
+    showDeletePostModal.value = true
 }
 // edit media caption
 function editCaption() {
@@ -364,13 +365,13 @@ function submit() {
     console.log('has submit')
 }
 
-function removeMedia(id) {
-    console.log(id);
-    axios.delete(route('api.gallery.destroy', id)).then((res) => console.log(res))
-    showDeleteMediaModal.value = false
-    Inertia.reload({
-        only: ['post'],
-    });
+function removePost() {
+
+    showDeletePostModal.value = false
+    Inertia.delete(route('posts.destroy', props.post.id), {
+    })
+    Inertia.get(route('profile.show'))
+
 }
 
 </script>
