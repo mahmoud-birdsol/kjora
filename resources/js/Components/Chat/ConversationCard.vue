@@ -34,10 +34,12 @@ const active = computed(() => {
                     <Link :href="route('player.profile', user.id)"  class="text-xs leading-none text-neutral-500"> @{{ user.username }} </Link>
                </div>
                 <div class="mis-auto -mt-2">
-                    <p class="text-xs text-gray-300" v-if="!user.online">Last seen</p>
-                    <p class="text-xs text-gray-300" v-if="!user.online">{{
+                    <p class="text-xs text-gray-300" v-if="!user.online">{{$t('last seen')}}</p>
+                    <p class="text-xs text-gray-300" v-if="!user.online">
+                        {{
                             dayjs().to(dayjs(user.last_seen_at))
-                        }}</p>
+                        }}
+                </p>
 
                     <p class="text-xs text-white flex items-center" v-else>
                         <CheckCircleIcon class="text-green-500 h-3 w-3 inline mr-1"/>

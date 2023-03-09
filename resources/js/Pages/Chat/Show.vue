@@ -18,7 +18,7 @@ provide('conversation', props.conversation);
 <template>
     <AppLayout title="Chat">
         <template #header>
-            Chat
+            {{$t('chat')}}
         </template>
 
         <ChatLayout :conversations="conversations">
