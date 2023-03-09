@@ -135,7 +135,7 @@ const removeFromFavorites = () => {
                 </div>
                 <div>
                     <p class="text-xs text-center text-white opacity-50 text-light">{{ $t('position') }}</p>
-                    <p class="text-sm text-center text-white font-semi-bold">{{ player.position.name }}</p>
+                    <p class="text-sm text-center text-white font-semi-bold">{{ $t(player.position.name) }}</p>
                 </div>
             </div>
 
