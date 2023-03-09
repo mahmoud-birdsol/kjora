@@ -17,10 +17,6 @@ class MessageController extends Controller
 {
     /**
      * Return a collection of paginated messages
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Conversation $conversation
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index(
         Request $request,
@@ -28,8 +24,8 @@ class MessageController extends Controller
     ): AnonymousResourceCollection {
         $query = $conversation->messages()->orderBy('created_at', 'DESC');
 
-        $request->whenFilled('search', function () use ($request, $query) {
-            $query->where('body', 'LIKE', '%' . request()->input('search') . '%');
+        $request->whenFilled('search', function () use ($query) {
+            $query->where('body', 'LIKE', '%'.request()->input('search').'%');
         });
 
         return MessageResource::collection($query->paginate(12));
@@ -38,10 +34,8 @@ class MessageController extends Controller
     /**
      * Store a new Message
      *
-     * @param \App\Http\Requests\MessageStoreRequest $request
-     * @param \App\Models\Conversation $conversation
-     * @param \App\Actions\CheckIfUserIsPresentAction $checkIfUserIsPresentAction
      * @return \App\Http\Resources\MessageResource
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Pusher\ApiErrorException
      * @throws \Pusher\PusherException
@@ -57,11 +51,10 @@ class MessageController extends Controller
         $message = $conversation->messages()->create([
             'body' => $request->input('body'),
             'sender_id' => $request->user()->id,
-            'parent_id' => $request->input('parent_id')
+            'parent_id' => $request->input('parent_id'),
         ]);
 
-
-        if (!is_null($request->attachments)) {
+        if (! is_null($request->attachments)) {
             foreach ($request->attachments as $attachment) {
                 $message->addMedia($attachment)->toMediaCollection('attachments');
             }

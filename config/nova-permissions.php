@@ -650,7 +650,6 @@ return [
         ],
 
         /*
-<<<<<<< HEAD
         |--------------------------------------------------------------------------
         | Conversation.
         |--------------------------------------------------------------------------
@@ -776,7 +775,6 @@ return [
             'group' => 'Message',
         ],
 
-
         /*
        |--------------------------------------------------------------------------
        | Report Options.
@@ -879,11 +877,47 @@ return [
             'group' => 'Review',
         ],
 
+
+      /*
+      |--------------------------------------------------------------------------
+      | Contact Permissions.
+      |--------------------------------------------------------------------------
+      */
+
+        'view contacts' => [
+            'display_name' => 'View contacts',
+            'description' => 'Can view contacts',
+            'group' => 'Contacts',
+        ],
+
+        'create contacts' => [
+            'display_name' => 'Create contacts',
+            'description' => 'Can create contacts',
+            'group' => 'Contacts',
+        ],
+
+        'edit contacts' => [
+            'display_name' => 'Edit contacts',
+            'description' => 'Can edit contacts',
+            'group' => 'Contacts',
+        ],
+
+        'delete contacts' => [
+            'display_name' => 'Delete contacts',
+            'description' => 'Can delete contacts',
+            'group' => 'Contacts',
+        ],
+
+        'receive contact notifications' => [
+            'display_name' => 'Receive contact notifications',
+            'description' => 'Can Receive contact notifications',
+            'group' => 'Contacts',
+        ],
         /*
-   |--------------------------------------------------------------------------
-   | Likes.
-   |--------------------------------------------------------------------------
-   */
+       |--------------------------------------------------------------------------
+       | Likes.
+       |--------------------------------------------------------------------------
+       */
 
         'view likes' => [
             'display_name' => 'View likes',

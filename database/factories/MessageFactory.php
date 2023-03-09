@@ -23,14 +23,12 @@ class MessageFactory extends Factory
             'conversation_id' => Conversation::factory(),
             'sender_id' => User::factory(),
             'read_at' => now(),
-            'body' => $this->faker->text()
+            'body' => $this->faker->text(),
         ];
     }
 
     /**
      * Indicate that the message is a reply.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
     public function reply(): Factory
     {
@@ -40,6 +38,4 @@ class MessageFactory extends Factory
             ];
         });
     }
-
-
 }
