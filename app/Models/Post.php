@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\CanBeLiked;
 use App\Models\Concerns\CanBeReported;
+use App\Models\Contracts\Likeable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,11 +14,12 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Post extends Model implements HasMedia
+class Post extends Model implements HasMedia, Likeable
 {
     use HasFactory;
     use InteractsWithMedia;
     use CanBeReported;
+    use CanBeLiked;
 
     /**
      * The attributes that are mass assignable.
@@ -96,5 +99,15 @@ class Post extends Model implements HasMedia
         return Attribute::make(
             get: fn($value) => $this->getMedia('gallery')->where('id', $this->cover_id)->first()
         );
+    }
+
+    public function owner(): User|null
+    {
+        return $this->user;
+    }
+
+    public function url(): string
+    {
+        return url(route('posts.show', $this));
     }
 }
