@@ -32,10 +32,6 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $post->getMedia('gallery')?->each(function (Media $media) {
-            $media?->delete();
-        });
-
         $post->delete();
 
         FlashMessage::make()->success(

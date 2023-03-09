@@ -407,7 +407,6 @@ Route::get('phone/verify', [VerificationCodeController::class, 'create'])->name(
 Route::post('phone/verify', [VerificationCodeController::class, 'store'])->name('phone.verify.store');
 Route::get('phone/resend-verification', ResendVerificationCodeController::class)->name('verification.phone.send');
 
-
 Route::get('test', function () {
     $response = Http::withHeaders([
         'x-rapidapi-host' => 'v3.football.api-sports.io',
