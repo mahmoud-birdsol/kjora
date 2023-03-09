@@ -88,6 +88,6 @@ dayjs.locale(locale, null, true)
 const localei18n = usePage().props.value.locale
 </script>
 <template>
-    <span v-if="type==='normal'">{{ dayjs().locale(localei18n).format(format) }}</span>
+    <span v-if="type==='normal'">{{ dayjs(start).locale(localei18n).format(format) }}</span>
     <span v-else-if="type==='range'">{{ dayjs(start).locale(localei18n).fromNow() }}</span>
 </template>

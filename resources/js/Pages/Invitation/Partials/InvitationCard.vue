@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { CalendarIcon, MapPinIcon } from "@heroicons/vue/20/solid";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import RespondToInvitationModal from "@/Components/RespondToInvitationModal.vue";
-
+import DateTranslation from '@/Components/DateTranslation.vue';
 const props = defineProps({
     invitation: {
         required: true,
@@ -29,7 +29,7 @@ const showInvitationNotificationModal = ref(false);
                 <div>
                     <h2 class="font-bold text-gray-900">
                         <CalendarIcon class="inline h-6 w-6" />
-                        {{ dayjs(invitation.date).format('DD MMMM YYYY, h:m A') }}
+                        <DateTranslation :start="invitation.date" format="DD MMMM YYYY, h:m A" />
                     </h2>
                     <p class="text-gray-500 text-sm mt-2">
                         <MapPinIcon class="inline h-4 w-4" />
@@ -49,7 +49,7 @@ const showInvitationNotificationModal = ref(false);
                     {{$t('declined')}}
                 </button>
 
-                <PrimaryButton v-if="invitation.state == null" @click="showInvitationNotificationModal = true">Respond
+                <PrimaryButton v-if="invitation.state == null" @click="showInvitationNotificationModal = true">{{$t('respond')}}
                 </PrimaryButton>
             </div>
         </div>
