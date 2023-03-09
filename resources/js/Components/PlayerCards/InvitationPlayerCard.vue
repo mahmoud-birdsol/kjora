@@ -65,7 +65,7 @@ const markerOptions = { position: position };
 <template>
     <div class="rounded-xl"
         :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
-        <div class="flex flex-col items-center justify-center gap-1 p-4 ">
+        <div class="flex flex-col items-center justify-center gap-3 p-4 ">
 
             <div class="flex flex-col items-center ">
                 <!-- image -->
@@ -111,7 +111,7 @@ const markerOptions = { position: position };
 
             <!-- respond to invitation state buttons -->
             <div class="self-stretch text-sm font-bold">
-                <div v-if="invitation.state == null" class="flex justify-center gap-2">
+                <div v-if="invitation.state == null" class="flex justify-center gap-6">
                     <button @click="decline"
                         class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                         <XMarkIcon class="w-6 text-red-600" />
