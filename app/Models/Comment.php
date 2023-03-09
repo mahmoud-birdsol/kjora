@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\CanBeLiked;
+use App\Models\Contracts\Likeable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class Comment extends Model
+class Comment extends Model implements Likeable
 {
     use HasFactory;
+    use CanBeLiked;
 
     /**
      * The attributes that are mass assignable.
@@ -67,5 +70,15 @@ class Comment extends Model
             ->with('replies')
             ->with('user')
             ->orderBy('created_at');
+    }
+
+    public function owner(): User
+    {
+        return $this->user;
+    }
+
+    public function url(): string
+    {
+        return url(route('gallery.show', $this->commentable));
     }
 }

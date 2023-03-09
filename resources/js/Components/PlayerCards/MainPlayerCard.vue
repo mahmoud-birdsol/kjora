@@ -7,7 +7,7 @@ import { HeartIcon, PencilIcon } from '@heroicons/vue/20/solid'
 import { ChevronDoubleRightIcon, FlagIcon, HeartIcon as HeartIconOutline, MapPinIcon } from '@heroicons/vue/24/outline';
 import ReportModal from "@/Components/ReportModal.vue";
 import Socials from '@/Components/Socials.vue';
-
+import ToolTip from "@/Components/ToolTip.vue";
 const props = defineProps({
     player: {
         required: true,
@@ -80,11 +80,11 @@ const removeFromFavorites = () => {
         <div class="p-4">
             <div class="flex items-start justify-between">
                 <div class="flex justify-start mb-2" :class="{ 'space-x-2': size == 'sm', 'space-x-8': size == 'lg' }">
-                    <div class="relative ">
+                    <div class="relative">
                         <Link :href="route('profile.edit')" v-if="isCurrentUser"
-                            class="absolute bottom-0 right-0 p-1 bg-white rounded-full hover:text-primary "
-                            title="Edit your profile">
-                        <PencilIcon class="w-3 " title="Edit your profile" />
+                            class="absolute bottom-0 right-0 p-1 bg-white rounded-full hover:text-primary">
+                        <PencilIcon class="w-3 [&+div]:hover:block " />
+                        <ToolTip value="Edit your profile"/>
                         </Link>
                         <Avatar :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true" />
                     </div>
@@ -114,11 +114,12 @@ const removeFromFavorites = () => {
 
             <div class="grid gap-4 border-b border-white"
                 :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' }">
-                <div v-if="size == 'lg'">
+                <div v-if="size == 'lg'" class="relative">
                     <p class="text-xs text-center text-white opacity-50 text-light">Favorite Club</p>
-                    <div class="flex justify-center item-center">
+                    <div class="flex justify-center item-center [&+div]:hover:block" >
                         <img :src="player.club?.logo_thumb" class="w-5 h-5 border-2 border-white rounded-full" />
                     </div>
+                    <ToolTip :value="player.club?.name"/>
                 </div>
                 <div>
                     <p class="text-xs text-center text-white opacity-50 text-light">Age</p>
