@@ -103,24 +103,26 @@ const options = {
 
 
         </template>
-        <div class="py-12">
+        <div class="">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <!-- Position Filters...
                                                                                                     =====================================================-->
-                <div class="flex gap-4 my-8 overflow-x-auto hideScrollBar">
-                    <SecondaryButton @click="filterByPosition(null)">
+                <div class="flex gap-4 mt-4 mb-8 overflow-x-auto hideScrollBar">
+                    <button @click="filterByPosition(null)" class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
+                    :class="{ 'border-primary': form.position == null, 'border-none': form.position != null }"
+                    >
                         <span class="w-full text-center"
                             :class="{ 'text-black': form.position == null, 'text-gray-400': form.position != null }">
                             All positions
                         </span>
-                    </SecondaryButton>
+                    </button>
                     <template v-for="position in positions" :key="position.id">
-                        <SecondaryButton @click="filterByPosition(position.id)">
-                            <span class="w-full text-center text-sm"
+                        <button @click="filterByPosition(position.id)" class="py-2 px-4 min-w-[215px] w-1/5 text-center font-bold items-center bg-white border-2 border-gray-300 rounded-full  text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary   active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap">
+                            <span class="w-full text-center"
                                 :class="{ 'text-black': form.position == position.id, 'text-gray-400': form.position != position.id }">
                                 {{ position.name }}
                             </span>
-                        </SecondaryButton>
+                        </button>
                     </template>
                 </div>
 

@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
-import { ElRate } from 'element-plus';
+import { ElRate, ElTimePicker } from 'element-plus';
 import dayjs from 'dayjs';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -32,7 +32,7 @@ const form = useForm({
 });
 
 const showSuccessModal = ref(false);
-
+const d = new Date();
 const createInvitation = () => {
     form.post(route('invitation.store'), {
         onSuccess: () => {
@@ -40,11 +40,28 @@ const createInvitation = () => {
         },
     });
 };
-
+const makeRange = (start, end) => {
+  const result = []
+  for (let i = start; i <= end; i++) {
+    result.push(i)
+  }
+  return result
+}
+const disabledDate = (time) => {
+    return dayjs(time).isBefore(dayjs().subtract(1, 'day'));
+}
+const disabledHours = () => {
+    let hour = d.getHours();
+  return makeRange(0, hour)
+}
+const disabledMinutes = (hour) => {
+    let minutes = d.getMinutes();
+    return makeRange(0 , minutes)
+}
 </script>
 
 <template>
-    <Head title="Send Invitation"/>
+    <Head title="Send Invitation" />
 
     <AppLayout title="Send Invitation">
         <template #header>
@@ -56,41 +73,39 @@ const createInvitation = () => {
                 <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div class="col-span-1">
                         <div class="bg-black rounded-xl p-6">
-                            <MainPlayerCard :player="invited" :show-report="false" :show-invite="false"/>
+                            <MainPlayerCard :player="invited" :show-report="false" :show-invite="false" />
 
                             <form @submit.prevent="">
                                 <div class="my-6">
                                     <InputLabel>Date</InputLabel>
                                     <div class="px-4">
-                                        <ElDatePicker style="background-color: black;" v-model="form.date"
-                                                      class="w-full" placeholde="DD/MM/YYYY"/>
+                                        <ElDatePicker stype="date" :disabled-date="disabledDate"
+                                            style="background-color: black;" v-model="form.date" class="w-full"
+                                            placeholde="DD/MM/YYYY" />
                                     </div>
-                                    <InputError class="mt-2" :message="form.errors.date"/>
+                                    <InputError class="mt-2" :message="form.errors.date" />
                                 </div>
 
                                 <div class="my-6">
                                     <InputLabel>Time</InputLabel>
                                     <div class="px-4">
-                                        <input type="time" name="time" id="time"
-                                               v-model="form.time"
-                                               class="block w-full rounded-full border-white px-4 focus:border-primary focus:ring-primary sm:text-sm bg-black text-white placeholder:center text-center"
-                                               placeholder="Search by name or username"/>
+                                        <ElTimePicker placeholder="Pick the time " v-model="form.time"
+                                            :disabled-hours="disabledHours" :disabled-minutes="disabledMinutes" />
                                     </div>
-                                    <InputError class="mt-2" :message="form.errors.time"/>
+                                    <InputError class="mt-2" :message="form.errors.time" />
                                 </div>
 
                                 <div class="my-6">
                                     <InputLabel>Stadium</InputLabel>
                                     <div class="px-4">
-                                        <select id="stadium" name="stadium"
-                                                v-model="form.stadium_id"
-                                                class="mt-1 block w-full rounded-full border-white py-2 pl-3 pr-10 text-base focus:border-primary focus:outline-none focus:ring-primary sm:text-sm text-white placeholder:center text-center bg-black">
-                                            <option v-for="stadium in stadiums" :key="stadium.id"
-                                                    :value="stadium.id">{{ stadium.name }}
+                                        <select id="stadium" name="stadium" v-model="form.stadium_id"
+                                            class="mt-1 block w-full rounded-full border-white py-2 pl-3 pr-10 text-base focus:border-primary focus:outline-none focus:ring-primary sm:text-sm text-white placeholder:center text-center bg-black">
+                                            <option v-for="stadium in stadiums" :key="stadium.id" :value="stadium.id">{{
+                                                stadium.name }}
                                             </option>
                                         </select>
                                     </div>
-                                    <InputError class="mt-2" :message="form.errors.stadium_id"/>
+                                    <InputError class="mt-2" :message="form.errors.stadium_id" />
                                 </div>
 
                                 <div class="my-6 mt-4">
@@ -110,10 +125,11 @@ const createInvitation = () => {
                         <h2 class="text-xl text-primary font-bold uppercase">Invitation Sent</h2>
                     </div>
 
-                    <p class="">Your invitation will be sent and you will receive an email updating you on the status of your request.</p>
+                    <p class="">Your invitation will be sent and you will receive an email updating you on the status of
+                        your request.</p>
 
                     <Link :href="route('home')" class="flex min-w-full w-full">
-                        <PrimaryButton class="w-full">Ok</PrimaryButton>
+                    <PrimaryButton class="w-full">Ok</PrimaryButton>
                     </Link>
                 </div>
             </div>
@@ -123,7 +139,6 @@ const createInvitation = () => {
 
 
 <style>
-
 .el-input__inner {
     height: 42px !important;
     color: black;
@@ -160,7 +175,11 @@ const createInvitation = () => {
     font-weight: bold !important;
 }
 
-.el-picker-panel__body-wrapper, .el-date-picker__header-label, .el-picker-panel__icon-btn, .el-picker-panel__content, .el-date-table > tbody > tr > th {
+.el-picker-panel__body-wrapper,
+.el-date-picker__header-label,
+.el-picker-panel__icon-btn,
+.el-picker-panel__content,
+.el-date-table>tbody>tr>th {
     color: green !important;
     font-weight: bold !important;
 }
@@ -191,7 +210,7 @@ const createInvitation = () => {
     background-color: black;
 }
 
-.el-input__inner{
+.el-input__inner {
     color: white;
 }
 </style>
