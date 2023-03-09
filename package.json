@@ -42,6 +42,7 @@
         "unplugin-auto-import": "^0.12.1",
         "unplugin-vue-components": "^0.22.12",
         "vue-chartjs": "^5.2.0",
-        "vue-easy-lightbox": "^1.14.0"
+        "vue-easy-lightbox": "^1.14.0",
+        "vue3-google-map": "^0.15.0"
     }
 }
