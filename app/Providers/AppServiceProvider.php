@@ -30,6 +30,6 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(RegisterViewResponse::class, RegisterResponse::class);
         $this->app->bind(ProfileInformationUpdatedResponse::class, ProfileInformationUpdatedResponseCustom::class);
-        $this->app->bind(RegisterResponse::class, RegisterSuccessfulResponse::class);
+        $this->app->bind(\Laravel\Fortify\Contracts\RegisterResponse::class, RegisterSuccessfulResponse::class);
     }
 }

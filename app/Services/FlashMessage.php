@@ -3,8 +3,6 @@
 namespace App\Services;
 
 use BadMethodCallException;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Notification;
 
 /**
  * @method success(string $message): FlashMessage
@@ -20,8 +18,11 @@ class FlashMessage
     ];
 
     private string $message;
+
     private string $type;
+
     private bool $closeable;
+
     private FlashMessageAction|null $action = null;
 
     public static function make(): FlashMessage
@@ -32,13 +33,11 @@ class FlashMessage
     /**
      * Call a method from the allowed message types.
      *
-     * @param string $name
-     * @param array $arguments
      * @return \App\Services\FlashMessage
      */
     public function __call(string $name, array $arguments)
     {
-        if (!in_array($name, self::TYPES)) {
+        if (! in_array($name, self::TYPES)) {
             throw new BadMethodCallException('This message type is not allowed');
         }
 
@@ -50,17 +49,11 @@ class FlashMessage
         return $message;
     }
 
-    /**
-     * @param string $message
-     */
     public function setMessage(string $message): void
     {
         $this->message = $message;
     }
 
-    /**
-     * @param string $type
-     */
     public function setType(string $type): void
     {
         $this->type = $type;
@@ -69,8 +62,6 @@ class FlashMessage
     /**
      * Add an action to the flash message.
      *
-     * @param string $url
-     * @param string $text
      * @return $this
      */
     public function action(string $url, string $text): FlashMessage
@@ -94,8 +85,6 @@ class FlashMessage
 
     /**
      * Get the array representation of the class.
-     *
-     * @return array
      */
     public function toArray(): array
     {
@@ -109,8 +98,6 @@ class FlashMessage
 
     /**
      * Add the message to the request session.
-     *
-     * @return void
      */
     public function send(): void
     {

@@ -16,8 +16,6 @@ class PlayerReviewController extends Controller
     /**
      * Get the show of the review
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Review $review
      * @return \Inertia\Response
      */
     public function show(Request $request, Review $review)
@@ -28,7 +26,7 @@ class PlayerReviewController extends Controller
             ->map(function ($ratingCategory) use ($ratingCategoriesCount) {
                 return [
                     'ratingCategory' => $ratingCategory->first()->name,
-                    'value' => (double)$ratingCategory->sum('pivot.value') / $ratingCategoriesCount
+                    'value' => (float) $ratingCategory->sum('pivot.value') / $ratingCategoriesCount,
                 ];
             })->values();
 
@@ -37,15 +35,10 @@ class PlayerReviewController extends Controller
             'ratingCategories' => RatingCategory::whereHas('positions', function (Builder $query) use ($review) {
                 $query->where('positions.id', $review->player->position_id);
             })->get(),
-            'playerRating' => $playerRating
+            'playerRating' => $playerRating,
         ]);
     }
 
-    /**
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Review $review
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function store(Request $request, Review $review): RedirectResponse
     {
         $value = 0;
@@ -56,10 +49,9 @@ class PlayerReviewController extends Controller
             ReviewRatingCategory::create([
                 'review_id' => $review->id,
                 'rating_category_id' => $ratingCategory['id'],
-                'value' => $ratingCategory['value']
+                'value' => $ratingCategory['value'],
             ]);
         }
-
 
         $request->session()->flash('message', [
             'type' => 'success',
@@ -68,8 +60,8 @@ class PlayerReviewController extends Controller
 
         $review->player->update([
             'rating' => $value / RatingCategory::whereHas('positions', function (Builder $query) use ($review) {
-                    $query->where('positions.id', $review->player->position_id);
-                })->count()
+                $query->where('positions.id', $review->player->position_id);
+            })->count(),
         ]);
 
         $review->player->notify(new NotifyUserOfRatingSubmittedNotification($review->reviewer, $review->player, $review));
