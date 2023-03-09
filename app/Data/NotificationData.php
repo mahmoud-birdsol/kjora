@@ -7,11 +7,16 @@ use Spatie\LaravelData\Data;
 class NotificationData extends Data
 {
     public string $displayType;
+
     public string $state;
+
     public string $title;
+
     public string $subtitle;
+
     public string|null $userAvatar = null;
     public string|null $userName = null;
+
     /**
      * @var \App\Data\RouteActionData
      */

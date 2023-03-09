@@ -35,10 +35,6 @@ class CountryFactory extends Factory
         ];
     }
 
-    /**
-     * @param  string  $countriesFile
-     * @return \Illuminate\Support\Collection
-     */
     private function collectCountries(string $countriesFile): Collection
     {
         return collect(json_decode(file_get_contents($countriesFile), true));

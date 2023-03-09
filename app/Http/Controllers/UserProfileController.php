@@ -8,14 +8,12 @@ use App\Models\Position;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class UserProfileController extends Controller
 {
     /**
      * Display the user profile
      *
-     * @param \Illuminate\Http\Request $request
      * @return \Inertia\Response
      */
     public function show(Request $request)
@@ -29,10 +27,9 @@ class UserProfileController extends Controller
             ->map(function ($ratingCategory) use ($ratingCategoriesCount) {
                 return [
                     'ratingCategory' => $ratingCategory->first()->name,
-                    'value' => (double)$ratingCategory->sum('pivot.value') / $ratingCategoriesCount
+                    'value' => (float) $ratingCategory->sum('pivot.value') / $ratingCategoriesCount,
                 ];
             })->values();
-
 
         $media = $user->getMedia('gallery')->map(function (MediaLibrary $media) {
             return [
@@ -40,24 +37,19 @@ class UserProfileController extends Controller
                 'url' => $media->original_url,
                 'type' => $media->type,
                 'extension' => $media->extension,
-                'comments' => $media->comments?->load('replies')
+                'comments' => $media->comments?->load('replies'),
             ];
         });
-
 
         return Inertia::render('Profile/Show', [
             'user' => $user,
             'media' => $media,
-            'playerRating' => $playerRating
+            'playerRating' => $playerRating,
         ]);
     }
 
-
     /**
      * Display and edit user profile page.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Inertia\Response
      */
     public function edit(Request $request): Response
     {
