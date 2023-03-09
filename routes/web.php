@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\UserEmailController;
 use App\Http\Controllers\Auth\UserNameController;
 use App\Http\Controllers\Auth\UserPhoneController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HireController;
 use App\Http\Controllers\IdentityVerificationController;
@@ -403,6 +404,8 @@ Route::get('upgrade', function () {
 Route::get('update-password', function () {
     return Inertia::render('Auth/UpdatePassword');
 })->name('update.password');
+
+Route::post('contacts', [ContactController::class, 'store'])->name('contacts.store');
 
 Route::get('phone/verify', [VerificationCodeController::class, 'create'])->name('phone.verify');
 Route::post('phone/verify', [VerificationCodeController::class, 'store'])->name('phone.verify.store');

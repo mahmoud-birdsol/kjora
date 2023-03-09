@@ -173,6 +173,18 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     }
 
     /**
+     * Get the rating value rounded
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function rating(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => round($this->rating)
+        );
+    }
+
+    /**
      * Get the user avatar url.
      */
     public function avatarUrl(): Attribute
