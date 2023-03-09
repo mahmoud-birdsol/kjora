@@ -7,7 +7,7 @@
                 <FadeInTransition>
                     <Link :href="route('posts.show', post.id)"
                         class="relative w-full h-full overflow-hidden rounded-lg aspect-square group">
-                    <img :src="post.cover_photo.original_url" alt="" class="object-cover w-full h-full ">
+                    <img :src="post?.cover_photo?.original_url" alt="" class="object-cover w-full h-full ">
                     <button v-if="currentUser.id === user.id" @click.prevent.stop="showDeleteMediaModal = true"
                         class="absolute top-0 right-0 hidden bg-white group-hover:block bg-opacity-90 rounded-bl-xl">
                         <div class="flex flex-col items-start justify-center h-full p-1 opacity-100 ">
