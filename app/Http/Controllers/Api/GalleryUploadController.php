@@ -11,8 +11,6 @@ class GalleryUploadController extends Controller
     /**
      * Upload user media gallery
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
      */
@@ -20,8 +18,8 @@ class GalleryUploadController extends Controller
     {
         $request->validate([
             'gallery' => [
-                'max:10240'
-            ]
+                'max:10240',
+            ],
         ]);
         /** @var \App\Models\User $user */
         $user = $request->user();
@@ -29,7 +27,7 @@ class GalleryUploadController extends Controller
         $user->addMedia($request->file('gallery'))->toMediaCollection('gallery');
 
         return response()->json([
-            'message' => 'File uploaded successfully'
+            'message' => 'File uploaded successfully',
         ]);
     }
 }

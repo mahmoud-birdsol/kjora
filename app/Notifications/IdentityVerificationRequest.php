@@ -14,9 +14,6 @@ class IdentityVerificationRequest extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    /**
-     * @var \App\Models\User
-     */
     private User $user;
 
     /**
@@ -57,8 +54,6 @@ class IdentityVerificationRequest extends Notification implements ShouldQueue
 
     /**
      * Get the nova representation of the notification
-     *
-     * @return NovaNotification
      */
     public function toNova(): NovaNotification
     {

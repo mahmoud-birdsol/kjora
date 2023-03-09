@@ -2,15 +2,21 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\CanBeReported;
+use App\Models\Contracts\Reportable;
+use App\Models\Concerns\CanBeLiked;
+use App\Models\Contracts\Likeable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class Comment extends Model
+class Comment extends Model implements Reportable, Likeable
 {
     use HasFactory;
+    use CanBeReported;
+    use CanBeLiked;
 
     /**
      * The attributes that are mass assignable.
@@ -38,8 +44,6 @@ class Comment extends Model
 
     /**
      * The type of the polymorphic relation.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function commentable(): MorphTo
     {
@@ -48,8 +52,6 @@ class Comment extends Model
 
     /**
      * Get the user associated with this comment
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -58,8 +60,6 @@ class Comment extends Model
 
     /**
      * Get the replies associated with this comment
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function replies(): HasMany
     {
@@ -67,5 +67,15 @@ class Comment extends Model
             ->with('replies')
             ->with('user')
             ->orderBy('created_at');
+    }
+
+    public function owner(): User
+    {
+        return $this->user;
+    }
+
+    public function url(): string
+    {
+        return url(route('gallery.show', $this->commentable));
     }
 }

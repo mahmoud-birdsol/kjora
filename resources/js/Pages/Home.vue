@@ -72,49 +72,45 @@ const filterByPosition = (position) => {
 </script>
 <template>
     <Head title="Home" />
-<AppLayout title="Home">
-    <template #header>
-        <HelloUserHeader />
-    </template>
-    <template #ads>
-        <Splide dir="ltr" class=" h-[4rem] w-[32rem] max-w-full self-end overflow-hidden  rounded-full md:ml-auto"
-            :options="options">
-            <template v-for="(advertisement, i) in advertisements" :key="i">
-                <SplideSlide class="h-full">
-                    <img class="object-cover h-full " :src="advertisement" alt="">
-                </SplideSlide>
-            </template>
-        </Splide>
-    </template>
-    <div class="py-12">
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <!-- Position Filters...
-                                                                                                            =====================================================-->
-            <div class="flex gap-4 my-8 overflow-x-auto hideScrollBar">
-                <SecondaryButton @click="filterByPosition(null)">
-                    <span class="w-full text-center"
-                        :class="{ 'text-black': form.position == null, 'text-gray-400': form.position != null }">
-                        All positions
-                    </span>
-                </SecondaryButton>
-                <template v-for="position in positions" :key="position.id">
-                    <SecondaryButton @click="filterByPosition(position.id)">
+
+    <AppLayout title="Home">
+        <template #header>
+            <HelloUserHeader />
+        </template>
+        <template #ads>
+
+            <Splide dir="ltr" class=" h-full w-[32rem] max-w-full self-end overflow-hidden  rounded-full md:ml-auto" :options="options">
+                <template v-for="(advertisement, i) in advertisements" :key="i">
+                    <SplideSlide class="h-full">
+                        <a :href="route('advertisements.show', advertisement)" class="block" target="_blank">
+                            <img class="object-cover h-full " :src="advertisement.media[0].original_url" alt="">
+                        </a>
+                    </SplideSlide>
+                </template>
+            </Splide>
+
+
+        </template>
+        <div class="">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <!-- Position Filters...
+                                                                                                    =====================================================-->
+                <div class="flex gap-4 mt-4 mb-8 overflow-x-auto hideScrollBar">
+                    <button @click="filterByPosition(null)" class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
+                    :class="{ 'border-primary': form.position == null, 'border-none': form.position != null }"
+                    >
                         <span class="w-full text-center"
                             :class="{ 'text-black': form.position == position.id, 'text-gray-400': form.position != position.id }">
                             {{ position.name }}
                         </span>
-                    </SecondaryButton>
-                </template>
-            </div>
-            <!-- Current list...
-                                                                                                            =====================================================-->
-            <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
-                <div class="flex items-start justify-start my-6">
-                    <p class="text-sm font-bold">Total ({{ players.total }})</p>
-                </div>
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-                    <template v-for="player in players.data" :key="player.id">
-                        <MainPlayerCard :player="player" />
+                    </button>
+                    <template v-for="position in positions" :key="position.id">
+                        <button @click="filterByPosition(position.id)" class="py-2 px-4 min-w-[215px] w-1/5 text-center font-bold items-center bg-white border-2 border-gray-300 rounded-full  text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary   active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap">
+                            <span class="w-full text-center"
+                                :class="{ 'text-black': form.position == position.id, 'text-gray-400': form.position != position.id }">
+                                {{ position.name }}
+                            </span>
+                        </button>
                     </template>
                 </div>
                     <div class="flex items-center justify-center my-4">

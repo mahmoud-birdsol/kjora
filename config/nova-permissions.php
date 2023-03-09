@@ -650,7 +650,6 @@ return [
         ],
 
         /*
-<<<<<<< HEAD
         |--------------------------------------------------------------------------
         | Conversation.
         |--------------------------------------------------------------------------
@@ -776,7 +775,6 @@ return [
             'group' => 'Message',
         ],
 
-
         /*
        |--------------------------------------------------------------------------
        | Report Options.
@@ -877,6 +875,37 @@ return [
             'display_name' => 'Resolve reviews',
             'description' => 'Can resolve reviews',
             'group' => 'Review',
+        ],
+
+
+        /*
+       |--------------------------------------------------------------------------
+       | Likes.
+       |--------------------------------------------------------------------------
+       */
+
+        'view likes' => [
+            'display_name' => 'View likes',
+            'description' => 'Can view likes',
+            'group' => 'Like',
+        ],
+
+        'create likes' => [
+            'display_name' => 'Create likes',
+            'description' => 'Can create likes',
+            'group' => 'Like',
+        ],
+
+        'edit likes' => [
+            'display_name' => 'Edit likes',
+            'description' => 'Can edit likes',
+            'group' => 'Like',
+        ],
+
+        'delete likes' => [
+            'display_name' => 'Delete likes',
+            'description' => 'Can delete likes',
+            'group' => 'Like',
         ],
     ]
 ];
