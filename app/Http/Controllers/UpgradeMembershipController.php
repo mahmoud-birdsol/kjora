@@ -24,6 +24,6 @@ class UpgradeMembershipController extends Controller
             message: 'Your Subscription has been upgraded to Premium'
         )->closeable()->send();
 
-        return redirect()->back();
+        return redirect()->route('home');
     }
 }

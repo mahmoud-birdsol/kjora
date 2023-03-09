@@ -4,10 +4,8 @@ namespace App\Notifications;
 
 use App\Data\NotificationData;
 use App\Data\RouteActionData;
-use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -16,14 +14,8 @@ class CommentCreatedNotification extends Notification
 {
     use Queueable;
 
-    /**
-     * @var \App\Models\User
-     */
     private User $user;
 
-    /**
-     * @var \App\Models\User
-     */
     private User $notifier;
 
     private $commentable;
@@ -61,7 +53,7 @@ class CommentCreatedNotification extends Notification
     {
         return (new MailMessage)
             ->subject('Comment Notification')
-            ->line('Dear ' . $this->user->name)
+            ->line('Dear '.$this->user->name)
             ->line('This is to notify you that a new comment has been created')
             ->action('Chat Now', url(route('gallery.show', $this->commentable)))
             ->line('Thank you for using our application!');
@@ -79,7 +71,7 @@ class CommentCreatedNotification extends Notification
             displayType: 'simple',
             state: 'success',
             title: 'Comment Notification',
-            subtitle: 'User ' . $this->notifier->name . ' commented on your post',
+            subtitle: 'User '.$this->notifier->name.' commented on your post',
             actionData: new RouteActionData(
                 route: route('gallery.show', $this->commentable),
                 text: 'View Now',

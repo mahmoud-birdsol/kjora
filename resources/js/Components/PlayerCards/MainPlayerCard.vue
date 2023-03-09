@@ -1,13 +1,14 @@
 <script setup>
-import { computed, ref } from 'vue';
-import { Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { ElRate } from 'element-plus';
+import {computed} from 'vue';
+import {Link, useForm, usePage} from '@inertiajs/inertia-vue3';
+import {ElRate} from 'element-plus';
 import Avatar from '@/Components/Avatar.vue';
-import { HeartIcon, PencilIcon } from '@heroicons/vue/20/solid'
-import { ChevronDoubleRightIcon, FlagIcon, HeartIcon as HeartIconOutline, MapPinIcon } from '@heroicons/vue/24/outline';
+import {HeartIcon, PencilIcon} from '@heroicons/vue/20/solid'
+import {FlagIcon, HeartIcon as HeartIconOutline, MapPinIcon} from '@heroicons/vue/24/outline';
 import ReportModal from "@/Components/ReportModal.vue";
 import Socials from '@/Components/Socials.vue';
 import ToolTip from "@/Components/ToolTip.vue";
+
 const props = defineProps({
     player: {
         required: true,
@@ -37,15 +38,18 @@ const props = defineProps({
 
 const state = props.player.state_name
 const backgroundImage = computed(() => {
-    if(state=='Premium'){
-        return '/images/gold.png';
+    if (state == 'Premium') {
+        return {
+            'sm': '/images/player_bg_sm_gold.png',
+            'lg': '/images/player_bg_lg_gold.png',
+        }[props.size];
     }
-    else if(state =='Free') {
+    if (state == 'Free') {
         return {
             'sm': '/images/player_bg_sm.png',
             'lg': '/images/player_bg_lg.png',
         }[props.size];
-    } 
+    }
 });
 
 const currentUser = usePage().props.value.auth.user
@@ -54,7 +58,7 @@ const isCurrentUser = props.player.id === currentUser.id
 const addToFavorites = () => {
     const form = useForm({});
 
-    form.post(route('favorites.store', { favorite: props.player.id }), {
+    form.post(route('favorites.store', {favorite: props.player.id}), {
         preserveState: false,
         preserveScroll: true,
     });
@@ -63,7 +67,7 @@ const addToFavorites = () => {
 const removeFromFavorites = () => {
     const form = useForm({});
 
-    form.delete(route('favorites.destroy', { favorite: props.player.id }), {
+    form.delete(route('favorites.destroy', {favorite: props.player.id}), {
         preserveState: false,
         preserveScroll: true,
     });
@@ -72,14 +76,14 @@ const removeFromFavorites = () => {
 
 <template>
     <div class="rounded-xl"
-        :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
+         :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
         <div v-if="player.id !== $page.props.auth.user.id" class="flex justify-end">
             <span class="rounded-lg rounded-bl-3xl bg-white p-2 -mt-0.5 -mr-0.5">
                 <a href="javascript:;" @click="addToFavorites" v-if="!player.is_favorite">
-                    <HeartIconOutline class="h-5 w-5 text-primary" />
+                    <HeartIconOutline class="h-5 w-5 text-primary"/>
                 </a>
                 <a href="javascript:;" @click="removeFromFavorites" v-if="player.is_favorite">
-                    <HeartIcon class="h-5 w-5 text-primary" />
+                    <HeartIcon class="h-5 w-5 text-primary"/>
                 </a>
             </span>
         </div>
@@ -88,25 +92,27 @@ const removeFromFavorites = () => {
                 <div class="flex justify-start mb-2" :class="{ 'space-x-2': size == 'sm', 'space-x-8': size == 'lg' }">
                     <div class="relative">
                         <Link :href="route('profile.edit')" v-if="isCurrentUser"
-                            class="absolute bottom-0 right-0 p-1 bg-white rounded-full hover:text-primary">
-                        <PencilIcon class="w-3 [&+div]:hover:block " />
-                        <ToolTip value="Edit your profile"/>
+                              class="absolute bottom-0 right-0 p-1 bg-white rounded-full hover:text-primary">
+                            <PencilIcon class="w-3 [&+div]:hover:block "/>
+                            <ToolTip value="Edit your profile"/>
                         </Link>
-                        <Avatar :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true" />
+                        <Avatar :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true"/>
                     </div>
 
                     <div>
                         <Link :href="route('player.profile', player.id)">
-                        <h2 class="text-sm font-bold text-white">
-                            {{ player.first_name }} {{ player.last_name }}
-                        </h2>
+                            <h2 class="text-sm font-bold text-white">
+                                {{ player.first_name }} {{ player.last_name }}
+                            </h2>
                         </Link>
 
                         <Link class="text-xs text-white opacity-50" :href="route('player.profile', player.id)">@{{
-                            player.username }}</Link>
+                                player.username
+                            }}
+                        </Link>
                         <p class="flex items-center space-x-2 text-sm text-white">
                             <span class="scale-[0.7] origin-left flex items-center gap-x-1">
-                                <ElRate disabled v-model="player.rating" size="small" />
+                                <ElRate disabled v-model="player.rating" size="small"/>
                                 {{ player.rating }}
                             </span>
                         </p>
@@ -119,11 +125,11 @@ const removeFromFavorites = () => {
             </div>
 
             <div class="grid gap-4 border-b border-white"
-                :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' }">
+                 :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' }">
                 <div v-if="size == 'lg'" class="relative">
                     <p class="text-xs text-center text-white opacity-50 text-light">Favorite Club</p>
-                    <div class="flex justify-center item-center [&+div]:hover:block" >
-                        <img :src="player.club?.logo_thumb" class="w-5 h-5 border-2 border-white rounded-full" />
+                    <div class="flex justify-center item-center [&+div]:hover:block">
+                        <img :src="player.club?.logo_thumb" class="w-5 h-5 border-2 border-white rounded-full"/>
                     </div>
                     <ToolTip :value="player.club?.name"/>
                 </div>
@@ -147,17 +153,17 @@ const removeFromFavorites = () => {
 
             <div class="flex items-center justify-between mt-2">
                 <p class="flex items-center text-sm text-white" v-if="showLocation">
-                    <MapPinIcon class="inline w-4 h-4 text-white" />
+                    <MapPinIcon class="inline w-4 h-4 text-white"/>
                     {{ player.current_city }}
                 </p>
                 <div class="flex gap-4 items-center">
                     <div class="flex space-x-2 text-white bg-transparent"
-                        v-if="showInvite && player.id !== $page.props.auth.user.id">
+                         v-if="showInvite && player.id !== $page.props.auth.user.id">
                         <Link :href="route('invitation.create', player.id)" class="text-sm text-white">Send Invitation
-                        <!-- <ChevronDoubleRightIcon class="inline w-4 h-4 text-white" /> -->
+                            <!-- <ChevronDoubleRightIcon class="inline w-4 h-4 text-white" /> -->
                         </Link>
                     </div>
-                    <Socials :id="player.id" />
+                    <Socials :id="player.id"/>
 
                 </div>
             </div>
@@ -168,7 +174,7 @@ const removeFromFavorites = () => {
                 <ReportModal :reportable-id="player.id" :reportable-type="'App\\Models\\User'">
                     <template #trigger>
                         <button>
-                            <FlagIcon class="h-4 w-4 text-red-500" />
+                            <FlagIcon class="h-4 w-4 text-red-500"/>
                         </button>
 
                     </template>

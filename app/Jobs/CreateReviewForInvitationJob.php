@@ -36,7 +36,7 @@ class CreateReviewForInvitationJob implements ShouldQueue
             ->get()->each(function (Invitation $invitation) {
                 $firstReview = $invitation->reviews()->create([
                     'reviewer_id' => $invitation->invitingPlayer->id,
-                    'player_id' => $invitation->invitedPlayer->id
+                    'player_id' => $invitation->invitedPlayer->id,
                 ]);
 
                 $invitation->invitingPlayer->notify(
@@ -49,9 +49,8 @@ class CreateReviewForInvitationJob implements ShouldQueue
 
                 $secondReview = $invitation->reviews()->create([
                     'reviewer_id' => $invitation->invitedPlayer->id,
-                    'player_id' => $invitation->invitingPlayer->id
+                    'player_id' => $invitation->invitingPlayer->id,
                 ]);
-
 
                 $invitation->invitedPlayer->notify(
                     new NotifyPlayerOfReviewNotification(

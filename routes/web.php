@@ -20,7 +20,6 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UpgradeMembershipController;
 use App\Http\Controllers\ResendVerificationCodeController;
 use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\VerificationCodeController;
 use App\Models\Country;
 use App\Models\Invitation;
 use App\Models\MediaLibrary;
@@ -64,14 +63,15 @@ Route::middleware([
     'auth:sanctum',
     'location.detect',
     config('jetstream.auth_session'),
-    'phone.verified'
-//    'player.review'
+    'verified.phone',
+    'verified.email',
+    'verified.identity',
+    'player.review'
 ])->group(function () {
     Route::get('/verification/identity', [
         IdentityVerificationController::class,
         'create',
     ])->name('identity.verification.create');
-
 
     Route::post('/verification/identity', [
         IdentityVerificationController::class,
@@ -149,13 +149,13 @@ Route::middleware([
         Route::get(
             'player/review/{review}', [
             PlayerReviewController::class,
-            'show'
+            'show',
         ])->name('player.review.show');
 
         Route::post(
             'player/review/{review}', [
             PlayerReviewController::class,
-            'store'
+            'store',
         ])->name('player.review.store');
 
         /*
@@ -166,7 +166,7 @@ Route::middleware([
 
         Route::get('invitations', [
             InvitationController::class,
-            'index'
+            'index',
         ])->name('invitation.index');
 
         Route::get('more', function () {
@@ -178,7 +178,7 @@ Route::middleware([
 
         Route::get('hires', [
             HireController::class,
-            'index'
+            'index',
         ])->name('hire.index');
 
         Route::get('invitations/create/{invited}', function (User $invited) {
@@ -273,7 +273,7 @@ Route::middleware([
                 ],
                 'image' => [
                     'required',
-                    'file'
+                    'file',
                 ],
             ]);
 
@@ -294,17 +294,17 @@ Route::middleware([
 
     Route::get('favourites', [
         FavoriteController::class,
-        'index'
+        'index',
     ])->name('favorites.index');
 
     Route::post('favorites/{favorite}', [
         FavoriteController::class,
-        'store'
+        'store',
     ])->name('favorites.store');
 
     Route::delete('favorites/{favorite}', [
         FavoriteController::class,
-        'destroy'
+        'destroy',
     ])->name('favorites.destroy');
 
     /*
@@ -317,7 +317,7 @@ Route::middleware([
         'chats',
         [
             ChatController::class,
-            'index'
+            'index',
         ]
     )->name('chats.index');
 
@@ -325,7 +325,7 @@ Route::middleware([
         'chats/{conversation}',
         [
             ChatController::class,
-            'show'
+            'show',
         ]
     )->name('chats.show');
 
@@ -337,7 +337,7 @@ Route::middleware([
 
     Route::post('report', [
         ReportController::class,
-        'store'
+        'store',
     ])->name('report.store');
 
 
@@ -366,7 +366,6 @@ Route::middleware([
     Route::delete('like', [\App\Http\Controllers\LikeController::class, 'destroy'])->name('like.destroy');
 });
 
-
 //     // Example 2: Get all the connected users for a specific channel
 // });
 
@@ -381,7 +380,7 @@ Route::get('gallery/{mediaLibrary}', function (MediaLibrary $mediaLibrary) {
 
     return Inertia::render('Gallery/Show', [
         'media' => $mediaLibrary,
-        'user' => $user
+        'user' => $user,
     ]);
 })->name('gallery.show');
 
@@ -400,9 +399,15 @@ Route::get('update-password', function () {
 })->name('update.password');
 
 Route::get('phone/verify', [VerificationCodeController::class, 'create'])->name('phone.verify');
-
 Route::post('phone/verify', [VerificationCodeController::class, 'store'])->name('phone.verify.store');
+Route::get('phone/resend-verification', ResendVerificationCodeController::class)->name('verification.phone.send');
 
 
-Route::get('phone/resend-verification', ResendVerificationCodeController::class)
-    ->name('verification.phone.send');
+Route::get('test', function () {
+    $response = Http::withHeaders([
+        'x-rapidapi-host' => 'v3.football.api-sports.io',
+        'x-rapidapi-key' => '303758e6ae860e914bb0755664b4caf0',
+    ])->get('https://v3.football.api-sports.io/teams?country=England&league=39&season=2022');
+
+    dd($response->json());
+});

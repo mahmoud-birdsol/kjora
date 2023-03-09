@@ -91,7 +91,7 @@ const expaireDate = `${day} ${months[month+3]} ${year}`
                     <template #body>
                             <div class="relative  rounded-xl mx-auto w-full bg-no-repeat bg-cover max-w-sm text-sm text-black"
                             >
-                                <img src="/images/gold.png" class="absolute top-0 left-0 w-full h-full" />
+                                <img src="/images/player_bg_sm_gold.png" class="absolute top-0 left-0 w-full h-full" />
                                 <div class="bg-black rounded-full absolute top-0 right-0 m-4">
                                     <StarIcon class="w-4 h-4 fill-golden" />
                                 </div>

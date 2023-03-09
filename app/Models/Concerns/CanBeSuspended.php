@@ -11,8 +11,6 @@ trait CanBeSuspended
 {
     /**
      * Check if the model is active.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function isActive(): Attribute
     {
@@ -23,8 +21,6 @@ trait CanBeSuspended
 
     /**
      * Check if the model is suspended.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function isSuspended(): Attribute
     {
@@ -35,9 +31,6 @@ trait CanBeSuspended
 
     /**
      * Filter to only suspended models.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeSuspended(Builder $query): Builder
     {
@@ -53,9 +46,6 @@ trait CanBeSuspended
 
     /**
      * Filter to active models.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeActive(Builder $query): Builder
     {
@@ -80,8 +70,6 @@ trait CanBeSuspended
 
     /**
      * Mark the model as active.
-     *
-     * @return void
      */
     public function activate(): void
     {
@@ -96,8 +84,6 @@ trait CanBeSuspended
 
     /**
      * Mark the model as suspended.
-     *
-     * @return void
      */
     public function suspend(): void
     {
@@ -112,8 +98,6 @@ trait CanBeSuspended
 
     /**
      * Get the model latest suspensions state.
-     *
-     * @return string
      */
     public function getLatestSuspensionState(): string
     {
@@ -128,8 +112,6 @@ trait CanBeSuspended
 
     /**
      * Get the model latest suspension record.
-     *
-     * @return \stdClass|null
      */
     public function getLatestSuspensionRecord(): stdClass|null
     {

@@ -26,9 +26,6 @@ class SendJoinPlatformNotification
     /**
      * Send a tokenized join platform notification which will redirect
      * the user to reset their password and join the platform.
-     *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @return void
      */
     public function __invoke(Authenticatable $user): void
     {
@@ -39,9 +36,6 @@ class SendJoinPlatformNotification
 
     /**
      * Generate and store a new unique token.
-     *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @return string
      */
     private function storeToken(Authenticatable $user): string
     {

@@ -24,24 +24,24 @@ class PlayerController extends Controller
     {
         $query = User::query()->whereNot('id', $request->user()->id);
 
-        $request->whenFilled('position', fn() => $query->where('position_id', $request->input('position')));
+        $request->whenFilled('position', fn () => $query->where('position_id', $request->input('position')));
         $request->whenFilled('rating',
             $request->input('rating') > 0
-                ? fn() => $query->where(function ($query) use ($request) {
-                $query->where('rating', '>=', $request->input('rating'));
-            })
-                : fn() => null
+                ? fn () => $query->where(function ($query) use ($request) {
+                    $query->where('rating', '>=', $request->input('rating'));
+                })
+                : fn () => null
         );
 
         $request->whenFilled('age',
-            fn() => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('age')))
+            fn () => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('age')))
         );
 
         $request->whenFilled('country',
-            fn() => $query->where('country_id', $request->input('country'))
+            fn () => $query->where('country_id', $request->input('country'))
         );
 
-        $request->whenFilled('search', fn() => $query->where(function ($query) use ($request) {
+        $request->whenFilled('search', fn () => $query->where(function ($query) use ($request) {
             $query
                 ->where('first_name', 'LIKE', '%' . $request->input('search') . '%')
                 ->orWhere('last_name', 'LIKE', '%' . $request->input('search') . '%')
@@ -58,7 +58,9 @@ class PlayerController extends Controller
         return Inertia::render('Home', [
             'players' => $query->paginate(20),
             'positions' => Position::all(),
-            'advertisements' => $advertisements
+            'advertisements' => Advertisement::orderBy('priority')->get()->map(function (Advertisement $advertisement) {
+                return $advertisement->getFirstMediaUrl('main');
+            }),
         ]);
     }
 
@@ -81,7 +83,7 @@ class PlayerController extends Controller
                 'url' => $media->original_url,
                 'type' => $media->type,
                 'extension' => $media->extension,
-                'comments' => $media->comments?->load('replies')
+                'comments' => $media->comments?->load('replies'),
             ];
         });
 
@@ -91,14 +93,14 @@ class PlayerController extends Controller
             ->map(function ($ratingCategory) use ($ratingCategoriesCount) {
                 return [
                     'ratingCategory' => $ratingCategory->first()->name,
-                    'value' => (double)$ratingCategory->sum('pivot.value') / $ratingCategoriesCount
+                    'value' => (float) $ratingCategory->sum('pivot.value') / $ratingCategoriesCount,
                 ];
             })->values();
 
         return Inertia::render('Player/Show', [
             'player' => $user,
             'media' => $media,
-            'playerRating' => $playerRating
+            'playerRating' => $playerRating,
         ]);
     }
 }

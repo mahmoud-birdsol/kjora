@@ -8,8 +8,6 @@ class CommentStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -26,23 +24,23 @@ class CommentStoreRequest extends FormRequest
         return [
             'parent_id' => [
                 'nullable',
-                'exists:comments,id'
+                'exists:comments,id',
             ],
             'user_id' => [
                 'required',
-                'exists:users,id'
+                'exists:users,id',
             ],
             'body' => [
                 'required',
                 'string',
-                'max:256'
+                'max:256',
             ],
             'commentable_id' => [
-                'required'
+                'required',
             ],
             'commentable_type' => [
-                'required'
-            ]
+                'required',
+            ],
         ];
     }
 }

@@ -12,16 +12,11 @@ class ReportController extends Controller
 {
     /**
      * Submit a new report.
-     *
-     * @param \App\Http\Requests\ReportRequest $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(ReportRequest $request): RedirectResponse
     {
-        $report = Report::create($request->validated())
-            ->user()
-            ->associate($request->user())
-            ->save();
+        $report = Report::create($request->validated());
+        $report->user()->associate($request->user())->save();
 
         NotifyAdminsOfReportSubmission::dispatch($report);
 

@@ -33,12 +33,12 @@ class CountrySeeder extends Seeder
             $country = Country::create([
                 'name' => $data['name'],
                 'code' => $data['alpha2Code'],
-                'calling_code' => $data['callingCodes'][0]
+                'calling_code' => $data['callingCodes'][0],
             ]);
 
             if (array_key_exists('flags', $data)) {
                 try {
-                    $country->addMediaFromUrl($data['flags']["svg"])->toMediaCollection('flag');
+                    $country->addMediaFromUrl($data['flags']['svg'])->toMediaCollection('flag');
                 } catch (\Exception $e) {
                     Log::info($e->getMessage());
                 }
@@ -48,10 +48,6 @@ class CountrySeeder extends Seeder
         Schema::enableForeignKeyConstraints();
     }
 
-    /**
-     * @param  string  $countriesFile
-     * @return \Illuminate\Support\Collection
-     */
     private function collectCountries(string $countriesFile): Collection
     {
         return collect(json_decode(file_get_contents($countriesFile), true));

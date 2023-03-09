@@ -14,9 +14,6 @@ class ReportSubmittedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    /**
-     * @var \App\Models\Report
-     */
     private Report $report;
 
     /**
@@ -32,7 +29,7 @@ class ReportSubmittedNotification extends Notification implements ShouldQueue
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -43,28 +40,26 @@ class ReportSubmittedNotification extends Notification implements ShouldQueue
     /**
      * Get the mail representation of the notification.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
         return (new MailMessage)
             ->subject('New report submitted ⚠️')
-            ->line($this->report->user->name . ' has submitted a report.')
-            ->action('Review', '/resources/reports/' . $this->report->id)
+            ->line($this->report->user->name.' has submitted a report.')
+            ->action('Review', '/resources/reports/'.$this->report->id)
             ->line('Thank you for using our application!');
     }
 
     /**
      * Get the nova representation of the notification
-     *
-     * @return NovaNotification
      */
     public function toNova(): NovaNotification
     {
         return (new NovaNotification)
-            ->message($this->report->user->name . ' has submitted a report.')
-            ->action('Review', '/resources/reports/' . $this->report->id)
+            ->message($this->report->user->name.' has submitted a report.')
+            ->action('Review', '/resources/reports/'.$this->report->id)
             ->icon('check')
             ->type('success');
     }
