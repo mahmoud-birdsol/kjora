@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\LocationDetector;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -65,8 +66,9 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified.email' => \App\Http\Middleware\EnsureEmailIsVerified::class,
-        //            \App\Http\Middleware\EnsurePhoneIsVerified::class,
+        'verified.phone' => \App\Http\Middleware\EnsurePhoneIsVerified::class,
         'verified.identity' => \App\Http\Middleware\EnsureUploadedIdentityVerificationDocuments::class,
+        'location.detect'=> \App\Http\Middleware\LocationDetector::class,
         'player.review' => \App\Http\Middleware\ReviewUserMiddleware::class,
     ];
 }

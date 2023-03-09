@@ -145,6 +145,7 @@ class Message extends Model implements HasMedia
         return Attribute::make(
             get: fn ($value) => [
                 'name' => User::find($this->sender_id)->name,
+                'id' => User::find($this->sender_id)->id,
                 'username' => User::find($this->sender_id)->username,
                 'avatar_url' => User::find($this->sender_id)->avatar_url,
             ]

@@ -15,6 +15,9 @@ class EnsureUploadedIdentityVerificationDocuments
      */
     public function handle(Request $request, Closure $next)
     {
+        if ($request->user()->hasVerifiedIdentity()) {
+            return $next($request);
+        }
         if (! $request->user()->hasUploadedVerificationDocuments()) {
             $request->session()->flash('message', [
                 'type' => 'warning',
