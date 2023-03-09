@@ -44,8 +44,6 @@ class Club extends Model implements Suspendable, HasMedia
     /**
      * Register the model media conversions.
      *
-     * @param  \Spatie\MediaLibrary\MediaCollections\Models\Media|null  $media
-     * @return void
      *
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
@@ -58,8 +56,6 @@ class Club extends Model implements Suspendable, HasMedia
 
     /**
      * Register the model media collections.
-     *
-     * @return void
      */
     public function registerMediaCollections(): void
     {
@@ -68,8 +64,6 @@ class Club extends Model implements Suspendable, HasMedia
 
     /**
      * Get the country logo.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function logo(): Attribute
     {
@@ -80,8 +74,6 @@ class Club extends Model implements Suspendable, HasMedia
 
     /**
      * Get the country logo thumb.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function logoThumb(): Attribute
     {
@@ -92,8 +84,6 @@ class Club extends Model implements Suspendable, HasMedia
 
     /**
      * Get the club country.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function country(): BelongsTo
     {
@@ -102,8 +92,6 @@ class Club extends Model implements Suspendable, HasMedia
 
     /**
      * Get the club users.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function users(): HasMany
     {

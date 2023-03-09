@@ -9,8 +9,6 @@ trait CanBeReported
 {
     /**
      * Get the reportable model reports.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function reports(): MorphMany
     {
