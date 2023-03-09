@@ -66,27 +66,29 @@ class LikeCreatedNotification extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function toArray($notifiable)
     {
         return (new NotificationData(
-            displayType: 'simple',
+            displayType: 'user',
             state: 'success',
             title: 'Like Notification',
             subtitle: $this->like->user->name . ' liked your ' . (get_class($this->likeable) == Comment::class ? 'comment!' : 'post!'),
             actionData: new RouteActionData(
                 route: $this->likeable->url(),
-                text: 'View ' . (get_class($this->likeable) == Comment::class ? 'comment!' : 'post!'),
+                text: 'View ' . (get_class($this->likeable) == Comment::class ? 'comment' : 'post'),
             ),
+            userAvatar: $notifiable->avatar_url,
+            userName: $notifiable->name,
         ))->toArray();
     }
 
     /**
      * Get the broadcastable representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return BroadcastMessage
      */
     public function toBroadcast($notifiable)
