@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Queries\AdvertisementQueryBuilder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -43,10 +44,14 @@ class Advertisement extends Model implements HasMedia
         'end_date' => 'datetime',
     ];
 
+    protected $appends = [
+        'image',
+    ];
+
     /**
      * Create a new Eloquent query builder for the model.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param \Illuminate\Database\Query\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder|static
      */
     public function newEloquentBuilder($query): AdvertisementQueryBuilder
@@ -76,6 +81,13 @@ class Advertisement extends Model implements HasMedia
     public function impressions(): HasMany
     {
         return $this->hasMany(Impression::class);
+    }
+
+    public function image(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->getFirstMediaUrl('main'),
+        );
     }
 
     /**
