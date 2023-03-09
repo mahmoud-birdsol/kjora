@@ -102,7 +102,7 @@ function reset() {
         </Modal>
     </div>
 </template>
-<style>
+<style scoped>
 .el-slider__button {
     border: 2px solid green;
 }
