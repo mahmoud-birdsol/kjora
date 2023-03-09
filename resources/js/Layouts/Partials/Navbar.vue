@@ -1,7 +1,7 @@
 <script setup>
 import { onBeforeMount, ref } from 'vue';
-import { Inertia, usePage } from '@inertiajs/inertia';
-import { Link } from '@inertiajs/inertia-vue3';
+import { Inertia, } from '@inertiajs/inertia';
+import { Link, usePage } from '@inertiajs/inertia-vue3';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
@@ -22,7 +22,7 @@ import Avatar from "../../Components/Avatar.vue";
 import { XMarkIcon } from '@heroicons/vue/20/solid';
 
 
-
+const currentUser = usePage().props.value.auth.user
 const showingNavigationDropdown = ref(false);
 
 const logout = () => {
@@ -83,7 +83,7 @@ const logout = () => {
                     <!-- user city  -->
                     <div class="flex items-center gap-1 ">
                         <MapPinIcon class="w-4 h-4 text-primary" />
-                        <span class="text-white w-max">{{ 'Egypt' }}</span>
+                        <span class="text-white w-max">{{ currentUser.current_city }}</span>
                     </div> <!-- Settings Dropdown -->
                     <div class="relative ">
                         <Dropdown align="right" width="48">

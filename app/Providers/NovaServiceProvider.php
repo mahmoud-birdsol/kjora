@@ -38,11 +38,13 @@ use App\Nova\Venue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Menu\MenuGroup;
 use Laravel\Nova\Menu\MenuItem;
 use Laravel\Nova\Menu\MenuSection;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Outl1ne\NovaSettings\NovaSettings;
 use Pktharindu\NovaPermissions\Nova\Role;
 use Pktharindu\NovaPermissions\NovaPermissions;
 
@@ -65,13 +67,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
                 MenuSection::make('Dashboards', [
                     MenuItem::dashboard(AdvertisementDashboard::class)->canSee(function (Request $request) {
-                        return $request->user()->hasPermissionTo('access advertisements dashboard');
+                        return $request->user();
                     }),
                     MenuItem::dashboard(AdminDashboard::class)->canSee(function (Request $request) {
-                        return $request->user()->hasPermissionTo('access admins dashboard');
+                        return $request->user();
                     }),
                     MenuItem::dashboard(UserDashboard::class)->canSee(function (Request $request) {
-                        return $request->user()->hasPermissionTo('access users dashboard');
+                        return $request->user();
                     }),
                 ])->icon('view-grid')->collapsable(),
 
@@ -115,6 +117,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 ])->icon('lock-closed')->collapsable(),
 
                 MenuSection::make('Settings', [
+                    MenuItem::link('Settings', 'nova-settings/general'),
                     MenuItem::resource(Country::class),
                     MenuItem::resource(Club::class),
                     MenuItem::resource(Stadium::class),
@@ -140,6 +143,16 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             </div>
         ');
         });
+
+        NovaSettings::addSettingsFields([
+            Select::make(__('Default Country'), 'default_country')->options(function () {
+                return \App\Models\Country::all()->pluck('name', 'id');
+            })->displayUsingLabels()->searchable(),
+
+            Select::make(__('Default Club'), 'default_club')->options(function () {
+                return \App\Models\Club::all()->pluck('name', 'id');
+            })->displayUsingLabels()->searchable()
+        ]);
     }
 
     /**
@@ -164,8 +177,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function gate()
     {
-        Gate::define('viewNova', function (Admin $user) {
-            return $user->hasPermissionTo('access nova');
+        Gate::define('viewNova', function (\App\Models\Admin $user) {
+            return $user;
         });
     }
 
@@ -181,17 +194,17 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             AdvertisementDashboard::make()
                 ->showRefreshButton()
                 ->canSee(function (Request $request) {
-                    return $request->user()->hasPermissionTo('access advertisements dashboard');
+                    return $request->user();
                 }),
             AdminDashboard::make()
                 ->showRefreshButton()
                 ->canSee(function (Request $request) {
-                    return $request->user()->hasPermissionTo('access admins dashboard');
+                    return $request->user();
                 }),
             UserDashboard::make()
                 ->showRefreshButton()
                 ->canSee(function (Request $request) {
-                    return $request->user()->hasPermissionTo('access users dashboard');
+                    return $request->user();
                 }),
         ];
     }
@@ -205,6 +218,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             NovaPermissions::make(),
+            NovaSettings::make()
         ];
     }
 

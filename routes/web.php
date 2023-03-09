@@ -12,7 +12,10 @@ use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerReviewController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ResendVerificationCodeController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\VerificationCodeController;
 use App\Models\Country;
 use App\Models\Invitation;
 use App\Models\MediaLibrary;
@@ -54,7 +57,9 @@ Route::middleware('guest')->resource(
 // Authenticated user routes...
 Route::middleware([
     'auth:sanctum',
+    'location.detect',
     config('jetstream.auth_session'),
+    'phone.verified'
 //    'player.review'
 ])->group(function () {
     Route::get('/verification/identity', [
@@ -67,6 +72,9 @@ Route::middleware([
         IdentityVerificationController::class,
         'store',
     ])->name('identity.verification.store');
+
+    Route::get('/change-password', [PasswordController::class, 'edit'])->name('password.edit');
+    Route::patch('/change-password', [PasswordController::class, 'update'])->name('password.update');
 
     Route::middleware([
         'verified.email',
@@ -148,7 +156,10 @@ Route::middleware([
             $data = $request->validate([
                 'stadium_id' => ['required', 'integer', 'exists:stadia,id'],
                 'invited_player_id' => ['required', 'integer', 'exists:users,id'],
-                'date' => ['required'],
+                'date' => [
+                    'required',
+                    'after_or_equal:today'
+                ],
                 'time' => ['required'],
             ]);
 
@@ -338,3 +349,15 @@ Route::get('contact', function () {
 Route::get('upgrade', function () {
     return Inertia::render('Upgrade');
 })->name('upgrade');
+
+Route::get('update-password', function () {
+    return Inertia::render('Auth/UpdatePassword');
+})->name('update.password');
+
+Route::get('phone/verify', [VerificationCodeController::class, 'create'])->name('phone.verify');
+
+Route::post('phone/verify', [VerificationCodeController::class, 'store'])->name('phone.verify.store');
+
+
+Route::get('phone/resend-verification', ResendVerificationCodeController::class)
+    ->name('verification.phone.send');
