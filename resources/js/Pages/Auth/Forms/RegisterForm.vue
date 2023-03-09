@@ -89,7 +89,7 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.password"/>
             </div>
             <div>
-                <InputLabel color="primary" for="country" value="Country"/>
+                <InputLabel color="primary" for="country" value="Nationality" />
                 <RichSelectInput :options="countries" value-name="id" text-name="name" image-name="flag"
                                  v-model="form.country_id"/>
                 <InputError class="mt-2" :message="form.errors.country_id"/>

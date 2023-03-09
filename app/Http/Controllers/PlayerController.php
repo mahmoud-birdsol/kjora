@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\CreateImpressionJob;
 use App\Models\Advertisement;
+use App\Models\Country;
 use App\Models\Impression;
 use App\Models\MediaLibrary;
 use App\Models\Position;
@@ -24,21 +25,26 @@ class PlayerController extends Controller
     {
         $query = User::query()->whereNot('id', $request->user()->id);
 
-        $request->whenFilled('position', fn () => $query->where('position_id', $request->input('position')));
-        $request->whenFilled('rating',
-            $request->input('rating') > 0
-                ? fn () => $query->where(function ($query) use ($request) {
-                    $query->where('rating', '>=', $request->input('rating'));
-                })
-                : fn () => null
+        $request->whenFilled('position', fn() => $query->where('position_id', $request->input('position')));
+        $request->whenFilled('ratingFrom',fn() => $query->where(function ($query) use ($request) {
+                $query->where('rating', '>=', $request->input('ratingFrom'));
+            })
+        );
+        $request->whenFilled('ratingTo',fn() => $query->where(function ($query) use ($request) {
+                $query->where('rating', '<=', $request->input('ratingTo'));
+            })
         );
 
-        $request->whenFilled('age',
-            fn () => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('age')))
+        $request->whenFilled('ageFrom',
+            fn() => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('ageFrom')))
         );
 
-        $request->whenFilled('country',
-            fn () => $query->where('country_id', $request->input('country'))
+        $request->whenFilled('ageTo',
+            fn() => $query->whereDate('date_of_birth', '>=', now()->subYears($request->input('ageTo')))
+        );
+
+        $request->whenFilled('country_id',
+            fn() => $query->where('country_id', $request->input('country_id'))
         );
 
         $request->whenFilled('search', fn () => $query->where(function ($query) use ($request) {
@@ -61,6 +67,8 @@ class PlayerController extends Controller
             'advertisements' => Advertisement::orderBy('priority')->get()->map(function (Advertisement $advertisement) {
                 return $advertisement->getFirstMediaUrl('main');
             }),
+
+            'countries' => Country::active()->orderBy('name')->get()
         ]);
     }
 
