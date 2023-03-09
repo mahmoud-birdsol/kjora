@@ -7,9 +7,6 @@ use App\Http\Controllers\Api\GalleryUploadController;
 use App\Http\Controllers\Api\MarkMessageAsReadController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\NewMessagesController;
-use App\Http\Resources\MessageResource;
-use App\Models\Conversation;
-use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,13 +39,31 @@ Route::get(
 )->middleware('auth:sanctum')->name('api.messages.index');
 
 Route::post(
-    'chats/{conversation}/messages', [
+    'chats/{conversation}/messages',
+    [
         MessageController::class,
-        'store',
-    ])->middleware('auth:sanctum')->name('api.messages.store');
+        'store'
+    ]
+)->middleware('auth:sanctum')->name('api.messages.store');
+
+Route::post('posts', function (Request $request) {
+    $post = \App\Models\Post::create([
+        'user_id' => $request->user()->id,
+        'caption' => $request->input('caption')
+    ]);
+
+    $cover = $post->addMedia($request->file('cover'))->toMediaCollection('gallery');
+
+    $post->update([
+        'cover_id' => $cover->id
+    ]);
+
+    return $post->toArray();
+})->name('api.posts.store');
+
 
 Route::post(
-    'gallery/upload',
+    'gallery/upload/{post}',
     GalleryUploadController::class
 )->middleware('auth:sanctum')->name('api.gallery.upload');
 

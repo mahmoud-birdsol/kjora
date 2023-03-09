@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentStoreRequest;
 use App\Http\Resources\CommentResource;
 use App\Models\Comment;
+use App\Models\MediaLibrary;
+use App\Models\Post;
 use App\Models\User;
 use App\Notifications\CommentCreatedNotification;
 use App\Notifications\ReplyCreatedNotification;
@@ -44,11 +46,14 @@ class CommentController extends Controller
 
         $media = $modelType->findOrFail($request->input('commentable_id'));
 
-        $user = User::find($media->model_id);
+        $post = Post::find($media->model_id);
+
+
+        $user = User::find($post->user->id);
 
         $user->notify(new CommentCreatedNotification($user, $request->user(), $media));
 
-        if ($request->has('parent_id') && ! is_null($request->input('parent_id'))) {
+        if ($request->has('parent_id') && !is_null($request->input('parent_id'))) {
             $parentComment = Comment::find($request->input('parent_id'));
             if ($parentComment->user->id != $request->user()->id) {
                 $parentComment->user->notify(new ReplyCreatedNotification($user, $request->user(), $media));
