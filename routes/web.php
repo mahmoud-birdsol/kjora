@@ -111,20 +111,16 @@ Route::middleware([
         ])->name('player.profile');
 
         Route::get(
-            'player/review/{review}',
-            [
-                PlayerReviewController::class,
-                'show'
-            ]
-        )->name('player.review.show');
+            'player/review/{review}', [
+            PlayerReviewController::class,
+            'show'
+        ])->name('player.review.show');
 
         Route::post(
-            'player/review/{review}',
-            [
-                PlayerReviewController::class,
-                'store'
-            ]
-        )->name('player.review.store');
+            'player/review/{review}', [
+            PlayerReviewController::class,
+            'store'
+        ])->name('player.review.store');
 
         /*
          |--------------------------------------------------------------------------
@@ -313,6 +309,16 @@ Route::middleware([
      | Message Routes...
      |--------------------------------------------------------------------------
     */
+
+
+    /*
+     |--------------------------------------------------------------------------
+     | Likes Routes...
+     |--------------------------------------------------------------------------
+    */
+
+    Route::post('like', [\App\Http\Controllers\LikeController::class, 'store'])->name('like.store');
+    Route::delete('like', [\App\Http\Controllers\LikeController::class, 'destroy'])->name('like.destroy');
 });
 
 
@@ -326,10 +332,7 @@ Route::middleware([
 // });
 
 Route::get('gallery/{mediaLibrary}', function (MediaLibrary $mediaLibrary) {
-
-    $userId = MediaLibrary::where('model_type', User::class)->where('id', $mediaLibrary->id)->first()->model_id;
-
-    $user = User::find($userId);
+    $user = $mediaLibrary->owner();
 
     return Inertia::render('Gallery/Show', [
         'media' => $mediaLibrary,
