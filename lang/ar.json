@@ -124,6 +124,18 @@
     "hello": "مرحبا",
     "favorite": "المفضل",
     "club": "النادى",
-    "All positions": "جميع المراكز"
+    "All positions": "جميع المراكز",
+    "You have been invited to a football match": "لقد تمت دعوتك إلى مباراة كرة قدم  ⚽️",
+    "You have been invited by **": "لقد تلقيت دعوة من **",
+    "** at **": "** في **",
+    "Respond Now": "أجيب الأن",
+    "Thank you for using our application!": "شكرا لك على استخدام تطبيقنا!",
+    "Comment Notification": "إعلام بالتعليق",
+    "Dear ": "عزيزي ",
+    "This is to notify you that a new comment has been created": "هذا لإعلامك بأنه تم إنشاء تعليق جديد",
+    "Chat Now": "الدردشة الآن"
+
+
+
 }
-   
+

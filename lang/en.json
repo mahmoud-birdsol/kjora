@@ -119,5 +119,14 @@
     "Defender": "Defender",
     "Midfielder": "Midfielder",
     "Forward": "Forward",
-    "All positions": "All positions"
+    "All positions": "All positions",
+    "You have been invited to a football match": "You have been invited to a football match  ⚽️",
+    "You have been invited by **": "You have been invited by **",
+    "** at **": "** at **",
+    "Respond Now": "Respond Now",
+    "Thank you for using our application!": "Thank you for using our application!",
+    "Comment Notification": "Comment Notification",
+    "Dear ": "Dear ",
+    "This is to notify you that a new comment has been created": "This is to notify you that a new comment has been created",
+    "Chat Now": "Chat Now"
 }

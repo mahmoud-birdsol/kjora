@@ -60,10 +60,10 @@ class CommentCreatedNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Comment Notification')
-            ->line('Dear ' . $this->user->name)
-            ->line('This is to notify you that a new comment has been created')
-            ->action('Chat Now', url(route('gallery.show', $this->commentable)))
+            ->subject(__('Comment Notification'))
+            ->line(__('Dear ') . $this->user->name)
+            ->line(__('This is to notify you that a new comment has been created'))
+            ->action(__('Chat Now'), url(route('gallery.show', $this->commentable)))
             ->line('Thank you for using our application!');
     }
 
