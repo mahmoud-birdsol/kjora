@@ -1,11 +1,15 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, onBeforeMount, onMounted } from 'vue';
 import { Link, useForm, usePage } from '@inertiajs/inertia-vue3';
 import { ElRate } from 'element-plus';
 import Avatar from '@/Components/Avatar.vue';
 import dayjs from "dayjs";
 import { CustomMarker, GoogleMap, Marker } from "vue3-google-map";
 import { CheckIcon, HandRaisedIcon, XMarkIcon } from '@heroicons/vue/24/solid';
+import relativeTime from 'dayjs/plugin/relativeTime';
+onBeforeMount(() => {
+    dayjs.extend(relativeTime);
+});
 const props = defineProps({
     player: {
         required: true,
@@ -60,6 +64,17 @@ let position = {
 }
 const markerOptions = { position: position };
 
+onMounted(() => {
+    calcShouldRate();
+});
+
+const shouldRate = ref(false)
+function calcShouldRate() {
+
+    if (dayjs().diff(dayjs(props.invitation.date), 'hour') > 2) {
+        shouldRate.value = true;
+    }
+}
 </script>
 
 <template>
@@ -121,18 +136,18 @@ const markerOptions = { position: position };
                         <CheckIcon class="w-6 text-green-600" />
                     </button>
                 </div>
-                <div v-if="invitation.state == 'declined'" class="flex justify-center">
+                <div v-if="invitation.state == 'declined' && !shouldRate" class="flex justify-center">
                     <button :disabled="true"
                         class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-200 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                         <XMarkIcon class="w-6 text-red-600" />
                     </button>
                 </div>
-                <Link :href="route('chats.index')" v-if="invitation.state == 'accepted'"
+                <Link :href="route('chats.index')" v-if="invitation.state == 'accepted' && !shouldRate"
                     class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                 Chat
                 </Link>
                 <!-- todo:fix the condition to show rate when they invitation date end -->
-                <button v-if="false"
+                <button v-if="shouldRate"
                     class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                     Rate
                 </button>
