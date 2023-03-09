@@ -5,12 +5,14 @@
         </template>
 
 
+
         <div class="px-4 py-4 bg-white sm:px-8 rounded-3xl">
             <div class="grid w-full h-full gap-3 border lg:grid-cols-2 rounded-2xl border-stone-400 ">
 
                 <!-- image and caption left col -->
                 <div class="flex flex-col max-w-full gap-6 p-3 ">
                     <!-- image -->
+
                     <Splide dir="ltr" class="" :options="options">
                         <template v-for="media in post.media" :key="media.id">
                             <SplideSlide class="">
@@ -46,6 +48,7 @@
                             </SplideSlide>
                         </template>
                     </Splide>
+
                     <!-- information -->
                     <div class="grid xs:grid-cols-[min-content_1fr] gap-4">
                         <!-- col 1 -->
@@ -59,6 +62,7 @@
                             <div class="flex justify-between w-full">
                                 <div class="flex flex-col gap-1 ">
                                     <div class="flex flex-row gap-2">
+
                                         <h3 class="m-0 text-lg font-bold leading-none capitalize ">{{ user.name
                                         }} </h3>
                                         <span v-if="false">star icon</span>
@@ -66,21 +70,54 @@
                                     <Link :href="route('player.profile', user.id)" class="text-xs text-stone-400 ">
                                     @{{
                                         user.username }} </Link>
+
                                 </div>
-                                <div class="relative">
+                                <div v-if="isCurrentUser" class="relative">
                                     <button class="p-1" @click="showOptions = !showOptions">
                                         <EllipsisHorizontalIcon class="w-6" />
                                     </button>
-                                    <div v-show="showOptions"
-                                        class="absolute left-0 p-2 bg-white rounded-lg shadow-lg cursor-pointer top-1/2">
-                                        <div class="fixed top-0 left-0 w-full h-full" @click="showOptions = false">
+
+                                    <FadeInTransition>
+                                        <!-- media option menu -->
+                                        <div v-show="showOptions"
+                                            class="absolute top-0 z-20 px-6 py-2 text-xs text-white bg-black border right-8 rounded-xl border-neutral-500 pie-10 z-2 ">
+                                            <ul class="flex flex-col justify-center gap-y-2">
+                                                <button class="hover:text-gray-400 group" @click="editCaption">
+                                                    <li class="flex items-center gap-x-2">
+                                                        <PencilIcon class="w-4 " />
+                                                        <span>Edit</span>
+                                                    </li>
+                                                </button>
+                                                <button @click="openRemoveMediaModal" class="hover:text-gray-400 ">
+                                                    <li class="flex items-center justify-center gap-x-2">
+                                                        <TrashIcon class="w-4" />
+                                                        <span> delete</span>
+                                                    </li>
+                                                    <!-- confirm delete media modal -->
+                                                    <Modal :show="showDeleteMediaModal"
+                                                        @close="showDeleteMediaModal = false" :closeable="true"
+                                                        :show-close-icon="false" :max-width="'sm'">
+                                                        <div class="flex flex-col justify-center p-6 text-stone-800 ">
+                                                            <p class="mb-3 text-lg">Are you sure you want delete this
+                                                                media?</p>
+                                                            <div class="flex justify-center w-full gap-4">
+                                                                <button
+                                                                    class="p-2 px-8 border-2 rounded-full border-primary hover:bg-primary text-primary hover:text-white active:scale-95 "
+                                                                    @click="showDeleteMediaModal = false">Cancel</button>
+                                                                <button
+                                                                    class="p-2 px-8 text-white bg-red-800 border-2 border-red-800 rounded-full hover:bg-transparent hover:text-red-800 active:scale-95 "
+                                                                    @click="removeMedia">Delete</button>
+
+                                                            </div>
+                                                        </div>
+                                                    </Modal>
+                                                </button>
+
+                                            </ul>
                                         </div>
-                                        <div
-                                            class="relative z-20 w-full text-sm text-center text-gray-500 divide-y whitespace-nowrap">
-                                            <div @click="contenteditable = true">Edit</div>
-                                            <div>remove photo</div>
-                                        </div>
-                                    </div>
+                                    </FadeInTransition>
+
+
                                 </div>
                             </div>
                             <!-- date and time and likes row 2-->
@@ -92,6 +129,7 @@
                                     }}</span>
 
                                 </div>
+
                                 <div class="flex items-center gap-1"><span class="text-sm">{{ post?.likes_count }}</span>
                                     <LikeButton :isLiked="post?.is_liked" :likeable_id="post.id"
                                         :likeable_type="'App\\Models\\Post'">
@@ -100,19 +138,19 @@
                                                 :class="isLiked ? 'fill-current' : 'fill-transparent'" />
                                         </template>
                                     </LikeButton>
+
                                 </div>
                             </div>
                             <!-- caption row 3 -->
                             <div>
-                                <p class="text-sm text-stone-500" v-show="!contenteditable">
-                                    aml walaed
+                                <p class="text-sm text-stone-500" v-show="!isEditingCaption">
+                                    {{ caption }}
                                 </p>
-                                <div v-show="contenteditable" class="flex">
-                                    <input type="text" value="aml walaed"
-                                        class="w-full text-sm border-none rounded-full text-stone-500 ring-1 focus:ring-primary focus:shadow-none focus:border-none ring-gray-300" />
-                                    <button class="p-1 group" @click="submit">
-                                        <PaperAirplaneIcon class="w-5 text-neutral-900" />
-                                    </button>
+
+                                <div v-show="isEditingCaption" class="flex">
+                                    <textarea rows="4" type="text" :value="caption" @blur="submit"
+                                        class="w-full text-sm border-none text-stone-500 ring-1 focus:ring-primary focus:shadow-none focus:border-none ring-gray-300 hideScrollBar" />
+
                                 </div>
                             </div>
 
@@ -122,6 +160,7 @@
                 <!-- comment and replies right col -->
                 <div class="flex flex-col h-full gap-2 max-lg:border-t lg:border-l border-stone-300">
                     <!-- header -->
+
                     <div class="p-3 pt-5 text-sm border-b border-stone-300">comments {{
                         comments &&
                         comments.filter(c =>
@@ -165,8 +204,10 @@
 <script setup>
 import AppLayout from '../../Layouts/AppLayout.vue';
 import Avatar from '../../Components/Avatar.vue';
-import { FaceSmileIcon, EllipsisHorizontalIcon } from '@heroicons/vue/24/outline';
+
+import { FaceSmileIcon, EllipsisHorizontalIcon, TrashIcon, PencilIcon } from '@heroicons/vue/24/outline';
 import { PaperAirplaneIcon, XMarkIcon } from '@heroicons/vue/24/solid';
+
 import axios from 'axios';
 import { onMounted, onBeforeMount, ref } from 'vue';
 import Comment from '../../Components/Comment.vue';
@@ -174,10 +215,13 @@ import { HeartIcon } from '@heroicons/vue/24/solid';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 import { usePage, Link } from '@inertiajs/inertia-vue3';
-import { Splide, SplideSlide } from "@splidejs/vue-splide";
-import LikeButton from '@/Components/LikeButton.vue';
+
+import FadeInTransition from '../../Components/FadeInTransition.vue';
 import Modal from '../../Components/Modal.vue';
 import { Inertia } from '@inertiajs/inertia';
+import LikeButton from '@/Components/LikeButton.vue';
+import { Splide, SplideSlide } from "@splidejs/vue-splide";
+
 onBeforeMount(() => {
     dayjs.extend(relativeTime)
 });
@@ -207,17 +251,19 @@ const commentsContainer = ref(null);
 const newComment = ref(null);
 const isSending = ref(false);
 let showOptions = ref(false)
-let contenteditable = ref(false);
+let isEditingCaption = ref(false);
 const currentUser = usePage().props.value.auth.user
-const showDeleteMediaModal = ref(false)
+const isCurrentUser = currentUser.id === props.user.id
+const showDeleteMediaModal = ref(false);
+const caption = ref('Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempora repellendus earum magni quia fugiat, enim deserunt labore tenetur praesentium.Impedit neque nihil ullam perferendis praesentium eos, molestiae amet deleniti sequi  ')
+
+//comment logic
 
 onMounted(() => {
     getPostComments()
 });
 
-
 function getPostComments() {
-
     axios.get(route('api.gallery.comments'), {
         params: {
             commentable_id: props.post.id,
@@ -229,15 +275,8 @@ function getPostComments() {
 
 }
 
-// post options
-function submit() {
-    console.log('has submit')
-}
-
 // store new comments in database
 function sendComment() {
-
-
     axios.post(route('api.gallery.comments.store'), {
         commentable_id: props.post.id,
         commentable_type: 'App\\Models\\Post',
@@ -276,6 +315,28 @@ function scrollToCommentsBottom() {
     }, 200);
 }
 
+
+
+// option menu logic
+// delete media
+function removeMedia() {
+    axios.delete(route('api.gallery.destroy', props.media.id)).then((res) => console.log(res))
+    Inertia.get(route('profile.show'))
+}
+
+function openRemoveMediaModal() {
+    showOptions.value = false
+    showDeleteMediaModal.value = true
+}
+// edit media caption
+function editCaption() {
+    showOptions.value = false
+    isEditingCaption.value = true
+}
+function submit() {
+    isEditingCaption.value = false
+    console.log('has submit')
+}
 
 function removeMedia(id) {
     console.log(id);
