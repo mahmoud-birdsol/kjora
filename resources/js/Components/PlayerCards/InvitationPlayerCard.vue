@@ -123,14 +123,14 @@ const markerOptions = { position: position };
                 </div>
                 <div v-if="invitation.state == 'declined'" class="flex justify-center">
                     <button :disabled="true"
-                        class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
+                        class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-200 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                         <XMarkIcon class="w-6 text-red-600" />
                     </button>
                 </div>
-                <button v-if="invitation.state == 'accepted'"
+                <Link :href="route('chats.index')" v-if="invitation.state == 'accepted'"
                     class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
-                    Chat
-                </button>
+                Chat
+                </Link>
                 <!-- todo:fix the condition to show rate when they invitation date end -->
                 <button v-if="false"
                     class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
