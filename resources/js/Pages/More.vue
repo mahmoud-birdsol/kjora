@@ -10,6 +10,7 @@ import { useForm } from "@inertiajs/inertia-vue3";
 import RichSelectInput from "@/Components/RichSelectInput.vue";
 import PhoneInput from "@/Components/PhoneInput.vue";
 import MoreBtn from "@/Components/MoreBtn.vue";
+import LanguageSelector from '@/Shared/LanguageSelector.vue';
 const props = defineProps(['countries', 'positions']);
 
 let paymentForm = useForm({
@@ -74,7 +75,7 @@ let paymentForm = useForm({
                                     class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
                                     :placeholder="$t('pleace-read')" />
                             </div>
-                        </div>s
+                        </div>
                     </template>
                 </CardContent>
             </Card>
