@@ -1,4 +1,10 @@
 {
+    "total":"المجموع",
+    "Goalkeeper":"حارس مرمى",
+    "Defender":"مدافع",
+    "Midfielder":"لاعب وسط",
+    "Forward":"أمامي",
+    "all-positions" :  "جميع المراكز",
     "you-have-received-an-invitation-from- :name ,-to-play-a-game-on":"لقد تلقيت دعوة من :name ، للعب لعبة ",
     "invitation":"دعوة",
     "decline":"رفض",
@@ -56,3 +62,4 @@
     "club": "النادى",
     "All positions": "جميع المراكز"
 }
+   

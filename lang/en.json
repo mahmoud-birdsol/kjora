@@ -51,5 +51,10 @@
     "payment details":"payment details",
     "update-merchant-account":"Update Merchant Account",
     "merchant-account":"merchant account",
-    "All positions": "All positions"
+    "total":"Total",
+    "Goalkeeper":"Goalkeeper",
+    "Defender":"Defender",
+    "Midfielder":"Midfielder",
+    "Forward":"Forward",
+    "All positions" :  "All positions"
 }
