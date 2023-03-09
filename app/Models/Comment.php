@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\CanBeReported;
+use App\Models\Contracts\Reportable;
 use App\Models\Concerns\CanBeLiked;
 use App\Models\Contracts\Likeable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,9 +12,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class Comment extends Model implements Likeable
+class Comment extends Model implements Reportable, Likeable
 {
     use HasFactory;
+    use CanBeReported;
     use CanBeLiked;
 
     /**
@@ -41,8 +44,6 @@ class Comment extends Model implements Likeable
 
     /**
      * The type of the polymorphic relation.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function commentable(): MorphTo
     {
@@ -51,8 +52,6 @@ class Comment extends Model implements Likeable
 
     /**
      * Get the user associated with this comment
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -61,8 +60,6 @@ class Comment extends Model implements Likeable
 
     /**
      * Get the replies associated with this comment
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function replies(): HasMany
     {

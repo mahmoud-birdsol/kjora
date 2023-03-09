@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AcceptInvitationController;
 use App\Http\Controllers\Actions\MarkNotificationAsRead;
+use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\UserEmailController;
 use App\Http\Controllers\Auth\UserNameController;
@@ -16,9 +17,7 @@ use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerReviewController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\ResendVerificationCodeController;
 use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\VerificationCodeController;
 use App\Models\Country;
 use App\Models\Invitation;
 use App\Models\MediaLibrary;
@@ -62,14 +61,15 @@ Route::middleware([
     'auth:sanctum',
     'location.detect',
     config('jetstream.auth_session'),
-    'phone.verified'
-//    'player.review'
+    'verified.phone',
+    'verified.email',
+    'verified.identity',
+    'player.review'
 ])->group(function () {
     Route::get('/verification/identity', [
         IdentityVerificationController::class,
         'create',
     ])->name('identity.verification.create');
-
 
     Route::post('/verification/identity', [
         IdentityVerificationController::class,
@@ -147,13 +147,13 @@ Route::middleware([
         Route::get(
             'player/review/{review}', [
             PlayerReviewController::class,
-            'show'
+            'show',
         ])->name('player.review.show');
 
         Route::post(
             'player/review/{review}', [
             PlayerReviewController::class,
-            'store'
+            'store',
         ])->name('player.review.store');
 
         /*
@@ -164,7 +164,7 @@ Route::middleware([
 
         Route::get('invitations', [
             InvitationController::class,
-            'index'
+            'index',
         ])->name('invitation.index');
 
         Route::get('more', function () {
@@ -176,7 +176,7 @@ Route::middleware([
 
         Route::get('hires', [
             HireController::class,
-            'index'
+            'index',
         ])->name('hire.index');
 
         Route::get('invitations/create/{invited}', function (User $invited) {
@@ -271,7 +271,7 @@ Route::middleware([
                 ],
                 'image' => [
                     'required',
-                    'file'
+                    'file',
                 ],
             ]);
 
@@ -292,17 +292,17 @@ Route::middleware([
 
     Route::get('favourites', [
         FavoriteController::class,
-        'index'
+        'index',
     ])->name('favorites.index');
 
     Route::post('favorites/{favorite}', [
         FavoriteController::class,
-        'store'
+        'store',
     ])->name('favorites.store');
 
     Route::delete('favorites/{favorite}', [
         FavoriteController::class,
-        'destroy'
+        'destroy',
     ])->name('favorites.destroy');
 
     /*
@@ -315,7 +315,7 @@ Route::middleware([
         'chats',
         [
             ChatController::class,
-            'index'
+            'index',
         ]
     )->name('chats.index');
 
@@ -323,7 +323,7 @@ Route::middleware([
         'chats/{conversation}',
         [
             ChatController::class,
-            'show'
+            'show',
         ]
     )->name('chats.show');
 
@@ -335,15 +335,21 @@ Route::middleware([
 
     Route::post('report', [
         ReportController::class,
-        'store'
+        'store',
     ])->name('report.store');
 
     /*
      |--------------------------------------------------------------------------
-     | Message Routes...
+     | Advertisement Routes...
      |--------------------------------------------------------------------------
     */
 
+    Route::get(
+        'advertisements/{advertisement}', [
+            AdvertisementController::class,
+            'show'
+        ]
+    )->name('advertisements.show');
 
     /*
      |--------------------------------------------------------------------------
@@ -354,7 +360,6 @@ Route::middleware([
     Route::post('like', [\App\Http\Controllers\LikeController::class, 'store'])->name('like.store');
     Route::delete('like', [\App\Http\Controllers\LikeController::class, 'destroy'])->name('like.destroy');
 });
-
 
 //     // Example 2: Get all the connected users for a specific channel
 // });
@@ -370,7 +375,7 @@ Route::get('gallery/{mediaLibrary}', function (MediaLibrary $mediaLibrary) {
 
     return Inertia::render('Gallery/Show', [
         'media' => $mediaLibrary,
-        'user' => $user
+        'user' => $user,
     ]);
 })->name('gallery.show');
 

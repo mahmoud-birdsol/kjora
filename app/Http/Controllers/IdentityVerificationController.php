@@ -7,7 +7,6 @@ use App\Models\Country;
 use App\Services\FlashMessage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
@@ -17,9 +16,6 @@ class IdentityVerificationController extends Controller
 {
     /**
      * Display the form to upload the user verification documents.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Inertia\Response
      */
     public function create(Request $request): Response
     {
@@ -31,8 +27,6 @@ class IdentityVerificationController extends Controller
     /**
      * Update the user verification documents.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
@@ -86,7 +80,7 @@ class IdentityVerificationController extends Controller
             $user = $request->user();
             $user
                 ->addMediaFromBase64($request->input('identity_selfie_image'))
-                ->setFileName($user->id . '_selfie_image.jpg')
+                ->setFileName($user->id.'_selfie_image.jpg')
                 ->withCustomProperties(['mime-type' => 'image/jpeg'])
                 ->toMediaCollection('identity_selfie_image');
         }

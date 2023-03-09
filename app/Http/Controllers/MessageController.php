@@ -7,7 +7,6 @@ use App\Events\MessageSentEvent;
 use App\Http\Requests\MessageStoreRequest;
 use App\Models\Conversation;
 use App\Notifications\NotifyUserOfChatMessageNotification;
-use Illuminate\Broadcasting\BroadcastManager;
 use Illuminate\Http\RedirectResponse;
 
 class MessageController extends Controller
@@ -15,10 +14,6 @@ class MessageController extends Controller
     /**
      * Store a new conversation message
      *
-     * @param \App\Http\Requests\MessageStoreRequest $request
-     * @param \App\Models\Conversation $conversation
-     * @param \App\Actions\CheckIfUserIsPresentAction $checkIfUserIsPresentAction
-     * @return \Illuminate\Http\RedirectResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Pusher\ApiErrorException
      * @throws \Pusher\PusherException
@@ -34,7 +29,7 @@ class MessageController extends Controller
         $message = $conversation->messages()->create([
             'body' => $request->input('body'),
             'sender_id' => $request->user()->id,
-            'parent_id' => $request->input('parent_id')
+            'parent_id' => $request->input('parent_id'),
         ]);
 
         if ($request->hasFile('attachments')) {

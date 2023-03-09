@@ -5,12 +5,9 @@ namespace App\Services;
 class FlashMessageAction
 {
     private string $url;
+
     private string $text;
 
-    /**
-     * @param string $url
-     * @param string $text
-     */
     public function __construct(string $url, string $text)
     {
         $this->url = $url;
@@ -20,8 +17,6 @@ class FlashMessageAction
     /**
      * Create a new instance of the class.
      *
-     * @param string $url
-     * @param string $text
      * @return \App\Services\FlashMessageAction
      */
     public static function make(string $url, string $text): FlashMessageAction
@@ -34,8 +29,6 @@ class FlashMessageAction
 
     /**
      * Get the array representation of the class.
-     *
-     * @return array
      */
     public function toArray(): array
     {

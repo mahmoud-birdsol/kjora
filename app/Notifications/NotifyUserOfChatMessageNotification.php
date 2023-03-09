@@ -16,19 +16,10 @@ class NotifyUserOfChatMessageNotification extends Notification implements Should
 {
     use Queueable;
 
-    /**
-     * @var \App\Models\User
-     */
     private User $user;
 
-    /**
-     * @var \App\Models\User
-     */
     private User $notifier;
 
-    /**
-     * @var \App\Models\Conversation
-     */
     private Conversation $conversation;
 
     /**
@@ -64,7 +55,7 @@ class NotifyUserOfChatMessageNotification extends Notification implements Should
     {
         return (new MailMessage)
             ->subject('New Chat Message Notification')
-            ->line('Dear ' . $this->user->name)
+            ->line('Dear '.$this->user->name)
             ->line('This is to notify you that a new chat message has been created on your platform.')
             ->action('Chat Now', url(route('chats.show', $this->conversation)))
             ->line('Thank you for using our application!');
@@ -82,7 +73,7 @@ class NotifyUserOfChatMessageNotification extends Notification implements Should
             displayType: 'simple',
             state: 'success',
             title: 'Chat Notification',
-            subtitle: 'User ' . $this->notifier->name . 'has sent you a message',
+            subtitle: 'User '.$this->notifier->name.'has sent you a message',
             actionData: new RouteActionData(
                 route: route('chats.show', $this->conversation),
                 text: 'Chat Now',
