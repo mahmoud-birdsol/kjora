@@ -11,8 +11,8 @@ import RichSelectInput from "@/Components/RichSelectInput.vue";
 import PhoneInput from "@/Components/PhoneInput.vue";
 import MoreBtn from "@/Components/MoreBtn.vue";
 import LanguageSelector from '@/Shared/LanguageSelector.vue';
+import DateTranslation from '@/Components/DateTranslation.vue';
 const props = defineProps(['countries', 'positions']);
-
 let paymentForm = useForm({
     merchant: null
 })
@@ -21,9 +21,9 @@ let paymentForm = useForm({
     <Head title="More" />
     <AppLayout>
         <template #header>
-            <p class="text-7xl">More</p>
-            <p class="text-lg font-semibold">
-                {{ dayjs().format("dddd, DD MMMM YYYY") }}
+            <p class="text-7xl"> {{$t('more') }} </p>
+            <p class="text-lg font-semibold pt-2">
+                <DateTranslation/>
             </p>
         </template>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-3">
@@ -101,7 +101,7 @@ let paymentForm = useForm({
                             </div>
                             <div>
                                 <InputLabel color="black">{{$t('language')}}</InputLabel>
-                                <RichSelectInput :options="countries" value-name="id" text-name="name" image-name="flag" />
+                                <LanguageSelector class="w-full"/>
                             </div>
                             <div>
                                 <InputLabel color="black">{{$t('help')}}</InputLabel>
@@ -109,7 +109,7 @@ let paymentForm = useForm({
                                     class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
                                     :placeholder="$t('breifly-explain-what-happened')" />
                             </div>
-                            <language-selector class="mx-4"/>
+                            
 
                         </div>
                     </template>

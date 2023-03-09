@@ -118,7 +118,7 @@ const options = {
                         <SecondaryButton @click="filterByPosition(position.id)">
                             <span class="w-full text-center"
                                 :class="{ 'text-black': form.position == position.id, 'text-gray-400': form.position != position.id }">
-                                {{ position.name }}
+                                {{ $t(position.name) }}
                             </span>
                         </SecondaryButton>
                     </template>
