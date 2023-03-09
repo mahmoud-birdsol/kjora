@@ -368,7 +368,7 @@ let captionForm = useForm({
     caption: props.post.caption
 })
 function submitEditCaption() {
-    captionForm.patch(route('posts.update', props.post).{
+    captionForm.patch(route('posts.update', props.post), {
         preserveScroll: true,
         preserveState: true
     })
