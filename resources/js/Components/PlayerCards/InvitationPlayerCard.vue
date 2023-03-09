@@ -31,7 +31,7 @@ const backgroundImage = computed(() => {
 
 const currentUser = usePage().props.value.auth.user
 const isCurrentUser = props.player.id === currentUser.id
-const apiKey = import.meta.env.VITE_GOOGLE_MAP_API_KEY;
+const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const accept = () => {
     const form = useForm({});
     form.patch(route('invitation.accept', props.invitation.id), {
