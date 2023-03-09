@@ -179,20 +179,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             Main::make(),
             AdvertisementDashboard::make()
-                ->showRefreshButton()
-                ->canSee(function (Request $request) {
-                    return $request->user()->hasPermissionTo('access advertisements dashboard');
-                }),
+                ->showRefreshButton(),
             AdminDashboard::make()
-                ->showRefreshButton()
-                ->canSee(function (Request $request) {
-                    return $request->user()->hasPermissionTo('access admins dashboard');
-                }),
+                ->showRefreshButton(),
             UserDashboard::make()
-                ->showRefreshButton()
-                ->canSee(function (Request $request) {
-                    return $request->user()->hasPermissionTo('access users dashboard');
-                }),
+                ->showRefreshButton(),
         ];
     }
 
