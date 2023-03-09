@@ -101,7 +101,7 @@ const submit = () => {
     >
         <div class="flex flex-col min-h-[500px] justify-between p-6">
             <div class="flex justify-center">
-                <h2 class="text-xl text-primary font-bold uppercase">Upload</h2>
+                <h2 class="text-xl text-primary font-bold uppercase">{{$t('upload')}}</h2>
             </div>
             <div class="flex justify-center items-center">
                 <input
@@ -116,9 +116,9 @@ const submit = () => {
                     <div v-if="!cameraIsOpen && !captured"
                          class="w-[450px] h-[337.5px] rounded border border-gray-500 flex justify-center items-center">
                         <p class="text-gray-500 text-xs font-light">
-                            Click on the following link to open the camera.
+                            {{$t('Click on the following link to open the camera')}}.
                             <a href="javascript:;" class="text-sky-500 hover:text-sky-700"
-                               @click="openCamera">Open camera</a>
+                               @click="openCamera">{{$t('open camera')}}</a>
                         </p>
                     </div>
 
@@ -141,7 +141,7 @@ const submit = () => {
             </div>
             <div>
                 <PrimaryButton @click="submit">
-                    Upload
+                    {{$t('upload')}}
                 </PrimaryButton>
             </div>
         </div>

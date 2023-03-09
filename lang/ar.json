@@ -1,3 +1,10 @@
 {
+    "report":"أبلغ",
+    "ok":"نعم",
+    "Click on the following link to open the camera":"اضغط على الرابط التالي لفتح الكاميرا",
+    "open camera":"افتح الكاميرا",
+    "please write caption":"الرجاء كتابة تعليق",
+    "only videos and images with max size (2MB) are allowed":"يسمح فقط بمقاطع الفيديو والصور ذات الحجم الأقصى (2 ميجا بايت)",
+    "upload":"تحميل",
     "All positions" :  "جميع المراكز"
 }

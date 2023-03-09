@@ -132,12 +132,12 @@ function reset(e) {
     <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="reset">
         <div class=" flex flex-col min-h-[500px] justify-between p-6">
             <div class="flex justify-center -mt-12">
-                <h2 class="text-xl font-bold uppercase text-primary">Upload</h2>
+                <h2 class="text-xl font-bold uppercase text-primary">{{$t('upload')}}</h2>
             </div>
             <div>
                 <InputLabel :value="'Caption'" class="text-primary" />
                 <div class="flex items-center flex-grow ">
-                    <textarea v-model="caption" name="caption" id="caption" rows="1" placeholder="Please write caption"
+                    <textarea v-model="caption" name="caption" id="caption" rows="1" :placeholder="$t('please write caption')"
                         class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400  text-stone-700 ring-1 focus:ring-primary ring-stone-400 "></textarea>
                 </div>
             </div>
@@ -191,11 +191,10 @@ function reset(e) {
 
             </div>
             <div>
-                <div class="justify-self-end text-sm mb-2 text-primary text-center">only videos and images with max size
-                    (2MB) are allowed
+                <div class="justify-self-end text-sm mb-2 text-primary text-center">{{$t('only videos and images with max size (2MB) are allowed')}}
                 </div>
                 <PrimaryButton @click.prevent="upload" :disabled="isDisabled">
-                    Upload
+                    {{$t('upload')}}
                 </PrimaryButton>
                 <!-- <InputError class="mt-2" :message="form.errors.image" /> -->
             </div>
