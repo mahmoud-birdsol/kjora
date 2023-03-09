@@ -29,7 +29,7 @@ function copy() {
     <div class="relative mt-2">
         <Transition enter-from-class="scale-0" enter-to-class="scale-100" enter-active-class="transition-all duration-300"
             leave-to-class="scale-0" leave-active-class="transition-all duration-300">
-            <div v-if="showSocials" class="bg-black bg-opacity-70 rounded-full p-1 flex gap-3 absolute -top-full right-1/2 z-30">
+            <div v-if="showSocials" class="bg-black bg-opacity-70 rounded-full p-1 flex gap-3 absolute -top-full ltr:right-1/2 rtl:left-1/2 z-30">
                 <a :href="'https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=' + url"
                     target="_blank">
                     <Facebook class="h-4 w-4 " />
@@ -44,7 +44,7 @@ function copy() {
                 <div class="relative">
                     <LinkIcon class="h-4 w-4 text-white" @click="copy" />
                     <span class="bg-white text-black text-[8px] font-bold rounded absolute bottom-full p-1"
-                        v-if="show">Copied!</span>
+                        v-if="show">{{$t('copied')}}!</span>
                 </div>
             </div>
         </Transition>
