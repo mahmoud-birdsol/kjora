@@ -121,17 +121,17 @@ const save = () => {
     <Head title="Identity Verification" />
 
     <AppLayout>
-        <template #header>Verification</template>
+        <template #header>{{$t('verification')}}</template>
 
         <div class="grid grid-cols-1 gap-4 mt-8 sm:grid-cols-2">
             <!-- Step 1...
                 =====================================================-->
             <Card>
-                <CardContent title="Verify Identity">
+                <CardContent :title="$t('verify identity')">
                     <template #body>
                         <div class="flex flex-col justify-between h-full gap-8">
                             <div>
-                                <h3 class="mb-4 text-lg font-bold text-gray-900">Use a valid government-issued document</h3>
+                                <h3 class="mb-4 text-lg font-bold text-gray-900">{{$t('use a valid government-issued document')}}</h3>
                                 <p class="text-xs text-gray-500">Only the following documents listed below will be accepted,
                                     all other documents will be rejected.</p>
                             </div>
