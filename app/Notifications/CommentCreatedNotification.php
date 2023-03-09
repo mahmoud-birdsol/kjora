@@ -35,7 +35,7 @@ class CommentCreatedNotification extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -46,7 +46,7 @@ class CommentCreatedNotification extends Notification
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
@@ -62,27 +62,29 @@ class CommentCreatedNotification extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function toArray($notifiable)
     {
         return (new NotificationData(
-            displayType: 'simple',
+            displayType: 'user',
             state: 'success',
             title: 'Comment Notification',
             subtitle: 'User '.$this->notifier->name.' commented on your post',
             actionData: new RouteActionData(
                 route: route('gallery.show', $this->commentable),
-                text: 'View Now',
+                text: 'Reply',
             ),
+            userAvatar: $notifiable->avatar_url,
+            userName: $notifiable->name
         ))->toArray();
     }
 
     /**
      * Get the broadcastable representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return BroadcastMessage
      */
     public function toBroadcast($notifiable)
