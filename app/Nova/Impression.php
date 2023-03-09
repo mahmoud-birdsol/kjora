@@ -31,14 +31,15 @@ class Impression extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'user.name', 'advertisement.name',
+        'id',
     ];
 
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
      * @return array
+     * @throws \Exception
      */
     public function fields(NovaRequest $request)
     {
@@ -83,9 +84,9 @@ class Impression extends Resource
     public function title(): string
     {
         return
-            $this->advertiement->name.' '.
-            $this->user->name.' '.
-            $this->created_at->toFormattedDateString();
+            $this->advertiement?->name.' '.
+            $this->user?->name.' '.
+            $this->created_at?->toFormattedDateString();
     }
 
     /**

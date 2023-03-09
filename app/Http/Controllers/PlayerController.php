@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\CreateImpressionJob;
 use App\Models\Advertisement;
+use App\Models\Impression;
 use App\Models\MediaLibrary;
 use App\Models\Position;
 use App\Models\User;
@@ -15,7 +17,7 @@ class PlayerController extends Controller
     /**
      * Display the home page.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Inertia\Response
      */
     public function index(Request $request): Response
@@ -41,25 +43,30 @@ class PlayerController extends Controller
 
         $request->whenFilled('search', fn() => $query->where(function ($query) use ($request) {
             $query
-                ->where('first_name', 'LIKE', '%'.$request->input('search').'%')
-                ->orWhere('last_name', 'LIKE', '%'.$request->input('search').'%')
-                ->orWhere('username', 'LIKE', '%'.$request->input('search').'%');
+                ->where('first_name', 'LIKE', '%' . $request->input('search') . '%')
+                ->orWhere('last_name', 'LIKE', '%' . $request->input('search') . '%')
+                ->orWhere('username', 'LIKE', '%' . $request->input('search') . '%');
         }));
+
+        $advertisements = Advertisement::active()->orderBy('priority')
+            ->with('media')
+            ->get()
+             ->each(function (Advertisement $advertisement) use ($request) {
+                 CreateImpressionJob::dispatch($request->user(), $advertisement);
+             });
 
         return Inertia::render('Home', [
             'players' => $query->paginate(20),
             'positions' => Position::all(),
-            'advertisements' => Advertisement::orderBy('priority')->get()->map(function(Advertisement $advertisement){
-                return $advertisement->getFirstMediaUrl('main');
-            })
+            'advertisements' => $advertisements
         ]);
     }
 
     /**
      * Display the player profile page.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\User $user
      * @return \Inertia\Response
      */
     public function show(Request $request, User $user): Response

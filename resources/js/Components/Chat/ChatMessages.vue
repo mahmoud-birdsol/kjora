@@ -30,6 +30,8 @@ onMounted(() => {
 
 onUnmounted(() => {
     chat.unRegisterScrollListener();
+    chat.clearFetchNewMessages();
+    chat.UnsubscribeFromChatChannel();
 });
 </script>
 

@@ -18,6 +18,9 @@ const props = defineProps({
 })
 const emits = defineEmits(['reply'])
 onMounted(() => {
+    setTimeout(() => {
+        props.message.new = false
+    }, 10000);
     // props.message.media.media !== [] && console.log(props.message.media)
 })
 const currentUser = usePage().props.value.auth.user
@@ -37,6 +40,9 @@ const bodyClass = computed(() => {
 const repliedClasses = computed(() => {
     return isCurrentUser.value ? 'bg-white text-black  ' : 'bg-primary text-white  ';
 })
+const newMessageClasses = computed(() => {
+    return props.message?.new ? 'border-t-2    border-green-400 relative before:content-["New"] before:absolute before:-top-3 before:bg-white before:right-3 before:text-sm before:text-green-700 before:px-1 ' : '';
+})
 function handleReply(e) {
     // emits('reply', props.message)
     chat.setMessageToReplyTo(props.message)
@@ -48,7 +54,7 @@ const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith
 <template>
     <div v-if="showOptions" class="fixed inset-0 z-10 w-full h-full cursor-pointer " @click="showOptions = false">
     </div>
-    <div :class="alignmentClass + parentClasses" class="w-full ">
+    <div :class="[alignmentClass, parentClasses, newMessageClasses]" class="w-full pt-2 transition-all duration-150   ">
         <!-- avatar for non current user message -->
         <div v-if='!isCurrentUser'>
             <div><img :src="'https://ui-avatars.com/api/?name=' + player.name + '&color=094609FF&background=E2E2E2'" alt=""
@@ -58,7 +64,7 @@ const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith
         <!-- message body -->
         <div class="max-w-[60%]">
 
-            <div :class="bodyClass" class="p-4 rounded-2xl max-w-full ">
+            <div :class="[bodyClass]" class="p-4 rounded-2xl max-w-full ">
                 <!-- replied message -->
                 <div v-if="message.parent_id" :class="repliedClasses" class="p-3 mb-2 text-xs rounded-lg">
                     <!-- name -->
@@ -120,9 +126,19 @@ const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith
                 </div>
             </div>
             <!-- date -->
-            <div class="mt-2 text-xs " :class="isCurrentUser ? 'text-end' : null"> <span>{{ message.read_at ?
-                dayjs(message.read_at).format('hh:mm A') : dayjs(message.created_at).format('hh:mm A') }}</span> | <span
-                    class="capitalize text-primary">{{ message.read_at ? 'r' : 's' }}</span></div>
+            <div class="mt-2 text-xs " :class="isCurrentUser ? 'text-end' : null">
+                <!-- date -->
+                <span v-if="isCurrentUser">{{ message.read_at ?
+                    dayjs(message.read_at).format('hh:mm A') : dayjs(message.created_at).format('hh:mm A') }}
+                </span>
+                <span v-if="!isCurrentUser">{{ dayjs(message.created_at).format('hh:mm A') }}
+                </span>
+                <!-- read status -->
+                <template v-if="isCurrentUser">
+                    <span> | </span>
+                    <span class="capitalize text-primary">{{ message.read_at ? 'r' : 's' }}</span>
+                </template>
+            </div>
         </div>
         <!-- options menu if message of the current user -->
         <div v-if="isCurrentUser" class="absolute top-0 right-0">

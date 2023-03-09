@@ -93,34 +93,38 @@ const options = {
         </template>
         <template #ads>
 
-            <Splide dir="ltr" class=" h-[4rem] w-[32rem] max-w-full self-end overflow-hidden  rounded-full md:ml-auto" :options="options">
+            <Splide dir="ltr" class=" h-full w-[32rem] max-w-full self-end overflow-hidden  rounded-full md:ml-auto" :options="options">
                 <template v-for="(advertisement, i) in advertisements" :key="i">
                     <SplideSlide class="h-full">
-                        <img class="object-cover h-full " :src="advertisement" alt="">
+                        <a :href="route('advertisements.show', advertisement)" class="block" target="_blank">
+                            <img class="object-cover h-full " :src="advertisement.media[0].original_url" alt="">
+                        </a>
                     </SplideSlide>
                 </template>
             </Splide>
 
 
         </template>
-        <div class="py-12">
+        <div class="">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <!-- Position Filters...
                                                                                                     =====================================================-->
-                <div class="flex gap-4 my-8 overflow-x-auto hideScrollBar">
-                    <SecondaryButton @click="filterByPosition(null)">
+                <div class="flex gap-4 mt-4 mb-8 overflow-x-auto hideScrollBar">
+                    <button @click="filterByPosition(null)" class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
+                    :class="{ 'border-primary': form.position == null, 'border-none': form.position != null }"
+                    >
                         <span class="w-full text-center"
                             :class="{ 'text-black': form.position == null, 'text-gray-400': form.position != null }">
                             All positions
                         </span>
-                    </SecondaryButton>
+                    </button>
                     <template v-for="position in positions" :key="position.id">
-                        <SecondaryButton @click="filterByPosition(position.id)">
+                        <button @click="filterByPosition(position.id)" class="py-2 px-4 min-w-[215px] w-1/5 text-center font-bold items-center bg-white border-2 border-gray-300 rounded-full  text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary   active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap">
                             <span class="w-full text-center"
                                 :class="{ 'text-black': form.position == position.id, 'text-gray-400': form.position != position.id }">
                                 {{ position.name }}
                             </span>
-                        </SecondaryButton>
+                        </button>
                     </template>
                 </div>
 
