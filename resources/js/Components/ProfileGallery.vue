@@ -8,7 +8,8 @@
                     <Link :href="route('posts.show', post.id)"
                         class="relative w-full h-full overflow-hidden rounded-lg aspect-square group">
                     <img :src="post?.cover_photo?.original_url" alt="" class="object-cover w-full h-full ">
-                    <button v-if="currentUser.id === user.id" @click.prevent.stop="showDeleteMediaModal = true"
+                    <!-- delete post button -->
+                    <!-- <button v-if="currentUser.id === user.id" @click.prevent.stop="showDeleteMediaModal = true"
                         class="absolute top-0 right-0 hidden bg-white group-hover:block bg-opacity-90 rounded-bl-xl">
                         <div class="flex flex-col items-start justify-center h-full p-1 opacity-100 ">
                             <XMarkIcon class="w-5 h-5 text-stone-800" />
@@ -29,47 +30,10 @@
                                 </div>
                             </div>
                         </Modal>
-                    </button>
+                    </button> -->
                     </Link>
                 </FadeInTransition>
             </template>
-
-
-
-            <!-- <template v-if="shouldPreview == 'videos'">
-                <template v-for="(file, index) in media.filter(f => f.type == 'video')" :key="index">
-                    <FadeInTransition>
-                        <Link :href="route('gallery.show', file.id)"
-                            class="relative w-full h-full overflow-hidden rounded-md group aspect-video">
-                        <video :src="file.url" alt="" class="object-cover w-full h-full " controls />
-                        <button v-if="currentUser.id === user.id" @click.prevent.stop="showDeleteMediaModal = true"
-                            class="absolute top-0 right-0 hidden bg-white group-hover:block bg-opacity-90 rounded-bl-xl">
-                            <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
-                                <XMarkIcon class="w-5 h-5 text-stone-800" />
-                            </div>
-                            <Modal :show="showDeleteMediaModal" @close="showDeleteMediaModal = false" :closeable="true"
-                                :show-close-icon="false" :max-width="'sm'">
-                                <div class="flex flex-col justify-center p-6 text-stone-800 ">
-                                    <p class="mb-3 text-lg">Are you sure you want delete this
-                                        media?</p>
-                                    <div class="flex justify-center w-full gap-4">
-                                        <button
-                                            class="p-2 px-8 border-2 rounded-full border-primary hover:bg-primary text-primary hover:text-white active:scale-95 "
-                                            @click="showDeleteMediaModal = false">Cancel</button>
-                                        <button
-                                            class="p-2 px-8 text-white bg-red-800 border-2 border-red-800 rounded-full hover:bg-transparent hover:text-red-800 active:scale-95 "
-                                            @click="removeItem(file.id)">Delete</button>
-
-                                    </div>
-                                </div>
-                            </Modal>
-                        </button>
-                        </Link>
-                    </FadeInTransition>
-                </template>
-            </template> -->
-
-
 
         </div>
     </div>
@@ -120,7 +84,7 @@ function getFileFromId(id) {
     return props.posts.filter(item => item.id == id)[0]
 }
 
-// function seturl
+
 function removeItem(id) {
     let file = getFileFromId(id)
     let index = props.posts.indexOf(file);

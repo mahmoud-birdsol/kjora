@@ -19,7 +19,8 @@
                                         :src="media.original_url" alt="" class="object-contain h-full ">
                                     <video v-if="media.mime_type.startsWith('video')" controls :src="media.original_url"
                                         alt="" class="object-contain h-full " />
-                                    <button v-if="currentUser.id === user.id"
+                                    <!-- delete single media -->
+                                    <!-- <button v-if="currentUser.id === user.id"
                                         @click.prevent.stop="showDeleteMediaModal = true"
                                         class="absolute top-0 right-0 hidden bg-white group-hover:block bg-opacity-90 rounded-bl-xl">
                                         <div class="flex flex-col items-start justify-center h-full p-1 opacity-100 ">
@@ -41,7 +42,7 @@
                                                 </div>
                                             </div>
                                         </Modal>
-                                    </button>
+                                    </button> -->
                                 </div>
                             </SplideSlide>
                         </template>
@@ -169,11 +170,12 @@
                             <!-- caption row 3 -->
                             <div>
                                 <p class="text-sm text-stone-500" v-show="!isEditingCaption">
-                                    {{ caption }}
+                                    {{ captionForm.caption }}
                                 </p>
-                                <div v-show="isEditingCaption" class="flex">
-                                    <textarea rows="4" type="text" :value="caption" @blur="submit"
-                                        class="w-full text-sm border-none text-stone-500 ring-1 focus:ring-primary focus:shadow-none focus:border-none ring-gray-300 hideScrollBar" />
+                                <div v-show="isEditingCaption" class="flex flex-col justify-end gap-3">
+                                    <textarea rows="4" type="text" v-model='captionForm.caption'
+                                        class="w-full text-sm border-none rounded-lg resize-none text-stone-500 ring-1 focus:ring-primary focus:shadow-none focus:border-none ring-gray-300 hideScrollBar" />
+                                    <PrimaryButton @click="submitEditCaption" class=''>Save</PrimaryButton>
                                 </div>
                             </div>
 
@@ -236,12 +238,13 @@ import Comment from '../../Components/Comment.vue';
 import { HeartIcon } from '@heroicons/vue/24/solid';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
-import { usePage, Link } from '@inertiajs/inertia-vue3';
+import { usePage, Link, useForm } from '@inertiajs/inertia-vue3';
 import FadeInTransition from '../../Components/FadeInTransition.vue';
 import Modal from '../../Components/Modal.vue';
 import ReportModal from '@/Components/ReportModal.vue';
 import { Inertia } from '@inertiajs/inertia';
 import LikeButton from '@/Components/LikeButton.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
 
 onBeforeMount(() => {
@@ -278,7 +281,7 @@ const currentUser = usePage().props.value.auth.user
 const isCurrentUser = currentUser.id === props.user.id
 const showDeleteMediaModal = ref(false);
 const showDeletePostModal = ref(false);
-const caption = ref('Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempora repellendus earum magni quia fugiat, enim deserunt labore tenetur praesentium.Impedit neque nihil ullam perferendis praesentium eos, molestiae amet deleniti sequi  ')
+
 
 //comment logic
 
@@ -342,14 +345,14 @@ function scrollToCommentsBottom() {
 
 // option menu logic
 // delete media
-function removeSingleMedia(id) {
-    axios.delete(route('api.gallery.destroy', id)).then((res) => console.log(res))
+// function removeSingleMedia(id) {
+//     axios.delete(route('api.gallery.destroy', id)).then((res) => console.log(res))
 
-    showDeleteMediaModal.value = false
-    Inertia.reload({
-        only: ['post'],
-    });
-}
+//     showDeleteMediaModal.value = false
+//     Inertia.reload({
+//         only: ['post'],
+//     });
+// }
 
 function openRemoveMediaModal() {
     showOptions.value = false
@@ -360,9 +363,13 @@ function editCaption() {
     showOptions.value = false
     isEditingCaption.value = true
 }
-function submit() {
+
+let captionForm = useForm({
+    caption: props.post.caption
+})
+function submitEditCaption() {
+    captionForm.patch(route('posts.update', props.post))
     isEditingCaption.value = false
-    console.log('has submit')
 }
 
 function removePost() {
@@ -370,7 +377,6 @@ function removePost() {
     showDeletePostModal.value = false
     Inertia.delete(route('posts.destroy', props.post.id), {
     })
-    Inertia.get(route('profile.show'))
 
 }
 
