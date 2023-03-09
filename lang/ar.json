@@ -1,4 +1,10 @@
 {
+    "you-have-received-an-invitation-from- :name ,-to-play-a-game-on":"لقد تلقيت دعوة من :name ، للعب لعبة ",
+    "invitation":"دعوة",
+    "decline":"رفض",
+    "accept":"قبول",
+    "declined":"رفض",
+    "message":"رسالة",
     "account":"الحساب",
     "security":"الامان",
     "payment":"دفع",

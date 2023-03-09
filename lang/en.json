@@ -1,5 +1,11 @@
 {
-    "copied":"Copied",
+    "you-have-received-an-invitation-from- :name ,-to-play-a-game-on":"you have received an Invitation from :name , to Play a Game on",
+    "invitation":"Invitation",
+    "decline":"Decline",
+    "accept":"Accept",
+    "declined":"Declined",
+    "messMage": "Message",
+        "copied":"Copied",
     "videos":"Videos",
     "photos":"Photos",
     "performance":"Performance",
@@ -45,5 +51,5 @@
     "payment details":"payment details",
     "update-merchant-account":"Update Merchant Account",
     "merchant-account":"merchant account",
-    "All positions" :  "All positions"
+    "All positions": "All positions"
 }
