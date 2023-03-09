@@ -4,7 +4,7 @@ import { Link, useForm, usePage } from '@inertiajs/inertia-vue3';
 import { ElRate } from 'element-plus';
 import Avatar from '@/Components/Avatar.vue';
 import dayjs from "dayjs";
-import { GoogleMap, Marker } from "vue3-google-map";
+import { CustomMarker, GoogleMap, Marker } from "vue3-google-map";
 import { CheckIcon, HandRaisedIcon, XMarkIcon } from '@heroicons/vue/24/solid';
 const props = defineProps({
     player: {
@@ -32,6 +32,8 @@ const backgroundImage = computed(() => {
 const currentUser = usePage().props.value.auth.user
 const isCurrentUser = props.player.id === currentUser.id
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
+
 const accept = () => {
     const form = useForm({});
     form.patch(route('invitation.accept', props.invitation.id), {
@@ -56,9 +58,7 @@ let position = {
     lat: parseFloat(props.invitation.stadium.latitude),
     lng: parseFloat(props.invitation.stadium.longitude),
 }
-const markerOptions = { position: position, label: props.invitation.stadium.name, title: props.invitation.stadium.name };
-
-
+const markerOptions = { position: position };
 
 </script>
 
@@ -96,14 +96,19 @@ const markerOptions = { position: position, label: props.invitation.stadium.name
                 </p>
             </div>
             <!-- invite user location -->
-            <!-- invitation.stadium.address --->
-            <!-- invitation.stadium.city   -->
-            <!-- invitation.stadium.country -->
-            <div>
+
+            <div class="w-full overflow-hidden rounded-lg ">
                 <GoogleMap :api-key="apiKey" style="width: 100%; height: 150px" :center="position" :zoom="15">
                     <Marker :options="markerOptions" />
+                    <CustomMarker :options="{ position: position, anchorPoint: 'TOP_RIGHT' }">
+                        <div class="text-center rounded-md bg-white/90 ">
+                            <div class="p-2 text-xs font-bold ">{{ invitation.stadium.name }}</div>
+                        </div>
+                    </CustomMarker>
                 </GoogleMap>
             </div>
+
+
             <!-- respond to invitation state buttons -->
             <div class="self-stretch text-sm font-bold">
                 <div v-if="invitation.state == null" class="flex justify-center gap-2">
