@@ -88,14 +88,14 @@ const reset = () => {
                             </span>
                         </SecondaryButton>
                     </template>
-                </div>
+            </div>
 
                 <!-- Current list...
                                     =====================================================-->
                 <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
 
                     <div class="flex items-start justify-start my-6">
-                        <p class="text-sm font-bold">{{$t('total')}} ({{ players.total }})</p>
+                        <p class="text-sm font-bold">{{$t('total ( :count )', {count:players.total})}}</p>
                     </div>
 
                     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">

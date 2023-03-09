@@ -129,7 +129,7 @@ const options = {
                 <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
 
                     <div class="flex items-start justify-start my-6">
-                        <p class="text-sm font-bold">Total ({{ players.total }})</p>
+                        <p class="text-sm font-bold">{{$t('total ( :count )', {count:players.total})}}</p>
                     </div>
 
                     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
@@ -154,7 +154,7 @@ const options = {
                     <Modal :show="showFiltersModal" max-width="sm" @close="showFiltersModal = false" :closeable="false">
                         <div class="p-6 bg-black">
                             <div class="flex items-center justify-between">
-                                <p class="text-sm text-white">Filter </p>
+                                <p class="text-sm text-white">{{$t('filter')}} </p>
 
                                 <button @click="showFiltersModal = false">
                                     <XMarkIcon class="w-4 h-4 text-white" />
@@ -163,48 +163,47 @@ const options = {
 
                             <form @submit.prevent="filter">
                                 <div class="my-6">
-                                    <InputLabel>Age</InputLabel>
+                                    <InputLabel>{{$t('age')}}</InputLabel>
                                     <div class="px-4 py-2 mx-4 border border-white  rounded-full">
                                         <el-slider v-model="form.age" class="" :min="18" :max="70" />
                                     </div>
                                 </div>
 
                                 <div class="my-6">
-                                    <InputLabel>Rating</InputLabel>
+                                    <InputLabel>{{$t('rating')}}</InputLabel>
                                     <div class="px-4 py-1 mx-4 border border-white rounded-full">
                                         <el-slider v-model="form.rating" :min="0" :max="5" />
                                     </div>
                                 </div>
 
                                 <div class="my-6">
-                                    <InputLabel>Search</InputLabel>
+                                    <InputLabel>{{$t('search')}}</InputLabel>
                                     <div class="px-4">
                                         <input type="search" name="search" id="search" v-model="form.search"
                                             class="block w-full px-4 text-center text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
-                                            placeholder="Search by name or username" />
+                                            :placeholder="$t('search') + $t('by') + $t('name') + $t('or') + $t('username')" />
                                     </div>
                                 </div>
 
                                 <div class="my-6">
-                                    <InputLabel>Position</InputLabel>
+                                    <InputLabel>{{$t('position')}}</InputLabel>
                                     <div class="px-4">
                                         <select id="location" name="location" v-model="form.position"
                                             class="block w-full py-2 pl-3 pr-10 mt-1 text-base text-center text-white bg-black border-white rounded-full focus:border-primary focus:outline-none focus:ring-primary sm:text-sm placeholder:center">
-                                            <option :value="null">All Positions</option>
-                                            <option v-for="position in positions" :key="position.id" :value="position.id">{{
-                                                position.name }}
+                                            <option :value="null">{{ $t('All positions') }}</option>
+                                            <option v-for="position in positions" :key="position.id" :value="position.id">{{ $t(position.name) }}
                                             </option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="my-6 mt-4">
-                                    <SecondaryButton @click="filter">Apply</SecondaryButton>
+                                    <SecondaryButton @click="filter">{{$t('apply')}}</SecondaryButton>
                                 </div>
                                 <div class="flex items-center justify-center mt-4">
                                     <button class="text-primary" @click="reset">
                                         <!-- <XMarkIcon class="inline w-4 h-4 mr-4" /> -->
-                                        Reset
+                                        {{$t('reset')}}
                                     </button>
                                 </div>
                             </form>
