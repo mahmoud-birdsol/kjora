@@ -64,15 +64,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 MenuSection::dashboard(Main::class)->icon('chart-bar'),
 
                 MenuSection::make('Dashboards', [
-                    MenuItem::dashboard(AdvertisementDashboard::class)->canSee(function (Request $request) {
-                        return $request->user()->hasPermissionTo('access advertisements dashboard');
-                    }),
-                    MenuItem::dashboard(AdminDashboard::class)->canSee(function (Request $request) {
-                        return $request->user()->hasPermissionTo('access admins dashboard');
-                    }),
-                    MenuItem::dashboard(UserDashboard::class)->canSee(function (Request $request) {
-                        return $request->user()->hasPermissionTo('access users dashboard');
-                    }),
+                    MenuItem::dashboard(AdvertisementDashboard::class),
+                    MenuItem::dashboard(AdminDashboard::class),
+                    MenuItem::dashboard(UserDashboard::class),
                 ])->icon('view-grid')->collapsable(),
 
                 MenuSection::make('Advertisements', [
@@ -180,10 +174,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             Main::make(),
             AdvertisementDashboard::make()
                 ->showRefreshButton(),
+
             AdminDashboard::make()
                 ->showRefreshButton(),
+
             UserDashboard::make()
                 ->showRefreshButton(),
+
         ];
     }
 
