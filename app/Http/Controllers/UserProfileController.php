@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use App\Models\MediaLibrary;
 use App\Models\Position;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -31,20 +32,12 @@ class UserProfileController extends Controller
                 ];
             })->values();
 
-        $media = $user->getMedia('gallery')->map(function (MediaLibrary $media) {
-            return [
-                'id' => $media->id,
-                'url' => $media->original_url,
-                'type' => $media->type,
-                'extension' => $media->extension,
-                'comments' => $media->comments?->load('replies'),
-            ];
-        });
+
 
         return Inertia::render('Profile/Show', [
             'user' => $user,
-            'media' => $media,
-            'playerRating' => $playerRating,
+            'posts' => $user->posts->load('comments'),
+            'playerRating' => $playerRating
         ]);
     }
 

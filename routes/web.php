@@ -17,6 +17,7 @@ use App\Http\Controllers\JoinPlatformController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerReviewController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ResendVerificationCodeController;
 use App\Http\Controllers\UserProfileController;
@@ -148,16 +149,20 @@ Route::middleware([
         ])->name('player.profile');
 
         Route::get(
-            'player/review/{review}', [
-            PlayerReviewController::class,
-            'show',
-        ])->name('player.review.show');
+            'player/review/{review}',
+            [
+                PlayerReviewController::class,
+                'show'
+            ]
+        )->name('player.review.show');
 
         Route::post(
-            'player/review/{review}', [
-            PlayerReviewController::class,
-            'store',
-        ])->name('player.review.store');
+            'player/review/{review}',
+            [
+                PlayerReviewController::class,
+                'store'
+            ]
+        )->name('player.review.store');
 
         /*
          |--------------------------------------------------------------------------
@@ -348,7 +353,8 @@ Route::middleware([
     */
 
     Route::get(
-        'advertisements/{advertisement}', [
+        'advertisements/{advertisement}',
+        [
             AdvertisementController::class,
             'show'
         ]
@@ -373,6 +379,9 @@ Route::middleware([
 //     event(new \App\Events\MessageSentEvent($user));
 // });
 
+Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::delete('posts/{post}/delete', [PostController::class, 'destroy'])->name('posts.destroy');
+Route::patch('posts/{post}', [PostController::class, 'update'])->name('posts.update');
 Route::get('gallery/{mediaLibrary}', function (MediaLibrary $mediaLibrary) {
     $user = $mediaLibrary->owner();
 
@@ -401,7 +410,6 @@ Route::post('contacts', [ContactController::class, 'store'])->name('contacts.sto
 Route::get('phone/verify', [VerificationCodeController::class, 'create'])->name('phone.verify');
 Route::post('phone/verify', [VerificationCodeController::class, 'store'])->name('phone.verify.store');
 Route::get('phone/resend-verification', ResendVerificationCodeController::class)->name('verification.phone.send');
-
 
 Route::get('test', function () {
     $response = Http::withHeaders([

@@ -82,18 +82,6 @@ class PlayerController extends Controller
     {
         $user->load('club');
 
-        $media = $user->getMedia('gallery')->filter(function (MediaLibrary $mediaLibrary) {
-            return $mediaLibrary->whereNull('suspended_at');
-        })->map(function (MediaLibrary $media) {
-            return [
-                'id' => $media->id,
-                'url' => $media->original_url,
-                'type' => $media->type,
-                'extension' => $media->extension,
-                'comments' => $media->comments?->load('replies'),
-            ];
-        });
-
         $ratingCategoriesCount = $user->playerReviews->count();
 
         $playerRating = $user->playerReviews->flatMap->ratingCategories->groupBy('name')
@@ -106,8 +94,8 @@ class PlayerController extends Controller
 
         return Inertia::render('Player/Show', [
             'player' => $user,
-            'media' => $media,
-            'playerRating' => $playerRating,
+            'posts' => $user->posts->load('comments'),
+            'playerRating' => $playerRating
         ]);
     }
 }
