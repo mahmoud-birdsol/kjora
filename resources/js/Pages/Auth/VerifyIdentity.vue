@@ -121,23 +121,22 @@ const save = () => {
     <Head title="Identity Verification" />
 
     <AppLayout>
-        <template #header>Verification</template>
+        <template #header>{{$t('verification')}}</template>
 
         <div class="grid grid-cols-1 gap-4 mt-8 sm:grid-cols-2">
             <!-- Step 1...
                 =====================================================-->
             <Card>
-                <CardContent title="Verify Identity">
+                <CardContent :title="$t('verify identity')">
                     <template #body>
                         <div class="flex flex-col justify-between h-full gap-8">
                             <div>
-                                <h3 class="mb-4 text-lg font-bold text-gray-900">Use a valid government-issued document</h3>
-                                <p class="text-xs text-gray-500">Only the following documents listed below will be accepted,
-                                    all other documents will be rejected.</p>
+                                <h3 class="mb-4 text-lg font-bold text-gray-900">{{$t('use a valid government-issued document')}}</h3>
+                                <p class="text-xs text-gray-500">{{ $t('only the following documents listed below will be accepted, all other documents will be rejected') }} .</p>
                             </div>
 
                             <div class="mt-4">
-                                <InputLabel color="primary" for="country" value="Country of issue" />
+                                <InputLabel color="primary" for="country" :value="$t('country of issue')" />
                                 <RichSelectInput :options="countries" value-name="name" text-name="name" image-name="flag"
                                     v-model="form.identity_issue_country" />
                                 <InputError class="mt-2" :message="form.errors.identity_issue_country" />
@@ -150,7 +149,7 @@ const save = () => {
                                         <template #icon>
                                             <font-awesome-icon icon="passport" class="w-12 h-auto text-center text-white" />
                                         </template>
-                                        Passport
+                                        {{$t('passport')}}
                                     </MegaButton>
 
                                     <MegaButton :active="form.identity_type == 'national_id'"
@@ -159,7 +158,7 @@ const save = () => {
                                             <font-awesome-icon icon="address-card"
                                                 class="w-12 h-auto text-center text-white" />
                                         </template>
-                                        Government issue id
+                                        {{$t('government issue id')}}
                                     </MegaButton>
                                 </div>
                                 <InputError class="mt-2" :message="form.errors.identity_type" />
@@ -170,7 +169,7 @@ const save = () => {
                         <PrimaryButton v-show="completedFirstStep == false" :class="{ 'opacity-25': form.processing }"
                             :disabled="form.processing || form.identity_type == null || form.identity_issue_country == null"
                             @click="completedFirstStep = true">
-                            Continue
+                            {{$t('continue')}}
                         </PrimaryButton>
                     </template>
                 </CardContent>
@@ -179,11 +178,11 @@ const save = () => {
             <!-- Step 2...
                 =====================================================-->
             <Card>
-                <CardContent title="Upload Identity">
+                <CardContent :title="$t('upload identity')">
                     <template #body>
                         <div class="flex flex-col justify-between h-full gap-2">
                             <div>
-                                <h3 class="mb-8 font-bold text-black uppercase">Take Selfie Photo</h3>
+                                <h3 class="mb-8 font-bold text-black uppercase">{{$t('take selfie photo')}}</h3>
                             </div>
 
                             <div>
@@ -204,19 +203,18 @@ const save = () => {
                                         </button>
                                     </div>
                                     <div class="w-3/4">
-                                        <CorrectText>Take a selfie of your self with a natural expression.</CorrectText>
-                                        <CorrectText>Make sure your whole face is visible, centered and your eyes are open.
+                                        <CorrectText>{{$t('Take a selfie of your self with a natural expression')}}.</CorrectText>
+                                        <CorrectText>{{$t('Make sure your whole face is visible, centered and your eyes are open')}}.
                                         </CorrectText>
-                                        <InCorrectText>Do not copy your ID or use screenshots of your ID.</InCorrectText>
-                                        <InCorrectText>Do not hide or alter pars of your face (No hats/beauty
-                                            images/filters/headgear).</InCorrectText>
+                                        <InCorrectText>{{$t('Do not copy your ID or use screenshots of your ID')}}.</InCorrectText>
+                                        <InCorrectText>{{$t('Do not hide or alter pars of your face (No hats/beauty images/filters/headgear)')}}.</InCorrectText>
                                     </div>
                                 </div>
                                 <InputError class="mt-2" :message="form.errors.identity_selfie_image" />
                             </div>
                             <div>
                                 <p class="mt-2 text-sm font-bold text-black">
-                                    File size must be between 10KB and 5120KB in jpg/jpeg/png format.
+                                    {{$t('File size must be between 10KB and 5120KB in jpg/jpeg/png format')}}.
                                 </p>
                             </div>
                             <div class="grid grid-cols-1 gap-4 mt-8 sm:grid-cols-2">
@@ -228,7 +226,7 @@ const save = () => {
                                             <font-awesome-icon v-else icon="camera"
                                                 class="w-12 h-auto text-center text-white" />
                                         </template>
-                                        Front
+                                        {{$t('Front')}}
                                     </MegaButton>
 
                                     <InputError class="mt-2" :message="form.errors.identity_front_image" />
@@ -242,7 +240,7 @@ const save = () => {
                                             <font-awesome-icon v-else icon="camera"
                                                 class="w-12 h-auto text-center text-white" />
                                         </template>
-                                        Back
+                                        {{$t('Back')}}
                                     </MegaButton>
 
                                     <InputError class="mt-2" :message="form.errors.identity_back_image" />
@@ -254,7 +252,7 @@ const save = () => {
                         <div class="mt-4">
                             <PrimaryButton v-show="completedFirstStep == true" :class="{ 'opacity-25': form.processing }"
                                 :disabled="form.processing" @click="save()">
-                                Verify
+                                {{$t('Verify')}}
                             </PrimaryButton>
                         </div>
                     </template>
