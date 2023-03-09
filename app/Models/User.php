@@ -73,6 +73,12 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'preferred_foot',
         'rating',
         'last_seen_at',
+        'last_known_ip',
+        'current_country',
+        'current_region',
+        'current_city',
+        'current_latitude',
+        'current_longitude'
     ];
 
     /**
@@ -269,6 +275,16 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     }
 
     /**
+     * Get the user posts
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    /**
      * Get the user favorites.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -448,5 +464,17 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function receivesBroadcastNotificationsOn(): string
     {
         return 'users.' . $this->id;
+    }
+
+    /**
+     * Verify the user phone
+     *
+     * @return void
+     */
+    public function verifyPhone(): void
+    {
+        $this->forceFill([
+            'phone_verified_at' => now()
+        ])->save();
     }
 }
