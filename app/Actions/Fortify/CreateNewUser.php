@@ -55,6 +55,7 @@ class CreateNewUser implements CreatesNewUsers
             'position_id' => $input['position_id'],
             'gender' => $input['gender'],
 
+            'last_seen_at' => now(),
             'accepted_terms_and_conditions_at' => now(),
             'accepted_privacy_policy_at' => now(),
             'accepted_cookie_policy_at' => now(),
