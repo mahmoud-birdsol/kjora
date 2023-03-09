@@ -14,17 +14,17 @@ const props = defineProps({
 
     <AppLayout title="Invitations">
         <template #header>
-            <p class="text-7xl font-black">Invitations</p>
+            <p class="text-7xl font-black">{{$t('invitations')}}</p>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex justify-end items-center space-x-4">
+                <div class="flex justify-end items-cente gap-3 ">
                     <Link :href="route('invitation.index')">
                         <SecondaryButton>
                                 <span
                                     :class="{'text-gray-500': !route().current('invitation.index'), 'text-black': route().current('invitation.index')}">
-                                    Invitation
+                                    {{ $t('invitation') }}
                                 </span>
                         </SecondaryButton>
                     </Link>
@@ -32,7 +32,7 @@ const props = defineProps({
                         <SecondaryButton>
                                 <span
                                     :class="{'text-gray-500': !route().current('hire.index'), 'text-black': route().current('hire.index')}">
-                                    Hire
+                                    {{$t('hire')}}
                                 </span>
                         </SecondaryButton>
                     </Link>
