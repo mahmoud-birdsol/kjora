@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Nova\Contact;
+use App\Nova\Conversation;
+use App\Nova\Invitation;
 use App\Nova\Admin;
 use App\Nova\Advertisement;
 use App\Nova\Click;
@@ -127,6 +130,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(Label::class),
                     MenuItem::resource(Social::class),
                     MenuItem::resource(MediaLibrary::class),
+                    MenuItem::resource(Contact::class),
                 ])->icon('cog')->collapsable(),
 
                 MenuSection::make('Reports', [
