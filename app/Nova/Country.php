@@ -80,7 +80,6 @@ class Country extends Resource
                 ->hideWhenCreating(),
 
             HasMany::make('Advertisements'),
-            HasMany::make('Clubs'),
             HasMany::make('Users'),
         ];
     }

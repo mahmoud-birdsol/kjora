@@ -394,9 +394,15 @@ Route::get('update-password', function () {
 })->name('update.password');
 
 Route::get('phone/verify', [VerificationCodeController::class, 'create'])->name('phone.verify');
-
 Route::post('phone/verify', [VerificationCodeController::class, 'store'])->name('phone.verify.store');
+Route::get('phone/resend-verification', ResendVerificationCodeController::class)->name('verification.phone.send');
 
 
-Route::get('phone/resend-verification', ResendVerificationCodeController::class)
-    ->name('verification.phone.send');
+Route::get('test', function () {
+    $response = Http::withHeaders([
+        'x-rapidapi-host' => 'v3.football.api-sports.io',
+        'x-rapidapi-key' => '303758e6ae860e914bb0755664b4caf0',
+    ])->get('https://v3.football.api-sports.io/teams?country=England&league=39&season=2022');
+
+    dd($response->json());
+});
