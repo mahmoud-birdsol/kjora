@@ -47,6 +47,6 @@ const props = defineProps({
                 </div>
             </div>
         </div>
-        <InvitationsFilter />
+        <InvitationsFilter url="hire.index" />
     </AppLayout>
 </template>

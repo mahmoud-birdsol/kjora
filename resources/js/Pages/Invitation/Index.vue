@@ -50,7 +50,7 @@ const props = defineProps({
                 </div>
             </div>
         </div>
-        <InvitationsFilter />
+        <InvitationsFilter url="invitation.index" />
     </AppLayout>
 </template>
 <style>
