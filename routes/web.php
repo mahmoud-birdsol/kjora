@@ -380,6 +380,7 @@ Route::middleware([
 
 Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
 Route::delete('posts/{post}/delete', [PostController::class, 'destroy'])->name('posts.destroy');
+Route::patch('posts/{post}', [PostController::class, 'update'])->name('posts.update');
 Route::get('gallery/{mediaLibrary}', function (MediaLibrary $mediaLibrary) {
     $user = $mediaLibrary->owner();
 

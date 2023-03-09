@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Services\FlashMessage;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class PostController extends Controller
 {
@@ -22,6 +22,21 @@ class PostController extends Controller
             'post' => $post,
             'user' => $post->user
         ]);
+    }
+
+    public function update(Request $request, Post $post): RedirectResponse
+    {
+        $data = $request->validate([
+            'caption' => 'required',
+        ]);
+
+        $post->update($data);
+
+        FlashMessage::make()->success(
+            message: 'Post successfully updated.'
+        )->closeable()->send();
+
+        return redirect()->back();
     }
 
     /**
