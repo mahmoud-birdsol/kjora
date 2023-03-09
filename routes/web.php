@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\AcceptInvitationController;
 use App\Http\Controllers\Actions\MarkNotificationAsRead;
+use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Auth\UserEmailController;
+use App\Http\Controllers\Auth\UserNameController;
+use App\Http\Controllers\Auth\UserPhoneController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HireController;
@@ -13,8 +17,9 @@ use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerReviewController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ResendVerificationCodeController;
 use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\VerificationCodeController;
 use App\Models\Country;
 use App\Models\Invitation;
 use App\Models\MediaLibrary;
@@ -58,6 +63,7 @@ Route::middleware([
     'auth:sanctum',
     'location.detect',
     config('jetstream.auth_session'),
+    'phone.verified'
 //    'player.review'
 ])->group(function () {
     Route::get('/verification/identity', [
@@ -71,8 +77,39 @@ Route::middleware([
         'store',
     ])->name('identity.verification.store');
 
-    Route::get('/change-password' ,[PasswordController::class , 'edit'])->name('password.edit');
-    Route::patch('/change-password' ,[PasswordController::class , 'update'])->name('password.update');
+    Route::get('/change-password', [PasswordController::class, 'edit'])->name('password.edit');
+    Route::patch('/change-password', [PasswordController::class, 'update'])->name('password.update');
+
+    Route::get('/user-name/edit', [
+        UserNameController::class,
+        'edit',
+    ])->name('username.edit');
+
+    Route::patch('/user-name/update', [
+        UserNameController::class,
+        'update',
+    ])->name('username.update');
+
+    Route::get('/email/edit', [
+        UserEmailController::class,
+        'edit',
+    ])->name('email.edit');
+
+    Route::patch('/email/update', [
+        UserEmailController::class,
+        'update',
+    ])->name('email.update');
+
+    Route::get('/phone/edit', [
+        UserPhoneController::class,
+        'edit',
+    ])->name('phone.edit');
+
+    Route::patch('/phone/update', [
+        UserPhoneController::class,
+        'update',
+    ])->name('phone.update');
+
 
     Route::middleware([
         'verified.email',
@@ -110,15 +147,15 @@ Route::middleware([
 
         Route::get(
             'player/review/{review}', [
-                PlayerReviewController::class,
-                'show'
-            ])->name('player.review.show');
+            PlayerReviewController::class,
+            'show'
+        ])->name('player.review.show');
 
         Route::post(
             'player/review/{review}', [
-                PlayerReviewController::class,
-                'store'
-            ])->name('player.review.store');
+            PlayerReviewController::class,
+            'store'
+        ])->name('player.review.store');
 
         /*
          |--------------------------------------------------------------------------
@@ -154,7 +191,10 @@ Route::middleware([
             $data = $request->validate([
                 'stadium_id' => ['required', 'integer', 'exists:stadia,id'],
                 'invited_player_id' => ['required', 'integer', 'exists:users,id'],
-                'date' => ['required'],
+                'date' => [
+                    'required',
+                    'after_or_equal:today'
+                ],
                 'time' => ['required'],
             ]);
 
@@ -304,6 +344,16 @@ Route::middleware([
      | Message Routes...
      |--------------------------------------------------------------------------
     */
+
+
+    /*
+     |--------------------------------------------------------------------------
+     | Likes Routes...
+     |--------------------------------------------------------------------------
+    */
+
+    Route::post('like', [\App\Http\Controllers\LikeController::class, 'store'])->name('like.store');
+    Route::delete('like', [\App\Http\Controllers\LikeController::class, 'destroy'])->name('like.destroy');
 });
 
 
@@ -333,4 +383,10 @@ Route::get('update-password', function () {
     return Inertia::render('Auth/UpdatePassword');
 })->name('update.password');
 
+Route::get('phone/verify', [VerificationCodeController::class, 'create'])->name('phone.verify');
 
+Route::post('phone/verify', [VerificationCodeController::class, 'store'])->name('phone.verify.store');
+
+
+Route::get('phone/resend-verification', ResendVerificationCodeController::class)
+    ->name('verification.phone.send');

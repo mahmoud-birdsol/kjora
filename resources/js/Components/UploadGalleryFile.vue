@@ -41,7 +41,7 @@ const props = defineProps({
     },
     maxWidth: {
         type: String,
-        default: '2xl',
+        default: 'lg',
     },
     closeable: {
         type: Boolean,
@@ -190,9 +190,7 @@ function reset(e) {
                             </div>
                         </FadeInTransition>
                     </div>
-
                 </div>
-
             </div>
             <div>
                 <div class="mb-2 text-sm text-center justify-self-end text-primary">only videos and images with max size

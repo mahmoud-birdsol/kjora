@@ -4,7 +4,6 @@
             <p>posts</p>
         </template>
 
-
         <Splide dir="ltr" class="" :options="options">
             <template v-for="(mediaWithComments, i) in mediaAndCommentsArr" :key="i">
                 <SplideSlide class="px-14 h-full">
@@ -55,10 +54,8 @@
                                                         class="w-full relative z-20 text-sm text-gray-500 whitespace-nowrap text-center divide-y">
                                                         <div @click="contenteditable = true">Edit</div>
                                                         <div>remove photo</div>
-
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                         <!-- date and time and likes row 2-->
@@ -141,7 +138,6 @@
                 </SplideSlide>
             </template>
         </Splide>
-
     </AppLayout>
 </template>
 
@@ -157,7 +153,11 @@ import { HeartIcon } from '@heroicons/vue/24/solid';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 import { usePage, Link } from '@inertiajs/inertia-vue3';
+<<<<<<< HEAD
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
+=======
+import LikeButton from '@/Components/LikeButton.vue';
+>>>>>>> main
 onBeforeMount(() => {
 
     dayjs.extend(relativeTime)
@@ -275,6 +275,10 @@ function scrollToCommentsBottom() {
         })
     }, 200);
 }
+
+
+
+
 </script>
 
 <style lang="scss" scoped></style>

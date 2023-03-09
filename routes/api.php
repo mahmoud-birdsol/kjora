@@ -4,7 +4,9 @@ use App\Http\Controllers\Api\ClubController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\DeleteGalleryController;
 use App\Http\Controllers\Api\GalleryUploadController;
+use App\Http\Controllers\Api\MarkMessageAsReadController;
 use App\Http\Controllers\Api\MessageController;
+use App\Http\Controllers\Api\NewMessagesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -84,3 +86,10 @@ Route::post('/elvis-has-left-the-building', function (Request $request) {
         'last_seen_at' => now(),
     ])->save();
 })->middleware('auth:sanctum')->name('api.user.left');
+
+
+Route::post('message/{message}/mark-as-read', MarkMessageAsReadController::class)
+    ->middleware('auth:sanctum')
+    ->name('api.message.mark-as-read');
+Route::get('chats/{conversation}/new-messages', NewMessagesController::class)
+    ->name('api.messages.new');
