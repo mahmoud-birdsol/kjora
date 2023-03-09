@@ -131,7 +131,7 @@ function reset(e) {
     <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="reset">
         <div class=" flex flex-col min-h-[500px] justify-between p-6">
             <div class="flex justify-center -mt-12">
-                <h2 class="text-xl font-bold uppercase text-primary">Upload</h2>
+                <h2 class="text-xl font-bold uppercase text-primary">{{$t('upload')}}</h2>
             </div>
             <!-- v-loading="" -->
             <div class="flex flex-col items-center h-full gap-2 py-8 ">
@@ -205,12 +205,10 @@ function reset(e) {
 
             </div>
             <div>
-                <div class="justify-self-end text-sm mb-2 text-primary text-center">video, images, PDFs and docs are allowed
-                    with max size
-                    (10 MB) are allowed
+                <div class="justify-self-end text-sm mb-2 text-primary text-center">{{$t('video, images, PDFs and docs are allowed with max size (10 MB) are allowed')}}
                 </div>
                 <PrimaryButton @click.prevent="upload" :disabled="isDisabled">
-                    Upload
+                    {{ $t('upload') }}
                 </PrimaryButton>
                 <!-- <InputError class="mt-2" :message="form.errors.image" /> -->
             </div>

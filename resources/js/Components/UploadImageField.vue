@@ -137,7 +137,7 @@ const upload = () => {
     >
         <div class="flex flex-col min-h-[500px] justify-between p-6">
             <div class="flex justify-center -mt-12">
-                <h2 class="text-xl text-primary font-bold uppercase">Upload</h2>
+                <h2 class="text-xl text-primary font-bold uppercase">{{$t('upload')}}</h2>
             </div>
             <div class="flex justify-center items-center sm:px-20 py-8" v-loading="form.processing">
                 <div class="max-w-[300px] w-full">
@@ -169,7 +169,7 @@ const upload = () => {
             </div>
             <div>
                 <PrimaryButton @click.prevent="upload" :disabled="form.processing">
-                    Upload
+                    {{$t('upload')}}
                 </PrimaryButton>
                 <InputError class="mt-2" :message="form.errors.image"/>
             </div>

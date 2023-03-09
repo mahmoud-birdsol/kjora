@@ -42,7 +42,7 @@ const submit = () => {
 
         <div class="flex flex-col p-4 text-center uppercase gap-y-6">
         <div class="mb-4 font-bold text-primary">
-            report
+            {{$t('report')}}
         </div>
             <!-- TODO:make it radio buttons group -->
             <form @submit.prevent="submit()">
@@ -57,7 +57,7 @@ const submit = () => {
                     </RadioGroup>
                 </ul>
                 <button class="w-full p-2 px-6 text-white uppercase bg-black rounded-full my-4">
-                    report
+                    {{$t('report')}}
                 </button>
             </form>
 
