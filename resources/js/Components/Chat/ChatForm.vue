@@ -184,7 +184,7 @@ const removePhoto = (i) => {
             <!--            </button>-->
             <div class="flex flex-grow items-center">
                 <textarea v-model="form.body" @keypress.enter.exact.prevent="submit" name="body" id="body" rows="1"
-                    placeholder="Type your Message Here"
+                    :placeholder="$t('Type your Message Here')"
                     class="w-full resize-none rounded-full border-none focus:ring-primary bg-stone-100 p-2 px-4 placeholder:text-neutral-400 text-stone-700 hideScrollBar"></textarea>
             </div>
             <button class="relative" @click="openModual = true">
