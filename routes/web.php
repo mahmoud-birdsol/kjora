@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AcceptInvitationController;
 use App\Http\Controllers\Actions\MarkNotificationAsRead;
+use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\UserEmailController;
 use App\Http\Controllers\Auth\UserNameController;
@@ -340,10 +341,16 @@ Route::middleware([
 
     /*
      |--------------------------------------------------------------------------
-     | Message Routes...
+     | Advertisement Routes...
      |--------------------------------------------------------------------------
     */
 
+    Route::get(
+        'advertisements/{advertisement}', [
+            AdvertisementController::class,
+            'show'
+        ]
+    )->name('advertisements.show');
 
     /*
      |--------------------------------------------------------------------------
