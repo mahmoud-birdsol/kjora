@@ -1,5 +1,5 @@
 <script setup>
-import {computed} from 'vue';
+import {computed , ref} from 'vue';
 import {Link, useForm, usePage} from '@inertiajs/inertia-vue3';
 import {ElRate} from 'element-plus';
 import Avatar from '@/Components/Avatar.vue';
@@ -36,7 +36,10 @@ const props = defineProps({
     }
 });
 
+const currentUser = usePage().props.value.auth.user
 const state = props.player.state_name
+const txtColor = state=='Free'?'white':'black'
+const colors = ref(['#99A9BF', state =="Free"? '#FF9900':'rgb(0, 100, 0)', state =="Free"? '#FF9900':'rgb(0, 100, 0)' ])
 const backgroundImage = computed(() => {
     if (state == 'Premium') {
         return {
@@ -44,7 +47,7 @@ const backgroundImage = computed(() => {
             'lg': '/images/player_bg_lg_gold.png',
         }[props.size];
     }
-    if (state == 'Free') {
+    else if (state == 'Free') {
         return {
             'sm': '/images/player_bg_sm.png',
             'lg': '/images/player_bg_lg.png',
@@ -52,7 +55,6 @@ const backgroundImage = computed(() => {
     }
 });
 
-const currentUser = usePage().props.value.auth.user
 const isCurrentUser = props.player.id === currentUser.id
 
 const addToFavorites = () => {
@@ -88,7 +90,7 @@ const removeFromFavorites = () => {
             </span>
         </div>
         <div class="p-4">
-            <div class="flex items-start justify-between">
+            <div class="flex items-start justify-between" :class="`text-${txtColor}`">
                 <div class="flex justify-start mb-2" :class="{ 'space-x-2': size == 'sm', 'space-x-8': size == 'lg' }">
                     <div class="relative">
                         <Link :href="route('profile.edit')" v-if="isCurrentUser"
@@ -101,18 +103,18 @@ const removeFromFavorites = () => {
 
                     <div>
                         <Link :href="route('player.profile', player.id)">
-                            <h2 class="text-sm font-bold text-white">
+                            <h2 class="text-sm font-bold">
                                 {{ player.first_name }} {{ player.last_name }}
                             </h2>
                         </Link>
 
-                        <Link class="text-xs text-white opacity-50" :href="route('player.profile', player.id)">@{{
+                        <Link class="text-xs  opacity-50" :href="route('player.profile', player.id)">@{{
                                 player.username
                             }}
                         </Link>
-                        <p class="flex items-center space-x-2 text-sm text-white">
-                            <span class="scale-[0.7] origin-left flex items-center gap-x-1">
-                                <ElRate disabled v-model="player.rating" size="small"/>
+                        <p class="flex items-center space-x-2 text-sm ">
+                            <span class="scale-[0.7] origin-left flex items-center gap-x-1" :class="txtColor == 'black' ? 'text-primary':'text-[#FF9900]'">
+                                <ElRate disabled  v-model="player.rating" size="small" :colors="colors"/>
                                 {{ player.rating }}
                             </span>
                         </p>
@@ -120,46 +122,46 @@ const removeFromFavorites = () => {
                 </div>
 
                 <div class="flex flex-col gap-1 items-center">
-                    <p class="text-sm font-bold text-white">{{ player.preferred_foot === 'right' ? 'R' : 'L' }}</p>
+                    <p class="text-sm font-bold">{{ player.preferred_foot === 'right' ? 'R' : 'L' }}</p>
                 </div>
             </div>
 
-            <div class="grid gap-4 border-b border-white"
-                 :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' }">
+            <div class="grid gap-4 border-b"
+                 :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' } , `border-${txtColor}` , `text-${txtColor}`">
                 <div v-if="size == 'lg'" class="relative">
-                    <p class="text-xs text-center text-white opacity-50 text-light">Favorite Club</p>
+                    <p class="text-xs text-center opacity-50 text-light">Favorite Club</p>
                     <div class="flex justify-center item-center [&+div]:hover:block">
                         <img :src="player.club?.logo_thumb" class="w-5 h-5 border-2 border-white rounded-full"/>
                     </div>
                     <ToolTip :value="player.club?.name"/>
                 </div>
                 <div>
-                    <p class="text-xs text-center text-white opacity-50 text-light">Age</p>
-                    <p class="text-sm text-center text-white font-semi-bold">{{ player.age }}</p>
+                    <p class="text-xs text-center opacity-50 " :class="state == 'Free' ?'text-white text-light':'text-primary'">Age</p>
+                    <p class="text-sm text-center font-semi-bold">{{ player.age }}</p>
                 </div>
                 <div>
-                    <p class="text-xs text-center text-white opacity-50 text-light">Played</p>
-                    <p class="text-sm text-center text-white font-semi-bold">0</p>
+                    <p class="text-xs text-center opacity-50 text-light" :class="state == 'Free' ?'text-white text-light':'text-primary'">Played</p>
+                    <p class="text-sm text-center font-semi-bold">0</p>
                 </div>
                 <div>
-                    <p class="text-xs text-center text-white opacity-50 text-light">Missed</p>
-                    <p class="text-sm text-center text-white font-semi-bold">0</p>
+                    <p class="text-xs text-center opacity-50 text-light" :class="state == 'Free' ?'text-white text-light':'text-primary'">Missed</p>
+                    <p class="text-sm text-center font-semi-bold">0</p>
                 </div>
                 <div>
-                    <p class="text-xs text-center text-white opacity-50 text-light">Position</p>
-                    <p class="text-sm text-center text-white font-semi-bold">{{ player.position.name }}</p>
+                    <p class="text-xs text-center opacity-50 text-light" :class="state == 'Free' ?'text-white text-light':'text-primary'">Position</p>
+                    <p class="text-sm text-center font-semi-bold">{{ player.position.name }}</p>
                 </div>
             </div>
 
-            <div class="flex items-center justify-between mt-2">
-                <p class="flex items-center text-sm text-white" v-if="showLocation">
-                    <MapPinIcon class="inline w-4 h-4 text-white"/>
+            <div class="flex items-center justify-between mt-2" :class="`text-${txtColor}`">
+                <p class="flex items-center text-sm" v-if="showLocation">
+                    <MapPinIcon class="inline w-4 h-4"/>
                     {{ player.current_city }}
                 </p>
                 <div class="flex gap-4 items-center">
-                    <div class="flex space-x-2 text-white bg-transparent"
+                    <div class="flex space-x-2 bg-transparent"
                          v-if="showInvite && player.id !== $page.props.auth.user.id">
-                        <Link :href="route('invitation.create', player.id)" class="text-sm text-white">Send Invitation
+                        <Link :href="route('invitation.create', player.id)" class="text-sm">Send Invitation
                             <!-- <ChevronDoubleRightIcon class="inline w-4 h-4 text-white" /> -->
                         </Link>
                     </div>
