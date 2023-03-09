@@ -24,16 +24,21 @@ class PlayerController extends Controller
         $query = User::query()->whereNot('id', $request->user()->id);
 
         $request->whenFilled('position', fn() => $query->where('position_id', $request->input('position')));
-        $request->whenFilled('rating',
-            $request->input('rating') > 0
-                ? fn() => $query->where(function ($query) use ($request) {
-                $query->where('rating', '>=', $request->input('rating'));
+        $request->whenFilled('ratingFrom',fn() => $query->where(function ($query) use ($request) {
+                $query->where('rating', '>=', $request->input('ratingFrom'));
             })
-                : fn() => null
+        );
+        $request->whenFilled('ratingTo',fn() => $query->where(function ($query) use ($request) {
+                $query->where('rating', '<=', $request->input('ratingTo'));
+            })
         );
 
-        $request->whenFilled('age',
-            fn() => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('age')))
+        $request->whenFilled('ageFrom',
+            fn() => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('ageFrom')))
+        );
+
+        $request->whenFilled('ageTo',
+            fn() => $query->whereDate('date_of_birth', '>=', now()->subYears($request->input('ageTo')))
         );
 
         $request->whenFilled('country_id',

@@ -10,7 +10,8 @@ import Modal from '@/Components/Modal.vue';
 import { ElSlider } from 'element-plus';
 import InputLabel from '@/Components/InputLabel.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
-
+let age = ref([18,70])
+let rating = ref([0,5])
 const props = defineProps({
     positions: Array,
     form: Object,
@@ -18,7 +19,6 @@ const props = defineProps({
     countries: Array
 })
 let emit = defineEmits(['filter', 'reset', 'update:form'])
-
 function filter() {
     emit('update:form', props.form)
     emit('filter')
@@ -26,7 +26,6 @@ function filter() {
 function reset() {
     emit('reset')
 }
-
 </script>
 <template>
     <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40">
@@ -34,32 +33,27 @@ function reset() {
             @click="showFiltersModal = !showFiltersModal">
             <AdjustmentsHorizontalIcon class="w-10 h-10 text-white" />
         </button>
-
         <Modal :show="showFiltersModal" max-width="sm" @close="showFiltersModal = false" :closeable="false">
             <div class="p-6 bg-black">
                 <div class="flex items-center justify-between">
                     <p class="text-sm text-white">Filter </p>
-
                     <button @click="showFiltersModal = false">
                         <XMarkIcon class="w-4 h-4 text-white" />
                     </button>
                 </div>
-
                 <form @submit.prevent="filter">
                     <div class="my-6">
                         <InputLabel>Age</InputLabel>
                         <div class="px-4 py-2 mx-4 border border-white  rounded-full">
-                            <el-slider v-model="form.age" class="" :min="18" :max="70" />
+                            <el-slider v-model="age" range class="" :min="18" :max="70" @change="form.ageFrom=age[0] ; form.ageTo= age[1]"/>
                         </div>
                     </div>
-
                     <div class="my-6">
                         <InputLabel>Rating</InputLabel>
                         <div class="px-4 py-1 mx-4 border border-white rounded-full">
-                            <el-slider v-model="form.rating" :min="0" :max="5" />
+                            <el-slider v-model="rating" range :min="0" :max="5"  @change="form.ratingFrom = rating[0]; form.ratingTo = rating[1]  " />
                         </div>
                     </div>
-
                     <div class="my-6">
                         <InputLabel>Search</InputLabel>
                         <div class="px-4">
@@ -87,7 +81,6 @@ function reset() {
                             </select>
                         </div>
                     </div>
-
                     <div class="my-6 mt-4">
                         <SecondaryButton @click="filter">Apply</SecondaryButton>
                     </div>
