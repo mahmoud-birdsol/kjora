@@ -12,7 +12,7 @@
             <!-- user information & comment time row 1-->
             <div class="flex flex-col xs:flex-row w-full justify-between">
                 <!-- user information -->
-                <div class="flex flex-col xs:flex-row  gap-1 ">
+                <div class="flex md:flex-col flex-row  gap-1 ">
                     <div class="flex flex-row gap-2">
                         <h3 class="font-bold m-0 text-lg text-stone-800 leading-none  capitalize ">{{
                             comment.user.first_name }} </h3>
@@ -36,9 +36,9 @@
             <!-- add reply & like buttons row 3 -->
             <div class="flex w-full text-sm gap-2 justify-start text-stone-700 font-semibold mb-2">
                 <button @click="handleReplyClicked"
-                    class="p-1 pis-0 enabled:hover:underline hover:underline-offset-4 transition-all duration-150">Reply</button>
+                    class="p-1 pis-0 enabled:hover:underline hover:underline-offset-4 transition-all duration-150">{{$t('reply')}}</button>
                 <button
-                    class="p-1 enabled:hover:underline hover:underline-offset-4 transition-all duration-150">Like</button>
+                    class="p-1 enabled:hover:underline hover:underline-offset-4 transition-all duration-150">{{$t('like')}}</button>
             </div>
 
             <!-- replies related to this comment row 4 -->
@@ -69,7 +69,7 @@
             <!-- view replies button row 6 -->
             <button v-show="hasReplies" @click="toggleRepliesView"
                 class="flex w-full text-sm gap-2 justify-start  text-stone-500 enabled:hover:underline hover:underline-offset-4 transition-all duration-300  ">
-                {{ showReplies ? 'hide' : 'view' }} {{ comment.replies?.length }} replies
+                {{ showReplies ? $t('hide') : $t('view') }} {{ comment.replies?.length }} {{$t('replies')}}
             </button>
 
         </div>
