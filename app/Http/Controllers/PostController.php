@@ -27,10 +27,11 @@ class PostController extends Controller
     /**
      * Delete the post
      *
+     * @param \Illuminate\Http\Request $request
      * @param \App\Models\Post $post
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Post $post)
+    public function destroy(Request $request, Post $post)
     {
         $post->delete();
 
@@ -38,6 +39,6 @@ class PostController extends Controller
             message: 'The Post has been deleted'
         )->closeable()->send();
 
-        return redirect()->back();
+        return redirect()->route('profile.show', $request->user());
     }
 }
