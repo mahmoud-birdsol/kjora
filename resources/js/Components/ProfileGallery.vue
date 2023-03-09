@@ -91,7 +91,7 @@ function removeItem(id) {
     let index = props.media.indexOf(file);
 
     props.media.splice(index, 1)
-    axios.delete(route('api.gallery.destroy', id)).then((res) => console.log(res))
+    axios.delete(route('api.gallery.destroy', id))
 }
 
 </script>

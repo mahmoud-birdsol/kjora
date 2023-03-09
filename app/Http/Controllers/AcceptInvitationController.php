@@ -12,18 +12,12 @@ class AcceptInvitationController extends Controller
 {
     /**
      * Accept the user invitation
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Invitation $invitation
-     * @param \App\Actions\CreateConversationAction $createConversationAction
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function __invoke(
         Request $request,
         Invitation $invitation,
         CreateConversationAction $createConversationAction
-    ): RedirectResponse
-    {
+    ): RedirectResponse {
         $invitation->forceFill(['state' => 'accepted'])->save();
 
         $invitation->invitingPlayer->notify(new InvitationAcceptedNotification($invitation));

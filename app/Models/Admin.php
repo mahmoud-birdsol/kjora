@@ -64,8 +64,6 @@ class Admin extends Authenticatable
 
     /**
      * Determine if the user can impersonate another user.
-     *
-     * @return bool
      */
     public function canImpersonate(): bool
     {
@@ -74,8 +72,6 @@ class Admin extends Authenticatable
 
     /**
      * Determine if the user can be impersonated.
-     *
-     * @return bool
      */
     public function canBeImpersonated(): bool
     {

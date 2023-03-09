@@ -21,9 +21,6 @@ class VerifyUser
 
     /**
      * Mark the user identity as verified, and notify them.
-     *
-     * @param  \App\Models\User  $user
-     * @return void
      */
     public function __invoke(User $user): void
     {

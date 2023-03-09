@@ -10,11 +10,9 @@ class CommentPolicy
 {
     use HandlesAuthorization;
 
-
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\Models\Admin  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function viewAny(Admin $user)
@@ -37,7 +35,6 @@ class CommentPolicy
     /**
      * Determine whether the user can create models.
      *
-     * @param  \App\Models\Admin  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function create(Admin $user)
