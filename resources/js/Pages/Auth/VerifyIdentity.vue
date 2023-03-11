@@ -125,7 +125,7 @@ const save = () => {
 
         <div class="grid grid-cols-1 gap-4 mt-8 sm:grid-cols-2">
             <!-- Step 1...
-                =====================================================-->
+                                =====================================================-->
             <Card>
                 <CardContent title="Verify Identity">
                     <template #body>
@@ -177,7 +177,7 @@ const save = () => {
             </Card>
 
             <!-- Step 2...
-                =====================================================-->
+                                =====================================================-->
             <Card>
                 <CardContent title="Upload Identity">
                     <template #body>
@@ -263,7 +263,7 @@ const save = () => {
         </div>
 
         <!-- Upload image Modals...
-            =====================================================-->
+                            =====================================================-->
 
         <UploadImageField :should-upload="false" :show="showIdentityFrontImageModal"
             :current-image-url="identityFrontImagePreview" v-model="form.identity_front_image"
@@ -273,8 +273,8 @@ const save = () => {
             :current-image-url="identityBackImagePreview" v-model="form.identity_back_image"
             @close="showIdentityBackImageModal = false" @selected="setIdentityBackImagePreview" />
 
-        <UploadSelfieModal :show="showIdentitySelfieModal" @close="showIdentitySelfieModal = false"
-            v-model="form.identity_selfie_image" />
+        <UploadSelfieModal v-model="form.identity_selfie_image" :show="showIdentitySelfieModal"
+            @close="showIdentitySelfieModal = false" />
 
         <SuccessMessageModal title="Congratulations"
             message="Your identity verification has been successfully sent. Please wait for approval."
