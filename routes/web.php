@@ -381,7 +381,6 @@ Route::prefix('policy')
         'auth:sanctum',
         'location.detect',
         config('jetstream.auth_session'),
-        'phone.verified'
     ])
     ->group(function () {
         /*terms*/
@@ -393,7 +392,7 @@ Route::prefix('policy')
             ]
         )->name('terms.and.condition.index');
 
-        Route::post('terms-and-condition/{termsAndConditions}', [
+        Route::patch('terms-and-condition/{termsAndConditions}', [
             \App\Http\Controllers\Policy\TermsAndConditionController::class,
             'store'
         ])->name('terms.and.condition.store');
@@ -408,7 +407,7 @@ Route::prefix('policy')
             ]
         )->name('privacy.policy.index');
 
-        Route::post('privacy-policy/{privacyPolicy}', [
+        Route::patch('privacy-policy/{privacyPolicy}', [
             \App\Http\Controllers\Policy\PrivacyPolicyController::class,
             'store'
         ])->name('privacy.policy.store');
@@ -423,7 +422,7 @@ Route::prefix('policy')
             ]
         )->name('cookies.policy.index');
 
-        Route::post('cookies-policy/{cookiePolicy}', [
+        Route::patch('cookies-policy/{cookiePolicy}', [
             \App\Http\Controllers\Policy\CookiesPolicyController::class,
             'store'
         ])->name('cookies.policy.store');

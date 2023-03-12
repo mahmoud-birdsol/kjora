@@ -21,14 +21,18 @@ class EnsurePoliciesVerified
      */
     public function handle(Request $request, Closure $next)
     {
+        $lastTerm = TermsAndConditions::latest()->first();
+        $lastPrivacyPolicy = PrivacyPolicy::latest()->first();
+        $lastCookie = CookiePolicy::latest()->first();
+
         //check if user accept the same version of current version
-        if ($this->termsConditionsVersionChecker($request->user()) != 0) {
+        if (($this->termsConditionsVersionChecker($request->user(), $lastTerm) != 0) && $lastTerm) {
             return Redirect::route('terms.and.condition.index');
         }
-        if ($this->privacyPolicyVersionChecker($request->user()) != 0) {
+        if (($this->privacyPolicyVersionChecker($request->user(), $lastPrivacyPolicy) != 0) && $lastPrivacyPolicy) {
             return Redirect::route('privacy.policy.index');
         }
-        if ($this->cookiesVersionChecker($request->user()) != 0) {
+        if (($this->cookiesVersionChecker($request->user(), $lastCookie) != 0) && $lastCookie) {
             return Redirect::route('cookies.policy.index');
         }
         return $next($request);
@@ -39,35 +43,32 @@ class EnsurePoliciesVerified
      * @param User $user
      * @return bool|int
      */
-    private function termsConditionsVersionChecker(User $user)
+    private function termsConditionsVersionChecker(User $user, $lastTerm)
     {
         $useTermsVersion = $user->accepted_terms_and_conditions_version;
-        $lastTerm = TermsAndConditions::latest()->first();
 
-        return version_compare($useTermsVersion, $lastTerm->version);
+        return $lastTerm ? version_compare($useTermsVersion, $lastTerm->version) : false;
     }
     /**
      * check if privacy policies same version with user
      * @param User $user
      * @return bool|int
      */
-    private function privacyPolicyVersionChecker(User $user)
+    private function privacyPolicyVersionChecker(User $user,  $lastPrivacyPolicy)
     {
         $usePrivacyVersion = $user->accepted_privacy_policy_version;
-        $lastPrivacyPolicy = PrivacyPolicy::latest()->first();
 
-        return version_compare($usePrivacyVersion, $lastPrivacyPolicy->version);
+        return $lastPrivacyPolicy ?  version_compare($usePrivacyVersion, $lastPrivacyPolicy->version) : false;
     }
     /**
      * check if Cookie same version with user
      * @param User $user
      * @return bool|int
      */
-    private function cookiesVersionChecker(User $user)
+    private function cookiesVersionChecker(User $user,  $lastCookie)
     {
         $useCookieVersion = $user->accepted_cookie_policy_version;
-        $lastCookie = CookiePolicy::latest()->first();
 
-        return version_compare($useCookieVersion, $lastCookie->version);
+        return $lastCookie ? version_compare($useCookieVersion, $lastCookie->version) : false;
     }
 }

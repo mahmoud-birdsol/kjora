@@ -21,7 +21,7 @@ class CookiesPolicyController extends Controller
      */
     public function index(Request $request): Response
     {
-        return Inertia::render('PrivacyPolicy', [
+        return Inertia::render('CookiesPolicy', [
             'cookies' => CookiePolicy::latest()->first()
         ]);
     }
@@ -34,12 +34,11 @@ class CookiesPolicyController extends Controller
      */
     public function store(
         Request $request,
-        CookiePolicy $cookiePolicy ,
+        CookiePolicy $cookiePolicy,
         AssignTheCookiesVersion $assignTheCookiesVersion
-    ): RedirectResponse
-    {
+    ): RedirectResponse {
         $user =  $request->user();
-        ($assignTheCookiesVersion)($user , $cookiePolicy);
+        ($assignTheCookiesVersion)($user, $cookiePolicy);
         FlashMessage::make()->success(
             message: 'Cookies approved successfully'
         )->closeable()->send();
