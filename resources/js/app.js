@@ -12,12 +12,13 @@ import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 import { createPinia } from "pinia";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import VueGoogleMaps from "@fawmi/vue-google-maps";
 library.add();
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
 
 const pinia = createPinia();
-
+const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) =>
@@ -30,6 +31,13 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .use(pinia)
+            .use(VueGoogleMaps, {
+                load: {
+                    key: apiKey,
+                    libraries: "places",
+                    // language: 'de',
+                },
+            })
             .component("font-awesome-icon", FontAwesomeIcon)
             .mount(el);
     },
