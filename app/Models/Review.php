@@ -29,13 +29,11 @@ class Review extends Model
      * @var array
      */
     protected $casts = [
-      'reviewed_at' => 'datetime'
+        'reviewed_at' => 'datetime',
     ];
 
     /**
      * Get the reviewing user
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function reviewer(): BelongsTo
     {
@@ -44,8 +42,6 @@ class Review extends Model
 
     /**
      * Get the reviewed user
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function player(): BelongsTo
     {
@@ -54,8 +50,6 @@ class Review extends Model
 
     /**
      * Get the review invitation
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function invitation(): BelongsTo
     {
@@ -64,8 +58,6 @@ class Review extends Model
 
     /**
      * Get the review rating categories
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function ratingCategories(): BelongsToMany
     {
@@ -76,5 +68,4 @@ class Review extends Model
             relatedPivotKey: 'rating_category_id'
         )->using(ReviewRatingCategory::class)->withPivot('value');
     }
-
 }

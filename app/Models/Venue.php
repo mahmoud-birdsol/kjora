@@ -35,8 +35,6 @@ class Venue extends Model implements Suspendable
 
     /**
      * Get the venue user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -45,8 +43,6 @@ class Venue extends Model implements Suspendable
 
     /**
      * Get the venue country.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function country(): BelongsTo
     {
