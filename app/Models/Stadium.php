@@ -33,4 +33,9 @@ class Stadium extends Model
     protected $casts = [
         'approved_at' => 'datetime',
     ];
+
+    public function formattedAddress(): string
+    {
+        return $this->street_address . ' ' . $this->city . ', ' . $this->country;
+    }
 }

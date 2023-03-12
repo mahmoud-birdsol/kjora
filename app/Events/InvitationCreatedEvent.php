@@ -13,9 +13,6 @@ class InvitationCreatedEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    /**
-     * @var \App\Models\Invitation
-     */
     public Invitation $invitation;
 
     /**

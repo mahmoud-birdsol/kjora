@@ -9,9 +9,6 @@ class SendVerificationReminder
 {
     /**
      * Send verification reminder notification to the specified user.
-     *
-     * @param  \App\Models\User  $user
-     * @return void
      */
     public function __invoke(User $user): void
     {

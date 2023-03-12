@@ -2,15 +2,15 @@
 import GuestNavbar from '@/Layouts/Partials/GuestNavbar.vue';
 import { usePage } from '@inertiajs/inertia-vue3';
 import CopyrightClaim from '@/Components/CopyrightClaim.vue';
-
+import SystemMessage from '@/Components/SystemMessage.vue';
 const socials = usePage().props.value.socials;
 </script>
 
 <template>
     <div class="min-h-screen bg-gradient-to-b from-black to-primaryDark">
         <div class="min-h-screen flex flex-col justify-between pt-6 sm:pt-0 space-y-8">
+            <SystemMessage />
             <GuestNavbar/>
-
             <main class="flex justify-center my-4">
                 <slot/>
             </main>

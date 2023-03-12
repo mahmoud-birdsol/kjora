@@ -13,6 +13,7 @@ export const useChat = defineStore("chat", {
             search: "",
             replyToMessage: null,
             currentUserId: null,
+            interval: null,
         };
     },
 
@@ -72,7 +73,7 @@ export const useChat = defineStore("chat", {
             this.currentUserId = currentUserId;
             this.subscribeToConversation();
             this.fetchMessages();
-
+            this.interval = setInterval(this.fetchNewMessages, 30000);
             // Add event listener for the container
             // scroll to load more messages.
             this.registerScrollListener();
@@ -106,7 +107,47 @@ export const useChat = defineStore("chat", {
                 return error;
             }
         },
+        /**
+         *
+         */
+        setMessageAsRead(message) {
+            // let oldMessage = this.messages.filter(
+            //     (m) => m.id === message.id
+            // )[0];
+            // let oldMessageIndex = this.messages.indexOf(oldMessage);
+            let oldMessageIndex = this.messages.findIndex(
+                (m) => m.id === message.id
+            );
 
+            this.messages[oldMessageIndex].read_at = message.read_at;
+            // this.messages.splice(oldMessageIndex, 1, message);
+        },
+        /**
+         * Fetch the new conversation  messages from api .
+         *
+         * @returns {Promise<*>}
+         */
+        async fetchNewMessages() {
+            // this.loading = true;
+            try {
+                let response = await axios.get(
+                    route(`api.messages.new`, this.conversation)
+                );
+                console.log(response.data.data);
+                let newMessages = response.data.data;
+                newMessages.forEach((newM) => {
+                    if (!this.messages.some((m) => m.id === newM.id)) {
+                        this.messages.unshift({ ...newM, new: true });
+                    }
+                });
+                // this.messages = this.messages.concat(response.data.data);
+                // this.loading = false;
+                this.page === 1 ? this.scrollToMessagesBottom() : null;
+            } catch (error) {
+                this.loading = false;
+                return error;
+            }
+        },
         /**
          * Search conversation messages.
          *
@@ -122,15 +163,20 @@ export const useChat = defineStore("chat", {
          * Subscribe to the conversation channel.
          */
         subscribeToConversation() {
-            Echo.private(`users.chat.${this.conversation.id}`).listen(
-                ".message-sent",
-                (event) => {
+            Echo.private(`users.chat.${this.conversation.id}`)
+                .listen(".message-sent", (event) => {
                     if (this.currentUserId !== event.sender_id) {
-                        this.messages.unshift(event);
+                        this.messages.unshift({ ...event, new: true });
                         this.scrollToMessagesBottom();
+                        axios.post(route("api.message.mark-as-read", event.id));
+                        console.log("event message sent occured");
                     }
-                }
-            );
+                })
+                .listen(".message-read", (event) => {
+                    console.log("message-read");
+                    console.log(event);
+                    this.setMessageAsRead(event);
+                });
         },
 
         /**
@@ -152,6 +198,19 @@ export const useChat = defineStore("chat", {
                       this.handleScroll
                   )
                 : null;
+        },
+        /**
+         * Unsubscribe from chat channel.
+         */
+        UnsubscribeFromChatChannel() {
+            Echo.leave(`users.chat.${this.conversation.id}`);
+            console.log("leave chat channel");
+        },
+        /**
+         * clear fetch new message interval.
+         */
+        clearFetchNewMessages() {
+            clearInterval(this.interval);
         },
 
         /**
