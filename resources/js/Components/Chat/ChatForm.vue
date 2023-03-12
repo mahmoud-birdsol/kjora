@@ -116,11 +116,7 @@ const removePhoto = (i) => {
 };
 
 function onSelectEmoji(emoji) {
-    console.log(emoji)
-    console.log(form.body)
     form.body += emoji
-    console.log(form.body)
-
 }
 
 </script>
