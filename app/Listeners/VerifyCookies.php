@@ -30,7 +30,7 @@ class VerifyCookies
     public function handle(Registered $event )
     {
         $user = $event->user;
-        $lastCookiesPolicy = CookiePolicy::latest()->first();
+        $lastCookiesPolicy = CookiePolicy::latest()->whereNotNull('published_at')->first();
         $this->assignTheCookiesVersion->__invoke($user , $lastCookiesPolicy);
 
     }

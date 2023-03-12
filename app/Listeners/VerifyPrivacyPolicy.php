@@ -30,7 +30,8 @@ class VerifyPrivacyPolicy
     public function handle(Registered $event )
     {
         $user = $event->user;
-        $lastPolicy = PrivacyPolicy::latest()->first();
+
+        $lastPolicy =  PrivacyPolicy::latest()->whereNotNull('published_at')->first();
         $this->assignThePrivacyVersion->__invoke($user , $lastPolicy);
 
     }

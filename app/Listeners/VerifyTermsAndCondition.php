@@ -30,7 +30,7 @@ class VerifyTermsAndCondition
     public function handle(Registered $event )
     {
         $user = $event->user;
-        $lastTerm = TermsAndConditions::latest()->first();
+        $lastTerm = TermsAndConditions::latest()->whereNotNull('published_at')->first();
         $this->assignTheTermsVersion->__invoke($user , $lastTerm);
 
     }

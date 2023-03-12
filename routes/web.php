@@ -377,11 +377,6 @@ Route::middleware([
    */
 
 Route::prefix('policy')
-    ->middleware([
-        'auth:sanctum',
-        'location.detect',
-        config('jetstream.auth_session'),
-    ])
     ->group(function () {
         /*terms*/
         Route::get(

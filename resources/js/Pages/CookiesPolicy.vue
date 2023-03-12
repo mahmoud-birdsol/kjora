@@ -5,6 +5,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AppLayout from '../Layouts/AppLayout.vue';
 import { ref } from 'vue';
 import dayjs from 'dayjs';
+import GuestLayout from "../Layouts/GuestLayout.vue";
 
 
 const props = defineProps({
@@ -20,7 +21,7 @@ function submit() {
 </script>
 
 <template>
-    <AppLayout title="Cookie use">
+    <GuestLayout title="Cookie use">
         <template #header>
             Security
         </template>
@@ -35,18 +36,21 @@ function submit() {
                         updated {{ dayjs(cookies.created_at).format('DD MMMM YYYY') }}
                     </div>
                 </div>
-                <div class="flex flex-col gap-2 justify-center">
-                    <label for="cookies" class="text-sm  font-medium text-primary">I Accept</label>
-                    <input type="radio" :value="cookies.id" id="cookies" v-model="form.cookiePolicy" :checked="false"
-                        @change="(e) => { e.target.checked ? isDisabled = false : isDisabled = true; }"
-                        class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
+                <div class="" v-if="$page.props.user">
+                    <div class="flex flex-col gap-2 justify-center">
+                        <label for="cookies" class="text-sm  font-medium text-primary">I Accept</label>
+                        <input type="radio" :value="cookies.id" id="cookies" v-model="form.cookiePolicy" :checked="false"
+                               @change="(e) => { e.target.checked ? isDisabled = false : isDisabled = true; }"
+                               class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
+                    </div>
+                    <div>
+                        <PrimaryButton :disabled="isDisabled" @click="submit">
+                            UPDATE
+                        </PrimaryButton>
+                    </div>
                 </div>
-                <div>
-                    <PrimaryButton :disabled="isDisabled" @click="submit">
-                        UPDATE
-                    </PrimaryButton>
-                </div>
+
             </div>
         </div>
-    </AppLayout>
+    </GuestLayout>
 </template>

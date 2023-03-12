@@ -6,6 +6,7 @@ use App\Models\CookiePolicy;
 use App\Models\PrivacyPolicy;
 use App\Models\TermsAndConditions;
 use App\Models\User;
+use App\Services\FlashMessage;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -21,19 +22,25 @@ class EnsurePoliciesVerified
      */
     public function handle(Request $request, Closure $next)
     {
-        $lastTerm = TermsAndConditions::latest()->first();
-        $lastPrivacyPolicy = PrivacyPolicy::latest()->first();
-        $lastCookie = CookiePolicy::latest()->first();
+        $lastTerm = TermsAndConditions::latest()->whereNotNull('published_at')->first();
+        $lastPrivacyPolicy = PrivacyPolicy::latest()->whereNotNull('published_at')->first();
+        $lastCookie = CookiePolicy::latest()->whereNotNull('published_at')->first();
 
         //check if user accept the same version of current version
         if (($this->termsConditionsVersionChecker($request->user(), $lastTerm) != 0) && $lastTerm) {
-            return Redirect::route('terms.and.condition.index');
+            FlashMessage::make()->warning(
+                message: __('Please approve our terms Conditions.')
+            )->action(route('terms.and.condition.index') , __('Approve terms and conditions'))->closeable()->send();
         }
         if (($this->privacyPolicyVersionChecker($request->user(), $lastPrivacyPolicy) != 0) && $lastPrivacyPolicy) {
-            return Redirect::route('privacy.policy.index');
+            FlashMessage::make()->warning(
+                message: __('Please approve our privacy policy.')
+            )->action(route('privacy.policy.index') , __('privacy policy'))->closeable()->send();
         }
         if (($this->cookiesVersionChecker($request->user(), $lastCookie) != 0) && $lastCookie) {
-            return Redirect::route('cookies.policy.index');
+            FlashMessage::make()->warning(
+                message: __('Please approve our cookies.')
+            )->action(route('cookies.policy.index') , __('Cookies policy'))->closeable()->send();
         }
         return $next($request);
     }

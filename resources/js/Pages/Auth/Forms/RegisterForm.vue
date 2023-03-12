@@ -172,13 +172,13 @@ const submit = () => {
 
         <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
             <p class="text-xs text-black font-light">
-                By signing up, you agree to the <a target="_blank" :href="route('terms.show')"
+                By signing up, you agree to the <a target="_blank" :href="route('terms.and.condition.index')"
                     class="text-sky-500 hover:text-sky-700 font-bold">Terms of
                     Service</a> and
-                <a target="_blank" :href="route('policy.show')" class="text-sky-500 hover:text-sky-700 font-bold">Privacy
+                <a target="_blank" :href="route('privacy.policy.index')" class="text-sky-500 hover:text-sky-700 font-bold">Privacy
                     Policy</a>
                 including
-                <Link class="text-sky-500 hover:text-sky-700 font-bold">Cookie use</Link>
+                <Link target="_blank" :href="route('cookies.policy.index')" class="text-sky-500 hover:text-sky-700 font-bold">Cookie use</Link>
             </p>
         </div>
 
