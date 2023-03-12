@@ -457,5 +457,20 @@
   "Filename": "Filename",
   "Type": "Type",
   "CSV (.csv)": "CSV (.csv)",
-  "Excel (.xlsx)": "Excel (.xlsx)"
+  "Excel (.xlsx)": "Excel (.xlsx)",
+    "Dashboards": "Dashboards",
+    "Advertisements": "Advertisements",
+    "Analytics": "Analytics",
+    "Admins": "Admins",
+    "Players": "Players",
+    "Chat": "Chat",
+    "Security": "Security",
+    "Settings": "Settings",
+    "Reports": "Reports",
+    "User dashboard": "User dashboard",
+    "Active Advertisement": "Active Advertisement",
+    "Expiring Advertisement": "Expiring Advertisement",
+    "Archived Advertisement": "Archived Advertisement",
+    "Clicks": "Clicks",
+    "Impressions": "Impressions"
 }

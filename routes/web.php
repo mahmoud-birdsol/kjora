@@ -413,7 +413,7 @@ Route::get('phone/resend-verification', ResendVerificationCodeController::class)
 
 // Route::get('test', function () {
 //     $response = Http::withHeaders([
-//         
+//
 //     ])->get('https://v3.football.api-sports.io/teams?country=England&league=39&season=2022'));
 
 Route::get('test', function(){
@@ -430,3 +430,10 @@ Route::any('language/{language}', function (Request $request, $language) {
 
     return redirect()->back();
 })->name('language');
+Route::any('nova/language/{language}', function (Request $request, $language) {
+    if(\Illuminate\Support\Facades\Auth::check()){
+        auth()->user()->update(['locale' => $language]);
+    }
+    return redirect()->back();
+})->middleware('auth:admin')->name('nova.language');
+
