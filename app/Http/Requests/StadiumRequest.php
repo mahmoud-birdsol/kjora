@@ -36,7 +36,7 @@ class StadiumRequest extends FormRequest
                 'required'
             ],
             'google_place_id' => [
-                'required'
+                'nullable'
             ],
             'user_id' => [
                 'nullable'
