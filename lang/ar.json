@@ -1,4 +1,7 @@
 {
+    "enter your password":"أدخل كلمة المرور الحالية",
+    "please enter new username and password to update your username":"الرجاء إدخال اسم مستخدم وكلمة مرور لتحديث اسم المستخدم الخاص بك",
+    "update username":"تعديل اسم المستخدم",
     "update email":"تعديل البريد الالكترونى",
     "please enter phone number associated with your account to receive a verification code":"الرجاء إدخال رقم الهاتف المرتبط بحسابك لتلقي رمز التحقق",
     "try another way":"جرب طريقة أخرى",

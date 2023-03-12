@@ -84,8 +84,8 @@ let paymentForm = useForm({
                     <template #body>
                         <div class="flex flex-col gap-4">
                             <div>
-                                <InputLabel color="black">{{$t('update-profile')}}</InputLabel>
-                                <MoreBtn>{{$t('update-details')}}</MoreBtn>
+                                <InputLabel color="black">{{$t('update username')}}</InputLabel>
+                                <MoreBtn :url="route('username.edit')">{{$t('update username')}}</MoreBtn>
                             </div>
                             <div>
                                 <InputLabel color="black">{{$t('update-password')}}</InputLabel>
