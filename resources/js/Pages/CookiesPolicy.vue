@@ -15,7 +15,7 @@ const form = useForm({
     cookiePolicy: props.cookies.id
 })
 function submit() {
-    form.patch(route('terms.and.condition.store', form.cookiePolicy))
+    form.patch(route('cookies.policy.store', form.cookiePolicy))
 }
 </script>
 

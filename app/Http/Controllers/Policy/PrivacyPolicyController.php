@@ -44,6 +44,6 @@ class PrivacyPolicyController extends Controller
             message: 'Private Policy approved successfully'
         )->closeable()->send();
 
-        return redirect()->back();
+        return redirect()->intended();
     }
 }

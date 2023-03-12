@@ -43,6 +43,6 @@ class CookiesPolicyController extends Controller
             message: 'Cookies approved successfully'
         )->closeable()->send();
 
-        return redirect()->back();
+        return redirect()->intended();
     }
 }

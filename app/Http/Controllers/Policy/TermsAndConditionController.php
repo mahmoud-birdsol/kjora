@@ -47,7 +47,7 @@ class TermsAndConditionController extends Controller
             message: 'Terms approved successfully'
         )->closeable()->send();
 
-        return redirect()->back();
+        return redirect()->intended();
     }
 
 }
