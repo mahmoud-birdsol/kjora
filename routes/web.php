@@ -368,6 +368,8 @@ Route::middleware([
 
     Route::post('like', [\App\Http\Controllers\LikeController::class, 'store'])->name('like.store');
     Route::delete('like', [\App\Http\Controllers\LikeController::class, 'destroy'])->name('like.destroy');
+
+    Route::post('stadiums', \App\Http\Controllers\StadiumController::class)->name('stadiums.store');
 });
 
 //     // Example 2: Get all the connected users for a specific channel
