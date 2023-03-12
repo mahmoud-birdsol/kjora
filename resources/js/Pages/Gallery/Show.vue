@@ -215,9 +215,9 @@ function getComments() {
     }).catch(err => console.error(err))
 }
 
-function submit() {
-    console.log('has submit')
-}
+// function submit() {
+//     console.log('has submit')
+// }
 
 onMounted(() => {
     getComments()
