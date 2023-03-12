@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Services\FlashMessage;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -16,14 +17,10 @@ class EnsurePhoneIsVerified
     public function handle(Request $request, Closure $next)
     {
         if (! $request->user()->hasVerifiedPhone()) {
-            $request->session()->flash('message', [
-                'type' => 'warning',
-                'body' => 'Please verify your phone number.',
-                'action' => [
-                    'url' => route('phone.verify'),
-                    'text' => 'Verify phone number',
-                ],
-            ]);
+            FlashMessage::make()->warning(
+                message: __('Please verify your phone number.')
+            )->action(route('phone.verify') , __('Verify phone number'))->closeable()->send();
+
         }
 
         return $next($request);
