@@ -1,4 +1,10 @@
 {
+    "A new verification code has been sent to the phone number you provided in your profile settings":"تم إرسال رمز تحقق جديد إلى رقم الهاتف الذي قدمته في إعدادات ملفك الشخصي",
+    "Edit Profile":"تعديل الملف الشخصي",
+    "Resend Code":"أعد إرسال الرمز",
+    "Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS? If you didn't receive the SMS, we will gladly send you another":"قبل المتابعة ، هل يمكنك التحقق من رقم هاتفك عن طريق إدخال الرمز المكون من 4 أرقام الذي تم إرساله إليك في رسالة نصية قصيرة؟ إذا لم تتلق الرسالة القصيرة ، فسنرسل لك رسالة أخرى بكل سرور",
+    "Verify Phone Number":"تحقق من رقم الهاتف",
+    "Phone Verification":"التحقق من الهاتف",
     "A new verification link has been sent to the email address you provided in your profile settings":"تم إرسال رابط تحقق جديد إلى عنوان البريد الإلكتروني الذي قدمته في إعدادات ملفك الشخصي",
     "Email Verification":"تأكيد بواسطة البريد الالكتروني",
     "Resend Email":"إعادة إرسال البريد الإلكتروني",
