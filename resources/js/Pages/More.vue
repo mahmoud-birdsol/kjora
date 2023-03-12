@@ -93,7 +93,7 @@ let paymentForm = useForm({
                             </div>
                             <div>
                                 <InputLabel color="black">{{$t('update-email')}}</InputLabel>
-                                <MoreBtn>{{$t('update-email')}}</MoreBtn>
+                                <MoreBtn :url="route('email.edit')">{{$t('update-email')}}</MoreBtn>
                             </div>
                             <div>
                                 <InputLabel color="black">{{$t('update-phone')}}</InputLabel>
