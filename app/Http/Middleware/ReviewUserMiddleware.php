@@ -20,17 +20,14 @@ class ReviewUserMiddleware
     {
         $review = $request->user()->reviewerReviews()->whereNull('reviewed_at')->first();
         if (!is_null($review)) {
-            $request->session()->flash('message', [
-                'type' => 'warning',
-                'body' => 'You have a pending player to review',
-                'action' => [
-                    'url' => route('player.review.show', [
-                        'review' => $review->id,
-                        'reviewing_user' => Auth::id()
-                    ]),
-                    'text' => 'Review',
-                ],
-            ]);
+            FlashMessage::make()->warning(
+                message: __('You have a pending player to review')
+            )->action(route('player.review.show', [
+                'review' => $review->id,
+                'reviewing_user' => Auth::id()
+            ]) , __('Review'))->closeable()->send();
+
+
         }
         return $next($request);
     }

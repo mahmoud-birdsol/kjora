@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\User;
+use App\Services\FlashMessage;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -18,14 +19,10 @@ class EnsureUploadedIdentityVerificationDocuments
     public function handle(Request $request, Closure $next)
     {
         if (! $request->user()->hasUploadedVerificationDocuments()) {
-            $request->session()->flash('message', [
-                'type' => 'warning',
-                'body' => 'Please verify your identity.',
-                'action' => [
-                    'url' => route('identity.verification.create'),
-                    'text' => 'Upload Verification Documents',
-                ],
-            ]);
+            FlashMessage::make()->warning(
+                message: __('Please verify your identity.')
+            )->action(route('identity.verification.create') , __('Upload Verification Documents'))->closeable()->send();
+
         }
 
         return $next($request);

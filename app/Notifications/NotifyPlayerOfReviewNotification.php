@@ -66,14 +66,14 @@ class NotifyPlayerOfReviewNotification extends Notification
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Review Notification')
-            ->line('Dear ' . $this->reviewer->name)
-            ->line('This is to notify you to review player ' . $this->player->name)
-            ->action('Review Now', url(route('player.review.show', [
+            ->subject(__('Review Notification', [] , $notifiable->locale))
+            ->line(__('Dear ' , [] , $notifiable->locale) . $this->reviewer->name)
+            ->line(__('This is to notify you to review player ',  [] , $notifiable->locale) . $this->player->name)
+            ->action(__('Review Now' , [] , $notifiable->locale), url(route('player.review.show', [
                 'review' => $this->review,
                 'reviewing_user' => $this->reviewer->id
             ])))
-            ->line('Thank you for using our application!');
+            ->line(__('Thank you for using our application!' , [] , $notifiable->locale));
     }
 
     /**
@@ -87,14 +87,14 @@ class NotifyPlayerOfReviewNotification extends Notification
         return (new NotificationData(
             displayType: 'simple',
             state: 'success',
-            title: 'Review Notification',
-            subtitle: 'You now can review Player ' . $this->player->name,
+            title: __('Review Notification', [] , $notifiable->locale),
+            subtitle: __('You now can review Player ', [] , $notifiable->locale) . $this->player->name,
             actionData: new RouteActionData(
                 route: route('player.review.show', [
                     'review' => $this->review,
                     'reviewing_user' => $this->reviewer->id
                 ]),
-                text: 'Review Now',
+                text: __('Review Now', [] , $notifiable->locale),
             ),
         ))->toArray();
     }

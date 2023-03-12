@@ -49,10 +49,10 @@ class IdentityVerificationRequest extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject($this->user->name.' has uploaded their identification documents.')
-            ->line($this->user->name.' has uploaded their identification documents and are waiting for review.')
-            ->action('Review', url('/nova/resources/users/'.$this->user->id))
-            ->line('Thank you for using our application!');
+            ->subject($this->user->name.__(' has uploaded their identification documents.', [] , $notifiable->locale ))
+            ->line($this->user->name.__(' has uploaded their identification documents and are waiting for review.', [] , $notifiable->locale ))
+            ->action(__('Review', [] , $notifiable->locale ), url('/nova/resources/users/'.$this->user->id))
+            ->line(__('Thank you for using our application!', [] , $notifiable->locale ));
     }
 
     /**
@@ -63,7 +63,7 @@ class IdentityVerificationRequest extends Notification implements ShouldQueue
     public function toNova(): NovaNotification
     {
         return (new NovaNotification)
-            ->message($this->user->name.' has uploaded their identification documents.')
+            ->message($this->user->name.__(' has uploaded their identification documents.'))
             ->action('Review', '/resources/users/'.$this->user->id)
             ->icon('check')
             ->type('success');

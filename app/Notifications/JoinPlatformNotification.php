@@ -46,10 +46,10 @@ class JoinPlatformNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Join '.config('app.name'))
-            ->line('Welcome to '.config('app.name').' you have been invited to join the platform.')
-            ->line('Please click on the button below to be redirected to safe page to update your password and join the platform.')
-            ->action('Notification Action', url(route('join-platform.create', $this->token)))
-            ->line('Thank you for using our application!');
+            ->subject(__('Join ', [] , $notifiable->locale ).config('app.name'))
+            ->line(__('Welcome to ', [] , $notifiable->locale ).config('app.name').__(' you have been invited to join the platform.', [] , $notifiable->locale ))
+            ->line(__('Please click on the button below to be redirected to safe page to update your password and join the platform.', [] , $notifiable->locale ))
+            ->action(__('Notification Action', [] , $notifiable->locale ), url(route('join-platform.create', $this->token)))
+            ->line(__('Thank you for using our application!', [] , $notifiable->locale ));
     }
 }

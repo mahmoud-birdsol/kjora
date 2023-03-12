@@ -60,11 +60,11 @@ class CommentCreatedNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject(__('Comment Notification'))
-            ->line(__('Dear ') . $this->user->name)
-            ->line(__('This is to notify you that a new comment has been created'))
-            ->action(__('Chat Now'), url(route('gallery.show', $this->commentable)))
-            ->line('Thank you for using our application!');
+            ->subject(__('Comment Notification' , [] , $notifiable->locale ))
+            ->line(__('Dear ' , [] , $notifiable->locale ) . $this->user->name)
+            ->line(__('This is to notify you that a new comment has been created' , [] , $notifiable->locale ))
+            ->action(__('Chat Now' , [] , $notifiable->locale ), url(route('gallery.show', $this->commentable)))
+            ->line(__('Thank you for using our application!' , [] , $notifiable->locale ));
     }
 
     /**
@@ -78,11 +78,11 @@ class CommentCreatedNotification extends Notification
         return (new NotificationData(
             displayType: 'simple',
             state: 'success',
-            title: 'Comment Notification',
-            subtitle: 'User ' . $this->notifier->name . ' commented on your post',
+            title: __('Comment Notification', [] , $notifiable->locale),
+            subtitle: __('User ', [] , $notifiable->locale) . $this->notifier->name . __(' commented on your post', [] , $notifiable->locale),
             actionData: new RouteActionData(
                 route: route('gallery.show', $this->commentable),
-                text: 'View Now',
+                text: __('View Now', [] , $notifiable->locale),
             ),
         ))->toArray();
     }

@@ -50,10 +50,10 @@ class InvitationCreatedNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject(__('You have been invited to a football match'))
-            ->line(__('You have been invited by **').$this->invitation->invitingPlayer->name.__('** للعب مباراة كرة قدم **').$this->invitation->date->toDateTimeString().__('** at **').$this->invitation->stadium->name.'**.')
-            ->action(__('Respond Now'), url(route('invitation.index')))
-            ->line(__('Thank you for using our application!'));
+            ->subject(__('You have been invited to a football match' , [] , $notifiable->locale ))
+            ->line(__('You have been invited by **' , [] , $notifiable->locale ).$this->invitation->invitingPlayer->name.__('** للعب مباراة كرة قدم **', [] , $notifiable->locale ).$this->invitation->date->toDateTimeString().__('** at **', [] , $notifiable->locale ).$this->invitation->stadium->name.'**.')
+            ->action(__('Respond Now', [] , $notifiable->locale ), url(route('invitation.index', [] , $notifiable->locale )))
+            ->line(__('Thank you for using our application!', [] , $notifiable->locale ));
     }
 
     /**
@@ -67,11 +67,11 @@ class InvitationCreatedNotification extends Notification implements ShouldQueue
         return (new NotificationData(
             displayType: 'simple',
             state: 'success',
-            title: 'Invitation',
-            subtitle: 'You have been invited to a football match.',
+            title: __('Invitation', [] , $notifiable->locale ),
+            subtitle: __('You have been invited to a football match.', [] , $notifiable->locale ),
             actionData: new RouteActionData(
                 route: route('invitation.index'),
-                text: 'View Invitation',
+                text: __('View Invitation', [] , $notifiable->locale ),
             ),
         ))->toArray();
     }

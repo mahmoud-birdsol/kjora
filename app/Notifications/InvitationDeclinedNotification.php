@@ -50,10 +50,10 @@ class InvitationDeclinedNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject($this->invitation->invitedPlayer->name . ' declined your invitation. ❌')
-            ->line('Your invitation for **'.$this->invitation->invitedPlayer->name.'** to play a football match on **'.$this->invitation->date->toDateTimeString().'** at **'.$this->invitation->stadium->name.'** was declined.')
-            ->action('View Invitation', url(route('invitation.index')))
-            ->line('Thank you for using our application!');
+            ->subject($this->invitation->invitedPlayer->name . __('declined your invitation. ❌', [] , $notifiable->locale ))
+            ->line(__('Your invitation for **', [] , $notifiable->locale ).$this->invitation->invitedPlayer->name.__('** to play a football match on **', [] , $notifiable->locale ).$this->invitation->date->toDateTimeString().__('** at **', [] , $notifiable->locale ).$this->invitation->stadium->name.__('** was declined.', [] , $notifiable->locale ))
+            ->action(__('View Invitation', [] , $notifiable->locale ), url(route('invitation.index')))
+            ->line(__('Thank you for using our application!' , [] , $notifiable->locale ));
     }
 
     /**
@@ -67,11 +67,11 @@ class InvitationDeclinedNotification extends Notification implements ShouldQueue
         return (new NotificationData(
             displayType: 'simple',
             state: 'danger',
-            title: 'Invitation',
-            subtitle: 'Your invitation to ' . $this->invitation->invitedPlayer->name . ' was declined',
+            title: __('Invitation', [] , $notifiable->locale),
+            subtitle: __('Your invitation to ', [] , $notifiable->locale) . $this->invitation->invitedPlayer->name . __(' was declined', [] , $notifiable->locale),
             actionData: new RouteActionData(
                 route: route('invitation.index'),
-                text: 'View Invitation',
+                text: __('View Invitation', [] , $notifiable->locale),
             ),
         ))->toArray();
     }
