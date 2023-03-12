@@ -15,6 +15,6 @@ class ReportOption extends Model
      * @var array<string>
      */
     protected $fillable = [
-        'body'
+        'body',
     ];
 }

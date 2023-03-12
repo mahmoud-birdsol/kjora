@@ -41,7 +41,7 @@ const props = defineProps({
     },
     maxWidth: {
         type: String,
-        default: '2xl',
+        default: 'lg',
     },
     closeable: {
         type: Boolean,
@@ -101,21 +101,31 @@ const upload = () => {
 
     isLoading.value = true;
     isDisabled.value = true;
-    console.log(files.value)
-    files.value.forEach((file, i) => {
-        console.log(file)
-        if (file.type.startsWith("image") || file.type.startsWith('video')) {
 
-            axios.postForm(route('api.gallery.upload'), {
-                gallery: file
-            }).then().catch(err => console.error(err)).finally(() => {
-                if (i === files.value.length - 1) {
-                    reset()
-                    emit('reload');
-                }
-            })
-        }
-    })
+    let postId
+
+    axios.postForm(route('api.posts.store'), {
+        cover: files.value[0],
+        caption: caption.value
+    }).then((res) => {
+        postId = res.data.id
+        console.log(postId);
+        files.value.slice(1).forEach((file, i) => {
+            if (file.type.startsWith("image") || file.type.startsWith('video')) {
+                axios.postForm(route('api.gallery.upload', postId), {
+                    gallery: file,
+
+                }).then().catch(err => console.error(err)).finally(() => {
+                    if (i === files.value.length - 2) {
+                        reset()
+                        emit('reload');
+                    }
+                })
+            }
+        })
+    });
+
+
 };
 
 function reset(e) {
@@ -176,19 +186,11 @@ function reset(e) {
                         </template>
                         <FadeInTransition>
                             <div v-if="isLoading"
-                                class="absolute inset-0 z-20 grid w-full h-full p-4 bg-stone-400/50  place-content-center ">
+                                class="absolute inset-0 z-20 grid w-full h-full p-4 bg-stone-400/50 place-content-center ">
                             </div>
                         </FadeInTransition>
                     </div>
-                    <!-- <FadeInTransition>
-                                                                                                         <div v-if="isLoading" class="absolute inset-0 top-4 z-20 grid p-4 place-content-center ">
-                                                                                                             <div
-                                                                                                                 class="h-12 border-4 rounded-full border-primary border-t-white aspect-square animate-spin">
-                                                                                                             </div>
-                                                                                                         </div>
-                                                                                                     </FadeInTransition> -->
                 </div>
-
             </div>
             <div>
                 <div class="justify-self-end text-sm mb-2 text-primary text-center">{{$t('only videos and images with max size (2MB) are allowed')}}

@@ -44,6 +44,7 @@
         "unplugin-vue-components": "^0.22.12",
         "vue-chartjs": "^5.2.0",
         "vue-easy-lightbox": "^1.14.0",
-        "vue-i18n": "^9.2.2"
+        "vue-i18n": "^9.2.2",
+        "vue3-google-map": "^0.15.0"
     }
 }

@@ -5,7 +5,8 @@ import dayjs from "dayjs";
 import { CalendarIcon, MapPinIcon } from "@heroicons/vue/20/solid";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import RespondToInvitationModal from "@/Components/RespondToInvitationModal.vue";
-import DateTranslation from '@/Components/DateTranslation.vue';
+import DateTranslation from '@/Components/DateTranslation.vue';import InvitationPlayerCard from '../../../Components/PlayerCards/InvitationPlayerCard.vue';
+
 const props = defineProps({
     invitation: {
         required: true,
@@ -13,16 +14,15 @@ const props = defineProps({
     }
 });
 
-const showInvitationNotificationModal = ref(false);
+
 </script>
 
 <template>
-    <div class="rounded-lg bg-gray-100 p-6">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="p-6 px-8 bg-gray-100 rounded-2xl">
+        <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             <div>
                 <div class="max-w-sm">
-                    <MainPlayerCard :player="invitation.inviting_player" :show-report="true" :show-invite="false"
-                        :show-location="true" />
+                    <InvitationPlayerCard :player="invitation.inviting_player" :invitation="invitation" />
                 </div>
             </div>
             <div class="flex flex-col justify-between items-start">
@@ -54,14 +54,4 @@ const showInvitationNotificationModal = ref(false);
             </div>
         </div>
     </div>
-
-    <transition enter-active-class="transform ease-out duration-300 transition"
-        enter-from-class="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
-        enter-to-class="translate-y-0 opacity-100 sm:translate-x-0" leave-active-class="transition ease-in duration-100"
-        leave-from-class="opacity-100" leave-to-class="opacity-0">
-        <div v-if="showInvitationNotificationModal">
-            <RespondToInvitationModal :invitation="invitation" :show="showInvitationNotificationModal"
-                @close="showInvitationNotificationModal = false" />
-        </div>
-    </transition>
 </template>

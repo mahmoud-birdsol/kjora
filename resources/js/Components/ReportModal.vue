@@ -29,6 +29,9 @@ const submit = () => {
     form.post(route('report.store'), {
         preserveState: false,
         preserveScroll: false,
+        onSuccess: () => {
+            show.value = false;
+        }
     });
 }
 </script>
@@ -46,7 +49,7 @@ const submit = () => {
         </div>
             <!-- TODO:make it radio buttons group -->
             <form @submit.prevent="submit()">
-                <ul>
+                <ul class="px-6">
                     <RadioGroup v-model="form.report_option_id"
                         class=" [&_li]:py-3 [&_li]:rounded-full [&_li]:border-2 text-stone-500  flex flex-col gap-4 text-sm font-medium cursor-pointer">
                         <template v-for="option in options">

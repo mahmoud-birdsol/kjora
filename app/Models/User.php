@@ -54,16 +54,16 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'last_name',
         'phone',
         'gender',
-//        'avatar',
+        //        'avatar',
         'identity_issue_country',
         'identity_type',
-//        'identity_front_image',
-//        'identity_back_image',
-//        'identity_selfie_image',
+        //        'identity_front_image',
+        //        'identity_back_image',
+        //        'identity_selfie_image',
 
-//        'accepted_terms_and_conditions_version',
-//        'accepted_privacy_policy_version',
-//        'accepted_cookie_policy_version',
+        //        'accepted_terms_and_conditions_version',
+        //        'accepted_privacy_policy_version',
+        //        'accepted_cookie_policy_version',
         'date_of_birth',
         'identity_verified_at',
         'phone_verified_at',
@@ -119,7 +119,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
      * @var array
      */
     protected $appends = [
-//        'profile_photo_url',
+        //        'profile_photo_url',
         'avatar_url',
         'identity_front_image_url',
         'identity_back_image_url',
@@ -137,14 +137,12 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
      */
     protected $with = [
         'position',
-//        'club'
+        //        'club'
     ];
 
     /**
      * Register the model media conversions.
      *
-     * @param \Spatie\MediaLibrary\MediaCollections\Models\Media|null $media
-     * @return void
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
     public function registerMediaConversions(Media $media = null): void
@@ -156,8 +154,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * Register the user media collection.
-     *
-     * @return void
      */
     public function registerMediaCollections(): void
     {
@@ -170,97 +166,93 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * Get the username.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function name(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->first_name . ' ' . $this->last_name
+            get: fn () => $this->first_name.' '.$this->last_name
+        );
+    }
+
+    /**
+     * Get the rating value rounded
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function rating(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => round($value)
         );
     }
 
     /**
      * Get the user avatar url.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function avatarUrl(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->getFirstMedia('avatar')?->getFullUrl()
+            get: fn () => $this->getFirstMedia('avatar')?->getFullUrl()
         );
     }
 
     /**
      * Get the user identity_front_image url.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function identityFrontImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->getFirstMedia('identity_front_image')?->getFullUrl()
+            get: fn () => $this->getFirstMedia('identity_front_image')?->getFullUrl()
         );
     }
 
     /**
      * Get the user identity_back_image url.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function identityBackImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->getFirstMedia('identity_back_image')?->getFullUrl()
+            get: fn () => $this->getFirstMedia('identity_back_image')?->getFullUrl()
         );
     }
 
     /**
      * Get the user identity_selfie_image url.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function identitySelfieImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->getFirstMedia('identity_selfie_image')?->getFullUrl()
+            get: fn () => $this->getFirstMedia('identity_selfie_image')?->getFullUrl()
         );
     }
 
     /**
      * Get the age attribute.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function age(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->date_of_birth?->age,
+            get: fn ($value) => $this->date_of_birth?->age,
         );
     }
 
     /**
      * Get the has verified identity attribute.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function hasVerifiedIdentity(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->hasVerifiedPersonalIdentity()
+            get: fn ($value) => $this->hasVerifiedPersonalIdentity()
         );
     }
 
     /**
      * Check if the user is favorited by the currently authenticated user.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function isFavorite(): Attribute
     {
         return Attribute::make(
-            get: fn() => Auth::check() && Auth::user() instanceof User
+            get: fn () => Auth::check() && Auth::user() instanceof User
                 ? Auth::user()->favorites->contains($this)
                 : false,
         );
@@ -268,8 +260,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * Get the advertisement clicks.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function clicks(): HasMany
     {
@@ -277,9 +267,17 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     }
 
     /**
-     * Get the user favorites.
+     * Get the user posts
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    /**
+     * Get the user favorites.
      */
     public function favorites(): BelongsToMany
     {
@@ -293,8 +291,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * Get the advertisement impressions.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function impressions(): HasMany
     {
@@ -303,8 +299,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * Get the user country.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function country(): BelongsTo
     {
@@ -313,8 +307,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * Get the user club.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function club(): BelongsTo
     {
@@ -323,8 +315,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * Get the user position.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function position(): BelongsTo
     {
@@ -333,8 +323,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * Get the user conversations
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function conversations(): BelongsToMany
     {
@@ -343,19 +331,14 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * Get the user messages
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class, 'sender_id');
     }
 
-
     /**
      * Mark account as verified.
-     *
-     * @return void
      */
     public function markAccountAsVerified(): void
     {
@@ -366,8 +349,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * Determine if the user can be impersonated.
-     *
-     * @return bool
      */
     public function canBeImpersonated(): bool
     {
@@ -376,42 +357,33 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * Check if the user has verified their phone number.
-     *
-     * @return bool
      */
     public function hasVerifiedPhone(): bool
     {
-        return !is_null($this->phone_verified_at);
+        return ! is_null($this->phone_verified_at);
     }
 
     /**
      * Check if the user has verified their phone number.
-     *
-     * @return bool
      */
     public function hasVerifiedPersonalIdentity(): bool
     {
-        return !is_null($this->identity_verified_at);
+        return ! is_null($this->identity_verified_at);
     }
 
     /**
      * Check if the user has upload verification documents.
-     *
-     * @return bool
      */
     public function hasUploadedVerificationDocuments(): bool
     {
         return
-            !is_null($this->identity_type) &&
-            !is_null($this->getFirstMedia('identity_front_image')?->exists()) &&
-            !is_null($this->getFirstMedia('identity_back_image')?->exists());
+            ! is_null($this->identity_type) &&
+            ! is_null($this->getFirstMedia('identity_front_image')?->exists()) &&
+            ! is_null($this->getFirstMedia('identity_back_image')?->exists());
     }
 
     /**
      * Update the user's profile photo.
-     *
-     * @param \Illuminate\Http\UploadedFile $photo
-     * @return void
      */
     public function updateProfilePhoto(UploadedFile $photo): void
     {
@@ -430,8 +402,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * Get the users reviews to other players
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function reviewerReviews(): HasMany
     {
@@ -440,8 +410,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * Get the users reviews to other players
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function playerReviews(): HasMany
     {
@@ -450,11 +418,21 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * The channels the user receives notification broadcasts on.
-     *
-     * @return string
      */
     public function receivesBroadcastNotificationsOn(): string
     {
-        return 'users.' . $this->id;
+        return 'users.'.$this->id;
+    }
+
+    /**
+     * Verify the user phone
+     *
+     * @return void
+     */
+    public function verifyPhone(): void
+    {
+        $this->forceFill([
+            'phone_verified_at' => now()
+        ])->save();
     }
 }

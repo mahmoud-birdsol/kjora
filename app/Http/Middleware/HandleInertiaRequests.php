@@ -20,7 +20,6 @@ class HandleInertiaRequests extends Middleware
     /**
      * Determine the current asset version.
      *
-     * @param \Illuminate\Http\Request $request
      * @return string|null
      */
     public function version(Request $request)
@@ -31,7 +30,6 @@ class HandleInertiaRequests extends Middleware
     /**
      * Define the props that are shared by default.
      *
-     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function share(Request $request)
@@ -41,9 +39,9 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'flash' => [
-                'message' => fn() => $request->session()->get('message'),
+                'message' => fn () => $request->session()->get('message'),
             ],
-            'queryParams' => fn() => $request->query(),
+            'queryParams' => fn () => $request->query(),
 
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
@@ -53,11 +51,11 @@ class HandleInertiaRequests extends Middleware
 
             'url' => url(),
 
-            'socials' => fn() => Social::active()->get(),
+            'socials' => fn () => Social::active()->get(),
 
-            'notifications' => fn() => $request->user() ? $request->user()->unreadNotifications : [],
+            'notifications' => fn () => $request->user() ? $request->user()->unreadNotifications : [],
 
-            'reportOptions' => fn() => ReportOption::all(),
+            'reportOptions' => fn () => ReportOption::all(),
 
             'locale' =>  app()->getLocale()
         ]);
