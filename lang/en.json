@@ -1,4 +1,9 @@
 {
+    "date from":"Date From",
+    "date to":"Date To",
+    "pick a date":"Pick a Date",
+    "search by name or username":"search by name or username",
+    "nationality":"nationality",
     "minimal features":"minimal features",
     "free plan":"free plan",
     "end":"end",
