@@ -5,6 +5,7 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import HireCard from "@/Pages/Hire/Partials/HireCard.vue";
 import { ref } from 'vue'
 import InvitationsFilter from '@/Components/InvitationsFilter.vue';
+import InvitationCard from '../Invitation/Partials/InvitationCard.vue';
 const props = defineProps({
     invitations: Array,
 });
@@ -15,11 +16,11 @@ const props = defineProps({
     <Head title="Invitations" />
     <AppLayout title="Invitations">
         <template #header>
-            <p class="text-7xl font-black">Invitations</p>
+            <p class="font-black text-7xl">Invitations</p>
         </template>
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex justify-end items-center space-x-4">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="flex items-center justify-end space-x-4">
                     <Link :href="route('invitation.index')">
                     <SecondaryButton>
                         <span
@@ -41,7 +42,7 @@ const props = defineProps({
                 <div class="bg-white rounded-xl mt-4 min-h-[500px] p-6">
                     <div class="grid grid-cols-1 gap-4">
                         <template v-for="invitation in invitations" :key="invitation.id">
-                            <HireCard :invitation="invitation" />
+                            <InvitationCard :invitation="invitation" />
                         </template>
                     </div>
                 </div>

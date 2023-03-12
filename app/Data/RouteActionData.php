@@ -7,6 +7,7 @@ use Spatie\LaravelData\Data;
 class RouteActionData extends Data
 {
     public string $route;
+
     public string $text;
 
     public function __construct(
