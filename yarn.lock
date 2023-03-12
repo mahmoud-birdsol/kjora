@@ -1140,6 +1140,14 @@ laravel-vite-plugin@^0.7.0:
     picocolors "^1.0.0"
     vite-plugin-full-reload "^1.0.5"
 
+laravel-vue-i18n@^2.3.0:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/laravel-vue-i18n/-/laravel-vue-i18n-2.4.1.tgz#c57936c3e5e0d1263a139533ec052fe6a6eea0e5"
+  integrity sha512-kmuicPVfI2PbjonICnPTBTl0gO6xvthvgNvcko7tKJMU0GHMp8wOgg2sotkiPR2REt+eX5k14elRfbKNJt5Lmw==
+  dependencies:
+    php-parser "3.1.3"
+    vue "^3.2.45"
+
 lilconfig@^2.0.5, lilconfig@^2.0.6:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/lilconfig/-/lilconfig-2.1.0.tgz#78e23ac89ebb7e1bfbf25b18043de756548e7f52"
@@ -1371,6 +1379,11 @@ pathe@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pathe/-/pathe-1.1.0.tgz#e2e13f6c62b31a3289af4ba19886c230f295ec03"
   integrity sha512-ODbEPR0KKHqECXW1GoxdDb+AZvULmXjVPy4rt+pGo2+TnjJTIPJQSVS6N63n8T2Ip+syHhbn52OewKicV0373w==
+
+php-parser@3.1.3:
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/php-parser/-/php-parser-3.1.3.tgz#7a2aac2eb88a5a6c5aa75e6170a256bee5a30e6b"
+  integrity sha512-hPvBmnRYPqWEtMfIFOlyjQv1q75UUtxt4U+YscKIQViGmEE2Xa4BuS1B1/cZdjy7MVcwtnr0WkEsr915LgRKOw==
 
 picocolors@^1.0.0:
   version "1.0.0"
@@ -1817,6 +1830,16 @@ vue-easy-lightbox@^1.14.0:
   resolved "https://registry.yarnpkg.com/vue-easy-lightbox/-/vue-easy-lightbox-1.14.0.tgz#9eb59e449b0b38bc12590d71bddb9553325a70a8"
   integrity sha512-qjkUCT7qkd5ekqEnLzL+VFAXNVLxhE5XnSz+/RNk0VNpoudL6fVOw9UKMSi9VbeIbhmIdoH1FIscoJzCwm15Rw==
 
+vue-i18n@^9.2.2:
+  version "9.2.2"
+  resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-9.2.2.tgz#aeb49d9424923c77e0d6441e3f21dafcecd0e666"
+  integrity sha512-yswpwtj89rTBhegUAv9Mu37LNznyu3NpyLQmozF3i1hYOhwpG8RjcjIFIIfnu+2MDZJGSZPXaKWvnQA71Yv9TQ==
+  dependencies:
+    "@intlify/core-base" "9.2.2"
+    "@intlify/shared" "9.2.2"
+    "@intlify/vue-devtools" "9.2.2"
+    "@vue/devtools-api" "^6.2.1"
+
 vue3-google-map@^0.15.0:
   version "0.15.0"
   resolved "https://registry.yarnpkg.com/vue3-google-map/-/vue3-google-map-0.15.0.tgz#83d996c23934ae06cd6d3e158fc2dd46ca7a18e1"
@@ -1826,7 +1849,7 @@ vue3-google-map@^0.15.0:
     "@googlemaps/markerclusterer" "^2.0.6"
     fast-deep-equal "^3.1.3"
 
-vue@^3.2.31:
+vue@^3.2.31, vue@^3.2.45:
   version "3.2.47"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.2.47.tgz#3eb736cbc606fc87038dbba6a154707c8a34cff0"
   integrity sha512-60188y/9Dc9WVrAZeUVSDxRQOZ+z+y5nO2ts9jWXSTkMvayiWxCWOWtBQoYjLeccfXkiiPZWAHcV+WTPhkqJHQ==
