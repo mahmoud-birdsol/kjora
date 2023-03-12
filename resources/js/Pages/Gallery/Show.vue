@@ -192,7 +192,7 @@
                     <!-- comments -->
                     <div class="self-stretch h-full p-3 px-6 ">
                         <div ref="commentsContainer"
-                            class="flex flex-col gap-4 w-full max-h-[300px] hideScrollBar overflow-auto" v-if="comments">
+                            class="flex flex-col gap-4 w-full max-h-[500px] hideScrollBar overflow-auto" v-if="comments">
                             <template v-for="comment in comments.filter(c => !c.parent_id)" :key="comment.id">
                                 <Comment @addedReply="() => handleAddedReply()" :comment="comment">
                                 </Comment>
