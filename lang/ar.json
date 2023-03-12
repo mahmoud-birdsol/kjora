@@ -1,4 +1,9 @@
 {
+    "A new verification link has been sent to the email address you provided in your profile settings":"تم إرسال رابط تحقق جديد إلى عنوان البريد الإلكتروني الذي قدمته في إعدادات ملفك الشخصي",
+    "Email Verification":"تأكيد بواسطة البريد الالكتروني",
+    "Resend Email":"إعادة إرسال البريد الإلكتروني",
+    "Verify Email Address":"التحقق من عنوان البريد الإلكتروني",
+    "We have sent you an email, please click on the provided link to verify your email address":"لقد أرسلنا لك بريدًا إلكترونيًا ، يرجى النقر على الرابط المقدم للتحقق من عنوان بريدك الإلكتروني",
     "date to":"الى تاريخ",
     "date from":"من تاريخ",
     "pick a date":"اختر تاريخًا",
