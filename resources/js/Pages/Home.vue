@@ -101,7 +101,7 @@ const filterByPosition = (position) => {
                     class="py-2 px-4 min-w-[215px] w-1/5 text-center font-bold items-center bg-white border-2 border-gray-300 rounded-full  text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary   active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap">
                     <span class="w-full text-center"
                         :class="{ 'text-black': form.position == null, 'text-gray-400': form.position != null }">
-                         {{ $t('All Position') }}
+                         {{ $t('All positions') }}
                     </span>
                 </button>
                 <template v-for="position in positions" :key="position.id">
