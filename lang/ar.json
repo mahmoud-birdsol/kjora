@@ -1,4 +1,11 @@
 {
+    "The password must be at least 8 characters and at least one uppercase, one lowercase letter , one symbol and one number":"يجب أن تتكون كلمة المرور من 8 أحرف على الأقل ، وحرف واحد كبير على الأقل ، وحرف صغير واحد ، ورمز واحد ، ورقم واحد على الأقل",
+    "new password":"كلمة المرور الجديدة",
+    "current password":"كلمة السر الحالية",
+    "enter your new password":"أدخل كلمة المرور الجديدة",
+    "enter your current password":"أدخل كلمة المرور الحالية",
+    "update password":"تعديل كلمة السر",
+    "please enter your current and new password to update your password":"الرجاء إدخال كلمة المرور الحالية والجديدة لتحديث كلمة المرور الخاصة بك",
     "Quote":"رد",
     "delete":"حذف",
     "Type your Message Here":"اكتب رسالتك هنا",
