@@ -1,4 +1,7 @@
 {
+    "update email":"تعديل البريد الالكترونى",
+    "please enter phone number associated with your account to receive a verification code":"الرجاء إدخال رقم الهاتف المرتبط بحسابك لتلقي رمز التحقق",
+    "try another way":"جرب طريقة أخرى",
     "The password must be at least 8 characters and at least one uppercase, one lowercase letter , one symbol and one number":"يجب أن تتكون كلمة المرور من 8 أحرف على الأقل ، وحرف واحد كبير على الأقل ، وحرف صغير واحد ، ورمز واحد ، ورقم واحد على الأقل",
     "new password":"كلمة المرور الجديدة",
     "current password":"كلمة السر الحالية",
