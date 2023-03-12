@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Services\FlashMessage;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +11,6 @@ class ReviewUserMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
@@ -27,8 +25,8 @@ class ReviewUserMiddleware
                 'reviewing_user' => Auth::id()
             ]) , __('Review'))->closeable()->send();
 
-
         }
+
         return $next($request);
     }
 }

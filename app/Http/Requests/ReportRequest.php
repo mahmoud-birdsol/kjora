@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Comment;
+use App\Models\Conversation;
+use App\Models\MediaLibrary;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -28,11 +31,16 @@ class ReportRequest extends FormRequest
         return [
             'reportable_type' => [
                 'required',
-                Rule::in([User::class,]),
+                Rule::in([
+                    User::class,
+                    MediaLibrary::class,
+                    Conversation::class,
+                    Comment::class,
+                ]),
             ],
             'user_id' => [
                 'required',
-                'exists:users,id'
+                'exists:users,id',
             ],
             'reportable_id' => [
                 'required',

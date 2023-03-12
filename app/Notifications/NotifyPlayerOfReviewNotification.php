@@ -15,19 +15,10 @@ class NotifyPlayerOfReviewNotification extends Notification
 {
     use Queueable;
 
-    /**
-     * @var \App\Models\User
-     */
     private User $reviewer;
 
-    /**
-     * @var \App\Models\User
-     */
     private User $player;
 
-    /**
-     * @var \App\Models\Review
-     */
     private Review $review;
 
     /**
@@ -36,11 +27,10 @@ class NotifyPlayerOfReviewNotification extends Notification
      * @return void
      */
     public function __construct(
-        User   $reviewer,
-        User   $player,
+        User $reviewer,
+        User $player,
         Review $review
-    )
-    {
+    ) {
         $this->reviewer = $reviewer;
         $this->player = $player;
         $this->review = $review;
@@ -49,8 +39,7 @@ class NotifyPlayerOfReviewNotification extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
-     * @return array
+     * @param  mixed  $notifiable
      */
     public function via($notifiable): array
     {
@@ -60,8 +49,7 @@ class NotifyPlayerOfReviewNotification extends Notification
     /**
      * Get the mail representation of the notification.
      *
-     * @param mixed $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @param  mixed  $notifiable
      */
     public function toMail($notifiable): MailMessage
     {
@@ -71,7 +59,7 @@ class NotifyPlayerOfReviewNotification extends Notification
             ->line(__('This is to notify you to review player ',  [] , $notifiable->locale) . $this->player->name)
             ->action(__('Review Now' , [] , $notifiable->locale), url(route('player.review.show', [
                 'review' => $this->review,
-                'reviewing_user' => $this->reviewer->id
+                'reviewing_user' => $this->reviewer->id,
             ])))
             ->line(__('Thank you for using our application!' , [] , $notifiable->locale));
     }
@@ -79,8 +67,7 @@ class NotifyPlayerOfReviewNotification extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param mixed $notifiable
-     * @return array
+     * @param  mixed  $notifiable
      */
     public function toArray($notifiable): array
     {
@@ -92,7 +79,7 @@ class NotifyPlayerOfReviewNotification extends Notification
             actionData: new RouteActionData(
                 route: route('player.review.show', [
                     'review' => $this->review,
-                    'reviewing_user' => $this->reviewer->id
+                    'reviewing_user' => $this->reviewer->id,
                 ]),
                 text: __('Review Now', [] , $notifiable->locale),
             ),
@@ -102,8 +89,7 @@ class NotifyPlayerOfReviewNotification extends Notification
     /**
      * Get the broadcastable representation of the notification.
      *
-     * @param mixed $notifiable
-     * @return BroadcastMessage
+     * @param  mixed  $notifiable
      */
     public function toBroadcast($notifiable): BroadcastMessage
     {

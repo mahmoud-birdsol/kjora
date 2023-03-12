@@ -7,7 +7,6 @@ use App\Data\RouteActionData;
 use App\Models\Review;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -16,27 +15,14 @@ class NotifyUserOfRatingSubmittedNotification extends Notification
 {
     use Queueable;
 
-    /**
-     * @var \App\Models\User
-     */
     private User $reviewer;
 
-    /**
-     * @var \App\Models\User
-     */
     private User $player;
 
-    /**
-     * @var \App\Models\Review
-     */
     private Review $review;
 
     /**
      * Create a new notification instance.
-     *
-     * @param \App\Models\User $reviewer
-     * @param \App\Models\User $player
-     * @param \App\Models\Review $review
      */
     public function __construct(User $reviewer, User $player, Review $review)
     {
@@ -70,7 +56,7 @@ class NotifyUserOfRatingSubmittedNotification extends Notification
             ->line(__('Player ') . $this->reviewer->name . __(' has submitted a review for you', [] , $notifiable->locale))
             ->action(__('Click here to review ', [] , $notifiable->locale), url(route('player.review.show', [
                 'review' => Review::where('reviewer_id', $this->player->id)->where('player_id', $this->reviewer->id)->first(),
-                'reviewing_player' => $this->player->id
+                'reviewing_player' => $this->player->id,
             ])))
             ->line(__('Thank you for using our application!', [] , $notifiable->locale));
     }
@@ -91,7 +77,7 @@ class NotifyUserOfRatingSubmittedNotification extends Notification
             actionData: new RouteActionData(
                 route: route('player.review.show', [
                     'review' => Review::where('reviewer_id', $this->player->id)->where('player_id', $this->reviewer->id)->first(),
-                    'reviewing_player' => $this->player->id
+                    'reviewing_player' => $this->player->id,
                 ]),
                 text: __('Review Now', [] , $notifiable->locale),
             ),
@@ -102,7 +88,6 @@ class NotifyUserOfRatingSubmittedNotification extends Notification
      * Get the broadcastable representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return BroadcastMessage
      */
     public function toBroadcast($notifiable): BroadcastMessage
     {

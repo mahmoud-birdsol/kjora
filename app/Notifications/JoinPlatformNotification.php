@@ -11,15 +11,10 @@ class JoinPlatformNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    /**
-     * @var string
-     */
     private string $token;
 
     /**
      * Create a new notification instance.
-     *
-     * @param  string  $token
      */
     public function __construct(string $token)
     {

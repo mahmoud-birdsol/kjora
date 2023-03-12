@@ -42,9 +42,6 @@ class IdentityVerifiedNotification extends Notification implements ShouldQueue
 
     /**
      * Get the array representation of the notification.
-     *
-     * @param $notifiable
-     * @return array
      */
     public function toArray($notifiable): array
     {

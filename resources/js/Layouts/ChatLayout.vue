@@ -62,7 +62,7 @@ onBeforeUnmount(() => {
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="relative grid h-full w-full overflow-hidden rounded-2xl bg-white text-neutral-500 lg:grid-cols-[1.2fr_2fr]">
-                    <div class="flex-col h-full gap-3 px-6 py-3 max-lg:border-b max-lg:border-b-stone-400 lg:flex lg:border-r lg:border-r-stone-400">
+                    <div class="flex-col h-full gap-3 px-6 py-3 max-lg:border-b max-lg:border-b-stone-400 lg:flex ltr:lg:border-r rtl:lg:border-l lg:border-r-stone-400">
                         <div class="hidden lg:block">
                             <ConversationsList :conversations="conversations"/>
                         </div>

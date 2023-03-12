@@ -6,7 +6,6 @@ use App\Data\NotificationData;
 use App\Data\RouteActionData;
 use App\Models\Report;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -15,10 +14,8 @@ class ReportResolvedNotification extends Notification
 {
     use Queueable;
 
-    /**
-     * @var \App\Models\Report
-     */
     private Report $report;
+
     private string $message;
 
     /**
@@ -35,7 +32,7 @@ class ReportResolvedNotification extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -46,7 +43,7 @@ class ReportResolvedNotification extends Notification
     /**
      * Get the mail representation of the notification.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
@@ -60,8 +57,7 @@ class ReportResolvedNotification extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param mixed $notifiable
-     * @return array
+     * @param  mixed  $notifiable
      */
     public function toArray($notifiable): array
     {
@@ -80,8 +76,7 @@ class ReportResolvedNotification extends Notification
     /**
      * Get the broadcastable representation of the notification.
      *
-     * @param mixed $notifiable
-     * @return BroadcastMessage
+     * @param  mixed  $notifiable
      */
     public function toBroadcast($notifiable): BroadcastMessage
     {

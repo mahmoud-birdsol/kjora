@@ -4,10 +4,8 @@ namespace App\Notifications;
 
 use App\Data\NotificationData;
 use App\Data\RouteActionData;
-use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -16,14 +14,8 @@ class CommentCreatedNotification extends Notification
 {
     use Queueable;
 
-    /**
-     * @var \App\Models\User
-     */
     private User $user;
 
-    /**
-     * @var \App\Models\User
-     */
     private User $notifier;
 
     private $commentable;
@@ -43,7 +35,7 @@ class CommentCreatedNotification extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -54,7 +46,7 @@ class CommentCreatedNotification extends Notification
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
@@ -70,13 +62,13 @@ class CommentCreatedNotification extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function toArray($notifiable)
     {
         return (new NotificationData(
-            displayType: 'simple',
+            displayType: 'user',
             state: 'success',
             title: __('Comment Notification', [] , $notifiable->locale),
             subtitle: __('User ', [] , $notifiable->locale) . $this->notifier->name . __(' commented on your post', [] , $notifiable->locale),
@@ -84,13 +76,15 @@ class CommentCreatedNotification extends Notification
                 route: route('gallery.show', $this->commentable),
                 text: __('View Now', [] , $notifiable->locale),
             ),
+            userAvatar: $notifiable->avatar_url,
+            userName: $notifiable->name
         ))->toArray();
     }
 
     /**
      * Get the broadcastable representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return BroadcastMessage
      */
     public function toBroadcast($notifiable)
