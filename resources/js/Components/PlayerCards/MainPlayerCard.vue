@@ -129,26 +129,26 @@ const removeFromFavorites = () => {
             <div class="grid gap-4 border-b"
                  :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' } , `border-${txtColor}` , `text-${txtColor}`">
                 <div v-if="size == 'lg'" class="relative">
-                    <p class="text-xs text-center opacity-50 text-light">Favorite Club</p>
+                    <p class="text-xs text-center" :class="state == 'Free' ?'text-white text-light opacity-50':'text-primary'">Favorite Club</p>
                     <div class="flex justify-center item-center [&+div]:hover:block">
                         <img :src="player.club?.logo_thumb" class="w-5 h-5 border-2 border-white rounded-full"/>
                     </div>
                     <ToolTip :value="player.club?.name"/>
                 </div>
                 <div>
-                    <p class="text-xs text-center opacity-50 " :class="state == 'Free' ?'text-white text-light':'text-primary'">Age</p>
+                    <p class="text-xs text-center" :class="state == 'Free' ?'text-white text-light opacity-50':'text-primary'">Age</p>
                     <p class="text-sm text-center font-semi-bold">{{ player.age }}</p>
                 </div>
                 <div>
-                    <p class="text-xs text-center opacity-50 text-light" :class="state == 'Free' ?'text-white text-light':'text-primary'">Played</p>
+                    <p class="text-xs text-center " :class="state == 'Free' ?'text-white text-light opacity-50':'text-primary'">Played</p>
                     <p class="text-sm text-center font-semi-bold">0</p>
                 </div>
                 <div>
-                    <p class="text-xs text-center opacity-50 text-light" :class="state == 'Free' ?'text-white text-light':'text-primary'">Missed</p>
+                    <p class="text-xs text-center" :class="state == 'Free' ?'text-white text-light opacity-50':'text-primary'">Missed</p>
                     <p class="text-sm text-center font-semi-bold">0</p>
                 </div>
                 <div>
-                    <p class="text-xs text-center opacity-50 text-light" :class="state == 'Free' ?'text-white text-light':'text-primary'">Position</p>
+                    <p class="text-xs text-center" :class="state == 'Free' ?'text-white text-light opacity-50':'text-primary'">Position</p>
                     <p class="text-sm text-center font-semi-bold">{{ player.position.name }}</p>
                 </div>
             </div>
