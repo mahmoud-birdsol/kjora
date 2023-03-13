@@ -27,7 +27,10 @@ class Report extends Resource
      * @var string
      */
     public static $title = 'id';
-
+    public static function label(): string
+    {
+        return __("Reports");
+    }
     /**
      * The columns that should be searched.
      *
@@ -53,27 +56,27 @@ class Report extends Resource
             ])->filterable(),
 
             BelongsTo::make(
-                'Report Option',
+                __('Report Option'),
                 'reportOption',
                 ReportOption::class
             )->showOnPreview()->nullable()->showCreateRelationButton(),
 
             BelongsTo::make(
-                'User',
+                __('User'),
                 'user',
                 User::class
             )->showOnPreview()->required(),
 
-            Textarea::make('Body')
+            Textarea::make(__('Body'),'body')
                 ->showOnPreview()
                 ->nullable()
                 ->rules('nullable'),
 
-            Boolean::make('Resolved')
+            Boolean::make(__('Resolved'),'resolved')
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
 
-            DateTime::make('Resolved at')
+            DateTime::make(__('Resolved at'),'resolved_at')
                 ->showOnPreview()
                 ->hideFromIndex()
                 ->nullable()

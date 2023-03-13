@@ -42,4 +42,13 @@ class PendingInvitations extends Table
     {
         // return now()->addMinutes(5);
     }
+    /**
+     * Sey the label for the metric.
+     *
+     * @return string
+     */
+    public function name()
+    {
+        return __('Pending Invitations');
+    }
 }

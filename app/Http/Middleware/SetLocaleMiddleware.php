@@ -23,8 +23,7 @@ class SetLocaleMiddleware
         if(Auth::check()){
             app()->setLocale(auth()->user()->locale);
         }
-
-        if (Auth::guard('admin')){
+        if (auth('admin')->user()){
             if (app()->getLocale() == 'ar') {
                 Nova::enableRTL();
             }

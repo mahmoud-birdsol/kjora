@@ -16,8 +16,8 @@ class UsersPerGender extends Partition
     public function calculate(NovaRequest $request)
     {
         return $this->count($request, User::class, 'gender')->colors([
-            'male' => '#0ea5e9',
-            'female' => '#ec4899',
+            __('male') => '#0ea5e9',
+            __('female') => '#ec4899',
         ]);
     }
 
@@ -39,5 +39,14 @@ class UsersPerGender extends Partition
     public function uriKey()
     {
         return 'users-per-gender';
+    }
+    /**
+     * Sey the label for the metric.
+     *
+     * @return string
+     */
+    public function name()
+    {
+        return __('Users Per Gender');
     }
 }
