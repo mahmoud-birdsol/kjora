@@ -64,6 +64,7 @@ Route::middleware('guest')->resource(
 Route::middleware([
     'auth:sanctum',
     'location.detect',
+    'policy.checker',
     config('jetstream.auth_session'),
     'verified.phone',
     'verified.email',
@@ -369,7 +370,58 @@ Route::middleware([
     Route::post('like', [\App\Http\Controllers\LikeController::class, 'store'])->name('like.store');
     Route::delete('like', [\App\Http\Controllers\LikeController::class, 'destroy'])->name('like.destroy');
 });
+/*
+    |--------------------------------------------------------------------------
+    | Policies Routes...
+    |--------------------------------------------------------------------------
+   */
 
+Route::prefix('policy')
+    ->group(function () {
+        /*terms*/
+        Route::get(
+            'terms-and-condition',
+            [
+                \App\Http\Controllers\Policy\TermsAndConditionController::class,
+                'index'
+            ]
+        )->name('terms.and.condition.index');
+
+        Route::patch('terms-and-condition/{termsAndConditions}', [
+            \App\Http\Controllers\Policy\TermsAndConditionController::class,
+            'store'
+        ])->name('terms.and.condition.store');
+
+        /*privacy*/
+
+        Route::get(
+            'privacy-policy',
+            [
+                \App\Http\Controllers\Policy\PrivacyPolicyController::class,
+                'index'
+            ]
+        )->name('privacy.policy.index');
+
+        Route::patch('privacy-policy/{privacyPolicy}', [
+            \App\Http\Controllers\Policy\PrivacyPolicyController::class,
+            'store'
+        ])->name('privacy.policy.store');
+
+        /*cookies*/
+
+        Route::get(
+            'cookies-policy',
+            [
+                \App\Http\Controllers\Policy\CookiesPolicyController::class,
+                'index'
+            ]
+        )->name('cookies.policy.index');
+
+        Route::patch('cookies-policy/{cookiePolicy}', [
+            \App\Http\Controllers\Policy\CookiesPolicyController::class,
+            'store'
+        ])->name('cookies.policy.store');
+    });
 //     // Example 2: Get all the connected users for a specific channel
 // });
 

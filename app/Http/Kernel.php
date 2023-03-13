@@ -70,6 +70,7 @@ class Kernel extends HttpKernel
         'verified.identity' => \App\Http\Middleware\EnsureUploadedIdentityVerificationDocuments::class,
         'location.detect'=> \App\Http\Middleware\LocationDetector::class,
         'player.review' => \App\Http\Middleware\ReviewUserMiddleware::class,
+        'policy.checker' => \App\Http\Middleware\EnsurePoliciesVerified::class,
         'detect.location' => \App\Http\Middleware\LocationDetector::class
     ];
 }
