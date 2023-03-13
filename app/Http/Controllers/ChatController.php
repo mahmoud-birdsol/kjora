@@ -50,7 +50,7 @@ class ChatController extends Controller
     ): Response {
         $userConversationsIds = request()->user()->conversations->pluck('id');
 
-        $markMessagesAsReadAction($conversation);
+        // $markMessagesAsReadAction($conversation);
 
         $conversations = Conversation::query()->whereHas('users', function ($query) use ($userConversationsIds) {
             $query->whereIn('conversation_user.conversation_id', $userConversationsIds)

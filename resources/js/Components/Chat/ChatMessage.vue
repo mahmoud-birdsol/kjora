@@ -21,6 +21,7 @@ onMounted(() => {
     setTimeout(() => {
         props.message.new = false
     }, 10000);
+
     // props.message.media.media !== [] && console.log(props.message.media)
 })
 const currentUser = usePage().props.value.auth.user
