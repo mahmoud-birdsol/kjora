@@ -55,7 +55,7 @@ const currentUser = usePage().props.value.auth.user
                             <InputLabel color="black">verification</InputLabel>
                             <Link :href="route('identity.verification.create')"
                                 v-if="currentUser.identity_status === 'Waiting for documents'"
-                                class="w-full p-2 border border-gray-500 rounded-full text-stone-500 active:border-primary hover:border-primary hover:text-primary sm:text-sm disabled:bg-gray-100 cursor-pointer ">
+                                class="w-full p-2 border border-gray-500 rounded-full cursor-pointer text-stone-500 active:border-primary hover:border-primary hover:text-primary sm:text-sm disabled:bg-gray-100 ">
                             {{ currentUser.identity_status }}
                             </Link>
                             <div v-else
@@ -63,24 +63,27 @@ const currentUser = usePage().props.value.auth.user
                                 {{ currentUser.identity_status }}
                             </div>
 
-                            <div>
-                                <InputLabel color="black">terms of service</InputLabel>
-                                <input type="text"
-                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    placeholder="place read" />
-                            </div>
-                            <div>
-                                <InputLabel color="black">privacy policy</InputLabel>
-                                <input type="text"
-                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    placeholder="place read" />
-                            </div>
-                            <div>
-                                <InputLabel color="black">cookie use</InputLabel>
-                                <input type="text"
-                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    placeholder="place read" />
-                            </div>
+
+                            <InputLabel color="black">terms of service</InputLabel>
+                            <Link :href="route('terms.and.condition.index')"
+                                class="w-full p-2 border border-gray-500 rounded-full cursor-pointer text-stone-500 active:border-primary hover:border-primary hover:text-primary sm:text-sm disabled:bg-gray-100 ">
+                            Terms of Service
+                            </Link>
+
+
+                            <InputLabel color="black">privacy policy</InputLabel>
+                            <Link :href="route('privacy.policy.index')"
+                                class="w-full p-2 border border-gray-500 rounded-full cursor-pointer text-stone-500 active:border-primary hover:border-primary hover:text-primary sm:text-sm disabled:bg-gray-100 ">
+                            Privacy Policy
+                            </Link>
+
+
+                            <InputLabel color="black">cookie use</InputLabel>
+                            <Link :href="route('cookies.policy.index')"
+                                class="w-full p-2 border border-gray-500 rounded-full cursor-pointer text-stone-500 active:border-primary hover:border-primary hover:text-primary sm:text-sm disabled:bg-gray-100 ">
+                            Cookie use
+                            </Link>
+
                         </div>
                     </template>
                 </CardContent>

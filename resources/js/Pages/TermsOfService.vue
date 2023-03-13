@@ -13,7 +13,7 @@ const props = defineProps({
 });
 const isDisabled = ref(true)
 const form = useForm({
-    termsAndConditions: props.terms.id
+    termsAndConditions: props.terms?.id ?? null
 })
 function submit() {
     form.patch(route('terms.and.condition.store', form.termsAndConditions))
@@ -25,20 +25,21 @@ function submit() {
         <template #header>
             Security
         </template>
-        <div class="grid lg:grid-cols-2 w-full ">
+        <div class="grid w-full lg:grid-cols-2 ">
             <div class="col-start-2 bg-white rounded-2xl p-6 w-full min-h-[500px] flex flex-col gap-4">
                 <div class="flex justify-center my-4">
-                    <h2 class="text-2xl text-primary font-bold uppercase">Terms of Service</h2>
+                    <h2 class="text-2xl font-bold uppercase text-primary">Terms of Service</h2>
                 </div>
-                <div class="relative  flex-grow border-2 border-stone-400 p-4 rounded-lg">
+                <div v-if="terms" class="relative flex-grow p-4 border-2 rounded-lg border-stone-400">
                     <div class="w-full max-h-[400px] overflow-auto hideScrollBar " v-html="terms.content" />
-                    <div class="absolute -top-4 z-20 left-4 bg-white p-2 text-primary uppercase text-xs font-bold ">
+                    <div class="absolute z-20 p-2 text-xs font-bold uppercase bg-white -top-4 left-4 text-primary ">
                         updated {{ dayjs(terms.created_at).format('DD MMMM YYYY') }}
                     </div>
                 </div>
-                <div class="" v-if="$page.props.user">
-                    <div class="flex flex-col gap-2 justify-center">
-                        <label for="terms" class="text-sm  font-medium text-primary">I Accept</label>
+                <div class=""
+                    v-if="$page.props.auth.user && terms && (terms.version !== $page.props.auth.user.accepted_terms_and_conditions_version)">
+                    <div class="flex flex-col justify-center gap-2">
+                        <label for="terms" class="text-sm font-medium text-primary">I Accept</label>
                         <input type="radio" :value="terms.id" id="terms" v-model="form.termsAndConditions" :checked="false"
                             @change="(e) => { e.target.checked ? isDisabled = false : isDisabled = true; }"
                             class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />

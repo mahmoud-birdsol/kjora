@@ -19,6 +19,7 @@ import {
 
 import { ElDatePicker } from 'element-plus';
 import MainPlayerCard from "@/Components/PlayerCards/MainPlayerCard.vue";
+import AddStadiumModal from '../../Components/AddStadiumModal.vue';
 
 const props = defineProps({
     invited: Object,
@@ -33,6 +34,7 @@ const form = useForm({
 });
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const showSuccessModal = ref(false);
+const showMap = ref(true)
 const d = new Date();
 const currentStadium = ref(null);
 const currentUser = usePage().props.value.auth.user
@@ -150,21 +152,32 @@ function changeMapMarker(e) {
                         </div>
                     </div>
                     <!-- staduim map -->
-                    <div class="lg:col-span-2 md:col-span-1 text-white">
-                        <GoogleMap :api-key="apiKey" style="width: 100%; height: 100%" :center="centerPosition" :zoom="15">
-                            <Marker v-if="currentStadium" :options="{ position: MarkerPosition }" />
-                            <CustomMarker v-if="currentStadium"
-                                :options="{ position: MarkerPosition, anchorPoint: 'TOP_RIGHT' }">
-                                <div class="text-center rounded-md bg-white/90 ">
-                                    <div class="p-2 text-xs font-bold text-stone-800">{{ currentStadium.name }}</div>
-                                </div>
-                            </CustomMarker>
-                        </GoogleMap>
+                    <div class="lg:col-span-2 md:col-span-1 text-white rounded-xl overflow-hidden">
+                        <!-- map with vue3-google-map lib  -->
+                        <!-- <GoogleMap v-if="showMap" :api-key="apiKey" style="width: 100%; height: 100%"
+                                                           :center="centerPosition" :zoom="15">
+                                                           <Marker v-if="currentStadium" :options="{ position: MarkerPosition }" />
+                                                           <CustomMarker v-if="currentStadium"
+                                                               :options="{ position: MarkerPosition, anchorPoint: 'TOP_RIGHT' }">
+                                                               <div class="text-center rounded-md bg-white/90 ">
+                                                                   <div class="p-2 text-xs font-bold text-stone-800">{{ currentStadium.name }}</div>
+                                                               </div>
+                                                           </CustomMarker>
+                                                       </GoogleMap> -->
+
+                        <!-- map with  vue 3 google map lib -->
+                        <GMapMap :center="centerPosition" :zoom="15">
+                            <GMapMarker v-if="currentStadium" :position="MarkerPosition" :clickable="true">
+                                <GMapInfoWindow :opened="true">
+                                    <div class="text-xs font-bold text-stone-800">{{ currentStadium.name }}</div>
+                                </GMapInfoWindow>
+                            </GMapMarker>
+                        </GMapMap>
                     </div>
                 </div>
             </div>
         </div>
-
+        <AddStadiumModal />
         <Modal :show="showSuccessModal" max-width="md">
             <div class="bg-white rounded-xl p-6 min-h-[500px]">
                 <div class="flex flex-col justify-between items-center min-h-[500px]">
