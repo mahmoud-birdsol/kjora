@@ -7,6 +7,8 @@ import { XMarkIcon, ArrowDownTrayIcon } from "@heroicons/vue/24/outline";
 // import DownloadImg from "./DownloadImg.vue";
 import ArrowRight from "../Icons/ArrowRight.vue";
 import Modal from "../Modal.vue";
+import Avatar from '@/Components/Avatar.vue';
+
 const props = defineProps({
     show: {
         type: Boolean,
@@ -80,23 +82,23 @@ function handleSplideActive(e) {
 <template>
     <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="$emit('close')"
         :show-close-icon="false">
-        <div class=" bg-white  px-7  py-5">
-            <div class="flex justify-between items-center">
+        <div class="py-5 bg-white px-7">
+            <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                    <img src="/images/selfie_example.png" class="rounded-full w-14 h-14 border-primary border-4" />
+                    <Avatar :image-url="user.avatar_url" :size="'md'" :username="user.name" :border="true" />
                     <div>
                         <div class="text-primary">{{ user.name }}</div>
-                        <Link class="text-gray-400 text-xs" :href="route('player.profile', user.user_id)">@{{ user.username
+                        <Link class="text-xs text-gray-400" :href="route('player.profile', user.id)">@{{ user.username
                         }}
                         </Link>
-                        <div class="text-gray-400 text-xs">10/01/2021 at 1:30 pm</div>
+                        <div class="text-xs text-gray-400">10/01/2021 at 1:30 pm</div>
                     </div>
                 </div>
                 <div class="flex gap-2">
                     <a :href="currentMediaUrl" :download="currentMediaName">
-                        <ArrowDownTrayIcon class="text-black w-6 cursor-pointer" @click="showSavePanel = true" />
+                        <ArrowDownTrayIcon class="w-6 text-black cursor-pointer" @click="showSavePanel = true" />
                     </a>
-                    <XMarkIcon class="text-black w-6 cursor-pointer" @click="$emit('close')" />
+                    <XMarkIcon class="w-6 text-black cursor-pointer" @click="$emit('close')" />
                 </div>
             </div>
             <div class="my-4">
@@ -115,7 +117,7 @@ function handleSplideActive(e) {
                         </button>
                     </div>
                     <SplideTrack id="splide01-track">
-                        <SplideSlide v-for="item in media" :key="item.id" class="my-4 w-full    ">
+                        <SplideSlide v-for="item in media" :key="item.id" class="w-full my-4 ">
                             <!-- <img :src="'/images/selfie_example.png'" alt="" /> -->
                             <template v-if="item.mime_type.startsWith('image')">
                                 <img class="h-full mx-auto rounded-lg w-[min(500px , 90%)]" :src="item?.original_url"
@@ -132,7 +134,7 @@ function handleSplideActive(e) {
             </div>
             <div v-show="props.media.length > 1" class="" some-slider>
                 <Splide :options="thumbsOptions" ref="thumbs" class="[&_ul]:justify-center">
-                    <SplideSlide v-for="item in media" :key="item.id" class="rounded-lg overflow-hidden"
+                    <SplideSlide v-for="item in media" :key="item.id" class="overflow-hidden rounded-lg"
                         style="border: none !important ;">
                         <!-- <img :src="'/images/selfie_example.png'" :alt="slide.alt" /> -->
                         <template v-if="item.mime_type.startsWith('image')">

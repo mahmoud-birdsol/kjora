@@ -11,6 +11,8 @@ import { useChat } from "../../stores/chat";
 import ChatGallery from './ChatGallery.vue';
 import SingleMediaPreview from './SingleMediaPreview.vue';
 import MediaThumbnails from './MediaThumbnails.vue';
+import Avatar from '@/Components/Avatar.vue';
+
 const chat = useChat();
 const props = defineProps({
     message: Object,
@@ -53,17 +55,17 @@ const imagesVideosOnly = props.message.attachments.filter(a => a.mime_type.start
 const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith('image') && !a.mime_type.startsWith('video'))
 </script>
 <template>
-    <div :class="[alignmentClass, parentClasses, newMessageClasses]" class="w-full pt-2 transition-all duration-150   ">
+    <div :class="[alignmentClass, parentClasses, newMessageClasses]" class="w-full pt-2 transition-all duration-150 ">
         <!-- avatar for non current user message -->
         <div v-if='!isCurrentUser'>
-            <div><img :src="'https://ui-avatars.com/api/?name=' + player.name + '&color=094609FF&background=E2E2E2'" alt=""
-                    class="object-cover w-10 h-10 border-2 rounded-full border-primary">
+            <div>
+                <Avatar :image-url="player.avatar_url" :size="'md'" :username="player.name" :border="true" />
             </div>
         </div>
         <!-- message body -->
         <div class="max-w-[60%]">
 
-            <div :class="[bodyClass]" class="p-4 rounded-2xl max-w-full ">
+            <div :class="[bodyClass]" class="max-w-full p-4 rounded-2xl ">
                 <!-- replied message -->
                 <div v-if="message.parent_id" :class="repliedClasses" class="p-3 mb-2 text-xs rounded-lg">
                     <!-- name -->
