@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\UserEmailController;
 use App\Http\Controllers\Auth\UserNameController;
 use App\Http\Controllers\Auth\UserPhoneController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HireController;
 use App\Http\Controllers\IdentityVerificationController;
@@ -16,10 +17,12 @@ use App\Http\Controllers\JoinPlatformController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerReviewController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UpgradeMembershipController;
 use App\Http\Controllers\ResendVerificationCodeController;
 use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\VerificationCodeController;
 use App\Models\Country;
 use App\Models\Invitation;
 use App\Models\MediaLibrary;
@@ -62,6 +65,7 @@ Route::middleware('guest')->resource(
 Route::middleware([
     'auth:sanctum',
     'location.detect',
+    'policy.checker',
     config('jetstream.auth_session'),
     'verified.phone',
     'verified.email',
@@ -139,7 +143,7 @@ Route::middleware([
         Route::get('home', [
             PlayerController::class,
             'index',
-        ])->name('home');
+        ])->middleware('detect.location')->name('home');
 
         Route::get('player/{user}', [
             PlayerController::class,
@@ -147,16 +151,20 @@ Route::middleware([
         ])->name('player.profile');
 
         Route::get(
-            'player/review/{review}', [
-            PlayerReviewController::class,
-            'show',
-        ])->name('player.review.show');
+            'player/review/{review}',
+            [
+                PlayerReviewController::class,
+                'show'
+            ]
+        )->name('player.review.show');
 
         Route::post(
-            'player/review/{review}', [
-            PlayerReviewController::class,
-            'store',
-        ])->name('player.review.store');
+            'player/review/{review}',
+            [
+                PlayerReviewController::class,
+                'store'
+            ]
+        )->name('player.review.store');
 
         /*
          |--------------------------------------------------------------------------
@@ -350,7 +358,8 @@ Route::middleware([
     Route::post('membership/upgrade', UpgradeMembershipController::class)->name('membership.upgrade');
 
     Route::get(
-        'advertisements/{advertisement}', [
+        'advertisements/{advertisement}',
+        [
             AdvertisementController::class,
             'show'
         ]
@@ -365,7 +374,58 @@ Route::middleware([
     Route::post('like', [\App\Http\Controllers\LikeController::class, 'store'])->name('like.store');
     Route::delete('like', [\App\Http\Controllers\LikeController::class, 'destroy'])->name('like.destroy');
 });
+/*
+    |--------------------------------------------------------------------------
+    | Policies Routes...
+    |--------------------------------------------------------------------------
+   */
 
+Route::prefix('policy')
+    ->group(function () {
+        /*terms*/
+        Route::get(
+            'terms-and-condition',
+            [
+                \App\Http\Controllers\Policy\TermsAndConditionController::class,
+                'index'
+            ]
+        )->name('terms.and.condition.index');
+
+        Route::patch('terms-and-condition/{termsAndConditions}', [
+            \App\Http\Controllers\Policy\TermsAndConditionController::class,
+            'store'
+        ])->name('terms.and.condition.store');
+
+        /*privacy*/
+
+        Route::get(
+            'privacy-policy',
+            [
+                \App\Http\Controllers\Policy\PrivacyPolicyController::class,
+                'index'
+            ]
+        )->name('privacy.policy.index');
+
+        Route::patch('privacy-policy/{privacyPolicy}', [
+            \App\Http\Controllers\Policy\PrivacyPolicyController::class,
+            'store'
+        ])->name('privacy.policy.store');
+
+        /*cookies*/
+
+        Route::get(
+            'cookies-policy',
+            [
+                \App\Http\Controllers\Policy\CookiesPolicyController::class,
+                'index'
+            ]
+        )->name('cookies.policy.index');
+
+        Route::patch('cookies-policy/{cookiePolicy}', [
+            \App\Http\Controllers\Policy\CookiesPolicyController::class,
+            'store'
+        ])->name('cookies.policy.store');
+    });
 //     // Example 2: Get all the connected users for a specific channel
 // });
 
@@ -375,6 +435,9 @@ Route::middleware([
 //     event(new \App\Events\MessageSentEvent($user));
 // });
 
+Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::delete('posts/{post}/delete', [PostController::class, 'destroy'])->name('posts.destroy');
+Route::patch('posts/{post}', [PostController::class, 'update'])->name('posts.update');
 Route::get('gallery/{mediaLibrary}', function (MediaLibrary $mediaLibrary) {
     $user = $mediaLibrary->owner();
 
@@ -398,10 +461,11 @@ Route::get('update-password', function () {
     return Inertia::render('Auth/UpdatePassword');
 })->name('update.password');
 
+Route::post('contacts', [ContactController::class, 'store'])->name('contacts.store');
+
 Route::get('phone/verify', [VerificationCodeController::class, 'create'])->name('phone.verify');
 Route::post('phone/verify', [VerificationCodeController::class, 'store'])->name('phone.verify.store');
 Route::get('phone/resend-verification', ResendVerificationCodeController::class)->name('verification.phone.send');
-
 
 Route::get('test', function () {
     $response = Http::withHeaders([
