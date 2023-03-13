@@ -38,14 +38,14 @@ function submit() {
                 </div>
                 <div class="" v-if="$page.props.user">
                     <div class="flex flex-col gap-2 justify-center">
-                        <label for="terms" class="text-sm  font-medium text-primary">I Accept</label>
+                        <label for="terms" class="text-sm  font-medium text-primary">{{$t('I Accept')}}</label>
                         <input type="radio" :value="terms.id" id="terms" v-model="form.termsAndConditions" :checked="false"
                             @change="(e) => { e.target.checked ? isDisabled = false : isDisabled = true; }"
                             class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
                     </div>
                     <div class="mt-2">
                         <PrimaryButton :disabled="isDisabled" @click="submit">
-                            UPDATE
+                            {{$t('UPDATE')}}
                         </PrimaryButton>
                     </div>
                 </div>
