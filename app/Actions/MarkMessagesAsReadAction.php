@@ -9,9 +9,6 @@ class MarkMessagesAsReadAction
 {
     /**
      * Mark Messages as read when page is visited action
-     *
-     * @param \App\Models\Conversation $conversation
-     * @return void
      */
     public function __invoke(Conversation $conversation): void
     {
@@ -20,7 +17,7 @@ class MarkMessagesAsReadAction
             ->whereNull('read_at')
             ->get()->each(function (Message $message) {
                 $message->update([
-                    'read_at' => now()
+                    'read_at' => now(),
                 ]);
             });
     }

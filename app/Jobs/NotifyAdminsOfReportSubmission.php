@@ -6,7 +6,6 @@ use App\Models\Admin;
 use App\Models\Report;
 use App\Notifications\ReportSubmittedNotification;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -16,9 +15,6 @@ class NotifyAdminsOfReportSubmission implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * @var \App\Models\Report
-     */
     private Report $report;
 
     /**

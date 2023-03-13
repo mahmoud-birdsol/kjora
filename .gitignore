@@ -17,4 +17,7 @@ yarn-error.log
 /.idea
 /.vscode
 /storage/media-library
+.DS_Store
+._.DS_Store
+.DS_Store?
 **/.DS_Store

@@ -1,10 +1,9 @@
 <script setup>
-import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import InvitationCard from "./Partials/InvitationCard.vue";
-import {ref} from 'vue'
-import { useForm, usePage } from '@inertiajs/inertia-vue3';
+
 import InvitationsFilter from '@/Components/InvitationsFilter.vue';
 const props = defineProps({
     invitations: Array,

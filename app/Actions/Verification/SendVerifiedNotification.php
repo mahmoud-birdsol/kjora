@@ -9,9 +9,6 @@ class SendVerifiedNotification
 {
     /**
      * Send account verified notification.
-     *
-     * @param  \App\Models\User  $user
-     * @return void
      */
     public function __invoke(User $user): void
     {

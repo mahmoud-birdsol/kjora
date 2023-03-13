@@ -44,14 +44,12 @@ class Social extends Model implements HasMedia, Suspendable
      * @var array
      */
     protected $appends = [
-        'icon'
+        'icon',
     ];
 
     /**
      * Register the media conversions.
      *
-     * @param  \Spatie\MediaLibrary\MediaCollections\Models\Media|null  $media
-     * @return void
      *
      * @throws \Spatie\Image\Exceptions\InvalidManipulation
      */
@@ -64,8 +62,6 @@ class Social extends Model implements HasMedia, Suspendable
 
     /**
      * Register the media collections.
-     *
-     * @return void
      */
     public function registerMediaCollections(): void
     {
@@ -74,8 +70,6 @@ class Social extends Model implements HasMedia, Suspendable
 
     /**
      * Get the icon attribute.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function icon(): Attribute
     {

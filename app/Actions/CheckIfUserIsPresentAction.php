@@ -8,13 +8,9 @@ use Pusher\Pusher;
 
 class CheckIfUserIsPresentAction
 {
-
     /**
      * Check if user is present or not
      *
-     * @param \App\Models\User $user
-     * @param \App\Models\Conversation $conversation
-     * @return bool
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Pusher\ApiErrorException
      * @throws \Pusher\PusherException
@@ -29,9 +25,8 @@ class CheckIfUserIsPresentAction
             $connection['options'] ?? []
         );
 
-        $channel = $pusher->getChannelInfo('private-users.chat.' . $conversation->id);
+        $channel = $pusher->getChannelInfo('private-users.chat.'.$conversation->id);
 
-
-        return (bool)$channel->occupied;
+        return (bool) $channel->occupied;
     }
 }
