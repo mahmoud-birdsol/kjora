@@ -64,6 +64,7 @@ Route::middleware('guest')->resource(
 Route::middleware([
     'auth:sanctum',
     'location.detect',
+    'policy.checker',
     config('jetstream.auth_session'),
     'verified.phone',
     'verified.email',
