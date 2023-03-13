@@ -66,9 +66,9 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified.email' => \App\Http\Middleware\EnsureEmailIsVerified::class,
-//            \App\Http\Middleware\EnsurePhoneIsVerified::class,
-        'location.detect'=> \App\Http\Middleware\LocationDetector::class,
+        'verified.phone' => \App\Http\Middleware\EnsurePhoneIsVerified::class,
         'verified.identity' => \App\Http\Middleware\EnsureUploadedIdentityVerificationDocuments::class,
+        'location.detect'=> \App\Http\Middleware\LocationDetector::class,
         'player.review' => \App\Http\Middleware\ReviewUserMiddleware::class,
         'detect.location' => \App\Http\Middleware\LocationDetector::class
     ];

@@ -1,9 +1,10 @@
 <script setup>
-import { ref } from 'vue';
-import { usePage } from '@inertiajs/inertia-vue3';
-import { Inertia } from '@inertiajs/inertia';
+import {ref} from 'vue';
+import {usePage} from '@inertiajs/inertia-vue3';
+import {Inertia} from '@inertiajs/inertia';
 import SimpleNotification from '@/Components/Notifications/SimpleNotification.vue';
 import RespondToInvitationModal from '@/Components/RespondToInvitationModal.vue';
+import UserNotification from "@/Components/Notifications/UserNotification.vue";
 
 const showNotificationPopup = ref(false);
 const broadcastNotification = ref(null);
@@ -35,9 +36,21 @@ Echo.private('users.' + usePage().props.value.auth.user.id)
                         leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100"
                         leave-to-class="opacity-0">
                 <template v-if="showNotificationPopup && broadcastNotification.displayType == 'simple'">
+                    <SimpleNotification
+                        :notification="broadcastNotification"
+                        @close="showNotificationPopup = false"/>
+                </template>
+            </transition>
 
-                        <SimpleNotification :notification="broadcastNotification"
-                                            @close="showNotificationPopup = false"/>
+            <transition enter-active-class="transform ease-out duration-300 transition"
+                        enter-from-class="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
+                        enter-to-class="translate-y-0 opacity-100 sm:translate-x-0"
+                        leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100"
+                        leave-to-class="opacity-0">
+                <template v-if="showNotificationPopup && broadcastNotification.displayType == 'user'">
+                    <UserNotification
+                        :notification="broadcastNotification"
+                        @close="showNotificationPopup = false"/>
                 </template>
             </transition>
         </div>
@@ -49,7 +62,8 @@ Echo.private('users.' + usePage().props.value.auth.user.id)
                 leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100"
                 leave-to-class="opacity-0">
         <div v-if="showInvitationNotificationModal">
-            <RespondToInvitationModal :invitation="invitation" :show="showInvitationNotificationModal" @close="showInvitationNotificationModal = false"/>
+            <RespondToInvitationModal :invitation="invitation" :show="showInvitationNotificationModal"
+                                      @close="showInvitationNotificationModal = false"/>
         </div>
     </transition>
 </template>

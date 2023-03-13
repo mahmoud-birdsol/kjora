@@ -45,13 +45,11 @@ class Invitation extends Model
     ];
 
     protected $dispatchesEvents = [
-        'created' => InvitationCreatedEvent::class
+        'created' => InvitationCreatedEvent::class,
     ];
 
     /**
      * Get the invitation stadium.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function stadium(): BelongsTo
     {
@@ -60,8 +58,6 @@ class Invitation extends Model
 
     /**
      * Get the invitation inviting player.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function invitingPlayer(): BelongsTo
     {
@@ -70,8 +66,6 @@ class Invitation extends Model
 
     /**
      * Ge the invitation invited player.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function invitedPlayer(): BelongsTo
     {
@@ -80,8 +74,6 @@ class Invitation extends Model
 
     /**
      * Get the invitations reviews
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function reviews(): HasMany
     {

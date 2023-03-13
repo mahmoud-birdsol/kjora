@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\CreateImpressionJob;
 use App\Models\Advertisement;
 use App\Models\Country;
 use App\Models\MediaLibrary;
@@ -26,16 +27,21 @@ class PlayerController extends Controller
         $query = User::query()->whereNot('id', $request->user()->id);
 
         $request->whenFilled('position', fn() => $query->where('position_id', $request->input('position')));
-        $request->whenFilled('rating',
-            $request->input('rating') > 0
-                ? fn() => $query->where(function ($query) use ($request) {
-                $query->where('rating', '>=', $request->input('rating'));
-            })
-                : fn() => null
+        $request->whenFilled('ratingFrom', fn() => $query->where(function ($query) use ($request) {
+            $query->where('rating', '>=', $request->input('ratingFrom'));
+        })
+        );
+        $request->whenFilled('ratingTo', fn() => $query->where(function ($query) use ($request) {
+            $query->where('rating', '<=', $request->input('ratingTo'));
+        })
         );
 
-        $request->whenFilled('age',
-            fn() => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('age')))
+        $request->whenFilled('ageFrom',
+            fn() => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('ageFrom')))
+        );
+
+        $request->whenFilled('ageTo',
+            fn() => $query->whereDate('date_of_birth', '>=', now()->subYears($request->input('ageTo')))
         );
 
         $request->whenFilled('country_id',
@@ -59,14 +65,18 @@ class PlayerController extends Controller
                            * SIN(RADIANS(current_latitude)))) AS distance")
             ));
 
+        $advertisements = Advertisement::active()->orderBy('priority')
+            ->with('media')
+            ->get()
+            ->each(function (Advertisement $advertisement) use ($request) {
+                CreateImpressionJob::dispatch($request->user(), $advertisement);
+            });
 
         return Inertia::render('Home', [
             'players' => $query->paginate(20),
             'positions' => Position::all(),
-            'advertisements' => Advertisement::orderBy('priority')->get()->map(function (Advertisement $advertisement) {
-                return $advertisement->getFirstMediaUrl('main');
-            }),
-            'countries' => Country::active()->orderBy('name')->get()
+            'countries' => Country::active()->orderBy('name')->get(),
+            'advertisements' => $advertisements
         ]);
     }
 
@@ -81,31 +91,19 @@ class PlayerController extends Controller
     {
         $user->load('club');
 
-        $media = $user->getMedia('gallery')->filter(function (MediaLibrary $mediaLibrary) {
-            return $mediaLibrary->whereNull('suspended_at');
-        })->map(function (MediaLibrary $media) {
-            return [
-                'id' => $media->id,
-                'url' => $media->original_url,
-                'type' => $media->type,
-                'extension' => $media->extension,
-                'comments' => $media->comments?->load('replies')
-            ];
-        });
-
         $ratingCategoriesCount = $user->playerReviews->count();
 
         $playerRating = $user->playerReviews->flatMap->ratingCategories->groupBy('name')
             ->map(function ($ratingCategory) use ($ratingCategoriesCount) {
                 return [
                     'ratingCategory' => $ratingCategory->first()->name,
-                    'value' => (double)$ratingCategory->sum('pivot.value') / $ratingCategoriesCount
+                    'value' => (float)$ratingCategory->sum('pivot.value') / $ratingCategoriesCount,
                 ];
             })->values();
 
         return Inertia::render('Player/Show', [
             'player' => $user,
-            'media' => $media,
+            'posts' => $user->posts->load('comments'),
             'playerRating' => $playerRating
         ]);
     }

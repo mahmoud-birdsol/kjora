@@ -26,8 +26,10 @@ const props = defineProps({
 
 const form = useForm({
     position: usePage().props.value.queryParams.position ?? null,
-    age: parseInt(usePage().props.value.queryParams.age ?? 18),
-    rating: parseInt(usePage().props.value.queryParams.rating ?? 0),
+    ageFrom: 18,
+    ageTo: 60,
+    ratingFrom: 0,
+    ratingTo: 5,
     search: usePage().props.value.queryParams.search ?? '',
     location: usePage().props.value.queryParams.location ?? null,
     country_id: usePage().props.value.queryParams.country_id ?? null
@@ -59,6 +61,7 @@ const reset = () => {
     form.age = 18;
     form.rating = 0;
     form.search = '';
+    form.country_id=null;
 
     filter();
 }
@@ -112,10 +115,8 @@ const reset = () => {
                     </div>
                 </div>
 
-
                 <FiltersModel :positions="positions" :countries="countries" v-model:form="form" @reset="reset"
                     @filter="filter" :showFiltersModal="showFiltersModal" />
-
             </div>
         </div>
     </AppLayout>

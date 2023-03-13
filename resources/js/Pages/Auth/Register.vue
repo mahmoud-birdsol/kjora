@@ -1,12 +1,17 @@
 <script setup>
-import { Head } from '@inertiajs/inertia-vue3';
+import {Head} from '@inertiajs/inertia-vue3';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import GuestTwoColumnLayout from '@/Layouts/Partials/GuestTwoColumnLayout.vue';
 import RegisterForm from '@/Pages/Auth/Forms/RegisterForm.vue';
 import Card from '@/Components/Card.vue';
 import CardContent from '@/Components/CardContent.vue';
 
-const props = defineProps(['countries', 'positions']);
+const props = defineProps([
+    'countries',
+    'positions',
+    'defaultClub',
+    'defaultCountryId'
+]);
 </script>
 
 <template>
@@ -17,7 +22,7 @@ const props = defineProps(['countries', 'positions']);
             <Card>
                 <CardContent title="Create an account">
                     <template #body>
-                        <RegisterForm :countries="countries" :positions="positions"/>
+                        <RegisterForm :countries="countries" :positions="positions" :default-club="defaultClub" :default-country-id="defaultCountryId"/>
                     </template>
                 </CardContent>
             </Card>

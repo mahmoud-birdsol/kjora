@@ -6,7 +6,6 @@ use App\Models\Admin;
 use App\Models\User;
 use App\Notifications\IdentityVerificationRequest;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -16,9 +15,6 @@ class NotifyAdminsOfVerificationRequest implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * @var \App\Models\User
-     */
     private User $user;
 
     /**

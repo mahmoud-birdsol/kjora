@@ -10,11 +10,6 @@ class ResolveReport
 {
     /**
      * Resolve the report incident.
-     *
-     * @param \App\Models\Report $report
-     * @param string|null $message
-     * @param \Carbon\Carbon|null $dateTime
-     * @return void
      */
     public function __invoke(Report $report, string $message = null, ?Carbon $dateTime = null): void
     {

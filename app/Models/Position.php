@@ -25,8 +25,6 @@ class Position extends Model
 
     /**
      * Get the position users.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function users(): HasMany
     {
@@ -35,8 +33,6 @@ class Position extends Model
 
     /**
      * Get the position rating categories.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function ratingCategories(): BelongsToMany
     {
