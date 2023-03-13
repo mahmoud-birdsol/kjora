@@ -7,6 +7,8 @@ import { ref, onMounted, watch } from 'vue';
 import InputError from '@/Components/InputError.vue';
 import FadeInTransition from './FadeInTransition.vue';
 import InputLabel from '@/Components/InputLabel.vue'
+import CropIcon from '@/Components/Icons/CropIcon.vue';
+import Crop from '@/Components/Crop.vue';
 const props = defineProps({
     modelValue: {
         required: false,
@@ -63,7 +65,8 @@ const isLoading = ref(false);
 const isDisabled = ref(false);
 const files = ref([]);
 const caption = ref('');
-
+const cropFile = ref([])
+const openModal = ref(false)
 const selectNewPhoto = () => {
     photoInput.value.click();
 };
@@ -73,12 +76,18 @@ const updatePhotoPreview = () => {
         return
     }
     ;
-    files.value = Array.from(photoInput.value.files)
+    files.value = Array.from(photoInput.value.files).map(file => { return { file: file, id: _.uniqueId("f") } })
 
-    files.value.forEach((file, i) => {
+    files.value.forEach(({ file, id }, i) => {
         const reader = new FileReader();
         reader.onload = (e) => {
-            previewImageUrls.value.push(e.target.result);
+            previewImageUrls.value.push({
+                file: file,
+                url: e.target.result,
+                name: file.name,
+                type: file.type,
+                id: id
+            });
             showPreview.value = true;
         };
         reader.readAsDataURL(file);
@@ -136,6 +145,19 @@ function reset(e) {
     caption.value = ''
     emit('close');
 }
+function changeFiles(file, url, id) {
+    let index = files.value.findIndex((f) => f.id === id)
+    files.value.splice(index, 1, file)
+    let fileUrlIndex = previewImageUrls.value.findIndex((f) => f.id === id)
+    previewImageUrls.value[fileUrlIndex].url = url
+    cropFile.value = []
+}
+let showCropModal = (file) => {
+    cropFile.value = file
+    openModal.value = true
+
+}
+
 </script>
 
 <template>
@@ -170,16 +192,22 @@ function reset(e) {
                 <div v-show="showPreview" class="relative overflow-auto hideScrollBar max-h-80" v-loading="isLoading">
                     <div class="relative grid grid-cols-3 gap-2">
                         <template v-for="(fileUrl, index) in previewImageUrls" :key="index">
-                            <div v-if="fileUrl.startsWith('data:image') || fileUrl.startsWith('data:video')"
+                            <div v-if="fileUrl.url.startsWith('data:image') || fileUrl.startsWith('data:video')"
                                 class="relative">
-                                <img v-if="fileUrl.startsWith('data:image')" :src="fileUrl" alt=""
+                                <img v-if="fileUrl.url.startsWith('data:image')" :src="fileUrl.url" alt=""
                                     class="object-contain w-full h-full rounded-lg aspect-square">
-                                <video v-if="fileUrl.startsWith('data:video')" :src="fileUrl" alt=""
+                                <video v-if="fileUrl.url.startsWith('data:video')" :src="fileUrl.url" alt=""
                                     class="object-cover w-full h-full rounded-lg aspect-square" controls />
                                 <button @click.prevent="removePhoto(index)"
                                     class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
                                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
                                         <XMarkIcon class="w-5 h-5 text-stone-800" />
+                                    </div>
+                                </button>
+                                <button class="absolute top-0 left-0 bg-white bg-opacity-90 rounded-br-xl"
+                                    @click="showCropModal(fileUrl)">
+                                    <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
+                                        <CropIcon class="w-4" />
                                     </div>
                                 </button>
                             </div>
@@ -193,6 +221,8 @@ function reset(e) {
                 </div>
             </div>
             <div>
+                <Crop :img="cropFile" @crop="changeFiles" v-model:open="openModal"
+                        @update:open="() => openModal = false" />
                 <div class="mb-2 text-sm text-center justify-self-end text-primary">only videos and images with max size
                     (2MB) are allowed
                 </div>

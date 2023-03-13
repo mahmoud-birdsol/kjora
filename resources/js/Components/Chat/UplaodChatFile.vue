@@ -58,7 +58,6 @@ const emit = defineEmits(['close', 'update:modelValue', 'reload', 'upload']);
 
 const showPreview = ref(false);
 const filesData = ref([]);
-const croppedFilesData = ref([]);
 const photoInput = ref(null);
 const isLoading = ref(false);
 const isDisabled = ref(false);
@@ -127,13 +126,6 @@ function changeFiles(file, url, id) {
     files.value.splice(index, 1, file)
     let fileUrlIndex = filesData.value.findIndex((f) => f.id === id)
     filesData.value[fileUrlIndex].url = url
-
-    croppedFilesData.value.push({
-        url: url,
-        name: file.name,
-        type: file.type,
-        id: id,
-    });
     cropFile.value = []
 }
 
