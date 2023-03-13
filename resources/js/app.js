@@ -14,6 +14,10 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {i18nVue} from "laravel-vue-i18n";
 
+import EmojiPicker from "vue3-emoji-picker";
+import { OnClickOutside } from "@vueuse/components";
+// import "vue3-emoji-picker/css";
+import "../../node_modules/vue3-emoji-picker/dist/style.css";
 library.add();
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
@@ -35,6 +39,8 @@ createInertiaApp({
             })
             .use(ZiggyVue, Ziggy)
             .use(pinia)
+            .component("EmojiPicker", EmojiPicker)
+            .component("OnClickOutside", OnClickOutside)
             .component("font-awesome-icon", FontAwesomeIcon)
             .mount(el);
     },

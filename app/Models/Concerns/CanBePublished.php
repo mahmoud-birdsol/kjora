@@ -11,7 +11,7 @@ trait CanBePublished
     /**
      * Mark the model as published.
      */
-    public function publish(?Carbon $date = null): void
+    public function publish( $date = null): void
     {
         $this->forceFill([
             'published_at' => $date ?? now(),

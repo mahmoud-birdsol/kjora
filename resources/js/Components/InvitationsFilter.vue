@@ -8,9 +8,10 @@ import { ref } from 'vue'
 import { ElDatePicker } from 'element-plus';
 import InputLabel from '@/Components/InputLabel.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
-
-const props = defineProps(['form_route'])
+import {Head, Link , useForm} from '@inertiajs/inertia-vue3';
+const props = defineProps({
+    url:String,
+})
 
 let showFiltersModal = ref(false)
 let loading = ref(false);
@@ -22,7 +23,7 @@ const form = useForm({
 
 const filter = () => {
     loading.value = true;
-    form.get(route(props.form_route), {
+    form.get(route(props.url), {
         preserveState: true,
         preserveScroll: true,
         onSuccess: () => {
@@ -30,7 +31,6 @@ const filter = () => {
             showFiltersModal.value = false;
         }
     });
-
 };
 const reset = () => {
     form.dateFrom = null,

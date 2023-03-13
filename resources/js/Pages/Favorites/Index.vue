@@ -31,6 +31,7 @@ const form = useForm({
     ratingFrom: 0,
     ratingTo: 5,
     search: usePage().props.value.queryParams.search ?? '',
+    location: usePage().props.value.queryParams.location ?? null,
     country_id: usePage().props.value.queryParams.country_id ?? null
 });
 
@@ -99,6 +100,7 @@ const reset = () => {
 
                 <!-- Current list...
                                                     =====================================================-->
+                                                    =====================================================-->
                 <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
 
                     <div class="flex items-start justify-start my-6">
@@ -116,8 +118,6 @@ const reset = () => {
                     </div>
                 </div>
 
-                <!-- Filters Modal...
-                                                    =====================================================-->
                 <FiltersModel :positions="positions" :countries="countries" v-model:form="form" @reset="reset"
                     @filter="filter" :showFiltersModal="showFiltersModal" />
             </div>
