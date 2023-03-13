@@ -10,6 +10,7 @@ use App\Http\Resources\MessageResource;
 use App\Models\Conversation;
 use App\Models\Message;
 use App\Notifications\NotifyUserOfChatMessageNotification;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -69,5 +70,20 @@ class MessageController extends Controller
         }
 
         return MessageResource::make($message);
+    }
+
+    /**
+     * Delete the selected Message
+     *
+     * @param \App\Models\Message $message
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy(Message $message): JsonResponse
+    {
+        $message->delete();
+
+        return response()->json([
+            'message' => 'Message Deleted Successfully',
+        ]);
     }
 }
