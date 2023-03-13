@@ -23,7 +23,7 @@ function submit() {
 <template>
     <GuestLayout :title="$t('Terms of Service')">
         <template #header>
-            Security
+            {{$t('Security')}}
         </template>
         <div class="grid lg:grid-cols-2 w-full ">
             <div class="col-start-2 bg-white rounded-2xl p-6 w-full min-h-[500px] flex flex-col gap-4">
