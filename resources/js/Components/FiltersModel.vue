@@ -26,6 +26,9 @@ function filter() {
 function reset() {
     emit('reset')
 }
+
+const distances = [5, 10, 20, 30, 40, 50];
+
 </script>
 <template>
     <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40">
@@ -63,9 +66,21 @@ function reset() {
                         </div>
                     </div>
                     <div class="my-6">
+                        <InputLabel>Location</InputLabel>
+                        <div class="px-4">
+                            <select id="location" name="location" v-model="form.location"
+                                class="block w-full py-2 pl-3 pr-10 mt-1 text-base text-center text-white bg-black border-white rounded-full focus:border-primary focus:outline-none focus:ring-primary sm:text-sm placeholder:center">
+                                <option :value="null">Distance</option>
+                                <option v-for="distance in distances" :key="distance" :value="distance">{{
+                                    distance }} Km
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="my-6">
                         <InputLabel>Nationality</InputLabel>
                         <div class="px-4 py-1">
-                            <RichSelectInput :options="countries" value-name="id" text-name="name" image-name="img"
+                            <RichSelectInput :options="countries" value-name="id" text-name="name" image-name="flag"
                                 v-model="form.country_id" bgColor="black" txtColor="white" />
                         </div>
                     </div>

@@ -21,7 +21,9 @@ const props = defineProps({
         type: Boolean,
         default: false,
     }
-    , borderColor: null,
+    , borderColor: {
+        default: 'primary'
+    },
     enableLightBox: {
         required: false,
         type: Boolean,
@@ -66,10 +68,10 @@ function hideLightBox() {
 </script>
 
 <template>
-    <span @click="showLightBox" v-if="imageUrl" class="block rounded-full bg-cover bg-no-repeat bg-center cursor-pointer"
+    <span @click="showLightBox" v-if="imageUrl" class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer"
         :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'" />
 
-    <span v-if="!imageUrl" class="block rounded-full bg-cover bg-no-repeat bg-center"
+    <span v-if="!imageUrl" class="block bg-center bg-no-repeat bg-cover rounded-full"
         :class="[sizeClasses, borderClasses, borderColorClass]"
         :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
     <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" @hide="hideLightBox"></vue-easy-lightbox>

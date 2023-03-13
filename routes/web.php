@@ -19,6 +19,7 @@ use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerReviewController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UpgradeMembershipController;
 use App\Http\Controllers\ResendVerificationCodeController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\VerificationCodeController;
@@ -64,6 +65,7 @@ Route::middleware('guest')->resource(
 Route::middleware([
     'auth:sanctum',
     'location.detect',
+    'policy.checker',
     config('jetstream.auth_session'),
     'verified.phone',
     'verified.email',
@@ -141,7 +143,7 @@ Route::middleware([
         Route::get('home', [
             PlayerController::class,
             'index',
-        ])->name('home');
+        ])->middleware('detect.location')->name('home');
 
         Route::get('player/{user}', [
             PlayerController::class,
@@ -346,11 +348,14 @@ Route::middleware([
         'store',
     ])->name('report.store');
 
+
     /*
      |--------------------------------------------------------------------------
      | Advertisement Routes...
      |--------------------------------------------------------------------------
     */
+
+    Route::post('membership/upgrade', UpgradeMembershipController::class)->name('membership.upgrade');
 
     Route::get(
         'advertisements/{advertisement}',
@@ -371,7 +376,58 @@ Route::middleware([
 
     Route::post('stadiums', \App\Http\Controllers\StadiumController::class)->name('stadiums.store');
 });
+/*
+    |--------------------------------------------------------------------------
+    | Policies Routes...
+    |--------------------------------------------------------------------------
+   */
 
+Route::prefix('policy')
+    ->group(function () {
+        /*terms*/
+        Route::get(
+            'terms-and-condition',
+            [
+                \App\Http\Controllers\Policy\TermsAndConditionController::class,
+                'index'
+            ]
+        )->name('terms.and.condition.index');
+
+        Route::patch('terms-and-condition/{termsAndConditions}', [
+            \App\Http\Controllers\Policy\TermsAndConditionController::class,
+            'store'
+        ])->name('terms.and.condition.store');
+
+        /*privacy*/
+
+        Route::get(
+            'privacy-policy',
+            [
+                \App\Http\Controllers\Policy\PrivacyPolicyController::class,
+                'index'
+            ]
+        )->name('privacy.policy.index');
+
+        Route::patch('privacy-policy/{privacyPolicy}', [
+            \App\Http\Controllers\Policy\PrivacyPolicyController::class,
+            'store'
+        ])->name('privacy.policy.store');
+
+        /*cookies*/
+
+        Route::get(
+            'cookies-policy',
+            [
+                \App\Http\Controllers\Policy\CookiesPolicyController::class,
+                'index'
+            ]
+        )->name('cookies.policy.index');
+
+        Route::patch('cookies-policy/{cookiePolicy}', [
+            \App\Http\Controllers\Policy\CookiesPolicyController::class,
+            'store'
+        ])->name('cookies.policy.store');
+    });
 //     // Example 2: Get all the connected users for a specific channel
 // });
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Responses;
 
+use App\Models\Club;
 use App\Models\Country;
 use App\Models\Position;
 use Inertia\Inertia;
