@@ -252,8 +252,9 @@ const save = () => {
                     </template>
                     <template #footer>
                         <div class="mt-4">
-                            <PrimaryButton v-show="completedFirstStep == true && !(identity_status === 'Verified')" :class="{ 'opacity-25': form.processing }"
+                            <PrimaryButton v-show="completedFirstStep == true && !(identity_status==='Verified')" :class="{ 'opacity-25': form.processing }"
                                 :disabled="form.processing" @click="save()">
+                                Verify
                             </PrimaryButton>
                         </div>
                     </template>
