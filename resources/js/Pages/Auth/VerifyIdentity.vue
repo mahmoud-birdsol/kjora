@@ -132,14 +132,12 @@ const save = () => {
                         <div class="flex flex-col justify-between h-full ">
                             <div class="min-h-[200px]">
                                 <div>
-                                    <h3 class="mb-4 text-lg font-bold text-gray-900">Use a valid government-issued document
+                                    <h3 class="mb-4 text-lg font-bold text-gray-900">{{$t('use a valid government-issued document')}}
                                     </h3>
-                                    <p class="text-xs text-gray-500">Only the following documents listed below will be
-                                        accepted,
-                                        all other documents will be rejected.</p>
+                                    <p class="text-xs text-gray-500">{{ $t('only the following documents listed below will be accepted, all other documents will be rejected') }}.</p>
                                 </div>
                                 <div class="mt-4">
-                                    <InputLabel color="primary" for="country" value="Country of issue" />
+                                    <InputLabel color="primary" for="country" :value="$t('country of issue')" />
                                     <RichSelectInput :options="countries" value-name="name" text-name="name"
                                         image-name="flag" v-model="form.identity_issue_country" />
                                     <InputError class="mt-2" :message="form.errors.identity_issue_country" />
@@ -153,7 +151,7 @@ const save = () => {
                                         <template #icon>
                                             <font-awesome-icon icon="passport" class="w-12 h-auto text-center text-white" />
                                     </template>
-                                        Passport
+                                    {{$t('passport')}}
                                     </MegaButton>
 
                                     <MegaButton :active="form.identity_type == 'national_id'"
@@ -187,7 +185,7 @@ const save = () => {
                         <div class="flex flex-col justify-between h-full gap-2">
                             <div class="min-h-[200px]">
                                 <div>
-                                    <h3 class="mb-8 font-bold text-black uppercase">Take Selfie Photo</h3>
+                                    <h3 class="mb-8 font-bold text-black uppercase">{{$t('Take Selfie Photo')}}</h3>
                                 </div>
                                 <div>
                                     <div class="flex space-x-4">
@@ -209,21 +207,18 @@ const save = () => {
                                             </button>
                                         </div>
                                         <div class="w-3/4">
-                                            <CorrectText>Take a selfie of your self with a natural expression.</CorrectText>
-                                            <CorrectText>Make sure your whole face is visible, centered and your eyes are
-                                                open.
+                                            <CorrectText>{{$t('Take a selfie of your self with a natural expression')}}.</CorrectText>
+                                            <CorrectText>{{$t('Make sure your whole face is visible, centered and your eyes are open')}}.
                                             </CorrectText>
-                                            <InCorrectText>Do not copy your ID or use screenshots of your ID.
-                                            </InCorrectText>
-                                            <InCorrectText>Do not hide or alter pars of your face (No hats/beauty
-                                                images/filters/headgear).</InCorrectText>
+                                            <InCorrectText>{{$t('Do not copy your ID or use screenshots of your ID')}}.</InCorrectText>
+                                            <InCorrectText>{{$t('Do not hide or alter pars of your face (No hats/beauty images/filters/headgear)')}}.</InCorrectText>
                                         </div>
                                     </div>
                                     <InputError class="mt-2" :message="form.errors.identity_selfie_image" />
                                 </div>
                                 <div>
                                     <p class="mt-2 text-sm font-bold text-black">
-                                        File size must be between 10KB and 5120KB in jpg/jpeg/png format.
+                                        {{$t('File size must be between 10KB and 5120KB in jpg/jpeg/png format')}}.
                                     </p>
                                 </div>
                             </div>

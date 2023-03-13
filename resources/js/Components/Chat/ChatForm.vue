@@ -197,7 +197,7 @@ function onSelectEmoji(emoji) {
                     <button @click="showEmojiPicker = !showEmojiPicker" :data-cancel-blur="true">
                         <FaceSmileIcon class="w-6 text-neutral-400" />
                     </button>
-                    <div class="absolute z-20 bottom-full left-full " v-show="showEmojiPicker">
+                    <div class="absolute z-20 bottom-full ltr:left-full rtl:right-full" v-show="showEmojiPicker">
                         <EmojiPickerElement @selected-emoji="onSelectEmoji" />
                     </div>
                 </div>

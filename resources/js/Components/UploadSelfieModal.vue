@@ -131,7 +131,7 @@ const submit = () => {
                         </button>
                     </div>
                     <div class="flex justify-center">
-                        <h2 class="text-xl font-bold uppercase text-primary">Upload</h2>
+                        <h2 class="text-xl font-bold uppercase text-primary">{{$t('upload')}}</h2>
                     </div>
                     <div class="flex items-center justify-center">
                         <input ref="photoInput" type="file" class="hidden" @change="updatePhotoPreview">
@@ -142,7 +142,7 @@ const submit = () => {
                                 class="w-[450px] h-[337.5px] rounded border border-gray-500 flex justify-center items-center">
                                 <p class="text-xs font-light text-gray-500">
                                     {{$t('Click on the following link to open the camera')}}.
-                                    <a href="javascript:;" class="text-sky-500 hover:text-sky-700" @click="openCamera">Open
+                                    <a href="javascript:;" class="text-sky-500 hover:text-sky-700" @click="openCamera">
                                         {{$t('open camera')}}</a>
                                 </p>
                             </div>

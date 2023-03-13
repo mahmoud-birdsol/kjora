@@ -1,8 +1,7 @@
 <template>
     <AppLayout title="gallery">
         <template #header>
-            <p v-if="media.mime_type.startsWith('image') || media.mime_type.startsWith('webp')">{{$t('photo')}}</p>
-            <p v-if="media.mime_type.startsWith('video')">{{$t('video')}}</p>
+            <p>post</p>
         </template>
 
         <div class="px-4 py-4 bg-white sm:px-8 rounded-3xl">

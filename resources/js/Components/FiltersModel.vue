@@ -66,25 +66,13 @@ const distances = [5, 10, 20, 30, 40, 50];
                         </div>
                     </div>
                     <div class="my-6">
-                        <InputLabel>Location</InputLabel>
+                        <InputLabel>{{$t('location')}}</InputLabel>
                         <div class="px-4">
                             <select id="location" name="location" v-model="form.location"
                                 class="block w-full py-2 pl-3 pr-10 mt-1 text-base text-center text-white bg-black border-white rounded-full focus:border-primary focus:outline-none focus:ring-primary sm:text-sm placeholder:center">
-                                <option :value="null">Distance</option>
+                                <option :value="null">{{$t('distance')}}</option>
                                 <option v-for="distance in distances" :key="distance" :value="distance">{{
-                                    distance }} Km
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="my-6">
-                        <InputLabel>Location</InputLabel>
-                        <div class="px-4">
-                            <select id="location" name="location" v-model="form.location"
-                                class="block w-full py-2 pl-3 pr-10 mt-1 text-base text-center text-white bg-black border-white rounded-full focus:border-primary focus:outline-none focus:ring-primary sm:text-sm placeholder:center">
-                                <option :value="null">Distance</option>
-                                <option v-for="distance in distances" :key="distance" :value="distance">{{
-                                    distance }} Km
+                                    distance }} {{$t('Km')}}
                                 </option>
                             </select>
                         </div>
