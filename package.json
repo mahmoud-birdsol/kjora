@@ -34,6 +34,8 @@
         "@headlessui/vue": "^1.7.11",
         "@heroicons/vue": "^2.0.13",
         "@splidejs/vue-splide": "^0.6.12",
+        "@vueuse/components": "^9.13.0",
+        "@vueuse/core": "^9.13.0",
         "chart.js": "^4.2.1",
         "dayjs": "^1.11.7",
         "element-plus": "^2.2.27",
@@ -42,6 +44,9 @@
         "unplugin-auto-import": "^0.12.1",
         "unplugin-vue-components": "^0.22.12",
         "vue-chartjs": "^5.2.0",
-        "vue-easy-lightbox": "^1.14.0"
+        "vue-easy-lightbox": "^1.14.0",
+        "vue3-emoji-picker": "^1.1.7",
+        "vue3-google-map": "^0.15.0"
+
     }
 }

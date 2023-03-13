@@ -10,6 +10,7 @@ import { useForm } from "@inertiajs/inertia-vue3";
 import RichSelectInput from "@/Components/RichSelectInput.vue";
 import PhoneInput from "@/Components/PhoneInput.vue";
 import { identity } from 'lodash';
+import MoreBtn from "@/Components/MoreBtn.vue";
 const props = defineProps(['countries', 'positions']);
 let paymentForm = useForm({
     merchant: null
@@ -89,26 +90,20 @@ const currentUser = usePage().props.value.auth.user
                     <template #body>
                         <div class="flex flex-col gap-4">
                             <div>
-                                <InputLabel color="black">update profile</InputLabel>
-                                <input type="text"
-                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    placeholder="update details" />
+                                <InputLabel color="black">update username</InputLabel>
+                                <MoreBtn :url="route('username.edit')">update username</MoreBtn>
                             </div>
                             <div>
                                 <InputLabel color="black">update password</InputLabel>
-                                <input type="text"
-                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    placeholder="update password" />
+                                <MoreBtn :url="route('password.edit')">update password</MoreBtn>
                             </div>
                             <div>
                                 <InputLabel color="black">update email</InputLabel>
-                                <input type="text"
-                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    placeholder="update email address" />
+                                <MoreBtn :url="route('email.edit')">update email</MoreBtn>
                             </div>
                             <div>
                                 <InputLabel color="black">update phone</InputLabel>
-                                <PhoneInput :options="countries" value-name="id" text-name="name" image-name="flag" />
+                                <MoreBtn :url="route('phone.edit')">update phone</MoreBtn>
                             </div>
                             <div>
                                 <InputLabel color="black">language</InputLabel>

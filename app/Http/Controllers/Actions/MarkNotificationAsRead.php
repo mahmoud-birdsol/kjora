@@ -10,10 +10,6 @@ class MarkNotificationAsRead extends Controller
 {
     /**
      * Mark the specified notification as read.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $notificationId
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function __invoke(Request $request, string $notificationId): RedirectResponse
     {

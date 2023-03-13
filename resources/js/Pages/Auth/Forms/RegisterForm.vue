@@ -1,5 +1,5 @@
 <script setup>
-import { Link, useForm } from '@inertiajs/inertia-vue3';
+import { Link, useForm, usePage } from '@inertiajs/inertia-vue3';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -11,9 +11,15 @@ import UploadImageField from '@/Components/UploadImageField.vue';
 import Avatar from '@/Components/Avatar.vue';
 
 import { ElDatePicker } from 'element-plus';
-import { ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
-const props = defineProps(['countries', 'positions']);
+const props = defineProps([
+    'countries',
+    'positions',
+    'defaultClub',
+    'defaultCountryId'
+]);
+
 
 const form = useForm({
     first_name: '',
@@ -21,8 +27,8 @@ const form = useForm({
     username: '',
     email: '',
     password: '',
-    country_id: 121,
-    club_id: 11,
+    country_id: props.defaultCountryId ?? 121,
+    club_id: props.defaultClub?.id ?? 1,
     password_confirmation: '',
     date_of_birth: '',
     terms: true,
@@ -77,14 +83,13 @@ const submit = () => {
                     auto-complete="email" aria-required="true" />
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
-            <div >
-                <InputLabel color="primary" for="username" value="Username" />
-                <TextInput type="text" v-model="form.username" placeholder="@" auto-complete="username"
-                    aria-required="true" />
-                <InputError class="mt-2" :message="form.errors.username" />
+            <div>
+                <InputLabel color="primary" for="password" value="Password" />
+                <PasswordInput v-model="form.password" />
+                <InputError class="mt-2" :message="form.errors.password" />
             </div>
             <div>
-                <InputLabel color="primary" for="country" value="Country" />
+                <InputLabel color="primary" for="country" value="Nationality" />
                 <RichSelectInput :options="countries" value-name="id" text-name="name" image-name="flag"
                     v-model="form.country_id" />
                 <InputError class="mt-2" :message="form.errors.country_id" />
@@ -92,7 +97,7 @@ const submit = () => {
             <div>
                 <InputLabel color="primary" for="club" value="Favorite Club" />
                 <RichSelectInput source="/api/clubs" value-name="id" text-name="name" image-name="logo"
-                    v-model="form.club_id" />
+                    :append="defaultClub" v-model="form.club_id" />
                 <InputError class="mt-2" :message="form.errors.club_id" />
             </div>
             <div>
@@ -106,13 +111,12 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.phone" />
             </div>
             <div class="sm:col-span-2">
-                <!-- TODO: change the icon  -->
-                <InputLabel color="primary" for="password" value="Password" />
-                <PasswordInput v-model="form.password" />
-                <div class="text-gray-400 text-xs m-2" v-if="!form.password && !form.errors.password">
-                    The password must be at least 8 characters and at least one uppercase, one lowercase letter , one symbol and one number
+                <div>
+                    <InputLabel color="primary" for="username" value="Username" />
+                    <TextInput type="text" v-model="form.username" placeholder="@" auto-complete="username"
+                        aria-required="true" />
+                    <InputError class="mt-2" :message="form.errors.username" />
                 </div>
-                <InputError class="mt-2" :message="form.errors.password" />
             </div>
         </div>
 
@@ -168,11 +172,13 @@ const submit = () => {
 
         <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
             <p class="text-xs text-black font-light">
-                By signing up, you agree to the <a target="_blank" :href="route('terms.show')"
-                    class="text-sky-500 hover:text-sky-700 font-bold">Terms of Service</a> and
-                <a target="_blank" :href="route('policy.show')" class="text-sky-500 hover:text-sky-700 font-bold">Privacy Policy</a>
+                By signing up, you agree to the <a target="_blank" :href="route('terms.and.condition.index')"
+                    class="text-sky-500 hover:text-sky-700 font-bold">Terms of
+                    Service</a> and
+                <a target="_blank" :href="route('privacy.policy.index')" class="text-sky-500 hover:text-sky-700 font-bold">Privacy
+                    Policy</a>
                 including
-                <Link class="text-sky-500 hover:text-sky-700 font-bold">Cookie use</Link>
+                <Link target="_blank" :href="route('cookies.policy.index')" class="text-sky-500 hover:text-sky-700 font-bold">Cookie use</Link>
             </p>
         </div>
 

@@ -10,11 +10,8 @@ trait CanBePublished
 {
     /**
      * Mark the model as published.
-     *
-     * @param  \Illuminate\Support\Carbon|null  $date
-     * @return void
      */
-    public function publish(?Carbon $date = null): void
+    public function publish( $date = null): void
     {
         $this->forceFill([
             'published_at' => $date ?? now(),
@@ -23,8 +20,6 @@ trait CanBePublished
 
     /**
      * Mark the model as unpublished.
-     *
-     * @return void
      */
     public function unPublish(): void
     {
@@ -35,8 +30,6 @@ trait CanBePublished
 
     /**
      * Check if the model is published.
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function isPublished(): Attribute
     {
@@ -47,9 +40,6 @@ trait CanBePublished
 
     /**
      * Filter to only published models.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopePublished(Builder $query): Builder
     {
@@ -58,9 +48,6 @@ trait CanBePublished
 
     /**
      * Filter to only un published models.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeUnPublished(Builder $query): Builder
     {

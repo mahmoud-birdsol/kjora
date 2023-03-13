@@ -10,18 +10,19 @@
         <div class="flex flex-col gap-1 relative isolate  z-[5] max-w-full "
             :class="[guidesClassesBefore, guidesClassesAfter]">
             <!-- user information & comment time row 1-->
-            <div class="flex flex-col xs:flex-row w-full justify-between">
+            <div class="flex flex-col justify-between w-full xs:flex-row">
                 <!-- user information -->
-                <div class="flex flex-col xs:flex-row  gap-1 ">
+                <div class="flex flex-col gap-1 xs:flex-row ">
                     <div class="flex flex-row gap-2">
-                        <h3 class="font-bold m-0 text-lg text-stone-800 leading-none  capitalize ">{{
+                        <h3 class="m-0 text-lg font-bold leading-none capitalize text-stone-800 ">{{
                             comment.user.first_name }} </h3>
                         <span v-if="false">star icon</span>
                     </div>
-                    <Link class="text-xs text-stone-400 " :href="route('player.profile', comment.user.id)">@{{ comment.user.username }} </Link>
+                    <Link class="text-xs text-stone-400 " :href="route('player.profile', comment.user.id)">@{{
+                        comment.user.username }} </Link>
                 </div>
                 <!-- date and time -->
-                <div class="flex flex-row gap-2 text-neutral-400/90 text-xs">
+                <div class="flex flex-row gap-2 text-xs text-neutral-400/90">
                     <span>{{ dayjs(comment.created_at).fromNow(true) }}</span>
                     <span>|</span>
                     <span>{{ dayjs(comment.created_at).format('hh:mm A') }}</span>
@@ -29,16 +30,27 @@
             </div>
             <!-- comment or reply body  row 2-->
             <div class="w-full">
-                <p class="w-full text-sm text-stone-800 break-all whitespace-pre-wrap">
+                <p class="w-full text-sm break-all whitespace-pre-wrap text-stone-800">
                     {{ comment.body }}
                 </p>
             </div>
             <!-- add reply & like buttons row 3 -->
-            <div class="flex w-full text-sm gap-2 justify-start text-stone-700 font-semibold mb-2">
+            <div class="flex justify-start w-full gap-2 mb-2 text-sm font-semibold text-stone-700 items-center">
                 <button @click="handleReplyClicked"
-                    class="p-1 pis-0 enabled:hover:underline hover:underline-offset-4 transition-all duration-150">Reply</button>
-                <button
-                    class="p-1 enabled:hover:underline hover:underline-offset-4 transition-all duration-150">Like</button>
+                    class="p-1 transition-all duration-150 pis-0 enabled:hover:underline hover:underline-offset-4">Reply</button>
+
+                <div class="flex  items-center">
+                    <div>{{ comment.likes_count }}</div>
+                    <LikeButton :isLiked="comment?.is_liked" :likeable_id="comment.id"
+                        :likeable_type="'App\\Models\\Comment'">
+                        <template v-slot="{ isLiked }">
+                            <div class="transition-all duration-150 enabled:hover:underline hover:underline-offset-4"
+                                :class="isLiked ? 'text-primary' : ''">Like</div>
+                        </template>
+                    </LikeButton>
+                </div>
+
+
             </div>
 
             <!-- replies related to this comment row 4 -->
@@ -48,27 +60,34 @@
                 </template>
             </div>
             <!-- new reply form row 5 -->
-            <div v-show="showReplyInput" class="flex flex-row p-3 items-center self-end w-full gap-x-3 ">
-                <button>
-                    <FaceSmileIcon class="w-6 text-neutral-400" />
-                </button>
-                <div class="flex items-center flex-grow ">
+            <OnClickOutside @trigger="handleBlur">
+                <div v-show="showReplyInput" class="flex flex-row items-center self-end w-full p-3 gap-x-3 ">
+                    <OnClickOutside @trigger="showEmojiPicker = false">
+                        <div class="relative flex items-center">
+                            <button @click="showEmojiPicker = !showEmojiPicker" :data-cancel-blur="true">
+                                <FaceSmileIcon class="w-6 text-neutral-400" />
+                            </button>
+                            <div class="absolute z-20 bottom-full left-full " v-show="showEmojiPicker">
+                                <EmojiPickerElement @selected-emoji="onSelectEmoji" />
+                            </div>
+                        </div>
+                    </OnClickOutside>
+                    <div class="flex items-center flex-grow ">
+                        <textarea ref="replyInput" @keypress.enter.exact.prevent="addReply" v-model="newReply"
+                            name="newReply" id="newReply" rows="1" placeholder="Add a comment..."
+                            class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary "></textarea>
+                    </div>
 
-                    <textarea ref="replyInput" @keypress.enter.exact.prevent="addReply" @blur="handleBlur"
-                        @keydown.esc="handleEsc" v-model="newReply" name="newReply" id="newReply" rows="1"
-                        placeholder="Add a comment..."
-                        class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary  "></textarea>
+                    <button @click="addReply" :disabled="isSending" class="p-1 group ">
+
+                        <PaperAirplaneIcon class="w-5 group-hover:text-neutral-700"
+                            :class="isSending ? 'text-neutral-200' : 'text-neutral-400'" />
+                    </button>
                 </div>
-
-                <button @click="addReply" :disabled="isSending" class="p-1 group ">
-
-                    <PaperAirplaneIcon class="w-5 group-hover:text-neutral-700"
-                        :class="isSending ? 'text-neutral-200' : 'text-neutral-400'" />
-                </button>
-            </div>
+            </OnClickOutside>
             <!-- view replies button row 6 -->
             <button v-show="hasReplies" @click="toggleRepliesView"
-                class="flex w-full text-sm gap-2 justify-start  text-stone-500 enabled:hover:underline hover:underline-offset-4 transition-all duration-300  ">
+                class="flex justify-start w-full gap-2 text-sm transition-all duration-300 text-stone-500 enabled:hover:underline hover:underline-offset-4 ">
                 {{ showReplies ? 'hide' : 'view' }} {{ comment.replies?.length }} replies
             </button>
 
@@ -83,7 +102,11 @@ import Avatar from './Avatar.vue';
 import { computed, onBeforeMount, ref, watch } from 'vue';
 import { FaceSmileIcon } from '@heroicons/vue/24/outline';
 import { PaperAirplaneIcon } from '@heroicons/vue/24/solid';
-import { usePage , Link } from '@inertiajs/inertia-vue3';
+import { usePage, Link } from '@inertiajs/inertia-vue3';
+import EmojiPickerElement from './EmojiPickerElement.vue';
+
+
+import LikeButton from './LikeButton.vue';
 const props = defineProps(['comment'])
 onBeforeMount(() => {
     dayjs.extend(relativeTime)
@@ -94,9 +117,12 @@ const currentUser = usePage().props.value.auth.user
 const replyInput = ref(null)
 const showReplies = ref(false)
 const hasReplies = computed(() => props.comment.replies && props.comment.replies.length > 0);
-const newReply = ref(null)
+const newReply = ref('')
 const showReplyInput = ref(false)
 const isSending = ref(false)
+const showEmojiPicker = ref(false)
+
+
 defineExpose({
     showReplies
 })
@@ -154,16 +180,19 @@ function handleAddedReply() {
     emit('addedReply')
     // showReplies.value = true
 }
-
+function onSelectEmoji(emoji) {
+    newReply.value += emoji
+    showReplyInput.value = true
+}
 
 // hide the input field when blur if it is empty
 function handleBlur(e) {
-    !newReply.value || newReply.value === '' ? showReplyInput.value = false : null
+    if (showReplyInput.value = true) {
+        !newReply.value || newReply.value === '' ? showReplyInput.value = false : null
+    }
+
 }
-function handleEsc(e) {
-    console.log('esc')
-    !newReply.value || newReply.value === '' ? showReplyInput.value = false : null
-}
+
 </script>
 
 <style  scoped></style>

@@ -14,9 +14,6 @@ class JoinPlatformController extends Controller
 {
     /**
      * Display the form to join the platform and reset password.
-     *
-     * @param  string  $token
-     * @return \Inertia\Response
      */
     public function create(string $token): Response
     {
@@ -30,10 +27,6 @@ class JoinPlatformController extends Controller
 
     /**
      * Update the user information, authenticate and redirect to dashboard.
-     *
-     * @param  \App\Http\Requests\JoinPlatformRequest  $request
-     * @param  string  $token
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(JoinPlatformRequest $request, string $token): RedirectResponse
     {
