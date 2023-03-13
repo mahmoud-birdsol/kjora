@@ -129,7 +129,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'age',
         'name',
         'is_favorite',
-        'identity_status'
+        'identity_status',
         'state_name'
 ];
 
