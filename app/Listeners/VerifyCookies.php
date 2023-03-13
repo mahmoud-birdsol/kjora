@@ -31,10 +31,9 @@ class VerifyCookies
     {
         $user = $event->user;
         $lastCookiesPolicy = CookiePolicy::latest()->whereNotNull('published_at')->first();
-        $this->assignTheCookiesVersion->__invoke($user , $lastCookiesPolicy);
 
+        if (!is_null($lastCookiesPolicy)) {
+            ($this->assignTheCookiesVersion)($user , $lastCookiesPolicy);
+        }
     }
-
-
-
 }

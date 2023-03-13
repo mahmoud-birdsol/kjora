@@ -31,9 +31,8 @@ class VerifyTermsAndCondition
     {
         $user = $event->user;
         $lastTerm = TermsAndConditions::latest()->whereNotNull('published_at')->first();
-        $this->assignTheTermsVersion->__invoke($user , $lastTerm);
-
+        if (!is_null($lastTerm)) {
+            ($this->assignTheTermsVersion)($user , $lastTerm);
+        }
     }
-
-
 }
