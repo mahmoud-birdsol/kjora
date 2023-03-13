@@ -125,31 +125,34 @@ const save = () => {
 
         <div class="grid grid-cols-1 gap-4 mt-8 sm:grid-cols-2">
             <!-- Step 1...
-                =====================================================-->
+                                                                =====================================================-->
             <Card>
                 <CardContent title="Verify Identity">
                     <template #body>
-                        <div class="flex flex-col justify-between h-full gap-8">
-                            <div>
-                                <h3 class="mb-4 text-lg font-bold text-gray-900">Use a valid government-issued document</h3>
-                                <p class="text-xs text-gray-500">Only the following documents listed below will be accepted,
-                                    all other documents will be rejected.</p>
+                        <div class="flex flex-col justify-between h-full ">
+                            <div class="min-h-[200px]">
+                                <div>
+                                    <h3 class="mb-4 text-lg font-bold text-gray-900">Use a valid government-issued document
+                                    </h3>
+                                    <p class="text-xs text-gray-500">Only the following documents listed below will be
+                                        accepted,
+                                        all other documents will be rejected.</p>
+                                </div>
+                                <div class="mt-4">
+                                    <InputLabel color="primary" for="country" value="Country of issue" />
+                                    <RichSelectInput :options="countries" value-name="name" text-name="name"
+                                        image-name="flag" v-model="form.identity_issue_country" />
+                                    <InputError class="mt-2" :message="form.errors.identity_issue_country" />
+                                </div>
                             </div>
 
-                            <div class="mt-4">
-                                <InputLabel color="primary" for="country" value="Country of issue" />
-                                <RichSelectInput :options="countries" value-name="name" text-name="name" image-name="flag"
-                                    v-model="form.identity_issue_country" />
-                                <InputError class="mt-2" :message="form.errors.identity_issue_country" />
-                            </div>
-
                             <div>
-                            <div class="grid grid-cols-1 gap-4 mt-12 sm:grid-cols-2">
+                                <div class="grid grid-cols-1 gap-4 mt-12 sm:grid-cols-2">
                                     <MegaButton :active="form.identity_type == 'passport'"
                                         @click="form.identity_type = 'passport'">
                                         <template #icon>
                                             <font-awesome-icon icon="passport" class="w-12 h-auto text-center text-white" />
-                                        </template>
+                                    </template>
                                         Passport
                                     </MegaButton>
 
@@ -177,49 +180,54 @@ const save = () => {
             </Card>
 
             <!-- Step 2...
-                =====================================================-->
+                                                                =====================================================-->
             <Card>
                 <CardContent title="Upload Identity">
                     <template #body>
                         <div class="flex flex-col justify-between h-full gap-2">
-                            <div>
-                                <h3 class="mb-8 font-bold text-black uppercase">Take Selfie Photo</h3>
-                            </div>
-
-                            <div>
-                                <div class="flex space-x-4">
-                                    <div class="w-1/4">
-                                        <button @click="showIdentitySelfieModal = true" class="relative w-full h-full">
-                                            <img v-if="form.identity_selfie_image" :src="form.identity_selfie_image" alt=""
-                                                class="w-full h-auto">
-                                            <img v-if="identitySelfieImagePreview" :src="identitySelfieImagePreview" alt=""
-                                                class="w-full h-auto">
-                                            <span
-                                                class="absolute inset-0 w-full h-full bg-transparent hover:bg-white hover:bg-opacity-50">
-                                                <span class="flex flex-col items-center justify-center h-full">
-                                                    <font-awesome-icon icon="camera"
-                                                        class="w-12 h-auto text-center text-black" />
-                                                </span>
-                                            </span>
-                                        </button>
-                                    </div>
-                                    <div class="w-3/4">
-                                        <CorrectText>Take a selfie of your self with a natural expression.</CorrectText>
-                                        <CorrectText>Make sure your whole face is visible, centered and your eyes are open.
-                                        </CorrectText>
-                                        <InCorrectText>Do not copy your ID or use screenshots of your ID.</InCorrectText>
-                                        <InCorrectText>Do not hide or alter pars of your face (No hats/beauty
-                                            images/filters/headgear).</InCorrectText>
-                                    </div>
+                            <div class="min-h-[200px]">
+                                <div>
+                                    <h3 class="mb-8 font-bold text-black uppercase">Take Selfie Photo</h3>
                                 </div>
-                                <InputError class="mt-2" :message="form.errors.identity_selfie_image" />
+                                <div>
+                                    <div class="flex space-x-4">
+                                        <div class="w-1/4">
+                                            <button @click="showIdentitySelfieModal = true"
+                                                class="relative w-full group h-full">
+                                                <img v-if="form.identity_selfie_image" :src="form.identity_selfie_image"
+                                                    alt="" class="w-full h-auto">
+                                                <img v-if="identitySelfieImagePreview" :src="identitySelfieImagePreview"
+                                                    alt="" class="w-full h-auto">
+                                                <span
+                                                    class="absolute inset-0 w-full h-full bg-transparent hover:bg-white hover:bg-opacity-50"
+                                                    :class="form.identity_selfie_image ? 'hidden group-hover:block ' : 'block'">
+                                                    <span class="flex flex-col items-center justify-center h-full">
+                                                        <font-awesome-icon icon="camera"
+                                                            class="w-12 h-auto text-center text-black" />
+                                                    </span>
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <div class="w-3/4">
+                                            <CorrectText>Take a selfie of your self with a natural expression.</CorrectText>
+                                            <CorrectText>Make sure your whole face is visible, centered and your eyes are
+                                                open.
+                                            </CorrectText>
+                                            <InCorrectText>Do not copy your ID or use screenshots of your ID.
+                                            </InCorrectText>
+                                            <InCorrectText>Do not hide or alter pars of your face (No hats/beauty
+                                                images/filters/headgear).</InCorrectText>
+                                        </div>
+                                    </div>
+                                    <InputError class="mt-2" :message="form.errors.identity_selfie_image" />
+                                </div>
+                                <div>
+                                    <p class="mt-2 text-sm font-bold text-black">
+                                        File size must be between 10KB and 5120KB in jpg/jpeg/png format.
+                                    </p>
+                                </div>
                             </div>
-                            <div>
-                                <p class="mt-2 text-sm font-bold text-black">
-                                    File size must be between 10KB and 5120KB in jpg/jpeg/png format.
-                                </p>
-                            </div>
-                            <div class="grid grid-cols-1 gap-4 mt-8 sm:grid-cols-2">
+                            <div class="grid grid-cols-1 gap-4 mt-10 sm:grid-cols-2">
                                 <div>
                                     <MegaButton @click="showIdentityFrontImageModal = true">
                                         <template #icon>
@@ -263,7 +271,7 @@ const save = () => {
         </div>
 
         <!-- Upload image Modals...
-            =====================================================-->
+                                                            =====================================================-->
 
         <UploadImageField :should-upload="false" :show="showIdentityFrontImageModal"
             :current-image-url="identityFrontImagePreview" v-model="form.identity_front_image"
@@ -273,8 +281,8 @@ const save = () => {
             :current-image-url="identityBackImagePreview" v-model="form.identity_back_image"
             @close="showIdentityBackImageModal = false" @selected="setIdentityBackImagePreview" />
 
-        <UploadSelfieModal :show="showIdentitySelfieModal" @close="showIdentitySelfieModal = false"
-            v-model="form.identity_selfie_image" />
+        <UploadSelfieModal v-model="form.identity_selfie_image" :show="showIdentitySelfieModal"
+            @close="showIdentitySelfieModal = false" />
 
         <SuccessMessageModal title="Congratulations"
             message="Your identity verification has been successfully sent. Please wait for approval."
