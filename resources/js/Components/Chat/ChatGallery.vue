@@ -86,7 +86,9 @@ function handleSplideActive(e) {
                     <img src="/images/selfie_example.png" class="rounded-full w-14 h-14 border-primary border-4" />
                     <div>
                         <div class="text-primary">{{ user.name }}</div>
-                        <Link class="text-gray-400 text-xs" :href="route('player.profile', user.id)">@{{ user.username }}</Link>
+                        <Link class="text-gray-400 text-xs" :href="route('player.profile', user.user_id)">@{{ user.username
+                        }}
+                        </Link>
                         <div class="text-gray-400 text-xs">10/01/2021 at 1:30 pm</div>
                     </div>
                 </div>

@@ -10,7 +10,7 @@ class Publish
     /**
      * Mark the publishable as published on the specified date.
      */
-    public function __invoke(Publishable $publishable, ?Carbon $date = null): void
+    public function __invoke(Publishable $publishable,  $date = null): void
     {
         $publishable->publish($date);
     }

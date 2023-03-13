@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from 'vue';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import { computed, ref, watch } from 'vue';
+import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
 import { ElRate, ElTimePicker } from 'element-plus';
 import dayjs from 'dayjs';
 import AppLayout from '@/Layouts/AppLayout.vue';
@@ -9,6 +9,7 @@ import InputError from '@/Components/InputError.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import Modal from '@/Components/Modal.vue';
+import { CustomMarker, GoogleMap, Marker } from "vue3-google-map";
 import Avatar from '@/Components/Avatar.vue';
 import {
     MapPinIcon,
@@ -30,9 +31,11 @@ const form = useForm({
     stadium_id: null,
     invited_player_id: props.invited.id,
 });
-
+const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const showSuccessModal = ref(false);
 const d = new Date();
+const currentStadium = ref(null);
+const currentUser = usePage().props.value.auth.user
 const createInvitation = () => {
     form.post(route('invitation.store'), {
         onSuccess: () => {
@@ -41,23 +44,54 @@ const createInvitation = () => {
     });
 };
 const makeRange = (start, end) => {
-  const result = []
-  for (let i = start; i <= end; i++) {
-    result.push(i)
-  }
-  return result
+    const result = []
+    for (let i = start; i <= end; i++) {
+        result.push(i)
+    }
+    return result
 }
 const disabledDate = (time) => {
     return dayjs(time).isBefore(dayjs().subtract(1, 'day'));
 }
 const disabledHours = () => {
     let hour = d.getHours();
-  return makeRange(0, hour)
+    return makeRange(0, hour)
 }
 const disabledMinutes = (hour) => {
     let minutes = d.getMinutes();
-    return makeRange(0 , minutes)
+    return makeRange(0, minutes)
 }
+
+let centerPosition = computed(() => {
+    let lat
+    let lng
+    if (currentStadium.value) {
+        lat = parseFloat(currentStadium.value?.latitude)
+        lng = parseFloat(currentStadium.value?.longitude)
+    } else {
+        lat = parseFloat(currentUser.current_latitude)
+        lng = parseFloat(currentUser.current_longitude)
+    }
+    return {
+        lat,
+        lng,
+    }
+})
+let MarkerPosition = computed(() => {
+    return {
+        lat: parseFloat(currentStadium.value?.latitude),
+        lng: parseFloat(currentStadium.value?.longitude),
+    }
+})
+
+
+function changeMapMarker(e) {
+    let std = props.stadiums.find(s => s.id === form.stadium_id)
+    currentStadium.value = std
+
+}
+
+
 </script>
 
 <template>
@@ -99,6 +133,7 @@ const disabledMinutes = (hour) => {
                                     <InputLabel>Stadium</InputLabel>
                                     <div class="px-4">
                                         <select id="stadium" name="stadium" v-model="form.stadium_id"
+                                            @change="changeMapMarker"
                                             class="mt-1 block w-full rounded-full border-white py-2 pl-3 pr-10 text-base focus:border-primary focus:outline-none focus:ring-primary sm:text-sm text-white placeholder:center text-center bg-black">
                                             <option v-for="stadium in stadiums" :key="stadium.id" :value="stadium.id">{{
                                                 stadium.name }}
@@ -113,6 +148,18 @@ const disabledMinutes = (hour) => {
                                 </div>
                             </form>
                         </div>
+                    </div>
+                    <!-- staduim map -->
+                    <div class="lg:col-span-2 md:col-span-1 text-white">
+                        <GoogleMap :api-key="apiKey" style="width: 100%; height: 100%" :center="centerPosition" :zoom="15">
+                            <Marker v-if="currentStadium" :options="{ position: MarkerPosition }" />
+                            <CustomMarker v-if="currentStadium"
+                                :options="{ position: MarkerPosition, anchorPoint: 'TOP_RIGHT' }">
+                                <div class="text-center rounded-md bg-white/90 ">
+                                    <div class="p-2 text-xs font-bold text-stone-800">{{ currentStadium.name }}</div>
+                                </div>
+                            </CustomMarker>
+                        </GoogleMap>
                     </div>
                 </div>
             </div>

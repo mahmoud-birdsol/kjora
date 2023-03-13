@@ -9,7 +9,7 @@ interface Publishable
     /**
      * Mark the model as published.
      */
-    public function publish(?Carbon $date = null): void;
+    public function publish( $date = null): void;
 
     /**
      * Mark the model as unpublished.
