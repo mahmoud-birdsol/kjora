@@ -4,11 +4,14 @@ namespace App\Providers;
 
 use App\Events\AdvertisementRetrieved;
 use App\Listeners\RecordAdvertisementImpression;
-use App\Notifications\VerificationCodeNotification;
+use App\Listeners\SendVerificationCodeNotification;
+use App\Listeners\StoreVerifyTermsAndCondition;
+use App\Listeners\VerifyCookies;
+use App\Listeners\VerifyPrivacyPolicy;
+use App\Listeners\VerifyTermsAndCondition;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -20,12 +23,17 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
-            VerificationCodeNotification::class
+            VerifyTermsAndCondition::class,
+            VerifyPrivacyPolicy::class,
+            VerifyCookies::class,
+            SendVerificationCodeNotification::class,
         ],
 
         AdvertisementRetrieved::class => [
             RecordAdvertisementImpression::class,
         ],
+
+
     ];
 
     /**

@@ -51,8 +51,8 @@ class CookiePolicy extends Resource
                 ->showOnPreview()
                 ->required()
                 ->rules('required')
-                ->creationRules('unique:privacy_policies,version')
-                ->updateRules('unique:privacy_policies,version,{{resourceId}}'),
+                ->creationRules('unique:cookie_policies,version')
+                ->updateRules('unique:cookie_policies,version,{{resourceId}}'),
 
             Trix::make('Content')
                 ->showOnPreview()
