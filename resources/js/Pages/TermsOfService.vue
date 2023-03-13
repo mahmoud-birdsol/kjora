@@ -6,7 +6,7 @@ import AppLayout from '../Layouts/AppLayout.vue';
 import { ref } from 'vue';
 import dayjs from 'dayjs';
 import GuestLayout from "../Layouts/GuestLayout.vue";
-
+import DateTranslation from "@/Components/DateTranslation.vue"
 
 const props = defineProps({
     terms: Object,
@@ -33,7 +33,7 @@ function submit() {
                 <div class="relative  flex-grow border-2 border-stone-400 p-4 rounded-lg">
                     <div class="w-full max-h-[400px] overflow-auto hideScrollBar " v-html="terms.content" />
                     <div class="absolute -top-4 z-20 left-4 bg-white p-2 text-primary uppercase text-xs font-bold ">
-                        {{$t('updated')}} {{ dayjs(terms.created_at).format('DD MMMM YYYY') }}
+                        {{$t('updated')}} <DateTranslation format="DD MMMM YYYY" :start="terms.created_at"/>
                     </div>
                 </div>
                 <div class="" v-if="$page.props.user">
