@@ -66,105 +66,105 @@ const submit = () => {
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-12">
             <div>
-                <InputLabel color="primary" for="first_name" value="First Name" />
-                <TextInput type="text" v-model="form.first_name" placeholder="Please enter your first name"
+                <InputLabel color="primary" for="first_name" :value="$t('first-name')" />
+                <TextInput type="text" v-model="form.first_name" :placeholder="$t('please enter your first name')"
                     auto-complete="given-name" aria-required="true" autofocus />
                 <InputError class="mt-2" :message="form.errors.first_name" />
             </div>
             <div>
-                <InputLabel color="primary" for="last_name" value="Surname" />
-                <TextInput type="text" v-model="form.last_name" placeholder="Please enter your last name"
+                <InputLabel color="primary" for="last_name" :value="$t('surname')" />
+                <TextInput type="text" v-model="form.last_name" :placeholder="$t('please enter your last name')"
                     auto-complete="sur-name" aria-required="true" />
                 <InputError class="mt-2" :message="form.errors.last_name" />
             </div>
             <div>
-                <InputLabel color="primary" for="email" value="Email Address" />
-                <TextInput type="text" v-model="form.email" placeholder="Please enter your email address"
+                <InputLabel color="primary" for="email" :value="$t('email')" />
+                <TextInput type="text" v-model="form.email" :placeholder="$t('please enter your email address')"
                     auto-complete="email" aria-required="true" />
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
-            <div>
-                <InputLabel color="primary" for="password" value="Password" />
-                <PasswordInput v-model="form.password" />
+           <div>
+                <InputLabel color="primary" for="password" :value="$t('password')" />
+                <PasswordInput v-model="form.password" :placeholder="$t('please enter a password')"/>
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
-            <div>
-                <InputLabel color="primary" for="country" value="Nationality" />
+           <div>
+                <InputLabel color="primary" for="country" :value="$t('nationality')" />
                 <RichSelectInput :options="countries" value-name="id" text-name="name" image-name="flag"
                     v-model="form.country_id" />
                 <InputError class="mt-2" :message="form.errors.country_id" />
             </div>
-            <div>
-                <InputLabel color="primary" for="club" value="Favorite Club" />
+           <div>
+                <InputLabel color="primary" for="club" :value="$t('favorite-club')" />
                 <RichSelectInput source="/api/clubs" value-name="id" text-name="name" image-name="logo"
                     :append="defaultClub" v-model="form.club_id" />
                 <InputError class="mt-2" :message="form.errors.club_id" />
             </div>
-            <div>
-                <InputLabel color="primary" for="date_of_birth" value="Date of birth" />
+           <div>
+                <InputLabel color="primary" for="date_of_birth" :value="$t('Date of birth')" />
                 <ElDatePicker v-model="form.date_of_birth" class="w-full" placeholde="DD/MM/YYYY" />
                 <InputError class="mt-6" :message="form.errors.date_of_birth" />
             </div>
             <div>
-                <InputLabel color="primary" for="phone" value="Phone" />
+                <InputLabel color="primary" for="phone" :value="$t('phone')" />
                 <PhoneInput :options="countries" value-name="id" text-name="name" image-name="flag" v-model="form.phone" />
                 <InputError class="mt-2" :message="form.errors.phone" />
-            </div>
+            </div> 
             <div class="sm:col-span-2">
                 <div>
-                    <InputLabel color="primary" for="username" value="Username" />
+                    <InputLabel color="primary" for="username" :value="$t('username')" />
                     <TextInput type="text" v-model="form.username" placeholder="@" auto-complete="username"
                         aria-required="true" />
                     <InputError class="mt-2" :message="form.errors.username" />
                 </div>
-            </div>
+            </div> 
         </div>
 
         <div class="sm:flex sm:justify-between mt-4">
             <div class="w-full sm:w-1/3 mt-4 sm:mt-0">
                 <div>
-                    <InputLabel color="primary" value="Gender" />
+                    <InputLabel color="primary" :value="$t('gender')" />
 
                     <div class="ml-4">
                         <div class="flex items-center space-x-2">
                             <input type="radio" id="male" value="male" v-model="form.gender"
                                 class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
-                            <label for="male" class="text-sm text-black font-medium">Male</label>
+                            <label for="male" class="text-sm text-black font-medium">{{$t('male')}}</label>
                         </div>
 
                         <div class="flex items-center space-x-2">
                             <input type="radio" id="female" value="female" v-model="form.gender"
                                 class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
-                            <label for="female" class="text-sm text-black font-medium">Female</label>
+                            <label for="female" class="text-sm text-black font-medium">{{$t('female')}}</label>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="w-full sm:w-1/3 mt-4 sm:mt-0">
-                <InputLabel color="primary" value="Position" />
+                <InputLabel color="primary" :value="$t('position')" />
 
                 <div class="ml-4">
                     <div class="flex items-center space-x-2" v-for="position in positions">
                         <input type="radio" :id="position.name" :value="position.id" v-model="form.position_id"
                             class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
-                        <label :for="position.name" class="text-sm text-black font-medium">{{ position.name }}</label>
+                        <label :for="position.name" class="text-sm text-black font-medium">{{ $t(position.name) }}</label>
                     </div>
                 </div>
             </div>
             <div class="w-full sm:w-1/3 mt-4 sm:mt-0">
-                <InputLabel color="primary" value="Preferred Foot" />
+                <InputLabel color="primary" :value="$t('Preferred Foot')" />
 
                 <div class="ml-4">
                     <div class="flex items-center space-x-2">
                         <input type="radio" id="left" value="left" v-model="form.preferred_foot"
                             class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
-                        <label for="left" class="text-sm text-black font-medium">Left</label>
+                        <label for="left" class="text-sm text-black font-medium">{{$t('left')}}</label>
                     </div>
 
                     <div class="flex items-center space-x-2">
                         <input type="radio" id="right" value="right" v-model="form.preferred_foot"
                             class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
-                        <label for="right" class="text-sm text-black font-medium">Right</label>
+                        <label for="right" class="text-sm text-black font-medium">{{$t('right')}}</label>
                     </div>
                 </div>
             </div>
@@ -172,19 +172,17 @@ const submit = () => {
 
         <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
             <p class="text-xs text-black font-light">
-                By signing up, you agree to the <a target="_blank" :href="route('terms.and.condition.index')"
-                    class="text-sky-500 hover:text-sky-700 font-bold">Terms of
-                    Service</a> and
-                <a target="_blank" :href="route('privacy.policy.index')" class="text-sky-500 hover:text-sky-700 font-bold">Privacy
-                    Policy</a>
-                including
-                <Link target="_blank" :href="route('cookies.policy.index')" class="text-sky-500 hover:text-sky-700 font-bold">Cookie use</Link>
+                {{$t('By signing up, you agree to the')}} <a target="_blank" :href="route('terms.and.condition.index')"
+                    class="text-sky-500 hover:text-sky-700 font-bold">{{$t('Terms of Service')}}</a> {{$t('and')}}
+                <a target="_blank" :href="route('privacy.policy.index')" class="text-sky-500 hover:text-sky-700 font-bold">{{$t('Privacy Policy')}}</a>
+                {{$t('including')}}
+                <Link target="_blank" :href="route('cookies.policy.index')" class="text-sky-500 hover:text-sky-700 font-bold">{{$t('cookie use')}}</Link>
             </p>
         </div>
 
         <div class="mt-4">
             <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Register
+                {{$t('register')}}
             </PrimaryButton>
         </div>
     </form>
