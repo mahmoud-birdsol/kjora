@@ -15,6 +15,9 @@ const props = defineProps({
     advertisements: Array,
     countries: Array,
 });
+
+
+
 const form = useForm({
     position: usePage().props.value.queryParams.position ?? null,
     ageFrom: 18,
@@ -92,8 +95,6 @@ const filterByPosition = (position) => {
         </template>
         <div class="">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <!-- Position Filters...
-                                                                                                        =====================================================-->
                 <div class="flex gap-4 mt-4 mb-8 overflow-x-auto hideScrollBar">
                     <button @click="filterByPosition(null)"
                             class="py-2 px-4 min-w-[215px] w-1/5 text-center font-bold items-center bg-white border-2 border-gray-300 rounded-full  text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary   active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap">
@@ -130,13 +131,8 @@ const filterByPosition = (position) => {
                         <Pagination :links="players.links"/>
                     </div>
                 </div>
-
-                <!-- Filters Modal-->
-                <FiltersModel :positions="positions" v-model:form="form" @reset="reset" @filter="filter"
-                              :showFiltersModal="showFiltersModal"/>
             </div>
-            <!-- Filters Modal...
-                                                                                                                                  =====================================================-->
+            <!-- Filters Modal -->
             <FiltersModel :positions="positions" :countries="countries" v-model:form="form" @reset="reset"
                           @filter="filter"
                           :showFiltersModal="showFiltersModal"/>
