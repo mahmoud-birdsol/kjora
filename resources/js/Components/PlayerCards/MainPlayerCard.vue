@@ -38,7 +38,6 @@ const props = defineProps({
 
 const currentUser = usePage().props.value.auth.user
 const state = props.player.state_name
-console.log(state);
 const txtColor = state == 'Free' ? 'white' : 'black'
 const colors = ref(['#99A9BF', state == "Free" ? '#FF9900' : 'rgb(0, 100, 0)', state == "Free" ? '#FF9900' : 'rgb(0, 100, 0)'])
 const backgroundImage = computed(() => {
