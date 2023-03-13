@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Stadium extends Model
 {
@@ -23,6 +24,7 @@ class Stadium extends Model
         'longitude',
         'latitude',
         'approved_at',
+        'user_id'
     ];
 
     /**
@@ -37,5 +39,15 @@ class Stadium extends Model
     public function formattedAddress(): string
     {
         return $this->street_address . ' ' . $this->city . ', ' . $this->country;
+    }
+
+    /**
+     * Get the user who created the stadium
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }
