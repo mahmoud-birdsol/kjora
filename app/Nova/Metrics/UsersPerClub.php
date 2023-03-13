@@ -42,4 +42,13 @@ class UsersPerClub extends Partition
     {
         return 'users-per-club';
     }
+    /**
+     * Sey the label for the metric.
+     *
+     * @return string
+     */
+    public function name()
+    {
+        return __('Users Per Club');
+    }
 }

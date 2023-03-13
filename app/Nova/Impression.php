@@ -24,6 +24,15 @@ class Impression extends Resource
      * @var string
      */
     public static $title = 'id';
+    /**
+     * Get the displayable label of the resource.
+     *
+     * @return string
+     */
+    public static function label(): string
+    {
+        return __("Impressions");
+    }
 
     /**
      * The columns that should be searched.
@@ -46,21 +55,21 @@ class Impression extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make('User')
+            BelongsTo::make(__('User'),'user' ,User::class)
                 ->showOnPreview()
                 ->filterable()
                 ->sortable()
                 ->searchable()
                 ->rules('required'),
 
-            BelongsTo::make('Advertisement')
+            BelongsTo::make(__('Advertisement'),'advertisement' , Advertisement::class)
                 ->showOnPreview()
                 ->filterable()
                 ->sortable()
                 ->searchable()
                 ->rules('required'),
 
-            URL::make('Source')
+            URL::make(__('Source'),'source')
                 ->showOnPreview()
                 ->required()
                 ->rules('required', 'url', 'max:254'),
@@ -70,7 +79,7 @@ class Impression extends Resource
                 ->onlyOnDetail()
                 ->copyable(),
 
-            Text::make('IP address', 'ip')
+            Text::make(__('IP address'), 'ip')
                 ->showOnPreview()
                 ->required('required'),
         ];

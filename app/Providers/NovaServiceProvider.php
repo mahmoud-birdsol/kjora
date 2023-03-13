@@ -66,7 +66,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             return [
                 MenuSection::dashboard(Main::class)->icon('chart-bar'),
 
-                MenuSection::make('Dashboards', [
+                MenuSection::make(__('Dashboards'), [
                     MenuItem::dashboard(AdvertisementDashboard::class)->canSee(function (Request $request) {
                         return $request->user();
                     }),
@@ -78,26 +78,26 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     }),
                 ])->icon('view-grid')->collapsable(),
 
-                MenuSection::make('Advertisements', [
-                    MenuGroup::make('Advertisements', [
+                MenuSection::make(__('Advertisements'), [
+                    MenuGroup::make(__('Advertisements'), [
                         MenuItem::resource(Advertisement::class),
                         MenuItem::lens(Advertisement::class, ActiveAdvertisement::class),
                         MenuItem::lens(Advertisement::class, ExpiringAdvertisement::class),
                         MenuItem::lens(Advertisement::class, ArchivedAdvertisement::class),
                     ]),
 
-                    MenuGroup::make('Analytics', [
+                    MenuGroup::make(__('Analytics'), [
                         MenuItem::resource(Click::class),
                         MenuItem::resource(Impression::class),
                     ]),
                 ])->icon('color-swatch')->collapsable(),
 
-                MenuSection::make('Admins', [
+                MenuSection::make(__('Admins'), [
                     MenuItem::resource(Admin::class),
                     MenuItem::resource(Role::class),
                 ])->icon('users')->collapsable(),
 
-                MenuSection::make('Players', [
+                MenuSection::make(__('Players'), [
                     MenuItem::resource(User::class),
                     MenuItem::lens(User::class, UnverifiedUsers::class),
                     MenuItem::resource(Venue::class),
@@ -106,18 +106,18 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(Like::class),
                 ])->icon('user-group')->collapsable(),
 
-                MenuSection::make('Chat', [
+                MenuSection::make(__('Chat'), [
                     MenuItem::resource(Conversation::class),
                     MenuItem::resource(Message::class),
                 ])->icon('messages')->collapsable(),
 
-                MenuSection::make('Security', [
+                MenuSection::make(__('Security'), [
                     MenuItem::resource(PrivacyPolicy::class),
                     MenuItem::resource(TermsAndConditions::class),
                     MenuItem::resource(CookiePolicy::class),
                 ])->icon('lock-closed')->collapsable(),
 
-                MenuSection::make('Settings', [
+                MenuSection::make(__('Settings'), [
                     MenuItem::link('Settings', 'nova-settings/general'),
                     MenuItem::resource(Country::class),
                     MenuItem::resource(Club::class),
@@ -129,9 +129,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(Social::class),
                     MenuItem::resource(MediaLibrary::class),
                     MenuItem::resource(Contact::class),
+                    MenuItem::make(__('Language'))
+                        ->method('POST')
+                        ->path(route('nova.language', __('Locale')))->external()
                 ])->icon('cog')->collapsable(),
 
-                MenuSection::make('Reports', [
+                MenuSection::make(__('Reports'), [
                     MenuItem::resource(ReportOption::class),
                     MenuItem::resource(Report::class),
                 ])->icon('exclamation')->collapsable(),

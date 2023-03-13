@@ -27,7 +27,15 @@ class TermsAndConditions extends Resource
      * @var string
      */
     public static $title = 'version';
-
+    /**
+     * Get the displayable label of the resource.
+     *
+     * @return string
+     */
+    public static function label(): string
+    {
+        return __("Terms And Conditions");
+    }
     /**
      * The columns that should be searched.
      *
@@ -47,18 +55,18 @@ class TermsAndConditions extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Version')
+            Text::make('Version','version')
                 ->showOnPreview()
                 ->required()
                 ->rules('required')
                 ->creationRules('unique:terms_and_conditions,version')
                 ->updateRules('unique:terms_and_conditions,version,{{resourceId}}'),
 
-            Trix::make('Content')
+            Trix::make(__('Content'),'content')
                 ->showOnPreview()
                 ->rules('required'),
 
-            Boolean::make('Published', 'is_published')
+            Boolean::make(__('Published'), 'is_published')
                 ->showOnPreview()
                 ->hideWhenCreating()
                 ->hideWhenUpdating()
@@ -67,7 +75,7 @@ class TermsAndConditions extends Resource
                 })
                 ->sortable(),
 
-            DateTime::make('Published at')
+            DateTime::make(__('Published at') , 'published_at')
                 ->showOnPreview()
                 ->hideWhenCreating()
                 ->hideWhenUpdating()
