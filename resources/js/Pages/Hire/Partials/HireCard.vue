@@ -11,15 +11,15 @@ const props = defineProps({
     invitation: {
         required: true,
         type: Object,
-    }
+    },
 });
 
-const showInvitationNotificationModal = ref(false);
+
 </script>
 
 <template>
-    <div class="p-6 px-8 bg-gray-100 rounded-lg">
-        <div class="grid grid-cols-1 gap-8 sm:grid-cols-4 ">
+    <div class="p-6 px-8 bg-gray-100 rounded-2xl">
+        <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             <div>
                 <div class="max-w-sm">
                     <InvitationPlayerCard :player="invitation.invited_player" :invitation="invitation" />

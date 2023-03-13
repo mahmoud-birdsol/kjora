@@ -16,12 +16,12 @@ const props = defineProps({
 
     <AppLayout title="Invitations">
         <template #header>
-            <p class="text-4xl md:text-7xl font-black">Invitations</p>
+            <p class="text-4xl font-black md:text-7xl">Invitations</p>
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex justify-end items-center space-x-4">
+            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="flex items-center justify-end space-x-4">
                     <Link :href="route('invitation.index')">
                     <SecondaryButton>
                         <span

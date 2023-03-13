@@ -11,7 +11,7 @@ const props = defineProps({
     invitation: {
         required: true,
         type: Object,
-    }
+    },
 });
 
 
