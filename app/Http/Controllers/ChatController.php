@@ -13,9 +13,6 @@ class ChatController extends Controller
 {
     /**
      * Display all the users conversations
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Inertia\Response
      */
     public function index(Request $request): Response
     {
@@ -40,25 +37,20 @@ class ChatController extends Controller
             'conversations' => $query->with('users', function ($query) use ($request) {
                 $query->whereNot('conversation_user.user_id', $request->user()->id);
             })->get(),
-            'last_online_at' => request()->user()->messages()?->orderBy('created_at', 'DESC')?->first()?->created_at
+            'last_online_at' => request()->user()->messages()?->orderBy('created_at', 'DESC')?->first()?->created_at,
         ]);
     }
 
     /**
      * Display a single conversation with its messages
-     *
-     * @param \App\Models\Conversation $conversation
-     * @param \App\Actions\MarkMessagesAsReadAction $markMessagesAsReadAction
-     * @return \Inertia\Response
      */
     public function show(
-        Conversation             $conversation,
+        Conversation $conversation,
         MarkMessagesAsReadAction $markMessagesAsReadAction
-    ): Response
-    {
+    ): Response {
         $userConversationsIds = request()->user()->conversations->pluck('id');
 
-        $markMessagesAsReadAction($conversation);
+        // $markMessagesAsReadAction($conversation);
 
         $conversations = Conversation::query()->whereHas('users', function ($query) use ($userConversationsIds) {
             $query->whereIn('conversation_user.conversation_id', $userConversationsIds)
@@ -72,7 +64,7 @@ class ChatController extends Controller
             'conversation' => $conversation,
             'player' => $conversation->users()->whereNot('conversation_user.user_id', request()->user()->id)->first(),
             'conversations' => $conversations,
-            'last_online_at' => request()->user()->messages()?->orderBy('created_at', 'DESC')?->first()?->created_at
+            'last_online_at' => request()->user()->messages()?->orderBy('created_at', 'DESC')?->first()?->created_at,
         ]);
     }
 }

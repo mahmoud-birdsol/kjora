@@ -1,43 +1,39 @@
 <template>
     <div class="">
         <div class="grid grid-cols-2 gap-4 overflow-auto sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 hideScrollBar ">
-            <template v-if="shouldPreview == 'photos'">
 
-                <template v-for="(file, index) in media.filter(f => f.type == 'image' || f.type == 'webp') " :key="index">
-                    <FadeInTransition>
-                        <Link :href="route('gallery.show', file.id)"
-                            class=" relative w-full h-full rounded-lg overflow-hidden aspect-square group">
-                        <img :src="file.url" alt="" class="object-cover w-full h-full ">
-                        <button v-if="currentUser.id === user.id" @click.prevent.stop="removeItem(file.id)"
-                            class=" hidden group-hover:block absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
-                            <div class="flex flex-col items-start justify-center h-full p-1 opacity-100 ">
-                                <XMarkIcon class="w-5 h-5 text-stone-800" />
+
+            <template v-for="(post, index) in posts " :key="post.id">
+                <FadeInTransition>
+                    <Link :href="route('posts.show', post.id)"
+                        class="relative w-full h-full overflow-hidden rounded-lg aspect-square group">
+                    <img :src="post?.cover_photo?.original_url" alt="" class="object-cover w-full h-full ">
+                    <!-- delete post button -->
+                    <!-- <button v-if="currentUser.id === user.id" @click.prevent.stop="showDeleteMediaModal = true"
+                        class="absolute top-0 right-0 hidden bg-white group-hover:block bg-opacity-90 rounded-bl-xl">
+                        <div class="flex flex-col items-start justify-center h-full p-1 opacity-100 ">
+                            <XMarkIcon class="w-5 h-5 text-stone-800" />
+                        </div>
+                        <Modal :show="showDeleteMediaModal" @close="showDeleteMediaModal = false" :closeable="true"
+                            :show-close-icon="false" :max-width="'sm'">
+                            <div class="flex flex-col justify-center p-6 text-stone-800 ">
+                                <p class="mb-3 text-lg">Are you sure you want delete this
+                                    post ?</p>
+                                <div class="flex justify-center w-full gap-4">
+                                    <button
+                                        class="p-2 px-8 border-2 rounded-full border-primary hover:bg-primary text-primary hover:text-white active:scale-95 "
+                                        @click="showDeleteMediaModal = false">Cancel</button>
+                                    <button
+                                        class="p-2 px-8 text-white bg-red-800 border-2 border-red-800 rounded-full hover:bg-transparent hover:text-red-800 active:scale-95 "
+                                        @click="removeItem(post.id)">Delete</button>
+
+                                </div>
                             </div>
-                        </button>
-                        </Link>
-                    </FadeInTransition>
-                </template>
-
+                        </Modal>
+                    </button> -->
+                    </Link>
+                </FadeInTransition>
             </template>
-
-            <template v-if="shouldPreview == 'videos'">
-                <template v-for="(file, index) in media.filter(f => f.type == 'video')" :key="index">
-                    <FadeInTransition>
-                        <Link :href="route('gallery.show', file.id)"
-                            class="group relative w-full h-full rounded-md overflow-hidden aspect-video">
-                        <video :src="file.url" alt="" class="object-cover w-full h-full " controls />
-                        <button v-if="currentUser.id === user.id" @click.prevent.stop="removeItem(file.id)"
-                            class="hidden group-hover:block  absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
-                            <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
-                                <XMarkIcon class="w-5 h-5 text-stone-800" />
-                            </div>
-                        </button>
-                        </Link>
-                    </FadeInTransition>
-                </template>
-            </template>
-
-
 
         </div>
     </div>
@@ -63,12 +59,15 @@ import FadeInTransition from './FadeInTransition.vue';
 import ListGroupTransition from './ListGroupTransition.vue';
 
 import { Link, usePage } from '@inertiajs/inertia-vue3';
+import Modal from './Modal.vue';
+import { Inertia } from '@inertiajs/inertia';
 
 const props = defineProps({
     user: {
         required: true,
-    }
-    , media: null,
+    },
+    posts: null,
+    media: null,
     shouldPreview: null
 })
 defineEmits(['reload'])
@@ -76,22 +75,26 @@ defineEmits(['reload'])
 
 const showUploadFileModal = ref(false)
 const currentUser = usePage().props.value.auth.user
-
+const showDeleteMediaModal = ref(false)
 
 onMounted(() => {
 
 });
 function getFileFromId(id) {
-    return props.media.filter(item => item.id == id)[0]
+    return props.posts.filter(item => item.id == id)[0]
 }
 
-// function seturl
+
 function removeItem(id) {
     let file = getFileFromId(id)
-    let index = props.media.indexOf(file);
+    let index = props.posts.indexOf(file);
 
-    props.media.splice(index, 1)
-    axios.delete(route('api.gallery.destroy', id)).then((res) => console.log(res))
+    props.posts.splice(index, 1)
+    showDeleteMediaModal.value = false
+    Inertia.delete(route('posts.destroy', id), {
+        preserveState: true,
+        preserveScroll: true,
+    })
 }
 
 </script>

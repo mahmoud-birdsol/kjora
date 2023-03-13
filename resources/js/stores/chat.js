@@ -13,6 +13,7 @@ export const useChat = defineStore("chat", {
             search: "",
             replyToMessage: null,
             currentUserId: null,
+            interval: null,
         };
     },
 
@@ -71,8 +72,10 @@ export const useChat = defineStore("chat", {
             this.container = container;
             this.currentUserId = currentUserId;
             this.subscribeToConversation();
+            this.messages = [];
             this.fetchMessages();
-
+            //fetch messages every 30 sec for case pusher doesn't work well
+            this.interval = setInterval(this.fetchNewMessages, 30000);
             // Add event listener for the container
             // scroll to load more messages.
             this.registerScrollListener();
@@ -95,10 +98,19 @@ export const useChat = defineStore("chat", {
                         },
                     }
                 );
-
                 this.messages = this.messages.concat(response.data.data);
                 this.lastPage = response.data.meta.last_page;
                 this.loading = false;
+
+                //mark messages that not read as read on fetch
+                this.messages.forEach((m) => {
+                    if (
+                        m.read_at == null &&
+                        m.sender_id !== this.currentUserId
+                    ) {
+                        axios.post(route("api.message.mark-as-read", m.id));
+                    }
+                });
 
                 this.page === 1 ? this.scrollToMessagesBottom() : null;
             } catch (error) {
@@ -106,7 +118,42 @@ export const useChat = defineStore("chat", {
                 return error;
             }
         },
+        /**
+         *
+         */
+        setMessageAsRead(message) {
+            let oldMessageIndex = this.messages.findIndex(
+                (m) => m.id === message.id
+            );
 
+            this.messages[oldMessageIndex].read_at = message.read_at;
+        },
+        /**
+         * Fetch the new conversation  messages from api .
+         *
+         * @returns {Promise<*>}
+         */
+        async fetchNewMessages() {
+            // this.loading = true;
+            try {
+                let response = await axios.get(
+                    route(`api.messages.new`, this.conversation)
+                );
+
+                let newMessages = response.data.data;
+                newMessages.forEach((newM) => {
+                    if (!this.messages.some((m) => m.id === newM.id)) {
+                        this.messages.unshift({ ...newM, new: true });
+                    }
+                });
+                // this.messages = this.messages.concat(response.data.data);
+                // this.loading = false;
+                this.page === 1 ? this.scrollToMessagesBottom() : null;
+            } catch (error) {
+                this.loading = false;
+                return error;
+            }
+        },
         /**
          * Search conversation messages.
          *
@@ -122,15 +169,19 @@ export const useChat = defineStore("chat", {
          * Subscribe to the conversation channel.
          */
         subscribeToConversation() {
-            Echo.private(`users.chat.${this.conversation.id}`).listen(
-                ".message-sent",
-                (event) => {
+            Echo.private(`users.chat.${this.conversation.id}`)
+                .listen(".message-sent", (event) => {
                     if (this.currentUserId !== event.sender_id) {
-                        this.messages.unshift(event);
+                        this.messages.unshift({ ...event, new: true });
                         this.scrollToMessagesBottom();
+                        axios.post(route("api.message.mark-as-read", event.id));
+                        // console.log("event message sent occured");
                     }
-                }
-            );
+                })
+                .listen(".message-read", (event) => {
+                    // console.log("message-read");
+                    this.setMessageAsRead(event);
+                });
         },
 
         /**
@@ -152,6 +203,19 @@ export const useChat = defineStore("chat", {
                       this.handleScroll
                   )
                 : null;
+        },
+        /**
+         * Unsubscribe from chat channel.
+         */
+        UnsubscribeFromChatChannel() {
+            Echo.leave(`users.chat.${this.conversation.id}`);
+            // console.log("leave chat channel");
+        },
+        /**
+         * clear fetch new message interval.
+         */
+        clearFetchNewMessages() {
+            clearInterval(this.interval);
         },
 
         /**

@@ -28,6 +28,8 @@ const showingNavigationDropdown = ref(false);
 const logout = () => {
     Inertia.post(route('logout'));
 };
+let state = usePage().props.value.user.state_name
+console.log(state)
 </script>
 
 <template>
@@ -74,7 +76,7 @@ const logout = () => {
 
                 <div class="hidden md:flex md:gap-x-3 sm:items-center lg:ml-6">
                     <!-- upgrade button  -->
-                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5">
+                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5" v-if="state !=='Premium'">
                         <div class="bg-black rounded-full">
                             <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                         </div>
@@ -194,7 +196,7 @@ const logout = () => {
                             </template>
                         </Dropdown>
                     </div>
-                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5">
+                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5" v-if="state !=='Premium'">
                         <div class="bg-black rounded-full">
                             <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                         </div>

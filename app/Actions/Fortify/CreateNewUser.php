@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\States\Free;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -17,8 +18,8 @@ class CreateNewUser implements CreatesNewUsers
     /**
      * Validate and create a newly registered user.
      *
-     * @param array $input
      * @return \App\Models\User
+     *
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist
      * @throws \Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig
      */
@@ -31,7 +32,7 @@ class CreateNewUser implements CreatesNewUsers
             'country_id' => ['required', 'integer', 'exists:countries,id'],
             'club_id' => ['required', 'integer', 'exists:clubs,id'],
             'date_of_birth' => ['required', 'date', 'before:-18 years'],
-            'phone' => ['required', 'phone'],
+            'phone' => ['required', 'phone', 'unique:users,phone'],
             'position_id' => ['required', 'exists:positions,id'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -54,7 +55,8 @@ class CreateNewUser implements CreatesNewUsers
             'phone' => $input['phone'],
             'position_id' => $input['position_id'],
             'gender' => $input['gender'],
-
+            'state' => Free::class,
+            'last_seen_at' => now(),
             'accepted_terms_and_conditions_at' => now(),
             'accepted_privacy_policy_at' => now(),
             'accepted_cookie_policy_at' => now(),
