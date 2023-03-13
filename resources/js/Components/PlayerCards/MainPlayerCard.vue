@@ -43,24 +43,24 @@ const backgroundImage = computed(() => {
 });
 
 const currentUser = usePage().props.value.auth.user
-const isCurrentUser = props.player.id === currentUser.id
-
+console.log(props.player )
+const isCurrentUser = props.player ? props.player.id === currentUser.id : false
 const addToFavorites = () => {
-    const form = useForm({});
+    // const form = useForm({});
 
-    form.post(route('favorites.store', { favorite: props.player.id }), {
-        preserveState: false,
-        preserveScroll: true,
-    });
+    // form.post(route('favorites.store', { favorite: props.player.id }), {
+    //     preserveState: false,
+    //     preserveScroll: true,
+    // });
 };
 
 const removeFromFavorites = () => {
-    const form = useForm({});
+    // const form = useForm({});
 
-    form.delete(route('favorites.destroy', { favorite: props.player.id }), {
-        preserveState: false,
-        preserveScroll: true,
-    });
+    // form.delete(route('favorites.destroy', { favorite: props.player.id }), {
+    //     preserveState: false,
+    //     preserveScroll: true,
+    // });
 };
 </script>
 
