@@ -33,6 +33,13 @@
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.21.2.tgz#dacafadfc6d7654c3051a66d6fe55b6cb2f2a0b3"
   integrity sha512-URpaIJQwEkEC2T9Kn+Ai6Xe/02iNaVCuT/PtoRz3GPVJVDpPd7mLo+VddTbhCRU9TXqW5mSrQfXZyi8kDKOVpQ==
 
+"@bassist/utils@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@bassist/utils/-/utils-0.4.0.tgz#58eb247b37afc3c405543884731a134f522fc64b"
+  integrity sha512-aoFTl0jUjm8/tDZodP41wnEkvB+C5O9NFCuYN/ztL6jSUSsuBkXq90/1ifBm1XhV/zySHgLYlU1+tgo3XtQ+nA==
+  dependencies:
+    "@withtypes/mime" "^0.1.2"
+
 "@ctrl/tinycolor@^3.4.1":
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-3.6.0.tgz#53fa5fe9c34faee89469e48f91d51a3766108bc8"
@@ -1831,6 +1838,14 @@ vue-easy-lightbox@^1.14.0:
   version "1.14.0"
   resolved "https://registry.yarnpkg.com/vue-easy-lightbox/-/vue-easy-lightbox-1.14.0.tgz#9eb59e449b0b38bc12590d71bddb9553325a70a8"
   integrity sha512-qjkUCT7qkd5ekqEnLzL+VFAXNVLxhE5XnSz+/RNk0VNpoudL6fVOw9UKMSi9VbeIbhmIdoH1FIscoJzCwm15Rw==
+
+vue-picture-cropper@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/vue-picture-cropper/-/vue-picture-cropper-0.6.1.tgz#d5c95ed4d715e2fdc41613fe48d107f6a9c75441"
+  integrity sha512-mz8fWHU/ZwZU7PrurlWBZiwlXejGSeUsnevnpOf47Ggg4uRyvAKRtAm/wo/Hu70FKx3S4AyR6Yh9N+8Q2WJmww==
+  dependencies:
+    "@bassist/utils" "^0.4.0"
+    cropperjs "^1.5.13"
 
 vue3-emoji-picker@^1.1.7:
   version "1.1.7"

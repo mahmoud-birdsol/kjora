@@ -5,6 +5,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { XMarkIcon, PlusCircleIcon } from '@heroicons/vue/24/outline';
 import { ref, onMounted, watch } from 'vue';
 import InputError from '@/Components/InputError.vue';
+import CropIcon from '@/Components/Icons/CropIcon.vue';
 import FadeInTransition from '@/Components/FadeInTransition.vue';
 import Crop from '@/Components/Crop.vue';
 const props = defineProps({
@@ -72,16 +73,16 @@ const updatePhotoPreview = () => {
         return
     }
     ;
-    files.value = Array.from(photoInput.value.files)
-    files.value.forEach((file, i) => {
+    files.value = Array.from(photoInput.value.files).map(file => { return { file: file, id: _.uniqueId("f") } });
+    files.value.forEach(({ file, id }, i) => {
         const reader = new FileReader();
         reader.onload = (e) => {
-
             filesData.value.push({
+                file: file,
                 url: e.target.result,
                 name: file.name,
                 type: file.type,
-                id: _.uniqueId("f")
+                id: id
             });
             showPreview.value = true;
         };
@@ -90,7 +91,6 @@ const updatePhotoPreview = () => {
 };
 
 const removePhoto = (i) => {
-
     filesData.value.splice(i, 1)
     files.value.splice(i, 1)
     filesData.value.length === 0 ? showPreview.value = false : null;
@@ -105,19 +105,6 @@ const upload = () => {
     isDisabled.value = true;
     emit('upload', files.value, filesData.value)
     reset()
-    // files.value.forEach((file, i) => {
-    //     if (file.type.startsWith("image") || file.type.startsWith('video')) {
-
-    //         axios.postForm(route('api.gallery.upload'), {
-    //             gallery: file
-    //         }).then(() => console.log('uploded')).catch(err => console.error(err)).finally(() => {
-    //             if (i === files.value.length - 1) {
-    //                 reset()
-    //
-    //             }
-    //         })
-    //     }
-    // })
 };
 
 function reset(e) {
@@ -127,25 +114,29 @@ function reset(e) {
     isDisabled.value = false;
     emit('close');
 }
-function changeFiles(file, url, id) {
-    console.log('data after crop happened file:', file);
-    console.log('data after crop happened url:', url);
-    console.log('data after crop happened id:', id);
+let cropFile = ref([])
+let openModal = ref(false)
 
-    // let index = files.value.findIndex((f) => f.id === id)
-    // files.value.splice(index, 1, file)
-
-    // let fileUrlIndex = filesData.value.findIndex((f) => f.id === id)
-    // filesData.value[fileUrlIndex].url = url
-
-    // croppedFilesData.value.push({
-    //     url: url,
-    //     name: file.name,
-    //     type: file.type,
-    //     id: id,
-    // });
+let showCropModal = (fileUrl) => {
+    cropFile.value = fileUrl
+    openModal.value = true
 
 }
+function changeFiles(file, url, id) {
+    let index = files.value.findIndex((f) => f.id === id)
+    files.value.splice(index, 1, file)
+    let fileUrlIndex = filesData.value.findIndex((f) => f.id === id)
+    filesData.value[fileUrlIndex].url = url
+
+    croppedFilesData.value.push({
+        url: url,
+        name: file.name,
+        type: file.type,
+        id: id,
+    });
+    cropFile.value = []
+}
+
 </script>
 
 <template>
@@ -185,7 +176,12 @@ function changeFiles(file, url, id) {
                                         <XMarkIcon class="w-5 h-5 text-stone-800" />
                                     </div>
                                 </button>
-                                <Crop :img="fileUrl" @crop="changeFiles" />
+                                <button class="absolute top-0 left-0 bg-white bg-opacity-90 rounded-br-xl"
+                                    @click="showCropModal(fileUrl)">
+                                    <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
+                                        <CropIcon class="w-4" />
+                                    </div>
+                                </button>
 
                             </div>
                             <div v-else-if="fileUrl.url.startsWith('data:application/pdf')"
@@ -212,45 +208,45 @@ function changeFiles(file, url, id) {
                             </div>
                         </template>
                         <!--
-                                <template v-for="(fileUrl, index) in croppedFilesData" :key="index">
-                                    <div v-if="fileUrl.url.startsWith('data:image') || fileUrl.url.startsWith('data:video')"
-                                        class="relative">
-                                        <img v-if="fileUrl.url.startsWith('data:image')" :src="fileUrl.url" alt=""
-                                            class="object-contain w-full h-full rounded-lg aspect-square ">
-                                        <video v-if="fileUrl.url.startsWith('data:video')" :src="fileUrl.url" alt=""
-                                            class="object-cover w-full h-full rounded-lg aspect-square" controls />
-                                        <button @click.prevent="removePhoto(index)"
-                                            class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
-                                            <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
-                                                <XMarkIcon class="w-5 h-5 text-stone-800" />
-                                            </div>
-                                        </button>
-                                        <Crop :img="fileUrl" @crop="changeFiles" />
+                                                <template v-for="(fileUrl, index) in croppedFilesData" :key="index">
+                                                    <div v-if="fileUrl.url.startsWith('data:image') || fileUrl.url.startsWith('data:video')"
+                                                        class="relative">
+                                                        <img v-if="fileUrl.url.startsWith('data:image')" :src="fileUrl.url" alt=""
+                                                            class="object-contain w-full h-full rounded-lg aspect-square ">
+                                                        <video v-if="fileUrl.url.startsWith('data:video')" :src="fileUrl.url" alt=""
+                                                            class="object-cover w-full h-full rounded-lg aspect-square" controls />
+                                                        <button @click.prevent="removePhoto(index)"
+                                                            class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                                                            <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
+                                                                <XMarkIcon class="w-5 h-5 text-stone-800" />
+                                                            </div>
+                                                        </button>
+                                                        <Crop :img="fileUrl" @crop="changeFiles" />
 
-                                    </div>
-                                    <div v-else-if="fileUrl.url.startsWith('data:application/pdf')"
-                                        class="relative flex flex-col gap-4 ">
-                                        <img class="mx-auto h-52" src="/images/pdf.png" />
-                                        <p class="truncate text-xs text-gray-400 text-center">{{ fileUrl.name }}</p>
-                                        <button @click.prevent="removePhoto(index)"
-                                            class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
-                                            <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
-                                                <XMarkIcon class="w-5 h-5 text-stone-800" />
-                                            </div>
-                                        </button>
-                                    </div>
-                                    <div v-else-if="fileUrl.type.endsWith('.document') || fileUrl.type.startsWith('application/msword')"
-                                        class="relative flex flex-col gap-4">
-                                        <img class="mx-auto h-52" src="/images/doc.png" />
-                                        <p class="truncate text-xs text-gray-400 text-center">{{ fileUrl.name }}</p>
-                                        <button @click.prevent="removePhoto(index)"
-                                            class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
-                                            <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
-                                                <XMarkIcon class="w-5 h-5 text-stone-800" />
-                                            </div>
-                                        </button>
-                                    </div>
-                                </template> -->
+                                                </div>
+                                                <div v-else-if="fileUrl.url.startsWith('data:application/pdf')"
+                                                    class="relative flex flex-col gap-4 ">
+                                                    <img class="mx-auto h-52" src="/images/pdf.png" />
+                                                    <p class="text-xs text-center text-gray-400 truncate">{{ fileUrl.name }}</p>
+                                                    <button @click.prevent="removePhoto(index)"
+                                                        class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                                                        <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
+                                                            <XMarkIcon class="w-5 h-5 text-stone-800" />
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                                <div v-else-if="fileUrl.type.endsWith('.document') || fileUrl.type.startsWith('application/msword')"
+                                                    class="relative flex flex-col gap-4">
+                                                    <img class="mx-auto h-52" src="/images/doc.png" />
+                                                    <p class="text-xs text-center text-gray-400 truncate">{{ fileUrl.name }}</p>
+                                                    <button @click.prevent="removePhoto(index)"
+                                                        class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                                                        <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
+                                                            <XMarkIcon class="w-5 h-5 text-stone-800" />
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                            </template> -->
                         <FadeInTransition>
                             <div v-if="isLoading"
                                 class="absolute inset-0 z-20 grid w-full h-full p-4 bg-stone-400/50 place-content-center ">
@@ -262,13 +258,18 @@ function changeFiles(file, url, id) {
             </div>
             <div>
                 <div class="mb-2 text-sm text-center justify-self-end text-primary">video, images, PDFs and docs are allowed
-                    with max size
-                    (10 MB) are allowed
+                    <Crop :img="cropFile" @crop="changeFiles" v-model:open="openModal"
+                        @update:open="() => openModal = false" />
+                    <div class="mb-2 text-sm text-center justify-self-end text-primary">video, images, PDFs and docs are
+                        allowed
+                        with max size
+                        (10 MB) are allowed
+                    </div>
+                    <PrimaryButton @click.prevent="upload" :disabled="isDisabled">
+                        Upload
+                    </PrimaryButton>
+                    <!-- <InputError class="mt-2" :message="form.errors.image" /> -->
                 </div>
-                <PrimaryButton @click.prevent="upload" :disabled="isDisabled">
-                    Upload
-                </PrimaryButton>
-                <!-- <InputError class="mt-2" :message="form.errors.image" /> -->
             </div>
         </div>
     </Modal>
