@@ -1,8 +1,8 @@
 <script setup>
-import {provide} from 'vue';
+import { provide } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import ChatLayout from '@/Layouts/ChatLayout.vue';
-import ChatMessages from "@/Components/Chat/ChatMessages.vue";
+import ChatMessagesContainer from "@/Components/Chat/ChatMessagesContainer.vue";
 import ChatHeader from '@/Components/Chat/ChatHeader.vue';
 import ChatForm from '@/Components/Chat/ChatForm.vue';
 
@@ -23,10 +23,10 @@ provide('conversation', props.conversation);
 
         <ChatLayout :conversations="conversations">
             <template #header>
-                <ChatHeader :conversation="conversation" :player="player"/>
+                <ChatHeader :conversation="conversation" :player="player" />
             </template>
             <template #main>
-                <ChatMessages :conversation="conversation" :player="player"/>
+                <ChatMessagesContainer :conversation="conversation" :player="player" />
             </template>
             <template #footer>
                 <ChatForm :conversation="conversation" :player="player"></ChatForm>
