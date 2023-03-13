@@ -70,7 +70,7 @@ const form = useForm({
     identity_back_image: usePage().props.value.auth.user.identity_back_image_url,
     identity_selfie_image: usePage().props.value.auth.user.identity_selfie_image_url,
 });
-
+let identity_status = usePage().props.value.auth.user.identity_status
 const setIdentityFrontImagePreview = (photo) => {
     identityFrontImagePreview.value = photo;
 };
@@ -252,9 +252,8 @@ const save = () => {
                     </template>
                     <template #footer>
                         <div class="mt-4">
-                            <PrimaryButton v-show="completedFirstStep == true" :class="{ 'opacity-25': form.processing }"
+                            <PrimaryButton v-show="completedFirstStep == true && !(identity_status === 'Verified')" :class="{ 'opacity-25': form.processing }"
                                 :disabled="form.processing" @click="save()">
-                                Verify
                             </PrimaryButton>
                         </div>
                     </template>
