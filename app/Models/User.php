@@ -129,8 +129,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'age',
         'name',
         'is_favorite',
+        'identity_status'
         'state_name'
-    ];
+];
 
     /**
      * The relations to eager load on every query.
@@ -259,7 +260,17 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
                 : false,
         );
     }
-
+    /**
+     * Get the user identety status .
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function identityStatus(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->hasVerifiedPersonalIdentity() ? 'Verified' : ($this->hasUploadedVerificationDocuments() ? 'Pending' : 'Waiting for documents' )
+        );
+    }
     /**
      * Get the advertisement clicks.
      */
