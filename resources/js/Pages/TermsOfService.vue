@@ -21,19 +21,19 @@ function submit() {
 </script>
 
 <template>
-    <GuestLayout title="Terms of Service">
+    <GuestLayout :title="$t('Terms of Service')">
         <template #header>
             Security
         </template>
         <div class="grid lg:grid-cols-2 w-full ">
             <div class="col-start-2 bg-white rounded-2xl p-6 w-full min-h-[500px] flex flex-col gap-4">
                 <div class="flex justify-center my-4">
-                    <h2 class="text-2xl text-primary font-bold uppercase">Terms of Service</h2>
+                    <h2 class="text-2xl text-primary font-bold uppercase">{{$t('Terms of Service')}}</h2>
                 </div>
                 <div class="relative  flex-grow border-2 border-stone-400 p-4 rounded-lg">
                     <div class="w-full max-h-[400px] overflow-auto hideScrollBar " v-html="terms.content" />
                     <div class="absolute -top-4 z-20 left-4 bg-white p-2 text-primary uppercase text-xs font-bold ">
-                        updated {{ dayjs(terms.created_at).format('DD MMMM YYYY') }}
+                        {{$t('updated')}} {{ dayjs(terms.created_at).format('DD MMMM YYYY') }}
                     </div>
                 </div>
                 <div class="" v-if="$page.props.user">
