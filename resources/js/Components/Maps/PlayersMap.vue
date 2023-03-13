@@ -1,7 +1,7 @@
 
 <script setup>
 import { CustomMarker, GoogleMap, InfoWindow, Marker } from "vue3-google-map";
-import Avatar from '@/components/Avatar.vue'
+import Avatar from '@/Components/Avatar.vue'
 import MainPlayerCard from "../PlayerCards/MainPlayerCard.vue";
 const props = defineProps(['players'])
 
