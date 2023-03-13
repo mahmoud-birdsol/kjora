@@ -13,7 +13,7 @@ const props = defineProps({
 });
 const isDisabled = ref(true)
 const form = useForm({
-    termsAndConditions: props.terms.id
+    termsAndConditions: props.terms?.id ?? null
 })
 function submit() {
     form.patch(route('terms.and.condition.store', form.termsAndConditions))
@@ -30,14 +30,14 @@ function submit() {
                 <div class="flex justify-center my-4">
                     <h2 class="text-2xl font-bold uppercase text-primary">Terms of Service</h2>
                 </div>
-                <div class="relative flex-grow p-4 border-2 rounded-lg border-stone-400">
+                <div v-if="terms" class="relative flex-grow p-4 border-2 rounded-lg border-stone-400">
                     <div class="w-full max-h-[400px] overflow-auto hideScrollBar " v-html="terms.content" />
                     <div class="absolute z-20 p-2 text-xs font-bold uppercase bg-white -top-4 left-4 text-primary ">
                         updated {{ dayjs(terms.created_at).format('DD MMMM YYYY') }}
                     </div>
                 </div>
                 <div class=""
-                    v-if="$page.props.auth.user && (terms.version !== $page.props.auth.user.accepted_terms_and_conditions_version)">
+                    v-if="$page.props.auth.user && terms && (terms.version !== $page.props.auth.user.accepted_terms_and_conditions_version)">
                     <div class="flex flex-col justify-center gap-2">
                         <label for="terms" class="text-sm font-medium text-primary">I Accept</label>
                         <input type="radio" :value="terms.id" id="terms" v-model="form.termsAndConditions" :checked="false"

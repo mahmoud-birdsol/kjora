@@ -13,7 +13,7 @@ const props = defineProps({
 });
 const isDisabled = ref(true)
 const form = useForm({
-    privacyPolicy: props.policy.id
+    privacyPolicy: props.policy?.id ?? null
 })
 function submit() {
     form.patch(route('privacy.policy.store', form.privacyPolicy))
@@ -28,16 +28,16 @@ function submit() {
         <div class="grid w-full lg:grid-cols-2">
             <div class="col-start-2 bg-white rounded-2xl p-6 w-full min-h-[500px] flex flex-col gap-4">
                 <div class="flex justify-center my-4">
-                    <h2 class="text-2xl font-bold uppercase  text-primary">Privacy And Policy</h2>
+                    <h2 class="text-2xl font-bold uppercase text-primary">Privacy And Policy</h2>
                 </div>
-                <div class="relative flex-grow p-4 border-2 rounded-lg border-stone-400">
+                <div v-if="policy" class="relative flex-grow p-4 border-2 rounded-lg border-stone-400">
                     <div class="w-full max-h-[400px] overflow-auto hideScrollBar " v-html="policy.content" />
                     <div class="absolute z-20 p-2 text-xs font-bold uppercase bg-white -top-4 left-4 text-primary ">
                         updated {{ dayjs(policy.created_at).format('DD MMMM YYYY') }}
                     </div>
                 </div>
                 <div class=""
-                    v-if="$page.props.user && (policy.version !== $page.props.auth.user.accepted_privacy_policy_version)">
+                    v-if="$page.props.user && policy && (policy.version !== $page.props.auth.user.accepted_privacy_policy_version)">
                     <div class="flex flex-col justify-center gap-2">
                         <label for="policy" class="text-sm font-medium text-primary">I Accept</label>
                         <input type="radio" :value="policy.id" id="policy" v-model="form.privacyPolicy" :checked="false"
