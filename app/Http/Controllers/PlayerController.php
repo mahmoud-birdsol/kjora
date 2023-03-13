@@ -8,7 +8,9 @@ use App\Models\Country;
 use App\Models\MediaLibrary;
 use App\Models\Position;
 use App\Models\User;
+use App\Services\Geolocator\IpInfo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -53,6 +55,16 @@ class PlayerController extends Controller
                 ->orWhere('username', 'LIKE', '%' . $request->input('search') . '%');
         }));
 
+
+        $request->whenFilled('location', fn() => $query->having('distance', '<', $request->input('location'))
+            ->select(DB::raw("*,
+                     (3959 * ACOS(COS(RADIANS({$request->user()->current_latitude}))
+                           * COS(RADIANS(current_latitude))
+                           * COS(RADIANS({$request->user()->current_longitude}) - RADIANS(current_longitude))
+                           + SIN(RADIANS({$request->user()->current_latitude}))
+                           * SIN(RADIANS(current_latitude)))) AS distance")
+            ));
+
         $advertisements = Advertisement::active()->orderBy('priority')
             ->with('media')
             ->get()
@@ -64,10 +76,7 @@ class PlayerController extends Controller
             'players' => $query->paginate(20),
             'positions' => Position::all(),
             'countries' => Country::active()->orderBy('name')->get(),
-            'advertisements' => Advertisement::orderBy('priority')
-                ->whereDate('start_date', '<', now())
-                ->whereDate('end_date', '>', now())
-                ->get(),
+            'advertisements' => $advertisements
         ]);
     }
 

@@ -49,7 +49,7 @@ const props = defineProps({
                 </div>
             </div>
         </div>
-        <InvitationsFilter form_route="invitation.index" />
+        <InvitationsFilter url="invitation.index" />
     </AppLayout>
 </template>
 <style>

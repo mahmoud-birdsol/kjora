@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Services\FlashMessage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class FavoriteController extends Controller
@@ -44,6 +45,16 @@ class FavoriteController extends Controller
                 ->orWhere('last_name', 'LIKE', '%'.$request->input('search').'%')
                 ->orWhere('username', 'LIKE', '%'.$request->input('search').'%');
         }));
+
+        $request->whenFilled('location', fn() => $query->having('distance', '<', $request->input('location'))
+            ->select(DB::raw("
+                     (3959 * ACOS(COS(RADIANS({$request->user()->current_latitude}))
+                           * COS(RADIANS(current_latitude))
+                           * COS(RADIANS({$request->user()->current_longitude}) - RADIANS(current_longitude))
+                           + SIN(RADIANS({$request->user()->current_latitude}))
+                           * SIN(RADIANS(current_latitude)))) AS distance")
+            ));
+
 
         return Inertia::render('Favorites/Index', [
             'players' => $query->paginate(20),
