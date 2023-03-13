@@ -51,8 +51,8 @@ class TermsAndConditions extends Resource
                 ->showOnPreview()
                 ->required()
                 ->rules('required')
-                ->creationRules('unique:privacy_policies,version')
-                ->updateRules('unique:privacy_policies,version,{{resourceId}}'),
+                ->creationRules('unique:terms_and_conditions,version')
+                ->updateRules('unique:terms_and_conditions,version,{{resourceId}}'),
 
             Trix::make('Content')
                 ->showOnPreview()

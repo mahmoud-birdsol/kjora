@@ -67,9 +67,7 @@
                                         <span v-if="false">star icon</span>
                                     </div>
                                     <Link :href="route('player.profile', user.id)" class="text-xs text-stone-400 ">@{{
-                                        user.username }}</Link>
-
-
+                                        user.username }} </Link>
                                 </div>
                                 <div class="fixed top-0 left-0 w-full h-full" v-show="showOptions"
                                     @click="showOptions = false"></div>
@@ -194,7 +192,7 @@
                     <!-- comments -->
                     <div class="self-stretch h-full p-3 px-6 ">
                         <div ref="commentsContainer"
-                            class="flex flex-col gap-4 w-full max-h-[300px] hideScrollBar overflow-auto" v-if="comments">
+                            class="flex flex-col gap-4 w-full max-h-[500px] hideScrollBar overflow-auto" v-if="comments">
                             <template v-for="comment in comments.filter(c => !c.parent_id)" :key="comment.id">
                                 <Comment @addedReply="() => handleAddedReply()" :comment="comment">
                                 </Comment>
@@ -203,9 +201,16 @@
                     </div>
                     <!-- new comment form -->
                     <div class="flex flex-row items-center self-end w-full p-3 border-t gap-x-3 border-stone-300">
-                        <button>
-                            <FaceSmileIcon class="w-6 text-neutral-400" />
-                        </button>
+                        <OnClickOutside @trigger="showEmojiPicker = false">
+                            <div class="relative flex items-center">
+                                <button @click="showEmojiPicker = !showEmojiPicker" :data-cancel-blur="true">
+                                    <FaceSmileIcon class="w-6 text-neutral-400" />
+                                </button>
+                                <div class="absolute z-20 bottom-full left-full " v-show="showEmojiPicker">
+                                    <EmojiPickerElement @selected-emoji="onSelectEmoji" />
+                                </div>
+                            </div>
+                        </OnClickOutside>
                         <div class="flex items-center flex-grow ">
 
                             <textarea @keypress.enter.exact.prevent="(e) => addComment()" v-model="newComment"
@@ -246,6 +251,7 @@ import { Inertia } from '@inertiajs/inertia';
 import LikeButton from '@/Components/LikeButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
+import EmojiPickerElement from '../../Components/EmojiPickerElement.vue';
 
 onBeforeMount(() => {
     dayjs.extend(relativeTime)
@@ -273,7 +279,7 @@ const options = {
 
 const comments = ref([])
 const commentsContainer = ref(null);
-const newComment = ref(null);
+const newComment = ref('');
 const isSending = ref(false);
 let showOptions = ref(false)
 let isEditingCaption = ref(false);
@@ -281,7 +287,7 @@ const currentUser = usePage().props.value.auth.user
 const isCurrentUser = currentUser.id === props.user.id
 const showDeleteMediaModal = ref(false);
 const showDeletePostModal = ref(false);
-
+const showEmojiPicker = ref(false)
 
 //comment logic
 
@@ -298,6 +304,9 @@ function getPostComments() {
     }).then(res => {
         comments.value = res.data.data
     }).catch(err => console.error(err))
+}
+function submit() {
+    console.log('has submit')
 }
 
 
@@ -341,7 +350,9 @@ function scrollToCommentsBottom() {
     }, 200);
 }
 
-
+function onSelectEmoji(emoji) {
+    newComment.value += emoji
+}
 
 // option menu logic
 // delete media
