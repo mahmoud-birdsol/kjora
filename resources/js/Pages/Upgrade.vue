@@ -13,12 +13,20 @@ import { CheckIcon, StarIcon  } from '@heroicons/vue/24/outline';
 import { CheckCircleIcon } from  "@heroicons/vue/20/solid"
 import PrimaryButton from '@/Components/PrimaryButton.vue'
 import FadeInTransition from "@/Components/FadeInTransition.vue";
-import { computed} from 'vue'
+import { computed , ref} from 'vue'
 let form = useForm({
     payment_plan: null
 })
+let loading =ref(false)
 function send(){
-    form.post(route('membership.upgrade'))
+    form.post(route('membership.upgrade'),{
+        preserveState: true,
+        preserveScroll: true,
+        onFinish: () => {
+            loading.value = false;
+        }
+    }
+    )
 }
 const date = new Date();
 
@@ -37,7 +45,7 @@ let expaireDate = computed(()=>{
     <AppLayout>
         <template #header>upgrade</template>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-5">
-            <Card>
+            <Card v-loading="loading">
                 <CardContent title="Upgrade account">
                     <template #header>
                         <h1 class="text-7xl">Upgrade account</h1>
