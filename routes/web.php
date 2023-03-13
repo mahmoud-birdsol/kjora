@@ -19,6 +19,7 @@ use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerReviewController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UpgradeMembershipController;
 use App\Http\Controllers\ResendVerificationCodeController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\VerificationCodeController;
@@ -347,11 +348,14 @@ Route::middleware([
         'store',
     ])->name('report.store');
 
+
     /*
      |--------------------------------------------------------------------------
      | Advertisement Routes...
      |--------------------------------------------------------------------------
     */
+
+    Route::post('membership/upgrade', UpgradeMembershipController::class)->name('membership.upgrade');
 
     Route::get(
         'advertisements/{advertisement}',

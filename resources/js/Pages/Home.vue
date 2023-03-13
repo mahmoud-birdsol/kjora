@@ -89,7 +89,7 @@ const filterByPosition = (position) => {
                         </a>
                     </SplideSlide>
                 </template>
-            </Splide>
+            </Splide> -->
 
 
         </template>
