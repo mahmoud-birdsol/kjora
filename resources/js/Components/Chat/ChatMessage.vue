@@ -163,7 +163,7 @@ function deleteMessage() {
                             <button class="hover:text-gray-400 " @click="deleteMessage">
                                 <li class="flex items-center justify-center gap-x-2">
                                     <TrashIcon class="w-4" />
-                                    <span> delete</span>
+                                    <span> {{$t('delete')}}</span>
                                 </li>
                             </button>
                             <button class="hover:text-gray-400 group" @click="handleReply">
@@ -171,7 +171,7 @@ function deleteMessage() {
                                     <ReplyIcon
                                         class="cursor-pointer fill-transparent group-hover:stroke-gray-400 stroke-white ">
                                     </ReplyIcon>
-                                    <span>Quote</span>
+                                    <span>{{$t('Quote')}}</span>
                                 </li>
                             </button>
                         </ul>

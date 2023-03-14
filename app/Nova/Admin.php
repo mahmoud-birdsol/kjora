@@ -38,7 +38,15 @@ class Admin extends Resource
     public static $search = [
         'id', 'name', 'email',
     ];
-
+    /**
+     * Get the displayable label of the resource.
+     *
+     * @return string
+     */
+    public static function label(): string
+    {
+        return __("Admins");
+    }
     /**
      * Get the fields displayed by the resource.
      *
@@ -51,17 +59,17 @@ class Admin extends Resource
 
             Gravatar::make()->maxWidth(50),
 
-            Text::make('Name')
+            Text::make(__('Name'),'name')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            Text::make('Email')
+            Text::make(__('Email'),'email')
                 ->sortable()
                 ->rules('required', 'email', 'max:254')
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
 
-            Password::make('Password')
+            Password::make(__('Password'),'password')
                 ->onlyOnForms()
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),
@@ -71,7 +79,7 @@ class Admin extends Resource
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
 
-            BelongsToMany::make('Roles', 'roles', Role::class)
+            BelongsToMany::make(__('Roles'), 'roles', Role::class)
                 ->filterable()
                 ->showCreateRelationButton(),
         ];

@@ -113,8 +113,8 @@
                                                                     </div>
                                                                     <div
                                                                         class="relative z-20 w-full text-sm text-center text-gray-500 divide-y whitespace-nowrap">
-                                                                        <div @click="isEditingCaption = true">Edit</div>
-                                                                        <div>remove photo</div>
+                                                                        <div @click="isEditingCaption = true">{{$t('edit')}}</div>
+                                                                        <div>{{$t('remove photo')}}</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -183,11 +183,7 @@
                 <!-- comment and replies right col -->
                 <div class="flex flex-col h-full gap-2 max-lg:border-t lg:border-l border-stone-300">
                     <!-- header -->
-
-                    <div class="p-3 pt-5 text-sm border-b border-stone-300">comments {{
-                        comments &&
-                        comments.filter(c =>
-                            !c.parent_id)?.length }}
+                    <div class=" pt-5 p-3 text-sm border-b border-stone-300"> {{ $t('comments ( :count )', {count: numComments})  }}
                     </div>
                     <!-- comments -->
                     <div class="self-stretch h-full p-3 px-6 ">
@@ -238,7 +234,7 @@ import { FaceSmileIcon, EllipsisHorizontalIcon, TrashIcon, PencilIcon, FlagIcon 
 import { PaperAirplaneIcon, XMarkIcon } from '@heroicons/vue/24/solid';
 
 import axios from 'axios';
-import { onMounted, onBeforeMount, ref } from 'vue';
+import { onMounted, onBeforeMount, ref  , computed} from 'vue';
 import Comment from '../../Components/Comment.vue';
 import { HeartIcon } from '@heroicons/vue/24/solid';
 import dayjs from 'dayjs';
@@ -393,7 +389,7 @@ function removePost() {
     })
 
 }
-
+let numComments  =computed(()=> comments.value ? comments.value.filter(c => !c.parent_id )?.length : 0 )
 </script>
 
 <style lang="scss" scoped></style>

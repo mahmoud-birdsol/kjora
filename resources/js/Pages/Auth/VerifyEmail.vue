@@ -23,17 +23,17 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
     <GuestLayout>
         <GuestTwoColumnLayout>
             <Card>
-                <CardContent title="Verify Email Address">
+                <CardContent :title="$t('Verify Email Address')">
                     <template #body>
                         <div class="flex justify-center items-center">
                             <p class="text-xs text-gary-900">
-                                We have sent you an email, please click on the provided link to verify your email address.
+                                {{$t('We have sent you an email, please click on the provided link to verify your email address')}}.
                             </p>
                         </div>
                     </template>
 
                     <template #footer>
-                        <div class="flex justify-center items-center w-full mt-12">
+                        <div class="flex justify-center items-center w-full mt-12 self-end">
                             <VerifyEmailForm/>
                         </div>
                     </template>
@@ -45,8 +45,8 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
             :show="verificationLinkSent && showSuccessModal"
             @close="showSuccessModal = false"
             position="right"
-            title="Email Verification"
-            message="A new verification link has been sent to the email address you provided in your profile settings."
+            :title="$t('Email Verification')"
+            :message="$t('A new verification link has been sent to the email address you provided in your profile settings')+'.'"
         />
     </GuestLayout>
 </template>

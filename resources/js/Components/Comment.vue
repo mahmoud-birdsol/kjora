@@ -12,7 +12,7 @@
             <!-- user information & comment time row 1-->
             <div class="flex flex-col justify-between w-full xs:flex-row">
                 <!-- user information -->
-                <div class="flex flex-col gap-1 xs:flex-row ">
+                <div class="flex md:flex-col flex-row  gap-1 ">
                     <div class="flex flex-row gap-2">
                         <h3 class="m-0 text-lg font-bold leading-none capitalize text-stone-800 ">{{
                             comment.user.first_name }} </h3>
@@ -87,8 +87,8 @@
             </OnClickOutside>
             <!-- view replies button row 6 -->
             <button v-show="hasReplies" @click="toggleRepliesView"
-                class="flex justify-start w-full gap-2 text-sm transition-all duration-300 text-stone-500 enabled:hover:underline hover:underline-offset-4 ">
-                {{ showReplies ? 'hide' : 'view' }} {{ comment.replies?.length }} replies
+                class="flex w-full text-sm gap-2 justify-start  text-stone-500 enabled:hover:underline hover:underline-offset-4 transition-all duration-300  ">
+                {{ showReplies ? $t('hide') : $t('view') }} {{ comment.replies?.length }} {{$t('replies')}}
             </button>
 
         </div>

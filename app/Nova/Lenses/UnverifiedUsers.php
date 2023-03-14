@@ -39,17 +39,17 @@ class UnverifiedUsers extends Lens
                 ->nullable()
                 ->rules('nullable'),
 
-            Text::make('Name')
+            Text::make(__('Name') , 'name')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            Text::make('Phone')
+            Text::make(__('Phone'),'phone')
                 ->showOnPreview()
                 ->sortable()
                 ->hideFromIndex()
                 ->rules('required', 'max:255'),
 
-            Text::make('Email')
+            Text::make(__('Email'),'email')
                 ->sortable()
                 ->rules('required', 'email', 'max:254')
                 ->creationRules('unique:users,email')
@@ -95,5 +95,14 @@ class UnverifiedUsers extends Lens
     public function uriKey()
     {
         return 'unverified-users';
+    }
+    /**
+     * Set the label for the metric.
+     *
+     * @return string
+     */
+    public function name()
+    {
+        return __('Unverified Users');
     }
 }

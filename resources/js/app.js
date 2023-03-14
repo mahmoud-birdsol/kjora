@@ -12,7 +12,7 @@ import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 import { createPinia } from "pinia";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-
+import {i18nVue} from "laravel-vue-i18n";
 import VueGoogleMaps from "@fawmi/vue-google-maps";
 
 import EmojiPicker from "vue3-emoji-picker";
@@ -35,6 +35,9 @@ createInertiaApp({
     setup({ el, app, props, plugin }) {
         return createApp({ render: () => h(app, props) })
             .use(plugin)
+            .use(i18nVue, {
+                resolve: (lang) => import(`../../lang/${lang}.json`)
+            })
             .use(ZiggyVue, Ziggy)
             .use(pinia)
             .use(VueGoogleMaps, {

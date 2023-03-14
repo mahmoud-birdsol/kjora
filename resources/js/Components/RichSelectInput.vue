@@ -150,7 +150,7 @@ const loadMore = () => {
                     <img :src="selected[imageName]" alt="" class="h-6 w-6 flex-shrink-0 rounded">
                     <span class="ml-3 block truncate">{{ selected[textName] }}</span>
                 </span>
-                <span class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                <span class="pointer-events-none absolute inset-y-0 ltr:right-0 rtl:left-0 ml-3 flex items-center pr-2">
                     <ChevronDownIcon class="h-5 w-5 text-gray-400"/>
                 </span>
             </button>

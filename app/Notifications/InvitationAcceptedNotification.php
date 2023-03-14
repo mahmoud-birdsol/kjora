@@ -47,10 +47,10 @@ class InvitationAcceptedNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject($this->invitation->invitedPlayer->name.' accepted your invitation. ✅')
-            ->line('Your invitation for **'.$this->invitation->invitedPlayer->name.'** to play a football match on **'.$this->invitation->date->toDateTimeString().'** at **'.$this->invitation->stadium->name.'** was accepted.')
-            ->action('Chat Now', url(route('invitation.index')))
-            ->line('Thank you for using our application!');
+            ->subject($this->invitation->invitedPlayer->name . __('accepted your invitation. ✅' , [] , $notifiable->locale ))
+            ->line(__('Your invitation for **' , [] , $notifiable->locale ).$this->invitation->invitedPlayer->name.__('** to play a football match on **' , [] , $notifiable->locale ).$this->invitation->date->toDateTimeString().__('** at **', [] , $notifiable->locale ).$this->invitation->stadium->name.__('** was accepted.', [] , $notifiable->locale ))
+            ->action(__('Chat Now', [] , $notifiable->locale ), url(route('invitation.index')))
+            ->line(__('Thank you for using our application!', [] , $notifiable->locale ));
     }
 
     /**
@@ -64,11 +64,11 @@ class InvitationAcceptedNotification extends Notification implements ShouldQueue
         return (new NotificationData(
             displayType: 'simple',
             state: 'success',
-            title: 'Invitation',
-            subtitle: 'Your invitation to '.$this->invitation->invitedPlayer->name.' was accepted',
+            title: __('Invitation'),
+            subtitle: __('Your invitation to ') . $this->invitation->invitedPlayer->name . __(' was accepted'),
             actionData: new RouteActionData(
                 route: route('invitation.index'),
-                text: 'Chat Now',
+                text: __('Chat Now'),
             ),
         ))->toArray();
     }

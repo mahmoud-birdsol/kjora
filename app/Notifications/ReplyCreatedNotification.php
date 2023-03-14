@@ -52,11 +52,11 @@ class ReplyCreatedNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Comment Notification')
-            ->line('Dear '.$this->user->name)
-            ->line($this->notifier->username.' Has replied to your comment')
-            ->action('Chat Now', url(route('gallery.show', $this->commentable)))
-            ->line('Thank you for using our application!');
+            ->subject(__('Comment Notification', [] , $notifiable->locale))
+            ->line(__('Dear ', [] , $notifiable->locale) . $this->user->name)
+            ->line($this->notifier->username . __(' Has replied to your comment', [] , $notifiable->locale))
+            ->action(__('Chat Now', [] , $notifiable->locale), url(route('gallery.show', $this->commentable)))
+            ->line(__('Thank you for using our application!', [] , $notifiable->locale));
     }
 
     /**
@@ -70,11 +70,11 @@ class ReplyCreatedNotification extends Notification
         return (new NotificationData(
             displayType: 'simple',
             state: 'success',
-            title: 'Comment Notification',
-            subtitle: 'User '.$this->notifier->name.' has replied to your comment',
+            title: __('Comment Notification', [] , $notifiable->locale),
+            subtitle: __('User ') . $this->notifier->name . __(' has replied to your comment', [] , $notifiable->locale),
             actionData: new RouteActionData(
                 route: route('gallery.show', $this->commentable),
-                text: 'View Now',
+                text: __('View Now', [] , $notifiable->locale),
             ),
         ))->toArray();
     }

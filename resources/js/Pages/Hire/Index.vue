@@ -16,26 +16,27 @@ const props = defineProps({
     <Head title="Invitations" />
     <AppLayout title="Invitations">
         <template #header>
-            <p class="font-black text-7xl">Invitations</p>
+            <p class="text-7xl font-black">{{$t('invitations')}}</p>
         </template>
         <div class="py-12">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="flex items-center justify-end space-x-4">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="flex justify-end items-cente gap-3 ">
                     <Link :href="route('invitation.index')">
-                    <SecondaryButton>
-                        <span
-                            :class="{ 'text-gray-500': !route().current('invitation.index'), 'text-black': route().current('invitation.index') }">
-                            Invitation
-                        </span>
-                    </SecondaryButton>
+                        <SecondaryButton>
+                                <span
+                                    :class="{'text-gray-500': !route().current('invitation.index'), 'text-black': route().current('invitation.index')}">
+                                    {{ $t('invitation') }}
+                                </span>
+                        </SecondaryButton>
                     </Link>
                     <Link :href="route('hire.index')">
-                    <SecondaryButton>
-                        <span
-                            :class="{ 'text-gray-500': !route().current('hire.index'), 'text-black': route().current('hire.index') }">
-                            Hire
-                        </span>
-                    </SecondaryButton>
+                        <SecondaryButton>
+                                <span
+                                    :class="{'text-gray-500': !route().current('hire.index'), 'text-black': route().current('hire.index')}">
+                                    {{$t('hire')}}
+                                </span>
+                        </SecondaryButton>
+
                     </Link>
                 </div>
 

@@ -33,7 +33,15 @@ class Invitation extends Resource
     public static $search = [
         'id',
     ];
-
+    /**
+     * Get the displayable label of the resource.
+     *
+     * @return string
+     */
+    public static function label(): string
+    {
+        return __("Invitations");
+    }
     /**
      * Get the fields displayed by the resource.
      *
@@ -44,35 +52,35 @@ class Invitation extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make('Stadium')
+            BelongsTo::make(__('Stadium'),'stadium' , Stadium::class)
                 ->filterable()
                 ->sortable()
                 ->showOnPreview()
                 ->required()
                 ->rules('required'),
 
-            BelongsTo::make('Inviting user', 'invitingPlayer', User::class)
+            BelongsTo::make(__('Inviting user'), 'invitingPlayer', User::class)
                 ->filterable()
                 ->sortable()
                 ->showOnPreview()
                 ->required()
                 ->rules('required'),
 
-            BelongsTo::make('Invited user', 'invitedPlayer', User::class)
+            BelongsTo::make(__('Invited user'), 'invitedPlayer', User::class)
                 ->filterable()
                 ->sortable()
                 ->showOnPreview()
                 ->required()
                 ->rules('required'),
 
-            DateTime::make('Date')
+            DateTime::make(__('Date'),'date')
                 ->filterable()
                 ->sortable()
                 ->showOnPreview()
                 ->required()
                 ->rules('required'),
 
-            Select::make('State')->options([
+            Select::make(__('State') , 'state')->options([
                 'accepted' => 'Accepted',
                 'declined' => 'Declined',
             ])->displayUsingLabels()
