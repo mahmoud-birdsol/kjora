@@ -70,10 +70,14 @@ onMounted(() => {
 
 const shouldRate = ref(false)
 function calcShouldRate() {
-    if (props.invitation.updated_at && dayjs(props.invitation?.updated_at).diff(dayjs(), 'hour') > 2 && props.invitation.state == 'accepted') {
-        shouldRate.value = true;
 
+    if (props.invitation?.reviews?.length) {
+        shouldRate.value = true;
     }
+    // if (props.invitation.updated_at && dayjs(props.invitation?.updated_at).diff(dayjs(), 'hour') > 2 && props.invitation.state == 'accepted') {
+    //     shouldRate.value = true;
+
+    // }
 }
 </script>
 
@@ -148,10 +152,10 @@ function calcShouldRate() {
                 Chat
                 </Link>
                 <!-- todo:fix the condition to show rate when they invitation date end -->
-                <button v-if="shouldRate"
+                <Link :href="route('player.review.show', invitation.reviews[0].id)" v-if="shouldRate"
                     class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
-                    Rate
-                </button>
+                Rate
+                </Link>
             </div>
 
 
