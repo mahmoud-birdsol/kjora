@@ -13,10 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('report_options', function (Blueprint $table) {
-            $table->id();
-            $table->string('body');
-            $table->timestamps();
+        Schema::table('report_options', function (Blueprint $table) {
+            $table->json('body')->change();
         });
     }
 
@@ -27,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('report_options');
+        Schema::table('report_options', function (Blueprint $table) {
+            //
+        });
     }
 };
