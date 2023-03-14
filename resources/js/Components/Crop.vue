@@ -8,9 +8,13 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 const props = defineProps({
     img: Object,
     open: Boolean,
+    aspectRatio:{
+        default:null
+    }
 })
-const emit = defineEmits(['crop', 'update:open'])
 
+const emit = defineEmits(['crop', 'update:open'])
+const num = ref(0)
 const result = reactive({
     dataURL: '',
     blobURL: '',
@@ -23,7 +27,7 @@ const options = {
     minCanvasHeight: '320',
     minContainerWidth: '320',
     minContainerHeight: '320',
-    // aspectRatio: 1 / 1,
+    aspectRatio:props.aspectRatio,
 }
 let boxStyle = {
     width: '100%',
@@ -31,10 +35,7 @@ let boxStyle = {
     backgroundColor: '#f8f8f8',
     margin: 'auto',
 }
-function reset() {
-    if (!cropper) return
-    cropper.reset()
-}
+
 async function getResult() {
     if (!cropper) return
     const filePreviewUrl = cropper.getDataURL()
@@ -52,10 +53,20 @@ async function getResult() {
 
 }
 function ready() {
-    if(cropper.ready && cropper.originalUrl == props.img.url){
+    console.log(cropper.originalUrl == props.img.url)
+    if(cropper.cropped && cropper.originalUrl == props.img.url){
     }else{
-        
+        cropper.originalUrl = props.img.url
+        console.log(cropper)
+        cropper.destroy()
+        cropper.crop(props.img.url)
     }
+    //     console.log('ready',num.value)
+    // }else{
+    //     num.value=num.value+1
+    //     console.log('not',num.value)
+    //     ready()
+    // }
 }
 </script>
 <template>
@@ -65,10 +76,9 @@ function ready() {
         class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-7xl bg-white p-6 rounded-xl flex gap-4 flex-col">
         <XMarkIcon class="w-4" @click="$emit('update:open')"/>
         <div>
-            <VuePictureCropper :boxStyle="boxStyle" :img="img.url" :options="options" @ready="ready" />
+            <VuePictureCropper :boxStyle="boxStyle" :img="img?.url" :options="options" @ready="ready" :key="num" />
         </div>
         <PrimaryButton @click="getResult">done</PrimaryButton>
-        <PrimaryButton @click="reset">reset</PrimaryButton>
     </div>
 </template>
 <style scoped>

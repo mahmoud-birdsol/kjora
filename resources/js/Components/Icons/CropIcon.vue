@@ -1,16 +1,14 @@
 <script setup>
 defineProps({
-    fill:{
-        default:'#000'
+    fill: {
+        default: '#000'
     }
 })
 
 </script>
 <template>
-    <svg xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 512 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-        <path
-        :fill="fill"
-        d="M128 32c0-17.7-14.3-32-32-32S64 14.3 64 32V64H32C14.3 64 0 78.3 0 96s14.3 32 32 32H64V384c0 35.3 28.7 64 64 64H352V384H128V32zM384 480c0 17.7 14.3 32 32 32s32-14.3 32-32V448h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H448l0-256c0-35.3-28.7-64-64-64L160 64v64l224 0 0 352z" />
-</svg>
+    <svg :fill="fill" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M426.667 0h106.666v1386.67H1920v106.66H426.667V0zM320 426.667H0v106.666h320V426.667zm320 0v106.666h746.67V1280h106.66V426.667H640zM1493.33 1600h-106.66v320h106.66v-320z" />
+    </svg>
 </template>
