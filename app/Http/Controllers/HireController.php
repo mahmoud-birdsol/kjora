@@ -15,6 +15,7 @@ class HireController extends Controller
     public function index(Request $request): Response
     {
         $query = Invitation::where('inviting_player_id', $request->user()->id)
+            ->whereNotNull('state')->where('date', '<', now()->addHours(2))
             ->latest('date')
             ->with('invitedPlayer')
             ->with(['reviews' => function ($q) use ($request) {

@@ -15,6 +15,7 @@ class InvitationController extends Controller
     public function index(Request $request): Response
     {
         $query = Invitation::where('invited_player_id', $request->user()->id)
+            ->whereNotNull('state')->where('date', '<', now()->addHours(2))
             ->latest('date')
             ->with('invitingPlayer')
             ->with(['reviews' => function ($q) use ($request) {
