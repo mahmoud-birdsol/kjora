@@ -77,7 +77,7 @@ const removeFromFavorites = () => {
 </script>
 
 <template>
-    <div class="rounded-xl"
+    <div class="overflow-hidden rounded-xl"
         :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
         <div v-if="player.id !== $page.props.auth.user.id" class="flex justify-end">
             <span class="rounded-lg rounded-bl-3xl bg-white p-2 -mt-0.5 -mr-0.5">
