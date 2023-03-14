@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Spatie\NovaTranslatable\Translatable;
 
 class ReportOption extends Resource
 {
@@ -32,7 +33,7 @@ class ReportOption extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'body',
+        'id', 'body->en', 'body->ar',
     ];
 
     /**
@@ -42,12 +43,14 @@ class ReportOption extends Resource
     {
         return [
             ID::make()->sortable(),
+            Translatable::make([
+                Text::make(__('Body'),'body')
+                    ->showOnPreview()
+                    ->sortable()
+                    ->required()
+                    ->rules('required', 'max:255'),
+            ]),
 
-            Text::make(__('Body'),'body')
-                ->showOnPreview()
-                ->sortable()
-                ->required()
-                ->rules('required', 'max:255'),
         ];
     }
 
