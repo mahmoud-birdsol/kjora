@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import { CustomMarker, GoogleMap, Marker } from "vue3-google-map";
 import { CheckIcon, HandRaisedIcon, XMarkIcon } from '@heroicons/vue/24/solid';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import DateTranslation from '../DateTranslation.vue';
 onBeforeMount(() => {
     dayjs.extend(relativeTime);
 });
@@ -103,15 +104,15 @@ function calcShouldRate() {
                     <h2 class="">
                         {{ player.first_name }} {{ player.last_name }}
                     </h2>
-                    <Link class="hover:underline" :href="route('player.profile', player.id)">@{{
+                    <Link class="hover:underline before:content-['a'] before:text-transparent" :href="route('player.profile', player.id)">@{{
                         player.username }}</Link>
                     <span>
                         <HandRaisedIcon class="w-4 text-yellow-300 rotate-[15deg]" />
                     </span>
                 </div>
                 <!-- invitation date -->
-                <p class="text-xs text-center text-stone-300/70">Wants to invite you for a match in
-                    <span>{{ dayjs(invitation.date).format('DD MMMM YYYY, h:m A') }}</span>
+                <p class="text-xs text-center text-stone-300/70">{{$t('Wants to invite you for a match in')}}
+                    <DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date"/>
                 </p>
             </div>
             <!-- invite user location -->
@@ -149,13 +150,13 @@ function calcShouldRate() {
                 </div>
                 <Link :href="route('chats.index')" v-if="invitation.state == 'accepted' && !shouldRate"
                     class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
-                Chat
+                {{$t('chat')}}
                 </Link>
 
                 <Link :href="route('player.review.show', invitation.reviews[0].id)"
                     v-if="invitation.state == 'accepted' && shouldRate"
                     class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
-                Rate
+                {{$t('rate')}}
                 </Link>
             </div>
 

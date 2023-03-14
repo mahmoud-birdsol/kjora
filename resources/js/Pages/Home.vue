@@ -130,10 +130,10 @@ const filterByPosition = (position) => {
                 <div class="flex items-center justify-end gap-3 mb-2 w-ful ">
                     <button @click="currentTabId = 1"
                         class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white rounded-sm cursor-pointer hover:bg-stone-200 active:scale-95 "
-                        :class="currentTabId == 1 ? 'border-2 border-primary text-primary' : ''">grid</button>
+                        :class="currentTabId == 1 ? 'border-2 border-primary text-primary' : ''">{{$t('grid')}}</button>
                     <button @click="currentTabId = 2"
                         class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white rounded-sm cursor-pointer hover:bg-stone-200 active:scale-95 "
-                        :class="currentTabId == 2 ? 'border-2 border-primary text-primary' : ''">map</button>
+                        :class="currentTabId == 2 ? 'border-2 border-primary text-primary' : ''">{{$t('map')}}</button>
 
 
                 </div>

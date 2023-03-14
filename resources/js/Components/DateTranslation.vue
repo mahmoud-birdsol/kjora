@@ -82,6 +82,7 @@ defineProps({
         default: 'normal' , //normal is 22 sunday 2023 , range is 30 day ago
     },
     start:String,
+    end:String,
 })
 
 dayjs.locale(locale, null, true)
@@ -90,4 +91,5 @@ const localei18n = usePage().props.value.locale
 <template>
     <span v-if="type==='normal'">{{ dayjs(start).locale(localei18n).format(format) }}</span>
     <span v-else-if="type==='range'">{{ dayjs(start).locale(localei18n).fromNow() }}</span>
+    <span v-else-if="type==='period'">{{ dayjs().locale(localei18n).to(dayjs(end)) }}</span>
 </template>
