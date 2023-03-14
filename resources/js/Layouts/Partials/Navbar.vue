@@ -28,6 +28,8 @@ const showingNavigationDropdown = ref(false);
 const logout = () => {
     Inertia.post(route('logout'));
 };
+let state = usePage().props.value.user.state_name
+
 </script>
 
 <template>
@@ -74,7 +76,8 @@ const logout = () => {
 
                 <div class="hidden md:flex md:gap-x-3 sm:items-center lg:ml-6">
                     <!-- upgrade button  -->
-                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5">
+                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5"
+                        v-if="state !== 'Premium'">
                         <div class="bg-black rounded-full">
                             <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                         </div>
@@ -194,7 +197,8 @@ const logout = () => {
                             </template>
                         </Dropdown>
                     </div>
-                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5">
+                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5"
+                        v-if="state !== 'Premium'">
                         <div class="bg-black rounded-full">
                             <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                         </div>
@@ -211,19 +215,20 @@ const logout = () => {
 
         <!-- Responsive Navigation Menu -->
         <!-- Responsive Navigation Menu -->
-        <div class="fixed top-0 right-0 left-0 bottom-0 bg-black bg-opacity-50 z-40"
+        <div class="fixed top-0 bottom-0 left-0 right-0 z-40 bg-black bg-opacity-50"
             :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }"
             @click="showingNavigationDropdown = false"></div>
-        <Transition 
-        enter-from-class="ltr:-left-full rtl:-right-full" 
-        enter-to-class="ltr:left-0 rtl:right-0" 
+        <Transition
+        enter-from-class="ltr:-left-full rtl:-right-full"
+        enter-to-class="ltr:left-0 rtl:right-0"
         enter-active-class="transition-all duration-700"
-        leave-to-class="ltr:-left-full rtl:-right-full" 
-        leave-from-class="ltr:left-0 rtl:right-0" 
+        leave-to-class="ltr:-left-full rtl:-right-full"
+        leave-from-class="ltr:left-0 rtl:right-0"
         leave-active-class="transition-all duration-700">
             <div class="pt-2 pb-3 space-y-1 fixed top-0  bg-black h-full w-[max(20em,50%)] z-50"
                 v-if="showingNavigationDropdown">
                 <XMarkIcon class="w-5 absolute ltr:right-0 rtl:left-0 m-3 text-white" @click="showingNavigationDropdown = false" />
+
                 <!-- Responsive Settings Options -->
                 <div class="pt-4 pb-1 border-gray-200">
                     <div class="flex px-4">

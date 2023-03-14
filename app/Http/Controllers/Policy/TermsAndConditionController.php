@@ -25,7 +25,7 @@ class TermsAndConditionController extends Controller
     public function index(Request $request): Response
     {
         return Inertia::render('TermsOfService', [
-            'terms' => TermsAndConditions::latest()->first()
+            'terms' => TermsAndConditions::latest()->whereNotNull('published_at')->orderBy('published_at', 'desc')->first()
         ]);
     }
     /**
@@ -37,17 +37,15 @@ class TermsAndConditionController extends Controller
      */
     public function store(
         Request $request,
-        TermsAndConditions $termsAndConditions ,
+        TermsAndConditions $termsAndConditions,
         AssignTheTermsVersion $assignTheTermsVersion
-    ): RedirectResponse
-    {
+    ): RedirectResponse {
         $user =  $request->user();
-        ($assignTheTermsVersion)($user , $termsAndConditions);
+        ($assignTheTermsVersion)($user, $termsAndConditions);
         FlashMessage::make()->success(
             message: 'Terms approved successfully'
         )->closeable()->send();
 
         return redirect()->intended();
     }
-
 }

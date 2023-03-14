@@ -14,7 +14,7 @@ import { ElSlider } from 'element-plus';
 import InputLabel from '@/Components/InputLabel.vue';
 
 const props = defineProps({
-    user: null,
+    player: null,
     posts: Array,
     playerRating: Array
 
@@ -27,7 +27,7 @@ const tabs = computed(() => {
         { name: 'performance', id: 1, component: PerformanceTab, compProps: { playerRating: props.playerRating } },
         {
             name: 'gallery', id: 2, component: ProfileGallery, compProps:
-                { user: props.user, posts: props.posts, }
+                { user: props.player, posts: props.posts, }
         }]
 })
 

@@ -46,6 +46,8 @@ Route::post(
     ]
 )->middleware('auth:sanctum')->name('api.messages.store');
 
+Route::delete('message/{message}/delete', [MessageController::class, 'destroy'])->middleware('auth:sanctum')->name('api.messages.delete');
+
 Route::post('posts', function (Request $request) {
     $post = \App\Models\Post::create([
         'user_id' => $request->user()->id,
