@@ -57,8 +57,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
                         <h2 class="text-xl font-bold text-center uppercase text-primary">{{ $t('Verify Phone Number') }}
                         </h2>
                         <div class="mb-4 text-sm text-center text-gray-600">
-                            {{ $t("Before continuing, could you verify your phone number by entering the 4 digit code sent
-                                                        to you in an SMS ? If you didn't receive the SMS, we will gladly send you another")}}.
+                            {{ $t("Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS ? If you didn't receive the SMS, we will gladly send you another")}}.
                         </div>
                     </div>
                 </div>
