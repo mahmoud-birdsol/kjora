@@ -159,3 +159,17 @@ const filterByPosition = (position) => {
         </div>
     </AppLayout>
 </template>
+<style>
+.el-slider__button {
+    border: 2px solid green;
+}
+
+.el-slider__bar {
+    background-color: green;
+    height: 0.15rem;
+}
+
+.el-slider__runway {
+    height: 0.15rem;
+}
+</style>
