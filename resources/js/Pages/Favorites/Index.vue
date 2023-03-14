@@ -61,47 +61,50 @@ const reset = () => {
     form.age = 18;
     form.rating = 0;
     form.search = '';
-    form.country_id=null;
+    form.country_id = null;
 
     filter();
 }
 </script>
 
 <template>
-    <Head title="Home" />
+    <Head :title="$t('home')" />
 
-    <AppLayout title="Home">
+    <AppLayout :title="$t('home')">
         <template #header>
-            <p class="font-black text-7xl">Favorites</p>
+            <p class="font-black text-7xl">{{ $t('favorites') }}</p>
         </template>
 
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <!-- Position Filters...
                                                     =====================================================-->
-                <div class="flex gap-4 my-8 overflow-x-auto hideScrollBar">
-                    <SecondaryButton @click="filterByPosition(null)">
+                <div class="flex gap-4 mt-4 mb-8 overflow-x-auto hideScrollBar">
+                    <button @click="filterByPosition(null)"
+                        class="py-2 px-4 min-w-[215px] w-1/5 text-center font-bold items-center bg-white border-2 border-gray-300 rounded-full  text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary   active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap">
                         <span class="w-full text-center"
                             :class="{ 'text-black': form.position == null, 'text-gray-400': form.position != null }">
-                            All positions
+                            {{ $t('All positions') }}
                         </span>
-                    </SecondaryButton>
+                    </button>
                     <template v-for="position in positions" :key="position.id">
-                        <SecondaryButton @click="filterByPosition(position.id)">
+                        <button @click="filterByPosition(position.id)"
+                            class="py-2 px-4 min-w-[215px] w-1/5 text-center font-bold items-center bg-white border-2 border-gray-300 rounded-full  text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary   active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap">
                             <span class="w-full text-center"
                                 :class="{ 'text-black': form.position == position.id, 'text-gray-400': form.position != position.id }">
-                                {{ position.name }}
+                                {{ $t(position.name) }}
                             </span>
-                        </SecondaryButton>
+                        </button>
                     </template>
                 </div>
 
                 <!-- Current list...
                                                     =====================================================-->
+                                                    =====================================================-->
                 <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
 
                     <div class="flex items-start justify-start my-6">
-                        <p class="text-sm font-bold">Total ({{ players.total }})</p>
+                        <p class="text-sm font-bold">{{ $t('total ( :count )', { count: players.total }) }}</p>
                     </div>
 
                     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">

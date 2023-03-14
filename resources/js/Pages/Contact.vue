@@ -38,7 +38,7 @@ function submit() {
     <GuestLayout>
         <GuestTwoColumnLayout>
             <Card>
-                <CardContent title="contact">
+                <CardContent :title="$t('contact')">
                     <template #body>
 
                         <div class="flex justify-center my-4" v-if="showSuccessMessage">
@@ -47,32 +47,32 @@ function submit() {
 
                         <form class="grid grid-cols-2 gap-4" @submit.prevent="submit" v-loading="form.processing">
                             <div class="col-span-1">
-                                <InputLabel color="text-primary"> First name</InputLabel>
-                                <TextInput type="text" v-model="form.first_name" placeholder="First Name"
+                                <InputLabel color="text-primary"> {{$t('first-name')}}</InputLabel>
+                                <TextInput type="text" v-model="form.first_name" :placeholder="$t('enter') + $t('first-name')"
                                            auto-complete="given-name" aria-required="true"/>
                                 <InputError :message="form.errors.first_name" class="px-4"/>
                             </div>
                             <div class="col-span-1">
-                                <InputLabel color="text-primary"> Surname</InputLabel>
-                                <TextInput type="text" v-model="form.last_name" placeholder="Enter Surname"
-                                           auto-complete="family-name" aria-required="true"/>
+                                <InputLabel color="text-primary"> {{$t('last-name')}} </InputLabel>
+                                <TextInput type="text" v-model="form.surName" :placeholder="$t('enter') + $t('last-name')"
+                                    auto-complete="family-name" aria-required="true" />
                                 <InputError :message="form.errors.last_name" class="px-4"/>
                             </div>
                             <div class="col-span-2">
-                                <InputLabel color="text-primary"> email</InputLabel>
-                                <TextInput type="text" v-model="form.email" placeholder="Enter Email"
+                                <InputLabel color="text-primary"> {{$t('email')}}</InputLabel>
+                                <TextInput type="text" v-model="form.email" :placeholder="$t('enter') + $t('email')"
                                            auto-complete="email"
                                            aria-required="true"/>
                                 <InputError :message="form.errors.email" class="px-4"/>
                             </div>
                             <div class="col-span-2">
-                                <InputLabel color="text-primary"> subject</InputLabel>
-                                <TextInput type="text" v-model="form.subject" placeholder="Subject"/>
+                                <InputLabel color="text-primary"> {{$t('subject')}} </InputLabel>
+                                <TextInput type="text" v-model="form.subject" :placeholder="$t('enter') + $t('subject')" />
                                 <InputError :message="form.errors.subject" class="px-4"/>
                             </div>
                             <div class="col-span-2 relative">
-                                <InputLabel color="text-primary"> message</InputLabel>
-                                <textarea placeholder="Please write a message or briefly what happen" class="
+                                <InputLabel color="text-primary"> {{$t('message')}}</InputLabel>
+                                <textarea :placeholder="$t('please write a message or briefly what happen')" class="
                                     block
                                     w-full
                                     rounded-2xl
@@ -84,15 +84,10 @@ function submit() {
                                     disabled:bg-gray-100
                                     h-[20ch]
                                     " v-model="form.message"></textarea>
-                                <div class="absolute bottom-0 right-0 ">
-                                    <PlusCircleIcon
-                                        class="w-8 h-8 m-2 rounded-full text-white bg-black p-1 cursor-pointer"/>
-                                    <CameraIcon
-                                        class="w-8 h-8 m-2 rounded-full text-white bg-black p-1 cursor-pointer"/>
-                                </div>
+
                             </div>
                             <InputError :message="form.errors.subject"/>
-                            <PrimaryButton class="col-span-2">submit</PrimaryButton>
+                            <PrimaryButton class="col-span-2">{{$t('submit')}}</PrimaryButton>
                         </form>
                     </template>
                 </CardContent>

@@ -10,7 +10,7 @@ import {
 } from '@heroicons/vue/24/outline';
 import MainPlayerCard from "./PlayerCards/MainPlayerCard.vue";
 import {Inertia} from "@inertiajs/inertia";
-
+import DateTranslation from '@/Components/DateTranslation.vue';
 const props = defineProps({
     invitation: {
         required: true,
@@ -50,10 +50,10 @@ const decline = () => {
         <div class="rounded-xl bg-white min-h-[300px]">
             <div class="flex flex-col items-center justify-between px-6 pb-6">
                 <div class="w-full">
-                    <h2 class="text-center text-xl font-bold uppercase text-primary">Invitation</h2>
+                    <h2 class="text-center text-xl font-bold uppercase text-primary">{{$t('invitation')}}</h2>
                     <p class="mt-6 text-sm font-light text-gray-700">
-                        You have received an invitation from {{ invitation.inviting_player.name }}, to play a game on
-                        <strong>{{ dayjs(invitation.date).format('DD MMMM YYYY, h:m A') }}</strong> at
+                        {{ $t('you-have-received-an-invitation-from- :name ,-to-play-a-game-on',{ name : invitation.inviting_player.name}) }}
+                        <strong><DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date"/> </strong>{{ $t('at') }}
                         <strong>{{ invitation.stadium.address }}, {{ invitation.stadium.city }}, {{ invitation.stadium.country }}</strong>
                     </p>
                 </div>
@@ -63,8 +63,8 @@ const decline = () => {
                 </div>
 
                 <div class="flex w-full flex-col space-y-4">
-                    <PrimaryButton @click="accept">Accept</PrimaryButton>
-                    <PrimaryButton @click="decline">Decline</PrimaryButton>
+                    <PrimaryButton @click="accept">{{$t('accept')}}</PrimaryButton>
+                    <PrimaryButton @click="decline">{{$t('decline')}}</PrimaryButton>
                 </div>
             </div>
         </div>

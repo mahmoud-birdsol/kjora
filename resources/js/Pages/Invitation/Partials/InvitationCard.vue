@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { CalendarIcon, MapPinIcon } from "@heroicons/vue/20/solid";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import RespondToInvitationModal from "@/Components/RespondToInvitationModal.vue";
-import InvitationPlayerCard from '../../../Components/PlayerCards/InvitationPlayerCard.vue';
+import DateTranslation from '@/Components/DateTranslation.vue';import InvitationPlayerCard from '../../../Components/PlayerCards/InvitationPlayerCard.vue';
 
 const props = defineProps({
     invitation: {
@@ -25,6 +25,7 @@ const props = defineProps({
                     <InvitationPlayerCard :player="invitation.inviting_player" :invitation="invitation" />
                 </div>
             </div>
+
         </div>
     </div>
 </template>

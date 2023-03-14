@@ -80,6 +80,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'current_city',
         'current_latitude',
         'current_longitude',
+        'locale',
         'state'
     ];
 

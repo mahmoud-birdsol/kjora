@@ -73,7 +73,8 @@ class FavoriteController extends Controller
         $request->user()->favorites()->attach($favorite);
 
         FlashMessage::make()->success(
-            message: $favorite->name.' has been successfully added to your favorites.'
+            message: $favorite->name . __(' has been successfully added to your favorites.')
+
         )->closeable()->send();
 
         return redirect()->back();
@@ -89,7 +90,8 @@ class FavoriteController extends Controller
         $request->user()->favorites()->detach($favorite);
 
         FlashMessage::make()->success(
-            message: $favorite->name.' has been successfully removed from your favorites.'
+            message: $favorite->name . __(' has been successfully removed from your favorites.')
+
         )->closeable()->send();
 
         return redirect()->back();

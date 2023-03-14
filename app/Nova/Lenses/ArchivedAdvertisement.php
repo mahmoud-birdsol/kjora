@@ -116,4 +116,13 @@ class ArchivedAdvertisement extends Lens
     {
         return 'archived-advertisement';
     }
+    /**
+     * Set the label for the metric.
+     *
+     * @return string
+     */
+    public function name()
+    {
+        return __('Archived Advertisement');
+    }
 }

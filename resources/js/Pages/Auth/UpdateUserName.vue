@@ -27,22 +27,30 @@ function submit() {
 }
 </script>
 <template>
-    <AppLayout title="update username">
+    <AppLayout :title="$t('update username')">
         <div class="flex gap-5 max-md:flex-wrap">
-            <h1 class="text-2xl font-bold text-white uppercase sm:text-7xl md:w-1/2">
-                account
+            <h1 class="text-2xl sm:text-7xl font-bold text-white uppercase md:w-1/2">
+                {{$t('account')}}
+
             </h1>
             <Card class="md:w-1/2" v-loading="loading">
-                <CardContent title="update username">
+                <CardContent :title="$t('update username')">
                     <template #body>
-                        <div class="py-10 text-sm text-center text-gray-500">
-                            please enter new username and password to update your username
-                        </div>
-                        <div class="flex flex-col gap-4 my-10">
-                            <div>
-                                <InputLabel value="username" color="primary" />
-                                <TextInput v-model="form.username" placeholder="username" />
-                                <InputError class="mt-2" :message="form.errors.username" />
+                            <div class="text-sm text-gray-500 text-center py-10">
+                                {{$t('please enter new username and password to update your username')}}
+                            </div>
+                            <div class="flex flex-col gap-4 my-10">
+                                <div>
+                                    <InputLabel :value="$t('username')" color="primary" />
+                                    <TextInput  v-model="form.username" :placeholder="$t('username')" />
+                                    <InputError class="mt-2" :message="form.errors.username" />
+
+                                </div>
+                                <div>
+                                    <InputLabel :value="$t('password')" color="primary" />
+                                    <TextInput type="password" v-model="form.password" :placeholder="$t('enter your password')"/>
+                                    <InputError class="mt-2" :message="form.errors.password" />
+                                </div>
 
                             </div>
                             <div>
@@ -50,10 +58,9 @@ function submit() {
                                 <TextInput type="password" v-model="form.password" placeholder="enter your password" />
                                 <InputError class="mt-2" :message="form.errors.password" />
                             </div>
-                        </div>
                     </template>
                     <template #footer>
-                        <PrimaryButton @click="submit" class="align-bottom">Upload</PrimaryButton>
+                        <PrimaryButton @click="submit" class="align-bottom">{{ $t('edit') }}</PrimaryButton>
                     </template>
                 </CardContent>
             </Card>

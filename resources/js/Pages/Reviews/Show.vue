@@ -46,13 +46,10 @@ function submitRatingForm() {
 <template>
     <Head title="Home" />
 
-    <AppLayout title="rate">
+    <AppLayout :title="$t('rate')">
         <template #header>
-            rate
+            {{$t('rate')}}
         </template>
-
-
-
         <div class="bg-white h-full p-6 rounded-xl">
             <div class="text-black flex flex-col  sm:flex-row gap-2 sm:items-center justify-between mb-4">
                 <div class="flex gap-3">
@@ -64,19 +61,19 @@ function submitRatingForm() {
                         <h3 class="capitalize font-bold text-lg text-primary">{{ review.player.name }}</h3>
                         <Link :href="route('player.profile', review.player.id)">@{{ review.player.username }} {{ 'cairo' }}</Link>
                         <div class="text-stone-400 text-xs flex gap-2 flex-wrap">
-                            <span>Age: {{ review.player.age }}</span>
-                            <span>Played: {{ '24' }}</span>
-                            <span>Missed: {{ '15' }}</span>
-                            <span>Position: {{ review.player.position.name }}</span>
+                            <span>{{$t('age')}}: {{ review.player.age }}</span>
+                            <span>{{$t('played')}}: {{ '24' }}</span>
+                            <span>{{$t('missed')}}: {{ '15' }}</span>
+                            <span>{{$t('Position')}}: {{ review.player.position.name }}</span>
                         </div>
                     </div>
                 </div>
                 <div class="flex flex-col gap1 ">
                     <ElRate v-model="rating" disabled size="large" />
                     <p class="flex items-center font-bold text-sm text-primary">
-                        {{ rating }} out of 5
+                        {{ rating }} {{$t('out of')}} 5
                     </p>
-                    <span class="text-stone-400 text-xs">based on 245 players rating</span>
+                    <span class="text-stone-400 text-xs">{{$t('based on :count players rating',{count:245})}}</span>
                 </div>
             </div>
 
@@ -98,7 +95,7 @@ function submitRatingForm() {
                         <RatingChart :data="data" :labels="labels" theme="rgb(0,100,0)" overlay='rgba(0,100,0,0.2)' />
                     </div>
                     <button @click="submitRatingForm" class="bg-black p-3 px-6 mt-4  w-full text-white rounded-full">
-                        Rate
+                        {{$t('rate')}}
                     </button>
                 </div>
             </div>

@@ -51,7 +51,7 @@ const maxWidthClass = computed(() => {
             </div>
 
             <div class="flex justify-center my-4" v-if="!action">
-                <PrimaryButton @click="$emit('close')">Ok</PrimaryButton>
+                <PrimaryButton @click="$emit('close')">{{$t('ok')}}</PrimaryButton>
             </div>
         </div>
     </Modal>
