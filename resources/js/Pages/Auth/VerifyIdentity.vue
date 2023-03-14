@@ -125,7 +125,7 @@ const save = () => {
 
         <div class="grid grid-cols-1 gap-4 mt-8 sm:grid-cols-2">
             <!-- Step 1...
-                                                                =====================================================-->
+                                                                                    =====================================================-->
             <Card>
                 <CardContent title="Verify Identity">
                     <template #body>
@@ -180,7 +180,7 @@ const save = () => {
             </Card>
 
             <!-- Step 2...
-                                                                =====================================================-->
+                                                                                                        =====================================================-->
             <Card>
                 <CardContent title="Upload Identity">
                     <template #body>
@@ -193,7 +193,7 @@ const save = () => {
                                     <div class="flex space-x-4">
                                         <div class="w-1/4">
                                             <button @click="showIdentitySelfieModal = true"
-                                                class="relative w-full group h-full">
+                                                class="relative w-full h-full group">
                                                 <img v-if="form.identity_selfie_image" :src="form.identity_selfie_image"
                                                     alt="" class="w-full h-auto">
                                                 <img v-if="identitySelfieImagePreview" :src="identitySelfieImagePreview"
@@ -260,8 +260,8 @@ const save = () => {
                     </template>
                     <template #footer>
                         <div class="mt-4">
-                            <PrimaryButton v-show="completedFirstStep == true && !(identity_status==='Verified')" :class="{ 'opacity-25': form.processing }"
-                                :disabled="form.processing" @click="save()">
+                            <PrimaryButton v-show="completedFirstStep == true && !(identity_status === 'Verified')"
+                                :class="{ 'opacity-25': form.processing }" :disabled="form.processing" @click="save()">
                                 Verify
                             </PrimaryButton>
                         </div>
@@ -271,7 +271,7 @@ const save = () => {
         </div>
 
         <!-- Upload image Modals...
-                                                            =====================================================-->
+                                                                                                    =====================================================-->
 
         <UploadImageField :should-upload="false" :show="showIdentityFrontImageModal"
             :current-image-url="identityFrontImagePreview" v-model="form.identity_front_image"
@@ -280,6 +280,7 @@ const save = () => {
         <UploadImageField :should-upload="false" :show="showIdentityBackImageModal"
             :current-image-url="identityBackImagePreview" v-model="form.identity_back_image"
             @close="showIdentityBackImageModal = false" @selected="setIdentityBackImagePreview" />
+
 
         <UploadSelfieModal v-model="form.identity_selfie_image" :show="showIdentitySelfieModal"
             @close="showIdentitySelfieModal = false" />

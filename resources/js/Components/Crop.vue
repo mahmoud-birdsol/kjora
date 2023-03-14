@@ -1,15 +1,15 @@
 <script setup>
 import VuePictureCropper, { cropper } from 'vue-picture-cropper'
 import { ScissorsIcon } from '@heroicons/vue/24/outline';
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 import Modal from './Modal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 const props = defineProps({
     img: Object,
     open: Boolean,
-    aspectRatio:{
-        default:null
+    aspectRatio: {
+        default: null
     }
 })
 
@@ -18,7 +18,7 @@ const result = reactive({
     dataURL: '',
     blobURL: '',
 })
-const num = ref(Math.floor(Math.random()*100))
+const num = ref(Math.floor(Math.random() * 100))
 const options = {
     viewMode: 1,
     dragMode: 'crop',
@@ -27,7 +27,7 @@ const options = {
     minCanvasHeight: '320',
     minContainerWidth: '320',
     minContainerHeight: '320',
-    aspectRatio:props.aspectRatio,
+    aspectRatio: props.aspectRatio,
 }
 let boxStyle = {
     width: '100%',
@@ -35,6 +35,9 @@ let boxStyle = {
     backgroundColor: '#f8f8f8',
     margin: 'auto',
 }
+const imageObj = computed(() => {
+    return props.img
+})
 
 async function getResult() {
     if (!cropper) return
@@ -42,31 +45,32 @@ async function getResult() {
     const blob = await cropper.getBlob()
     if (!blob) return
     const file = await cropper.getFile({
-        fileName: props.img.name,
+        fileName: imageObj.value.name,
     })
 
     result.blobURL = URL.createObjectURL(blob)
     result.dataURL = filePreviewUrl
-    
-    emit('crop', file, filePreviewUrl, props.img.id)
+
+    emit('crop', file, filePreviewUrl, imageObj.value.id)
     emit('update:open')
 
 }
 function ready() {
-    if(cropper.cropped && cropper.ready && cropper.originalUrl == props.img.url){
-    }else{
-        num.value+=1
+    console.log(imageObj.value);
+    console.log(cropper.originalUrl == imageObj.value.url.value);
+    if (cropper.cropped && cropper.ready && cropper.originalUrl == imageObj.value.url) {
+    } else {
+        num.value += 1
     }
 }
 </script>
 <template>
-    <div v-show="open" 
-    class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
-    <div v-show="open"
-        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-7xl bg-white p-6 rounded-xl flex gap-4 flex-col">
-        <XMarkIcon class="w-4" @click="$emit('update:open')"/>
+    <div v-if="open" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
+    <div v-if="open"
+        class="absolute flex flex-col gap-4 p-6 -translate-x-1/2 -translate-y-1/2 bg-white top-1/2 left-1/2 min-w-7xl rounded-xl">
+        <XMarkIcon class="w-4" @click="$emit('update:open')" />
         <div>
-            <VuePictureCropper :boxStyle="boxStyle" :img="img?.url" :options="options" @ready="ready" :key="num"/>
+            <VuePictureCropper :boxStyle="boxStyle" :img="imageObj?.url" :options="options" @ready="ready" :key="num" />
         </div>
         <PrimaryButton @click="getResult">done</PrimaryButton>
     </div>
