@@ -130,7 +130,7 @@ function calcShouldRate() {
 
             <!-- respond to invitation state buttons -->
             <div class="self-stretch text-sm font-bold">
-                <div v-if="invitation.state == null && invitation.inviting_player_id !== currentUser.id"
+                <div v-if="invitation.state == null && invitation.inviting_player_id !== currentUser.id && dayjs(props.invitation?.date).diff(dayjs(), 'hour') > 0"
                     class="flex justify-center gap-6">
                     <button @click="decline"
                         class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
