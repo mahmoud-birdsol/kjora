@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('report_options', function (Blueprint $table) {
             $table->id();
-            $table->string('body');
+            $table->json('body');
             $table->timestamps();
         });
     }
