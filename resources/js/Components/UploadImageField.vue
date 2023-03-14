@@ -67,7 +67,7 @@ const form = useForm({
     collection_name: props.collectionName,
     image: null,
 });
-const num = ref(0)
+const num = ref(Math.floor(Math.random()*100))
 const cropFile = ref([])
 const openModal = ref(false)
 onMounted(() => {
@@ -111,7 +111,7 @@ const removePhoto = () => {
 
 const upload = () => {
     if (!props.shouldUpload) {
-        emit('update:modelValue', fileData.value);
+        emit('update:modelValue', fileData.value.url);
         emit('selected', previewImageUrl.value);
         close()
         return;
@@ -124,7 +124,7 @@ const upload = () => {
     form.post(route('upload'), {
         preserveState: true,
         preserveScroll: true,
-        onSuccess: (response) => {
+        onFinish: (response) => {
             close();
         },
     });
@@ -146,7 +146,8 @@ let showCropModal = (url) => {
 function close(){
     fileData.value=[]
     previewImageUrl.value =''
-    num.value+=1
+    num.value += 1
+    console.log(num.value)
     emit('close')
 }
 </script>

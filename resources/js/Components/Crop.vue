@@ -18,7 +18,7 @@ const result = reactive({
     dataURL: '',
     blobURL: '',
 })
-const num = ref(0)
+const num = ref(Math.floor(Math.random()*100))
 const options = {
     viewMode: 1,
     dragMode: 'crop',
