@@ -17,7 +17,11 @@ class InvitationController extends Controller
         $query = Invitation::where('invited_player_id', $request->user()->id)
             ->latest('date')
             ->with('invitingPlayer')
+            ->with(['reviews' => function ($q) use ($request) {
+                $q->whereNot('player_id', '=', $request->user()->id)->whereDoesntHave('ratingCategories');
+            }])
             ->with('stadium');
+
 
         $request->whenFilled('search', fn () => $query->where(function ($query) use ($request) {
             $query->whereHas('invitingPlayer', function ($q) use ($request) {

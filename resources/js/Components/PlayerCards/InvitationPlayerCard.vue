@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import { CustomMarker, GoogleMap, Marker } from "vue3-google-map";
 import { CheckIcon, HandRaisedIcon, XMarkIcon } from '@heroicons/vue/24/solid';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import DateTranslation from '../DateTranslation.vue';
 onBeforeMount(() => {
     dayjs.extend(relativeTime);
 });
@@ -71,9 +72,13 @@ onMounted(() => {
 const shouldRate = ref(false)
 function calcShouldRate() {
 
-    if (dayjs().diff(dayjs(props.invitation.date), 'hour') > 2) {
+    if (props.invitation?.reviews?.length) {
         shouldRate.value = true;
     }
+    // if (props.invitation.updated_at && dayjs(props.invitation?.updated_at).diff(dayjs(), 'hour') > 2 && props.invitation.state == 'accepted') {
+    //     shouldRate.value = true;
+
+    // }
 }
 </script>
 
@@ -99,15 +104,15 @@ function calcShouldRate() {
                     <h2 class="">
                         {{ player.first_name }} {{ player.last_name }}
                     </h2>
-                    <Link class="hover:underline" :href="route('player.profile', player.id)">@{{
+                    <Link class="hover:underline before:content-['a'] before:text-transparent" :href="route('player.profile', player.id)">@{{
                         player.username }}</Link>
                     <span>
                         <HandRaisedIcon class="w-4 text-yellow-300 rotate-[15deg]" />
                     </span>
                 </div>
                 <!-- invitation date -->
-                <p class="text-xs text-center text-stone-300/70">Wants to invite you for a match in
-                    <span>{{ dayjs(invitation.date).format('DD MMMM YYYY, h:m A') }}</span>
+                <p class="text-xs text-center text-stone-300/70">{{$t('Wants to invite you for a match in')}}
+                    <DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date"/>
                 </p>
             </div>
             <!-- invite user location -->
@@ -126,7 +131,8 @@ function calcShouldRate() {
 
             <!-- respond to invitation state buttons -->
             <div class="self-stretch text-sm font-bold">
-                <div v-if="invitation.state == null" class="flex justify-center gap-6">
+                <div v-if="invitation.state == null && invitation.inviting_player_id !== currentUser.id && dayjs(props.invitation?.date).diff(dayjs(), 'hour') > 0"
+                    class="flex justify-center gap-6">
                     <button @click="decline"
                         class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                         <XMarkIcon class="w-6 text-red-600" />
@@ -136,7 +142,7 @@ function calcShouldRate() {
                         <CheckIcon class="w-6 text-green-600" />
                     </button>
                 </div>
-                <div v-if="invitation.state == 'declined' && !shouldRate" class="flex justify-center">
+                <div v-if="invitation.state == 'declined'" class="flex justify-center">
                     <button :disabled="true"
                         class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-200 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                         <XMarkIcon class="w-6 text-red-600" />
@@ -144,13 +150,14 @@ function calcShouldRate() {
                 </div>
                 <Link :href="route('chats.index')" v-if="invitation.state == 'accepted' && !shouldRate"
                     class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
-                Chat
+                {{$t('chat')}}
                 </Link>
-                <!-- todo:fix the condition to show rate when they invitation date end -->
-                <button v-if="shouldRate"
+
+                <Link :href="route('player.review.show', invitation.reviews[0].id)"
+                    v-if="invitation.state == 'accepted' && shouldRate"
                     class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
-                    Rate
-                </button>
+                {{$t('rate')}}
+                </Link>
             </div>
 
 

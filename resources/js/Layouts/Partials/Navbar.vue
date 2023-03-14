@@ -7,8 +7,8 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import NotificationComponent from '@/Components/NotificationComponent.vue';
-import ChatIcon from '../../Components/Icons/ChatIcon.vue';
-import FootBallIcon from '../../Components/Icons/FootBallIcon.vue';
+import ChatIcon from '@/Components/Icons/ChatIcon.vue';
+import FootBallIcon from '@/Components/Icons/FootBallIcon.vue';
 import {
     BellIcon,
     Bars3Icon,
@@ -18,10 +18,10 @@ import {
     EllipsisHorizontalCircleIcon,
     StarIcon,
 } from '@heroicons/vue/24/outline';
-import Avatar from "../../Components/Avatar.vue";
+import Avatar from "@/Components/Avatar.vue";
 import { XMarkIcon } from '@heroicons/vue/20/solid';
 
-
+const locale = usePage().props.value.locale
 const currentUser = usePage().props.value.auth.user
 const showingNavigationDropdown = ref(false);
 
@@ -29,7 +29,7 @@ const logout = () => {
     Inertia.post(route('logout'));
 };
 let state = usePage().props.value.user.state_name
-console.log(state)
+
 </script>
 
 <template>
@@ -43,32 +43,32 @@ console.log(state)
                         <NavLink :href="route('home')" :active="route().current('home')" class="">
                             <HomeIcon class="w-4 h-4 text-primary" />
                             <span class="">
-                                Home
+                                {{ $t('home') }}
                             </span>
                         </NavLink>
                         <NavLink :href="route('chats.index')" :active="route().current('chats.index')" class="">
                             <ChatIcon class="w-4 h-4 text-primary" />
                             <span>
-                                Chat
+                                {{ $t('chat') }}
                             </span>
                         </NavLink>
                         <NavLink :href="route('favorites.index')" :active="route().current('favorites.index')">
                             <HeartIcon class="w-4 h-4 text-primary" />
                             <span>
-                                Favorites
+                                {{$t('favorites')}}
                             </span>
                         </NavLink>
                         <NavLink :href="route('invitation.index')" :active="route().current('invitation.index')">
                             <FootBallIcon class="fill-primary" />
 
                             <span>
-                                Invitation
+                                {{$t('invitations')}}
                             </span>
                         </NavLink>
                         <NavLink :href="route('more')" :active="route().current('more')">
                             <EllipsisHorizontalCircleIcon class="w-4 h-4 text-primary" />
                             <span>
-                                More
+                                {{$t('more')}}
                             </span>
                         </NavLink>
                     </div>
@@ -76,11 +76,12 @@ console.log(state)
 
                 <div class="hidden md:flex md:gap-x-3 sm:items-center lg:ml-6">
                     <!-- upgrade button  -->
-                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5" v-if="state !=='Premium'">
+                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5"
+                        v-if="state !== 'Premium'">
                         <div class="bg-black rounded-full">
                             <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                         </div>
-                        <Link :href="route('upgrade')">Upgrade</Link>
+                        <Link :href="route('upgrade')">{{$t('upgrade')}}</Link>
                     </button>
                     <!-- user city  -->
                     <div class="flex items-center gap-1 ">
@@ -88,7 +89,7 @@ console.log(state)
                         <span class="text-white w-max">{{ currentUser.current_city }}</span>
                     </div> <!-- Settings Dropdown -->
                     <div class="relative ">
-                        <Dropdown align="right" width="48">
+                        <Dropdown :align="locale == 'en'? 'right' :'left'" width="48">
                             <template #trigger>
                                 <button
                                     class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
@@ -100,11 +101,11 @@ console.log(state)
 
                             <template #content>
                                 <DropdownLink :href="route('profile.show')">
-                                    Profile
+                                    {{$t('profile')}}
                                 </DropdownLink>
 
                                 <DropdownLink :href="route('identity.verification.create')">
-                                    Identity Verification
+                                    {{$t('identity-verification')}}
                                 </DropdownLink>
 
                                 <div class="border-t border-gray-100" />
@@ -112,7 +113,7 @@ console.log(state)
                                 <!-- Authentication -->
                                 <form @submit.prevent="logout">
                                     <DropdownLink as="button">
-                                        Log Out
+                                        {{$t('log-out')}}
                                     </DropdownLink>
                                 </form>
                             </template>
@@ -120,8 +121,8 @@ console.log(state)
                     </div>
 
                     <!-- Notifications Dropdown -->
-                    <div class="relative ">
-                        <Dropdown width="96">
+                    <div class="relative">
+                        <Dropdown :align="locale == 'en'? 'right' :'left'" width="96">
                             <template #trigger>
                                 <button>
                                     <BellIcon class="w-6 h-6 text-white"></BellIcon>
@@ -131,7 +132,7 @@ console.log(state)
                             <template #content>
                                 <!-- Notifications -->
                                 <div class="block px-4 py-2 text-xs text-gray-400">
-                                    Notifications
+                                    {{$t('notifications')}}
                                 </div>
 
                                 <div v-if="$page.props.notifications.length">
@@ -144,13 +145,13 @@ console.log(state)
 
                                 <div v-else>
                                     <div class="block px-4 py-2 text-xs text-center text-gray-500">
-                                        You don't have any new notifications.
+                                        {{$t("you-don't-have-any-new-notifications")}}.
                                     </div>
                                 </div>
 
                                 <div class="block px-4 py-2 text-xs text-center text-sky-500">
-                                    <Link :href="route('notification.index')" class="text-sky-500 hover:text-sky-700">
-                                    View all
+                                    <Link :href="route('notification.index')" class="text-primary hover:text-primaryDark">
+                                    {{$t('view-all')}}
                                     </Link>
                                 </div>
                             </template>
@@ -171,7 +172,7 @@ console.log(state)
                             <template #content>
                                 <!-- Notifications -->
                                 <div class="block px-4 py-2 text-xs text-gray-400">
-                                    Notifications
+                                    {{$t('notifications')}}
                                 </div>
 
                                 <div v-if="$page.props.notifications.length">
@@ -184,23 +185,24 @@ console.log(state)
 
                                 <div v-else>
                                     <div class="block px-4 py-2 text-xs text-center text-gray-500">
-                                        You don't have any new notifications.
+                                        {{$t("you-don't-have-any-new-notifications")}}.
                                     </div>
                                 </div>
 
                                 <div class="block px-4 py-2 text-xs text-center text-sky-500">
                                     <Link :href="route('notification.index')" class="text-sky-500 hover:text-sky-700">
-                                    View all
+                                        {{$t('view-all')}}
                                     </Link>
                                 </div>
                             </template>
                         </Dropdown>
                     </div>
-                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5" v-if="state !=='Premium'">
+                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5"
+                        v-if="state !== 'Premium'">
                         <div class="bg-black rounded-full">
                             <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                         </div>
-                        <Link :href="route('upgrade')">Upgrade</Link>
+                        <Link :href="route('upgrade')">{{$t('upgrade')}}</Link>
                     </button>
                     <button
                         class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none hover:bg-transparent focus:text-gray-500"
@@ -213,18 +215,24 @@ console.log(state)
 
         <!-- Responsive Navigation Menu -->
         <!-- Responsive Navigation Menu -->
-        <div class="fixed top-0 right-0 left-0 bottom-0 bg-black bg-opacity-50 z-40"
+        <div class="fixed top-0 bottom-0 left-0 right-0 z-40 bg-black bg-opacity-50"
             :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }"
             @click="showingNavigationDropdown = false"></div>
-        <Transition enter-from-class="-left-full" enter-to-class="left-0" enter-active-class="transition-all duration-700"
-            leave-to-class="-left-full" leave-from-class="left-0" leave-active-class="transition-all duration-700">
+        <Transition
+        enter-from-class="ltr:-left-full rtl:-right-full"
+        enter-to-class="ltr:left-0 rtl:right-0"
+        enter-active-class="transition-all duration-700"
+        leave-to-class="ltr:-left-full rtl:-right-full"
+        leave-from-class="ltr:left-0 rtl:right-0"
+        leave-active-class="transition-all duration-700">
             <div class="pt-2 pb-3 space-y-1 fixed top-0  bg-black h-full w-[max(20em,50%)] z-50"
                 v-if="showingNavigationDropdown">
-                <XMarkIcon class="w-5 absolute right-0 m-3 text-white" @click="showingNavigationDropdown = false" />
+                <XMarkIcon class="w-5 absolute ltr:right-0 rtl:left-0 m-3 text-white" @click="showingNavigationDropdown = false" />
+
                 <!-- Responsive Settings Options -->
                 <div class="pt-4 pb-1 border-gray-200">
                     <div class="flex px-4">
-                        <div v-if="$page.props.jetstream.managesProfilePhotos" class="mr-3 shrink-0 min-w-max">
+                        <div v-if="$page.props.jetstream.managesProfilePhotos" class="mx-3 shrink-0 min-w-max">
                             <Avatar :image-url="$page.props.auth.user.avatar_url" :size="'lg'"
                                 :username="$page.props.auth.user.name" :border="true" />
                         </div>
@@ -240,18 +248,18 @@ console.log(state)
 
                     <div class="mt-3 space-y-1">
                         <ResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')">
-                            Profile
+                            {{$t('profile')}}
                         </ResponsiveNavLink>
 
                         <ResponsiveNavLink :href="route('identity.verification.create')"
                             :active="route().current('identity.verification.create')">
-                            Identity Verification
+                            {{$t('identity-verification')}}
                         </ResponsiveNavLink>
 
 
                         <form method="POST" @submit.prevent="logout">
                             <ResponsiveNavLink as="button">
-                                Log Out
+                                {{$t('log-out')}}
                             </ResponsiveNavLink>
                         </form>
                         <div class="border-t border-gray-100" />
@@ -259,23 +267,23 @@ console.log(state)
                 </div>
                 <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
                     <HomeIcon class="w-4 h-4 text-primary" />
-                    <span>Home</span>
+                    <span>{{ $t('home') }}</span>
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('chats.index')" :active="route().current('chats.index')">
                     <ChatIcon class="w-4 h-4 text-primary" />
-                    <span>Chat</span>
+                    <span>{{ $t('chat') }}</span>
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('invitation.index')" :active="route().current('invitation.index')">
                     <FootBallIcon class="fill-primary" />
-                    <span>Invitations</span>
+                    <span>{{$t('invitations')}}</span>
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('favorites.index')" :active="route().current('favorites.index')">
                     <HeartIcon class="w-4 h-4 text-primary" />
-                    <span>Favorite</span>
+                    <span>{{$t('favorites')}}</span>
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('more')" :active="route().current('more')">
                     <EllipsisHorizontalCircleIcon class="w-4 h-4 text-primary" />
-                    <span>More</span>
+                    <span>{{$t('more')}}</span>
                 </ResponsiveNavLink>
 
             </div>

@@ -43,4 +43,13 @@ class VerifiedVsUnverifiedUsers extends Partition
     {
         return 'verified-vs-unverified-users';
     }
+    /**
+     * Sey the label for the metric.
+     *
+     * @return string
+     */
+    public function name()
+    {
+        return __('Verified Vs Unverified Users');
+    }
 }

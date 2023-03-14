@@ -17,6 +17,9 @@ class HireController extends Controller
         $query = Invitation::where('inviting_player_id', $request->user()->id)
             ->latest('date')
             ->with('invitedPlayer')
+            ->with(['reviews' => function ($q) use ($request) {
+                $q->whereNot('player_id', '=', $request->user()->id)->whereDoesntHave('ratingCategories');
+            }])
             ->with('stadium');
 
         $request->whenFilled('search', fn () => $query->where(function ($query) use ($request) {

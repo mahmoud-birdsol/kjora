@@ -23,7 +23,15 @@ class Stadium extends Resource
      * @var string
      */
     public static $title = 'name';
-
+    /**
+     * Get the displayable label of the resource.
+     *
+     * @return string
+     */
+    public static function label(): string
+    {
+        return __("Stadiums");
+    }
     /**
      * The columns that should be searched.
      *
@@ -43,12 +51,12 @@ class Stadium extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Name')
+            Text::make(__('Name') , 'name')
                 ->sortable()
                 ->showOnPreview()
                 ->rules('required', 'max:255'),
 
-            Text::make('Google place ID')
+            Text::make(__('Google place ID'),'google_place_iD')
                 ->sortable()
                 ->showOnPreview()
                 ->rules('nullable', 'max:255'),
@@ -58,22 +66,22 @@ class Stadium extends Resource
                 ->showOnPreview()
                 ->rules('nullable', 'max:255'),
 
-            Text::make('Street Address')
+            Text::make(__('Street Address') , 'street_address')
                 ->sortable()
                 ->showOnPreview()
                 ->rules('nullable', 'max:255'),
 
-            Text::make('Longitude')
+            Text::make(__('Longitude'),'longitude')
                 ->sortable()
                 ->showOnPreview()
                 ->rules('nullable', 'max:255'),
 
-            Text::make('Latitude')
+            Text::make(__('Latitude') , 'latitude')
                 ->sortable()
                 ->showOnPreview()
                 ->rules('nullable', 'max:255'),
 
-            DateTime::make('Approved at')
+            DateTime::make(__('Approved at'),'approved_at')
                 ->sortable()
                 ->filterable()
                 ->showOnPreview()

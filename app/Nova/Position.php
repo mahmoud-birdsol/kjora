@@ -25,7 +25,15 @@ class Position extends Resource
      * @var string
      */
     public static $title = 'name';
-
+    /**
+     * Get the displayable label of the resource.
+     *
+     * @return string
+     */
+    public static function label(): string
+    {
+        return __("Positions");
+    }
     /**
      * The columns that should be searched.
      *
@@ -45,15 +53,15 @@ class Position extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Name')
+            Text::make(__('Name') , 'name')
                 ->showOnPreview()
                 ->rules('required', 'max:254'),
 
-            Textarea::make('Description')
+            Textarea::make(__('Description'),'Description')
                 ->showOnPreview()
                 ->rules('required', 'max:254'),
 
-            BelongsToMany::make('Rating Categories'),
+            BelongsToMany::make(__('Rating Categories'),'rating_categories' , RatingCategory::class),
 
             HasMany::make('Users'),
         ];

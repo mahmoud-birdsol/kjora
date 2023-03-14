@@ -30,6 +30,7 @@ class PlayerReviewController extends Controller
                 ];
             })->values();
 
+
         return Inertia::render('Reviews/Show', [
             'review' => $review->load('player'),
             'ratingCategories' => RatingCategory::whereHas('positions', function (Builder $query) use ($review) {

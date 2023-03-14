@@ -62,7 +62,7 @@ const photoInput = ref(null);
 const isLoading = ref(false);
 const isDisabled = ref(false);
 const files = ref([]);
-const num= ref(0)
+const num = ref(0)
 const selectNewPhoto = () => {
     photoInput.value.click();
 };
@@ -102,7 +102,7 @@ const upload = () => {
 
     isLoading.value = true;
     isDisabled.value = true;
-    files.value = Array.from(files.value).map(file =>file.file);
+    files.value = Array.from(files.value).map(file => file.file);
     emit('upload', files.value, filesData.value)
     reset()
 };
@@ -112,7 +112,7 @@ function reset(e) {
     files.value = []
     isLoading.value = false
     isDisabled.value = false;
-    num.value +=1 
+    num.value += 1
     emit('close');
 }
 let cropFile = ref([])
@@ -125,7 +125,7 @@ let showCropModal = (file) => {
 }
 function changeFiles(file, url, id) {
     let index = files.value.findIndex((f) => f.id === id)
-    files.value.splice(index, 1, {file:file,id:id})
+    files.value.splice(index, 1, { file: file, id: id })
     let fileUrlIndex = filesData.value.findIndex((f) => f.id === id)
     filesData.value[fileUrlIndex].url = url
     cropFile.value = []
@@ -137,7 +137,7 @@ function changeFiles(file, url, id) {
     <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="reset" :key="num">
         <div class=" flex flex-col min-h-[500px] justify-between p-6">
             <div class="flex justify-center -mt-12">
-                <h2 class="text-xl font-bold uppercase text-primary">Upload</h2>
+                <h2 class="text-xl font-bold uppercase text-primary">{{ $t('upload') }}</h2>
             </div>
             <!-- v-loading="" -->
             <div class="flex flex-col items-center h-full gap-2 py-8 ">
@@ -171,9 +171,7 @@ function changeFiles(file, url, id) {
                                     </div>
                                 </button>
                                 <button class="absolute top-0 left-0 bg-white bg-opacity-90 rounded-br-xl"
-                                    @click="showCropModal(file)"
-                                    v-if="file.url.startsWith('data:image')"
-                                    >
+                                    @click="showCropModal(file)" v-if="file.url.startsWith('data:image')">
                                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
                                         <CropIcon class="w-4" />
                                     </div>
@@ -223,7 +221,7 @@ function changeFiles(file, url, id) {
                         (10 MB) are allowed
                     </div>
                     <PrimaryButton @click.prevent="upload" :disabled="isDisabled">
-                        Upload
+                        {{ $t('upload') }}
                     </PrimaryButton>
                     <!-- <InputError class="mt-2" :message="form.errors.image" /> -->
                 </div>

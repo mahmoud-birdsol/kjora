@@ -4,7 +4,7 @@ import { TrashIcon, EyeIcon } from '@heroicons/vue/24/outline';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useForm, Link } from '@inertiajs/inertia-vue3';
-
+import DateTranslation from './DateTranslation.vue';
 dayjs.extend(relativeTime);
 
 const props = defineProps({
@@ -57,7 +57,8 @@ const deleteNotification = () => {
             </div>
             <div>
                 <time :datetime="notification.created_at"
-                      class="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">{{ dayjs(notification.created_at).fromNow() }}
+                      class="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">
+                      <DateTranslation type="range" :start="notification.created_at" />
                 </time>
             </div>
         </div>

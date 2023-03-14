@@ -1,6 +1,6 @@
 <script setup>
-import {onMounted, ref} from 'vue';
-import {CheckIcon, ChevronDownIcon} from '@heroicons/vue/24/solid';
+import { onMounted, ref } from 'vue';
+import { CheckIcon, ChevronDownIcon } from '@heroicons/vue/24/solid';
 
 
 const props = defineProps({
@@ -22,11 +22,11 @@ const props = defineProps({
         required: false,
         type: Object,
     },
-    bgColor:{
-        default:'white'
+    bgColor: {
+        default: 'white'
     },
-    txtColor:{
-        default:'black'
+    txtColor: {
+        default: 'black'
     }
 });
 
@@ -43,7 +43,7 @@ onMounted(() => {
                 return option[props.valueName] == props.modelValue;
             })[0];
         } else {
-            selected.value = props.options[0];
+            selected.value = '';
         }
     } else {
         axios.get(props.source).then(response => {
@@ -140,62 +140,50 @@ const loadMore = () => {
 
 <template>
     <div>
-        <!--        <div class="fixed top-0 left-0 w-full h-full z-20" @click="showDropDown = false" v-if="showDropDown"></div>-->
+        <!--        <div class="fixed top-0 left-0 z-20 w-full h-full" @click="showDropDown = false" v-if="showDropDown"></div>-->
         <div class="relative mt-1">
-            <button type="button" @click="showDropDown = ! showDropDown"
-                    class="relative w-full cursor-pointer rounded-full border border-gray-300  py-2 pl-3 pr-10 text-left shadow-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
-                    :class="`bg-${bgColor} text-${txtColor}`"
-                    aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
+            <button type="button" @click="showDropDown = !showDropDown"
+                class="relative w-full pl-3 pr-10 text-left border border-gray-300 rounded-full shadow-sm cursor-pointer focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
+                :class="[`bg-${bgColor} text-${txtColor}`, selected != '' ? 'py-2' : 'py-4']" aria-haspopup="listbox"
+                aria-expanded="true" aria-labelledby="listbox-label">
                 <span class="flex items-center" v-if="selected">
-                    <img :src="selected[imageName]" alt="" class="h-6 w-6 flex-shrink-0 rounded">
-                    <span class="ml-3 block truncate">{{ selected[textName] }}</span>
+                    <img :src="selected[imageName]" alt="" class="flex-shrink-0 w-6 h-6 rounded">
+                    <span class="block ml-3 truncate">{{ selected[textName] }}</span>
                 </span>
-                <span class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                    <ChevronDownIcon class="h-5 w-5 text-gray-400"/>
+                <span class="absolute inset-y-0 flex items-center pr-2 ml-3 pointer-events-none ltr:right-0 rtl:left-0">
+                    <ChevronDownIcon class="w-5 h-5 text-gray-400" />
                 </span>
             </button>
 
-            <transition
-                enter-active-class="transition ease-in duration-100"
-                enter-from-class="opacity-0"
-                enter-to-class="opacity-100"
-                leave-active-class="transition ease-in duration-100"
-                leave-from-class="opacity-100"
-                leave-to-class="opacity-0"
-            >
-                <ul v-if="showDropDown"
-                    v-infinite-scroll="loadMore"
-                    v-loading="loading"
-                    class="absolute z-30 mt-1 max-h-56 w-full overflow-auto rounded-lg  py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-                    :class="`bg-${bgColor}`"
-                    tabindex="-1" role="listbox" aria-labelledby="listbox-label"
+            <transition enter-active-class="transition duration-100 ease-in" enter-from-class="opacity-0"
+                enter-to-class="opacity-100" leave-active-class="transition duration-100 ease-in"
+                leave-from-class="opacity-100" leave-to-class="opacity-0">
+                <ul v-if="showDropDown" v-infinite-scroll="loadMore" v-loading="loading"
+                    class="absolute z-30 w-full py-1 mt-1 overflow-auto text-base rounded-lg shadow-lg max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                    :class="`bg-${bgColor}`" tabindex="-1" role="listbox" aria-labelledby="listbox-label"
                     aria-activedescendant="listbox-option-3">
                     <li>
                         <div class="flex p-4">
-                            <input type="search"
-                                   v-model="searchValue"
-                                   class="block w-full rounded border-gray-300 px-4 shadow-sm focus:border-primary focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                   @input="search"
-                                   placeholder="Search">
+                            <input type="search" v-model="searchValue"
+                                class="block w-full px-4 border-gray-300 rounded shadow-sm focus:border-primary focus:ring-primary sm:text-sm disabled:bg-gray-100"
+                                @input="search" placeholder="Search">
                         </div>
                     </li>
 
                     <li v-if="filteredOptions.length" v-for="option in filteredOptions" @click="select(option)"
-                        class="relative cursor-pointer select-none py-2 pl-3 pr-9 hover:bg-primary hover:text-white"
-                        :class="`text-${txtColor}`"
-                        id="listbox-option-0"
-                        role="option">
+                        class="relative py-2 pl-3 cursor-pointer select-none pr-9 hover:bg-primary hover:text-white"
+                        :class="`text-${txtColor}`" id="listbox-option-0" role="option">
                         <div class="flex items-center">
-                            <img :src="option[imageName]" alt="" class="h-6 w-6 flex-shrink-0 rounded">
-                            <span class="font-normal ml-3 block truncate"
-                                  :class="{'font-semibold': option[valueName] == selected[valueName], 'font-normal': option[valueName] != selected[valueName]}">{{
+                            <img :src="option[imageName]" alt="" class="flex-shrink-0 w-6 h-6 rounded">
+                            <span class="block ml-3 font-normal truncate"
+                                :class="{ 'font-semibold': option[valueName] == selected[valueName], 'font-normal': option[valueName] != selected[valueName] }">{{
                                     option[textName]
                                 }}</span>
                         </div>
 
                         <span class="absolute inset-y-0 right-0 flex items-center pr-4"
-                              :class="{'text-primary': option[valueName] == selected[valueName], 'text-white': option[valueName] != selected[valueName]}">
-                            <CheckIcon class="h-5 w-5"/>
+                            :class="{ 'text-primary': option[valueName] == selected[valueName], 'text-white': option[valueName] != selected[valueName] }">
+                            <CheckIcon class="w-5 h-5" />
                         </span>
                     </li>
                 </ul>

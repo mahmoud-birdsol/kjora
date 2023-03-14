@@ -39,15 +39,15 @@ function filterConversations() {
 </script>
 
 <template>
-    <div class="flex flex-col gap-4 h-full">
+    <div class="flex flex-col h-full gap-4">
         <div class="flex">
-            <TextInput type="search" v-model="search" placeholder="Search" />
+            <TextInput type="search" v-model="search" :placeholder="$t('search')" />
         </div>
 
-        <div class="">
-            <p class="mb-3 font-bold text-black uppercase ">total ({{ filteredConversations.length }})</p>
+        <div class="flex-grow">
+            <p class="mb-3 font-bold text-black uppercase ">{{$t('total ( :count )', {count:filteredConversations.length })}}</p>
             <div ref="conversationList"
-                class="flex self-end flex-col gap-3 hideScrollBar max-h-[500px] overflow-auto  lg:max-h-[50pxx] ">
+                class="flex self-end hideScrollBar flex-col gap-3 h-full max-h-[500px] overflow-auto  ">
                 <ListGroupTransition>
                     <template v-for="conversation in filteredConversations" :key="conversation.id">
                         <ConversationCard :conversation="conversation" />

@@ -34,9 +34,9 @@ function reloadMedia() {
 </script>
 
 <template>
-    <Head title="Home" />
+    <Head :title="$t('home')" />
 
-    <AppLayout title="Home">
+    <AppLayout :title="$t('home')" >
         <template #header>
             <HelloUserHeader />
         </template>
@@ -49,7 +49,7 @@ function reloadMedia() {
                         <button @click="currentTabId = tab.id" :data-tab="tab.name"
                             class="text-sm font-semibold uppercase transition-colors duration-150 ease-in hover:text-stone-600 "
                             :class="tab.id === currentTabId ? 'text-stone-800' : 'text-stone-400'">{{
-                                tab.name }} </button>
+                                $t(tab.name) }} </button>
                     </template>
 
                 </div>

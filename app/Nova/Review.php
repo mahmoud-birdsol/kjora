@@ -34,7 +34,15 @@ class Review extends Resource
     public static $search = [
         'id',
     ];
-
+    /**
+     * Get the displayable label of the resource.
+     *
+     * @return string
+     */
+    public static function label(): string
+    {
+        return __("Reviews");
+    }
     /**
      * Get the fields displayed by the resource.
      *
@@ -45,7 +53,7 @@ class Review extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make('Reviewer', 'reviewer', User::class)
+            BelongsTo::make(__('Reviewer'), 'reviewer', User::class)
                 ->showOnPreview()
                 ->sortable()
                 ->filterable()
@@ -54,7 +62,7 @@ class Review extends Resource
                     'exists:users,id',
                 ]),
 
-            BelongsTo::make('Player', 'player', User::class)
+            BelongsTo::make(__('Player'), 'player', User::class)
                 ->showOnPreview()
                 ->sortable()
                 ->filterable()
@@ -63,7 +71,7 @@ class Review extends Resource
                     'exists:users,id',
                 ]),
 
-            BelongsTo::make('Invitation', 'invitation', Invitation::class)
+            BelongsTo::make(__('Invitation'), 'invitation', Invitation::class)
                 ->showOnPreview()
                 ->sortable()
                 ->filterable()
@@ -72,7 +80,7 @@ class Review extends Resource
                     'exists:invitations,id',
                 ]),
 
-            DateTime::make('Reviewed At')
+            DateTime::make(__('Reviewed At'),'reviewed_at')
                 ->nullable()
                 ->sortable()
                 ->filterable()

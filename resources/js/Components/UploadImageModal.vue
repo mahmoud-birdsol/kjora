@@ -71,7 +71,7 @@ const updatePhotoPreview = () => {
     >
         <div class="flex flex-col min-h-[500px] justify-between p-6">
             <div class="flex justify-center">
-                <h2 class="text-xl text-primary font-bold uppercase">Upload</h2>
+                <h2 class="text-xl text-primary font-bold uppercase">{{$t('upload')}}</h2>
             </div>
             <div class="flex justify-center items-center">
                 <input
@@ -101,7 +101,7 @@ const updatePhotoPreview = () => {
             </div>
             <div>
                 <PrimaryButton @click="close">
-                    Upload
+                    {{$t('upload')}}
                 </PrimaryButton>
             </div>
         </div>

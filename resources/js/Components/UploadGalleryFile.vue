@@ -168,12 +168,12 @@ let showCropModal = (file) => {
     <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="reset" :key="num">
         <div class=" flex flex-col min-h-[500px] justify-between p-6">
             <div class="flex justify-center -mt-12">
-                <h2 class="text-xl font-bold uppercase text-primary">Upload</h2>
+                <h2 class="text-xl font-bold uppercase text-primary">{{$t('upload')}}</h2>
             </div>
             <div>
                 <InputLabel :value="'Caption'" class="text-primary" />
                 <div class="flex items-center flex-grow ">
-                    <textarea v-model="caption" name="caption" id="caption" rows="1" placeholder="Please write caption"
+                    <textarea v-model="caption" name="caption" id="caption" rows="1" :placeholder="$t('please write caption')"
                         class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 text-stone-700 ring-1 focus:ring-primary ring-stone-400 "></textarea>
                 </div>
             </div>
@@ -229,11 +229,10 @@ let showCropModal = (file) => {
             <div>
                 <Crop :img="cropFile" @crop="changeFiles" v-model:open="openModal"
                         @update:open="() => openModal = false"/>
-                <div class="mb-2 text-sm text-center justify-self-end text-primary">only videos and images with max size
-                    (2MB) are allowed
+                <div class="mb-2 text-sm text-center justify-self-end text-primary">{{ $t('only videos and images with max size (2MB) are allowed') }}
                 </div>
                 <PrimaryButton @click.prevent="upload" :disabled="isDisabled">
-                    Upload
+                    {{$t('upload')}}
                 </PrimaryButton>
                 <!-- <InputError class="mt-2" :message="form.errors.image" /> -->
             </div>

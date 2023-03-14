@@ -24,6 +24,11 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
 
+    protected $middlewarePriority = [
+        \Illuminate\Session\Middleware\StartSession::class,
+        \App\Http\Middleware\SetLocaleMiddleware::class,
+    ];
+
     /**
      * The application's route middleware groups.
      *
@@ -37,6 +42,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\SetLocaleMiddleware::class,
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ],
@@ -68,7 +74,7 @@ class Kernel extends HttpKernel
         'verified.email' => \App\Http\Middleware\EnsureEmailIsVerified::class,
         'verified.phone' => \App\Http\Middleware\EnsurePhoneIsVerified::class,
         'verified.identity' => \App\Http\Middleware\EnsureUploadedIdentityVerificationDocuments::class,
-        'location.detect'=> \App\Http\Middleware\LocationDetector::class,
+        'location.detect' => \App\Http\Middleware\LocationDetector::class,
         'player.review' => \App\Http\Middleware\ReviewUserMiddleware::class,
         'policy.checker' => \App\Http\Middleware\EnsurePoliciesVerified::class,
         'detect.location' => \App\Http\Middleware\LocationDetector::class

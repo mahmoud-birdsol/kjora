@@ -6,7 +6,7 @@ import AppLayout from '../Layouts/AppLayout.vue';
 import { ref } from 'vue';
 import dayjs from 'dayjs';
 import GuestLayout from "../Layouts/GuestLayout.vue";
-
+import DateTranslation from "@/Components/DateTranslation.vue"
 
 const props = defineProps({
     policy: Object,
@@ -23,17 +23,19 @@ function submit() {
 <template>
     <GuestLayout title="Privacy policy">
         <template #header>
-            Security
+            {{$t('Security')}}
         </template>
         <div class="grid w-full lg:grid-cols-2">
             <div class="col-start-2 bg-white rounded-2xl p-6 w-full min-h-[500px] flex flex-col gap-4">
                 <div class="flex justify-center my-4">
-                    <h2 class="text-2xl font-bold uppercase text-primary">Privacy And Policy</h2>
+
+                    <h2 class="text-2xl font-bold uppercase text-primary">{{$t('Privacy And Policy')}}</h2>
                 </div>
                 <div v-if="policy" class="relative flex-grow p-4 border-2 rounded-lg border-stone-400">
                     <div class="w-full max-h-[400px] overflow-auto hideScrollBar " v-html="policy.content" />
+
                     <div class="absolute z-20 p-2 text-xs font-bold uppercase bg-white -top-4 left-4 text-primary ">
-                        updated {{ dayjs(policy.created_at).format('DD MMMM YYYY') }}
+                        {{$t('updated')}} <DateTranslation format="DD MMMM YYYY" :start="policy.created_at"/>
                     </div>
                 </div>
                 <div class=""
@@ -46,7 +48,7 @@ function submit() {
                     </div>
                     <div class="mt-2">
                         <PrimaryButton :disabled="isDisabled" @click="submit">
-                            UPDATE
+                            {{$t('UPDATE')}}
                         </PrimaryButton>
                     </div>
                 </div>

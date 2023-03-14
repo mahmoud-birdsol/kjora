@@ -34,7 +34,10 @@ class RatingCategory extends Resource
     public static $search = [
         'id', 'name',
     ];
-
+    public static function label(): string
+    {
+        return __("Rating Categories");
+    }
     /**
      * Get the fields displayed by the resource.
      *
@@ -45,13 +48,13 @@ class RatingCategory extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Name')
+            Text::make(__('Name'),'name')
                 ->showOnPreview()
                 ->sortable()
                 ->required()
                 ->rules('required', 'string', 'max:255'),
 
-            Textarea::make('Description')
+            Textarea::make(__('Description'),'description')
                 ->showOnPreview()
                 ->nullable()
                 ->rules('nullable'),

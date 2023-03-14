@@ -28,7 +28,7 @@ class AdvertisementDashboard extends Dashboard
      */
     public function label(): string
     {
-        return 'Advertisements';
+        return __('Advertisements');
     }
 
     /**

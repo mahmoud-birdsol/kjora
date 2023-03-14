@@ -20,7 +20,7 @@ const props = defineProps([
     <GuestLayout>
         <GuestTwoColumnLayout>
             <Card>
-                <CardContent title="Create an account">
+                <CardContent :title="$t('create an account')">
                     <template #body>
                         <RegisterForm :countries="countries" :positions="positions" :default-club="defaultClub" :default-country-id="defaultCountryId"/>
                     </template>

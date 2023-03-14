@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import Avatar from "@/Components/Avatar.vue";
 import { CheckCircleIcon } from '@heroicons/vue/24/outline'
+import DateTranslation from '../DateTranslation.vue';
 
 dayjs.extend(relativeTime)
 
@@ -31,13 +32,13 @@ const active = computed(() => {
                 <h4 class="m-0 text-lg leading-none text-white capitalize">{{ user.name }}</h4>
                 <!-- <Link :href="route('player.profile', user)" class="text-xs leading-none text-neutral-500"> @{{
                         user.username }} </Link> -->
-                <span class="text-xs leading-none text-neutral-500"> @{{ user.username }} </span>
+                <span class="text-xs leading-none text-neutral-500 before:content-['a'] before:text-transparent"> @{{ user.username }} </span>
             </div>
             <div class="mis-auto -mt-2">
-                <p class="text-xs text-gray-300" v-if="!user.online">Last seen</p>
-                <p class="text-xs text-gray-300" v-if="!user.online">{{
-                    dayjs().to(dayjs(user.last_seen_at))
-                }}</p>
+                <p class="text-xs text-gray-300" v-if="!user.online">{{$t('Last seen')}}</p>
+                <p class="text-xs text-gray-300" v-if="!user.online">
+                <DateTranslation :end="user.last_seen_at" type="period"/>
+                </p>
 
                 <p class="text-xs text-white flex items-center" v-else>
                     <CheckCircleIcon class="text-green-500 h-3 w-3 inline mr-1" />

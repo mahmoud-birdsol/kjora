@@ -164,7 +164,10 @@ export const useChat = defineStore("chat", {
             this.messages = [];
             await this.fetchMessages();
         },
-
+        deleteMessage(id) {
+            let index = this.messages.findIndex((m) => m.id === id);
+            this.messages.splice(index, 1);
+        },
         /**
          * Subscribe to the conversation channel.
          */

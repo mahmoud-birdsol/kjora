@@ -34,10 +34,10 @@ class IdentityVerifiedNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Account verified!')
-            ->line('Your account and identity has been verified on '.config('app.name').'.')
+            ->subject(__('Account verified!' , [] , $notifiable->locale ))
+            ->line(__('Your account and identity has been verified on ' , [] , $notifiable->locale).config('app.name').'.')
             ->action('Login', url('/dashboard'))
-            ->line('Thank you for using our application!');
+            ->line(__('Thank you for using our application!' , [] , $notifiable->locale ));
     }
 
     /**
@@ -48,11 +48,11 @@ class IdentityVerifiedNotification extends Notification implements ShouldQueue
         return (new NotificationData(
             displayType: 'simple',
             state: 'success',
-            title: 'Identity Verification',
-            subtitle: 'Your account has been verified',
+            title: __('Identity Verification', [] , $notifiable->locale ),
+            subtitle: __('Your account has been verified', [] , $notifiable->locale ),
             actionData: new RouteActionData(
                 route: route('profile.show'),
-                text: 'View Profile',
+                text: __('View Profile', [] , $notifiable->locale ),
             ),
         ))->toArray();
     }

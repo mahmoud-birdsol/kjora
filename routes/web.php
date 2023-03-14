@@ -70,7 +70,7 @@ Route::middleware([
     'verified.phone',
     'verified.email',
     'verified.identity',
-    'player.review'
+    // 'player.review'
 ])->group(function () {
     Route::get('/verification/identity', [
         IdentityVerificationController::class,
@@ -469,11 +469,28 @@ Route::get('phone/verify', [VerificationCodeController::class, 'create'])->name(
 Route::post('phone/verify', [VerificationCodeController::class, 'store'])->name('phone.verify.store');
 Route::get('phone/resend-verification', ResendVerificationCodeController::class)->name('verification.phone.send');
 
+// Route::get('test', function () {
+//     $response = Http::withHeaders([
+//
+//     ])->get('https://v3.football.api-sports.io/teams?country=England&league=39&season=2022'));
+
 Route::get('test', function () {
     $response = Http::withHeaders([
         'x-rapidapi-host' => 'v3.football.api-sports.io',
         'x-rapidapi-key' => '303758e6ae860e914bb0755664b4caf0',
-    ])->get('https://v3.football.api-sports.io/teams?country=England&league=39&season=2022');
-
-    dd($response->json());
+    ])->get('');
 });
+
+Route::any('language/{language}', function (Request $request, $language) {
+    if (\Illuminate\Support\Facades\Auth::check()) {
+        auth()->user()->update(['locale' => $language]);
+    }
+
+    return redirect()->back();
+})->name('language');
+Route::any('nova/language/{language}', function (Request $request, $language) {
+    if (\Illuminate\Support\Facades\Auth::check()) {
+        auth()->user()->update(['locale' => $language]);
+    }
+    return redirect()->back();
+})->middleware('auth:admin')->name('nova.language');

@@ -15,7 +15,7 @@ const submit = () => {
     <form @submit.prevent="submit" class="w-full">
         <div class="mt-4 flex items-center justify-between w-full">
             <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Resend Email
+                {{$t('Resend Email')}}
             </PrimaryButton>
         </div>
     </form>

@@ -13,6 +13,7 @@ import SingleMediaPreview from './SingleMediaPreview.vue';
 import MediaThumbnails from './MediaThumbnails.vue';
 import Avatar from '@/Components/Avatar.vue';
 
+import axios from 'axios';
 const chat = useChat();
 const props = defineProps({
     message: Object,
@@ -30,6 +31,9 @@ const currentUser = usePage().props.value.auth.user
 const showOptions = ref(false)
 const showChatGallery = ref(false)
 const showSingleMediaGallery = ref(false)
+const imagesVideosOnly = props.message.attachments.filter(a => a.mime_type.startsWith('image') || a.mime_type.startsWith('video'))
+const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith('image') && !a.mime_type.startsWith('video'))
+
 const isCurrentUser = computed(() => { return props.message.sender_id === currentUser.id })
 const alignmentClass = computed(() => {
     return isCurrentUser.value ? 'self-end  ' : 'self-start   ';
@@ -51,8 +55,13 @@ function handleReply(e) {
     chat.setMessageToReplyTo(props.message)
     showOptions.value ? showOptions.value = false : null
 }
-const imagesVideosOnly = props.message.attachments.filter(a => a.mime_type.startsWith('image') || a.mime_type.startsWith('video'))
-const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith('image') && !a.mime_type.startsWith('video'))
+
+function deleteMessage() {
+    axios.delete(route('api.messages.delete', props.message.id))
+    showOptions.value = false
+    chat.deleteMessage(props.message.id)
+}
+
 </script>
 <template>
     <div :class="[alignmentClass, parentClasses, newMessageClasses]" class="w-full pt-2 transition-all duration-150 ">
@@ -153,10 +162,10 @@ const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith
                     <div v-show="showOptions"
                         class="absolute z-20 px-6 py-2 text-xs text-white bg-black border -top-1 rounded-xl border-neutral-500 pie-10 z-2 right-7">
                         <ul class="flex flex-col justify-center gap-y-2">
-                            <button class="hover:text-gray-400 ">
+                            <button class="hover:text-gray-400 " @click="deleteMessage">
                                 <li class="flex items-center justify-center gap-x-2">
                                     <TrashIcon class="w-4" />
-                                    <span> delete</span>
+                                    <span> {{ $t('delete') }}</span>
                                 </li>
                             </button>
                             <button class="hover:text-gray-400 group" @click="handleReply">
@@ -164,7 +173,7 @@ const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith
                                     <ReplyIcon
                                         class="cursor-pointer fill-transparent group-hover:stroke-gray-400 stroke-white ">
                                     </ReplyIcon>
-                                    <span>Quote</span>
+                                    <span>{{ $t('Quote') }}</span>
                                 </li>
                             </button>
                         </ul>

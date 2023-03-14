@@ -23,7 +23,15 @@ class Venue extends Resource
      * @var string
      */
     public static $title = 'name';
-
+    /**
+     * Get the displayable label of the resource.
+     *
+     * @return string
+     */
+    public static function label(): string
+    {
+        return __("Venues");
+    }
     /**
      * The columns that should be searched.
      *
@@ -43,48 +51,48 @@ class Venue extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make('User')
+            BelongsTo::make(__('User') , 'user' , User::class)
                 ->required()
                 ->sortable()
                 ->filterable()
                 ->rules('required'),
 
-            BelongsTo::make('Country')
+            BelongsTo::make(__('Country') , 'country' , Country::class)
                 ->required()
                 ->sortable()
                 ->filterable()
                 ->rules('required'),
 
-            Text::make('Name')
+            Text::make(__('Name'),'Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            Text::make('Address')
+            Text::make(__('Address'), 'Address')
                 ->rules('required', 'max:255'),
 
-            Text::make('Address Line 2')
+            Text::make(__('Address Line 2'),'address_line_2')
                 ->nullable()
                 ->rules('nullable', 'max:255'),
 
-            Text::make('City')
-                ->nullable()
-                ->sortable()
-                ->filterable()
-                ->rules('nullable', 'max:255'),
-
-            Text::make('State')
+            Text::make(__('City'),'city')
                 ->nullable()
                 ->sortable()
                 ->filterable()
                 ->rules('nullable', 'max:255'),
 
-            Text::make('Latitude')
+            Text::make(__('State'),'state')
                 ->nullable()
                 ->sortable()
                 ->filterable()
                 ->rules('nullable', 'max:255'),
 
-            Text::make('Longitude')
+            Text::make(__('Latitude'),'latitude')
+                ->nullable()
+                ->sortable()
+                ->filterable()
+                ->rules('nullable', 'max:255'),
+
+            Text::make(__('Longitude'),'longitude')
                 ->nullable()
                 ->sortable()
                 ->filterable()
