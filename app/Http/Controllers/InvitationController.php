@@ -18,7 +18,7 @@ class InvitationController extends Controller
             ->latest('date')
             ->with('invitingPlayer')
             ->with(['reviews' =>function($q) use($request){
-                $q->whereHas('ratingCategories')->Where('reviewer_id' ,'!=' ,$request->user()->id );
+                $q->whereNot('reviewer_id' ,'=' ,$request->user()->id );
             }])
             ->with('stadium');
 
