@@ -25,14 +25,14 @@ const props = defineProps({
 });
 
 const form = useForm({
-    position: usePage().props.value.queryParams.position ?? null,
+    position: null,
     ageFrom: 18,
     ageTo: 60,
     ratingFrom: 0,
     ratingTo: 5,
-    search: usePage().props.value.queryParams.search ?? '',
-    location: usePage().props.value.queryParams.location ?? null,
-    country_id: usePage().props.value.queryParams.country_id ?? null
+    search: '',
+    location: null,
+    country_id: null
 });
 
 const loading = ref(false);
@@ -57,12 +57,15 @@ const filter = () => {
 };
 
 const reset = () => {
-    form.position = null;
-    form.age = 18;
-    form.rating = 0;
-    form.search = '';
-    form.country_id = null;
 
+    form.position = null;
+    form.ageFrom = null;
+    form.ageTo = null;
+    form.ratingFrom = null;
+    form.ratingTo = null;
+    form.location = null;
+    form.search = null;
+    form.country_id = null
     filter();
 }
 </script>
@@ -78,7 +81,7 @@ const reset = () => {
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <!-- Position Filters...
-                                                    =====================================================-->
+                                                                        =====================================================-->
                 <div class="flex gap-4 mt-4 mb-8 overflow-x-auto hideScrollBar">
                     <button @click="filterByPosition(null)"
                         class="py-2 px-4 min-w-[215px] w-1/5 text-center font-bold items-center bg-white border-2 border-gray-300 rounded-full  text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary   active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap">
@@ -99,8 +102,8 @@ const reset = () => {
                 </div>
 
                 <!-- Current list...
-                                                    =====================================================-->
-                                                    =====================================================-->
+                                                                        =====================================================-->
+                =====================================================-->
                 <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
 
                     <div class="flex items-start justify-start my-6">
