@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Services\FlashMessage;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,8 +24,7 @@ class ReviewUserMiddleware
             )->action(route('player.review.show', [
                 'review' => $review->id,
                 'reviewing_user' => Auth::id()
-            ]) , __('Review'))->closeable()->send();
-
+            ]), __('Review'))->closeable()->send();
         }
 
         return $next($request);

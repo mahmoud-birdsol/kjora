@@ -20,19 +20,23 @@ const props = defineProps({
 
 
 const currentTabId = ref(1)
+const loading = ref(false);
 
 const form = useForm({
-    position: usePage().props.value.queryParams.position ?? null,
+    position: null,
     ageFrom: 18,
     ageTo: 60,
     ratingFrom: 0,
     ratingTo: 5,
-    search: usePage().props.value.queryParams.search ?? '',
-    country_id: usePage().props.value.queryParams.country_id ?? null
+    search: '',
+    location: null,
+    country_id: null
 });
-const loading = ref(false);
+
 const filter = () => {
+
     loading.value = true;
+
     form.get(route('home'), {
         preserveState: true,
         preserveScroll: true,
@@ -43,10 +47,14 @@ const filter = () => {
     });
 };
 const reset = () => {
+
     form.position = null;
-    form.ageForm = 18;
-    form.ageto = 0;
-    form.search = '';
+    form.ageFrom = null;
+    form.ageTo = null;
+    form.ratingFrom = null;
+    form.ratingTo = null;
+    form.location = null;
+    form.search = null;
     form.country_id = null
     filter();
 }
@@ -99,10 +107,9 @@ const filterByPosition = (position) => {
         <div class="">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <!-- Position Filters...
-                                                                                                                                                                                =====================================================-->
+                                                                                                                                                                                                                                                                                            =====================================================-->
                 <div class="flex gap-4 mt-4 mb-8 overflow-x-auto hideScrollBar">
                     <button @click="filterByPosition(null)"
-
                         class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
                         :class="{ 'border-primary': form.position == null, 'border-none': form.position != null }">
                         <span class="w-full text-center"
@@ -122,11 +129,11 @@ const filterByPosition = (position) => {
                 </div>
                 <div class="flex items-center justify-end gap-3 mb-2 w-ful ">
                     <button @click="currentTabId = 1"
-                        class="p-2 px-4 text-xs font-bold leading-none uppercase bg-white rounded-sm cursor-pointer hover:bg-stone-200 active:scale-95 "
-                        :class="currentTabId == 1 ? 'bg-stone-400' : ''">grid</button>
+                        class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white rounded-sm cursor-pointer hover:bg-stone-200 active:scale-95 "
+                        :class="currentTabId == 1 ? 'border-2 border-primary text-primary' : ''">grid</button>
                     <button @click="currentTabId = 2"
-                        class="p-2 px-4 text-xs font-bold leading-none uppercase bg-white rounded-sm cursor-pointer hover:bg-stone-200 active:scale-95 "
-                        :class="currentTabId == 2 ? 'bg-stone-400' : ''">map</button>
+                        class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white rounded-sm cursor-pointer hover:bg-stone-200 active:scale-95 "
+                        :class="currentTabId == 2 ? 'border-2 border-primary text-primary' : ''">map</button>
 
 
                 </div>
@@ -135,7 +142,7 @@ const filterByPosition = (position) => {
                     v-loading="loading">
                     <div>
                         <div class="flex items-start justify-start my-6">
-                            <p class="text-sm font-bold">{{$t('total ( :count )', {count:players.total})}}</p>
+                            <p class="text-sm font-bold">{{ $t('total ( :count )', { count: players.total }) }}</p>
                         </div>
                         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                             <template v-for="player in players.data" :key="player.id">
@@ -152,7 +159,7 @@ const filterByPosition = (position) => {
                 </div>
 
                 <!-- Filters Modal...
-                                                                                                                                                                                =====================================================-->
+                                                                                                                                                                                                                                                                                            =====================================================-->
                 <FiltersModel :positions="positions" :countries="countries" v-model:form="form" @reset="reset"
                     @filter="filter" :showFiltersModal="showFiltersModal" />
             </div>
