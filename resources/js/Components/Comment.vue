@@ -64,7 +64,7 @@
                 <div v-show="showReplyInput" class="flex flex-row items-center self-end w-full p-3 gap-x-3 ">
                     <OnClickOutside @trigger="showEmojiPicker = false">
                         <div class="relative flex items-center">
-                            <button @click="  = !showEmojiPicker" :data-cancel-blur="true">
+                            <button @click="showEmojiPicker = !showEmojiPicker" :data-cancel-blur="true">
                                 <FaceSmileIcon class="w-6 text-neutral-400" />
                             </button>
                             <div class="absolute z-20 bottom-full left-full " v-show="showEmojiPicker">
