@@ -279,5 +279,21 @@
     "Congratulations your account has been successfully updated.": "Congratulations your account has been successfully updated.",
     "Request another email": "Request another email",
     "Language": "العربية",
-    "Locale": "ar"
+    "Locale": "ar",
+    "My Account": "My Account",
+
+    "First Name": "First Name",
+    "Surname": "Surname",
+    "Email Address": "Email Address",
+    "Country": "Country",
+    "Favorite Club": "Favorite Club",
+    "Phone": "Phone",
+    "Username": "Username",
+    "Gender": "Gender",
+    "Male": "Male",
+    "Female": "Female",
+    "Position": "Position",
+    "Left": "Left",
+    "Right": "Right",
+    "Update": "Update"
 }
