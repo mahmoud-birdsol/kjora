@@ -24,9 +24,9 @@ const currentUser = usePage().props.value.auth.user
     <Head title="More" />
     <AppLayout>
         <template #header>
-            <p class="text-7xl"> {{$t('more') }} </p>
-            <p class="text-lg font-semibold pt-2">
-                <DateTranslation/>
+            <p class="text-7xl"> {{ $t('more') }} </p>
+            <p class="pt-2 text-lg font-semibold">
+                <DateTranslation />
             </p>
         </template>
         <div class="grid grid-cols-1 gap-5 my-3 md:grid-cols-2 lg:grid-cols-3">
@@ -35,15 +35,15 @@ const currentUser = usePage().props.value.auth.user
                     <template #body>
                         <div class="flex flex-col gap-4">
                             <div>
-                                <InputLabel color="black">{{$t('merchant-account')}}</InputLabel>
+                                <InputLabel color="black">{{ $t('merchant-account') }}</InputLabel>
                                 <input type="text"
-                                    class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
+                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
                                     :placeholder="$t('update-merchant-account')" />
                             </div>
                             <div>
-                                <InputLabel color="black">{{$t('payment-details')}}</InputLabel>
+                                <InputLabel color="black">{{ $t('payment-details') }}</InputLabel>
                                 <input type="text"
-                                    class="w-full rounded-full border border-gray-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
+                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
                                     :placeholder="$t('payment-overflow')" />
 
                             </div>
@@ -56,38 +56,24 @@ const currentUser = usePage().props.value.auth.user
                     <template #body>
                         <div class="flex flex-col gap-4">
 
-                            <InputLabel color="black">{{  $t('verification') }}</InputLabel>
-                            <Link :href="route('identity.verification.create')"
-                                v-if="currentUser.identity_status === 'Waiting for documents'"
-                                class="w-full p-2 border border-gray-500 rounded-full cursor-pointer text-stone-500 active:border-primary hover:border-primary hover:text-primary sm:text-sm disabled:bg-gray-100 ">
-                            {{ $t(currentUser.identity_status) }}
-                            </Link>
+                            <InputLabel color="black">{{ $t('verification') }}</InputLabel>
+                            <MoreBtn :url="route('identity.verification.create')"
+                                v-if="currentUser.identity_status === 'Waiting for documents'"> {{
+                                    $t(currentUser.identity_status) }}</MoreBtn>
                             <div v-else
-                                class="w-full p-2 border border-gray-500 rounded-full text-stone-500 focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100">
+                                class="block w-full px-6 py-2 text-gray-500 transition duration-150 border border-gray-500 rounded-full sm:text-sm disabled:bg-gray-100 text-start ">
                                 {{ $t(currentUser.identity_status) }}
                             </div>
 
 
-                            <InputLabel color="black">{{$t('terms-of-service')}}</InputLabel>
-                            <Link :href="route('terms.and.condition.index')"
-                                class="w-full p-2 border border-gray-500 rounded-full cursor-pointer text-stone-500 active:border-primary hover:border-primary hover:text-primary sm:text-sm disabled:bg-gray-100 ">
-                                {{$t('terms-of-service')}}
-                            </Link>
-
+                            <InputLabel color="black">{{ $t('terms-of-service') }}</InputLabel>
+                            <MoreBtn :url="route('terms.and.condition.index')">{{ $t('terms-of-service') }}</MoreBtn>
 
                             <InputLabel color="black">{{ $t('privacy-policy') }}</InputLabel>
-                            <Link :href="route('privacy.policy.index')"
-                                class="w-full p-2 border border-gray-500 rounded-full cursor-pointer text-stone-500 active:border-primary hover:border-primary hover:text-primary sm:text-sm disabled:bg-gray-100 ">
-                                {{ $t('privacy-policy') }}
-                            </Link>
+                            <MoreBtn :url="route('privacy.policy.index')"> {{ $t('privacy-policy') }}</MoreBtn>
 
-
-                            <InputLabel color="black">{{$t('cookie-use')}}</InputLabel>
-                            <Link :href="route('cookies.policy.index')"
-                                class="w-full p-2 border border-gray-500 rounded-full cursor-pointer text-stone-500 active:border-primary hover:border-primary hover:text-primary sm:text-sm disabled:bg-gray-100 ">
-                                {{$t('cookie-use')}}
-                            </Link>
-
+                            <InputLabel color="black">{{ $t('cookie-use') }}</InputLabel>
+                            <MoreBtn :url="route('cookies.policy.index')"> {{ $t('cookie-use') }}</MoreBtn>
                         </div>
                     </template>
                 </CardContent>
@@ -97,27 +83,27 @@ const currentUser = usePage().props.value.auth.user
                     <template #body>
                         <div class="flex flex-col gap-4">
                             <div>
-                                <InputLabel color="black">{{$t('update username')}}</InputLabel>
-                                <MoreBtn :url="route('username.edit')">{{$t('update username')}}</MoreBtn>
+                                <InputLabel color="black">{{ $t('update username') }}</InputLabel>
+                                <MoreBtn :url="route('username.edit')">{{ $t('update username') }}</MoreBtn>
                             </div>
                             <div>
-                                <InputLabel color="black">{{$t('update-password')}}</InputLabel>
-                                <MoreBtn :url="route('password.edit')">{{$t('update-password')}}</MoreBtn>
+                                <InputLabel color="black">{{ $t('update-password') }}</InputLabel>
+                                <MoreBtn :url="route('password.edit')">{{ $t('update-password') }}</MoreBtn>
                             </div>
                             <div>
-                                <InputLabel color="black">{{$t('update-email')}}</InputLabel>
-                                <MoreBtn :url="route('email.edit')">{{$t('update-email')}}</MoreBtn>
+                                <InputLabel color="black">{{ $t('update-email') }}</InputLabel>
+                                <MoreBtn :url="route('email.edit')">{{ $t('update-email') }}</MoreBtn>
                             </div>
                             <div>
-                                <InputLabel color="black">{{$t('update-phone')}}</InputLabel>
-                                <MoreBtn :url="route('phone.edit')">{{$t('update-phone')}}</MoreBtn>
+                                <InputLabel color="black">{{ $t('update-phone') }}</InputLabel>
+                                <MoreBtn :url="route('phone.edit')">{{ $t('update-phone') }}</MoreBtn>
                             </div>
                             <div>
-                                <InputLabel color="black">{{$t('language')}}</InputLabel>
-                                <LanguageSelector class="w-full"/>
+                                <InputLabel color="black">{{ $t('language') }}</InputLabel>
+                                <LanguageSelector class="w-full" />
                             </div>
                             <div>
-                                <InputLabel color="black">{{$t('help')}}</InputLabel>
+                                <InputLabel color="black">{{ $t('help') }}</InputLabel>
                                 <input type="text"
                                     class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
                                     :placeholder="$t('breifly-explain-what-happened')" />
