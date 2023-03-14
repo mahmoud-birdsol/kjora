@@ -59,11 +59,11 @@ const type = (event) => {
     emit('update:modelValue', event.target.value);
 
     props.options.forEach((country) => {
-        if(event.target.value.toUpperCase().includes( '+' + country.calling_code.toUpperCase())){
+        if(event.target.value.substring(0, 3).toUpperCase().includes( '+' + country.calling_code.toUpperCase())){
             selected.value = country;
         }
 
-        if(event.target.value.toUpperCase().includes( '00' + country.calling_code.toUpperCase())){
+        if(event.target.value.substring(0, 4).toUpperCase().includes( '00' + country.calling_code.toUpperCase())){
             selected.value = country;
         }
     });
