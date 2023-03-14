@@ -54,10 +54,11 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
             <div class="flex flex-col gap-2  justify-between bg-white rounded-md p-6 w-full sm:w-2/5 min-h-[500px]">
                 <div class="flex justify-center my-4">
                     <div>
-                        <h2 class="text-xl font-bold text-center uppercase text-primary">{{ $t('Verify Phone Number') }}</h2>
+                        <h2 class="text-xl font-bold text-center uppercase text-primary">{{ $t('Verify Phone Number') }}
+                        </h2>
                         <div class="mb-4 text-sm text-center text-gray-600">
-                            {{ $t("Before continuing, could you verify your phone number by entering the 4 digit code sent to
-                                                        you in an SMS ? If you didn't receive the SMS, we will gladly send you another")}}.
+                            {{ $t("Before continuing, could you verify your phone number by entering the 4 digit code sent
+                                                        to you in an SMS ? If you didn't receive the SMS, we will gladly send you another")}}.
                         </div>
                     </div>
                 </div>
@@ -93,8 +94,9 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
                 </form>
 
                 <div v-if="verificationLinkSent" class="mt-4 text-sm font-medium text-green-600">
-                    {{ $t('A new verification code has been sent to the phone number you provided in your profile
-                                        settings')}}.
+                    {{
+                        $t('A new verification code has been sent to the phone number you provided in your profile settings')
+                    }}.
                 </div>
             </div>
         </div>
