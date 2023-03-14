@@ -31,7 +31,7 @@ class UserEmailController extends Controller
     {
         $request->validate([
             'password' => ['required', 'current_password'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'. auth()->user()->id ],
         ]);
         #Match The Old Password
         if(!Hash::check($request->password, auth()->user()->password)){
