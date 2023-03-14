@@ -56,7 +56,7 @@ const showUploadAvatarModal = ref(false);
         </div>
         <div class="w-full p-6 bg-white rounded-md sm:w-1/2">
             <div class="flex justify-center my-4">
-                <h2 class="text-xl font-bold uppercase text-primary">My Account</h2>
+                <h2 class="text-xl font-bold uppercase text-primary">{{ $t('My Account') }}</h2>
             </div>
 
             <form @submit.prevent="updateProfileInformation">
@@ -72,48 +72,48 @@ const showUploadAvatarModal = ref(false);
 
                 <div class="grid grid-cols-1 gap-4 mt-12 sm:grid-cols-2">
                     <div>
-                        <InputLabel color="primary" for="first_name" value="First Name" />
-                        <TextInput type="text" v-model="form.first_name" placeholder="Please enter your first name"
+                        <InputLabel color="primary" for="first_name" :value="$t('First Name')" />
+                        <TextInput type="text"  :value="user.first_name" placeholder="Please enter your first name"
                             auto-complete="given-name" aria-required="true" :disabled="true" autofocus />
                         <InputError class="mt-2" :message="form.errors.first_name" />
                     </div>
                     <div>
-                        <InputLabel color="primary" for="last_name" value="Surname" />
-                        <TextInput type="text" v-model="form.last_name" placeholder="Please enter your last name"
+                        <InputLabel color="primary" for="last_name" :value="$t('Surname')" />
+                        <TextInput type="text" :value="user.last_name"  placeholder="Please enter your last name"
                             auto-complete="sur-name" aria-required="true" :disabled="true" />
                         <InputError class="mt-2" :message="form.errors.last_name" />
                     </div>
                     <div>
-                        <InputLabel color="primary" for="email" value="Email Address" />
-                        <TextInput type="email" v-model="form.email" placeholder="Please enter your email address"
+                        <InputLabel color="primary" for="email" :value="$t('Email Address')" />
+                        <TextInput type="email" :value="user.email"  placeholder="Please enter your email address"
                             auto-complete="email" aria-required="true" :disabled="true" />
                         <InputError class="mt-2" :message="form.errors.email" />
                     </div>
                     <div>
-                        <InputLabel color="primary" for="country" value="Country" />
+                        <InputLabel color="primary" for="country" :value="$t('Country')" />
                         <RichSelectInput :options="countries" value-name="id" text-name="name" image-name="flag"
                             v-model="form.country_id" />
                         <InputError class="mt-2" :message="form.errors.country_id" />
                     </div>
                     <div>
-                        <InputLabel color="primary" for="club" value="Favorite Club" />
+                        <InputLabel color="primary" for="club" :value="$t('Favorite Club')" />
                         <RichSelectInput source="/api/clubs" value-name="id" text-name="name" image-name="logo"
                             :append="user.club" v-model="form.club_id" />
                         <InputError class="mt-2" :message="form.errors.club_id" />
                     </div>
                     <div>
-                        <InputLabel color="primary" for="date_of_birth" value="Date of birth" />
+                        <InputLabel color="primary" for="date_of_birth" :value="$t('Date of birth')" />
                         <ElDatePicker v-model="form.date_of_birth" class="w-full" placeholde="DD/MM/YYYY" />
                         <InputError class="mt-2" :message="form.errors.date_of_birth" />
                     </div>
                     <div>
-                        <InputLabel color="primary" for="phone" value="Phone" />
-                        <TextInput type="tel" :disabled="true" v-model="form.phone" />
+                        <InputLabel color="primary" for="phone" :value="$t('Phone')" />
+                        <TextInput type="tel" :disabled="true" :value="user.phone"  />
                         <InputError class="mt-2" :message="form.errors.phone" />
                     </div>
                     <div>
-                        <InputLabel color="primary" for="username" value="Username" />
-                        <TextInput type="text" v-model="form.username" placeholder="@" auto-complete="username"
+                        <InputLabel color="primary" for="username" :value="$t('Username')" />
+                        <TextInput type="text" :value="user.username" v-model="form.username" placeholder="@" auto-complete="username"
                             aria-required="true" :disabled="true" />
                         <InputError class="mt-2" :message="form.errors.username" />
                     </div>
@@ -122,25 +122,25 @@ const showUploadAvatarModal = ref(false);
                 <div class="mt-4 sm:flex sm:justify-between">
                     <div class="w-full mt-4 sm:w-1/3 sm:mt-0">
                         <div>
-                            <InputLabel color="primary" value="Gender" />
+                            <InputLabel color="primary" :value="$t('Gender')" />
 
                             <div class="ml-4">
                                 <div class="flex items-center space-x-2">
                                     <input type="radio" id="male" value="male" v-model="form.gender"
                                         class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
-                                    <label for="male" class="text-sm font-medium text-black">Male</label>
+                                    <label for="male" class="text-sm font-medium text-black">{{ $t('Male') }}</label>
                                 </div>
 
                                 <div class="flex items-center space-x-2">
                                     <input type="radio" id="female" value="female" v-model="form.gender"
                                         class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
-                                    <label for="female" class="text-sm font-medium text-black">Female</label>
+                                    <label for="female" class="text-sm font-medium text-black">{{ $t('Female') }}</label>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="w-full mt-4 sm:w-1/3 sm:mt-0">
-                        <InputLabel color="primary" value="Position" />
+                        <InputLabel color="primary" :value="$t('Position')" />
 
                         <div class="ml-4">
                             <div class="flex items-center space-x-2" v-for="position in positions">
@@ -152,19 +152,19 @@ const showUploadAvatarModal = ref(false);
                         </div>
                     </div>
                     <div class="w-full mt-4 sm:w-1/3 sm:mt-0">
-                        <InputLabel color="primary" value="Preferred Foot" />
+                        <InputLabel color="primary" :value="$t('Preferred Foot')" />
 
                         <div class="ml-4">
                             <div class="flex items-center space-x-2">
                                 <input type="radio" id="left" value="left" v-model="form.preferred_foot"
                                     class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
-                                <label for="left" class="text-sm font-medium text-black">Left</label>
+                                <label for="left" class="text-sm font-medium text-black">{{ $t('Left') }}</label>
                             </div>
 
                             <div class="flex items-center space-x-2">
                                 <input type="radio" id="right" value="right" v-model="form.preferred_foot"
                                     class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
-                                <label for="right" class="text-sm font-medium text-black">Right</label>
+                                <label for="right" class="text-sm font-medium text-black">{{ $t('Right') }}</label>
                             </div>
                         </div>
                     </div>
@@ -172,7 +172,7 @@ const showUploadAvatarModal = ref(false);
 
                 <div class="mt-4">
                     <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                        Update
+                        {{ $t('Update') }}
                     </PrimaryButton>
                 </div>
             </form>
