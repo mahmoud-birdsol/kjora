@@ -141,7 +141,7 @@ function calcShouldRate() {
                         <CheckIcon class="w-6 text-green-600" />
                     </button>
                 </div>
-                <div v-if="invitation.state == 'declined' && !shouldRate" class="flex justify-center">
+                <div v-if="invitation.state == 'declined'" class="flex justify-center">
                     <button :disabled="true"
                         class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-200 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                         <XMarkIcon class="w-6 text-red-600" />
@@ -151,8 +151,9 @@ function calcShouldRate() {
                     class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                 Chat
                 </Link>
-                <!-- todo:fix the condition to show rate when they invitation date end -->
-                <Link :href="route('player.review.show', invitation.reviews[0].id)" v-if="shouldRate"
+
+                <Link :href="route('player.review.show', invitation.reviews[0].id)"
+                    v-if="invitation.state == 'accepted' && shouldRate"
                     class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                 Rate
                 </Link>
