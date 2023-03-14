@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VerifyPhoneRequest;
+use App\Services\FlashMessage;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -31,10 +32,10 @@ class VerificationCodeController extends Controller
     {
         $request->user()->verifyPhone();
 
-        $request->session()->flash('message', [
-            'type' => 'success',
-            'content' => __('Thank you for verifying your phone'),
-        ]);
+        FlashMessage::make()->success(
+            message: __('Thank you for verifying your phone')
+        )->closeable()->send();
+
 
         return redirect()->route('home');
     }
