@@ -271,6 +271,21 @@
     "Congratulations your account has been successfully updated.": "تهانينا لقد تم تحديث حسابك بنجاح.",
     "Request another email": "اطلب بريدًا إلكترونيًا آخر",
     "Language": "English",
-    "Locale": "en"
+    "Locale": "en",
+    "My Account": "حسابي",
+    "First Name": "الاسم الأول",
+    "Surname": "اسم العائلة",
+    "Email Address": "عنوان البريد الإلكتروني",
+    "Country": "دولة",
+    "Favorite Club": "النادي المفضل",
+    "Phone": "هاتف",
+    "Username": "اسم المستخدم",
+    "Gender": "جنس",
+    "Male": "ذكر",
+    "Female": "أنثى",
+    "Position": "المركز",
+    "Left": "يسار",
+    "Right": "يمين",
+    "Update": "تحديث"
 }
 
