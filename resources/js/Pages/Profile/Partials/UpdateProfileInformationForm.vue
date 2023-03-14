@@ -62,7 +62,7 @@ const showUploadAvatarModal = ref(false);
             <form @submit.prevent="updateProfileInformation">
                 <div class="flex items-center justify-center sm:justify-end sm:-mt-12">
                     <button class="mt-2" @click.prevent="showUploadAvatarModal = true">
-                        <Avatar :image-url="user.avatar_url" :username="user.name" size="lg" />
+                        <Avatar :image-url="user.avatar_url" :username="user.name" size="lg" :enableLightBox="false" />
                     </button>
 
                     <UploadImageField :current-image-url="user.avatar_url" :show="showUploadAvatarModal"

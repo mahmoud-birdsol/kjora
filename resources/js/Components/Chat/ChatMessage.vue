@@ -11,6 +11,8 @@ import { useChat } from "../../stores/chat";
 import ChatGallery from './ChatGallery.vue';
 import SingleMediaPreview from './SingleMediaPreview.vue';
 import MediaThumbnails from './MediaThumbnails.vue';
+import Avatar from '@/Components/Avatar.vue';
+
 import axios from 'axios';
 const chat = useChat();
 const props = defineProps({
@@ -65,8 +67,8 @@ function deleteMessage() {
     <div :class="[alignmentClass, parentClasses, newMessageClasses]" class="w-full pt-2 transition-all duration-150 ">
         <!-- avatar for non current user message -->
         <div v-if='!isCurrentUser'>
-            <div><img :src="'https://ui-avatars.com/api/?name=' + player.name + '&color=094609FF&background=E2E2E2'" alt=""
-                    class="object-cover w-10 h-10 border-2 rounded-full border-primary">
+            <div>
+                <Avatar :image-url="player.avatar_url" :size="'md'" :username="player.name" :border="true" />
             </div>
         </div>
         <!-- message body -->
@@ -163,7 +165,7 @@ function deleteMessage() {
                             <button class="hover:text-gray-400 " @click="deleteMessage">
                                 <li class="flex items-center justify-center gap-x-2">
                                     <TrashIcon class="w-4" />
-                                    <span> {{$t('delete')}}</span>
+                                    <span> {{ $t('delete') }}</span>
                                 </li>
                             </button>
                             <button class="hover:text-gray-400 group" @click="handleReply">
@@ -171,7 +173,7 @@ function deleteMessage() {
                                     <ReplyIcon
                                         class="cursor-pointer fill-transparent group-hover:stroke-gray-400 stroke-white ">
                                     </ReplyIcon>
-                                    <span>{{$t('Quote')}}</span>
+                                    <span>{{ $t('Quote') }}</span>
                                 </li>
                             </button>
                         </ul>

@@ -2,10 +2,12 @@
 import Modal from '@/Components/Modal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import FadeInTransition from '@/Components/FadeInTransition.vue';
-import { ref, onMounted, onBeforeMount } from 'vue';
+import { ref, onMounted, onBeforeMount, computed } from 'vue';
 import { faCamera, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
+import Crop from './Crop.vue';
+import { usePage } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({
     show: {
@@ -49,6 +51,9 @@ const resolution = {
     width: 450,
     height: 337.5,
 }
+const currentUser = usePage().props.value.auth.user
+const photoUrl = ref(null)
+const context = computed(()=> canvas.value?.getContext('2d'))
 const close = () => {
     closeCamera()
     cameraIsOpen.value = false
@@ -87,9 +92,15 @@ function closeCamera() {
     }
 }
 const capture = () => {
-    const context = canvas.value.getContext('2d');
-    context.drawImage(camera.value, 0, 0, resolution.width, resolution.height);
+
+    context.value.drawImage(camera.value, 0, 0, resolution.width, resolution.height);
     closeCamera()
+
+    photoUrl.value = document.getElementById('photoTaken')
+        .toDataURL('image/jpeg')
+        .replace('image/jpeg', 'image/octet-stream');
+
+
 
     captured.value = true;
     cameraIsOpen.value = false;
@@ -99,12 +110,30 @@ const selectNewPhoto = () => {
     photoInput.value.click();
 };
 
-const submit = () => {
-    const photo = document.getElementById('photoTaken')
-        .toDataURL('image/jpeg')
-        .replace('image/jpeg', 'image/octet-stream');
+const openCropModal = ref(false)
+const cropFile = ref(null)
+function changeFiles(file, url, id){
+photoUrl.value = url
+const image = new Image()
+    image.onload = function () {
+    context.value.drawImage(image, 0, 0, resolution.width, resolution.height);
+};
+image.src = url
 
-    emit('update:modelValue', photo);
+}
+let showCropModal = (url) => {
+    cropFile.value = {
+        name: `${currentUser.name}_selfie_image`,
+        url:photoUrl.value,
+    }
+    openCropModal.value = true
+    // cropLoading.value = false
+
+}
+const submit = () => {
+
+
+    emit('update:modelValue', photoUrl);
 
     close();
 };
@@ -152,6 +181,10 @@ const submit = () => {
                             </div>
                             <canvas v-show="captured" id="photoTaken" ref="canvas" :width="resolution.width"
                                 :height="resolution.height"></canvas>
+                        <PrimaryButton v-if="captured" @click="showCropModal">
+                                {{ $t('Crop') }}
+                            </PrimaryButton>
+                         <Crop :img="cropFile" @crop="changeFiles" v-model:open="openCropModal" @update:open="() => openCropModal = false"/>
                             <div class="flex justify-center">
                                 <button type="button"
                                     class="inline-flex items-center p-4 text-white bg-black border border-transparent rounded-full shadow-sm hover:bg-black focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"

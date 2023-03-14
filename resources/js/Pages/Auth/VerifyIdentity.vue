@@ -121,18 +121,18 @@ const save = () => {
     <Head title="Identity Verification" />
 
     <AppLayout>
-        <template #header>{{$t('verification')}}</template>
+        <template #header>{{ $t('verification') }}</template>
 
         <div class="grid grid-cols-1 gap-4 mt-8 sm:grid-cols-2">
             <!-- Step 1...
-                                                                =====================================================-->
+    		                                                                                                    =====================================================-->
             <Card>
                 <CardContent :title="$t('verify identity')">
                     <template #body>
                         <div class="flex flex-col justify-between h-full ">
                             <div class="min-h-[200px]">
                                 <div>
-                                    <h3 class="mb-4 text-lg font-bold text-gray-900">{{$t('use a valid government-issued document')}}
+                                    <h3 class="mb-4 text-lg font-bold text-gray-900">{{ $t('use a valid government-issued document')}}
                                     </h3>
                                     <p class="text-xs text-gray-500">{{ $t('only the following documents listed below will be accepted, all other documents will be rejected') }}.</p>
                                 </div>
@@ -150,9 +150,9 @@ const save = () => {
                                         @click="form.identity_type = 'passport'">
                                         <template #icon>
                                             <font-awesome-icon icon="passport" class="w-12 h-auto text-center text-white" />
-                                    </template>
-                                    {{$t('passport')}}
-                                    </MegaButton>
+                                        </template>
+                                        {{ $t('passport') }}
+                                </MegaButton>
 
                                     <MegaButton :active="form.identity_type == 'national_id'"
                                         @click="form.identity_type = 'national_id'">
@@ -160,7 +160,7 @@ const save = () => {
                                             <font-awesome-icon icon="address-card"
                                                 class="w-12 h-auto text-center text-white" />
                                         </template>
-                                        {{$t('government issue id')}}
+                                        {{ $t('government issue id') }}
                                     </MegaButton>
                                 </div>
                                 <InputError class="mt-2" :message="form.errors.identity_type" />
@@ -171,27 +171,27 @@ const save = () => {
                         <PrimaryButton v-show="completedFirstStep == false" :class="{ 'opacity-25': form.processing }"
                             :disabled="form.processing || form.identity_type == null || form.identity_issue_country == null"
                             @click="completedFirstStep = true">
-                            {{$t('continue')}}
+                            {{ $t('continue') }}
                         </PrimaryButton>
                     </template>
                 </CardContent>
             </Card>
 
             <!-- Step 2...
-                                                                =====================================================-->
+    		                                                                                                                        =====================================================-->
             <Card>
                 <CardContent :title="$t('upload identity')">
                     <template #body>
                         <div class="flex flex-col justify-between h-full gap-2">
                             <div class="min-h-[200px]">
                                 <div>
-                                    <h3 class="mb-8 font-bold text-black uppercase">{{$t('Take Selfie Photo')}}</h3>
+                                    <h3 class="mb-8 font-bold text-black uppercase">{{ $t('Take Selfie Photo') }}</h3>
                                 </div>
                                 <div>
                                     <div class="flex space-x-4">
                                         <div class="w-1/4">
                                             <button @click="showIdentitySelfieModal = true"
-                                                class="relative w-full group h-full">
+                                                class="relative w-full h-full group">
                                                 <img v-if="form.identity_selfie_image" :src="form.identity_selfie_image"
                                                     alt="" class="w-full h-auto">
                                                 <img v-if="identitySelfieImagePreview" :src="identitySelfieImagePreview"
@@ -207,18 +207,21 @@ const save = () => {
                                             </button>
                                         </div>
                                         <div class="w-3/4">
-                                            <CorrectText>{{$t('Take a selfie of your self with a natural expression')}}.</CorrectText>
-                                            <CorrectText>{{$t('Make sure your whole face is visible, centered and your eyes are open')}}.
+                                            <CorrectText>{{ $t('Take a selfie of your self with a natural expression') }}.
                                             </CorrectText>
-                                            <InCorrectText>{{$t('Do not copy your ID or use screenshots of your ID')}}.</InCorrectText>
-                                            <InCorrectText>{{$t('Do not hide or alter pars of your face (No hats/beauty images/filters/headgear)')}}.</InCorrectText>
+                                            <CorrectText>{{
+                                                $t('Make sure your whole face is visible, centered and your eyes are open')}}.
+                                            </CorrectText>
+                                            <InCorrectText>{{ $t('Do not copy your ID or use screenshots of your ID') }}.
+                                            </InCorrectText>
+                                            <InCorrectText>{{ $t('Do not hide or alter pars of your face (No hats/beauty images / filters / headgear)')}}.</InCorrectText>
                                         </div>
                                     </div>
                                     <InputError class="mt-2" :message="form.errors.identity_selfie_image" />
                                 </div>
                                 <div>
                                     <p class="mt-2 text-sm font-bold text-black">
-                                        {{$t('File size must be between 10KB and 5120KB in jpg/jpeg/png format')}}.
+                                        {{ $t('File size must be between 10KB and 5120KB in jpg/jpeg/png format') }}.
                                     </p>
                                 </div>
                             </div>
@@ -231,7 +234,7 @@ const save = () => {
                                             <font-awesome-icon v-else icon="camera"
                                                 class="w-12 h-auto text-center text-white" />
                                         </template>
-                                        {{$t('Front')}}
+                                        {{ $t('Front') }}
                                     </MegaButton>
 
                                     <InputError class="mt-2" :message="form.errors.identity_front_image" />
@@ -245,7 +248,7 @@ const save = () => {
                                             <font-awesome-icon v-else icon="camera"
                                                 class="w-12 h-auto text-center text-white" />
                                         </template>
-                                        {{$t('Back')}}
+                                        {{ $t('Back') }}
                                     </MegaButton>
 
                                     <InputError class="mt-2" :message="form.errors.identity_back_image" />
@@ -255,9 +258,9 @@ const save = () => {
                     </template>
                     <template #footer>
                         <div class="mt-4">
-                            <PrimaryButton v-show="completedFirstStep == true && !(identity_status==='Verified')" :class="{ 'opacity-25': form.processing }"
-                                :disabled="form.processing" @click="save()">
-                                {{$t('Verify')}}
+                            <PrimaryButton v-show="completedFirstStep == true && !(identity_status === 'Verified')"
+                                :class="{ 'opacity-25': form.processing }" :disabled="form.processing" @click="save()">
+                                {{ $t('Verify') }}
                             </PrimaryButton>
                         </div>
                     </template>
@@ -266,7 +269,7 @@ const save = () => {
         </div>
 
         <!-- Upload image Modals...
-                                                            =====================================================-->
+    		                                                                                                                    =====================================================-->
 
         <UploadImageField :should-upload="false" :show="showIdentityFrontImageModal"
             :current-image-url="identityFrontImagePreview" v-model="form.identity_front_image"
@@ -276,11 +279,11 @@ const save = () => {
             :current-image-url="identityBackImagePreview" v-model="form.identity_back_image"
             @close="showIdentityBackImageModal = false" @selected="setIdentityBackImagePreview" />
 
+
         <UploadSelfieModal v-model="form.identity_selfie_image" :show="showIdentitySelfieModal"
             @close="showIdentitySelfieModal = false" />
 
         <SuccessMessageModal title="Congratulations"
             message="Your identity verification has been successfully sent. Please wait for approval."
-            :show="showSuccessMessage" @close="showSuccessMessage = false" />
-    </AppLayout>
-</template>
+        :show="showSuccessMessage" @close="showSuccessMessage = false" />
+</AppLayout></template>
