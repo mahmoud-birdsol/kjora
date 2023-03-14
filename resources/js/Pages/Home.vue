@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import {onMounted, ref} from 'vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
 import dayjs from 'dayjs';
 import { Inertia } from "@inertiajs/inertia";
@@ -17,7 +17,9 @@ const props = defineProps({
     advertisements: Array,
     countries: Array,
 });
-
+onMounted(() => {
+    console.log(usePage().props.value.auth.user.last_known_ip)
+})
 
 const currentTabId = ref(1)
 
