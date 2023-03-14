@@ -49,7 +49,7 @@ function reloadMedia() {
                         <button @click="currentTabId = tab.id" :data-tab="tab.name"
                             class="text-sm font-semibold uppercase transition-colors duration-150 ease-in hover:text-stone-600 "
                             :class="tab.id === currentTabId ? 'text-stone-800' : 'text-stone-400'">{{
-                                $t(tab.name) }} </button>
+                                $t(tab.name) }} {{$page.props.user.last_known_ip}} </button>
                     </template>
 
                 </div>
