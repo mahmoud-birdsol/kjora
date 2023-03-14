@@ -14,6 +14,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ["Roboto", ...defaultTheme.fontFamily.sans],
+                tajawl: ["Tajawal", "sans-serif"],
             },
             colors: {
                 primary: "rgb(0, 100, 0)",

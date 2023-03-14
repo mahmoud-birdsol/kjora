@@ -16,7 +16,7 @@ defineProps({
 </script>
 
 <template>
-    <div  :dir="$page.props.locale == 'ar' ? 'rtl' : 'ltr'">
+    <div   :dir="$page.props.locale == 'ar' ? 'rtl' : 'ltr'" class="ltr:font-sans rtl:font-tajawl ">
 
         <Head :title="title" />
 
