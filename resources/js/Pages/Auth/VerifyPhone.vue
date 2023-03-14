@@ -43,56 +43,58 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
     <Head :title="$t('Phone Verification')" />
 
     <GuestLayout>
-        <div class="w-full sm:flex sm:justify-between sm:space-x-4 px-4 sm:px-8">
+        <div class="w-full px-4 sm:flex sm:justify-between sm:space-x-4 sm:px-8">
             <div class="w-full sm:flex sm:justify-end sm:w-3/5">
                 <div>
-                    <h2 class="text-white text-2xl font-light uppercase">{{$t('Welcome to')}}</h2>
-                    <h1 class="text-white text-6xl font-black uppercase">KJORA</h1>
+                    <h2 class="text-2xl font-light text-white uppercase">{{ $t('Welcome to') }}</h2>
+                    <h1 class="text-6xl font-black text-white uppercase">KJORA</h1>
                 </div>
             </div>
 
             <div class="flex flex-col gap-2  justify-between bg-white rounded-md p-6 w-full sm:w-2/5 min-h-[500px]">
                 <div class="flex justify-center my-4">
                     <div>
-                        <h2 class="text-xl text-primary font-bold uppercase text-center">{{$t('Verify Phone Number')}}</h2>
-                        <div class="mb-4 text-center text-sm text-gray-600">
-                            {{$t("Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS? If you didn't receive the SMS, we will gladly send you another")}}.
+                        <h2 class="text-xl font-bold text-center uppercase text-primary">{{ $t('Verify Phone Number') }}</h2>
+                        <div class="mb-4 text-sm text-center text-gray-600">
+                            {{ $t("Before continuing, could you verify your phone number by entering the 4 digit code sent to
+                                                        you in an SMS ? If you didn't receive the SMS, we will gladly send you another")}}.
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-row gap-6 justify-center ">
+                <div class="flex flex-row justify-center gap-6 ">
                     <template v-for="(input, index) in inputs" :key="index">
                         <input @input="handleInput(index, $event);" @keydown="changeFocus(index, $event)" maxlength="1"
                             type="text" :placeholder="index" ref="codeInputs"
-                            class="bg-black p-4 focus:border-primary focus:ring-0 rounded-md text-lg text-white font-bold text-center w-14 aspect-square">
+                            class="p-4 text-lg font-bold text-center text-white bg-black rounded-md focus:border-primary focus:ring-0 w-14 aspect-square">
                     </template>
                 </div>
                 <InputError :message="form.errors.code" />
                 <div class="flex justify-center gap-2">
                     <Link :href="route('verification.phone.send')"
-                        class="underline text-sm text-gray-600 hover:text-gray-900">
-                    {{$('Resend Code')}}</Link>
+                        class="text-sm text-gray-600 underline hover:text-gray-900">
+                    {{ $t('Resend Code') }}</Link>
 
-                    <Link :href="route('profile.edit')" class="underline text-sm text-gray-600 hover:text-gray-900">
-                    {{$t('Edit Profile')}}</Link>
+                    <Link :href="route('profile.edit')" class="text-sm text-gray-600 underline hover:text-gray-900">
+                    {{ $t('Edit Profile') }}</Link>
 
                     <Link :href="route('logout')" method="post" as="button"
-                        class="underline text-sm text-gray-600 hover:text-gray-900 ">
-                    {{$t('log-out')}}
+                        class="text-sm text-gray-600 underline hover:text-gray-900 ">
+                    {{ $t('log-out') }}
                     </Link>
                 </div>
 
 
                 <form @submit.prevent="submit">
-                    <div class="mt-4 flex items-center justify-between">
+                    <div class="flex items-center justify-between mt-4">
                         <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            {{$t('Verify')}}
+                            {{ $t('Verify') }}
                         </PrimaryButton>
                     </div>
                 </form>
 
-                <div v-if="verificationLinkSent" class="mt-4 font-medium text-sm text-green-600">
-                  {{  $t('A new verification code has been sent to the phone number you provided in your profile settings')}}.
+                <div v-if="verificationLinkSent" class="mt-4 text-sm font-medium text-green-600">
+                    {{ $t('A new verification code has been sent to the phone number you provided in your profile
+                                        settings')}}.
                 </div>
             </div>
         </div>
