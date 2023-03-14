@@ -14,11 +14,11 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['crop', 'update:open'])
-const num = ref(0)
 const result = reactive({
     dataURL: '',
     blobURL: '',
 })
+const num = ref(0)
 const options = {
     viewMode: 1,
     dragMode: 'crop',
@@ -53,20 +53,10 @@ async function getResult() {
 
 }
 function ready() {
-    console.log(cropper.originalUrl == props.img.url)
-    if(cropper.cropped && cropper.originalUrl == props.img.url){
+    if(cropper.cropped && cropper.ready && cropper.originalUrl == props.img.url){
     }else{
-        cropper.originalUrl = props.img.url
-        console.log(cropper)
-        cropper.destroy()
-        cropper.crop(props.img.url)
+        num.value+=1
     }
-    //     console.log('ready',num.value)
-    // }else{
-    //     num.value=num.value+1
-    //     console.log('not',num.value)
-    //     ready()
-    // }
 }
 </script>
 <template>
@@ -76,7 +66,7 @@ function ready() {
         class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-7xl bg-white p-6 rounded-xl flex gap-4 flex-col">
         <XMarkIcon class="w-4" @click="$emit('update:open')"/>
         <div>
-            <VuePictureCropper :boxStyle="boxStyle" :img="img?.url" :options="options" @ready="ready" :key="num" />
+            <VuePictureCropper :boxStyle="boxStyle" :img="img?.url" :options="options" @ready="ready" :key="num"/>
         </div>
         <PrimaryButton @click="getResult">done</PrimaryButton>
     </div>

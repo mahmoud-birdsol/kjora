@@ -67,6 +67,7 @@ const files = ref([]);
 const caption = ref('');
 const cropFile = ref([])
 const openModal = ref(false)
+const num = ref(0)
 const selectNewPhoto = () => {
     photoInput.value.click();
 };
@@ -114,12 +115,12 @@ const upload = () => {
     let postId
 
     axios.postForm(route('api.posts.store'), {
-        cover: files.value[0],
+        cover: files.value[0].file,
         caption: caption.value
     }).then((res) => {
         postId = res.data.id
-        console.log(postId);
-        files.value.slice(1).forEach((file, i) => {
+        if(files.value.slice(1).length>0){
+        files.value.slice(1).forEach(({file}, i) => {
             if (file.type.startsWith("image") || file.type.startsWith('video')) {
                 axios.postForm(route('api.gallery.upload', postId), {
                     gallery: file,
@@ -131,7 +132,10 @@ const upload = () => {
                     }
                 })
             }
-        })
+        })}else{
+            reset()
+            emit('reload')
+        }
     });
 
 
@@ -143,11 +147,12 @@ function reset(e) {
     isLoading.value = false
     isDisabled.value = false;
     caption.value = ''
+    num.value+=1
     emit('close');
 }
 function changeFiles(file, url, id) {
     let index = files.value.findIndex((f) => f.id === id)
-    files.value.splice(index, 1, file)
+    files.value.splice(index, 1, {file:file,id:id})
     let fileUrlIndex = previewImageUrls.value.findIndex((f) => f.id === id)
     previewImageUrls.value[fileUrlIndex].url = url
     cropFile.value = []
@@ -155,13 +160,12 @@ function changeFiles(file, url, id) {
 let showCropModal = (file) => {
     cropFile.value = file
     openModal.value = true
-
 }
 
 </script>
 
 <template>
-    <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="reset">
+    <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="reset" :key="num">
         <div class=" flex flex-col min-h-[500px] justify-between p-6">
             <div class="flex justify-center -mt-12">
                 <h2 class="text-xl font-bold uppercase text-primary">Upload</h2>
@@ -192,7 +196,7 @@ let showCropModal = (file) => {
                 <div v-show="showPreview" class="relative overflow-auto hideScrollBar max-h-80" v-loading="isLoading">
                     <div class="relative grid grid-cols-3 gap-2">
                         <template v-for="(fileUrl, index) in previewImageUrls" :key="index">
-                            <div v-if="fileUrl.url.startsWith('data:image') || fileUrl.startsWith('data:video')"
+                            <div v-if="fileUrl.url.startsWith('data:image') || fileUrl.url.startsWith('data:video')"
                                 class="relative">
                                 <img v-if="fileUrl.url.startsWith('data:image')" :src="fileUrl.url" alt=""
                                     class="object-contain w-full h-full rounded-lg aspect-square">
@@ -205,9 +209,11 @@ let showCropModal = (file) => {
                                     </div>
                                 </button>
                                 <button class="absolute top-0 left-0 bg-white bg-opacity-90 rounded-br-xl"
-                                    @click="showCropModal(fileUrl)">
+                                    @click="showCropModal(fileUrl)"
+                                    v-if="fileUrl.url.startsWith('data:image')"
+                                    >
                                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
-                                        <CropIcon class="w-4" />
+                                        <CropIcon class="w-4"/>
                                     </div>
                                 </button>
                             </div>
@@ -222,7 +228,7 @@ let showCropModal = (file) => {
             </div>
             <div>
                 <Crop :img="cropFile" @crop="changeFiles" v-model:open="openModal"
-                        @update:open="() => openModal = false" />
+                        @update:open="() => openModal = false"/>
                 <div class="mb-2 text-sm text-center justify-self-end text-primary">only videos and images with max size
                     (2MB) are allowed
                 </div>

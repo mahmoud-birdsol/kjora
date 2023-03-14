@@ -67,6 +67,7 @@ const form = useForm({
     collection_name: props.collectionName,
     image: null,
 });
+const num = ref(0)
 const cropFile = ref([])
 const openModal = ref(false)
 onMounted(() => {
@@ -145,12 +146,13 @@ let showCropModal = (url) => {
 function close(){
     fileData.value=[]
     previewImageUrl.value =''
+    num.value+=1
     emit('close')
 }
 </script>
 
 <template>
-    <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="close">
+    <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="close" :key="num">
         <div class="flex flex-col min-h-[500px] justify-between p-6">
             <div class="flex justify-center -mt-12">
                 <h2 class="text-xl text-primary font-bold uppercase">Upload</h2>
