@@ -56,8 +56,7 @@ async function getResult() {
 
 }
 function ready() {
-    console.log(imageObj.value);
-    console.log(cropper.originalUrl == imageObj.value.url.value);
+
     if (cropper.cropped && cropper.ready && cropper.originalUrl == imageObj.value.url) {
     } else {
         num.value += 1

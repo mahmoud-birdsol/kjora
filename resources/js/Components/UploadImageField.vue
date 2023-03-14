@@ -69,8 +69,8 @@ const form = useForm({
 });
 const num = ref(Math.floor(Math.random() * 100))
 const cropFile = ref([])
-const openModal = ref(false)
-const renderCrop = ref(false)
+const openCropModal = ref(false)
+
 onMounted(() => {
     if (props.currentImageUrl) {
         showPreview.value = true;
@@ -104,7 +104,6 @@ const updatePhotoPreview = () => {
 
     reader.readAsDataURL(fileData.value);
     reader.onloadend = () => {
-        renderCrop.value = true;
         setTimeout(() => {
             showCropModal(previewImageUrl)
         }, 0)
@@ -146,7 +145,7 @@ let showCropModal = (url) => {
         name: fileData.value.name,
         url,
     }
-    openModal.value = true
+    openCropModal.value = true
     cropLoading.value = false
 
 }
@@ -154,7 +153,6 @@ function close() {
     fileData.value = []
     previewImageUrl.value = ''
     num.value += 1
-    console.log(num.value)
     emit('close')
 }
 </script>
@@ -189,8 +187,8 @@ function close() {
                 </div>
             </div>
             <div>
-                <Crop :img="cropFile" @crop="changeFiles" v-model:open="openModal" @update:open="() => openModal = false"
-                    :aspectRatio="1 / 1" />
+                <Crop :img="cropFile" @crop="changeFiles" v-model:open="openCropModal" @update:open="() => openCropModal = false"
+                     />
                 <PrimaryButton @click.prevent="upload" :disabled="form.processing">
                     {{ $t('upload') }}
                 </PrimaryButton>
