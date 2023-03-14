@@ -22,7 +22,7 @@ class CookiesPolicyController extends Controller
     public function index(Request $request): Response
     {
         return Inertia::render('CookiesPolicy', [
-            'cookies' => CookiePolicy::latest()->first()
+            'cookies' => CookiePolicy::latest()->whereNotNull('published_at')->orderBy('published_at', 'desc')->first()
         ]);
     }
     /**

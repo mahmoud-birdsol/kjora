@@ -9,8 +9,10 @@ import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { ref } from 'vue';
 let loading = ref(false)
+
+const currentUser = usePage().props.value.auth.user
 const form = useForm({
-    username: null,
+    username: currentUser.username,
     password: null
 })
 function submit() {
@@ -29,6 +31,7 @@ function submit() {
         <div class="flex gap-5 max-md:flex-wrap">
             <h1 class="text-2xl sm:text-7xl font-bold text-white uppercase md:w-1/2">
                 {{$t('account')}}
+
             </h1>
             <Card class="md:w-1/2" v-loading="loading">
                 <CardContent :title="$t('update username')">
@@ -48,6 +51,12 @@ function submit() {
                                     <TextInput type="password" v-model="form.password" :placeholder="$t('enter your password')"/>
                                     <InputError class="mt-2" :message="form.errors.password" />
                                 </div>
+
+                            </div>
+                            <div>
+                                <InputLabel value="password" color="primary" />
+                                <TextInput type="password" v-model="form.password" placeholder="enter your password" />
+                                <InputError class="mt-2" :message="form.errors.password" />
                             </div>
                     </template>
                     <template #footer>

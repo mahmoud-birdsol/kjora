@@ -37,7 +37,7 @@ onUnmounted(() => {
 
 <template>
     <div ref="messagesContainer" v-loading="chat.isLoading"
-        class="relative flex flex-col gap-y-4 overflow-auto p-2 min-h-[300px] max-h-[350px] md:min-h-[400px] md:max-h-[450px]">
+        class="relative flex flex-col gap-y-4 overflow-auto p-2 min-h-[300px] max-h-[350px] hideScrollBar md:min-h-[400px] md:max-h-[450px]">
 
         <ChatNotice v-if="chat.lastPageReached">No more messages to load.</ChatNotice>
         <ChatNotice v-if="chat.isLoading">Loading.</ChatNotice>

@@ -8,6 +8,7 @@ use App\Http\Responses\RegisterSuccessfulResponse;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Contracts\ProfileInformationUpdatedResponse;
 use Laravel\Fortify\Contracts\RegisterViewResponse;
+use Spatie\NovaTranslatable\Translatable;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,7 +19,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        Translatable::defaultLocales(['en', 'ar']);
+
     }
 
     /**

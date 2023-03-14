@@ -41,4 +41,13 @@ class ClickPerAdvertisement extends Partition
     {
         return 'click-per-advertisement';
     }
+    /**
+     * Sey the label for the metric.
+     *
+     * @return string
+     */
+    public function name()
+    {
+        return __('Click Per Advertisement');
+    }
 }

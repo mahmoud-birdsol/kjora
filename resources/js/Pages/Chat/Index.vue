@@ -1,11 +1,11 @@
 <script setup>
-import {provide} from 'vue';
+import { provide } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import ChatLayout from '@/Layouts/ChatLayout.vue';
 
 const props = defineProps(['conversations', 'last_online_at'])
 
-provide('conversation', props.conversation);
+provide('conversation', null);
 </script>
 <template>
     <AppLayout title="Chat">

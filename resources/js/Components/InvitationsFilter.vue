@@ -8,9 +8,9 @@ import { ref } from 'vue'
 import { ElDatePicker } from 'element-plus';
 import InputLabel from '@/Components/InputLabel.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
-import {Head, Link , useForm} from '@inertiajs/inertia-vue3';
+import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 const props = defineProps({
-    url:String,
+    url: String,
 })
 
 let showFiltersModal = ref(false)
@@ -45,9 +45,8 @@ const reset = () => {
             @click="showFiltersModal = !showFiltersModal">
             <AdjustmentsHorizontalIcon class="w-10 h-10 text-white" />
         </button>
-        <Modal :show="showFiltersModal" max-width="sm" @close="showFiltersModal = false" :closeable="false"
-            v-loading="loading">
-            <div class="p-6 bg-black">
+        <Modal :show="showFiltersModal" max-width="sm" @close="showFiltersModal = false" :closeable="false">
+            <div class="p-6 bg-black" v-loading="loading">
                 <div class="flex items-center justify-between">
                     <p class="text-sm text-white">{{$t('filter')}} </p>
 

@@ -50,7 +50,7 @@ function copy() {
         </Transition>
         <button>
 
-            <ShareIcon class="h-4 w-4 text-white" @click="showSocials = !showSocials" />
+            <ShareIcon class="h-4 w-4" @click="showSocials = !showSocials" />
         </button>
     </div>
 </template>

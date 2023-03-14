@@ -36,7 +36,15 @@ class PrivacyPolicy extends Resource
     public static $search = [
         'id', 'version',
     ];
-
+    /**
+     * Get the displayable label of the resource.
+     *
+     * @return string
+     */
+    public static function label(): string
+    {
+        return __("Privacy Policies");
+    }
     /**
      * Get the fields displayed by the resource.
      *
@@ -47,18 +55,18 @@ class PrivacyPolicy extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Version')
+            Text::make(__('Version'),'version')
                 ->showOnPreview()
                 ->required()
                 ->rules('required')
                 ->creationRules('unique:privacy_policies,version')
                 ->updateRules('unique:privacy_policies,version,{{resourceId}}'),
 
-            Trix::make('Content')
+            Trix::make(__('Content'),'content')
                 ->showOnPreview()
                 ->rules('required'),
 
-            Boolean::make('Published', 'is_published')
+            Boolean::make(__('Published'), 'is_published')
                 ->showOnPreview()
                 ->hideWhenCreating()
                 ->hideWhenUpdating()
@@ -67,7 +75,7 @@ class PrivacyPolicy extends Resource
                 })
                 ->sortable(),
 
-            DateTime::make('Published at')
+            DateTime::make(__('Published at'),'published_at')
                 ->showOnPreview()
                 ->hideWhenCreating()
                 ->hideWhenUpdating()

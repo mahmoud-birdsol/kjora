@@ -4,10 +4,11 @@ import { Link, useForm, usePage } from '@inertiajs/inertia-vue3';
 import { ElRate } from 'element-plus';
 import Avatar from '@/Components/Avatar.vue';
 import { HeartIcon, PencilIcon } from '@heroicons/vue/20/solid'
-import { ChevronDoubleRightIcon, FlagIcon, HeartIcon as HeartIconOutline, MapPinIcon } from '@heroicons/vue/24/outline';
+import { FlagIcon, HeartIcon as HeartIconOutline, MapPinIcon } from '@heroicons/vue/24/outline';
 import ReportModal from "@/Components/ReportModal.vue";
 import Socials from '@/Components/Socials.vue';
 import ToolTip from "@/Components/ToolTip.vue";
+
 const props = defineProps({
     player: {
         required: true,
@@ -35,32 +36,42 @@ const props = defineProps({
     }
 });
 
+const currentUser = usePage().props.value.auth.user
+const state = props.player.state_name
+const txtColor = state == 'Free' ? 'white' : 'black'
+const colors = ref(['#99A9BF', state == "Free" ? '#FF9900' : 'rgb(0, 100, 0)', state == "Free" ? '#FF9900' : 'rgb(0, 100, 0)'])
 const backgroundImage = computed(() => {
-    return {
-        'sm': '/images/player_bg_sm.png',
-        'lg': '/images/player_bg_lg.png',
-    }[props.size];
+    if (state == 'Premium') {
+        return {
+            'sm': '/images/player_bg_sm_gold.png',
+            'lg': '/images/player_bg_lg_gold.png',
+        }[props.size];
+    }
+    else if (state == 'Free') {
+        return {
+            'sm': '/images/player_bg_sm.png',
+            'lg': '/images/player_bg_lg.png',
+        }[props.size];
+    }
 });
 
-const currentUser = usePage().props.value.auth.user
-console.log(props.player )
-const isCurrentUser = props.player ? props.player.id === currentUser.id : false
+const isCurrentUser = props.player.id === currentUser.id
+
 const addToFavorites = () => {
-    // const form = useForm({});
+    const form = useForm({});
 
-    // form.post(route('favorites.store', { favorite: props.player.id }), {
-    //     preserveState: false,
-    //     preserveScroll: true,
-    // });
+    form.post(route('favorites.store', { favorite: props.player.id }), {
+        preserveState: false,
+        preserveScroll: true,
+    });
 };
-
 const removeFromFavorites = () => {
-    // const form = useForm({});
+    const form = useForm({});
 
-    // form.delete(route('favorites.destroy', { favorite: props.player.id }), {
-    //     preserveState: false,
-    //     preserveScroll: true,
-    // });
+    form.delete(route('favorites.destroy', { favorite: props.player.id }), {
+        preserveState: false,
+        preserveScroll: true,
+    });
 };
 </script>
 
@@ -70,10 +81,10 @@ const removeFromFavorites = () => {
         <div v-if="player.id !== $page.props.auth.user.id" class="flex justify-end">
             <span class="rounded-lg ltr:rounded-bl-3xl rtl:rounded-br-3xl bg-white p-2 -mt-0.5 ltr:-mr-0.5 rtl:-ml-0.5">
                 <a href="javascript:;" @click="addToFavorites" v-if="!player.is_favorite">
-                    <HeartIconOutline class="h-5 w-5 text-primary" />
+                    <HeartIconOutline class="w-5 h-5 text-primary" />
                 </a>
                 <a href="javascript:;" @click="removeFromFavorites" v-if="player.is_favorite">
-                    <HeartIcon class="h-5 w-5 text-primary" />
+                    <HeartIcon class="w-5 h-5 text-primary" />
                 </a>
             </span>
         </div>
@@ -89,65 +100,76 @@ const removeFromFavorites = () => {
                         <Avatar :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true" />
                     </div>
 
-                    <div>
+                    <div :class="state == 'Free' ? 'text-white' : 'text-primary'"
+                    >
                         <Link :href="route('player.profile', player.id)">
-                        <h2 class="text-sm font-bold text-white">
+                        <h2 class="text-sm font-bold">
                             {{ player.first_name }} {{ player.last_name }}
                         </h2>
                         </Link>
 
-                        <Link class="text-xs text-white opacity-50" :href="route('player.profile', player.id)">@{{
-                            player.username }}</Link>
-                        <p class="flex items-center justify-start space-x-2 text-sm text-white">
-                            <span class="scale-[0.7] ltr:origin-left rtl:origin-right flex items-center gap-x-1">
-                                <ElRate disabled v-model="player.rating" size="small" />
+                        <Link class="text-xs opacity-50" :href="route('player.profile', player.id)">@{{
+                            player.username
+                        }}
+                        </Link>
+                        <p class="flex items-center space-x-2 text-sm ">
+                            <span class="scale-[0.7] origin-left flex items-center gap-x-1"
+                                :class="txtColor == 'black' ? 'text-primary' : 'text-[#FF9900]'">
+                                <ElRate disabled v-model="player.rating" size="small" :colors="colors" />
                                 {{ player.rating }}
                             </span>
                         </p>
                     </div>
                 </div>
 
-                <div class="flex flex-col gap-1 items-center">
-                    <p class="text-sm font-bold text-white">{{ player.preferred_foot === 'right' ? 'R' : 'L' }}</p>
+                <div class="flex flex-col items-center gap-1">
+                    <p  :class="state == 'Free' ? 'text-white' : 'text-primary'" class="text-sm font-bold ">{{ player.preferred_foot === 'right' ? 'R' : 'L' }}</p>
                 </div>
             </div>
 
-            <div class="grid gap-4 border-b border-white"
-                :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' }">
+            <div class="grid gap-4 border-b"
+                :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' }, `border-${txtColor}`, `text-${txtColor}`">
                 <div v-if="size == 'lg'" class="relative">
-                    <p class="text-xs text-center text-white opacity-50 text-light">{{ $t('favorite-club') }}</p>
-                    <div class="flex justify-center item-center [&+div]:hover:block" >
+
+                    <p class="text-xs text-center"
+                        :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{ $t('favorite-club') }}</p>
+                    <div class="flex justify-center item-center [&+div]:hover:block">
                         <img :src="player.club?.logo_thumb" class="w-5 h-5 border-2 border-white rounded-full" />
                     </div>
-                    <ToolTip :value="player.club?.name"/>
+                    <ToolTip :value="player.club?.name" />
                 </div>
                 <div>
-                    <p class="text-xs text-center text-white opacity-50 text-light">{{ $t('age') }}</p>
-                    <p class="text-sm text-center text-white font-semi-bold">{{ player.age }}</p>
+
+                    <p class="text-xs text-center"
+                        :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{ $t('age') }}</p>
+                    <p class="text-sm text-center font-semi-bold">{{ player.age }}</p>
                 </div>
                 <div>
-                    <p class="text-xs text-center text-white opacity-50 text-light">{{ $t('played') }}</p>
-                    <p class="text-sm text-center text-white font-semi-bold">0</p>
+                    <p class="text-xs text-center "
+                        :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{ $t('played') }}</p>
+                    <p class="text-sm text-center font-semi-bold">0</p>
                 </div>
                 <div>
-                    <p class="text-xs text-center text-white opacity-50 text-light">{{ $t('missed') }}</p>
-                    <p class="text-sm text-center text-white font-semi-bold">0</p>
+                    <p class="text-xs text-center"
+                        :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{ $t('missed') }}</p>
+                    <p class="text-sm text-center font-semi-bold">0</p>
                 </div>
                 <div>
-                    <p class="text-xs text-center text-white opacity-50 text-light">{{ $t('position') }}</p>
-                    <p class="text-sm text-center text-white font-semi-bold">{{ $t(player.position.name) }}</p>
+                    <p class="text-xs text-center"
+                        :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{ $t('position') }}</p>
+                    <p class="text-sm text-center font-semi-bold">{{ player.position.name }}</p>
                 </div>
             </div>
 
-            <div class="flex items-center justify-between mt-2">
-                <p class="flex items-center text-sm text-white" v-if="showLocation">
-                    <MapPinIcon class="inline w-4 h-4 text-white" />
+            <div class="flex items-center justify-between mt-2" :class="`text-${txtColor}`">
+                <p class="flex items-center text-sm" v-if="showLocation">
+                    <MapPinIcon class="inline w-4 h-4" />
                     {{ player.current_city }}
                 </p>
-                <div class="flex gap-4 items-center">
-                    <div class="flex space-x-2 text-white bg-transparent"
-                        v-if="showInvite && player.id !== $page.props.auth.user.id">
-                        <Link :href="route('invitation.create', player.id)" class="text-sm text-white">{{$t('send-invitation')}}
+
+                <div class="flex items-center gap-4">
+                    <div class="flex space-x-2 bg-transparent" v-if="showInvite && player.id !== $page.props.auth.user.id">
+                        <Link :href="route('invitation.create', player.id)" class="text-sm">{{$t('send-invitation')}}
                         <!-- <ChevronDoubleRightIcon class="inline w-4 h-4 text-white" /> -->
                         </Link>
                     </div>
@@ -157,12 +179,12 @@ const removeFromFavorites = () => {
             </div>
 
 
-            <div class="flex justify-between items-center mt-6" v-if="showReport">
+            <div class="flex items-center justify-between mt-6" v-if="showReport">
                 <div></div>
                 <ReportModal :reportable-id="player.id" :reportable-type="'App\\Models\\User'">
                     <template #trigger>
                         <button>
-                            <FlagIcon class="h-4 w-4 text-red-500" />
+                            <FlagIcon class="w-4 h-4 text-red-500" />
                         </button>
 
                     </template>

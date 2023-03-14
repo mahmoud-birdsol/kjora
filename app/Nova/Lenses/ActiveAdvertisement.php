@@ -116,4 +116,9 @@ class ActiveAdvertisement extends Lens
     {
         return 'active-advertisement';
     }
+
+    public function name()
+    {
+        return __('Active Advertisement');
+    }
 }

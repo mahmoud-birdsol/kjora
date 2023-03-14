@@ -45,4 +45,13 @@ class VerifiedUsersCount extends Value
     {
         return now()->addMinutes(5);
     }
+    /**
+     * Sey the label for the metric.
+     *
+     * @return string
+     */
+    public function name()
+    {
+        return __('Verified Users Count');
+    }
 }

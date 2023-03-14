@@ -19,6 +19,7 @@ use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerReviewController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UpgradeMembershipController;
 use App\Http\Controllers\ResendVerificationCodeController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\VerificationCodeController;
@@ -347,11 +348,14 @@ Route::middleware([
         'store',
     ])->name('report.store');
 
+
     /*
      |--------------------------------------------------------------------------
      | Advertisement Routes...
      |--------------------------------------------------------------------------
     */
+
+    Route::post('membership/upgrade', UpgradeMembershipController::class)->name('membership.upgrade');
 
     Route::get(
         'advertisements/{advertisement}',
@@ -369,6 +373,8 @@ Route::middleware([
 
     Route::post('like', [\App\Http\Controllers\LikeController::class, 'store'])->name('like.store');
     Route::delete('like', [\App\Http\Controllers\LikeController::class, 'destroy'])->name('like.destroy');
+
+    Route::post('stadiums', \App\Http\Controllers\StadiumController::class)->name('stadiums.store');
 });
 /*
     |--------------------------------------------------------------------------
@@ -465,7 +471,7 @@ Route::get('phone/resend-verification', ResendVerificationCodeController::class)
 
 // Route::get('test', function () {
 //     $response = Http::withHeaders([
-//         
+//
 //     ])->get('https://v3.football.api-sports.io/teams?country=England&league=39&season=2022'));
 
 Route::get('test', function(){
@@ -482,3 +488,10 @@ Route::any('language/{language}', function (Request $request, $language) {
 
     return redirect()->back();
 })->name('language');
+Route::any('nova/language/{language}', function (Request $request, $language) {
+    if(\Illuminate\Support\Facades\Auth::check()){
+        auth()->user()->update(['locale' => $language]);
+    }
+    return redirect()->back();
+})->middleware('auth:admin')->name('nova.language');
+

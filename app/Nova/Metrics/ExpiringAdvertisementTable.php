@@ -10,6 +10,7 @@ use Laravel\Nova\Metrics\Table;
 
 class ExpiringAdvertisementTable extends Table
 {
+
     /**
      * Calculate the value of the metric.
      *
@@ -24,7 +25,7 @@ class ExpiringAdvertisementTable extends Table
                     ->icon('exclamation-circle')
                     ->iconClass('text-amber-500')
                     ->title($advertisement->name)
-                    ->subtitle('Expiring  on '.$advertisement->end_date->toFormattedDateString())
+                    ->subtitle(__('Expiring  on ').$advertisement->end_date->toFormattedDateString())
                     ->actions(function () use ($advertisement) {
                         return [
                             MenuItem::link('View', '/resources/advertisements/'.$advertisement->id),
@@ -41,5 +42,10 @@ class ExpiringAdvertisementTable extends Table
     public function cacheFor()
     {
         return now()->addMinutes(5);
+    }
+
+    public function name()
+    {
+        return __('Expiring Advertisement Table');
     }
 }

@@ -13,12 +13,21 @@ import { CheckIcon, StarIcon  } from '@heroicons/vue/24/outline';
 import { CheckCircleIcon } from  "@heroicons/vue/20/solid"
 import PrimaryButton from '@/Components/PrimaryButton.vue'
 import FadeInTransition from "@/Components/FadeInTransition.vue";
-import { computed} from 'vue'
+
+import { computed , ref} from 'vue'
 let form = useForm({
     payment_plan: null
 })
+let loading =ref(false)
 function send(){
-    form.post(route('membership.upgrade'))
+    form.post(route('membership.upgrade'),{
+        preserveState: true,
+        preserveScroll: true,
+        onFinish: () => {
+            loading.value = false;
+        }
+    }
+    )
 }
 const date = new Date();
 const locale = usePage().props.value.locale
@@ -28,20 +37,21 @@ let year = date.getFullYear();
 let months = [
      {en:'January',ar:'يناير'},
      {en:'February',ar:'فبراير'},
-     {en:'March',ar:'مارس'}, 
-     {en:'April',ar:'ابريل'}, 
-     {en:'May',ar:'مايو'}, 
-     {en:'June',ar:'يونيو'}, 
-     {en:'July',ar:'يوليو'}, 
-     {en:'August',ar:'اغسطس'}, 
-     {en:'September',ar:'سيتمبر'}, 
-     {en:'October',ar:'اكتوبر'}, 
-     {en:'November',ar:'نوفمبر'}, 
+     {en:'March',ar:'مارس'},
+     {en:'April',ar:'ابريل'},
+     {en:'May',ar:'مايو'},
+     {en:'June',ar:'يونيو'},
+     {en:'July',ar:'يوليو'},
+     {en:'August',ar:'اغسطس'},
+     {en:'September',ar:'سيتمبر'},
+     {en:'October',ar:'اكتوبر'},
+     {en:'November',ar:'نوفمبر'},
      {en:'December',ar:'ديسمبر'}]
 const currentDate = `${day} ${months[month][locale]} ${year}`
 let expaireDate = computed(()=>{
     if(form.payment_plan == 'yearly') return `${day} ${months[month+1]} ${year}`
     else  return `${day} ${months[month][locale]} ${year+1}`
+
 })
 </script>
 <template>
@@ -49,7 +59,8 @@ let expaireDate = computed(()=>{
     <AppLayout>
         <template #header>{{$t('upgrade')}}</template>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-5">
-            <Card>
+
+            <Card v-loading="loading">
                 <CardContent :title="$t('upgrade account')">
                     <template #header>
                         <h1 class="text-7xl">{{$t('upgrade account')}}</h1>
@@ -77,7 +88,8 @@ let expaireDate = computed(()=>{
                                 <span>Lorem ipsum dolor sit amet </span>
                             </li>
                         </ul>
-                        <div class="text-gray-600 text-sm font-bold my-3">{{ $t('choose plan') }}</div>
+
+                        <div class="text-gray-600 text-sm font-bold my-3">{{ $t('choose plan')}}</div>
                         <RadioGroup v-model="form.payment_plan" class="flex flex-col gap-2">
                             <RadioGroupOption v-slot="{ checked }" value="monthly"
                                 class="[&_li]:py-3 [&_li]:pl-6 [&_li]:pr-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:list-none text-stone-500  flex flex-col  text-sm font-medium cursor-pointer">
@@ -89,6 +101,7 @@ let expaireDate = computed(()=>{
                             </RadioGroupOption>
                             <RadioGroupOption v-slot="{ checked }" value="yearly"
                                 class="[&_li]:py-3 [&_li]:pl-6 [&_li]:pr-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:list-none text-stone-500  flex flex-col  text-sm font-medium cursor-pointer">
+
                                 <InputLabel :value="$t('yearly')" color="primary" />
                                 <li  class="flex justify-between items-center">
                                     <span>$25</span>
@@ -96,6 +109,7 @@ let expaireDate = computed(()=>{
                                 </li>
                             </RadioGroupOption>
                         </RadioGroup>
+
                         <PrimaryButton class="my-3" @click="send" :disabled="!form.payment_plan">{{$t('upgrade')}}</PrimaryButton>
                     </template>
                 </CardContent>
@@ -118,9 +132,10 @@ let expaireDate = computed(()=>{
                                 <div class="bg-black rounded-full absolute top-0 right-0 m-4">
                                     <StarIcon class="w-4 h-4 fill-golden" />
                                 </div>
-                                <div class="p-8 font-bold z-10 relative"> 
+                                <div class="p-8 font-bold z-10 relative">
                                     <div class="mt-5 mb-16">
                                         <h2 class="uppercase text-primary" v-if="form.payment_plan=='monthly'">{{$t('monthly')}}</h2>
+
                                         <span>10</span>
                                     </div>
                                     <div class="flex justify-between">
@@ -142,9 +157,10 @@ let expaireDate = computed(()=>{
                                 <div class="bg-black rounded-full absolute top-0 right-0 m-4">
                                     <StarIcon class="w-4 h-4 fill-golden" />
                                 </div>
-                                <div class="p-8 font-bold z-10 relative"> 
+                                <div class="p-8 font-bold z-10 relative">
                                     <div class="mt-5 mb-16">
                                         <h2 class="uppercase text-primary">{{$t('yearly')}}</h2>
+
                                         <span>25$</span>
                                     </div>
                                     <div class="flex justify-between">
@@ -154,6 +170,7 @@ let expaireDate = computed(()=>{
                                         </div>
                                         <div>
                                             <div class="uppercase text-primary">{{$t('end')}}</div>
+
                                             <div>{{ expaireDate }}</div>
                                         </div>
                                     </div>
@@ -166,13 +183,14 @@ let expaireDate = computed(()=>{
                                 <div class="bg-black rounded-full absolute top-0 right-0 m-4">
                                     <StarIcon class="w-4 h-4 fill-primary" />
                                 </div>
-                                <div class="p-8 font-bold z-10 relative"> 
+                                <div class="p-8 font-bold z-10 relative">
                                     <div class="mt-5 mb-16">
                                         <h2 class="uppercase text-white">{{$t('free plan')}}</h2>
                                     </div>
                                 </div>
                                 <div class="flex justify-center py-6">
                                             <div class="uppercase text-white opacity-50">{{$t('minimal features')}}</div>
+
                                 </div>
                             </div>
                         </FadeInTransition>

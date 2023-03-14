@@ -45,4 +45,13 @@ class UsersCount extends Value
     {
         return now()->addMinutes(5);
     }
+    /**
+     * Set the label for the metric.
+     *
+     * @return string
+     */
+    public function name()
+    {
+        return __('Users Count');
+    }
 }

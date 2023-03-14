@@ -70,9 +70,9 @@ onMounted(() => {
 
 const shouldRate = ref(false)
 function calcShouldRate() {
-
-    if (dayjs().diff(dayjs(props.invitation.date), 'hour') > 2) {
+    if (props.invitation.updated_at && dayjs(props.invitation?.updated_at).diff(dayjs(), 'hour') > 2 && props.invitation.state == 'accepted') {
         shouldRate.value = true;
+
     }
 }
 </script>
@@ -126,7 +126,8 @@ function calcShouldRate() {
 
             <!-- respond to invitation state buttons -->
             <div class="self-stretch text-sm font-bold">
-                <div v-if="invitation.state == null" class="flex justify-center gap-6">
+                <div v-if="invitation.state == null && invitation.inviting_player_id !== currentUser.id"
+                    class="flex justify-center gap-6">
                     <button @click="decline"
                         class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                         <XMarkIcon class="w-6 text-red-600" />

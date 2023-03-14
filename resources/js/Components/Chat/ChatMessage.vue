@@ -11,6 +11,7 @@ import { useChat } from "../../stores/chat";
 import ChatGallery from './ChatGallery.vue';
 import SingleMediaPreview from './SingleMediaPreview.vue';
 import MediaThumbnails from './MediaThumbnails.vue';
+import axios from 'axios';
 const chat = useChat();
 const props = defineProps({
     message: Object,
@@ -21,12 +22,16 @@ onMounted(() => {
     setTimeout(() => {
         props.message.new = false
     }, 10000);
+
     // props.message.media.media !== [] && console.log(props.message.media)
 })
 const currentUser = usePage().props.value.auth.user
 const showOptions = ref(false)
 const showChatGallery = ref(false)
 const showSingleMediaGallery = ref(false)
+const imagesVideosOnly = props.message.attachments.filter(a => a.mime_type.startsWith('image') || a.mime_type.startsWith('video'))
+const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith('image') && !a.mime_type.startsWith('video'))
+
 const isCurrentUser = computed(() => { return props.message.sender_id === currentUser.id })
 const alignmentClass = computed(() => {
     return isCurrentUser.value ? 'self-end  ' : 'self-start   ';
@@ -48,11 +53,16 @@ function handleReply(e) {
     chat.setMessageToReplyTo(props.message)
     showOptions.value ? showOptions.value = false : null
 }
-const imagesVideosOnly = props.message.attachments.filter(a => a.mime_type.startsWith('image') || a.mime_type.startsWith('video'))
-const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith('image') && !a.mime_type.startsWith('video'))
+
+function deleteMessage() {
+    axios.delete(route('api.messages.delete', props.message.id))
+    showOptions.value = false
+    chat.deleteMessage(props.message.id)
+}
+
 </script>
 <template>
-    <div :class="[alignmentClass, parentClasses, newMessageClasses]" class="w-full pt-2 transition-all duration-150   ">
+    <div :class="[alignmentClass, parentClasses, newMessageClasses]" class="w-full pt-2 transition-all duration-150 ">
         <!-- avatar for non current user message -->
         <div v-if='!isCurrentUser'>
             <div><img :src="'https://ui-avatars.com/api/?name=' + player.name + '&color=094609FF&background=E2E2E2'" alt=""
@@ -62,7 +72,7 @@ const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith
         <!-- message body -->
         <div class="max-w-[60%]">
 
-            <div :class="[bodyClass]" class="p-4 rounded-2xl max-w-full ">
+            <div :class="[bodyClass]" class="max-w-full p-4 rounded-2xl ">
                 <!-- replied message -->
                 <div v-if="message.parent_id" :class="repliedClasses" class="p-3 mb-2 text-xs rounded-lg">
                     <!-- name -->
@@ -150,7 +160,7 @@ const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith
                     <div v-show="showOptions"
                         class="absolute z-20 px-6 py-2 text-xs text-white bg-black border -top-1 rounded-xl border-neutral-500 pie-10 z-2 right-7">
                         <ul class="flex flex-col justify-center gap-y-2">
-                            <button class="hover:text-gray-400 ">
+                            <button class="hover:text-gray-400 " @click="deleteMessage">
                                 <li class="flex items-center justify-center gap-x-2">
                                     <TrashIcon class="w-4" />
                                     <span> {{$t('delete')}}</span>
