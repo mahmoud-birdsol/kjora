@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Services\FlashMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -48,10 +49,12 @@ class UserEmailController extends Controller
         ]);
         $user->sendEmailVerificationNotification();
 
-        $request->session()->flash('message', [
-            'type' => 'success',
-            'body' => 'Email changed successfully please verify your mail',
-        ]);
+
+        FlashMessage::make()->success(
+            message: __('Email changed successfully please verify your mail')
+        )->closeable()->send();
+
+
         return redirect()->route('home');
 
     }
