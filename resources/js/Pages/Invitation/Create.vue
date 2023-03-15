@@ -97,11 +97,11 @@ function changeMapMarker(e) {
 </script>
 
 <template>
-    <Head title="Send Invitation" />
+    <Head :title="$t('send-invitation')" />
 
-    <AppLayout title="Send Invitation">
+    <AppLayout :title="$t('send-invitation')">
         <template #header>
-            <p class="text-7xl font-black">Send Invitation</p>
+            <p class="text-7xl font-black">{{$t('send-invitation')}}</p>
         </template>
 
         <div class="py-12">
@@ -113,7 +113,7 @@ function changeMapMarker(e) {
 
                             <form @submit.prevent="">
                                 <div class="my-6">
-                                    <InputLabel>Date</InputLabel>
+                                    <InputLabel>{{$t('Date')}}</InputLabel>
                                     <div class="px-4">
                                         <ElDatePicker stype="date" :disabled-date="disabledDate"
                                             style="background-color: black;" v-model="form.date" class="w-full"
@@ -123,7 +123,7 @@ function changeMapMarker(e) {
                                 </div>
 
                                 <div class="my-6">
-                                    <InputLabel>Time</InputLabel>
+                                    <InputLabel>{{$t('Time')}}</InputLabel>
                                     <div class="px-4">
                                         <ElTimePicker placeholder="Pick the time " v-model="form.time"
                                             :disabled-hours="disabledHours" :disabled-minutes="disabledMinutes" />
@@ -132,7 +132,7 @@ function changeMapMarker(e) {
                                 </div>
 
                                 <div class="my-6">
-                                    <InputLabel>Stadium</InputLabel>
+                                    <InputLabel>{{$t('Stadium')}}</InputLabel>
                                     <div class="px-4">
                                         <select id="stadium" name="stadium" v-model="form.stadium_id"
                                             @change="changeMapMarker"
@@ -146,7 +146,7 @@ function changeMapMarker(e) {
                                 </div>
 
                                 <div class="my-6 mt-4">
-                                    <SecondaryButton @click="createInvitation">Send</SecondaryButton>
+                                    <SecondaryButton @click="createInvitation">{{$t('Send')}}</SecondaryButton>
                                 </div>
                             </form>
                         </div>
