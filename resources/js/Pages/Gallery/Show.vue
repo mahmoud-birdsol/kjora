@@ -297,7 +297,6 @@ let numComments = computed(() => comments.value ? comments.value.filter(c => !c.
 
 onMounted(() => {
     getPostComments()
-    console.log(commentsContainerOffset.value);
 });
 
 const commentsContainerOffset = computed(() => {
