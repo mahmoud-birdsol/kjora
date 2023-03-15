@@ -1,11 +1,14 @@
 <script setup>
-import { Head } from '@inertiajs/inertia-vue3';
+import {Head, usePage} from '@inertiajs/inertia-vue3';
 import SystemMessage from '@/Components/SystemMessage.vue';
 import CopyrightClaim from '@/Components/CopyrightClaim.vue';
 import Navbar from '@/Layouts/Partials/Navbar.vue';
 import RealtimeNotifications from '@/Layouts/Partials/RealtimeNotifications.vue';
-import { provide } from 'vue';
-
+import {onMounted, provide} from 'vue';
+import {loadLanguageAsync} from 'laravel-vue-i18n';
+onMounted(()=>{
+    loadLanguageAsync(usePage().props.value.locale)
+})
 
 defineProps({
     title: String,
@@ -16,7 +19,7 @@ defineProps({
 </script>
 
 <template>
-    <div   :dir="$page.props.locale == 'ar' ? 'rtl' : 'ltr'" class="ltr:font-sans rtl:font-tajawl ">
+    <div :dir="$page.props.locale == 'ar' ? 'rtl' : 'ltr'" >
 
         <Head :title="title" />
 
@@ -24,7 +27,7 @@ defineProps({
 
         <div
             class="min-h-screen bg-gradient-to-b from-black to-primaryDark before:bg-[url(/images/ballkjoura.png)]  relative before:absolute before:inset-0 before:bg-no-repeat before:mix-blend-overlay isolate before:-z-10">
-            <div class="min-h-screen flex flex-col justify-between pt-6 sm:pt-0 space-y-4 ">
+            <div class="min-h-screen flex flex-col justify-between pt-6 sm:pt-0 space-y-4 ltr:font-sans rtl:font-tajawl">
                 <Navbar />
 
                 <header v-if="$slots.header" class="">
