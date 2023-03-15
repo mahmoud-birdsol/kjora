@@ -102,7 +102,7 @@ function handleSplideActive(e) {
                 </div>
             </div>
             <div class="my-4">
-                <Splide @splide:moved="handleSplideActive" aria-labelledby="thumbnail-example-heading"
+                <Splide dir="ltr" @splide:moved="handleSplideActive" aria-labelledby="thumbnail-example-heading"
                     :options="mainOptions" ref="main" :has-track="false">
                     <div v-show="props.media.length > 1" class="splide__arrows">
                         <button class="splide__arrow splide__arrow--prev"
@@ -133,7 +133,7 @@ function handleSplideActive(e) {
                 </Splide>
             </div>
             <div v-show="props.media.length > 1" class="" some-slider>
-                <Splide :options="thumbsOptions" ref="thumbs" class="[&_ul]:justify-center">
+                <Splide dir="ltr" :options="thumbsOptions" ref="thumbs" class="[&_ul]:justify-center">
                     <SplideSlide v-for="item in media" :key="item.id" class="overflow-hidden rounded-lg"
                         style="border: none !important ;">
                         <!-- <img :src="'/images/selfie_example.png'" :alt="slide.alt" /> -->

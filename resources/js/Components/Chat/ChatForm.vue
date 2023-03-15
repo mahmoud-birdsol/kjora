@@ -136,11 +136,11 @@ function onSelectEmoji(emoji) {
                         size="sm" />
                     <div class="font-bold capitalize text-primary pis-3">
                         <div>
-                        {{
-                            chat.repliedMessage.sender_id === $page.props.auth.user.id
-                            ? $page.props.auth.user.name
-                            : player.name
-                        }}
+                            {{
+                                chat.repliedMessage.sender_id === $page.props.auth.user.id
+                                ? $page.props.auth.user.name
+                                : player.name
+                            }}
                         </div>
 
                         <Link class="text-xs font-normal text-gray-600 "
@@ -203,21 +203,21 @@ function onSelectEmoji(emoji) {
                     </div>
                 </div>
             </OnClickOutside>
-            <div class="flex items-center flex-grow">
+            <div class="flex items-center flex-grow ">
                 <textarea v-model="form.body" @keypress.enter.exact.prevent="submit" name="body" id="body" rows="1"
                     :placeholder="$t('Type your Message Here')"
-                    class="w-full resize-none rounded-full border-none focus:ring-primary bg-stone-100 p-2 px-4 placeholder:text-neutral-400 text-stone-700 hideScrollBar"></textarea>
+                    class="w-full p-2 px-4 border-none rounded-full resize-none focus:ring-primary bg-stone-100 placeholder:text-neutral-400 text-stone-700 hideScrollBar"></textarea>
             </div>
             <button class="relative" @click="openModual = true">
                 <PhotoIcon class="w-6 h-6 text-neutral-400" />
                 <span class="absolute bottom-0 rounded-full bg-white -right-[1px]">
                     <UplaodChatFile :show="openModual" @close="openModual = false" :should-upload="true"
                         @upload="addFiles" />
-                    <ArrowUpCircleIcon class="w-2 h-2 text-neutral-400" />
+                    <ArrowUpCircleIcon class="w-2 h-2 text-neutral-400 " />
                 </span>
             </button>
             <button :disabled="loading" class="p-1 group" @click="submit">
-                <PaperAirplaneIcon class="w-5" :class="loading ? 'text-neutral-400' : 'text-neutral-900'" />
+                <PaperAirplaneIcon class="w-5 rtl:rotate-180" :class="loading ? 'text-neutral-400' : 'text-neutral-900'" />
             </button>
         </div>
     </div>

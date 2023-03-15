@@ -34,34 +34,35 @@ watch(() => chat.search, () => {
 <template>
     <FadeInTransition>
         <div v-if="showSearchForm" class="w-full">
-            <div class="flex justify-between items-center gap-4 p-4">
+            <div class="flex items-center justify-between gap-4 p-4">
                 <div class="grow">
                     <TextInput type="search" v-model="chat.search" placeholder="Search" />
                 </div>
                 <div class="flex-none">
-                    <button @click="showSearchForm = false" class="rounded-full p-1 group hover:ring-primary hover:ring">
+                    <button @click="showSearchForm = false" class="p-1 rounded-full group hover:ring-primary hover:ring">
                         <XMarkIcon class="w-5 text-black group-hover:text-primary" />
                     </button>
                 </div>
             </div>
         </div>
         <div class="flex w-full" v-else>
-            <div class="flex flex-1 items-center gap-4 border-r border-r-stone-400 p-4">
+            <div
+                class="flex items-center flex-1 gap-4 p-4 ltr:border-r ltr:border-r-stone-400 rtl:border-l rtl:border-l-stone-400">
                 <Avatar :image-url="player.avatar_url" :username="player.name" size="md" :border="true"
                     border-color="primary" />
 
                 <div class="flex flex-col">
-                    <h4 class="mb-1 font-bold capitalize leading-none text-primary">
+                    <h4 class="mb-1 font-bold leading-none capitalize text-primary">
                         {{ player.name }}
                     </h4>
                     <Link class="text-xs leading-none text-neutral-500" :href="route('player.profile', player.id)">
-                        @{{ player.username }}
+                    @{{ player.username }}
                     </Link>
                 </div>
             </div>
             <div class="flex items-center gap-4 p-4">
                 <button @click="showSearchForm = true">
-                    <MagnifyingGlassIcon class="h-5 w-5 cursor-pointer text-primary hover:text-primaryDark" />
+                    <MagnifyingGlassIcon class="w-5 h-5 cursor-pointer text-primary hover:text-primaryDark" />
                 </button>
                 <ReportModal :reportable-id="conversation.id" :reportable-type="'App\\Models\\Conversation'">
                     <template #trigger>
