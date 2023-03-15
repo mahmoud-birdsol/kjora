@@ -58,7 +58,7 @@ function closeModal() {
         <Modal :show="showAddStadiumModal" max-width="sm" @close="closeModal" :closeable="true" :show-close-icon="false">
             <div class="p-6 bg-black">
                 <div class="flex items-center justify-between">
-                    <p class="text-lg text-white">Add new Stadium </p>
+                    <p class="text-lg text-white">{{$t('Add new Stadium')}} </p>
 
                     <button @click="showAddStadiumModal = false">
                         <XMarkIcon class="w-4 h-4 text-white" />
@@ -67,19 +67,19 @@ function closeModal() {
 
                 <form @submit.prevent="addStadium">
                     <div class="my-6">
-                        <InputLabel>Stadium Name</InputLabel>
+                        <InputLabel>{{$t('Stadium Name')}}</InputLabel>
                         <input type="text" name="search" id="search" v-model="form.name"
                             class="block w-full px-4  text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
-                            placeholder="stadium name ..." />
+                            :placeholder=" $t('Stadium Name') + '...'" />
                     </div>
                     <div class="my-6">
-                        <InputLabel>choose stadium place </InputLabel>
-                        <GMapAutocomplete placeholder="This is a placeholder" @place_changed="setPlace"
+                        <InputLabel>{{$t('choose stadium place')}} </InputLabel>
+                        <GMapAutocomplete :placeholder="$t('choose from map')" @place_changed="setPlace"
                             class="block w-full px-4  text-white bg-black border-white border p-2 rounded-full focus:border focus:border-primary focus:ring-primary sm:text-sm placeholder:center">
                         </GMapAutocomplete>
                     </div>
                     <div class="my-6 mt-4">
-                        <SecondaryButton @click="addStadium">Add</SecondaryButton>
+                        <SecondaryButton @click="addStadium">{{$t('Add')}}</SecondaryButton>
                     </div>
 
                 </form>

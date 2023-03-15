@@ -171,25 +171,23 @@ function changeMapMarker(e) {
                                 <GMapInfoWindow :opened="true">
                                     <div class="text-xs font-bold text-stone-800">{{ currentStadium.name }}</div>
                                 </GMapInfoWindow>
-                            </GMapMarker>
+                            </GMapMarker>Add new Stadium
                         </GMapMap>
                     </div>
                 </div>
             </div>
         </div>
         <AddStadiumModal />
-        <Modal :show="showSuccessModal" max-width="md">
-            <div class="bg-white rounded-xl p-6 min-h-[500px]">
-                <div class="flex flex-col justify-between items-center min-h-[500px]">
+        <Modal :show="showSuccessModal" max-width="md" @close="showSuccessModal=false">
+            <div class="bg-white rounded-xl p-6 md:min-h-[500px]">
+                <div class="flex flex-col justify-between items-center h-56 md:min-h-[500px]">
                     <div class="flex justify-center my-4">
-                        <h2 class="text-xl text-primary font-bold uppercase">Invitation Sent</h2>
+                        <h2 class="text-xl text-primary font-bold uppercase">{{$t('Invitation Sent')}}</h2>
                     </div>
-
-                    <p class="">Your invitation will be sent and you will receive an email updating you on the status of
-                        your request.</p>
+                    <p class="">{{$t('Your invitation will be sent and you will receive an email updating you on the status of your request')}}.</p>
 
                     <Link :href="route('home')" class="flex min-w-full w-full">
-                    <PrimaryButton class="w-full">Ok</PrimaryButton>
+                    <PrimaryButton class="w-full" @click="showSuccessModal=false">{{$t('Ok')}}</PrimaryButton>
                     </Link>
                 </div>
             </div>

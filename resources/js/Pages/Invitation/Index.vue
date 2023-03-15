@@ -22,7 +22,7 @@ const props = defineProps({
 
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="flex items-center justify-end space-x-4">
+                <div class="flex items-center justify-end gap-3">
                     <Link :href="route('invitation.index')">
                     <SecondaryButton>
                         <span
@@ -41,7 +41,7 @@ const props = defineProps({
                     </Link>
                 </div>
 
-                <div class="bg-white rounded-xl mt-4 min-h-[500px] p-6">
+                <div class="bg-white rounded-xl mt-4 min-h-[500px] p-2 md:p-6">
                     <div class="grid grid-cols-1 gap-4">
                         <template v-for="invitation in invitations" :key="invitation.id">
                             <InvitationCard :invitation="invitation" />

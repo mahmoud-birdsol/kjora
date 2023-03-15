@@ -75,7 +75,7 @@ const reset = () => {
 
     <AppLayout :title="$t('home')">
         <template #header>
-            <p class="font-black text-7xl">{{ $t('favorites') }}</p>
+            <p class="font-black sm:text-7xl">{{ $t('favorites') }}</p>
         </template>
 
         <div class="py-12">

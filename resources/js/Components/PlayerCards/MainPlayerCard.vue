@@ -113,12 +113,12 @@ const removeFromFavorites = () => {
                             player.username
                         }}
                         </Link>
-                        <p class="flex items-center space-x-2 text-sm ">
-                            <span class="scale-[0.7] origin-left flex items-center gap-x-1"
+                        <p class="flex items-start space-x-2 text-sm ">
+                            <div class="scale-[0.7] origin-left flex items-center gap-x-1"
                                 :class="txtColor == 'black' ? 'text-primary' : 'text-[#FF9900]'">
                                 <ElRate disabled v-model="player.rating" size="small" :colors="colors" />
                                 {{ player.rating }}
-                            </span>
+                        </div>
                         </p>
                     </div>
                 </div>
