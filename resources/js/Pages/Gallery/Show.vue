@@ -78,19 +78,19 @@
                                     <FadeInTransition>
                                         <!-- media option menu -->
                                         <div v-show="showOptions"
-                                            class="absolute top-0 z-20 px-6 py-2 text-xs text-white bg-black border right-8 rounded-xl border-neutral-500 pie-10 z-2 ">
+                                            class="absolute top-0 z-20 px-6 py-2 text-xs text-white bg-black border ltr:right-8 rtl:left-8 rounded-xl border-neutral-500 pie-10 z-2 ">
                                             <ul class="flex flex-col justify-center gap-y-2">
                                                 <button class="hover:text-gray-400 group" @click="editCaption">
                                                     <li class="flex items-center gap-x-2">
                                                         <PencilIcon class="w-4 " />
-                                                        <span>Edit</span>
+                                                        <span>{{$t('edit')}}</span>
                                                     </li>
                                                 </button>
                                                 <button @click="openRemoveMediaModal" class="hover:text-gray-400 "
                                                     v-if="isCurrentUser">
                                                     <li class="flex items-center justify-center gap-x-2">
                                                         <TrashIcon class="w-4" />
-                                                        <span> Delete</span>
+                                                        <span> {{$t('delete')}}</span>
                                                     </li>
                                                     <!-- confirm delete media modal -->
                                                     <Modal :show="showDeletePostModal" @close="showDeletePostModal = false"
@@ -149,11 +149,9 @@
                             <!-- date and time and likes row 2-->
                             <div class="flex justify-between w-full gap-2 text-sm text-stone-700">
                                 <div class="flex flex-row gap-2">
-                                    <span>{{ dayjs(post.created_at).fromNow(true) }}</span>
+                                    <DateTranslation :start="post.created_at" type="range"/>
                                     <span>|</span>
-                                    <span>{{ dayjs(post.created_at).format('hh:mm A')
-                                    }}</span>
-
+                                    <DateTranslation :start="post.created_at" format="hh:mm A" />
                                 </div>
 
                                 <div class="flex items-center gap-1"><span class="text-sm">{{ post?.likes_count }}</span>
@@ -207,7 +205,7 @@
                                 <button @click="showEmojiPicker = !showEmojiPicker" :data-cancel-blur="true">
                                     <FaceSmileIcon class="w-6 text-neutral-400" />
                                 </button>
-                                <div class="absolute z-20 bottom-full left-full " v-show="showEmojiPicker">
+                                <div class="absolute z-20 bottom-full ltr:left-full rtl:right-full" v-show="showEmojiPicker">
                                     <EmojiPickerElement @selected-emoji="onSelectEmoji" />
                                 </div>
                             </div>
@@ -215,7 +213,7 @@
                         <div class="flex items-center flex-grow ">
 
                             <textarea @keypress.enter.exact.prevent="(e) => addComment()" v-model="newComment"
-                                name="newComment" id="newComment" rows="1" placeholder="Add a comment..."
+                                name="newComment" id="newComment" rows="1" :placeholder="$t('Add a comment...')"
                                 class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary "></textarea>
                         </div>
 
@@ -253,6 +251,7 @@ import LikeButton from '@/Components/LikeButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
 import EmojiPickerElement from '../../Components/EmojiPickerElement.vue';
+import DateTranslation from '../../Components/DateTranslation.vue';
 
 
 onBeforeMount(() => {

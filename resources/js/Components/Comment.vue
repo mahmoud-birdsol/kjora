@@ -22,9 +22,9 @@
                 </div>
                 <!-- date and time -->
                 <div class="flex flex-row gap-2 text-xs text-neutral-400/90">
-                    <span>{{ dayjs(comment.created_at).fromNow(true) }}</span>
+                    <span><DateTranslation type="range"  :start="comment.created_at"/></span>
                     <span>|</span>
-                    <span>{{ dayjs(comment.created_at).format('hh:mm A') }}</span>
+                    <DateTranslation format='hh:mm A' :start="comment.created_at"/>
                 </div>
             </div>
             <!-- comment or reply body  row 2-->
@@ -36,7 +36,7 @@
             <!-- add reply & like buttons row 3 -->
             <div class="flex items-center justify-start w-full gap-2 mb-2 text-sm font-semibold text-stone-700">
                 <button @click="handleReplyClicked"
-                    class="p-1 transition-all duration-150 pis-0 enabled:hover:underline hover:underline-offset-4">Reply</button>
+                    class="p-1 transition-all duration-150 pis-0 enabled:hover:underline hover:underline-offset-4">{{$t('reply')}}</button>
 
                 <div class="flex items-center">
                     <div>{{ comment.likes_count }}</div>
@@ -44,7 +44,7 @@
                         :likeable_type="'App\\Models\\Comment'">
                         <template v-slot="{ isLiked }">
                             <div class="transition-all duration-150 enabled:hover:underline hover:underline-offset-4"
-                                :class="isLiked ? 'text-primary' : ''">Like</div>
+                                :class="isLiked ? 'text-primary' : ''">{{$t('like')}}</div>
                         </template>
                     </LikeButton>
                 </div>
@@ -66,7 +66,7 @@
                             <button @click="toggleEmojiPicker" :data-cancel-blur="true">
                                 <FaceSmileIcon class="w-6 text-neutral-400" />
                             </button>
-                            <div class="absolute z-[1000] left-full " :class="EmojiPickerClass" v-show="showEmojiPicker">
+                            <div class="absolute z-[1000] ltr:left-full rtl:right-full" :class="EmojiPickerClass" v-show="showEmojiPicker">
                                 <EmojiPickerElement @selected-emoji="onSelectEmoji" />
                             </div>
                         </div>
@@ -103,7 +103,7 @@ import { FaceSmileIcon } from '@heroicons/vue/24/outline';
 import { PaperAirplaneIcon } from '@heroicons/vue/24/solid';
 import { usePage, Link } from '@inertiajs/inertia-vue3';
 import EmojiPickerElement from './EmojiPickerElement.vue';
-
+import DateTranslation from './DateTranslation.vue';
 
 import LikeButton from './LikeButton.vue';
 const props = defineProps(['comment', 'parentOffset'])
@@ -134,13 +134,13 @@ watch(() => props.comment.replies.length, (newLength, oldLength) => {
 
 
 const guidesClassesBefore = computed(() => {
-    return hasReplies.value ? 'before:absolute  before:-left-9   before:w-px   before:bg-stone-200  before:z-[1] before:top-0 before:bottom-[8px]   '
+    return hasReplies.value ? 'before:absolute  ltr:before:-left-9 rtl:before:-right-9   before:w-px   before:bg-stone-200  before:z-[1] before:top-0 before:bottom-[8px]   '
         : ' '
 }); const guidesClassesAfter = computed(() => {
-    return (hasReplies.value) ? !showReplies.value ? ' after:absolute after:h-px after:w-8  after:bg-stone-200   after:-left-9 after:bottom-[8px] ' : ' after:absolute after:h-px after:w-8  after:bg-stone-200   after:-left-9 after:bottom-[8px]' : '';
+    return (hasReplies.value) ? !showReplies.value ? ' after:absolute after:h-px after:w-8  after:bg-stone-200   ltr:after:-left-9 rtl:after:-right-9 after:bottom-[8px] ' : ' after:absolute after:h-px after:w-8  after:bg-stone-200   ltr:after:-left-9 rtl:after:-right-9 after:bottom-[8px]' : '';
 }); const guidesClassesAfter2 = computed(() => {
     return props.comment.parent_id ?
-        ' after:absolute after:h-px after:w-8  after:bg-stone-200  after:z-[-1] after:-left-9 after:top-5 ' : '';
+        ' after:absolute after:h-px after:w-8  after:bg-stone-200  after:z-[-1] ltr:after:-left-9 rtl:after:-right-9 after:top-5 ' : '';
 });
 function toggleRepliesView() {
     showReplies.value = !showReplies.value

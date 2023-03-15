@@ -53,11 +53,6 @@ function submit() {
                                 </div>
 
                             </div>
-                            <div>
-                                <InputLabel value="password" color="primary" />
-                                <TextInput type="password" v-model="form.password" placeholder="enter your password" />
-                                <InputError class="mt-2" :message="form.errors.password" />
-                            </div>
                     </template>
                     <template #footer>
                         <PrimaryButton @click="submit" class="align-bottom">{{ $t('edit') }}</PrimaryButton>
