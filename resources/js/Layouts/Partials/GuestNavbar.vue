@@ -44,8 +44,14 @@ const showMobileMenu = ref(false);
                 </div>
             </div>
         </div>
-
-        <div class="sm:hidden" id="mobile-menu" v-if="showMobileMenu">
+        <Transition
+        enter-from-class="h-0"
+        enter-to-class="h-44"
+        enter-active-class="transition-all duration-500 overflow-hidden"
+        leave-to-class="h-0"
+        leave-from-class="h-44"
+        leave-active-class="transition-all duration-500 overflow-hidden">
+        <div class="relative h-" id="mobile-menu" v-if="showMobileMenu">
             <div class="space-y-1 pt-2 pb-3 mt-8 bg-black">
                 <ResponsiveNavLink :href="route('welcome')"
                     :active="route().current('login') || route().current('welcome')">{{$t('home')}}
@@ -54,5 +60,6 @@ const showMobileMenu = ref(false);
                 <ResponsiveNavLink :href="route('contact')">{{$t('contact')}}</ResponsiveNavLink>
             </div>
         </div>
+    </Transition>
     </nav>
 </template>
