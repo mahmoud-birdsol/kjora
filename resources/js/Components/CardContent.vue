@@ -11,7 +11,7 @@ const props = defineProps({
                 <h2 class="text-xl text-primary font-bold uppercase">{{ props.title }}</h2>
             </div>
         </div>
-        <div class="mx-8">
+        <div class="mx-2 md:mx-8">
             <slot name="body"></slot>
         </div>
         <div class="md:mx-8 my-4" v-if="$slots.footer">

@@ -16,8 +16,8 @@ import CardContent from "@/Components/CardContent.vue";
                         <h2 class="text-xl text-primary font-bold uppercase">{{$t('about')}}</h2>
                     </div>
 
-                    <div class="mx-8">
-                        <div class="border border-gray-600  rounded-2xl w-full  text-justify p-16 text-gray-600 mb-9">
+                    <div class="mx-2 md:mx-8">
+                        <div class="border border-gray-600  rounded-2xl w-full  text-justify p-4 md:p-16 text-gray-600 mb-9">
                             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Excepturi hic laboriosam facere,
                             voluptas ipsum at sint accusantium iste velit facilis, porro nostrum accusamus eveniet dolorem
                             sapiente id autem dignissimos soluta dicta voluptate fugit tempora repellat eius. In cum iure
