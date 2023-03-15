@@ -1,6 +1,7 @@
 <script setup>
 import { usePage } from '@inertiajs/inertia-vue3';
 import dayjs from 'dayjs';
+const localei18n = usePage().props.value.locale
 const months = 'يناير_فبراير_مارس_أبريل_مايو_يونيو_يوليو_أغسطس_سبتمبر_أكتوبر_نوفمبر_ديسمبر'.split('_')
 const symbolMap = {
     1: '١',
@@ -51,6 +52,11 @@ const locale = {
         y: 'عام واحد',
         yy: '%d أعوام'
     },
+    meridiem: (hour, minute, isLowercase) => {
+    // OPTIONAL, AM/PM
+    if(localei18n == 'en') return hour > 12 ? 'PM' : 'AM'
+    else return hour > 12 ? 'م' : 'ًص'
+  },
     preparse(string) {
         return string
             .replace(
@@ -86,7 +92,7 @@ defineProps({
 })
 
 dayjs.locale(locale, null, true)
-const localei18n = usePage().props.value.locale
+
 </script>
 <template>
     <span v-if="type==='normal'">{{ dayjs(start).locale(localei18n).format(format) }}</span>
