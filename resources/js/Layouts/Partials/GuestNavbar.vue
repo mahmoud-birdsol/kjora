@@ -51,7 +51,7 @@ const showMobileMenu = ref(false);
                     :active="route().current('login') || route().current('welcome')">{{$t('home')}}
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('about')">{{$t('about')}}</ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('conatact')">{{$t('contact')}}</ResponsiveNavLink>
+                <ResponsiveNavLink :href="route('contact')">{{$t('contact')}}</ResponsiveNavLink>
             </div>
         </div>
     </nav>

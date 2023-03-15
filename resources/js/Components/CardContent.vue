@@ -14,7 +14,7 @@ const props = defineProps({
         <div class="mx-8">
             <slot name="body"></slot>
         </div>
-        <div class="mx-8 my-4" v-if="$slots.footer">
+        <div class="md:mx-8 my-4" v-if="$slots.footer">
             <slot name="footer"></slot>
         </div>
     </div>

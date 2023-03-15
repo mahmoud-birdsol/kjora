@@ -103,7 +103,6 @@ const reset = () => {
 
                 <!-- Current list...
                                                                         =====================================================-->
-                =====================================================-->
                 <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
 
                     <div class="flex items-start justify-start my-6">
