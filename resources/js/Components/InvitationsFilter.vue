@@ -9,6 +9,7 @@ import { ElDatePicker } from 'element-plus';
 import InputLabel from '@/Components/InputLabel.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import FixedWrapper from '@/Components/FixedWrapper.vue';
 const props = defineProps({
     url: String,
 })
@@ -40,7 +41,7 @@ const reset = () => {
 }
 </script>
 <template>
-    <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40 py-40 md:py-20  z-10">
+    <FixedWrapper>
         <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl"
             @click="showFiltersModal = !showFiltersModal">
             <AdjustmentsHorizontalIcon class="w-10 h-10 text-white" />
@@ -49,12 +50,12 @@ const reset = () => {
             <div class="p-6 bg-black" v-loading="loading">
                 <div class="flex items-center justify-between">
                     <p class="text-sm text-white">{{$t('filter')}} </p>
-
+    
                     <button @click="showFiltersModal = false">
                         <XMarkIcon class="w-4 h-4 text-white" />
                     </button>
                 </div>
-
+    
                 <form @submit.prevent="filter">
                     <div class="my-6">
                         <InputLabel>{{$t('date from')}}: </InputLabel>
@@ -86,5 +87,5 @@ const reset = () => {
                 </form>
             </div>
         </Modal>
-    </div>
+    </FixedWrapper>
 </template>

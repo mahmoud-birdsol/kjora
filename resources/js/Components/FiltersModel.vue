@@ -10,6 +10,7 @@ import Modal from '@/Components/Modal.vue';
 import { ElSlider } from 'element-plus';
 import InputLabel from '@/Components/InputLabel.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
+import FixedWrapper from '@/Components/FixedWrapper.vue';
 let age = ref([18,70])
 let rating = ref([0,5])
 const props = defineProps({
@@ -31,7 +32,7 @@ const distances = [5, 10, 20, 30, 40, 50];
 
 </script>
 <template>
-    <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40 py-40 md:py-20  z-20">
+    <FixedWrapper>
         <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl"
             @click="showFiltersModal = !showFiltersModal">
             <AdjustmentsHorizontalIcon class="w-10 h-10 text-white" />
@@ -108,7 +109,7 @@ const distances = [5, 10, 20, 30, 40, 50];
                 </form>
             </div>
         </Modal>
-    </div>
+    </FixedWrapper>
 </template>
 <style scoped>
 .el-slider__button {

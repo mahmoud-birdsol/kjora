@@ -37,7 +37,7 @@
 
         </div>
     </div>
-    <div v-if="currentUser.id === user.id" class="fixed bottom-0 right-0 px-10 py-40 md:py-20  sm:px-20 lg:px-40 z-10">
+    <FixedWrapper v-if="currentUser.id === user.id" >
         <button class="flex items-center justify-center text-center bg-black rounded-full shadow-xl w-14 aspect-square"
             @click="showUploadFileModal = true">
             <PlusCircleIcon class="w-5 text-white" />
@@ -45,7 +45,7 @@
         <UploadGalleryFile :show="showUploadFileModal" @close="showUploadFileModal = false" @reload="$emit('reload')"
             :should-upload="true" />
 
-    </div>
+    </FixedWrapper>
 </template>
 
 <script setup>
@@ -61,6 +61,7 @@ import ListGroupTransition from './ListGroupTransition.vue';
 import { Link, usePage } from '@inertiajs/inertia-vue3';
 import Modal from './Modal.vue';
 import { Inertia } from '@inertiajs/inertia';
+import FixedWrapper from '@/Components/FixedWrapper.vue';
 
 const props = defineProps({
     user: {

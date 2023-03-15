@@ -9,7 +9,7 @@ const show = ref(true);
 </script>
 
 <template>
-    <div v-if="message && show" class="flex w-full justify-between fixed bottom-0 z-[5]">
+    <div v-if="message && show" class="flex w-full justify-between fixed bottom-0 z-40 max-md:text-xs">
         <!-- Info Message -->
         <div v-if="message.type === 'info'" class="flex w-full bg-sky-500 px-6 py-4">
             <div class="w-full flex items-center justify-between space-x-4">
