@@ -106,8 +106,8 @@ function deleteMessage() {
                             @click="showChatGallery = true">
                             <MediaThumbnails :media="imagesVideosOnly[1]" />
                             <div
-                                class="absolute inset-0 grid font-bold text-white rounded-md cursor-pointer bg-stone-700/70 place-items-center">
-                                show all
+                                class="absolute inset-0 grid font-bold text-white rounded-md cursor-pointer max-sm:text-xs bg-stone-700/70 place-items-center">
+                                {{ `${$page.props.locale == 'en' ? 'show all' : 'عرض الجميع'}` }}
                             </div>
                         </div>
                         <MediaThumbnails v-if="imagesVideosOnly[2]" :media="imagesVideosOnly[2]" />
@@ -116,7 +116,9 @@ function deleteMessage() {
                             <MediaThumbnails :media="imagesVideosOnly[4]" />
                             <div
                                 class="absolute inset-0 grid font-bold text-white rounded-md cursor-pointer bg-stone-700/70 place-items-center max-sm:text-xs">
-                                {{ imagesVideosOnly.length > 3 ? `+ ${imagesVideosOnly.length - 3} more...` : 'show all'
+                                {{ imagesVideosOnly.length > 3 ? `+ ${imagesVideosOnly.length - 3} ${$page.props.locale
+                                    == 'en' ? 'more...' : 'المزيد ...'}` :
+                                    `${$page.props.locale == 'en' ? 'show all' : 'عرض الجميع'}`
                                 }}
                             </div>
                         </div>
