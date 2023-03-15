@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, onUpdated, ref } from 'vue';
 import { CheckIcon, ChevronDownIcon } from '@heroicons/vue/24/solid';
 
 
@@ -33,7 +33,19 @@ const props = defineProps({
 const nextPageUrl = ref(null);
 
 const filteredOptions = ref([]);
+onUpdated(() => {
+    if (props.options.length) {
+        filteredOptions.value = props.options;
 
+        if (props.modelValue) {
+            selected.value = props.options.filter((option) => {
+                return option[props.valueName] == props.modelValue;
+            })[0];
+        } else {
+            selected.value = '';
+        }
+    }
+})
 onMounted(() => {
     if (props.options.length) {
         filteredOptions.value = props.options;

@@ -82,14 +82,14 @@ function handleSplideActive(e) {
 <template>
     <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="$emit('close')"
         :show-close-icon="false">
-        <div class="py-5 bg-white px-7">
+        <div class="max-w-full py-5 bg-white px-7">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
                     <Avatar :image-url="user.avatar_url" :size="'md'" :username="user.name" :border="true" />
                     <div>
                         <div class="text-primary">{{ user.name }}</div>
                         <Link class="text-xs text-gray-400" :href="route('player.profile', user.id)">@{{ user.username
-                        }}
+                                                }}
                         </Link>
                         <div class="text-xs text-gray-400">10/01/2021 at 1:30 pm</div>
                     </div>
