@@ -145,6 +145,8 @@ let showCropModal = (url) => {
         name: fileData.value.name,
         url,
     }
+    console.log(document.querySelector('#img').clientWidth)
+    console.log(document.querySelector('#img').clientHeight)
     openCropModal.value = true
     cropLoading.value = false
 
@@ -152,7 +154,7 @@ let showCropModal = (url) => {
 function close() {
     fileData.value = []
     previewImageUrl.value = ''
-    num.value += 1
+    num.value += 1 
     emit('close')
 }
 </script>
@@ -177,7 +179,7 @@ function close() {
 
                     <button v-show="showPreview" @click.prevent="removePhoto" class="relative w-full rounded"
                         v-loading="cropLoading">
-                        <img :src="previewImageUrl" alt="" class="w-full h-auto rounded-lg">
+                        <img :src="previewImageUrl" alt="" class="w-full h-auto rounded-lg" id="img">
                         <div class="absolute inset-0 w-full h-full bg-transparent hover:bg-white hover:bg-opacity-50">
                             <div class="flex flex-col items-center justify-center h-full opacity-0 hover:opacity-100">
                                 <XMarkIcon class="w-8 h-8 text-white" />

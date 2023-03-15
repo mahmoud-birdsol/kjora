@@ -23,16 +23,14 @@ const options = {
     viewMode: 1,
     dragMode: 'crop',
     responsive: true,
-    minCanvasWidth: '320',
-    minCanvasHeight: '320',
-    minContainerWidth: '320',
-    minContainerHeight: '320',
     aspectRatio: props.aspectRatio,
+    background:false,
+    highlight:false
 }
 let boxStyle = {
     width: '100%',
     height: '100%',
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#FFF',
     margin: 'auto',
 }
 const imageObj = computed(() => {
@@ -88,5 +86,8 @@ function ready() {
     height: auto;
     max-width: 100%;
     max-height: 100%;
+}
+.cropper-modal{
+    background-color: #fff !important;
 }
 </style>
