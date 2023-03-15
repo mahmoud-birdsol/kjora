@@ -4,7 +4,7 @@ import SystemMessage from '@/Components/SystemMessage.vue';
 import CopyrightClaim from '@/Components/CopyrightClaim.vue';
 import Navbar from '@/Layouts/Partials/Navbar.vue';
 import RealtimeNotifications from '@/Layouts/Partials/RealtimeNotifications.vue';
-import {onMounted, provide} from 'vue';
+import {onMounted, provide , ref} from 'vue';
 import {loadLanguageAsync} from 'laravel-vue-i18n';
 onMounted(()=>{
     loadLanguageAsync(usePage().props.value.locale)
@@ -15,6 +15,8 @@ defineProps({
 });
 
 
+const height = ref(null)
+onMounted(()=> height.value = document.querySelector('#SysMessage').offsetHeight)
 
 </script>
 
@@ -22,8 +24,6 @@ defineProps({
     <div :dir="$page.props.locale == 'ar' ? 'rtl' : 'ltr'" >
 
         <Head :title="title" />
-
-        <SystemMessage />
 
         <div
             class="min-h-screen bg-gradient-to-b from-black to-primaryDark before:bg-[url(/images/ballkjoura.png)]  relative before:absolute before:inset-0 before:bg-no-repeat before:mix-blend-overlay isolate before:-z-10">
@@ -52,10 +52,11 @@ defineProps({
                         <CopyrightClaim />
                     </div>
                 </footer>
+                <div class="w-full" :style="`height:${height}px;`"></div>
+                <SystemMessage id="SysMessage" />
             </div>
         </div>
     </div>
-
     <RealtimeNotifications />
 </template>
 

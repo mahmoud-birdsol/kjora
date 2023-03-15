@@ -50,7 +50,7 @@ function closeModal() {
 }
 </script>
 <template>
-    <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40">
+    <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40 py-40 md:py-20 z-10">
         <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl"
             @click="openModal">
             <PlusCircleIcon class="w-8 h-8 text-white" />

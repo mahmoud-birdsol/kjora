@@ -31,7 +31,7 @@ const distances = [5, 10, 20, 30, 40, 50];
 
 </script>
 <template>
-    <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40 z-10">
+    <div class="fixed bottom-0 right-0 p-10 sm:px-20 lg:px-40 py-40 md:py-20  z-20">
         <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl"
             @click="showFiltersModal = !showFiltersModal">
             <AdjustmentsHorizontalIcon class="w-10 h-10 text-white" />
