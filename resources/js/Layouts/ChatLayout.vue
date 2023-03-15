@@ -66,7 +66,7 @@ onBeforeUnmount(() => {
                     <ConversationsList :conversations="conversations" />
 
                 </div>
-                <div class="flex justify-end h-full lg:hidden">
+                <div class="flex h-full ltr:justify-end rtl:justify-start lg:hidden">
                     <button @click="showSideBar = true" class="p-1 text-black hover:text-primary">
                         <Bars3Icon class="w-6" />
                     </button>

@@ -36,7 +36,7 @@ let state = usePage().props.value.user.state_name
     <nav class="bg-transparent">
         <!-- Primary Navigation Menu -->
         <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
+            <div class="flex items-center h-16 md:justify-between">
                 <div class="flex">
                     <!-- Navigation Links -->
                     <div class="items-center hidden gap-2 lg:gap-8 sm:-my-px md:flex">
@@ -55,20 +55,20 @@ let state = usePage().props.value.user.state_name
                         <NavLink :href="route('favorites.index')" :active="route().current('favorites.index')">
                             <HeartIcon class="w-4 h-4 text-primary" />
                             <span>
-                                {{$t('favorites')}}
+                                {{ $t('favorites') }}
                             </span>
                         </NavLink>
                         <NavLink :href="route('invitation.index')" :active="route().current('invitation.index')">
                             <FootBallIcon class="fill-primary" />
 
                             <span>
-                                {{$t('invitations')}}
+                                {{ $t('invitations') }}
                             </span>
                         </NavLink>
                         <NavLink :href="route('more')" :active="route().current('more')">
                             <EllipsisHorizontalCircleIcon class="w-4 h-4 text-primary" />
                             <span>
-                                {{$t('more')}}
+                                {{ $t('more') }}
                             </span>
                         </NavLink>
                     </div>
@@ -81,7 +81,7 @@ let state = usePage().props.value.user.state_name
                         <div class="bg-black rounded-full">
                             <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                         </div>
-                        <Link :href="route('upgrade')">{{$t('upgrade')}}</Link>
+                        <Link :href="route('upgrade')">{{ $t('upgrade') }}</Link>
                     </button>
                     <!-- user city  -->
                     <div class="flex items-center gap-1 ">
@@ -89,7 +89,7 @@ let state = usePage().props.value.user.state_name
                         <span class="text-white w-max">{{ currentUser.current_city }}</span>
                     </div> <!-- Settings Dropdown -->
                     <div class="relative ">
-                        <Dropdown :align="locale == 'en'? 'right' :'left'" width="48">
+                        <Dropdown :align="locale == 'en' ? 'right' : 'left'" width="48">
                             <template #trigger>
                                 <button
                                     class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
@@ -101,11 +101,11 @@ let state = usePage().props.value.user.state_name
 
                             <template #content>
                                 <DropdownLink :href="route('profile.show')">
-                                    {{$t('profile')}}
+                                    {{ $t('profile') }}
                                 </DropdownLink>
 
                                 <DropdownLink :href="route('identity.verification.create')">
-                                    {{$t('identity-verification')}}
+                                    {{ $t('identity-verification') }}
                                 </DropdownLink>
 
                                 <div class="border-t border-gray-100" />
@@ -113,7 +113,7 @@ let state = usePage().props.value.user.state_name
                                 <!-- Authentication -->
                                 <form @submit.prevent="logout">
                                     <DropdownLink as="button">
-                                        {{$t('log-out')}}
+                                        {{ $t('log-out') }}
                                     </DropdownLink>
                                 </form>
                             </template>
@@ -122,7 +122,7 @@ let state = usePage().props.value.user.state_name
 
                     <!-- Notifications Dropdown -->
                     <div class="relative">
-                        <Dropdown :align="locale == 'en'? 'right' :'left'" width="96">
+                        <Dropdown :align="locale == 'en' ? 'right' : 'left'" width="96">
                             <template #trigger>
                                 <button>
                                     <BellIcon class="w-6 h-6 text-white"></BellIcon>
@@ -132,11 +132,12 @@ let state = usePage().props.value.user.state_name
                             <template #content>
                                 <!-- Notifications -->
                                 <div class="block px-4 py-2 text-xs text-gray-400">
-                                    {{$t('notifications')}}
+                                    {{ $t('notifications') }}
                                 </div>
 
                                 <div v-if="$page.props.notifications.length">
-                                    <ul role="list" class="divide-y divide-gray-200">
+                                    <ul role="list"
+                                        class="divide-y divide-gray-200 max-h-[calc(100dvh-200px)] overflow-y-auto">
                                         <template v-for="notification in $page.props.notifications">
                                             <NotificationComponent :notification="notification" />
                                         </template>
@@ -145,13 +146,13 @@ let state = usePage().props.value.user.state_name
 
                                 <div v-else>
                                     <div class="block px-4 py-2 text-xs text-center text-gray-500">
-                                        {{$t("you-don't-have-any-new-notifications")}}.
+                                        {{ $t("you-don't-have-any-new-notifications") }}.
                                     </div>
                                 </div>
 
-                                <div class="block px-4 py-2 text-xs text-center text-sky-500">
+                                <div class="block px-4 py-2 text-xs text-center ">
                                     <Link :href="route('notification.index')" class="text-primary hover:text-primaryDark">
-                                    {{$t('view-all')}}
+                                    {{ $t('view-all') }}
                                     </Link>
                                 </div>
                             </template>
@@ -161,7 +162,7 @@ let state = usePage().props.value.user.state_name
                 </div>
 
                 <!-- Hamburger -->
-                <div class="flex items-center -mr-2 space-x-2 md:hidden">
+                <div class="flex items-center -mr-2 space-x-2 rtl:flex-row-reverse md:hidden">
                     <div class="relative ml-3">
                         <Dropdown width="96">
                             <template #trigger>
@@ -172,11 +173,12 @@ let state = usePage().props.value.user.state_name
                             <template #content>
                                 <!-- Notifications -->
                                 <div class="block px-4 py-2 text-xs text-gray-400">
-                                    {{$t('notifications')}}
+                                    {{ $t('notifications') }}
                                 </div>
 
                                 <div v-if="$page.props.notifications.length">
-                                    <ul role="list" class="divide-y divide-gray-200">
+                                    <ul role="list"
+                                        class="divide-y divide-gray-200 max-h-[calc(100dvh-200px)] overflow-y-auto">
                                         <template v-for="notification in $page.props.notifications">
                                             <NotificationComponent :notification="notification" />
                                         </template>
@@ -185,13 +187,13 @@ let state = usePage().props.value.user.state_name
 
                                 <div v-else>
                                     <div class="block px-4 py-2 text-xs text-center text-gray-500">
-                                        {{$t("you-don't-have-any-new-notifications")}}.
+                                        {{ $t("you-don't-have-any-new-notifications") }}.
                                     </div>
                                 </div>
 
-                                <div class="block px-4 py-2 text-xs text-center text-sky-500">
-                                    <Link :href="route('notification.index')" class="text-sky-500 hover:text-sky-700">
-                                        {{$t('view-all')}}
+                                <div class="block px-4 py-2 text-xs text-center">
+                                    <Link :href="route('notification.index')" class="text-primary hover:text-primaryDark">
+                                    {{ $t('view-all') }}
                                     </Link>
                                 </div>
                             </template>
@@ -202,7 +204,7 @@ let state = usePage().props.value.user.state_name
                         <div class="bg-black rounded-full">
                             <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                         </div>
-                        <Link :href="route('upgrade')">{{$t('upgrade')}}</Link>
+                        <Link :href="route('upgrade')">{{ $t('upgrade') }}</Link>
                     </button>
                     <button
                         class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none hover:bg-transparent focus:text-gray-500"
@@ -218,16 +220,13 @@ let state = usePage().props.value.user.state_name
         <div class="fixed top-0 bottom-0 left-0 right-0 z-40 bg-black bg-opacity-50"
             :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }"
             @click="showingNavigationDropdown = false"></div>
-        <Transition
-        enter-from-class="ltr:-left-full rtl:-right-full"
-        enter-to-class="ltr:left-0 rtl:right-0"
-        enter-active-class="transition-all duration-700"
-        leave-to-class="ltr:-left-full rtl:-right-full"
-        leave-from-class="ltr:left-0 rtl:right-0"
-        leave-active-class="transition-all duration-700">
+        <Transition enter-from-class="ltr:-left-full rtl:-right-full" enter-to-class="ltr:left-0 rtl:right-0"
+            enter-active-class="transition-all duration-700" leave-to-class="ltr:-left-full rtl:-right-full"
+            leave-from-class="ltr:left-0 rtl:right-0" leave-active-class="transition-all duration-700">
             <div class="pt-2 pb-3 space-y-1 fixed top-0  bg-black h-full w-[max(20em,50%)] z-50"
                 v-if="showingNavigationDropdown">
-                <XMarkIcon class="w-5 absolute ltr:right-0 rtl:left-0 m-3 text-white" @click="showingNavigationDropdown = false" />
+                <XMarkIcon class="absolute w-5 m-3 text-white ltr:right-0 rtl:left-0"
+                    @click="showingNavigationDropdown = false" />
 
                 <!-- Responsive Settings Options -->
                 <div class="pt-4 pb-1 border-gray-200">
@@ -237,10 +236,10 @@ let state = usePage().props.value.user.state_name
                                 :username="$page.props.auth.user.name" :border="true" />
                         </div>
                         <div>
-                            <div class="text-base font-medium text-gray-800">
+                            <div class="text-base font-medium text-white">
                                 {{ $page.props.auth.user.username }}
                             </div>
-                            <div class="text-sm font-medium text-gray-500">
+                            <div class="text-sm font-medium text-stone-300">
                                 {{ $page.props.auth.user.email }}
                             </div>
                         </div>
@@ -248,18 +247,18 @@ let state = usePage().props.value.user.state_name
 
                     <div class="mt-3 space-y-1">
                         <ResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')">
-                            {{$t('profile')}}
+                            {{ $t('profile') }}
                         </ResponsiveNavLink>
 
                         <ResponsiveNavLink :href="route('identity.verification.create')"
                             :active="route().current('identity.verification.create')">
-                            {{$t('identity-verification')}}
+                            {{ $t('identity-verification') }}
                         </ResponsiveNavLink>
 
 
                         <form method="POST" @submit.prevent="logout">
                             <ResponsiveNavLink as="button">
-                                {{$t('log-out')}}
+                                {{ $t('log-out') }}
                             </ResponsiveNavLink>
                         </form>
                         <div class="border-t border-gray-100" />
@@ -275,15 +274,15 @@ let state = usePage().props.value.user.state_name
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('invitation.index')" :active="route().current('invitation.index')">
                     <FootBallIcon class="fill-primary" />
-                    <span>{{$t('invitations')}}</span>
+                    <span>{{ $t('invitations') }}</span>
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('favorites.index')" :active="route().current('favorites.index')">
                     <HeartIcon class="w-4 h-4 text-primary" />
-                    <span>{{$t('favorites')}}</span>
+                    <span>{{ $t('favorites') }}</span>
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('more')" :active="route().current('more')">
                     <EllipsisHorizontalCircleIcon class="w-4 h-4 text-primary" />
-                    <span>{{$t('more')}}</span>
+                    <span>{{ $t('more') }}</span>
                 </ResponsiveNavLink>
 
             </div>

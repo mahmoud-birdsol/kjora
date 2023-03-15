@@ -98,7 +98,7 @@ function deleteMessage() {
                 <!-- message.attachments && message.attachments.length > 1 -->
                 <template v-if="message.attachments.length > 1">
                     <!-- images and videos -->
-                    <div v-if="imagesVideosOnly.length" class="grid max-w-full grid-cols-2 gap-2 place-items-center"
+                    <div v-if="imagesVideosOnly.length" class="grid max-w-[200px] grid-cols-2 gap-2 place-items-center"
                         :class="imagesVideosOnly.length > 2 ? 'grid-rows-2' : ''">
                         <MediaThumbnails :media="imagesVideosOnly[0]" />
                         <MediaThumbnails v-if="imagesVideosOnly.length > 2" :media="imagesVideosOnly[1]" />
@@ -115,7 +115,7 @@ function deleteMessage() {
                             @click="showChatGallery = true">
                             <MediaThumbnails :media="imagesVideosOnly[4]" />
                             <div
-                                class="absolute inset-0 grid font-bold text-white rounded-md cursor-pointer bg-stone-700/70 place-items-center">
+                                class="absolute inset-0 grid font-bold text-white rounded-md cursor-pointer bg-stone-700/70 place-items-center max-sm:text-xs">
                                 {{ imagesVideosOnly.length > 3 ? `+ ${imagesVideosOnly.length - 3} more...` : 'show all'
                                 }}
                             </div>
