@@ -212,19 +212,14 @@ function changeFiles(file, url, id) {
 
             </div>
             <div>
-                <div class="mb-2 text-sm text-center justify-self-end text-primary">video, images, PDFs and docs are allowed
                     <Crop :img="cropFile" @crop="changeFiles" v-model:open="openModal"
                         @update:open="() => openModal = false" />
-                    <div class="mb-2 text-sm text-center justify-self-end text-primary">video, images, PDFs and docs are
-                        allowed
-                        with max size
-                        (10 MB) are allowed
+                    <div class="mb-2 text-sm text-center justify-self-end text-primary">{{$t('video, images, PDFs and docs are allowed with max size (10 MB) are allowed')}}
                     </div>
                     <PrimaryButton @click.prevent="upload" :disabled="isDisabled">
                         {{ $t('upload') }}
                     </PrimaryButton>
                     <!-- <InputError class="mt-2" :message="form.errors.image" /> -->
-                </div>
             </div>
         </div>
     </Modal>
