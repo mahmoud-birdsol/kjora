@@ -1,18 +1,17 @@
 <template>
     <!-- comment  -->
-    <div class="grid grid-cols-[min-content_1fr] w-full justify-start gap-4" :class="comment.parent_id ? 'bg-white' : ''">
+    <div class="grid grid-cols-[min-content_1fr] w-full justify-start gap-4 " :class="comment.parent_id ? 'bg-white' : ''">
         <!-- image col 1 -->
         <div class="min-w-max z-[10] relative  " :class="guidesClassesAfter2">
             <Avatar :username="comment.user.name" :image-url="comment.user.avatar_url" :size="'md'" :border="true"
                 border-color="primary" />
         </div>
         <!-- comment information col 2 -->
-        <div class="flex flex-col gap-1 relative isolate  z-[5] max-w-full "
-            :class="[guidesClassesBefore, guidesClassesAfter]">
+        <div class="relative flex flex-col max-w-full gap-1 " :class="[guidesClassesBefore, guidesClassesAfter]">
             <!-- user information & comment time row 1-->
             <div class="flex flex-col justify-between w-full xs:flex-row">
                 <!-- user information -->
-                <div class="flex md:flex-col flex-row  gap-1 ">
+                <div class="flex flex-row gap-1 md:flex-col ">
                     <div class="flex flex-row gap-2">
                         <h3 class="m-0 text-lg font-bold leading-none capitalize text-stone-800 ">{{
                             comment.user.first_name }} </h3>
@@ -35,11 +34,11 @@
                 </p>
             </div>
             <!-- add reply & like buttons row 3 -->
-            <div class="flex justify-start w-full gap-2 mb-2 text-sm font-semibold text-stone-700 items-center">
+            <div class="flex items-center justify-start w-full gap-2 mb-2 text-sm font-semibold text-stone-700">
                 <button @click="handleReplyClicked"
                     class="p-1 transition-all duration-150 pis-0 enabled:hover:underline hover:underline-offset-4">Reply</button>
 
-                <div class="flex  items-center">
+                <div class="flex items-center">
                     <div>{{ comment.likes_count }}</div>
                     <LikeButton :isLiked="comment?.is_liked" :likeable_id="comment.id"
                         :likeable_type="'App\\Models\\Comment'">
@@ -64,10 +63,10 @@
                 <div v-show="showReplyInput" class="flex flex-row items-center self-end w-full p-3 gap-x-3 ">
                     <OnClickOutside @trigger="showEmojiPicker = false">
                         <div class="relative flex items-center">
-                            <button @click="showEmojiPicker = !showEmojiPicker" :data-cancel-blur="true">
+                            <button @click="toggleEmojiPicker" :data-cancel-blur="true">
                                 <FaceSmileIcon class="w-6 text-neutral-400" />
                             </button>
-                            <div class="absolute z-20 bottom-full left-full " v-show="showEmojiPicker">
+                            <div class="absolute z-[1000] left-full " :class="EmojiPickerClass" v-show="showEmojiPicker">
                                 <EmojiPickerElement @selected-emoji="onSelectEmoji" />
                             </div>
                         </div>
@@ -87,8 +86,8 @@
             </OnClickOutside>
             <!-- view replies button row 6 -->
             <button v-show="hasReplies" @click="toggleRepliesView"
-                class="flex w-full text-sm gap-2 justify-start  text-stone-500 enabled:hover:underline hover:underline-offset-4 transition-all duration-300  ">
-                {{ showReplies ? $t('hide') : $t('view') }} {{ comment.replies?.length }} {{$t('replies')}}
+                class="flex justify-start w-full gap-2 text-sm transition-all duration-300 text-stone-500 enabled:hover:underline hover:underline-offset-4 ">
+                {{ showReplies ? $t('hide') : $t('view') }} {{ comment.replies?.length }} {{ $t('replies') }}
             </button>
 
         </div>
@@ -107,7 +106,7 @@ import EmojiPickerElement from './EmojiPickerElement.vue';
 
 
 import LikeButton from './LikeButton.vue';
-const props = defineProps(['comment'])
+const props = defineProps(['comment', 'parentOffset'])
 onBeforeMount(() => {
     dayjs.extend(relativeTime)
 })
@@ -122,6 +121,7 @@ const showReplyInput = ref(false)
 const isSending = ref(false)
 const showEmojiPicker = ref(false)
 
+const EmojiPickerClass = ref('');
 
 defineExpose({
     showReplies
@@ -131,11 +131,13 @@ watch(() => props.comment.replies.length, (newLength, oldLength) => {
     showReplies.value = true
 })
 
+
+
 const guidesClassesBefore = computed(() => {
     return hasReplies.value ? 'before:absolute  before:-left-9   before:w-px   before:bg-stone-200  before:z-[1] before:top-0 before:bottom-[8px]   '
         : ' '
 }); const guidesClassesAfter = computed(() => {
-    return (hasReplies.value) ? !showReplies.value ? ' after:absolute after:h-px after:w-8  after:bg-stone-200  after:z-[-1] after:-left-9 after:bottom-[8px] ' : 'after:absolute after:h-px after:w-8  after:bg-stone-200  after:z-[-1] after:-left-9 after:bottom-[8px]' : '';
+    return (hasReplies.value) ? !showReplies.value ? ' after:absolute after:h-px after:w-8  after:bg-stone-200   after:-left-9 after:bottom-[8px] ' : ' after:absolute after:h-px after:w-8  after:bg-stone-200   after:-left-9 after:bottom-[8px]' : '';
 }); const guidesClassesAfter2 = computed(() => {
     return props.comment.parent_id ?
         ' after:absolute after:h-px after:w-8  after:bg-stone-200  after:z-[-1] after:-left-9 after:top-5 ' : '';
@@ -191,6 +193,17 @@ function handleBlur(e) {
         !newReply.value || newReply.value === '' ? showReplyInput.value = false : null
     }
 
+}
+
+
+function toggleEmojiPicker(e) {
+    let parentOffset = props.parentOffset;
+    let emojiButtonOffset = e.target.getBoundingClientRect().top + window.scrollY
+    let emojiPickerHeight = 320
+    emojiButtonOffset - parentOffset > emojiPickerHeight ?
+        EmojiPickerClass.value = 'bottom-full' : EmojiPickerClass.value = 'top-full'
+
+    showEmojiPicker.value = !showEmojiPicker.value
 }
 
 </script>

@@ -1,7 +1,7 @@
 <template>
     <AppLayout title="gallery">
         <template #header>
-            <p>{{$t('post')}}</p>
+            <p>{{ $t('post') }}</p>
         </template>
 
         <div class="px-4 py-4 bg-white sm:px-8 rounded-3xl">
@@ -96,24 +96,27 @@
                                                     <Modal :show="showDeletePostModal" @close="showDeletePostModal = false"
                                                         :closeable="true" :show-close-icon="false" :max-width="'sm'">
                                                         <div class="flex flex-col justify-center p-6 text-stone-800 ">
-                                                            <p class="mb-3 text-lg">{{$t('Are you sure you want delete this media?')}}</p>
+                                                            <p class="mb-3 text-lg">
+                                                                {{ $t('Are you sure you want delete this media ? ') }}</p>
                                                             <div class="flex justify-center w-full gap-4">
                                                                 <button
                                                                     class="p-2 px-8 border-2 rounded-full border-primary hover:bg-primary text-primary hover:text-white active:scale-95 "
-                                                                    @click="showDeletePostModal = false">{{$t('Cancel')}}</button>
+                                                                    @click="showDeletePostModal = false">{{ $t('Cancel')
+                                                                    }}</button>
                                                                 <button
                                                                     class="p-2 px-8 text-white bg-red-800 border-2 border-red-800 rounded-full hover:bg-transparent hover:text-red-800 active:scale-95 "
-                                                                    @click="removePost">{{$t('Delete Post')}}</button>
+                                                                    @click="removePost">{{ $t('Delete Post') }}</button>
 
                                                                 <div v-show="showOptions"
-                                                                    class="absolute left-0 p-2 bg-white ro unded-lg shadow-lg cursor-pointer top-1/2">
+                                                                    class="absolute left-0 p-2 bg-white shadow-lg cursor-pointer ro unded-lg top-1/2">
                                                                     <div class="fixed top-0 left-0 w-full h-full"
                                                                         @click="showOptions = false">
                                                                     </div>
                                                                     <div
                                                                         class="relative z-20 w-full text-sm text-center text-gray-500 divide-y whitespace-nowrap">
-                                                                        <div @click="isEditingCaption = true">{{$t('edit')}}</div>
-                                                                        <div>{{$t('remove photo')}}</div>
+                                                                        <div @click="isEditingCaption = true">{{ $t('edit')
+                                                                        }}</div>
+                                                                        <div>{{ $t('remove photo') }}</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -127,7 +130,7 @@
                                                             <template #trigger>
                                                                 <button class="flex items-center gap-x-2">
                                                                     <FlagIcon class="w-4" />
-                                                                    <span>{{$t('report')}}</span>
+                                                                    <span>{{ $t('report') }}</span>
                                                                 </button>
 
                                                             </template>
@@ -172,7 +175,7 @@
                                 <div v-show="isEditingCaption" class="flex flex-col justify-end gap-3">
                                     <textarea rows="4" type="text" v-model='captionForm.caption'
                                         class="w-full text-sm border-none rounded-lg resize-none text-stone-500 ring-1 focus:ring-primary focus:shadow-none focus:border-none ring-gray-300 hideScrollBar" />
-                                    <PrimaryButton @click="submitEditCaption" class=''>{{$t('Save')}}</PrimaryButton>
+                                    <PrimaryButton @click="submitEditCaption" class=''>{{ $t('Save') }}</PrimaryButton>
                                 </div>
                             </div>
 
@@ -182,15 +185,18 @@
                 <!-- comment and replies right col -->
                 <div class="flex flex-col h-full gap-2 max-lg:border-t lg:border-l border-stone-300">
                     <!-- header -->
-                    <div class=" pt-5 p-3 text-sm border-b border-stone-300"> {{ $t('comments ( :count )', {count: numComments})  }}
+                    <div class="p-3 pt-5 text-sm border-b border-stone-300"> {{ $t('comments ( :count )', {
+                        count: numComments
+                    }) }}
                     </div>
                     <!-- comments -->
                     <div class="self-stretch h-full p-3 px-6 ">
-                        <div ref="commentsContainer"
-                            class="flex flex-col gap-4 w-full max-h-[500px] hideScrollBar overflow-auto" v-if="comments">
+                        <div ref="commentsContainer" @scroll="handleScroll"
+                            class="flex flex-col gap-4 w-full max-h-[500px] min-h-[480px]  hideScrollBar overflow-auto"
+                            v-if="comments">
                             <template v-for="comment in comments.filter(c => !c.parent_id)" :key="comment.id">
-                                <Comment @addedReply="() => handleAddedReply()" :comment="comment">
-                                </Comment>
+                                <Comment @addedReply="() => handleAddedReply()" :comment="comment" ref="commentsComps"
+                                    :parentOffset="commentsContainerOffset" />
                             </template>
                         </div>
                     </div>
@@ -233,7 +239,7 @@ import { FaceSmileIcon, EllipsisHorizontalIcon, TrashIcon, PencilIcon, FlagIcon 
 import { PaperAirplaneIcon, XMarkIcon } from '@heroicons/vue/24/solid';
 
 import axios from 'axios';
-import { onMounted, onBeforeMount, ref  , computed} from 'vue';
+import { onMounted, onBeforeMount, ref, computed } from 'vue';
 import Comment from '../../Components/Comment.vue';
 import { HeartIcon } from '@heroicons/vue/24/solid';
 import dayjs from 'dayjs';
@@ -247,6 +253,7 @@ import LikeButton from '@/Components/LikeButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
 import EmojiPickerElement from '../../Components/EmojiPickerElement.vue';
+
 
 onBeforeMount(() => {
     dayjs.extend(relativeTime)
@@ -284,11 +291,19 @@ const showDeleteMediaModal = ref(false);
 const showDeletePostModal = ref(false);
 const showEmojiPicker = ref(false)
 
+
+let numComments = computed(() => comments.value ? comments.value.filter(c => !c.parent_id)?.length : 0)
 //comment logic
 
 onMounted(() => {
     getPostComments()
 });
+
+const commentsContainerOffset = computed(() => {
+    return commentsContainer.value?.getBoundingClientRect().top + window.scrollY
+})
+
+
 
 function getPostComments() {
     axios.get(route('api.gallery.comments'), {
@@ -300,9 +315,7 @@ function getPostComments() {
         comments.value = res.data.data
     }).catch(err => console.error(err))
 }
-function submit() {
-    console.log('has submit')
-}
+
 
 
 // store new comments in database
@@ -317,8 +330,10 @@ function sendComment() {
         getPostComments()
         scrollToCommentsBottom()
 
+
     }).catch(err => console.error(err)).finally(() => {
         isSending.value = false
+        newComment.value = ''
     })
 }
 
@@ -388,7 +403,7 @@ function removePost() {
     })
 
 }
-let numComments  =computed(()=> comments.value ? comments.value.filter(c => !c.parent_id )?.length : 0 )
+
 </script>
 
 <style lang="scss" scoped></style>

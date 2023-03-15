@@ -46,10 +46,8 @@ class CommentController extends Controller
 
         $media = $modelType->findOrFail($request->input('commentable_id'));
 
-        $post = Post::find($media->model_id);
 
-
-        $user = User::find($post->user->id);
+        $user = User::find($media->user->id);
 
         $user->notify(new CommentCreatedNotification($user, $request->user(), $media));
 
