@@ -12,6 +12,7 @@ import ChatGallery from './ChatGallery.vue';
 import SingleMediaPreview from './SingleMediaPreview.vue';
 import MediaThumbnails from './MediaThumbnails.vue';
 import Avatar from '@/Components/Avatar.vue';
+import DateTranslation from '@/Components/DateTranslation.vue';
 
 import axios from 'axios';
 const chat = useChat();
@@ -66,11 +67,11 @@ function deleteMessage() {
 <template>
     <div :class="[alignmentClass, parentClasses, newMessageClasses]" class="w-full pt-2 transition-all duration-150 ">
         <!-- avatar for non current user message -->
-        <div v-if='!isCurrentUser'>
-            <div>
+        <template v-if='!isCurrentUser'>
+            <div class="self-start">
                 <Avatar :image-url="player.avatar_url" :size="'md'" :username="player.name" :border="true" />
             </div>
-        </div>
+        </template>
         <!-- message body -->
         <div class="max-w-[60%]">
 
@@ -97,11 +98,11 @@ function deleteMessage() {
                 <!-- message.attachments && message.attachments.length > 1 -->
                 <template v-if="message.attachments.length > 1">
                     <!-- images and videos -->
-                    <div v-if="imagesVideosOnly.length" class="grid grid-cols-2 gap-2 place-items-center "
+                    <div v-if="imagesVideosOnly.length" class="grid max-w-full grid-cols-2 gap-2 place-items-center"
                         :class="imagesVideosOnly.length > 2 ? 'grid-rows-2' : ''">
                         <MediaThumbnails :media="imagesVideosOnly[0]" />
                         <MediaThumbnails v-if="imagesVideosOnly.length > 2" :media="imagesVideosOnly[1]" />
-                        <div v-if="imagesVideosOnly.length == 2" class="relative w-28 aspect-square"
+                        <div v-if="imagesVideosOnly.length == 2" class="relative w-full aspect-square"
                             @click="showChatGallery = true">
                             <MediaThumbnails :media="imagesVideosOnly[1]" />
                             <div
@@ -110,12 +111,12 @@ function deleteMessage() {
                             </div>
                         </div>
                         <MediaThumbnails v-if="imagesVideosOnly[2]" :media="imagesVideosOnly[2]" />
-                        <div v-if="imagesVideosOnly.length >= 3" class="relative w-28 aspect-square"
+                        <div v-if="imagesVideosOnly.length >= 3" class="relative w-full aspect-square"
                             @click="showChatGallery = true">
                             <MediaThumbnails :media="imagesVideosOnly[4]" />
                             <div
                                 class="absolute inset-0 grid font-bold text-white rounded-md cursor-pointer bg-stone-700/70 place-items-center">
-                                {{ imagesVideosOnly.length > 3 ? `+ ${imagesVideosOnly.length - 3} + more...` : 'show all'
+                                {{ imagesVideosOnly.length > 3 ? `+ ${imagesVideosOnly.length - 3} more...` : 'show all'
                                 }}
                             </div>
                         </div>
@@ -138,10 +139,16 @@ function deleteMessage() {
             <!-- date -->
             <div class="mt-2 text-xs " :class="isCurrentUser ? 'text-end' : null">
                 <!-- date -->
-                <span v-if="isCurrentUser">{{ message.read_at ?
-                    dayjs(message.read_at).format('hh:mm A') : dayjs(message.created_at).format('hh:mm A') }}
+                <span v-if="isCurrentUser">
+                    <template v-if="message.read_at">
+                        <DateTranslation :start="message.read_at" format="hh:mm A" />
+                    </template>
+                    <template v-else>
+                        <DateTranslation :start="message.created_at" format="hh:mm A" />
+                    </template>
                 </span>
-                <span v-if="!isCurrentUser">{{ dayjs(message.created_at).format('hh:mm A') }}
+                <span v-if="!isCurrentUser">
+                    <DateTranslation :start="message.created_at" format="hh:mm A" />
                 </span>
                 <!-- read status -->
                 <template v-if="isCurrentUser">
@@ -151,7 +158,7 @@ function deleteMessage() {
             </div>
         </div>
         <!-- options menu if message of the current user -->
-        <div v-if="isCurrentUser" class="absolute top-0 right-0">
+        <div v-if="isCurrentUser" class="absolute top-0 ltr:right-0 rtl:left-0">
             <button @click="showOptions = !showOptions">
                 <EllipsisVerticalIcon class="w-6 text-neutral-500" />
             </button>
@@ -160,18 +167,18 @@ function deleteMessage() {
                     leaveToClass="opacity-0" leave-active-class="transition-all duration-150 ease-in"
                     enterActiveClass="transition-all duration-150 ease-out">
                     <div v-show="showOptions"
-                        class="absolute z-20 px-6 py-2 text-xs text-white bg-black border -top-1 rounded-xl border-neutral-500 pie-10 z-2 right-7">
+                        class="absolute z-20 px-6 py-2 text-xs text-white bg-black border -top-1 rounded-xl border-neutral-500 pie-10 z-2 rtl:left-7 ltr:right-7">
                         <ul class="flex flex-col justify-center gap-y-2">
                             <button class="hover:text-gray-400 " @click="deleteMessage">
-                                <li class="flex items-center justify-center gap-x-2">
+                                <li class="flex items-center justify-center gap-x-2 rtl:flex-row-reverse">
                                     <TrashIcon class="w-4" />
                                     <span> {{ $t('delete') }}</span>
                                 </li>
                             </button>
                             <button class="hover:text-gray-400 group" @click="handleReply">
-                                <li class="flex items-center justify-center gap-x-2">
+                                <li class="flex items-center justify-center gap-x-2 rtl:flex-row-reverse">
                                     <ReplyIcon
-                                        class="cursor-pointer fill-transparent group-hover:stroke-gray-400 stroke-white ">
+                                        class="cursor-pointer fill-transparent group-hover:stroke-gray-400 stroke-white rtl:mis-2 ">
                                     </ReplyIcon>
                                     <span>{{ $t('Quote') }}</span>
                                 </li>
