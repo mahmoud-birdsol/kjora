@@ -52,7 +52,6 @@ const thumbsOptions = {
     rewind: true,
     gap: "1rem",
     pagination: false,
-    fixedWidth: 110,
     fixedHeight: 110,
     cover: true,
     drag: 'free',
@@ -60,6 +59,13 @@ const thumbsOptions = {
     isNavigation: true,
     updateOnMove: true,
     arrows: false,
+    perPage: props.media.length > 5 ? 5 : props.media.length,
+    breakpoints: {
+		640: {
+			perPage: 2,
+		},
+  }
+   
     //   focus: 'center',
 };
 onMounted(() => {
