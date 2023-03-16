@@ -1,125 +1,3 @@
-<script setup>
-import { ref } from 'vue';
-import { useChat } from "@/stores/chat";
-import MediaPreview from "@/Components/MediaPreview.vue";
-import {
-    ArrowUpCircleIcon,
-    PaperAirplaneIcon,
-    PhotoIcon,
-    XMarkIcon
-} from '@heroicons/vue/24/solid'
-import axios from "axios";
-import { useForm, Link } from "@inertiajs/inertia-vue3";
-import Avatar from "../Avatar.vue";
-import UplaodChatFile from './UplaodChatFile.vue';
-import EmojiPickerElement from '../EmojiPickerElement.vue';
-import { FaceSmileIcon } from '@heroicons/vue/24/outline';
-import { fromPairs } from 'lodash';
-
-const props = defineProps({
-    conversation: {
-        required: true,
-        type: Object,
-    },
-    player: {
-        required: true,
-        type: Object,
-    }
-});
-const showEmojiPicker = ref(false)
-const chat = useChat();
-const hasAttachement = ref(false);
-const loading = ref(false);
-let openModual = ref(false);
-const filesData = ref(null)
-const form = useForm({
-    parent_id: null,
-    body: '',
-    attachments: null
-});
-
-const submit = () => {
-    loading.value = true;
-
-    if (chat.repliedMessage) {
-        form.parent_id = chat.repliedMessage.id;
-    }
-
-    axios.post(route('api.messages.store', props.conversation.id), form.data(), {
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        }
-    }).then((response) => {
-
-        chat.pushNewMessage(response.data.data);
-    }).catch(error => {
-        console.error(error.response)
-    }).finally(() => {
-        loading.value = false;
-        filePreview.value = null;
-        form.reset();
-        filesData.value = []
-    });
-};
-
-// TODO: message body character count based on current screen
-// TODO: view should determine the number of rows with a max number
-// TODO: of rows before activating scroll.
-
-const attachmentsInput = ref(null)
-const filePreview = ref(null);
-
-function clickFileInput() {
-    attachmentsInput.value.click()
-}
-
-/* -------------------------------------------------------------------------- */
-let fileType = ref(null)
-let fileName = ref(null)
-
-function handleFile(file) {
-    if (!file) return;
-    fileType.value = file.type
-    fileName.value = file.name
-
-    const reader = new FileReader();
-
-    reader.onload = (e) => {
-        filePreview.value = e.target.result;
-        hasAttachement.value = true
-    };
-
-
-    reader.readAsDataURL(file);
-}
-
-// on photoInput change method
-const handleAttachments = (e) => {
-    const file = attachmentsInput.value.files[0];
-    form.attachments = attachmentsInput.value.files[0]
-
-    handleFile(file)
-}
-function addFiles(files, filesUrls) {
-    if (form.attachments) {
-        form.attachments = [...form.attachments, ...files]
-        filesData.value = [...filesData.value, ...filesUrls]
-    } else {
-        form.attachments = files
-        filesData.value = filesUrls
-    }
-
-}
-const removePhoto = (i) => {
-    filesData.value.splice(i, 1)
-    form.attachments.splice(i, 1)
-};
-
-function onSelectEmoji(emoji) {
-    form.body += emoji
-}
-
-</script>
 
 <template>
     <div class="grid p-6 bg-white gap-y-4 rounded-2xl">
@@ -222,3 +100,131 @@ function onSelectEmoji(emoji) {
         </div>
     </div>
 </template>
+
+
+
+<script setup>
+import { ref } from 'vue';
+import { useChat } from "@/stores/chat";
+import MediaPreview from "@/Components/MediaPreview.vue";
+import {
+    ArrowUpCircleIcon,
+    PaperAirplaneIcon,
+    PhotoIcon,
+    XMarkIcon
+} from '@heroicons/vue/24/solid'
+import axios from "axios";
+import { useForm, Link } from "@inertiajs/inertia-vue3";
+import Avatar from "../Avatar.vue";
+import UplaodChatFile from './UplaodChatFile.vue';
+import EmojiPickerElement from '../EmojiPickerElement.vue';
+import { FaceSmileIcon } from '@heroicons/vue/24/outline';
+import { fromPairs } from 'lodash';
+
+const props = defineProps({
+    conversation: {
+        required: true,
+        type: Object,
+    },
+    player: {
+        required: true,
+        type: Object,
+    }
+});
+const showEmojiPicker = ref(false)
+const chat = useChat();
+const hasAttachement = ref(false);
+const loading = ref(false);
+let openModual = ref(false);
+const filesData = ref(null)
+const form = useForm({
+    parent_id: null,
+    body: '',
+    attachments: null
+});
+
+const submit = () => {
+
+    if (loading.value) { return }
+
+
+    loading.value = true;
+    if (chat.repliedMessage) {
+        form.parent_id = chat.repliedMessage.id;
+    }
+
+    axios.post(route('api.messages.store', props.conversation.id), form.data(), {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }).then((response) => {
+        chat.pushNewMessage(response.data.data);
+    }).catch(error => {
+        console.error(error.response)
+    }).finally(() => {
+        loading.value = false;
+        filePreview.value = null;
+        form.reset();
+        filesData.value = []
+    });
+};
+
+// TODO: message body character count based on current screen
+// TODO: view should determine the number of rows with a max number
+// TODO: of rows before activating scroll.
+
+const attachmentsInput = ref(null)
+const filePreview = ref(null);
+
+function clickFileInput() {
+    attachmentsInput.value.click()
+}
+
+/* -------------------------------------------------------------------------- */
+let fileType = ref(null)
+let fileName = ref(null)
+
+function handleFile(file) {
+    if (!file) return;
+    fileType.value = file.type
+    fileName.value = file.name
+
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+        filePreview.value = e.target.result;
+        hasAttachement.value = true
+    };
+
+
+    reader.readAsDataURL(file);
+}
+
+// on photoInput change method
+const handleAttachments = (e) => {
+    const file = attachmentsInput.value.files[0];
+    form.attachments = attachmentsInput.value.files[0]
+
+    handleFile(file)
+}
+function addFiles(files, filesUrls) {
+    if (form.attachments) {
+        form.attachments = [...form.attachments, ...files]
+        filesData.value = [...filesData.value, ...filesUrls]
+    } else {
+        form.attachments = files
+        filesData.value = filesUrls
+    }
+
+}
+const removePhoto = (i) => {
+    filesData.value.splice(i, 1)
+    form.attachments.splice(i, 1)
+};
+
+function onSelectEmoji(emoji) {
+    form.body += emoji
+}
+
+</script>
+
