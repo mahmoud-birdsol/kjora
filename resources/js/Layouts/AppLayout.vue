@@ -1,12 +1,12 @@
 <script setup>
-import {Head, usePage} from '@inertiajs/inertia-vue3';
+import { Head, usePage } from '@inertiajs/inertia-vue3';
 import SystemMessage from '@/Components/SystemMessage.vue';
 import CopyrightClaim from '@/Components/CopyrightClaim.vue';
 import Navbar from '@/Layouts/Partials/Navbar.vue';
 import RealtimeNotifications from '@/Layouts/Partials/RealtimeNotifications.vue';
-import {onMounted, provide , ref} from 'vue';
-import {loadLanguageAsync} from 'laravel-vue-i18n';
-onMounted(()=>{
+import { onMounted, provide, ref } from 'vue';
+import { loadLanguageAsync } from 'laravel-vue-i18n';
+onMounted(() => {
     loadLanguageAsync(usePage().props.value.locale)
 })
 
@@ -16,24 +16,27 @@ defineProps({
 
 
 const height = ref(null)
-onMounted(()=> height.value = document.querySelector('#SysMessage').offsetHeight)
+onMounted(() => {
+    // console.log(document.querySelector('#SysMessage'));
+    //  height.value = document.querySelector('#SysMessage').offsetHeight
+})
 
 </script>
 
 <template>
-    <div :dir="$page.props.locale == 'ar' ? 'rtl' : 'ltr'" >
+    <div :dir="$page.props.locale == 'ar' ? 'rtl' : 'ltr'">
 
         <Head :title="title" />
 
         <div
             class="min-h-screen bg-gradient-to-b from-black to-primaryDark before:bg-[url(/images/ballkjoura.png)]  relative before:absolute before:inset-0 before:bg-no-repeat before:mix-blend-overlay isolate before:-z-10">
-            <div class="min-h-screen flex flex-col justify-between pt-6 sm:pt-0 space-y-4 ltr:font-sans rtl:font-tajawl">
+            <div class="flex flex-col justify-between min-h-screen pt-6 space-y-4 sm:pt-0 ltr:font-sans rtl:font-tajawl">
                 <Navbar />
 
                 <header v-if="$slots.header" class="">
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div class="flex flex-col md:flex-row items-center  px-4 sm:px-6 lg:px-8 gap-6">
-                            <h1 class="text-2xl sm:text-7xl font-bold text-white uppercase">
+                    <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+                        <div class="flex flex-col items-center gap-6 px-4 md:flex-row sm:px-6 lg:px-8">
+                            <h1 class="text-2xl font-bold text-white uppercase sm:text-7xl">
                                 <slot name="header" />
                             </h1>
                             <slot v-if="$slots.ads" name="ads" />
@@ -42,17 +45,17 @@ onMounted(()=> height.value = document.querySelector('#SysMessage').offsetHeight
                 </header>
 
                 <!-- Page Content -->
-                <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <main class="w-full px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <slot />
                 </main>
 
                 <!-- Footer -->
                 <footer>
-                    <div class="h-10 flex justify-center">
+                    <div class="flex justify-center h-10">
                         <CopyrightClaim />
                     </div>
                 </footer>
-                <div class="w-full" :style="`height:${height}px;`"></div>
+                <div class="w-full h-[200px]"></div>
                 <SystemMessage id="SysMessage" />
             </div>
         </div>
