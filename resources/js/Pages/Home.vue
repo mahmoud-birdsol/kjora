@@ -10,7 +10,7 @@ import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
 import HelloUserHeader from '@/Components/HelloUserHeader.vue';
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
 import PlayersMap from '@/Components/Maps/PlayersMap.vue'; import FiltersModel from '@/Components/FiltersModel.vue';
-
+const showFiltersModal = ref(false);
 const props = defineProps({
     players: Object,
     positions: Array,
@@ -107,7 +107,7 @@ const filterByPosition = (position) => {
         <div class="">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <!-- Position Filters...
-                                                                                                                                                                                                                                                                                                            =====================================================-->
+                                                                                                                                                                                                                                                                                            =====================================================-->
                 <div class="flex gap-4 mt-4 mb-8 overflow-x-auto hideScrollBar">
                     <button @click="filterByPosition(null)"
                         class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
@@ -130,10 +130,10 @@ const filterByPosition = (position) => {
                 <div class="flex items-center justify-end gap-3 mb-2 w-ful ">
                     <button @click="currentTabId = 1"
                         class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white rounded-sm cursor-pointer hover:bg-stone-200 active:scale-95 "
-                        :class="currentTabId == 1 ? 'border-2 border-primary text-primary' : ''">{{ $t('grid') }}</button>
+                        :class="currentTabId == 1 ? 'border-2 border-primary text-primary' : ''">{{$t('grid')}}</button>
                     <button @click="currentTabId = 2"
                         class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white rounded-sm cursor-pointer hover:bg-stone-200 active:scale-95 "
-                        :class="currentTabId == 2 ? 'border-2 border-primary text-primary' : ''">{{ $t('map') }}</button>
+                        :class="currentTabId == 2 ? 'border-2 border-primary text-primary' : ''">{{$t('map')}}</button>
 
 
                 </div>
@@ -159,8 +159,9 @@ const filterByPosition = (position) => {
                 </div>
 
                 <!-- Filters Modal...
-                                                                                                                                                                                                                                                                                                            =====================================================-->
-                <FiltersModel :positions="positions" :countries="countries" :formRoute="'home'" />
+                                                                                                                                                                                                                                                                                            =====================================================-->
+                <FiltersModel :positions="positions" :countries="countries" v-model:form="form" @reset="reset"
+                    @filter="filter" :showFiltersModal="showFiltersModal" />
             </div>
         </div>
     </AppLayout>

@@ -81,7 +81,7 @@ const reset = () => {
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <!-- Position Filters...
-                                                                                =====================================================-->
+                                                                        =====================================================-->
                 <div class="flex gap-4 mt-4 mb-8 overflow-x-auto hideScrollBar">
                     <button @click="filterByPosition(null)"
                         class="py-2 px-4 min-w-[215px] w-1/5 text-center font-bold items-center bg-white border-2 border-gray-300 rounded-full  text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary   active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap">
@@ -102,7 +102,7 @@ const reset = () => {
                 </div>
 
                 <!-- Current list...
-                                                                                =====================================================-->
+                                                                        =====================================================-->
                 <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
 
                     <div class="flex items-start justify-start my-6">
@@ -120,7 +120,8 @@ const reset = () => {
                     </div>
                 </div>
 
-                <FiltersModel :positions="positions" :countries="countries" :formRoute="'favorites.index'" />
+                <FiltersModel :positions="positions" :countries="countries" v-model:form="form" @reset="reset"
+                    @filter="filter" :showFiltersModal="showFiltersModal" />
             </div>
         </div>
     </AppLayout>
