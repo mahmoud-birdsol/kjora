@@ -16,7 +16,7 @@ const form = useForm({
 })
 function submit() {
     loading.value = true
-    form.patch(route('password.update'), {
+    form.patch(route('password.change'), {
         preserveState: true,
         preserveScroll: true,
         onFinish: () => {

@@ -1,7 +1,7 @@
 <script setup>
-import { computed, ref, watch } from 'vue';
-import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { ElRate, ElTimePicker } from 'element-plus';
+import {computed, ref} from 'vue';
+import {Head, Link, useForm, usePage} from '@inertiajs/inertia-vue3';
+import {ElDatePicker, ElTimePicker} from 'element-plus';
 import dayjs from 'dayjs';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -9,15 +9,6 @@ import InputError from '@/Components/InputError.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import Modal from '@/Components/Modal.vue';
-import { CustomMarker, GoogleMap, Marker } from "vue3-google-map";
-import Avatar from '@/Components/Avatar.vue';
-import {
-    MapPinIcon,
-    ChevronDoubleRightIcon,
-    FlagIcon
-} from '@heroicons/vue/24/outline';
-
-import { ElDatePicker } from 'element-plus';
 import MainPlayerCard from "@/Components/PlayerCards/MainPlayerCard.vue";
 import AddStadiumModal from '../../Components/AddStadiumModal.vue';
 
@@ -97,11 +88,11 @@ function changeMapMarker(e) {
 </script>
 
 <template>
-    <Head :title="$t('send-invitation')" />
+    <Head :title="$t('send-invitation')"/>
 
     <AppLayout :title="$t('send-invitation')">
         <template #header>
-            <p class="text-7xl font-black">{{$t('send-invitation')}}</p>
+            <p class="text-7xl font-black">{{ $t('send-invitation') }}</p>
         </template>
 
         <div class="py-12">
@@ -109,85 +100,77 @@ function changeMapMarker(e) {
                 <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div class="col-span-1">
                         <div class="bg-black rounded-xl p-6">
-                            <MainPlayerCard :player="invited" :show-report="false" :show-invite="false" />
+                            <MainPlayerCard :player="invited" :show-report="false" :show-invite="false"/>
 
                             <form @submit.prevent="">
                                 <div class="my-6">
-                                    <InputLabel>{{$t('Date')}}</InputLabel>
+                                    <InputLabel>{{ $t('Date') }}</InputLabel>
                                     <div class="px-4">
                                         <ElDatePicker stype="date" :disabled-date="disabledDate"
-                                            style="background-color: black;" v-model="form.date" class="w-full"
-                                            placeholde="DD/MM/YYYY" />
+                                                      style="background-color: black;" v-model="form.date"
+                                                      class="w-full"
+                                                      placeholde="DD/MM/YYYY"/>
                                     </div>
-                                    <InputError class="mt-2" :message="form.errors.date" />
+                                    <InputError class="mt-2" :message="form.errors.date"/>
                                 </div>
 
                                 <div class="my-6">
-                                    <InputLabel>{{$t('Time')}}</InputLabel>
+                                    <InputLabel>{{ $t('Time') }}</InputLabel>
                                     <div class="px-4">
                                         <ElTimePicker placeholder="Pick the time " v-model="form.time"
-                                            :disabled-hours="disabledHours" :disabled-minutes="disabledMinutes" />
+                                                      :disabled-hours="disabledHours"
+                                                      :disabled-minutes="disabledMinutes"/>
                                     </div>
-                                    <InputError class="mt-2" :message="form.errors.time" />
+                                    <InputError class="mt-2" :message="form.errors.time"/>
                                 </div>
 
                                 <div class="my-6">
-                                    <InputLabel>{{$t('Stadium')}}</InputLabel>
+                                    <InputLabel>{{ $t('Stadium') }}</InputLabel>
                                     <div class="px-4">
                                         <select id="stadium" name="stadium" v-model="form.stadium_id"
-                                            @change="changeMapMarker"
-                                            class="mt-1 block w-full rounded-full border-white py-2 pl-3 pr-10 text-base focus:border-primary focus:outline-none focus:ring-primary sm:text-sm text-white placeholder:center text-center bg-black">
+                                                @change="changeMapMarker"
+                                                class="mt-1 block w-full rounded-full border-white py-2 pl-3 pr-10 text-base focus:border-primary focus:outline-none focus:ring-primary sm:text-sm text-white placeholder:center text-center bg-black">
                                             <option v-for="stadium in stadiums" :key="stadium.id" :value="stadium.id">{{
-                                                stadium.name }}
+                                                    stadium.name
+                                                }}
                                             </option>
                                         </select>
                                     </div>
-                                    <InputError class="mt-2" :message="form.errors.stadium_id" />
+                                    <InputError class="mt-2" :message="form.errors.stadium_id"/>
                                 </div>
 
                                 <div class="my-6 mt-4">
-                                    <SecondaryButton @click="createInvitation">{{$t('Send')}}</SecondaryButton>
+                                    <SecondaryButton @click="createInvitation">{{ $t('Send') }}</SecondaryButton>
                                 </div>
                             </form>
                         </div>
                     </div>
                     <!-- staduim map -->
                     <div class="lg:col-span-2 md:col-span-1 text-white rounded-xl overflow-hidden">
-                        <!-- map with vue3-google-map lib  -->
-                        <!-- <GoogleMap v-if="showMap" :api-key="apiKey" style="width: 100%; height: 100%"
-                                                           :center="centerPosition" :zoom="15">
-                                                           <Marker v-if="currentStadium" :options="{ position: MarkerPosition }" />
-                                                           <CustomMarker v-if="currentStadium"
-                                                               :options="{ position: MarkerPosition, anchorPoint: 'TOP_RIGHT' }">
-                                                               <div class="text-center rounded-md bg-white/90 ">
-                                                                   <div class="p-2 text-xs font-bold text-stone-800">{{ currentStadium.name }}</div>
-                                                               </div>
-                                                           </CustomMarker>
-                                                       </GoogleMap> -->
-
-                        <!-- map with  vue 3 google map lib -->
                         <GMapMap :center="centerPosition" :zoom="15">
                             <GMapMarker v-if="currentStadium" :position="MarkerPosition" :clickable="true">
                                 <GMapInfoWindow :opened="true">
                                     <div class="text-xs font-bold text-stone-800">{{ currentStadium.name }}</div>
                                 </GMapInfoWindow>
-                            </GMapMarker>Add new Stadium
+                            </GMapMarker>
+                            Add new Stadium
                         </GMapMap>
                     </div>
                 </div>
             </div>
         </div>
-        <AddStadiumModal />
+        <AddStadiumModal/>
         <Modal :show="showSuccessModal" max-width="md" @close="showSuccessModal=false">
             <div class="bg-white rounded-xl p-6 md:min-h-[500px]">
                 <div class="flex flex-col justify-between items-center h-56 md:min-h-[500px]">
                     <div class="flex justify-center my-4">
-                        <h2 class="text-xl text-primary font-bold uppercase">{{$t('Invitation Sent')}}</h2>
+                        <h2 class="text-xl text-primary font-bold uppercase">{{ $t('Invitation Sent') }}</h2>
                     </div>
-                    <p class="">{{$t('Your invitation will be sent and you will receive an email updating you on the status of your request')}}.</p>
+                    <p class="">
+                        {{ $t('Your invitation will be sent and you will receive an email updating you on the status of your request') }}.</p>
 
                     <Link :href="route('home')" class="flex min-w-full w-full">
-                    <PrimaryButton class="w-full" @click="showSuccessModal=false">{{$t('Ok')}}</PrimaryButton>
+                        <PrimaryButton class="w-full" @click="showSuccessModal=false">{{ $t('Ok') }}</PrimaryButton>
                     </Link>
                 </div>
             </div>
@@ -237,7 +220,7 @@ function changeMapMarker(e) {
 .el-date-picker__header-label,
 .el-picker-panel__icon-btn,
 .el-picker-panel__content,
-.el-date-table>tbody>tr>th {
+.el-date-table > tbody > tr > th {
     color: green !important;
     font-weight: bold !important;
 }
@@ -245,6 +228,18 @@ function changeMapMarker(e) {
 /*.el-picker-panel__body{*/
 /*    color: green !important;*/
 /*}*/
+
+.disabled > .el-date-table-cell {
+    background-color: black !important;
+}
+
+.disabled > .el-date-table-cell > .el-date-table-cell__text {
+    color: gray !important;
+}
+
+.prev-month > .el-date-table-cell > .el-date-table-cell__text {
+    color: darkgray !important;
+}
 
 .el-date-table-cell__text {
     color: white !important;

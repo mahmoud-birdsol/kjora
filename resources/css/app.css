@@ -11679,13 +11679,13 @@
 }
 
 .el-rate {
-    --el-rate-height: 20px;
+    --el-rate-height: 24px;
     --el-rate-font-size: var(--el-font-size-base);
-    --el-rate-icon-size: 18px;
+    --el-rate-icon-size: 24px;
     --el-rate-icon-margin: 6px;
     --el-rate-void-color: var(--el-border-color-darker);
     --el-rate-fill-color: #f7ba2a;
-    --el-rate-disabled-void-color: var(--el-fill-color-darker);
+    --el-rate-disabled-void-color: var(--el-fill-color);
     --el-rate-text-color: var(--el-text-color-primary);
 }
 

@@ -35,7 +35,7 @@ class NotifyAdminsOfReportSubmission implements ShouldQueue
     public function handle()
     {
         $admins = Admin::all()->filter(function (Admin $admin) {
-            return $admin->hasPermissionTo('resolve reports');
+            return $admin->hasPermissionTo('resolve report');
         });
 
         $admins->each->notify(new ReportSubmittedNotification($this->report));

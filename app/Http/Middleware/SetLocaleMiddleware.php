@@ -24,11 +24,11 @@ class SetLocaleMiddleware
             app()->setLocale(auth()->user()->locale);
         }
         if (auth('admin')->user()){
+            app()->setLocale(auth('admin')->user()->locale);
+
             if (app()->getLocale() == 'ar') {
                 Nova::enableRTL();
             }
-            app()->setLocale(auth('admin')->user()->locale);
-
         }
 
         return $next($request);

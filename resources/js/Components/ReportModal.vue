@@ -54,7 +54,7 @@ const submit = () => {
                         class=" [&_li]:py-3 [&_li]:rounded-full [&_li]:border-2 text-stone-500  flex flex-col gap-4 text-sm font-medium cursor-pointer">
                         <template v-for="option in options">
                             <RadioGroupOption v-slot="{ checked }" :value="option.id">
-                                <li :class="checked ? 'border-primary text-primary' : 'border-gray-400'">{{ option.body }}</li>
+                                <li :class="checked ? 'border-primary text-primary' : 'border-gray-400'">{{ option.body[$page.props.locale] }}</li>
                             </RadioGroupOption>
                         </template>
                     </RadioGroup>

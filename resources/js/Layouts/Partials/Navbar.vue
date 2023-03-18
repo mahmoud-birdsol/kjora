@@ -37,7 +37,7 @@ let state = usePage().props.value.user.state_name
         <!-- Primary Navigation Menu -->
         <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="flex items-center h-16 md:justify-between">
-                <div class="flex">
+                <div class="hidden md:flex">
                     <!-- Navigation Links -->
                     <div class="items-center hidden gap-2 lg:gap-8 sm:-my-px md:flex">
                         <NavLink :href="route('home')" :active="route().current('home')" class="">
@@ -58,7 +58,7 @@ let state = usePage().props.value.user.state_name
                                 {{ $t('favorites') }}
                             </span>
                         </NavLink>
-                        <NavLink :href="route('invitation.index')" :active="route().current('invitation.index')">
+                        <NavLink :href="route('invitation.index')" :active="route().current('invitation.index') || route().current('hire.index')">
                             <FootBallIcon class="fill-primary" />
 
                             <span>
@@ -73,14 +73,13 @@ let state = usePage().props.value.user.state_name
                         </NavLink>
                     </div>
                 </div>
-
                 <div class="hidden md:flex md:gap-x-3 sm:items-center lg:ml-6">
                     <!-- upgrade button  -->
                     <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5"
                         v-if="state !== 'Premium'">
-                        <div class="bg-black rounded-full">
+                        <span class="bg-black rounded-full">
                             <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
-                        </div>
+                        </span>
                         <Link :href="route('upgrade')">{{ $t('upgrade') }}</Link>
                     </button>
                     <!-- user city  -->
@@ -158,11 +157,22 @@ let state = usePage().props.value.user.state_name
                             </template>
                         </Dropdown>
                     </div>
-
                 </div>
 
-                <!-- Hamburger -->
-                <div class="flex items-center -mr-2 space-x-2 rtl:flex-row-reverse md:hidden">
+                <!-- Mobile navigation menu. -->
+                <div class="flex justify-between items-center -mr-2 space-x-2 rtl:flex-row-reverse md:hidden w-full">
+                    <button
+                        class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none hover:bg-transparent focus:text-gray-500"
+                        @click="showingNavigationDropdown = !showingNavigationDropdown">
+                        <Bars3Icon class="w-6 h-6" />
+                    </button>
+                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5"
+                        v-if="state !== 'Premium'">
+                        <span class="bg-black rounded-full">
+                            <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
+                        </span>
+                        <Link :href="route('upgrade')">{{ $t('upgrade') }}</Link>
+                    </button>
                     <div class="relative ml-3">
                         <Dropdown width="96">
                             <template #trigger>
@@ -193,24 +203,12 @@ let state = usePage().props.value.user.state_name
 
                                 <div class="block px-4 py-2 text-xs text-center">
                                     <Link :href="route('notification.index')" class="text-primary hover:text-primaryDark">
-                                    {{ $t('view-all') }}
+                                        {{ $t('view-all') }}
                                     </Link>
                                 </div>
                             </template>
                         </Dropdown>
                     </div>
-                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5"
-                        v-if="state !== 'Premium'">
-                        <div class="bg-black rounded-full">
-                            <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
-                        </div>
-                        <Link :href="route('upgrade')">{{ $t('upgrade') }}</Link>
-                    </button>
-                    <button
-                        class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none hover:bg-transparent focus:text-gray-500"
-                        @click="showingNavigationDropdown = !showingNavigationDropdown">
-                        <Bars3Icon class="w-6 h-6" />
-                    </button>
                 </div>
             </div>
         </div>
@@ -272,7 +270,7 @@ let state = usePage().props.value.user.state_name
                     <ChatIcon class="w-4 h-4 text-primary" />
                     <span>{{ $t('chat') }}</span>
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('invitation.index')" :active="route().current('invitation.index')">
+                <ResponsiveNavLink :href="route('invitation.index')" :active="route().current('invitation.index') || route().current('hire.index')">
                     <FootBallIcon class="fill-primary" />
                     <span>{{ $t('invitations') }}</span>
                 </ResponsiveNavLink>
