@@ -72,8 +72,9 @@ const updatePhotoPreview = () => {
         return
     }
     ;
-    files.value = Array.from(photoInput.value.files).map(file => { return { file: file, id: _.uniqueId("f") } });
-    files.value.forEach(({ file, id }, i) => {
+    const newFiles = Array.from(photoInput.value.files).map(file => { return { file: file, id: _.uniqueId("f") } })
+    files.value = files.value.concat(newFiles);
+    newFiles.forEach(({ file, id }, i) => {
         const reader = new FileReader();
         reader.onload = (e) => {
             filesData.value.push({
@@ -212,14 +213,14 @@ function changeFiles(file, url, id) {
 
             </div>
             <div>
-                    <Crop :img="cropFile" @crop="changeFiles" v-model:open="openModal"
-                        @update:open="() => openModal = false" />
-                    <div class="mb-2 text-sm text-center justify-self-end text-primary">{{$t('video, images, PDFs and docs are allowed with max size (10 MB) are allowed')}}
-                    </div>
-                    <PrimaryButton @click.prevent="upload" :disabled="isDisabled">
-                        {{ $t('upload') }}
-                    </PrimaryButton>
-                    <!-- <InputError class="mt-2" :message="form.errors.image" /> -->
+                <Crop :img="cropFile" @crop="changeFiles" v-model:open="openModal" @update:open="() => openModal = false" />
+                <div class="mb-2 text-sm text-center justify-self-end text-primary">
+                    {{ $t('video, images, PDFs and docs are allowed with max size(10 MB) are allowed') }}
+                </div>
+                <PrimaryButton @click.prevent="upload" :disabled="isDisabled">
+                    {{ $t('upload') }}
+                </PrimaryButton>
+                <!-- <InputError class="mt-2" :message="form.errors.image" /> -->
             </div>
         </div>
     </Modal>

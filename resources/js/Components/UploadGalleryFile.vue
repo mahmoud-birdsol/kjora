@@ -77,9 +77,10 @@ const updatePhotoPreview = () => {
         return
     }
     ;
-    files.value = Array.from(photoInput.value.files).map(file => { return { file: file, id: _.uniqueId("f") } })
+    const newFiles = Array.from(photoInput.value.files).map(file => { return { file: file, id: _.uniqueId("f") } })
+    files.value = files.value.concat(newFiles)
 
-    files.value.forEach(({ file, id }, i) => {
+    newFiles.forEach(({ file, id }, i) => {
         const reader = new FileReader();
         reader.onload = (e) => {
             previewImageUrls.value.push({
@@ -98,9 +99,9 @@ const updatePhotoPreview = () => {
 const removePhoto = (i) => {
 
     previewImageUrls.value.splice(i, 1)
-    console.log(files.value)
+
     files.value.splice(i, 1)
-    console.log(files.value)
+
     previewImageUrls.value.length === 0 ? showPreview.value = false : null;
 };
 
@@ -119,20 +120,21 @@ const upload = () => {
         caption: caption.value
     }).then((res) => {
         postId = res.data.id
-        if(files.value.slice(1).length>0){
-        files.value.slice(1).forEach(({file}, i) => {
-            if (file.type.startsWith("image") || file.type.startsWith('video')) {
-                axios.postForm(route('api.gallery.upload', postId), {
-                    gallery: file,
+        if (files.value.slice(1).length > 0) {
+            files.value.slice(1).forEach(({ file }, i) => {
+                if (file.type.startsWith("image") || file.type.startsWith('video')) {
+                    axios.postForm(route('api.gallery.upload', postId), {
+                        gallery: file,
 
-                }).then().catch(err => console.error(err)).finally(() => {
-                    if (i === files.value.length - 2) {
-                        reset()
-                        emit('reload');
-                    }
-                })
-            }
-        })}else{
+                    }).then().catch(err => console.error(err)).finally(() => {
+                        if (i === files.value.length - 2) {
+                            reset()
+                            emit('reload');
+                        }
+                    })
+                }
+            })
+        } else {
             reset()
             emit('reload')
         }
@@ -147,12 +149,12 @@ function reset(e) {
     isLoading.value = false
     isDisabled.value = false;
     caption.value = ''
-    num.value+=1
+    num.value += 1
     emit('close');
 }
 function changeFiles(file, url, id) {
     let index = files.value.findIndex((f) => f.id === id)
-    files.value.splice(index, 1, {file:file,id:id})
+    files.value.splice(index, 1, { file: file, id: id })
     let fileUrlIndex = previewImageUrls.value.findIndex((f) => f.id === id)
     previewImageUrls.value[fileUrlIndex].url = url
     cropFile.value = []
@@ -168,12 +170,13 @@ let showCropModal = (file) => {
     <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="reset" :key="num">
         <div class=" flex flex-col min-h-[500px] justify-between p-6">
             <div class="flex justify-center -mt-12">
-                <h2 class="text-xl font-bold uppercase text-primary">{{$t('upload')}}</h2>
+                <h2 class="text-xl font-bold uppercase text-primary">{{ $t('upload') }}</h2>
             </div>
             <div>
                 <InputLabel :value="'Caption'" class="text-primary" />
                 <div class="flex items-center flex-grow ">
-                    <textarea v-model="caption" name="caption" id="caption" rows="1" :placeholder="$t('please write caption')"
+                    <textarea v-model="caption" name="caption" id="caption" rows="1"
+                        :placeholder="$t('please write caption')"
                         class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 text-stone-700 ring-1 focus:ring-primary ring-stone-400 "></textarea>
                 </div>
             </div>
@@ -209,11 +212,9 @@ let showCropModal = (file) => {
                                     </div>
                                 </button>
                                 <button class="absolute top-0 left-0 bg-white bg-opacity-90 rounded-br-xl"
-                                    @click="showCropModal(fileUrl)"
-                                    v-if="fileUrl.url.startsWith('data:image')"
-                                    >
+                                    @click="showCropModal(fileUrl)" v-if="fileUrl.url.startsWith('data:image')">
                                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
-                                        <CropIcon class="w-4"/>
+                                        <CropIcon class="w-4" />
                                     </div>
                                 </button>
                             </div>
@@ -227,12 +228,12 @@ let showCropModal = (file) => {
                 </div>
             </div>
             <div>
-                <Crop :img="cropFile" @crop="changeFiles" v-model:open="openModal"
-                        @update:open="() => openModal = false"/>
-                <div class="mb-2 text-sm text-center justify-self-end text-primary">{{ $t('only videos and images with max size (2MB) are allowed') }}
+                <Crop :img="cropFile" @crop="changeFiles" v-model:open="openModal" @update:open="() => openModal = false" />
+                <div class="mb-2 text-sm text-center justify-self-end text-primary">
+                    {{ $t('only videos and images with max size (2MB) are allowed') }}
                 </div>
                 <PrimaryButton @click.prevent="upload" :disabled="isDisabled">
-                    {{$t('upload')}}
+                    {{ $t('upload') }}
                 </PrimaryButton>
                 <!-- <InputError class="mt-2" :message="form.errors.image" /> -->
             </div>
