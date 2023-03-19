@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\ApproveStadium;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
@@ -126,6 +127,8 @@ class Stadium extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            ApproveStadium::make()
+        ];
     }
 }

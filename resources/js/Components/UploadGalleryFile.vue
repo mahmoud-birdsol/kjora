@@ -59,7 +59,7 @@ const props = defineProps({
 const emit = defineEmits(['close', 'update:modelValue', 'reload']);
 
 const showPreview = ref(false);
-const previewImageUrls = ref([]);
+const filesData = ref([]);
 const photoInput = ref(null);
 const isLoading = ref(false);
 const isDisabled = ref(false);
@@ -78,12 +78,12 @@ const updatePhotoPreview = () => {
     }
     ;
     const newFiles = Array.from(photoInput.value.files).map(file => { return { file: file, id: _.uniqueId("f") } })
-    files.value = files.value.concat(newFiles)
+    // files.value = files.value.concat(newFiles)
 
     newFiles.forEach(({ file, id }, i) => {
         const reader = new FileReader();
         reader.onload = (e) => {
-            previewImageUrls.value.push({
+            filesData.value.push({
                 file: file,
                 url: e.target.result,
                 name: file.name,
@@ -96,17 +96,18 @@ const updatePhotoPreview = () => {
     })
 };
 
-const removePhoto = (i) => {
+const removePhoto = ({ file, url, id }) => {
+    let fileDataIndex = filesData.value.findIndex((f) => f.id === id)
 
-    previewImageUrls.value.splice(i, 1)
+    filesData.value.splice(fileDataIndex, 1)
 
-    files.value.splice(i, 1)
+    // files.value.splice(i, 1)
 
-    previewImageUrls.value.length === 0 ? showPreview.value = false : null;
+    filesData.value.length === 0 ? showPreview.value = false : null;
 };
 
 const upload = () => {
-    if (!files.value.length) {
+    if (!filesData.value.length) {
         return
     }
 
@@ -116,18 +117,18 @@ const upload = () => {
     let postId
 
     axios.postForm(route('api.posts.store'), {
-        cover: files.value[0].file,
+        cover: filesData.value[0].file,
         caption: caption.value
     }).then((res) => {
         postId = res.data.id
-        if (files.value.slice(1).length > 0) {
-            files.value.slice(1).forEach(({ file }, i) => {
+        if (filesData.value.slice(1).length > 0) {
+            filesData.value.slice(1).forEach(({ file }, i) => {
                 if (file.type.startsWith("image") || file.type.startsWith('video')) {
                     axios.postForm(route('api.gallery.upload', postId), {
                         gallery: file,
 
                     }).then().catch(err => console.error(err)).finally(() => {
-                        if (i === files.value.length - 2) {
+                        if (i === filesData.value.length - 2) {
                             reset()
                             emit('reload');
                         }
@@ -144,7 +145,7 @@ const upload = () => {
 };
 
 function reset(e) {
-    previewImageUrls.value = []
+    filesData.value = []
     files.value = []
     isLoading.value = false
     isDisabled.value = false;
@@ -153,10 +154,11 @@ function reset(e) {
     emit('close');
 }
 function changeFiles(file, url, id) {
-    let index = files.value.findIndex((f) => f.id === id)
-    files.value.splice(index, 1, { file: file, id: id })
-    let fileUrlIndex = previewImageUrls.value.findIndex((f) => f.id === id)
-    previewImageUrls.value[fileUrlIndex].url = url
+    // let index = files.value.findIndex((f) => f.id === id)
+    // files.value.splice(index, 1, { file: file, id: id })
+    let fileObjIndex = filesData.value.findIndex((f) => f.id === id)
+    filesData.value[fileObjIndex].url = url
+    filesData.value[fileObjIndex].file = file
     cropFile.value = []
 }
 let showCropModal = (file) => {
@@ -198,21 +200,21 @@ let showCropModal = (file) => {
                 <!-- preview -->
                 <div v-show="showPreview" class="relative overflow-auto hideScrollBar max-h-80" v-loading="isLoading">
                     <div class="relative grid grid-cols-3 gap-2">
-                        <template v-for="(fileUrl, index) in previewImageUrls" :key="index">
-                            <div v-if="fileUrl.url.startsWith('data:image') || fileUrl.url.startsWith('data:video')"
+                        <template v-for="(fileData, index) in filesData" :key="index">
+                            <div v-if="fileData.url.startsWith('data:image') || fileData.url.startsWith('data:video')"
                                 class="relative">
-                                <img v-if="fileUrl.url.startsWith('data:image')" :src="fileUrl.url" alt=""
+                                <img v-if="fileData.url.startsWith('data:image')" :src="fileData.url" alt=""
                                     class="object-contain w-full h-full rounded-lg aspect-square">
-                                <video v-if="fileUrl.url.startsWith('data:video')" :src="fileUrl.url" alt=""
+                                <video v-if="fileData.url.startsWith('data:video')" :src="fileData.url" alt=""
                                     class="object-cover w-full h-full rounded-lg aspect-square" controls />
-                                <button @click.prevent="removePhoto(index)"
+                                <button @click.prevent="removePhoto(fileData)"
                                     class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
                                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
                                         <XMarkIcon class="w-5 h-5 text-stone-800" />
                                     </div>
                                 </button>
                                 <button class="absolute top-0 left-0 bg-white bg-opacity-90 rounded-br-xl"
-                                    @click="showCropModal(fileUrl)" v-if="fileUrl.url.startsWith('data:image')">
+                                    @click="showCropModal(fileData)" v-if="fileData.url.startsWith('data:image')">
                                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
                                         <CropIcon class="w-4" />
                                     </div>

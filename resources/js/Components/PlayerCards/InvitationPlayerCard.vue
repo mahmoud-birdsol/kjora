@@ -89,7 +89,7 @@ function calcShouldRate() {
 
             <div class="flex flex-col items-center ">
                 <!-- image -->
-                <Avatar :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true" />
+                <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true" />
                 <!-- rating -->
                 <div class="flex items-center space-x-2 text-sm text-white">
                     <span class="scale-[0.5]  flex items-center gap-x-1">

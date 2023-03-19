@@ -9,7 +9,7 @@
             <div v-if="chat.repliedMessage"
                 class="relative flex flex-row items-center justify-between w-full px-2 py-2 text-sm bg-gray-100 group rounded-xl">
                 <div v-if="chat.repliedMessage" class="flex items-center justify-start space-x-4">
-                    <Avatar :image-url="chat.repliedMessage.message_sender.avatar_url"
+                    <Avatar :id="chat.repliedMessage.message_sender.id" :image-url="chat.repliedMessage.message_sender.avatar_url"
                         :username="chat.repliedMessage.message_sender.name" :border="true" border-color="primary"
                         size="sm" />
                     <div class="font-bold capitalize text-primary pis-3">
@@ -71,7 +71,7 @@
 
         <div class="flex flex-row items-center w-full gap-x-3">
 
-            <OnClickOutside @trigger="showEmojiPicker = false">
+                    <OnClickOutside class="hidden sm:block" @trigger="showEmojiPicker = false">
                 <div class="relative flex items-center">
                     <button @click="showEmojiPicker = !showEmojiPicker" :data-cancel-blur="true">
                         <FaceSmileIcon class="w-6 text-neutral-400" />
@@ -81,10 +81,10 @@
                     </div>
                 </div>
             </OnClickOutside>
-            <div class="flex items-center flex-grow ">
-                <textarea v-model="form.body" @keypress.enter.exact.prevent="submit" name="body" id="body" rows="1"
-                    :placeholder="$t('Type your Message Here')"
-                    class="w-full p-2 px-4 border-none rounded-full resize-none focus:ring-primary bg-stone-100 placeholder:text-neutral-400 text-stone-700 hideScrollBar"></textarea>
+                        <div class="flex items-center flex-grow bg-stone-100 p-1 rounded-full ">
+                            <textarea v-model="form.body" @keypress.enter.exact.prevent="submit" name="body" id="body" rows="1"
+                                :placeholder="$t('Type your Message Here')"
+                                    class="w-full p-2 px-4 border-none rounded-full resize-none max-sm:placeholder:text-xs focus:ring-primary  bg-stone-100 placeholder:text-neutral-400 text-stone-700 hideScrollBar"></textarea>
             </div>
             <button class="relative" @click="openModual = true">
                 <PhotoIcon class="w-6 h-6 text-neutral-400" />
@@ -147,7 +147,7 @@ const submit = () => {
 
     if (loading.value) { return }
 
-    if (form.body === '') { return }
+    if (form.body === '' && !form.attachments.length) { return }
 
     loading.value = true;
     if (chat.repliedMessage) {

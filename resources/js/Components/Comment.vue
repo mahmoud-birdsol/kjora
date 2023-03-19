@@ -4,7 +4,7 @@
          :class="comment.parent_id ? 'bg-white' : ''">
         <!-- image col 1 -->
         <div class="min-w-max z-[10] relative  " :class="guidesClassesAfter2">
-            <Avatar :username="comment.user.name" :image-url="comment.user.avatar_url" :size="'md'" :border="true"
+            <Avatar :id="comment.user.id" :username="comment.user.name" :image-url="comment.user.avatar_url" :size="'md'" :border="true"
                     border-color="primary"/>
         </div>
         <!-- comment information col 2 -->
