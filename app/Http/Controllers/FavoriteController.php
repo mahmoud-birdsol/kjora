@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use App\Models\Position;
 use App\Models\User;
+use App\Notifications\FavoriteAddedNotification;
 use App\Services\FlashMessage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -71,6 +72,8 @@ class FavoriteController extends Controller
         User $favorite
     ): RedirectResponse {
         $request->user()->favorites()->attach($favorite);
+
+        $favorite->notify(new FavoriteAddedNotification($request->user()));
 
         FlashMessage::make()->success(
             message: $favorite->name . __(' has been successfully added to your favorites.')
