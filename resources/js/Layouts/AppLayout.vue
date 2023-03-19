@@ -19,8 +19,11 @@ defineProps({
 
 const height = ref(null)
 onMounted(() => {
+    console.log(document.querySelector('#SysMessage'));
+    height.value = document.querySelector('#SysMessage').offsetHeight
+})
 
-    navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { enableHighAccuracy: true });
+navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { enableHighAccuracy: true });
 
     // navigator.permissions.query({ name: "geolocation" }).then((result) => {
     //     console.log(result);
@@ -74,8 +77,7 @@ const errorCallback = (error) => {
                         <CopyrightClaim />
                     </div>
                 </footer>
-                <div class="w-full h-[200px]"></div>
-                <SystemMessage id="SysMessage" />
+                <SystemMessage />
             </div>
         </div>
     </div>

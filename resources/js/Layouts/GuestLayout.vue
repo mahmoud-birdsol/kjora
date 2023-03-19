@@ -9,7 +9,6 @@ const socials = usePage().props.value.socials;
 <template>
     <div class="min-h-screen bg-gradient-to-b from-black to-primaryDark">
         <div class="min-h-screen flex flex-col justify-between pt-6 sm:pt-0 space-y-8">
-            <SystemMessage />
             <GuestNavbar/>
             <main class="flex justify-center my-4">
                 <slot/>
@@ -30,6 +29,7 @@ const socials = usePage().props.value.socials;
                     <CopyrightClaim/>
                 </div>
             </footer>
+            <SystemMessage />
         </div>
     </div>
 </template>

@@ -207,11 +207,10 @@ Route::middleware([
                 'time' => ['required'],
             ]);
 
-            $hours = explode(':', $request->input('time'))[0];
-            $minutes = explode(':', $request->input('time'))[1];
+            $time = Carbon::parse($data['time']);
 
             $data['inviting_player_id'] = $request->user()->id;
-            $data['date'] = Carbon::parse($data['date'])->setTime($hours, $minutes);
+            $data['date'] = Carbon::parse( $data['date'])->setTime($time->hour, $time->minute);
             unset($data['time']);
 
             $invitation = Invitation::create($data);
@@ -502,3 +501,4 @@ Route::any('nova/language/{language}', function (Request $request, $language) {
     }
     return redirect()->back();
 })->middleware('auth:admin')->name('nova.language');
+

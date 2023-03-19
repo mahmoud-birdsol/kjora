@@ -101,10 +101,15 @@ class PlayerController extends Controller
                 ];
             })->values();
 
+        $countries = Country::active()->orderBy('name')->get();
+        $positions = Position::all();
+
         return Inertia::render('Player/Show', [
             'player' => $user,
             'posts' => $user->posts->load('comments'),
-            'playerRating' => $playerRating
+            'playerRating' => $playerRating,
+            'countries' => $countries,
+            'positions' => $positions,
         ]);
     }
 }
