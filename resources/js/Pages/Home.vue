@@ -131,12 +131,12 @@ const filterByPosition = (position) => {
                         </button>
                     </template>
                 </div>
-                <RadioGroup v-model="currentTabId" class="flex items-center justify-end mb-2 w-ful gap-[0.15rem]">
+                <RadioGroup v-model="currentTabId" class="flex items-center justify-end mb-2 w-full rounded-sm">
                     <RadioGroupOption v-slot="{ checked }" :value="1"
-                        class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white rounded-sm cursor-pointer hover:bg-stone-200 active:scale-95 "
+                        class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white cursor-pointer hover:bg-stone-200 active:scale-95 "
                         :class="currentTabId == 1 ? 'bg-primary bg-opacity-80' : ''">{{ $t('grid') }}</RadioGroupOption>
                     <RadioGroupOption v-slot="{ checked }" :value="2"
-                        class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white rounded-sm cursor-pointer hover:bg-stone-200 active:scale-95 "
+                        class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white cursor-pointer hover:bg-stone-200 active:scale-95 "
                         :class="currentTabId == 2 ? ' bg-primary bg-opacity-80' : ''">{{ $t('map') }}</RadioGroupOption>
 
                 </RadioGroup>
