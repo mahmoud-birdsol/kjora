@@ -147,7 +147,7 @@ const submit = () => {
 
     if (loading.value) { return }
 
-    if (form.body === '') { return }
+    if (form.body === '' && !form.attachments.length) { return }
 
     loading.value = true;
     if (chat.repliedMessage) {
