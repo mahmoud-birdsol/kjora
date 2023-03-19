@@ -22,6 +22,7 @@ class Conversation extends Model implements Reportable
      */
     protected $appends = [
         'latest_message',
+        'unread_messages'
     ];
 
     /**
@@ -49,4 +50,20 @@ class Conversation extends Model implements Reportable
             get: fn () => $this->messages()->latest()->first()
         );
     }
+
+    /**
+     * Get the count of unread messages that were not sent by the user in each conversation
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function unreadMessages(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->messages()
+                ->where('sender_id', '!=', request()->user()->id)
+                ->whereNull('read_at')
+                ->count()
+        );
+    }
+
 }
