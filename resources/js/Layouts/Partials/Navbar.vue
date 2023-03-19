@@ -187,23 +187,23 @@ let state = usePage().props.value.user.state_name
                                 <template #trigger>
                                     <button
                                         class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
-                                        <Avatar :image-url="$page.props.auth.user.avatar_url"
+                                        <Avatar :image-url="$page.props.auth.user.avatar_url" :id="$page.props.auth.user.id"
                                             :username="$page.props.auth.user.name" :border="true" border-color="primary"
                                             size="sm" :enable-light-box="false" />
                                     </button>
                                 </template>
-    
+
                                 <template #content>
                                     <DropdownLink :href="route('profile.show')">
                                         {{ $t('profile') }}
                                     </DropdownLink>
-    
+
                                     <DropdownLink :href="route('identity.verification.create')">
                                         {{ $t('identity-verification') }}
                                     </DropdownLink>
-    
+
                                     <div class="border-t border-gray-100" />
-    
+
                                     <!-- Authentication -->
                                     <form @submit.prevent="logout">
                                         <DropdownLink as="button">
@@ -214,7 +214,7 @@ let state = usePage().props.value.user.state_name
                             </Dropdown>
                         </div>
                         <div class="relative grid place-items-center">
-                            <Dropdown width="96" :align="locale=='ar'?'left':'right'">
+                            <Dropdown width="96" :align="locale == 'ar' ? 'left' : 'right'">
                                 <template #trigger>
                                     <button>
                                         <BellIcon class="w-6 h-6 text-white"></BellIcon>
@@ -225,7 +225,7 @@ let state = usePage().props.value.user.state_name
                                     <div class="block px-4 py-2 text-xs text-gray-400">
                                         {{ $t('notifications') }}
                                     </div>
-    
+
                                     <div v-if="$page.props.notifications.length">
                                         <ul role="list"
                                             class="divide-y divide-gray-200 max-h-[calc(100dvh-200px)] overflow-y-auto">
@@ -234,22 +234,23 @@ let state = usePage().props.value.user.state_name
                                             </template>
                                         </ul>
                                     </div>
-    
+
                                     <div v-else>
                                         <div class="block px-4 py-2 text-xs text-center text-gray-500">
                                             {{ $t("you-don't-have-any-new-notifications") }}.
                                         </div>
                                     </div>
-    
+
                                     <div class="block px-4 py-2 text-xs text-center">
-                                        <Link :href="route('notification.index')" class="text-primary hover:text-primaryDark">
+                                        <Link :href="route('notification.index')"
+                                            class="text-primary hover:text-primaryDark">
                                         {{ $t('view-all') }}
                                         </Link>
                                     </div>
                                 </template>
                             </Dropdown>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -272,8 +273,8 @@ let state = usePage().props.value.user.state_name
                 <div class="pt-4 pb-1 border-gray-200">
                     <div class="flex px-4">
                         <div v-if="$page.props.jetstream.managesProfilePhotos" class="mx-3 shrink-0 min-w-max">
-                            <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url" :size="'lg'"
-                                :username="$page.props.auth.user.name" :border="true" />
+                            <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url"
+                                :size="'lg'" :username="$page.props.auth.user.name" :border="true" />
                         </div>
                         <div>
                             <div class="text-base font-medium text-white">
