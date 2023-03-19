@@ -23,6 +23,8 @@ class Like extends Resource
      */
     public static $title = 'id';
 
+    public static $displayInNavigation = true;
+
     /**
      * The columns that should be searched.
      *
@@ -44,9 +46,9 @@ class Like extends Resource
             ID::make()->sortable(),
 
             BelongsTo::make('User'),
+
             MorphTo::make('Likeable')->types([
                 Comment::class,
-                MediaLibrary::class,
                 Post::class,
             ]),
         ];
