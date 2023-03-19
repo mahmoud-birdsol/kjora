@@ -136,11 +136,13 @@ const filterByPosition = (position) => {
                     <RadioGroupOption
                         v-slot="{ checked }"
                         :value="currentTabId"
+                        @click="currentTabId = 1"
                         class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white rounded-sm cursor-pointer hover:bg-stone-200 active:scale-95 "
                         :class="currentTabId == 1 ? 'bg-primary bg-opacity-80' : ''">{{$t('grid')}}</RadioGroupOption>
                     <RadioGroupOption
-                    v-slot="{ checked }"
-                    :value="currentTabId"
+                        v-slot="{ checked }"
+                        :value="currentTabId"
+                        @click="currentTabId = 2"
                         class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white rounded-sm cursor-pointer hover:bg-stone-200 active:scale-95 "
                         :class="currentTabId == 2 ? ' bg-primary bg-opacity-80' : ''">{{$t('map')}}</RadioGroupOption>
 
