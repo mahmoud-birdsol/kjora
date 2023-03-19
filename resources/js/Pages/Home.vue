@@ -10,6 +10,10 @@ import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
 import HelloUserHeader from '@/Components/HelloUserHeader.vue';
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
 import PlayersMap from '@/Components/Maps/PlayersMap.vue'; import FiltersModel from '@/Components/FiltersModel.vue';
+import {
+    RadioGroup,
+    RadioGroupOption,
+} from '@headlessui/vue'
 const showFiltersModal = ref(false);
 const props = defineProps({
     players: Object,
@@ -127,16 +131,22 @@ const filterByPosition = (position) => {
                         </button>
                     </template>
                 </div>
-                <div class="flex items-center justify-end gap-3 mb-2 w-ful ">
-                    <button @click="currentTabId = 1"
-                        class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white rounded-sm cursor-pointer hover:bg-stone-200 active:scale-95 "
-                        :class="currentTabId == 1 ? 'border-2 border-primary text-primary' : ''">{{$t('grid')}}</button>
-                    <button @click="currentTabId = 2"
-                        class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white rounded-sm cursor-pointer hover:bg-stone-200 active:scale-95 "
-                        :class="currentTabId == 2 ? 'border-2 border-primary text-primary' : ''">{{$t('map')}}</button>
+                <RadioGroup v-model="currentTabId" class="flex items-center justify-end mb-2 w-ful gap-[0.15rem]">
 
+                    <RadioGroupOption
+                        v-slot="{ checked }"
+                        :value="currentTabId"
+                        @click="currentTabId = 1"
+                        class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white rounded-sm cursor-pointer hover:bg-stone-200 active:scale-95 "
+                        :class="currentTabId == 1 ? 'bg-primary bg-opacity-80' : ''">{{$t('grid')}}</RadioGroupOption>
+                    <RadioGroupOption
+                        v-slot="{ checked }"
+                        :value="currentTabId"
+                        @click="currentTabId = 2"
+                        class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white rounded-sm cursor-pointer hover:bg-stone-200 active:scale-95 "
+                        :class="currentTabId == 2 ? ' bg-primary bg-opacity-80' : ''">{{$t('map')}}</RadioGroupOption>
 
-                </div>
+                </RadioGroup>
                 <!-- Current list...-->
                 <div v-show="currentTabId == 1" class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6"
                     v-loading="loading">
