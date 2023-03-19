@@ -1,15 +1,21 @@
 <script setup>
-import { ref } from 'vue';
+import { ref ,onMounted} from 'vue';
 import { usePage, Link } from '@inertiajs/inertia-vue3';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { XMarkIcon } from "@heroicons/vue/24/solid";
 
 const message = usePage().props.value.flash?.message;
 const show = ref(true);
+const height = ref(null)
+onMounted(() => {
+    if(message) height.value = document.querySelector('#SysMessage').offsetHeight
+})
+
 </script>
 
 <template>
-    <div v-if="message && show" class="flex w-full justify-between fixed bottom-0 z-40 max-md:text-xs">
+    <div class="m-0" :style="`height: ${height}px;`" v-if="message && show"></div>
+    <div v-if="message && show" class="flex w-full justify-between fixed bottom-0 z-40 max-md:text-xs" id="SysMessage" >
         <!-- Info Message -->
         <div v-if="message.type === 'info'" class="flex w-full bg-sky-500 px-6 py-4">
             <div class="w-full flex items-center justify-between space-x-4">
