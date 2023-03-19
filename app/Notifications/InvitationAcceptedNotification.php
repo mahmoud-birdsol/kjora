@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use App\Data\NotificationData;
 use App\Data\RouteActionData;
+use App\Models\Conversation;
 use App\Models\Invitation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -30,7 +31,7 @@ class InvitationAcceptedNotification extends Notification implements ShouldQueue
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -41,22 +42,28 @@ class InvitationAcceptedNotification extends Notification implements ShouldQueue
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
+        $conversation = Conversation::whereHas('users', function ($query) {
+            $query->where('user_id', $this->invitation->invitedPlayer);
+        })->whereHas('users', function ($query) {
+            $query->where('user_id', $this->invitation->invitingPlayer);
+        })->first();
+
         return (new MailMessage)
-            ->subject($this->invitation->invitedPlayer->name . __('accepted your invitation. ✅' , [] , $notifiable->locale ))
-            ->line(__('Your invitation for **' , [] , $notifiable->locale ).$this->invitation->invitedPlayer->name.__('** to play a football match on **' , [] , $notifiable->locale ).$this->invitation->date->toDateTimeString().__('** at **', [] , $notifiable->locale ).$this->invitation->stadium->name.__('** was accepted.', [] , $notifiable->locale ))
-            ->action(__('Chat Now', [] , $notifiable->locale ), url(route('invitation.index')))
-            ->line(__('Thank you for using our application!', [] , $notifiable->locale ));
+            ->subject($this->invitation->invitedPlayer->name . __('accepted your invitation. ✅', [], $notifiable->locale))
+            ->line(__('Your invitation for **', [], $notifiable->locale) . $this->invitation->invitedPlayer->name . __('** to play a football match on **', [], $notifiable->locale) . $this->invitation->date->toDateTimeString() . __('** at **', [], $notifiable->locale) . $this->invitation->stadium->name . __('** was accepted.', [], $notifiable->locale))
+            ->action(__('Chat Now', [], $notifiable->locale), url(route('chats.show', $conversation)))
+            ->line(__('Thank you for using our application!', [], $notifiable->locale));
     }
 
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function toArray($notifiable)
@@ -76,7 +83,7 @@ class InvitationAcceptedNotification extends Notification implements ShouldQueue
     /**
      * Get the broadcastable representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return BroadcastMessage
      */
     public function toBroadcast($notifiable)
