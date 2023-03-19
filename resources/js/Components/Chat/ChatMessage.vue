@@ -8,7 +8,7 @@ import { onMounted } from 'vue';
 import dayjs from 'dayjs';
 import MediaPreview from '@/Components/MediaPreview.vue';
 import { useChat } from "../../stores/chat";
-import ChatGallery from './ChatGallery.vue';
+import ChatGallery from './MediaGallery.vue';
 import SingleMediaPreview from './SingleMediaPreview.vue';
 import MediaThumbnails from './MediaThumbnails.vue';
 import Avatar from '@/Components/Avatar.vue';
@@ -30,7 +30,7 @@ onMounted(() => {
 })
 const currentUser = usePage().props.value.auth.user
 const showOptions = ref(false)
-const showChatGallery = ref(false)
+const showMediaGallery = ref(false)
 const showSingleMediaGallery = ref(false)
 const imagesVideosOnly = props.message.attachments.filter(a => a.mime_type.startsWith('image') || a.mime_type.startsWith('video'))
 const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith('image') && !a.mime_type.startsWith('video'))
@@ -103,7 +103,7 @@ function deleteMessage() {
                         <MediaThumbnails :media="imagesVideosOnly[0]" />
                         <MediaThumbnails v-if="imagesVideosOnly.length > 2" :media="imagesVideosOnly[1]" />
                         <div v-if="imagesVideosOnly.length == 2" class="relative w-full aspect-square"
-                            @click="showChatGallery = true">
+                            @click="showMediaGallery = true">
                             <MediaThumbnails :media="imagesVideosOnly[1]" />
                             <div
                                 class="absolute inset-0 grid font-bold text-white rounded-md cursor-pointer max-sm:text-xs bg-stone-700/70 place-items-center">
@@ -112,7 +112,7 @@ function deleteMessage() {
                         </div>
                         <MediaThumbnails v-if="imagesVideosOnly[2]" :media="imagesVideosOnly[2]" />
                         <div v-if="imagesVideosOnly.length >= 3" class="relative w-full aspect-square"
-                            @click="showChatGallery = true">
+                            @click="showMediaGallery = true">
                             <MediaThumbnails :media="imagesVideosOnly[4]" />
                             <div
                                 class="absolute inset-0 grid font-bold text-white rounded-md cursor-pointer bg-stone-700/70 place-items-center max-sm:text-xs">
@@ -129,7 +129,7 @@ function deleteMessage() {
                             <SingleMediaPreview :media="item" :is-current-user="isCurrentUser" />
                         </template>
                     </div>
-                    <ChatGallery :show="showChatGallery" @close="showChatGallery = false" :media="imagesVideosOnly"
+                    <ChatGallery :show="showMediaGallery" @close="showMediaGallery = false" :media="imagesVideosOnly"
                         :user="message.message_sender" />
                 </template>
                 <!-- text message -->
