@@ -23,11 +23,19 @@ const props = defineProps({
 });
 
 const chat = useChat();
-
 const showSearchForm = ref(false);
 
+function handleExitSearch() {
+    showSearchForm.value = false
+    chat.search = ''
+    chat.messages = [];
+    chat.fetchMessages()
+}
+
+
+const searchMessagesDebounced = _.debounce(chat.searchMessages, 500)
 watch(() => chat.search, () => {
-    _.debounce(chat.searchMessages, 500)();
+    searchMessagesDebounced()
 });
 </script>
 
@@ -39,7 +47,7 @@ watch(() => chat.search, () => {
                     <TextInput type="search" v-model="chat.search" placeholder="Search" />
                 </div>
                 <div class="flex-none">
-                    <button @click="showSearchForm = false" class="p-1 rounded-full group hover:ring-primary hover:ring">
+                    <button @click="handleExitSearch" class="p-1 rounded-full group hover:ring-primary hover:ring">
                         <XMarkIcon class="w-5 text-black group-hover:text-primary" />
                     </button>
                 </div>
