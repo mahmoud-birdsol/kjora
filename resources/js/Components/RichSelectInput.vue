@@ -160,9 +160,9 @@ const loadMore = () => {
                 aria-expanded="true" aria-labelledby="listbox-label">
                 <span class="flex items-center" v-if="selected">
                     <img :src="selected[imageName]" alt="" class="flex-shrink-0 w-6 h-6 rounded">
-                    <span class="block ml-3 truncate">{{ selected[textName] }}</span>
+                    <span class="block truncate mis-3">{{ selected[textName] }}</span>
                 </span>
-                <span class="absolute inset-y-0 flex items-center pr-2 ml-3 pointer-events-none ltr:right-0 rtl:left-0">
+                <span class="absolute inset-y-0 flex items-center pr-2 pointer-events-none mie-3 ltr:right-0 rtl:left-0">
                     <ChevronDownIcon class="w-5 h-5 text-gray-400" />
                 </span>
             </button>
@@ -187,7 +187,7 @@ const loadMore = () => {
                         :class="`text-${txtColor}`" id="listbox-option-0" role="option">
                         <div class="flex items-center">
                             <img :src="option[imageName]" alt="" class="flex-shrink-0 w-6 h-6 rounded">
-                            <span class="block ml-3 font-normal truncate"
+                            <span class="block font-normal truncate mis-3"
                                 :class="{ 'font-semibold': option[valueName] == selected[valueName], 'font-normal': option[valueName] != selected[valueName] }">{{
                                     option[textName]
                                 }}</span>

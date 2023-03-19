@@ -35,7 +35,8 @@ const props = defineProps({
         type: Number,
     }
 });
-const currentUser = usePage().props.value.user
+
+const currentUser = usePage().props.value?.auth?.user ?? null
 const isCurrentUser = currentUser?.id === props?.id
 const sizeClasses = computed(() => {
     return {
