@@ -19,8 +19,8 @@ use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerReviewController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\ResendVerificationCodeController;
 use App\Http\Controllers\UpgradeMembershipController;
+use App\Http\Controllers\ResendVerificationCodeController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\VerificationCodeController;
 use App\Models\Country;
@@ -501,5 +501,3 @@ Route::any('nova/language/{language}', function (Request $request, $language) {
     }
     return redirect()->back();
 })->middleware('auth:admin')->name('nova.language');
-
-Route::get('test', \App\Http\Controllers\Api\UserLocationController::class);

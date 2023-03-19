@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Nova\Comment;
 use App\Nova\Contact;
 use App\Nova\Conversation;
 use App\Nova\Invitation;
@@ -26,7 +25,6 @@ use App\Nova\Like;
 use App\Nova\MediaLibrary;
 use App\Nova\Message;
 use App\Nova\Position;
-use App\Nova\Post;
 use App\Nova\PrivacyPolicy;
 use App\Nova\Rating;
 use App\Nova\RatingCategory;
@@ -102,20 +100,16 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 MenuSection::make(__('Players'), [
                     MenuItem::resource(User::class),
                     MenuItem::lens(User::class, UnverifiedUsers::class),
+                    MenuItem::resource(Venue::class),
                     MenuItem::resource(Invitation::class),
-                    MenuItem::resource(Position::class),
-                ])->icon('user-group')->collapsable(),
-
-                MenuSection::make(__('Posts'), [
-                    MenuItem::resource(Post::class),
-                    MenuItem::resource(Comment::class),
+                    MenuItem::resource(Review::class),
                     MenuItem::resource(Like::class),
-                ])->icon('paper-clip')->collapsable(),
+                ])->icon('user-group')->collapsable(),
 
                 MenuSection::make(__('Chat'), [
                     MenuItem::resource(Conversation::class),
                     MenuItem::resource(Message::class),
-                ])->icon('inbox')->collapsable(),
+                ])->icon('messages')->collapsable(),
 
                 MenuSection::make(__('Security'), [
                     MenuItem::resource(PrivacyPolicy::class),
@@ -123,38 +117,27 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(CookiePolicy::class),
                 ])->icon('lock-closed')->collapsable(),
 
-                MenuSection::make(__('Ratings'), [
-                    MenuItem::resource(Rating::class),
-                    MenuItem::resource(RatingCategory::class),
-                    MenuItem::resource(Review::class),
-                ])->icon('chart-bar')->collapsable(),
-
-                MenuSection::make(__('Locations'), [
+                MenuSection::make(__('Settings'), [
+                    MenuItem::link('Settings', 'nova-settings/general'),
                     MenuItem::resource(Country::class),
                     MenuItem::resource(Club::class),
                     MenuItem::resource(Stadium::class),
-                ])->icon('map')->collapsable(),
-
-                MenuSection::make(__('Settings'), [
-                    MenuItem::link('Settings', 'nova-settings/general'),
+                    MenuItem::resource(Position::class),
+                    MenuItem::resource(Rating::class),
+                    MenuItem::resource(RatingCategory::class),
                     MenuItem::resource(Label::class),
                     MenuItem::resource(Social::class),
-                ])->icon('cog')->collapsable(),
-
-                MenuSection::make(__('Contact Messages'), [
+                    MenuItem::resource(MediaLibrary::class),
                     MenuItem::resource(Contact::class),
-
-                ])->icon('envelope')->collapsable(),
-
+                    MenuItem::make(__('Language'))
+                        ->method('POST')
+                        ->path(route('nova.language', __('Locale')))->external()
+                ])->icon('cog')->collapsable(),
 
                 MenuSection::make(__('Reports'), [
                     MenuItem::resource(ReportOption::class),
                     MenuItem::resource(Report::class),
                 ])->icon('exclamation')->collapsable(),
-
-                MenuItem::make(__('Language'))
-                    ->method('POST')
-                    ->path(route('nova.language', __('Locale')))->external()
             ];
         });
 

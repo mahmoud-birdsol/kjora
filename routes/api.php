@@ -7,8 +7,6 @@ use App\Http\Controllers\Api\GalleryUploadController;
 use App\Http\Controllers\Api\MarkMessageAsReadController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\NewMessagesController;
-use App\Http\Controllers\Api\UserLocationController;
-use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -51,7 +49,7 @@ Route::post(
 Route::delete('message/{message}/delete', [MessageController::class, 'destroy'])->middleware('auth:sanctum')->name('api.messages.delete');
 
 Route::post('posts', function (Request $request) {
-    $post = Post::create([
+    $post = \App\Models\Post::create([
         'user_id' => $request->user()->id,
         'caption' => $request->input('caption')
     ]);
@@ -96,6 +94,3 @@ Route::post('message/{message}/mark-as-read', MarkMessageAsReadController::class
     ->name('api.message.mark-as-read');
 Route::get('chats/{conversation}/new-messages', NewMessagesController::class)
     ->name('api.messages.new');
-
-Route::post('update-location', UserLocationController::class)->name('api.location.store');
-

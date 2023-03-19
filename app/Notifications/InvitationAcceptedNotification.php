@@ -47,11 +47,12 @@ class InvitationAcceptedNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable): MailMessage
     {
-        $conversation = Conversation::whereHas('users', function ($query) {
-            $query->where('user_id', $this->invitation->invitedPlayer);
-        })->whereHas('users', function ($query) {
-            $query->where('user_id', $this->invitation->invitingPlayer);
-        })->first();
+        $conversation = Conversation::query()
+            ->whereHas('users', function ($query) {
+                $query->where('user_id', $this->invitation->invitedPlayer->id);
+            })->whereHas('users', function ($query) {
+                $query->where('user_id', $this->invitation->invitingPlayer->id);
+            })->first();
 
         return (new MailMessage)
             ->subject($this->invitation->invitedPlayer->name . __('accepted your invitation. ✅', [], $notifiable->locale))
