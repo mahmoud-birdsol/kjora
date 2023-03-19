@@ -25,8 +25,8 @@ const active = computed(() => {
 
 function removeConversation() {
     Inertia.delete(route('chats.delete', props.conversation.id), {
-        preserveScroll:true,
-        preserveState:false
+        preserveScroll: true,
+        preserveState: false
     })
     showDeleteConvModal.value = false
 }
@@ -43,20 +43,25 @@ function removeConversation() {
             <div class="flex flex-col ">
                 <h4 class="m-0 text-lg leading-none text-white capitalize">{{ user.name }}</h4>
                 <!-- <Link :href="route('player.profile', user)" class="text-xs leading-none text-neutral-500"> @{{
-                                                                                                                        user.username }} </Link> -->
+                                                                                                                                                                                                                user.username }} </Link> -->
                 <span class="text-xs leading-none text-neutral-500 before:content-['a'] before:text-transparent"> @{{
                     user.username }} </span>
             </div>
-            <div class="mis-auto -mt-2">
-                <p class="text-xs text-gray-300" v-if="!user.online">{{ $t('Last seen') }}</p>
-                <p class="text-xs text-gray-300" v-if="!user.online">
-                    <DateTranslation :end="user.last_seen_at" type="period" />
-                </p>
-
+            <div class="mis-auto -mt-2 flex gap-2">
+                <div v-if="!user.online">
+                    <p class="text-xs text-gray-300">{{ $t('Last seen') }}</p>
+                    <p class="text-xs text-gray-300">
+                        <DateTranslation :end="user.last_seen_at" type="period" />
+                    </p>
+                </div>
                 <p class="text-xs text-white flex items-center" v-else>
                     <CheckCircleIcon class="text-green-500 h-3 w-3 inline mr-1" />
                     Online
                 </p>
+                <div v-if="conversation.unread_messages !== 0" class="flex items-center p-2 justify-center">
+                    <span class="w-6 h-6 p-1 grid place-items-center rounded-full text-xs bg-white">
+                        {{ conversation.unread_messages }}</span>
+                </div>
             </div>
         </div>
         <div class="flex w-full gap-4">

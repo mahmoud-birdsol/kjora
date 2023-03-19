@@ -30,13 +30,13 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
-    id:{
-        required: false,
+    id: {
+        required: true,
         type: Number,
     }
 });
 const currentUser = usePage().props.value.user
-const isCurrentUser =  currentUser.id ===props.id
+const isCurrentUser = currentUser.id === props.id
 const sizeClasses = computed(() => {
     return {
         'sm': 'h-8 w-8',
@@ -78,17 +78,15 @@ function hideLightBox() {
         class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer"
         :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'">
     </Link>
-    <Link v-else-if="!isCurrentUser && !imageUrl && id" :href="route('player.profile', id)"
-        class="block bg-center bg-no-repeat bg-cover rounded-full"
-        :class="[sizeClasses, borderClasses, borderColorClass]"
+    <Link v-else-if="!isCurrentUser && !imageUrl" :href="route('player.profile', id)"
+        class="block bg-center bg-no-repeat bg-cover rounded-full" :class="[sizeClasses, borderClasses, borderColorClass]"
         :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
 
     <span @click="showLightBox" v-else-if="imageUrl"
         class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer"
         :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'" />
 
-    <span v-else
-        class="block bg-center bg-no-repeat bg-cover rounded-full"
+    <span v-else class="block bg-center bg-no-repeat bg-cover rounded-full"
         :class="[sizeClasses, borderClasses, borderColorClass]"
         :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
     <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" @hide="hideLightBox"></vue-easy-lightbox>
