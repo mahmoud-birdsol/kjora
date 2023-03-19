@@ -47,11 +47,12 @@ class InvitationAcceptedNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable): MailMessage
     {
-        $conversation = Conversation::whereHas('users', function ($query) {
-            $query->where('user_id', $this->invitation->invitedPlayer);
-        })->whereHas('users', function ($query) {
-            $query->where('user_id', $this->invitation->invitingPlayer);
-        })->first();
+        $conversation = Conversation::query()
+            ->whereHas('users', function ($query) {
+                $query->where('user_id', $this->invitation->invitedPlayer->id);
+            })->whereHas('users', function ($query) {
+                $query->where('user_id', $this->invitation->invitingPlayer->id);
+            })->first();
 
         return (new MailMessage)
             ->subject($this->invitation->invitedPlayer->name . __('accepted your invitation. ✅', [], $notifiable->locale))
@@ -68,13 +69,20 @@ class InvitationAcceptedNotification extends Notification implements ShouldQueue
      */
     public function toArray($notifiable)
     {
+        $conversation = Conversation::query()
+            ->whereHas('users', function ($query) {
+                $query->where('user_id', $this->invitation->invitedPlayer->id);
+            })->whereHas('users', function ($query) {
+                $query->where('user_id', $this->invitation->invitingPlayer->id);
+            })->first();
+
         return (new NotificationData(
             displayType: 'simple',
             state: 'success',
             title: __('Invitation'),
             subtitle: __('Your invitation to ') . $this->invitation->invitedPlayer->name . __(' was accepted'),
             actionData: new RouteActionData(
-                route: route('invitation.index'),
+                route: route('chats.show', $conversation),
                 text: __('Chat Now'),
             ),
         ))->toArray();
