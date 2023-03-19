@@ -32,12 +32,15 @@ class UserProfileController extends Controller
                 ];
             })->values();
 
-
+        $countries = Country::active()->orderBy('name')->get();
+        $positions = Position::all();
 
         return Inertia::render('Profile/Show', [
             'user' => $user,
             'posts' => $user->posts->load('comments'),
-            'playerRating' => $playerRating
+            'playerRating' => $playerRating,
+            'countries' => $countries,
+            'positions' => $positions,
         ]);
     }
 
