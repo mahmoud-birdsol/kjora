@@ -1,11 +1,13 @@
 <script setup>
-import { Head, usePage } from '@inertiajs/inertia-vue3';
+import { Head, useForm, usePage } from '@inertiajs/inertia-vue3';
 import SystemMessage from '@/Components/SystemMessage.vue';
 import CopyrightClaim from '@/Components/CopyrightClaim.vue';
 import Navbar from '@/Layouts/Partials/Navbar.vue';
 import RealtimeNotifications from '@/Layouts/Partials/RealtimeNotifications.vue';
 import { onMounted, provide, ref } from 'vue';
 import { loadLanguageAsync } from 'laravel-vue-i18n';
+import axios from 'axios';
+import { usePermission } from '@vueuse/core';
 onMounted(() => {
     loadLanguageAsync(usePage().props.value.locale)
 })
@@ -15,6 +17,30 @@ defineProps({
 });
 
 
+const height = ref(null)
+onMounted(() => {
+
+
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { enableHighAccuracy: true });
+
+    // navigator.permissions.query({ name: "geolocation" }).then((result) => {
+    //     console.log(result);
+    // });
+
+
+})
+const successCallback = (position) => {
+
+
+    axios.post(route('api.location.store'), {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+    }).catch(err => console.error(err))
+};
+
+const errorCallback = (error) => {
+    console.log(error);
+};
 </script>
 
 <template>

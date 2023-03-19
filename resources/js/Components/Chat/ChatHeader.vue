@@ -48,7 +48,7 @@ watch(() => chat.search, () => {
         <div class="flex w-full" v-else>
             <div
                 class="flex items-center flex-1 gap-4 p-4 ltr:border-r ltr:border-r-stone-400 rtl:border-l rtl:border-l-stone-400">
-                <Avatar :image-url="player.avatar_url" :username="player.name" size="md" :border="true"
+                <Avatar :image-url="player.avatar_url" :id="player.id" :username="player.name" size="md" :border="true"
                     border-color="primary" />
 
                 <div class="flex flex-col">

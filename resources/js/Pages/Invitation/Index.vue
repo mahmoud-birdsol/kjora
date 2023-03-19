@@ -17,31 +17,32 @@ const props = defineProps({
     <AppLayout title="Invitations">
         <template #header>
 
-            <p class="text-4xl font-black md:text-7xl">{{$t('invitations')}}</p>
+            <p class="text-4xl font-black md:text-7xl">{{ $t('invitations') }}</p>
         </template>
 
         <div class="py-12">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="">
                 <div class="flex items-center justify-end gap-3">
                     <Link :href="route('invitation.index')">
-                        <button
-                            class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
-                            :class="{ 'border-primary': route().current('invitation.index'), 'border-none': !route().current('invitation.index') }">
+                    <button
+                        class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
+                        :class="{ 'border-primary': route().current('invitation.index'), 'border-none': !route().current('invitation.index') }">
 
-                            <span :class="{'text-gray-500': !route().current('invitation.index'), 'text-black': route().current('invitation.index')}">
-                                    {{ $t('invitation') }}
-                            </span>
-                        </button>
+                        <span
+                            :class="{ 'text-gray-500': !route().current('invitation.index'), 'text-black': route().current('invitation.index') }">
+                            {{ $t('invitation') }}
+                        </span>
+                    </button>
                     </Link>
                     <Link :href="route('hire.index')">
-                        <button
-                            class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
-                            :class="{ 'border-primary': route().current('hire.index'), 'border-none': !route().current('hire.index') }">
-                                <span
-                                    :class="{'text-gray-500': !route().current('hire.index'), 'text-black': route().current('hire.index')}">
-                                    {{ $t('hire') }}
-                                </span>
-                        </button>
+                    <button
+                        class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
+                        :class="{ 'border-primary': route().current('hire.index'), 'border-none': !route().current('hire.index') }">
+                        <span
+                            :class="{ 'text-gray-500': !route().current('hire.index'), 'text-black': route().current('hire.index') }">
+                            {{ $t('hire') }}
+                        </span>
+                    </button>
                     </Link>
                 </div>
 

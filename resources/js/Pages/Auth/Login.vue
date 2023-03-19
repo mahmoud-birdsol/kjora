@@ -58,7 +58,7 @@ const submit = () => {
                         <InputError class="mt-2" :message="form.errors.password" />
                     </div>
 
-                    <div class="flex items-center space-x-2 my-2">
+                    <div class="flex items-center gap-1 my-2">
                         <Checkbox id="remember" v-model:checked="form.remember" name="remember" />
                         <span class="text-xs text-white font-semibold uppercase">{{$t('remember me')}}</span>
                     </div>

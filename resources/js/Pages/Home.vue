@@ -109,9 +109,9 @@ const filterByPosition = (position) => {
 
         </template>
         <div class="">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="">
                 <!-- Position Filters...
-                                                                                                                                                                                                                                                                                                    =====================================================-->
+                                                                                                                                                                                                                                                                                                        =====================================================-->
                 <div class="flex gap-4 mt-4 mb-8 overflow-x-auto hideScrollBar">
                     <button @click="filterByPosition(null)"
                         class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
@@ -131,7 +131,7 @@ const filterByPosition = (position) => {
                         </button>
                     </template>
                 </div>
-                <RadioGroup v-model="currentTabId" class="flex items-center justify-end mb-2 w-full rounded-sm">
+                <RadioGroup v-model="currentTabId" class="flex items-center justify-end w-full mb-2 rounded-sm">
                     <RadioGroupOption v-slot="{ checked }" :value="1"
                         class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white cursor-pointer hover:bg-stone-200 active:scale-95 "
                         :class="currentTabId == 1 ? 'bg-primary bg-opacity-80' : ''">{{ $t('grid') }}</RadioGroupOption>
@@ -162,7 +162,7 @@ const filterByPosition = (position) => {
                 </div>
 
                 <!-- Filters Modal...
-                                                                                                                                                                                                                                                                                                    =====================================================-->
+                                                                                                                                                                                                                                                                                                        =====================================================-->
                 <FiltersModel :positions="positions" :countries="countries" v-model:form="form" @reset="reset"
                     @filter="filter" :showFiltersModal="showFiltersModal" />
             </div>

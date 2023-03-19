@@ -1,6 +1,6 @@
 
 <script setup>
-import { CustomMarker, GoogleMap, InfoWindow, Marker ,MarkerCluster} from "vue3-google-map";
+import { CustomMarker, GoogleMap, InfoWindow, Marker, MarkerCluster } from "vue3-google-map";
 import Avatar from '@/Components/Avatar.vue'
 import MainPlayerCard from "../PlayerCards/MainPlayerCard.vue";
 const props = defineProps(['players'])
@@ -16,31 +16,31 @@ const filteredPlayers = props.players.data.filter(p => p.current_latitude != nul
         lat: parseFloat($page.props.auth.user.current_latitude),
         lng: parseFloat($page.props.auth.user.current_longitude)
     }" :zoom="5">
-            <MarkerCluster>
-                <template v-for="(player, ) in filteredPlayers" :key="player.id">
-                    <Marker :options="{
-                        position: {
-                            lat: parseFloat(player.current_latitude),
-                            lng: parseFloat(player.current_longitude)
-                        }, anchorPoint: 'TOP_CENTER'
-                    }">
 
-                    <CustomMarker :options="{
-                        position: {
-                            lat: parseFloat(player.current_latitude),
-                            lng: parseFloat(player.current_longitude)
-                        }, anchorPoint: 'TOP_CENTER'
-                    }">
-                        <Avatar :id="player.id" :image-url="player.avatar_url" :size="'md'" :username="player.name" :border="true"
-                            borderColor="primary" :enableLightBox="false" />
-                        </CustomMarker>
-                        <InfoWindow>
-                            <MainPlayerCard :player="player" />
-                        </InfoWindow>
-                    </Marker>
+        <template v-for="(player, ) in filteredPlayers" :key="player.id">
+            <Marker :options="{
+                position: {
+                    lat: parseFloat(player.current_latitude),
+                    lng: parseFloat(player.current_longitude)
+                }, anchorPoint: 'TOP_CENTER'
+            }">
 
-                </template>
-    </MarkerCluster>
+                <CustomMarker :options="{
+                    position: {
+                        lat: parseFloat(player.current_latitude),
+                        lng: parseFloat(player.current_longitude)
+                    }, anchorPoint: 'TOP_CENTER'
+                }">
+                    <Avatar :id="player.id" :image-url="player.avatar_url" :size="'md'" :username="player.name"
+                        :border="true" borderColor="primary" :enableLightBox="false" />
+                </CustomMarker>
+                <InfoWindow>
+                    <MainPlayerCard :player="player" />
+                </InfoWindow>
+            </Marker>
+
+        </template>
+
     </GoogleMap>
 </template>
 

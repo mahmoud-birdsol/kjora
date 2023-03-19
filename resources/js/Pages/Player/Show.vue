@@ -16,7 +16,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 const props = defineProps({
     player: null,
     posts: Array,
-    playerRating: Array
+    playerRating: Array,
 
 });
 
