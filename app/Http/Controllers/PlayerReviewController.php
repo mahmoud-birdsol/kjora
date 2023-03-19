@@ -6,6 +6,7 @@ use App\Models\RatingCategory;
 use App\Models\Review;
 use App\Models\ReviewRatingCategory;
 use App\Notifications\NotifyUserOfRatingSubmittedNotification;
+use App\Services\FlashMessage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -54,11 +55,9 @@ class PlayerReviewController extends Controller
             ]);
         }
 
-        $request->session()->flash('message', [
-            'type' => 'success',
-            'body' => 'Review Submitted Successfully',
-        ]);
-
+        FlashMessage::make()->success(
+            message: __('Review Submitted Successfully')
+        )->closeable()->send();
         $review->player->update([
             'rating' => $value / RatingCategory::whereHas('positions', function (Builder $query) use ($review) {
                 $query->where('positions.id', $review->player->position_id);

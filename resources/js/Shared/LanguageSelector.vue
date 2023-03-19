@@ -53,9 +53,9 @@ function setLocale() {
     --el-color-primary:rgb(0, 100, 0)
 
 }
-.el-input__inner:focus{
+.el-input__inner:focus , .el-input__inner{
     box-shadow: none;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 </style>

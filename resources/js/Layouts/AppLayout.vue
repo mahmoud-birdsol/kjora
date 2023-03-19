@@ -55,7 +55,7 @@ const errorCallback = (error) => {
 
                 <header v-if="$slots.header" class="">
                     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                        <div class="flex flex-col items-center gap-6 md:flex-row ">
+                        <div class="flex gap-6 px-4 md:flex-row sm:px-6 lg:px-8">
                             <h1 class="text-2xl font-bold text-white uppercase sm:text-7xl">
                                 <slot name="header" />
                             </h1>

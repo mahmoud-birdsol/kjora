@@ -86,16 +86,16 @@ class IdentityVerificationController extends Controller
         }
 
         if ($request->user()->hasUploadedVerificationDocuments()) {
-            $request->session()->flash('message', [
-                'type' => 'success',
-                'body' => 'Thank you for uploading your verification documents we will verify the information provided and get back to you shortly.',
-            ]);
+            FlashMessage::make()->success(
+                message: __('Thank you for uploading your verification documents we will verify the information provided and get back to you shortly.')
+            )->closeable()->send();
+
         }
 
         NotifyAdminsOfVerificationRequest::dispatch($request->user());
 
         FlashMessage::make()->success(
-            message: 'Your identity verification has been successfully sent. Please wait for approval.'
+            message: __('Your identity verification has been successfully sent. Please wait for approval.')
         )->closeable()->send();
 
         return redirect()->route('home');

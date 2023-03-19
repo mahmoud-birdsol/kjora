@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Services\FlashMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -36,20 +37,19 @@ class UserNameController extends Controller
         ]);
         #Match The Old Password
         if(!Hash::check($request->password, auth()->user()->password)){
-            $request->session()->flash('message', [
-                'type' => 'error',
-                'body' => "Password Doesn't match!",
-            ]);
+            FlashMessage::make()->error(
+                message: __('Password Doesnt match!')
+            )->closeable()->send();
             return redirect()->back();
         }
         $user = Auth::user();
          $user->update([
             'username' => preg_replace('/[^\p{L}\p{N}\s]/u', '',  $request->get('username'))
         ]);
-        $request->session()->flash('message', [
-            'type' => 'success',
-            'body' => 'User name changed successfully',
-        ]);
+        FlashMessage::make()->success(
+            message: __('User name changed successfully')
+        )->closeable()->send();
+
         return redirect()->route('home');
 
     }

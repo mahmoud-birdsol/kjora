@@ -36,10 +36,10 @@ class UserEmailController extends Controller
         ]);
         #Match The Old Password
         if(!Hash::check($request->password, auth()->user()->password)){
-            $request->session()->flash('message', [
-                'type' => 'error',
-                'body' => "Password Doesn't match!",
-            ]);
+
+            FlashMessage::make()->error(
+                message: __('Password Doesnt match!')
+            )->closeable()->send();
             return redirect()->back();
         }
         $user = Auth::user();
