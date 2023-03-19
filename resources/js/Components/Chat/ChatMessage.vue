@@ -69,7 +69,7 @@ function deleteMessage() {
         <!-- avatar for non current user message -->
         <template v-if='!isCurrentUser'>
             <div class="self-start">
-                <Avatar :image-url="player.avatar_url" :size="'md'" :username="player.name" :border="true" />
+                <Avatar :id="player.id" :image-url="player.avatar_url" :size="'md'" :username="player.name" :border="true" />
             </div>
         </template>
         <!-- message body -->

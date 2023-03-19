@@ -8,7 +8,7 @@
                 <PostMedia :postMedia="post.media" :user="user"></PostMedia>
             </template>
             <template #userImage>
-                <Avatar :username="user.name" :image-url="user.avatar_url" :size="'lg'" :border="true"
+                <Avatar :id="user.id" :username="user.name" :image-url="user.avatar_url" :size="'lg'" :border="true"
                     border-color="primary" />
             </template>
             <template #userInfo>
