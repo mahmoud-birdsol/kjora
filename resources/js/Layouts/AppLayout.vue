@@ -15,12 +15,6 @@ defineProps({
 });
 
 
-const height = ref(null)
-onMounted(() => {
-    console.log(document.querySelector('#SysMessage'));
-     height.value = document.querySelector('#SysMessage').offsetHeight
-})
-
 </script>
 
 <template>
