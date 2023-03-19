@@ -177,19 +177,18 @@ const save = () => {
                 </CardContent>
             </Card>
 
-            <!-- Step 2...
-    		                                                                                                                        =====================================================-->
-            <Card>
-                <CardContent :title="$t('upload identity')">
-                    <template #body>
-                        <div class="flex flex-col justify-between h-full gap-2">
-                            <div class="min-h-[200px]">
-                                <div>
-                                    <h3 class="mb-8 font-bold text-black uppercase">{{ $t('Take Selfie Photo') }}</h3>
-                                </div>
-                                <div>
-                                    <div class="flex space-x-4">
-                                        <div class="w-1/4">
+                                <!-- Step 2...==============-->
+                            <Card>
+                                <CardContent :title="$t('upload identity')">
+                                    <template #body>
+                                        <div class="flex flex-col justify-between h-full gap-2">
+                                            <div class="min-h-[200px]">
+                                                <div>
+                                                    <h3 class="mb-8 font-bold text-black uppercase">{{ $t('Take Selfie Photo') }}</h3>
+                                                </div>
+                                                <div>
+                                            <div class="flex gap-4 max-md:flex-col ">
+                                                <div class="md:w-1/4">
                                             <button @click="showIdentitySelfieModal = true"
                                                 class="relative w-full h-full group">
                                                 <img v-if="form.identity_selfie_image" :src="form.identity_selfie_image"
