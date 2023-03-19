@@ -38,7 +38,7 @@ function removeConversation() {
         :class="active ? 'border-2 border-white' : ''">
         <div class="flex flex-row items-center w-full gap-4" v-for="user in conversation.users">
             <div>
-                <Avatar :image-url="user.avatar" size="sm" :username="user.name" :border="true" />
+                <Avatar :id="user.id" :image-url="user.avatar" size="sm" :username="user.name" :border="true" />
             </div>
             <div class="flex flex-col ">
                 <h4 class="m-0 text-lg leading-none text-white capitalize">{{ user.name }}</h4>

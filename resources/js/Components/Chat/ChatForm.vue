@@ -9,7 +9,7 @@
             <div v-if="chat.repliedMessage"
                 class="relative flex flex-row items-center justify-between w-full px-2 py-2 text-sm bg-gray-100 group rounded-xl">
                 <div v-if="chat.repliedMessage" class="flex items-center justify-start space-x-4">
-                    <Avatar :image-url="chat.repliedMessage.message_sender.avatar_url"
+                    <Avatar :id="chat.repliedMessage.message_sender.id" :image-url="chat.repliedMessage.message_sender.avatar_url"
                         :username="chat.repliedMessage.message_sender.name" :border="true" border-color="primary"
                         size="sm" />
                     <div class="font-bold capitalize text-primary pis-3">

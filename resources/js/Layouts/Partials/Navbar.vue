@@ -92,7 +92,7 @@ let state = usePage().props.value.user.state_name
                             <template #trigger>
                                 <button
                                     class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
-                                    <Avatar :image-url="$page.props.auth.user.avatar_url"
+                                    <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url"
                                         :username="$page.props.auth.user.name" :border="true" border-color="primary"
                                         size="sm" :enable-light-box="false" />
                                 </button>
@@ -230,7 +230,7 @@ let state = usePage().props.value.user.state_name
                 <div class="pt-4 pb-1 border-gray-200">
                     <div class="flex px-4">
                         <div v-if="$page.props.jetstream.managesProfilePhotos" class="mx-3 shrink-0 min-w-max">
-                            <Avatar :image-url="$page.props.auth.user.avatar_url" :size="'lg'"
+                            <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url" :size="'lg'"
                                 :username="$page.props.auth.user.name" :border="true" />
                         </div>
                         <div>
