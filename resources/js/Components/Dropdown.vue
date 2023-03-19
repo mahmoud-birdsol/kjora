@@ -48,7 +48,7 @@ const alignmentClasses = computed(() => {
 </script>
 
 <template>
-    
+
     <!-- Full Screen Dropdown Overlay -->
     <OnClickOutside @trigger="open = false">
         <div class="relative">
