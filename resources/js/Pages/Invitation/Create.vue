@@ -47,12 +47,10 @@ const disabledDate = (time) => {
     return dayjs(time).isBefore(dayjs().subtract(1, 'day'));
 }
 const disabledHours = () => {
-    let hour = d.getHours();
-    return makeRange(0, hour)
-}
-const disabledMinutes = (hour) => {
-    let minutes = d.getMinutes();
-    return makeRange(0, minutes)
+    if(dayjs(form.date).format('dddd, DD MMMM YYYY') === dayjs(d).format('dddd, DD MMMM YYYY') ){
+        let hour = d.getHours();
+        return makeRange(0, hour+1)
+    }
 }
 
 let centerPosition = computed(() => {
@@ -107,7 +105,9 @@ function changeMapMarker(e) {
                                     <InputLabel>{{ $t('Date') }}</InputLabel>
                                     <div class="px-4">
                                         <ElDatePicker stype="date" :disabled-date="disabledDate"
-                                                      style="background-color: black;" v-model="form.date"
+                                                      style="background-color: black;" 
+                                                      v-model="form.date"
+                                                      @change="disabledHours()"
                                                       class="w-full"
                                                       placeholde="DD/MM/YYYY"/>
                                     </div>
@@ -119,7 +119,7 @@ function changeMapMarker(e) {
                                     <div class="px-4">
                                         <ElTimePicker placeholder="Pick the time " v-model="form.time"
                                                       :disabled-hours="disabledHours"
-                                                      :disabled-minutes="disabledMinutes"/>
+                                                      />
                                     </div>
                                     <InputError class="mt-2" :message="form.errors.time"/>
                                 </div>

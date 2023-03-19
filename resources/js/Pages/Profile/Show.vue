@@ -13,7 +13,9 @@ import FadeInTransition from '../../Components/FadeInTransition.vue';
 const props = defineProps({
     user: null,
     posts: Array,
-    playerRating: Array
+    playerRating: Array,
+    countries: Array,
+    positions: Array,
 });
 
 const currentTabId = ref(2)
@@ -36,14 +38,15 @@ function reloadMedia() {
 <template>
     <Head :title="$t('home')" />
 
-    <AppLayout :title="$t('home')" >
+    <AppLayout :title="$t('home')">
         <template #header>
             <HelloUserHeader />
         </template>
 
         <div class="py-12">
             <div class="flex flex-col max-w-5xl mx-auto gap-y-6 sm:px-6 lg:px-8">
-                <MainPlayerCard :player="user" size="lg" :show-report="false" />
+                <MainPlayerCard :player="user" size="lg" :show-report="false" :countries="countries"
+                    :positions="positions" />
                 <div class="flex justify-center p-2 bg-white rounded-full gap-x-3 ">
                     <template v-for="(tab, index) in tabs" :key="index">
                         <button @click="currentTabId = tab.id" :data-tab="tab.name"

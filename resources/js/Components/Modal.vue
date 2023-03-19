@@ -109,7 +109,7 @@ const maxWidthClass = computed(() => {
                         <div v-show="position == 'right'">
                             <div class="w-full mx-auto max-w-7xl">
                                 <div class="flex justify-end">
-                                    <div class="flex justify-center w-1/2">
+                                    <div class="flex justify-center sm:w-1/2">
                                         <div class="mb-6 overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:w-full sm:mx-auto"
                                             :class="maxWidthClass">
                                             <div class="flex justify-end px-6 pt-6" v-if="closeable">

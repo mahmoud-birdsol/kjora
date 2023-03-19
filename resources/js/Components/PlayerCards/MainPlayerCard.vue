@@ -10,6 +10,7 @@ import Socials from '@/Components/Socials.vue';
 import ToolTip from "@/Components/ToolTip.vue";
 import Modal from '../Modal.vue';
 import UpdateProfileInformationForm from '../../Pages/Profile/Partials/UpdateProfileInformationForm.vue'
+import UploadImageField from '../UploadImageField.vue';
 
 const props = defineProps({
     player: {
@@ -38,7 +39,7 @@ const props = defineProps({
     }, countries: Array,
     positions: Array,
 });
-
+const showUploadAvatarModal = ref(false)
 const currentUser = usePage().props.value.auth.user
 const state = props.player.state_name
 const txtColor = state == 'Free' ? 'white' : 'black'
@@ -97,16 +98,14 @@ const removeFromFavorites = () => {
                 <div class="flex items-center justify-start gap-2 mb-2"
                     :class="{ 'space-x-2': size == 'sm', 'space-x-8': size == 'lg' }">
                     <div class="relative">
-                        <Link :href="route('profile.edit')" v-if="isCurrentUser"
+                        <button @click="showUploadAvatarModal = true" v-if="isCurrentUser"
                             class="absolute bottom-0 p-1 bg-white rounded-full ltr:right-0 rtl:left-0 hover:text-primary">
-                        <PencilIcon class="w-3 [&+div]:hover:block " />
-                        <ToolTip :value="$t('edit-your-profile')" />
-                        </Link>
-                        <Modal :show="showEditProfileForm" @close="showEditProfileForm = false" :closeable="false"
-                            :showCloseIcon="true">
-                            <UpdateProfileInformationForm :user="player" :countries="countries" :positions="positions">
-                            </UpdateProfileInformationForm>
-                        </Modal>
+                            <PencilIcon class="w-3 [&+div]:hover:block " />
+                            <ToolTip :value="$t('edit-your-profile')" />
+                        </button>
+                        <UploadImageField :current-image-url="player.avatar_url" :show="showUploadAvatarModal"
+                            :model-name="'\\App\\Models\\User'" :model-id="player.id" :should-upload="true"
+                            collection-name="avatar" @close="showUploadAvatarModal = false" />
                         <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name"
                             :border="true" />
                     </div>

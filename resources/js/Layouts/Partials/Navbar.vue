@@ -270,41 +270,6 @@ let state = usePage().props.value.user.state_name
                     @click="showingNavigationDropdown = false" />
 
                 <!-- Responsive Settings Options -->
-                <div class="pt-4 pb-1 border-gray-200">
-                    <div class="flex px-4">
-                        <div v-if="$page.props.jetstream.managesProfilePhotos" class="mx-3 shrink-0 min-w-max">
-                            <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url"
-                                :size="'lg'" :username="$page.props.auth.user.name" :border="true" />
-                        </div>
-                        <div>
-                            <div class="text-base font-medium text-white">
-                                {{ $page.props.auth.user.username }}
-                            </div>
-                            <div class="text-sm font-medium text-stone-300">
-                                {{ $page.props.auth.user.email }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-3 space-y-1">
-                        <ResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')">
-                            {{ $t('profile') }}
-                        </ResponsiveNavLink>
-
-                        <ResponsiveNavLink :href="route('identity.verification.create')"
-                            :active="route().current('identity.verification.create')">
-                            {{ $t('identity-verification') }}
-                        </ResponsiveNavLink>
-
-
-                        <form method="POST" @submit.prevent="logout">
-                            <ResponsiveNavLink as="button">
-                                {{ $t('log-out') }}
-                            </ResponsiveNavLink>
-                        </form>
-                        <div class="border-t border-gray-100" />
-                    </div>
-                </div>
                 <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
                     <HomeIcon class="w-4 h-4 text-primary" />
                     <span>{{ $t('home') }}</span>

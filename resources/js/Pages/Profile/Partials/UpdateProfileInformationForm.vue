@@ -53,9 +53,8 @@ const showUploadAvatarModal = ref(false);
 
 <template>
     <div class="w-full mt-8 sm:flex sm:justify-between sm:space-x-4">
-        <div class="w-full sm:flex sm:justify-end sm:w-1/2">
-        </div>
-        <div class="w-full p-6 bg-white rounded-md sm:w-1/2">
+
+        <div class="w-full p-6 bg-white rounded-md ">
             <div class="flex justify-center my-4">
                 <h2 class="text-xl font-bold uppercase text-primary">{{ $t('My Account') }}</h2>
             </div>
