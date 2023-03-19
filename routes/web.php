@@ -337,7 +337,7 @@ Route::middleware([
         ]
     )->name('chats.show');
 
-    Route::get(
+    Route::delete(
         'chats/{conversation}/delete',
         [
             ChatController::class,
