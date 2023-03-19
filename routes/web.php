@@ -501,3 +501,4 @@ Route::any('nova/language/{language}', function (Request $request, $language) {
     }
     return redirect()->back();
 })->middleware('auth:admin')->name('nova.language');
+
