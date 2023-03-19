@@ -40,7 +40,7 @@ function removeConversation() {
             <div class="flex flex-col ">
                 <h4 class="m-0 text-lg leading-none text-white capitalize">{{ user.name }}</h4>
                 <!-- <Link :href="route('player.profile', user)" class="text-xs leading-none text-neutral-500"> @{{
-                                                                                                                    user.username }} </Link> -->
+                                                                                                                        user.username }} </Link> -->
                 <span class="text-xs leading-none text-neutral-500 before:content-['a'] before:text-transparent"> @{{
                     user.username }} </span>
             </div>
@@ -63,7 +63,7 @@ function removeConversation() {
                 <TrashIcon class="w-5 text-stone-200 hover:text-red-600 active:scale-90 " />
             </button>
             <!-- confirm delete media modal -->
-            <Modal :show="showDeleteConvModal" @close="showDeletePostModal = false" :closeable="true"
+            <Modal :show="showDeleteConvModal" @close="showDeleteConvModal = false" :closeable="true"
                 :show-close-icon="false" :max-width="'sm'">
                 <div class="flex flex-col justify-center p-6 text-stone-800 ">
                     <p class="mb-3 text-lg">
