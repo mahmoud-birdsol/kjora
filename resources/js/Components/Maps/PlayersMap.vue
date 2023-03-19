@@ -31,7 +31,7 @@ const filteredPlayers = props.players.data.filter(p => p.current_latitude != nul
                             lng: parseFloat(player.current_longitude)
                         }, anchorPoint: 'TOP_CENTER'
                     }">
-                        <Avatar :image-url="player.avatar_url" :size="'md'" :username="player.name" :border="true"
+                        <Avatar :id="player.id" :image-url="player.avatar_url" :size="'md'" :username="player.name" :border="true"
                             borderColor="primary" :enableLightBox="false" />
                         </CustomMarker>
                         <InfoWindow>

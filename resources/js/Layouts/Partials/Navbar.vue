@@ -58,7 +58,8 @@ let state = usePage().props.value.user.state_name
                                 {{ $t('favorites') }}
                             </span>
                         </NavLink>
-                        <NavLink :href="route('invitation.index')" :active="route().current('invitation.index') || route().current('hire.index')">
+                        <NavLink :href="route('invitation.index')"
+                            :active="route().current('invitation.index') || route().current('hire.index')">
                             <FootBallIcon class="fill-primary" />
 
                             <span>
@@ -92,7 +93,7 @@ let state = usePage().props.value.user.state_name
                             <template #trigger>
                                 <button
                                     class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
-                                    <Avatar :image-url="$page.props.auth.user.avatar_url"
+                                    <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url"
                                         :username="$page.props.auth.user.name" :border="true" border-color="primary"
                                         size="sm" :enable-light-box="false" />
                                 </button>
@@ -160,54 +161,95 @@ let state = usePage().props.value.user.state_name
                 </div>
 
                 <!-- Mobile navigation menu. -->
-                <div class="flex justify-between items-center -mr-2 space-x-2 rtl:flex-row-reverse md:hidden w-full">
+                <div class="flex justify-between items-center md:hidden w-full">
                     <button
                         class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none hover:bg-transparent focus:text-gray-500"
                         @click="showingNavigationDropdown = !showingNavigationDropdown">
                         <Bars3Icon class="w-6 h-6" />
                     </button>
-                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5"
-                        v-if="state !== 'Premium'">
-                        <span class="bg-black rounded-full">
-                            <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
-                        </span>
-                        <Link :href="route('upgrade')">{{ $t('upgrade') }}</Link>
-                    </button>
-                    <div class="relative ml-3">
-                        <Dropdown width="96">
-                            <template #trigger>
-                                <button>
-                                    <BellIcon class="w-6 h-6 text-white"></BellIcon>
-                                </button>
-                            </template>
-                            <template #content>
-                                <!-- Notifications -->
-                                <div class="block px-4 py-2 text-xs text-gray-400">
-                                    {{ $t('notifications') }}
-                                </div>
+                    <div class="flex justify-between gap-2">
+                        <!-- user city  -->
+                        <div class="flex items-center gap-1">
+                            <MapPinIcon class="w-4 h-4 text-primary" />
+                            <span class="text-white w-max">{{ currentUser.current_city }}</span>
+                        </div>
+                        <button class="rounded-full bg-[#CFC27A] font-medium px-2 py-1 flex items-center gap-1"
+                            v-if="state !== 'Premium'">
+                            <span class="bg-black rounded-full">
+                                <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
+                            </span>
+                            <Link :href="route('upgrade')">{{ $t('upgrade') }}</Link>
+                        </button>
 
-                                <div v-if="$page.props.notifications.length">
-                                    <ul role="list"
-                                        class="divide-y divide-gray-200 max-h-[calc(100dvh-200px)] overflow-y-auto">
-                                        <template v-for="notification in $page.props.notifications">
-                                            <NotificationComponent :notification="notification" />
-                                        </template>
-                                    </ul>
-                                </div>
-
-                                <div v-else>
-                                    <div class="block px-4 py-2 text-xs text-center text-gray-500">
-                                        {{ $t("you-don't-have-any-new-notifications") }}.
+                        <!-- Settings Dropdown -->
+                        <div class="relative ">
+                            <Dropdown :align="locale == 'en' ? 'right' : 'left'" width="48">
+                                <template #trigger>
+                                    <button
+                                        class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
+                                        <Avatar :image-url="$page.props.auth.user.avatar_url"
+                                            :username="$page.props.auth.user.name" :border="true" border-color="primary"
+                                            size="sm" :enable-light-box="false" />
+                                    </button>
+                                </template>
+    
+                                <template #content>
+                                    <DropdownLink :href="route('profile.show')">
+                                        {{ $t('profile') }}
+                                    </DropdownLink>
+    
+                                    <DropdownLink :href="route('identity.verification.create')">
+                                        {{ $t('identity-verification') }}
+                                    </DropdownLink>
+    
+                                    <div class="border-t border-gray-100" />
+    
+                                    <!-- Authentication -->
+                                    <form @submit.prevent="logout">
+                                        <DropdownLink as="button">
+                                            {{ $t('log-out') }}
+                                        </DropdownLink>
+                                    </form>
+                                </template>
+                            </Dropdown>
+                        </div>
+                        <div class="relative grid place-items-center">
+                            <Dropdown width="96" :align="locale=='ar'?'left':'right'">
+                                <template #trigger>
+                                    <button>
+                                        <BellIcon class="w-6 h-6 text-white"></BellIcon>
+                                    </button>
+                                </template>
+                                <template #content>
+                                    <!-- Notifications -->
+                                    <div class="block px-4 py-2 text-xs text-gray-400">
+                                        {{ $t('notifications') }}
                                     </div>
-                                </div>
-
-                                <div class="block px-4 py-2 text-xs text-center">
-                                    <Link :href="route('notification.index')" class="text-primary hover:text-primaryDark">
+    
+                                    <div v-if="$page.props.notifications.length">
+                                        <ul role="list"
+                                            class="divide-y divide-gray-200 max-h-[calc(100dvh-200px)] overflow-y-auto">
+                                            <template v-for="notification in $page.props.notifications">
+                                                <NotificationComponent :notification="notification" />
+                                            </template>
+                                        </ul>
+                                    </div>
+    
+                                    <div v-else>
+                                        <div class="block px-4 py-2 text-xs text-center text-gray-500">
+                                            {{ $t("you-don't-have-any-new-notifications") }}.
+                                        </div>
+                                    </div>
+    
+                                    <div class="block px-4 py-2 text-xs text-center">
+                                        <Link :href="route('notification.index')" class="text-primary hover:text-primaryDark">
                                         {{ $t('view-all') }}
-                                    </Link>
-                                </div>
-                            </template>
-                        </Dropdown>
+                                        </Link>
+                                    </div>
+                                </template>
+                            </Dropdown>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -230,7 +272,7 @@ let state = usePage().props.value.user.state_name
                 <div class="pt-4 pb-1 border-gray-200">
                     <div class="flex px-4">
                         <div v-if="$page.props.jetstream.managesProfilePhotos" class="mx-3 shrink-0 min-w-max">
-                            <Avatar :image-url="$page.props.auth.user.avatar_url" :size="'lg'"
+                            <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url" :size="'lg'"
                                 :username="$page.props.auth.user.name" :border="true" />
                         </div>
                         <div>
@@ -270,7 +312,8 @@ let state = usePage().props.value.user.state_name
                     <ChatIcon class="w-4 h-4 text-primary" />
                     <span>{{ $t('chat') }}</span>
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('invitation.index')" :active="route().current('invitation.index') || route().current('hire.index')">
+                <ResponsiveNavLink :href="route('invitation.index')"
+                    :active="route().current('invitation.index') || route().current('hire.index')">
                     <FootBallIcon class="fill-primary" />
                     <span>{{ $t('invitations') }}</span>
                 </ResponsiveNavLink>

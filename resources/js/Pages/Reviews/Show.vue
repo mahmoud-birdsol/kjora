@@ -54,7 +54,7 @@ function submitRatingForm() {
             <div class="text-black flex flex-col  sm:flex-row gap-2 sm:items-center justify-between mb-4">
                 <div class="flex gap-3">
                     <div class="min-w-max ">
-                        <Avatar :username="review.player.name" :image-url="review.player.avatar_url" :size="'lg'"
+                        <Avatar :id="review.player.id" :username="review.player.name" :image-url="review.player.avatar_url" :size="'lg'"
                             :border="true" border-color="primary" />
                     </div>
                     <div class="flex-col flex gap-0">
