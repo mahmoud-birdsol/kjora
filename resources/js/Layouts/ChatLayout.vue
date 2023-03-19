@@ -62,31 +62,30 @@ onBeforeUnmount(() => {
             class="relative grid h-full w-full max-w-full overflow-hidden min-h-[500px] rounded-2xl bg-white text-neutral-500 lg:grid-cols-[1.2fr_2fr]">
             <div
                 class="flex-col w-full h-full gap-3 px-6 py-3 max-lg:border-b max-lg:border-b-stone-400 lg:flex ltr:lg:border-r ltr:lg:border-r-stone-400 rtl:lg:border-l rtl:lg:border-l-stone-400">
-                <div class="hidden lg:block">
+                <div class="">
                     <ConversationsList :conversations="conversations" />
-
                 </div>
-                <div class="flex h-full ltr:justify-end rtl:justify-start lg:hidden">
-                    <button @click="showSideBar = true" class="p-1 text-black hover:text-primary">
-                        <Bars3Icon class="w-6" />
-                    </button>
-                    <FadeInTransition>
-                        <div v-show="showSideBar" @click="showSideBar = false" @touchend="showSideBar = false"
-                            class="absolute inset-0 z-10 bg-stone-400/50"></div>
-                    </FadeInTransition>
-                    <SlideInTransition>
-                        <div v-show="showSideBar"
-                            class="absolute top-0 right-0 z-20 flex flex-col h-full px-6 py-3 bg-white gap-y-3">
-                            <div class="flex justify-end">
-                                <button @click="showSideBar = false"
-                                    class="p-1 text-black rounded-full hover:ring-primary hover:text-primary hover:ring-2">
-                                    <XMarkIcon class="w-5" />
-                                </button>
+                <!-- <div class="flex h-full ltr:justify-end rtl:justify-start lg:hidden">
+                        <button @click="showSideBar = true" class="p-1 text-black hover:text-primary">
+                            <Bars3Icon class="w-6" />
+                        </button>
+                        <FadeInTransition>
+                            <div v-show="showSideBar" @click="showSideBar = false" @touchend="showSideBar = false"
+                                class="absolute inset-0 z-10 bg-stone-400/50"></div>
+                        </FadeInTransition>
+                        <SlideInTransition>
+                            <div v-show="showSideBar"
+                                class="absolute top-0 right-0 z-20 flex flex-col h-full px-6 py-3 bg-white gap-y-3">
+                                <div class="flex justify-end">
+                                    <button @click="showSideBar = false"
+                                        class="p-1 text-black rounded-full hover:ring-primary hover:text-primary hover:ring-2">
+                                        <XMarkIcon class="w-5" />
+                                    </button>
+                                </div>
+                                <ConversationsList :conversations="conversations" />
                             </div>
-                            <ConversationsList :conversations="conversations" />
-                        </div>
-                    </SlideInTransition>
-                </div>
+                        </SlideInTransition>
+                    </div> -->
             </div>
 
             <!-- Chat layout body... -->

@@ -192,7 +192,7 @@ Route::middleware([
         Route::get('invitations/create/{invited}', function (User $invited) {
             return Inertia::render('Invitation/Create', [
                 'invited' => $invited,
-                'stadiums' => Stadium::all(),
+                'stadiums' => Stadium::whereNotNull('approved_at')->get(),
             ]);
         })->name('invitation.create');
 
@@ -336,6 +336,14 @@ Route::middleware([
             'show',
         ]
     )->name('chats.show');
+
+    Route::delete(
+        'chats/{conversation}/delete',
+        [
+            ChatController::class,
+            'destroy',
+        ]
+    )->name('chats.delete');
 
     /*
      |--------------------------------------------------------------------------
