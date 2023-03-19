@@ -81,10 +81,10 @@
                     </div>
                 </div>
             </OnClickOutside>
-            <div class="flex items-center flex-grow ">
-                <textarea v-model="form.body" @keypress.enter.exact.prevent="submit" name="body" id="body" rows="1"
-                    :placeholder="$t('Type your Message Here')"
-                    class="w-full p-2 px-4 border-none rounded-full resize-none focus:ring-primary bg-stone-100 placeholder:text-neutral-400 text-stone-700 hideScrollBar"></textarea>
+                        <div class="flex items-center flex-grow bg-stone-100 p-1 rounded-full ">
+                            <textarea v-model="form.body" @keypress.enter.exact.prevent="submit" name="body" id="body" rows="1"
+                                :placeholder="$t('Type your Message Here')"
+                                    class="w-full p-2 px-4 border-none rounded-full resize-none max-sm:placeholder:text-xs focus:ring-primary  bg-stone-100 placeholder:text-neutral-400 text-stone-700 hideScrollBar"></textarea>
             </div>
             <button class="relative" @click="openModual = true">
                 <PhotoIcon class="w-6 h-6 text-neutral-400" />
