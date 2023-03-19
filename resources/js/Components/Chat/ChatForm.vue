@@ -71,7 +71,7 @@
 
         <div class="flex flex-row items-center w-full gap-x-3">
 
-            <OnClickOutside @trigger="showEmojiPicker = false">
+                    <OnClickOutside class="hidden sm:block" @trigger="showEmojiPicker = false">
                 <div class="relative flex items-center">
                     <button @click="showEmojiPicker = !showEmojiPicker" :data-cancel-blur="true">
                         <FaceSmileIcon class="w-6 text-neutral-400" />
