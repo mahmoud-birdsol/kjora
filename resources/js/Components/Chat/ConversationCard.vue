@@ -24,7 +24,10 @@ const active = computed(() => {
 });
 
 function removeConversation() {
-    Inertia.delete(route('chats.delete', props.conversation.id))
+    Inertia.delete(route('chats.delete', props.conversation.id), {
+        preserveScroll:true,
+        preserveState:false
+    })
     showDeleteConvModal.value = false
 }
 </script>

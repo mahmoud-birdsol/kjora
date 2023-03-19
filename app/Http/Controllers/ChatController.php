@@ -77,9 +77,9 @@ class ChatController extends Controller
      */
     public function destroy(Conversation $conversation)
     {
+        $user = $conversation->users()->where('conversation_user.user_id', '!=', request()->user()->id)->first();
         $conversation->users()
-            ->where('conversation_user.user_id', '!=', request()->user()->id)
-            ->updateExistingPivot($conversation->id, [
+            ->updateExistingPivot($user->id, [
                 'is_deleted' => true
             ]);
 
