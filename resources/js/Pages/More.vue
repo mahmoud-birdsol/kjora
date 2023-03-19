@@ -30,50 +30,36 @@ const currentUser = usePage().props.value.auth.user
             </p>
         </template>
         <div class="grid grid-cols-1 gap-5 my-3 md:grid-cols-2 lg:grid-cols-3">
-            <Card>
-                <CardContent :title="$t('payment')">
-                    <template #body>
-                        <div class="flex flex-col gap-4">
-                            <div>
-                                <InputLabel color="black">{{ $t('merchant-account') }}</InputLabel>
-                                <input type="text"
-                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    :placeholder="$t('update-merchant-account')" />
-                            </div>
-                            <div>
-                                <InputLabel color="black">{{ $t('payment-details') }}</InputLabel>
-                                <input type="text"
-                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    :placeholder="$t('payment-overflow')" />
-
-                            </div>
-                        </div>
-                    </template>
-                </CardContent>
-            </Card>
+            <div></div>
             <Card>
                 <CardContent :title="$t('security')">
                     <template #body>
                         <div class="flex flex-col gap-4">
+                            <div>
+                                <InputLabel color="black">{{ $t('verification') }}</InputLabel>
+                                <MoreBtn :url="route('identity.verification.create')"
+                                    v-if="currentUser.identity_status === 'Waiting for documents'"> {{
+                                        $t(currentUser.identity_status) }}</MoreBtn>
+                                <div v-else
+                                    class="block w-full px-6 py-2 text-gray-500 transition duration-150 border border-gray-500 rounded-full sm:text-sm disabled:bg-gray-100 text-start ">
+                                    {{ $t(currentUser.identity_status) }}
+                                </div>
 
-                            <InputLabel color="black">{{ $t('verification') }}</InputLabel>
-                            <MoreBtn :url="route('identity.verification.create')"
-                                v-if="currentUser.identity_status === 'Waiting for documents'"> {{
-                                    $t(currentUser.identity_status) }}</MoreBtn>
-                            <div v-else
-                                class="block w-full px-6 py-2 text-gray-500 transition duration-150 border border-gray-500 rounded-full sm:text-sm disabled:bg-gray-100 text-start ">
-                                {{ $t(currentUser.identity_status) }}
                             </div>
+                            <div>
+                                <InputLabel color="black">{{ $t('terms-of-service') }}</InputLabel>
+                                <MoreBtn :url="route('terms.and.condition.index')">{{ $t('terms-of-service') }}</MoreBtn>
 
+                            </div>
+                            <div>
+                                <InputLabel color="black">{{ $t('privacy-policy') }}</InputLabel>
+                                <MoreBtn :url="route('privacy.policy.index')"> {{ $t('privacy-policy') }}</MoreBtn>
 
-                            <InputLabel color="black">{{ $t('terms-of-service') }}</InputLabel>
-                            <MoreBtn :url="route('terms.and.condition.index')">{{ $t('terms-of-service') }}</MoreBtn>
-
-                            <InputLabel color="black">{{ $t('privacy-policy') }}</InputLabel>
-                            <MoreBtn :url="route('privacy.policy.index')"> {{ $t('privacy-policy') }}</MoreBtn>
-
-                            <InputLabel color="black">{{ $t('cookie-use') }}</InputLabel>
-                            <MoreBtn :url="route('cookies.policy.index')"> {{ $t('cookie-use') }}</MoreBtn>
+                            </div>
+                            <div>
+                                <InputLabel color="black">{{ $t('cookie-use') }}</InputLabel>
+                                <MoreBtn :url="route('cookies.policy.index')"> {{ $t('cookie-use') }}</MoreBtn>
+                            </div>
                         </div>
                     </template>
                 </CardContent>
@@ -102,14 +88,6 @@ const currentUser = usePage().props.value.auth.user
                                 <InputLabel color="black">{{ $t('language') }}</InputLabel>
                                 <LanguageSelector class="w-full" />
                             </div>
-                            <div>
-                                <InputLabel color="black">{{ $t('help') }}</InputLabel>
-                                <input type="text"
-                                    class="w-full border border-gray-500 rounded-full focus:border-none focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                    :placeholder="$t('breifly-explain-what-happened')" />
-                            </div>
-
-
                         </div>
                     </template>
                 </CardContent>
