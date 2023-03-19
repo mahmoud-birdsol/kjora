@@ -40,7 +40,7 @@ class CookiesPolicyController extends Controller
         $user =  $request->user();
         ($assignTheCookiesVersion)($user, $cookiePolicy);
         FlashMessage::make()->success(
-            message: 'Cookies approved successfully'
+            message: __('Cookies approved successfully')
         )->closeable()->send();
 
         return redirect()->intended();

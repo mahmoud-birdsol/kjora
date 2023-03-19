@@ -44,10 +44,10 @@ class UserPhoneController extends Controller
             ]);
         #Match The Old Password
         if(!Hash::check($request->password, auth()->user()->password)){
-            $request->session()->flash('message', [
-                'type' => 'error',
-                'body' => "Password Doesn't match!",
-            ]);
+
+            FlashMessage::make()->error(
+                message: __('Password Doesnt match!')
+            )->closeable()->send();
             return redirect()->back();
         }
         $user = Auth::user();
@@ -57,7 +57,7 @@ class UserPhoneController extends Controller
         ]);
         ($createVerificationCode)($user);
         FlashMessage::make()->success(
-            message: 'Phone changed successfully'
+            message: __('Phone changed successfully')
         )->closeable()->send();
 
         return redirect()->route('phone.verify');

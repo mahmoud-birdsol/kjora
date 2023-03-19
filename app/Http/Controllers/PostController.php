@@ -33,7 +33,7 @@ class PostController extends Controller
         $post->update($data);
 
         FlashMessage::make()->success(
-            message: 'Post successfully updated.'
+            message: __('Post successfully updated.')
         )->closeable()->send();
 
         return redirect()->back();

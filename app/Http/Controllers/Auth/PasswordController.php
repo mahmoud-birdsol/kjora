@@ -37,29 +37,29 @@ class PasswordController extends Controller
         ]);
         #Match The Old Password
         if(!Hash::check($request->current_password, auth()->user()->password)){
-            $request->session()->flash('message', [
-                'type' => 'error',
-                'body' => "Old Password Doesn't match!",
-            ]);
+            FlashMessage::make()->error(
+                message: 'Old Password Doesnt match!.'
+            )->closeable()->send();
+
             return redirect()->back();
         }
 
         if(strcmp($request->get('current_password'), $request->get('new_password')) == 0){
             // Current password and new password same
-            $request->session()->flash('message', [
-                'type' => 'error',
-                'body' => 'New Password cannot be same as your current password.',
-            ]);
+
+            FlashMessage::make()->error(
+                message: __('New Password cannot be same as your current password.')
+            )->closeable()->send();
             return redirect()->back();
         }
         $user = Auth::user();
         $user->update([
             'password' => Hash::make($request->get('new_password'))
         ]);
-        $request->session()->flash('message', [
-            'type' => 'success',
-            'body' => 'Password changed successfully',
-        ]);
+        FlashMessage::make()->success(
+            message: __('Password changed successfully')
+        )->closeable()->send();
+
         return redirect()->route('home');
     }
 }

@@ -40,7 +40,7 @@ class PrivacyPolicyController extends Controller
         $user =  $request->user();
         ($assignThePrivacyVersion)($user, $privacyPolicy);
         FlashMessage::make()->success(
-            message: 'Private Policy approved successfully'
+            message: __('Private Policy approved successfully')
         )->closeable()->send();
 
         return redirect()->intended();

@@ -308,5 +308,21 @@
     "Position": "Position",
     "Left": "Left",
     "Right": "Right",
-    "Update": "Update"
+    "Update": "Update",
+    "Old Password Doesnt match!.": "Old Password Doesnt match!.",
+    "New Password cannot be same as your current password.": "New Password cannot be same as your current password.",
+    "Password changed successfully": "Password changed successfully",
+    "Password Doesnt match!": "Password Doesnt match!",
+    "Email changed successfully please verify your mail": "Email changed successfully please verify your mail",
+    "User name changed successfully": "User name changed successfully",
+    "Phone changed successfully": "Phone changed successfully",
+    "Your contact request has reached us and we will review it shortly.": "Your contact request has reached us and we will review it shortly.",
+    "Thank you for uploading your verification documents we will verify the information provided and get back to you shortly.": "Thank you for uploading your verification documents we will verify the information provided and get back to you shortly.",
+    "Your identity verification has been successfully sent. Please wait for approval.": "Your identity verification has been successfully sent. Please wait for approval.",
+    "Review Submitted Successfully": "Review Submitted Successfully",
+    "Cookies approved successfully": "Cookies approved successfully",
+    "Private Policy approved successfully": "Private Policy approved successfully",
+    "Terms approved successfully": "Terms approved successfully",
+    "Post successfully updated.": "Post successfully updated."
+
 }

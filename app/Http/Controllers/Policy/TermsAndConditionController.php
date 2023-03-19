@@ -43,7 +43,7 @@ class TermsAndConditionController extends Controller
         $user =  $request->user();
         ($assignTheTermsVersion)($user, $termsAndConditions);
         FlashMessage::make()->success(
-            message: 'Terms approved successfully'
+            message: __('Terms approved successfully')
         )->closeable()->send();
 
         return redirect()->intended();
