@@ -10,6 +10,7 @@ import RichSelectInput from '@/Components/RichSelectInput.vue';
 import SuccessMessageModal from '@/Components/SuccessMessageModal.vue';
 import UploadImageField from '@/Components/UploadImageField.vue';
 import Avatar from '@/Components/Avatar.vue';
+import Modal from '../../../Components/Modal.vue';
 
 const props = defineProps({
     user: Object,
@@ -62,7 +63,8 @@ const showUploadAvatarModal = ref(false);
             <form @submit.prevent="updateProfileInformation">
                 <div class="flex items-center justify-center sm:justify-end sm:-mt-12">
                     <button class="mt-2" @click.prevent="showUploadAvatarModal = true">
-                        <Avatar :image-url="user.avatar_url" :username="user.name" size="lg" :enableLightBox="false" />
+                        <Avatar :image-url="user.avatar_url" :username="user.name" size="lg" :id="user.id"
+                            :enableLightBox="false" />
                     </button>
 
                     <UploadImageField :current-image-url="user.avatar_url" :show="showUploadAvatarModal"
@@ -73,19 +75,19 @@ const showUploadAvatarModal = ref(false);
                 <div class="grid grid-cols-1 gap-4 mt-12 sm:grid-cols-2">
                     <div>
                         <InputLabel color="primary" for="first_name" :value="$t('First Name')" />
-                        <TextInput type="text"  :value="user.first_name" placeholder="Please enter your first name"
+                        <TextInput type="text" :value="user.first_name" placeholder="Please enter your first name"
                             auto-complete="given-name" aria-required="true" :disabled="true" autofocus />
                         <InputError class="mt-2" :message="form.errors.first_name" />
                     </div>
                     <div>
                         <InputLabel color="primary" for="last_name" :value="$t('Surname')" />
-                        <TextInput type="text" :value="user.last_name"  placeholder="Please enter your last name"
+                        <TextInput type="text" :value="user.last_name" placeholder="Please enter your last name"
                             auto-complete="sur-name" aria-required="true" :disabled="true" />
                         <InputError class="mt-2" :message="form.errors.last_name" />
                     </div>
                     <div>
                         <InputLabel color="primary" for="email" :value="$t('Email Address')" />
-                        <TextInput type="email" :value="user.email"  placeholder="Please enter your email address"
+                        <TextInput type="email" :value="user.email" placeholder="Please enter your email address"
                             auto-complete="email" aria-required="true" :disabled="true" />
                         <InputError class="mt-2" :message="form.errors.email" />
                     </div>
@@ -108,13 +110,13 @@ const showUploadAvatarModal = ref(false);
                     </div>
                     <div>
                         <InputLabel color="primary" for="phone" :value="$t('Phone')" />
-                        <TextInput type="tel" :disabled="true" :value="user.phone"  />
+                        <TextInput type="tel" :disabled="true" :value="user.phone" />
                         <InputError class="mt-2" :message="form.errors.phone" />
                     </div>
                     <div>
                         <InputLabel color="primary" for="username" :value="$t('Username')" />
-                        <TextInput type="text" :value="user.username" v-model="form.username" placeholder="@" auto-complete="username"
-                            aria-required="true" :disabled="true" />
+                        <TextInput type="text" :value="user.username" v-model="form.username" placeholder="@"
+                            auto-complete="username" aria-required="true" :disabled="true" />
                         <InputError class="mt-2" :message="form.errors.username" />
                     </div>
                 </div>
@@ -134,7 +136,8 @@ const showUploadAvatarModal = ref(false);
                                 <div class="flex items-center space-x-2">
                                     <input type="radio" id="female" value="female" v-model="form.gender"
                                         class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
-                                    <label for="female" class="text-sm font-medium text-black">{{ $t('Female') }}</label>
+                                    <label for="female" class="text-sm font-medium text-black">{{ $t('Female')
+                                    }}</label>
                                 </div>
                             </div>
                         </div>

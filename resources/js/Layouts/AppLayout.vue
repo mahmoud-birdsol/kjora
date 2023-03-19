@@ -1,11 +1,13 @@
 <script setup>
-import { Head, usePage } from '@inertiajs/inertia-vue3';
+import { Head, useForm, usePage } from '@inertiajs/inertia-vue3';
 import SystemMessage from '@/Components/SystemMessage.vue';
 import CopyrightClaim from '@/Components/CopyrightClaim.vue';
 import Navbar from '@/Layouts/Partials/Navbar.vue';
 import RealtimeNotifications from '@/Layouts/Partials/RealtimeNotifications.vue';
 import { onMounted, provide, ref } from 'vue';
 import { loadLanguageAsync } from 'laravel-vue-i18n';
+import axios from 'axios';
+import { usePermission } from '@vueuse/core';
 onMounted(() => {
     loadLanguageAsync(usePage().props.value.locale)
 })
@@ -17,10 +19,27 @@ defineProps({
 
 const height = ref(null)
 onMounted(() => {
-    // console.log(document.querySelector('#SysMessage'));
-    //  height.value = document.querySelector('#SysMessage').offsetHeight
-})
 
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { enableHighAccuracy: true });
+
+    // navigator.permissions.query({ name: "geolocation" }).then((result) => {
+    //     console.log(result);
+    // });
+
+
+})
+const successCallback = (position) => {
+
+
+    axios.post(route('api.location.store'), {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+    }).catch(err => console.error(err))
+};
+
+const errorCallback = (error) => {
+    console.log(error);
+};
 </script>
 
 <template>
@@ -35,7 +54,7 @@ onMounted(() => {
 
                 <header v-if="$slots.header" class="">
                     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                        <div class="flex flex-col items-center gap-6 px-4 md:flex-row sm:px-6 lg:px-8">
+                        <div class="flex flex-col items-center gap-6 md:flex-row ">
                             <h1 class="text-2xl font-bold text-white uppercase sm:text-7xl">
                                 <slot name="header" />
                             </h1>
