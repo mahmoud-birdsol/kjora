@@ -1,14 +1,15 @@
 <template>
-    <Splide dir="ltr" class="" :options="options">
-        <template v-for="media in postMedia" :key="media.id">
-            <SplideSlide class="">
-                <div class="flex justify-center overflow-hidden group rounded-3xl aspect-video ">
-                    <img v-if="media.mime_type.startsWith('image') || media.mime_type.startsWith('webp')"
-                        :src="media.original_url" alt="" class="object-contain h-full ">
-                    <video v-if="media.mime_type.startsWith('video')" controls :src="media.original_url" alt=""
-                        class="object-contain h-full " />
-                    <!-- delete single media -->
-                    <!-- <button v-if="currentUser.id === user.id"
+                                                <div class="relative">
+                                                        <Splide @splide:moved="(e) => { currentMediaIndex = e.index + 1 }" dir="ltr" class="" :options="options">
+                                                            <template v-for="media in postMedia" :key="media.id">
+                                                                <SplideSlide class="">
+                                                                    <div class="flex justify-center overflow-hidden group rounded-3xl aspect-video ">
+                                                                        <img v-if="media.mime_type.startsWith('image') || media.mime_type.startsWith('webp')"
+                                                                            :src="media.original_url" alt="" class="object-contain h-full ">
+                                                                        <video v-if="media.mime_type.startsWith('video')" controls :src="media.original_url" alt=""
+                                                                            class="object-contain h-full " />
+                                                                        <!-- delete single media -->
+                                                                        <!-- <button v-if="currentUser.id === user.id"
                                         @click.prevent.stop="showDeleteMediaModal = true"
                                         class="absolute top-0 right-0 hidden bg-white group-hover:block bg-opacity-90 rounded-bl-xl">
                                         <div class="flex flex-col items-start justify-center h-full p-1 opacity-100 ">
@@ -31,10 +32,16 @@
                                             </div>
                                         </Modal>
                                     </button> -->
-                </div>
-            </SplideSlide>
-        </template>
-    </Splide>
+                                                                    </div>
+                                                                </SplideSlide>
+                                                            </template>
+                                                        </Splide>
+                                                        <div v-if="postMedia.length > 1" class="absolute top-2 right-2 bg-white shadow-md rounded-full p-1 ">
+                                                            <span>{{ currentMediaIndex }}</span>
+                                                            <span>/</span>
+                                                            <span>{{ postMedia.length }} </span>
+                                                        </div>
+                                                    </div>
 </template>
 
 <script setup>
@@ -42,14 +49,14 @@ import { Splide, SplideSlide } from "@splidejs/vue-splide";
 import { ref } from "vue";
 
 const props = defineProps(['postMedia', 'user'])
-
+const currentMediaIndex = ref(1)
 
 const showDeleteMediaModal = ref(false);
 // slider option
 const options = {
-    arrows: true,
+    arrows: false,
     rewind: false,
-    pagination: false,
+    pagination: true,
     // drag: "free",
     type: 'slide',
     focus: "center",
