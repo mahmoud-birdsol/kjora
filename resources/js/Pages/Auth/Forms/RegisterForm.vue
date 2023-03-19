@@ -57,14 +57,14 @@ const submit = () => {
     <form @submit.prevent="submit" @keypress.enter.exact.prevent="submit">
         <div class="flex items-center justify-center sm:justify-end sm:-mt-12">
             <button class="mt-2" @click.prevent="showUploadAvatarModal = true">
-                <Avatar :image-url="avatarPreview" size="lg" />
+                <Avatar :image-url="avatarPreview" size="lg" :id="-1" />
             </button>
 
             <UploadImageField :should-upload="false" :show="showUploadAvatarModal" v-model="form.photo"
                 @close="showUploadAvatarModal = false" @selected="setAvatarPreview" />
         </div>
 
-        <div class="grid grid-cols-1 gap-4 mt-12 sm:grid-cols-2">
+        <div class="grid grid-cols-1 gap-4 mt-12 tracking-tight sm:grid-cols-2">
             <div>
                 <InputLabel color="primary" for="first_name" :value="$t('first-name')" />
                 <TextInput type="text" v-model="form.first_name" :placeholder="$t('please enter your first name')"
@@ -125,14 +125,14 @@ const submit = () => {
                 <div>
                     <InputLabel color="primary" :value="$t('gender')" />
 
-                    <div class="ml-4">
-                        <div class="flex items-center space-x-2">
+                    <div class="mie-4">
+                        <div class="flex items-center gap-x-2">
                             <input type="radio" id="male" value="male" v-model="form.gender"
                                 class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
                             <label for="male" class="text-sm font-medium text-black">{{ $t('male') }}</label>
                         </div>
 
-                        <div class="flex items-center space-x-2">
+                        <div class="flex items-center gap-x-2">
                             <input type="radio" id="female" value="female" v-model="form.gender"
                                 class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
                             <label for="female" class="text-sm font-medium text-black">{{ $t('female') }}</label>
@@ -143,8 +143,8 @@ const submit = () => {
             <div class="w-full mt-4 sm:w-1/3 sm:mt-0">
                 <InputLabel color="primary" :value="$t('position')" />
 
-                <div class="ml-4">
-                    <div class="flex items-center space-x-2" v-for="position in positions">
+                <div class="mie-4">
+                    <div class="flex items-center gap-x-2" v-for="position in positions">
                         <input type="radio" :id="position.name" :value="position.id" v-model="form.position_id"
                             class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
                         <label :for="position.name" class="text-sm font-medium text-black">{{ $t(position.name) }}</label>
@@ -154,14 +154,14 @@ const submit = () => {
             <div class="w-full mt-4 sm:w-1/3 sm:mt-0">
                 <InputLabel color="primary" :value="$t('Preferred Foot')" />
 
-                <div class="ml-4">
-                    <div class="flex items-center space-x-2">
+                <div class="mie-4">
+                    <div class="flex items-center gap-x-2">
                         <input type="radio" id="left" value="left" v-model="form.preferred_foot"
                             class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
                         <label for="left" class="text-sm font-medium text-black">{{ $t('left') }}</label>
                     </div>
 
-                    <div class="flex items-center space-x-2">
+                    <div class="flex items-center gap-x-2">
                         <input type="radio" id="right" value="right" v-model="form.preferred_foot"
                             class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
                         <label for="right" class="text-sm font-medium text-black">{{ $t('right') }}</label>

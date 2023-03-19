@@ -17,8 +17,8 @@ defineProps({
 
 const height = ref(null)
 onMounted(() => {
-    // console.log(document.querySelector('#SysMessage'));
-    //  height.value = document.querySelector('#SysMessage').offsetHeight
+    console.log(document.querySelector('#SysMessage'));
+     height.value = document.querySelector('#SysMessage').offsetHeight
 })
 
 </script>
@@ -55,8 +55,7 @@ onMounted(() => {
                         <CopyrightClaim />
                     </div>
                 </footer>
-                <div class="w-full h-[200px]"></div>
-                <SystemMessage id="SysMessage" />
+                <SystemMessage />
             </div>
         </div>
     </div>

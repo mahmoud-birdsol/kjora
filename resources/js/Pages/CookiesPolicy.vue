@@ -21,6 +21,7 @@ function submit() {
 </script>
 
 <template>
+    <Head title="Cookie use"/>
     <GuestLayout title="Cookie use">
         <template #header>
             {{$t('Security')}}
@@ -40,7 +41,7 @@ function submit() {
                 </div>
                 <div class=""
                     v-if="$page.props.user && cookies && (cookies.version !== $page.props.auth.user.accepted_cookie_policy_version)">
-                    <div class="flex flex-col justify-center gap-2">
+                    <div class="flex flex-col justify-center mt-4 gap-2">
                         <label for="cookies" class="text-sm font-medium text-primary">I Accept</label>
                         <input type="radio" :value="cookies.id" id="cookies" v-model="form.cookiePolicy" :checked="false"
                             @change="(e) => { e.target.checked ? isDisabled = false : isDisabled = true; }"
