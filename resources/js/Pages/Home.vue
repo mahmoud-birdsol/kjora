@@ -114,7 +114,7 @@ const filterByPosition = (position) => {
                                                                                                                                                                                                                                                                                                     =====================================================-->
                 <div class="flex gap-4 mt-4 mb-8 overflow-x-auto hideScrollBar">
                     <button @click="filterByPosition(null)"
-                        class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
+                        class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center inline-flex items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
                         :class="{ 'border-primary': form.position == null, 'border-none': form.position != null }">
                         <span class="w-full text-center rtl:tracking-tight"
                             :class="{ 'text-black': form.position == null, 'text-gray-400': form.position != null }">
@@ -123,7 +123,7 @@ const filterByPosition = (position) => {
                     </button>
                     <template v-for="position in positions" :key="position.id">
                         <button @click="filterByPosition(position.id)"
-                            class="py-2 px-4 min-w-[215px] w-1/5 text-center font-bold items-center bg-white border-2 border-gray-300 rounded-full  text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary   active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap">
+                            class="py-2 px-4 min-w-[215px] w-1/5 text-center font-bold inline-flex items-center bg-white border-2 border-gray-300 rounded-full  text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary   active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap">
                             <span class="w-full text-center rtl:tracking-tight"
                                 :class="{ 'text-black': form.position == position.id, 'text-gray-400': form.position != position.id }">
                                 {{ $t(position.name) }}
