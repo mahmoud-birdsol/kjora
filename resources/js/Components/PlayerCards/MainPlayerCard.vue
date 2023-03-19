@@ -68,7 +68,6 @@ const addToFavorites = () => {
         preserveScroll: true,
     });
 };
-
 const removeFromFavorites = () => {
     const form = useForm({});
     props.player.is_favorite = false;
