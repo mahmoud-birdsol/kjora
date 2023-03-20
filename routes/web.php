@@ -210,7 +210,7 @@ Route::middleware([
             $time = Carbon::parse($data['time']);
 
             $data['inviting_player_id'] = $request->user()->id;
-            $data['date'] = Carbon::parse( $data['date'])->addDay()->setTime($time->hour, $time->minute);
+            $data['date'] = Carbon::parse($data['date'])->addDay()->setTime($time->hour, $time->minute);
             unset($data['time']);
 
             $invitation = Invitation::create($data);
@@ -520,7 +520,7 @@ Route::get('public/player/{player}', function (User $player) {
     $countries = Country::active()->orderBy('name')->get();
     $positions = Position::all();
 
-    return Inertia::render('Public/Player', [
+    return Inertia::render('Public/PlayerView', [
         'player' => $player,
         'posts' => $player->posts->load('comments'),
         'playerRating' => $playerRating,

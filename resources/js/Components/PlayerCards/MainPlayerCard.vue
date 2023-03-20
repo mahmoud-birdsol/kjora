@@ -36,6 +36,10 @@ const props = defineProps({
         required: false,
         type: Boolean,
         default: true
+    }, showFavorite: {
+        required: false,
+        type: Boolean,
+        default: true
     }, countries: Array,
     positions: Array,
 });
@@ -81,7 +85,7 @@ const removeFromFavorites = () => {
 
 <template>
     <div class="overflow-hidden rounded-xl" :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
-        <div v-if="player.id !== $page.props.auth.user.id" class="flex justify-end">
+        <div v-if="showFavorite" class="flex justify-end">
             <span class="rounded-lg ltr:rounded-bl-3xl rtl:rounded-br-3xl bg-white p-2 -mt-0.5 ltr:-mr-0.5 rtl:-ml-0.5">
                 <a href="javascript:;" @click="addToFavorites" v-if="!player.is_favorite">
                     <HeartIconOutline class="w-5 h-5 text-primary" />
