@@ -6,6 +6,7 @@ import InvitationsFilter from '@/Components/InvitationsFilter.vue';
 import HireCard from './Partials/HireCard.vue';
 import DateTranslation from '@/Components/DateTranslation.vue';
 import { CalendarIcon } from "@heroicons/vue/20/solid";
+import dayjs from 'dayjs';
 const props = defineProps({
     invitations: Array,
 });
@@ -46,8 +47,8 @@ const props = defineProps({
                 <div class="bg-white rounded-xl mt-4 min-h-[500px] p-6">
                     <div class="font-bold text-xs flex gap-1 mb-4" v-if="invitations.length">
                         <CalendarIcon class="w-4" />
-                        <DateTranslation :start="invitations.slice(-1).date" format="DD MMMM YYYY" /> 
-                        <span v-if="invitations[0].date !==invitations.slice(-1).date ">
+                        <DateTranslation :start="invitations[invitations.length - 1].date" format="DD MMMM YYYY" /> 
+                        <span v-if="dayjs(invitations[0].date).format('DD MMMM YYYY')  !== dayjs(invitations[invitations.length - 1].date).format('DD MMMM YYYY')">
                             {{ $t('to') }}
                             <DateTranslation :start="invitations[0].date" format="DD MMMM YYYY"  />
                         </span>
