@@ -32,14 +32,17 @@ const logout = () => {
 let state = usePage().props.value.user.state_name
 let notificationsLength = ref(usePage().props.value.notifications.length)
 let notifications = ref(usePage().props.value.notifications)
-const showNotificationIndicator = ref(true)
+const showNotificationIndicator = computed(() => {
+    notificationsLength ? true : false;
+})
 watch(() => notificationsLength.value, () => {
     console.log(notificationsLength)
 })
 
 
 function markAllNotificationsAsRead() {
-    if (!showNotificationIndicator.value) return
+    if (!showNotificationIndicator.value && !notificationsLength) return
+
     notifications.value.forEach((n, i) => {
         axios.post(route('api.notifications.mark-as-read', n.id)).then(res => {
             if (i === notificationsLength.value - 1) {
