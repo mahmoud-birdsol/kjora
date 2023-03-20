@@ -133,7 +133,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'name',
         'is_favorite',
         'identity_status',
-        'state_name'
+        'state_name',
+        'played',
+        'missed'
 ];
 
     /**
@@ -467,6 +469,30 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     {
         return Attribute::make(
             get: fn($value) => $this->state?->name()
+        );
+    }
+
+    /**
+     * Get the count of the played matches
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function played(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->playerReviews()->whereHas('ratingCategories')->count()
+        );
+    }
+
+    /**
+     * Get the count of the user missed matches
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function missed(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->playerReviews()->whereDoesntHave('ratingCategories')->count()
         );
     }
 

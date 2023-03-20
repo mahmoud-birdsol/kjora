@@ -67,7 +67,7 @@ class PlayerReviewController extends Controller
 
         if ($ratingCategoryCount > 0) {
             $review->player->update([
-                'rating' => $ratingCategoryCount,
+                'rating' => $value / $ratingCategoryCount,
             ]);
             $review->player->notify(new NotifyUserOfRatingSubmittedNotification($review->reviewer, $review->player, $review));
         }

@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm , Link } from '@inertiajs/inertia-vue3';
+import { Head, useForm, Link } from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import Modal from '../../Components/Modal.vue';
@@ -48,32 +48,31 @@ function submitRatingForm() {
 
     <AppLayout :title="$t('rate')">
         <template #header>
-            {{$t('rate')}}
+            {{ $t('rate') }}
         </template>
         <div class="bg-white h-full p-6 rounded-xl">
             <div class="text-black flex flex-col  sm:flex-row gap-2 sm:items-center justify-between mb-4">
                 <div class="flex gap-3">
                     <div class="min-w-max ">
-                        <Avatar :id="review.player.id" :username="review.player.name" :image-url="review.player.avatar_url" :size="'lg'"
-                            :border="true" border-color="primary" />
+                        <Avatar :id="review.player.id" :username="review.player.name" :image-url="review.player.avatar_url" :size="'lg'" :border="true" border-color="primary" />
                     </div>
                     <div class="flex-col flex gap-0">
                         <h3 class="capitalize font-bold text-lg text-primary">{{ review.player.name }}</h3>
                         <Link :href="route('player.profile', review.player.id)">@{{ review.player.username }} {{ 'cairo' }}</Link>
                         <div class="text-stone-400 text-xs flex gap-2 flex-wrap">
-                            <span>{{$t('age')}}: {{ review.player.age }}</span>
-                            <span>{{$t('played')}}: {{ '24' }}</span>
-                            <span>{{$t('missed')}}: {{ '15' }}</span>
-                            <span>{{$t('Position')}}: {{ review.player.position.name }}</span>
+                            <span>{{ $t('age') }}: {{ review.player.age }}</span>
+                            <span>{{ $t('played') }}: {{ review.player.played }}</span>
+                            <span>{{ $t('missed') }}: {{ review.player.missed }}</span>
+                            <span>{{ $t('Position') }}: {{ review.player.position.name }}</span>
                         </div>
                     </div>
                 </div>
                 <div class="flex flex-col gap1 ">
                     <ElRate v-model="rating" disabled size="large" />
                     <p class="flex items-center font-bold text-sm text-primary">
-                        {{ rating }} {{$t('out of')}} 5
+                        {{ rating }} {{ $t('out of') }} 5
                     </p>
-                    <span class="text-stone-400 text-xs">{{$t('based on :count players rating',{count:245})}}</span>
+                    <span class="text-stone-400 text-xs">{{ $t('based on :count players rating', { count: 245 }) }}</span>
                 </div>
             </div>
 
@@ -83,8 +82,7 @@ function submitRatingForm() {
                         <div class="flex flex-col gap-2 ">
                             <InputLabel class="text-black">{{ item.name }}</InputLabel>
                             <div class="px-6 py-1 mx-4 bg-black border border-white rounded-full">
-                                <el-slider v-model="ratingForm.ratingCategory.filter(c => c.id === item.id)[0].value"
-                                    :step="0.5" :min="0" :max="5" />
+                                <el-slider v-model="ratingForm.ratingCategory.filter(c => c.id === item.id)[0].value" :step="0.5" :min="0" :max="5" />
                             </div>
                         </div>
                     </template>
@@ -95,7 +93,7 @@ function submitRatingForm() {
                         <RatingChart :data="data" :labels="labels" theme="rgb(0,100,0)" overlay='rgba(0,100,0,0.2)' />
                     </div>
                     <button @click="submitRatingForm" class="bg-black p-3 px-6 mt-4  w-full text-white rounded-full">
-                        {{$t('rate')}}
+                        {{ $t('rate') }}
                     </button>
                 </div>
             </div>
