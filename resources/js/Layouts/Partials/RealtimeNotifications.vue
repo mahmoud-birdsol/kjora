@@ -12,10 +12,15 @@ const broadcastNotification = ref(null);
 const showInvitationNotificationModal = ref(false);
 const invitation = ref(null);
 
+
 Echo.private('users.' + usePage().props.value.auth.user.id)
     .listen('.invitation.created', (event) => {
-        invitation.value = event.invitation;
-        showInvitationNotificationModal.value = true;
+
+        axios.get(route('api.invitations.index', event.id)).then(res => {
+
+            invitation.value = res.data.data;
+            showInvitationNotificationModal.value = true;
+        }).catch(err => console.error(err))
     })
     .notification((notification) => {
         broadcastNotification.value = notification;
