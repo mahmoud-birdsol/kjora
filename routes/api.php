@@ -98,9 +98,9 @@ Route::post('message/{message}/mark-as-read', MarkMessageAsReadController::class
 Route::get('chats/{conversation}/new-messages', NewMessagesController::class)
     ->name('api.messages.new');
 
-Route::post('update-location', UserLocationController::class)->name('api.location.store')->middleware('auth:sanctum');
+Route::post('update-location', UserLocationController::class)->name('api.location.store');
 
 
 Route::post('notifications/mark-as-read/{notificationId}', MarkNotificationAsReadController::class)
-    ->name('api.notifications.mark-as-read')->middleware('auth:sanctum');
+    ->name('api.notifications.mark-as-read');
 
