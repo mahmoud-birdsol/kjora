@@ -128,7 +128,6 @@ watch(()=>notifications.value, ()=>{
                         <Dropdown :align="locale == 'en' ? 'right' : 'left'" width="96">
                             <template #trigger>
                                 <button class="text-white">
-                                    {{ $page.props.notifications.length }}
                                     <BellIcon class="w-6 h-6 text-white"></BellIcon>
                                 </button>
                             </template>
