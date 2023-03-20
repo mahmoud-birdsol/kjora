@@ -105,5 +105,5 @@ Route::post('update-location', UserLocationController::class)->name('api.locatio
 Route::post('notifications/mark-as-read/{notificationId}', MarkNotificationAsReadController::class)
     ->name('api.notifications.mark-as-read')->middleware('throttle:200,1');
 
-Route::get('invitations', FetchInvitationController::class)->name('api.invitations.index');
+Route::get('invitations/{invitation}', FetchInvitationController::class)->name('api.invitations.index');
 
