@@ -48,7 +48,7 @@ const props = defineProps({
                 </div>
 
                 <div class="bg-white rounded-xl mt-4 min-h-[500px] p-2 md:p-6">
-                    <div class="font-bold text-xs flex gap-1 mb-4" v-if="invitations">
+                    <div class="font-bold text-xs flex gap-1 mb-4" v-if="invitations.length">
                         <CalendarIcon class="w-4"/>
                        <DateTranslation :start="invitations.slice(-1).date" format="DD MMMM YYYY"/>
                        <span v-if="invitations[0].date !== invitations.slice(-1).date ">
