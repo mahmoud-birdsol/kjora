@@ -520,7 +520,7 @@ Route::get('public/player/{player}', function (User $player) {
     $countries = Country::active()->orderBy('name')->get();
     $positions = Position::all();
 
-    return Inertia::render('Player/Show', [
+    return Inertia::render('Public/Player', [
         'player' => $player,
         'posts' => $player->posts->load('comments'),
         'playerRating' => $playerRating,
