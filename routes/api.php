@@ -109,11 +109,11 @@ Route::post('notifications/mark-as-read/{notificationId}', MarkNotificationAsRea
 Route::get('invitations/{invitation}', FetchInvitationController::class)->name('api.invitations.index');
 
 
-//Route::get('public/post/comments', function (Request $request) {
-//    $modelType = (new ReflectionClass($request->input('commentable_type')))->newInstance();
-//
-//    $model = $modelType->findOrFail($request->input('commentable_id'));
-//
-//    return CommentResource::collection($model->comments->load('user')->load('replies'));
-//})->name('public.post.comments');
+Route::get('public/post/comments', function (Request $request) {
+    $modelType = (new ReflectionClass($request->input('commentable_type')))->newInstance();
+
+    $model = $modelType->findOrFail($request->input('commentable_id'));
+
+    return CommentResource::collection($model->comments->load('user')->load('replies'));
+})->name('public.post.comments');
 
