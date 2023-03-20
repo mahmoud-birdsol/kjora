@@ -120,12 +120,12 @@ const submit = () => {
 
                     <div class="mie-4">
                         <div class="flex items-center gap-x-2">
-                            <input type="radio" id="male" value="male" v-model="form.gender" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
+                            <input type="radio" id="male" value="male" v-model="form.gender" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
                             <label for="male" class="text-sm font-medium text-black">{{ $t('male') }}</label>
                         </div>
 
                         <div class="flex items-center gap-x-2">
-                            <input type="radio" id="female" value="female" v-model="form.gender" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
+                            <input type="radio" id="female" value="female" v-model="form.gender" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
                             <label for="female" class="text-sm font-medium text-black">{{ $t('female') }}</label>
                         </div>
                     </div>
@@ -136,7 +136,7 @@ const submit = () => {
 
                 <div class="mie-4">
                     <div class="flex items-center gap-x-2" v-for="position in positions">
-                        <input type="radio" :id="position.name" :value="position.id" v-model="form.position_id" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
+                        <input type="radio" :id="position.name" :value="position.id" v-model="form.position_id" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
                         <label :for="position.name" class="text-sm font-medium text-black">{{ $t(position.name) }}</label>
                     </div>
                 </div>
@@ -146,12 +146,12 @@ const submit = () => {
 
                 <div class="mie-4">
                     <div class="flex items-center gap-x-2">
-                        <input type="radio" id="left" value="left" v-model="form.preferred_foot" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
+                        <input type="radio" id="left" value="left" v-model="form.preferred_foot" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
                         <label for="left" class="text-sm font-medium text-black">{{ $t('left') }}</label>
                     </div>
 
                     <div class="flex items-center gap-x-2">
-                        <input type="radio" id="right" value="right" v-model="form.preferred_foot" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
+                        <input type="radio" id="right" value="right" v-model="form.preferred_foot" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
                         <label for="right" class="text-sm font-medium text-black">{{ $t('right') }}</label>
                     </div>
                 </div>

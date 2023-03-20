@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Verification\CreateVerificationCode;
+use App\Services\FlashMessage;
 use Illuminate\Http\Request;
 
 class ResendVerificationCodeController extends Controller
@@ -22,10 +23,10 @@ class ResendVerificationCodeController extends Controller
     {
         ($createVerificationCode)($request->user());
 
-        $request->session()->put('message', [
-            'type' => 'success',
-            'content' => 'Verification code sent.',
-        ]);
+
+        FlashMessage::make()->success(
+            message: __('Verification code sent.')
+        )->closeable()->send();
 
         return back();
     }
