@@ -492,7 +492,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function missed(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->playerReviews()->whereDoesntHas('ratingCategories')->count()
+            get: fn() => $this->playerReviews()->whereDoesntHave('ratingCategories')->count()
         );
     }
 
