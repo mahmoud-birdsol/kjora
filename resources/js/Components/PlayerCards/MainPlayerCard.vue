@@ -80,8 +80,7 @@ const removeFromFavorites = () => {
 </script>
 
 <template>
-    <div class="overflow-hidden rounded-xl"
-        :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
+    <div class="overflow-hidden rounded-xl" :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
         <div v-if="player.id !== $page.props.auth.user.id" class="flex justify-end">
             <span class="rounded-lg ltr:rounded-bl-3xl rtl:rounded-br-3xl bg-white p-2 -mt-0.5 ltr:-mr-0.5 rtl:-ml-0.5">
                 <a href="javascript:;" @click="addToFavorites" v-if="!player.is_favorite">
@@ -94,19 +93,14 @@ const removeFromFavorites = () => {
         </div>
         <div class="p-4">
             <div class="flex items-start justify-between">
-                <div class="flex items-center justify-start gap-2 mb-2"
-                    :class="{ 'space-x-2': size == 'sm', 'space-x-8': size == 'lg' }">
+                <div class="flex items-center justify-start gap-2 mb-2" :class="{ 'space-x-2': size == 'sm', 'space-x-8': size == 'lg' }">
                     <div class="relative">
-                        <button @click="showUploadAvatarModal = true" v-if="isCurrentUser"
-                            class="absolute bottom-0 p-1 bg-white rounded-full ltr:right-0 rtl:left-0 hover:text-primary">
+                        <button @click="showUploadAvatarModal = true" v-if="isCurrentUser" class="absolute bottom-0 p-1 bg-white rounded-full ltr:right-0 rtl:left-0 hover:text-primary">
                             <PencilIcon class="w-3 [&+div]:hover:block " />
-                            <ToolTip :value="$t('edit-your-profile')" />
+                            <ToolTip :value="$t('edit-your-profile-photo')" />
                         </button>
-                        <UploadImageField :current-image-url="player.avatar_url" :show="showUploadAvatarModal"
-                            :model-name="'\\App\\Models\\User'" :model-id="player.id" :should-upload="true"
-                            collection-name="avatar" @close="showUploadAvatarModal = false" />
-                        <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name"
-                            :border="true" />
+                        <UploadImageField :current-image-url="player.avatar_url" :show="showUploadAvatarModal" :model-name="'\\App\\Models\\User'" :model-id="player.id" :should-upload="true" collection-name="avatar" @close="showUploadAvatarModal = false" />
+                        <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true" />
                     </div>
 
                     <div :class="state == 'Free' ? 'text-white' : 'text-primary'">
@@ -121,8 +115,7 @@ const removeFromFavorites = () => {
                         }}
                         </Link>
                         <p class="flex items-center space-x-2 text-sm ">
-                            <span class="scale-[0.7] ltr:origin-left rtl:origin-right  flex items-center gap-x-1"
-                                :class="txtColor == 'black' ? 'text-primary' : 'text-[#FF9900]'">
+                            <span class="scale-[0.7] ltr:origin-left rtl:origin-right  flex items-center gap-x-1" :class="txtColor == 'black' ? 'text-primary' : 'text-[#FF9900]'">
                                 <!--                                <ElRate disabled v-model="player.rating" size="small" :colors="colors"/>-->
                                 <!--                                {{ player.rating }}-->
 
@@ -151,12 +144,10 @@ const removeFromFavorites = () => {
                 </div>
             </div>
 
-            <div class="grid gap-4 border-b"
-                :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' }, `border-${txtColor}`, `text-${txtColor}`">
+            <div class="grid gap-4 border-b" :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' }, `border-${txtColor}`, `text-${txtColor}`">
                 <div v-if="size == 'lg'" class="relative">
 
-                    <p class="text-xs text-center"
-                        :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">
+                    <p class="text-xs text-center" :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">
                         {{ $t('favorite-club') }}</p>
                     <div class="flex justify-center item-center [&+div]:hover:block">
                         <img :src="player.club?.logo_thumb" class="w-5 h-5 border-2 border-white rounded-full" />
@@ -165,31 +156,27 @@ const removeFromFavorites = () => {
                 </div>
                 <div>
 
-                    <p class="text-xs text-center"
-                        :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
-                            $t('age')
-                        }}</p>
+                    <p class="text-xs text-center" :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
+                        $t('age')
+                    }}</p>
                     <p class="text-sm text-center font-semi-bold">{{ player.age }}</p>
                 </div>
                 <div>
-                    <p class="text-xs text-center "
-                        :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
-                            $t('played')
-                        }}</p>
+                    <p class="text-xs text-center " :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
+                        $t('played')
+                    }}</p>
                     <p class="text-sm text-center font-semi-bold">0</p>
                 </div>
                 <div>
-                    <p class="text-xs text-center"
-                        :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
-                            $t('missed')
-                        }}</p>
+                    <p class="text-xs text-center" :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
+                        $t('missed')
+                    }}</p>
                     <p class="text-sm text-center font-semi-bold">0</p>
                 </div>
                 <div>
-                    <p class="text-xs text-center"
-                        :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
-                            $t('position')
-                        }}</p>
+                    <p class="text-xs text-center" :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
+                        $t('position')
+                    }}</p>
                     <p class="text-sm text-center font-semi-bold">{{ $t(player.position.name) }}</p>
                 </div>
             </div>
