@@ -5,23 +5,21 @@
 
             <template v-for="(post, index) in posts " :key="post.id">
                 <FadeInTransition>
-                    <Link :href="route('posts.show', post.id)"
-                          class="relative w-full h-full overflow-hidden rounded-lg aspect-square group">
+                    <Link :href="route('posts.show', post.id)" class="relative w-full h-full overflow-hidden rounded-lg aspect-square group">
 
-                        <template v-if="mimeType(post?.cover_photo?.mime_type) === 'image'">
-                            <img
-                                 :src="post?.cover_photo?.original_url" alt="" class="object-cover w-full h-full ">
-                        </template>
+                    <template v-if="mimeType(post?.cover_photo?.mime_type) === 'image'">
+                        <img :src="post?.cover_photo?.original_url" alt="" class="object-cover w-full h-full ">
+                    </template>
 
-                        <template v-if="mimeType(post?.cover_photo?.mime_type) === 'video'">
-                            <video :src="post?.cover_photo?.original_url" :type="post?.cover_photo?.mime_type"  class="object-cover object-left h-full w-full max-w-full  mx-auto rounded-lg">
+                    <template v-if="mimeType(post?.cover_photo?.mime_type) === 'video'">
+                        <video :src="post?.cover_photo?.original_url" :type="post?.cover_photo?.mime_type" class="object-cover object-left w-full h-full max-w-full mx-auto rounded-lg">
 
-                            </video>
-                        </template>
+                        </video>
+                    </template>
 
 
-                        <!-- delete post button -->
-                        <!-- <button v-if="currentUser.id === user.id" @click.prevent.stop="showDeleteMediaModal = true"
+                    <!-- delete post button -->
+                    <!-- <button v-if="currentUser.id === user.id" @click.prevent.stop="showDeleteMediaModal = true"
                             class="absolute top-0 right-0 hidden bg-white group-hover:block bg-opacity-90 rounded-bl-xl">
                             <div class="flex flex-col items-start justify-center h-full p-1 opacity-100 ">
                                 <XMarkIcon class="w-5 h-5 text-stone-800" />
@@ -50,24 +48,22 @@
         </div>
     </div>
     <FixedWrapper v-if="currentUser.id === user.id">
-        <button class="flex items-center justify-center text-center bg-black rounded-full shadow-xl w-14 aspect-square"
-                @click="showUploadFileModal = true">
-            <PlusCircleIcon class="w-5 text-white"/>
+        <button class="flex items-center justify-center text-center bg-black rounded-full shadow-xl w-14 aspect-square" @click="showUploadFileModal = true">
+            <PlusCircleIcon class="w-5 text-white" />
         </button>
-        <UploadGalleryFile :show="showUploadFileModal" @close="showUploadFileModal = false" @reload="$emit('reload')"
-                           :should-upload="true"/>
+        <UploadGalleryFile :show="showUploadFileModal" @close="showUploadFileModal = false" @reload="$emit('reload')" :should-upload="true" />
 
     </FixedWrapper>
 </template>
 
 <script setup>
-import {PlusCircleIcon,} from '@heroicons/vue/24/outline';
+import { PlusCircleIcon, } from '@heroicons/vue/24/outline';
 import UploadGalleryFile from './UploadGalleryFile.vue';
-import {onMounted, ref} from 'vue';
+import { onMounted, ref } from 'vue';
 import FadeInTransition from './FadeInTransition.vue';
 
-import {Link, usePage} from '@inertiajs/inertia-vue3';
-import {Inertia} from '@inertiajs/inertia';
+import { Link, usePage } from '@inertiajs/inertia-vue3';
+import { Inertia } from '@inertiajs/inertia';
 import FixedWrapper from '@/Components/FixedWrapper.vue';
 
 const props = defineProps({
@@ -86,7 +82,7 @@ const currentUser = usePage().props.value.auth.user
 const showDeleteMediaModal = ref(false)
 
 onMounted(() => {
-    console.log(props.posts);
+    // console.log(props.posts);
 });
 
 function getFileFromId(id) {
