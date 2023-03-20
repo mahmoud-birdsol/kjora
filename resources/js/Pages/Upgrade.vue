@@ -69,23 +69,19 @@ let expaireDate = computed(()=>{
                         <ul class="flex flex-col gap-3 items-center text-xs text-gray-800">
                             <li class="flex gap-5">
                                 <CheckIcon class="w-5 text-primary" />
-                                <span>Lorem ipsum dolor sit amet </span>
+                                <span>{{$t('Lorem ipsum dolor sit amet')}} </span>
                             </li>
                             <li class="flex gap-5">
                                 <CheckIcon class="w-5 text-primary" />
-                                <span>Lorem ipsum dolor sit amet </span>
+                                <span>{{$t('Lorem ipsum dolor sit amet')}} </span>
                             </li>
-                            <li class="flex gap-5">
+                           <li class="flex gap-5">
                                 <CheckIcon class="w-5 text-primary" />
-                                <span>Lorem ipsum dolor sit amet </span>
+                                <span>{{$t('Lorem ipsum dolor sit amet')}} </span>
                             </li>
-                            <li class="flex gap-5">
+                           <li class="flex gap-5">
                                 <CheckIcon class="w-5 text-primary" />
-                                <span>Lorem ipsum dolor sit amet </span>
-                            </li>
-                            <li class="flex gap-5">
-                                <CheckIcon class="w-5 text-primary" />
-                                <span>Lorem ipsum dolor sit amet </span>
+                                <span>{{$t('Lorem ipsum dolor sit amet')}} </span>
                             </li>
                         </ul>
 
