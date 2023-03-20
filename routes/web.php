@@ -502,3 +502,29 @@ Route::any('nova/language/{language}', function (Request $request, $language) {
     return redirect()->back();
 })->middleware('auth:admin')->name('nova.language');
 
+
+
+Route::get('public/player/{player}', function (User $player) {
+    $player->load('club');
+
+    $ratingCategoriesCount = $player->playerReviews->count();
+
+    $playerRating = $player->playerReviews->flatMap->ratingCategories->groupBy('name')
+        ->map(function ($ratingCategory) use ($ratingCategoriesCount) {
+            return [
+                'ratingCategory' => $ratingCategory->first()->name,
+                'value' => (float)$ratingCategory->sum('pivot.value') / $ratingCategoriesCount,
+            ];
+        })->values();
+
+    $countries = Country::active()->orderBy('name')->get();
+    $positions = Position::all();
+
+    return Inertia::render('Player/Show', [
+        'player' => $player,
+        'posts' => $player->posts->load('comments'),
+        'playerRating' => $playerRating,
+        'countries' => $countries,
+        'positions' => $positions,
+    ]);
+})->name('public.player');
