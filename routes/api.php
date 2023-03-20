@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\DeleteGalleryController;
 use App\Http\Controllers\Api\GalleryUploadController;
 use App\Http\Controllers\Api\MarkMessageAsReadController;
+use App\Http\Controllers\Api\MarkNotificationAsReadController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\NewMessagesController;
 use App\Http\Controllers\Api\UserLocationController;
@@ -98,4 +99,8 @@ Route::get('chats/{conversation}/new-messages', NewMessagesController::class)
     ->name('api.messages.new');
 
 Route::post('update-location', UserLocationController::class)->name('api.location.store');
+
+
+Route::post('notifications/mark-as-read/{notificationId}', MarkNotificationAsReadController::class)
+    ->name('api.notifications.mark-as-read');
 

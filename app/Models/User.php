@@ -424,6 +424,24 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     }
 
     /**
+     * Get the users invitations
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function invitations(): HasMany
+    {
+        return $this->hasMany(Invitation::class, 'invited_player_id');
+    }
+
+    /**
+     * Get the users hires
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function hires(): HasMany
+    {
+        return $this->hasMany(Invitation::class, 'inviting_player_id');
+    }
+
+    /**
      * Get the users reviews to other players
      */
     public function playerReviews(): HasMany
