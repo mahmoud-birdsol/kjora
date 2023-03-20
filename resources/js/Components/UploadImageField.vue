@@ -118,7 +118,6 @@ const removePhoto = () => {
 
 const upload = () => {
     if (!props.shouldUpload) {
-        console.log(fileData.value);
         emit('update:modelValue', fileData.value);
         emit('selected', previewImageUrl.value);
         close()
@@ -156,7 +155,7 @@ let showCropModal = (url) => {
 }
 function close() {
     fileData.value = null
-    previewImageUrl.value = ''
+    // previewImageUrl.value = ''
     num.value += 1
     emit('close')
 }
@@ -173,15 +172,12 @@ function close() {
                     <input ref="photoInput" type="file" class="hidden" @input="updatePhotoPreview">
 
                     <div class="flex items-center justify-center mb-6">
-                        <button type="button"
-                            class="inline-flex items-center p-4 text-white bg-black border border-transparent rounded-full shadow-sm hover:bg-black focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
-                            @click.prevent="selectNewPhoto">
+                        <button type="button" class="inline-flex items-center p-4 text-white bg-black border border-transparent rounded-full shadow-sm hover:bg-black focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2" @click.prevent="selectNewPhoto">
                             <PlusCircleIcon class="w-5 h-5" />
                         </button>
                     </div>
 
-                    <button v-show="showPreview" @click.prevent="removePhoto" class="relative w-full rounded"
-                        v-loading="cropLoading">
+                    <button v-show="showPreview" @click.prevent="removePhoto" class="relative w-full rounded" v-loading="cropLoading">
                         <img :src="previewImageUrl" alt="" class="w-full h-auto rounded-lg" id="img">
                         <div class="absolute inset-0 w-full h-full bg-transparent hover:bg-white hover:bg-opacity-50">
                             <div class="flex flex-col items-center justify-center h-full opacity-0 hover:opacity-100">
@@ -192,8 +188,7 @@ function close() {
                 </div>
             </div>
             <div>
-                <Crop :img="cropFile" @crop="changeFiles" v-model:open="openCropModal"
-                    @update:open="() => openCropModal = false" />
+                <Crop :img="cropFile" @crop="changeFiles" v-model:open="openCropModal" @update:open="() => openCropModal = false" />
                 <PrimaryButton @click.prevent="upload" :disabled="form.processing">
                     {{ $t('upload') }}
                 </PrimaryButton>

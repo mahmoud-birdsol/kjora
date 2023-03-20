@@ -35,9 +35,11 @@ const props = defineProps({
         type: Number,
     }
 });
-
+// const isRegister = id === null
 const currentUser = usePage().props.value?.auth?.user ?? null
+// console.log(currentUser);
 const isCurrentUser = currentUser?.id === props?.id
+// console.log(isCurrentUser);
 const sizeClasses = computed(() => {
     return {
         'sm': 'h-8 w-8',
@@ -75,20 +77,13 @@ function hideLightBox() {
 </script>
 
 <template>
-    <Link v-if="!isCurrentUser && imageUrl" :href="route('player.profile', id)"
-        class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer"
-        :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'">
+    <Link v-if="!isCurrentUser && imageUrl && id" :href="route('player.profile', id)" class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer" :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'">
     </Link>
-    <Link v-else-if="!isCurrentUser && !imageUrl" :href="route('player.profile', id)"
-        class="block bg-center bg-no-repeat bg-cover rounded-full" :class="[sizeClasses, borderClasses, borderColorClass]"
+    <Link v-else-if="!isCurrentUser && !imageUrl && id" :href="route('player.profile', id)" class="block bg-center bg-no-repeat bg-cover rounded-full" :class="[sizeClasses, borderClasses, borderColorClass]"
         :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
 
-    <span @click="showLightBox" v-else-if="imageUrl"
-        class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer"
-        :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'" />
+    <span @click="showLightBox" v-else-if="imageUrl" class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer" :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'" />
 
-    <span v-else class="block bg-center bg-no-repeat bg-cover rounded-full"
-        :class="[sizeClasses, borderClasses, borderColorClass]"
-        :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
+    <span v-else class="block bg-center bg-no-repeat bg-cover rounded-full" :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
     <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" @hide="hideLightBox"></vue-easy-lightbox>
 </template>

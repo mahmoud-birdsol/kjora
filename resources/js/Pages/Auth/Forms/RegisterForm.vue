@@ -57,10 +57,10 @@ const submit = () => {
     <form @submit.prevent="submit" @keypress.enter.exact.prevent="submit">
         <div class="flex items-center justify-center sm:justify-end sm:-mt-12">
             <button class="mt-2" @click.prevent="showUploadAvatarModal = true">
-                <Avatar :image-url="avatarPreview" size="lg" :id="-1" />
+                <Avatar :image-url="avatarPreview" size="lg" :id="0" :enableLightBox="false" />
             </button>
 
-            <UploadImageField :should-upload="false" :show="showUploadAvatarModal" v-model="form.photo" @close="showUploadAvatarModal = false" @selected="setAvatarPreview" />
+            <UploadImageField :should-upload="false" :show="showUploadAvatarModal" v-model="form.photo" :currentImageUrl="avatarPreview" @close="showUploadAvatarModal = false" @selected="setAvatarPreview" />
         </div>
 
         <div class="grid grid-cols-1 gap-4 mt-12 tracking-tight sm:grid-cols-2 ">
