@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('reviewer_id')->references('id')->on('users');
-            $table->foreignId('player_id')->references('id')->on('users');
-            $table->foreignId('invitation_id')->references('id')->on('invitations');
+            $table->foreignId('reviewer_id')->nullable()->references('id')->on('users')->nullOnDelete();
+            $table->foreignId('player_id')->nullable()->references('id')->on('users')->nullOnDelete();
+            $table->foreignId('invitation_id')->nullable()->references('id')->on('invitations')->nullOnDelete();
             $table->timestamp('reviewed_at')->nullable();
             $table->timestamps();
         });
