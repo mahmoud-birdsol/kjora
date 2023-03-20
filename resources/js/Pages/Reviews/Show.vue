@@ -25,7 +25,8 @@ const ratingCategory = props.ratingCategories.map(cat => {
 })
 const ratingForm = useForm(
     {
-        ratingCategory
+        ratingCategory,
+        attended: true
     }
 )
 function submitRatingForm() {
@@ -77,14 +78,21 @@ function submitRatingForm() {
             </div>
 
             <div class="grid md:grid-cols-[1fr_2fr] gap-4">
+
                 <form @submit.prevent="submitRatingForm" class="flex flex-col gap-4">
-                    <template v-for="item in  ratingCategories" :key="item.id">
-                        <div class="flex flex-col gap-2 ">
-                            <InputLabel class="text-black">{{ item.name }}</InputLabel>
-                            <div class="px-6 py-1 mx-4 bg-black border border-white rounded-full">
-                                <el-slider v-model="ratingForm.ratingCategory.filter(c => c.id === item.id)[0].value" :step="0.5" :min="0" :max="5" />
+                    <div class="flex items-center gap-x-2">
+                        <input type="checkbox" id="male" value="male" v-model="ratingForm.attended" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
+                        <label for="male" class="text-sm font-medium text-black">{{ $t('attended') }}</label>
+                    </div>
+                    <template v-if="ratingForm.attended">
+                        <template v-for="item in  ratingCategories" :key="item.id">
+                            <div class="flex flex-col gap-2 ">
+                                <InputLabel class="text-black">{{ item.name }}</InputLabel>
+                                <div class="px-6 py-1 mx-4 bg-black border border-white rounded-full">
+                                    <el-slider v-model="ratingForm.ratingCategory.filter(c => c.id === item.id)[0].value" :step="0.5" :min="0" :max="5" />
+                                </div>
                             </div>
-                        </div>
+                        </template>
                     </template>
 
                 </form>
