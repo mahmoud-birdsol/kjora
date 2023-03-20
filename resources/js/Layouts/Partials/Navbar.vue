@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, ref ,watch} from 'vue';
+import { onBeforeMount, ref, watch } from 'vue';
 import { Inertia, } from '@inertiajs/inertia';
 import { Link, usePage } from '@inertiajs/inertia-vue3';
 import Dropdown from '@/Components/Dropdown.vue';
@@ -20,19 +20,35 @@ import {
 } from '@heroicons/vue/24/outline';
 import Avatar from "@/Components/Avatar.vue";
 import { XMarkIcon } from '@heroicons/vue/20/solid';
+import axios from 'axios';
 
 const locale = usePage().props.value.locale
 const currentUser = usePage().props.value.auth.user
-const showingNavigationDropdown  = ref(false);
+const showingNavigationDropdown = ref(false);
 
 const logout = () => {
     Inertia.post(route('logout'));
 };
 let state = usePage().props.value.user.state_name
-let notifications =  ref(usePage().props.value.notifications.length)
-watch(()=>notifications.value, ()=>{
-    console.log (notifications)
+let notificationsLength = ref(usePage().props.value.notifications.length)
+let notifications = ref(usePage().props.value.notifications)
+const showNotificationIndicator = ref(true)
+watch(() => notificationsLength.value, () => {
+    console.log(notificationsLength)
 })
+
+
+function markAllNotificationsAsRead() {
+    if (!showNotificationIndicator.value) return
+    notifications.value.forEach((n, i) => {
+        axios.post(route('api.notifications.mark-as-read', n.id)).then(res => {
+            if (i === notificationsLength.value - 1) {
+                showNotificationIndicator.value = false
+            }
+        })
+
+    })
+}
 </script>
 
 <template>
@@ -61,8 +77,7 @@ watch(()=>notifications.value, ()=>{
                                 {{ $t('favorites') }}
                             </span>
                         </NavLink>
-                        <NavLink :href="route('invitation.index')"
-                            :active="route().current('invitation.index') || route().current('hire.index')">
+                        <NavLink :href="route('invitation.index')" :active="route().current('invitation.index') || route().current('hire.index')">
                             <FootBallIcon class="fill-primary" />
 
                             <span>
@@ -79,8 +94,7 @@ watch(()=>notifications.value, ()=>{
                 </div>
                 <div class="hidden md:flex md:gap-x-3 sm:items-center lg:ml-6">
                     <!-- upgrade button  -->
-                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5"
-                        v-if="state !== 'Premium'">
+                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5" v-if="state !== 'Premium'">
                         <span class="bg-black rounded-full">
                             <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                         </span>
@@ -94,11 +108,8 @@ watch(()=>notifications.value, ()=>{
                     <div class="relative ">
                         <Dropdown :align="locale == 'en' ? 'right' : 'left'" width="48">
                             <template #trigger>
-                                <button
-                                    class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
-                                    <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url"
-                                        :username="$page.props.auth.user.name" :border="true" border-color="primary"
-                                        size="sm" :enable-light-box="false" />
+                                <button class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
+                                    <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url" :username="$page.props.auth.user.name" :border="true" border-color="primary" size="sm" :enable-light-box="false" />
                                 </button>
                             </template>
 
@@ -127,8 +138,13 @@ watch(()=>notifications.value, ()=>{
                     <div class="relative">
                         <Dropdown :align="locale == 'en' ? 'right' : 'left'" width="96">
                             <template #trigger>
-                                <button class="text-white">
-                                    <BellIcon class="w-6 h-6 text-white"></BellIcon>
+                                <button class="text-white " @click="markAllNotificationsAsRead">
+                                    <div class="relative">
+                                        <BellIcon class="w-6 h-6 text-white"></BellIcon>
+                                        <div v-show="showNotificationIndicator" class="absolute top-0 grid w-2 h-2 p-1 text-xs rounded-full bg-primary -right-0 place-items-center">
+                                            <!-- <span class="scale-[0.25] origin-center text-xs">{{ $page.props.notifications.length }}</span> -->
+                                        </div>
+                                    </div>
                                 </button>
                             </template>
 
@@ -139,8 +155,7 @@ watch(()=>notifications.value, ()=>{
                                 </div>
 
                                 <div v-if="$page.props.notifications.length">
-                                    <ul role="list"
-                                        class="divide-y divide-gray-200 max-h-[calc(100dvh-200px)] overflow-y-auto">
+                                    <ul role="list" class="divide-y divide-gray-200 max-h-[calc(100dvh-200px)] overflow-y-auto">
                                         <template v-for="notification in $page.props.notifications">
                                             <NotificationComponent :notification="notification" />
                                         </template>
@@ -164,10 +179,8 @@ watch(()=>notifications.value, ()=>{
                 </div>
 
                 <!-- Mobile navigation menu. -->
-                <div class="flex justify-between items-center md:hidden w-full">
-                    <button
-                        class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none hover:bg-transparent focus:text-gray-500"
-                        @click="showingNavigationDropdown = !showingNavigationDropdown">
+                <div class="flex items-center justify-between w-full md:hidden">
+                    <button class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none hover:bg-transparent focus:text-gray-500" @click="showingNavigationDropdown = !showingNavigationDropdown">
                         <Bars3Icon class="w-6 h-6" />
                     </button>
                     <div class="flex justify-between gap-2">
@@ -176,8 +189,7 @@ watch(()=>notifications.value, ()=>{
                             <MapPinIcon class="w-4 h-4 text-primary" />
                             <span class="text-white w-max">{{ currentUser.current_city }}</span>
                         </div>
-                        <button class="rounded-full bg-[#CFC27A] font-medium px-2 py-1 flex items-center gap-1"
-                            v-if="state !== 'Premium'">
+                        <button class="rounded-full bg-[#CFC27A] font-medium px-2 py-1 flex items-center gap-1" v-if="state !== 'Premium'">
                             <span class="bg-black rounded-full">
                                 <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                             </span>
@@ -188,11 +200,8 @@ watch(()=>notifications.value, ()=>{
                         <div class="relative ">
                             <Dropdown :align="locale == 'en' ? 'right' : 'left'" width="48">
                                 <template #trigger>
-                                    <button
-                                        class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
-                                        <Avatar :image-url="$page.props.auth.user.avatar_url" :id="$page.props.auth.user.id"
-                                            :username="$page.props.auth.user.name" :border="true" border-color="primary"
-                                            size="sm" :enable-light-box="false" />
+                                    <button class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
+                                        <Avatar :image-url="$page.props.auth.user.avatar_url" :id="$page.props.auth.user.id" :username="$page.props.auth.user.name" :border="true" border-color="primary" size="sm" :enable-light-box="false" />
                                     </button>
                                 </template>
 
@@ -230,8 +239,7 @@ watch(()=>notifications.value, ()=>{
                                     </div>
 
                                     <div v-if="$page.props.notifications.length">
-                                        <ul role="list"
-                                            class="divide-y divide-gray-200 max-h-[calc(100dvh-200px)] overflow-y-auto">
+                                        <ul role="list" class="divide-y divide-gray-200 max-h-[calc(100dvh-200px)] overflow-y-auto">
                                             <template v-for="notification in $page.props.notifications">
                                                 <NotificationComponent :notification="notification" />
                                             </template>
@@ -245,8 +253,7 @@ watch(()=>notifications.value, ()=>{
                                     </div>
 
                                     <div class="block px-4 py-2 text-xs text-center">
-                                        <Link :href="route('notification.index')"
-                                            class="text-primary hover:text-primaryDark">
+                                        <Link :href="route('notification.index')" class="text-primary hover:text-primaryDark">
                                         {{ $t('view-all') }}
                                         </Link>
                                     </div>
@@ -261,16 +268,10 @@ watch(()=>notifications.value, ()=>{
 
         <!-- Responsive Navigation Menu -->
         <!-- Responsive Navigation Menu -->
-        <div class="fixed top-0 bottom-0 left-0 right-0 z-40 bg-black bg-opacity-50"
-            :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }"
-            @click="showingNavigationDropdown = false"></div>
-        <Transition enter-from-class="ltr:-left-full rtl:-right-full" enter-to-class="ltr:left-0 rtl:right-0"
-            enter-active-class="transition-all duration-700" leave-to-class="ltr:-left-full rtl:-right-full"
-            leave-from-class="ltr:left-0 rtl:right-0" leave-active-class="transition-all duration-700">
-            <div class="pt-2 pb-3 space-y-1 fixed top-0  bg-black h-full w-[max(20em,50%)] z-50"
-                v-if="showingNavigationDropdown">
-                <XMarkIcon class="absolute w-5 m-3 text-white ltr:right-0 rtl:left-0"
-                    @click="showingNavigationDropdown = false" />
+        <div class="fixed top-0 bottom-0 left-0 right-0 z-40 bg-black bg-opacity-50" :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }" @click="showingNavigationDropdown = false"></div>
+        <Transition enter-from-class="ltr:-left-full rtl:-right-full" enter-to-class="ltr:left-0 rtl:right-0" enter-active-class="transition-all duration-700" leave-to-class="ltr:-left-full rtl:-right-full" leave-from-class="ltr:left-0 rtl:right-0" leave-active-class="transition-all duration-700">
+            <div class="pt-2 pb-3 space-y-1 fixed top-0  bg-black h-full w-[max(20em,50%)] z-50" v-if="showingNavigationDropdown">
+                <XMarkIcon class="absolute w-5 m-3 text-white ltr:right-0 rtl:left-0" @click="showingNavigationDropdown = false" />
 
                 <!-- Responsive Settings Options -->
                 <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
@@ -281,8 +282,7 @@ watch(()=>notifications.value, ()=>{
                     <ChatIcon class="w-4 h-4 text-primary" />
                     <span>{{ $t('chat') }}</span>
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('invitation.index')"
-                    :active="route().current('invitation.index') || route().current('hire.index')">
+                <ResponsiveNavLink :href="route('invitation.index')" :active="route().current('invitation.index') || route().current('hire.index')">
                     <FootBallIcon class="fill-primary" />
                     <span>{{ $t('invitations') }}</span>
                 </ResponsiveNavLink>

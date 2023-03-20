@@ -41,37 +41,34 @@ const deleteNotification = () => {
 
 <template>
     <!--
-        border-green-500
-        border-amber-500
-        border-red-500
-        border-sky-500
-    -->
-    <li class="relative border-l-2 bg-white py-4 px-2 hover:bg-gray-50"
-        :class="borderColor"
-    >
+                border-green-500
+                border-amber-500
+                border-red-500
+                border-sky-500
+            -->
+    <li class="relative px-2 py-4 bg-white border-l-2 hover:bg-gray-50" :class="borderColor">
         <div class="flex justify-between space-x-3">
             <div class="">
                 <Link :href="notification.data.actionData.route" class="block focus:outline-none">
-                    <p class="truncate text-sm" :class="{'font-medium text-gray-700': notification.read_at == null, 'text-gray-500': notification.read_at != null}">{{ notification.data.title }}</p>
+                <p class="text-sm truncate" :class="{ 'font-medium text-gray-700': notification.read_at == null, 'text-gray-500': notification.read_at != null }">{{ notification.data.title }}</p>
                 </Link>
             </div>
             <div>
-                <time :datetime="notification.created_at"
-                      class="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">
-                      <DateTranslation type="range" :start="notification.created_at" />
+                <time :datetime="notification.created_at" class="flex-shrink-0 text-sm text-gray-500 whitespace-nowrap">
+                    <DateTranslation type="range" :start="notification.created_at" />
                 </time>
             </div>
         </div>
         <div class="mt-1">
             <p class="text-xs text-gray-500 line-clamp-2">{{ notification.data.subtitle }}</p>
         </div>
-        <div class="flex justify-end space-x-2">
-            <a href="javascript:;" @click="markAsRead">
-                <EyeIcon class="h-4 w-4 text-gray-500"/>
-            </a>
-            <a href="javascript:;" @click="deleteNotification">
-                <TrashIcon class="h-4 w-4 text-gray-500"/>
-            </a>
-        </div>
+        <!-- <div class="flex justify-end space-x-2">
+                    <a href="javascript:;" @click="markAsRead">
+                        <EyeIcon class="w-4 h-4 text-gray-500"/>
+                    </a>
+                    <a href="javascript:;" @click="deleteNotification">
+                        <TrashIcon class="w-4 h-4 text-gray-500"/>
+                    </a>
+                </div> -->
     </li>
 </template>
