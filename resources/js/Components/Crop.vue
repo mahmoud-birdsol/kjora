@@ -33,6 +33,7 @@ let boxStyle = {
     backgroundColor: '#FFF',
     margin: 'auto',
 }
+const isLoading =ref(true)
 const imageObj = computed(() => {
     return props.img
 })
@@ -56,6 +57,7 @@ async function getResult() {
 function ready() {
 
     if (cropper.cropped && cropper.ready && cropper.originalUrl == imageObj.value.url) {
+        isLoading.value=false
     } else {
         num.value += 1
     }
@@ -66,7 +68,7 @@ function ready() {
     <div v-if="open"
         class="absolute flex flex-col gap-4 p-6 -translate-x-1/2 -translate-y-1/2 bg-white top-1/2 left-1/2 min-w-7xl rounded-xl">
         <XMarkIcon class="w-4" @click="$emit('update:open')" />
-        <div>
+        <div v-loading="isLoading">
             <VuePictureCropper :boxStyle="boxStyle" :img="imageObj?.url" :options="options" @ready="ready" :key="num" />
         </div>
         <PrimaryButton @click="getResult">done</PrimaryButton>
