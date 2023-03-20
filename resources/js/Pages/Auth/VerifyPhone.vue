@@ -20,8 +20,12 @@ const form = useForm({
 });
 
 const submit = () => {
-    console.log(form.code);
-    form.post(route('phone.verify.store'));
+    console.log(form.code)
+    form.post(route('phone.verify.store'),{
+        onFinish: () => {
+            form.reset()
+        }
+    });
 };
 
 function changeFocus(index, e) {
@@ -57,7 +61,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
                             {{$t("Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS ? If you didn't receive the SMS, we will gladly send you another")}}
                         </div>
                         <div class="flex flex-col gap-4 px-6">
-                            <div class="flex flex-row justify-center gap-6 ">
+                            <div class="flex justify-center gap-6 " dir="ltr">
                                 <template v-for="(input, index) in inputs" :key="index">
                                     <input @input="handleInput(index, $event);" @keydown="changeFocus(index, $event)"
                                            maxlength="1"
