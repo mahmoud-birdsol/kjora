@@ -48,14 +48,13 @@ const errorCallback = (error) => {
 
         <Head :title="title" />
 
-        <div
-            class="min-h-screen bg-gradient-to-b from-black to-primaryDark before:bg-[url(/images/ballkjoura.png)]  relative before:absolute before:inset-0 before:bg-no-repeat before:mix-blend-overlay isolate before:-z-10">
+        <div class="min-h-screen bg-gradient-to-b from-black to-primaryDark before:bg-[url(/images/ballkjoura.png)]  relative before:absolute before:inset-0 before:bg-no-repeat before:mix-blend-overlay isolate before:-z-10">
             <div class="flex flex-col justify-between min-h-screen pt-6 space-y-4 sm:pt-0 ltr:font-sans rtl:font-tajawl">
                 <Navbar />
 
                 <header v-if="$slots.header" class="">
                     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                        <div class="flex gap-6 px-4 md:flex-row sm:px-6 lg:px-8">
+                        <div class="flex gap-6  md:flex-row  ">
                             <h1 class="text-2xl font-bold text-white uppercase sm:text-7xl">
                                 <slot name="header" />
                             </h1>
