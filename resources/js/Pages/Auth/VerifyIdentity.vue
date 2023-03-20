@@ -125,7 +125,7 @@ const save = () => {
 
         <div class="grid grid-cols-1 gap-4 mt-8 sm:grid-cols-2">
             <!-- Step 1...
-    		                                                                                                    =====================================================-->
+                                            		                                                                                                    =====================================================-->
             <Card>
                 <CardContent :title="$t('verify identity')">
                     <template #body>
@@ -152,9 +152,9 @@ const save = () => {
                                             <font-awesome-icon icon="passport" class="w-12 h-auto text-center text-white" />
                                         </template>
                                         {{ $t('passport') }}
-                                </MegaButton>
+                                    </MegaButton>
 
-                                    <MegaButton :active="form.identity_type == 'national_id'"
+                                <MegaButton :active="form.identity_type == 'national_id'"
                                         @click="form.identity_type = 'national_id'">
                                         <template #icon>
                                             <font-awesome-icon icon="address-card"
@@ -177,22 +177,22 @@ const save = () => {
                 </CardContent>
             </Card>
 
-                                <!-- Step 2...==============-->
-                            <Card>
-                                <CardContent :title="$t('upload identity')">
-                                    <template #body>
-                                        <div class="flex flex-col justify-between h-full gap-2">
-                                            <div class="min-h-[200px]">
-                                                <div>
-                                                    <h3 class="mb-8 font-bold text-black uppercase">{{ $t('Take Selfie Photo') }}</h3>
-                                                </div>
-                                                <div>
-                                            <div class="flex gap-4 max-md:flex-col ">
-                                                <div class="md:w-1/4">
+            <!-- Step 2...==============-->
+            <Card>
+                <CardContent :title="$t('upload identity')">
+                    <template #body>
+                        <div class="flex flex-col justify-between h-full gap-2">
+                            <div class="min-h-[200px]">
+                                <div>
+                                    <h3 class="mb-8 font-bold text-black uppercase">{{ $t('Take Selfie Photo') }}</h3>
+                                </div>
+                                <div>
+                                    <div class="flex gap-4 max-md:flex-col ">
+                                        <div class="md:w-1/4">
                                             <button @click="showIdentitySelfieModal = true"
                                                 class="relative w-full h-full group">
-                                                <img v-if="form.identity_selfie_image" :src="form.identity_selfie_image"
-                                                    alt="" class="w-full h-auto">
+                                                <!-- <img v-if="form.identity_selfie_image" :src="form.identity_selfie_image"
+                                                                                            alt="" class="w-full h-auto"> -->
                                                 <img v-if="identitySelfieImagePreview" :src="identitySelfieImagePreview"
                                                     alt="" class="w-full h-auto">
                                                 <span
@@ -211,9 +211,12 @@ const save = () => {
                                             <CorrectText>{{
                                                 $t('Make sure your whole face is visible, centered and your eyes are open')}}.
                                             </CorrectText>
-                                            <InCorrectText>{{ $t('Do not copy your ID or use screenshots of your ID') }}.
+                                            <InCorrectText>
+                                                {{ $t('Do not copy your ID or use screenshots of your ID') }}.
                                             </InCorrectText>
-                                            <InCorrectText>{{ $t('Do not hide or alter pars of your face (No hats/beauty images / filters / headgear)')}}.</InCorrectText>
+                                            <InCorrectText>
+                                                {{ $t('Do not hide or alter pars of your face (No hats/beauty images / filters / headgear)')}}.
+                                            </InCorrectText>
                                         </div>
                                     </div>
                                     <InputError class="mt-2" :message="form.errors.identity_selfie_image" />
@@ -268,7 +271,7 @@ const save = () => {
         </div>
 
         <!-- Upload image Modals...
-    		                                                                                                                    =====================================================-->
+                                            		                                                                                                                    =====================================================-->
 
         <UploadImageField :should-upload="false" :show="showIdentityFrontImageModal"
             :current-image-url="identityFrontImagePreview" v-model="form.identity_front_image"
@@ -284,5 +287,6 @@ const save = () => {
 
         <SuccessMessageModal title="Congratulations"
             message="Your identity verification has been successfully sent. Please wait for approval."
-        :show="showSuccessMessage" @close="showSuccessMessage = false" />
-</AppLayout></template>
+            :show="showSuccessMessage" @close="showSuccessMessage = false" />
+    </AppLayout>
+</template>

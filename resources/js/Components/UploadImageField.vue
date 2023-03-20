@@ -10,7 +10,6 @@ import Crop from '@/Components/Crop.vue';
 const props = defineProps({
     modelValue: {
         required: false,
-        type: String,
         default: null,
     },
     shouldUpload: {
@@ -59,7 +58,7 @@ const emit = defineEmits(['close', 'update:modelValue', 'selected']);
 const showPreview = ref(false);
 const previewImageUrl = ref(null);
 const photoInput = ref(null);
-const fileData = ref([])
+const fileData = ref(null)
 const cropLoading = ref(false)
 const form = useForm({
     model_name: props.modelName,
@@ -119,7 +118,8 @@ const removePhoto = () => {
 
 const upload = () => {
     if (!props.shouldUpload) {
-        emit('update:modelValue', fileData.value.url);
+        console.log(fileData.value);
+        emit('update:modelValue', fileData.value);
         emit('selected', previewImageUrl.value);
         close()
         return;
