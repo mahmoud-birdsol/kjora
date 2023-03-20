@@ -83,4 +83,8 @@ const options = {
 
 </script>
 
-<style  scoped></style>
+<style >
+.splide__pagination__page.is-active{
+    background-color: rgb(0, 100, 0) !important;
+}
+</style>
