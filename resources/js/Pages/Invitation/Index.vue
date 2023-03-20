@@ -3,8 +3,9 @@ import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import InvitationCard from "./Partials/InvitationCard.vue";
-
+import DateTranslation from '@/Components/DateTranslation.vue';
 import InvitationsFilter from '@/Components/InvitationsFilter.vue';
+import { CalendarIcon } from "@heroicons/vue/20/solid";
 const props = defineProps({
     invitations: Array,
 });
@@ -47,6 +48,14 @@ const props = defineProps({
                 </div>
 
                 <div class="bg-white rounded-xl mt-4 min-h-[500px] p-2 md:p-6">
+                    <div class="font-bold text-xs flex gap-1 mb-4" v-if="invitations">
+                        <CalendarIcon class="w-4"/>
+                       <DateTranslation :start="invitations.slice(-1).date" format="DD MMMM YYYY"/>
+                       <span v-if="invitations[0].date !== invitations.slice(-1).date ">
+                            {{ $t('to') }}
+                            <DateTranslation :start="invitations[0].date" format="DD MMMM YYYY"  />
+                        </span>
+                    </div>
                     <div class="grid grid-cols-1 gap-4">
                         <template v-for="invitation in invitations" :key="invitation.id">
                             <InvitationCard :invitation="invitation" />
