@@ -55,16 +55,22 @@ class PlayerReviewController extends Controller
             ]);
         }
 
+        $ratingCategoryCount = RatingCategory::whereHas('positions', function (Builder $query) use ($review) {
+            $query->where('positions.id', $review->player->position_id);
+        })->count();
+
+
+
         FlashMessage::make()->success(
             message: __('Review Submitted Successfully')
         )->closeable()->send();
-        $review->player->update([
-            'rating' => $value / RatingCategory::whereHas('positions', function (Builder $query) use ($review) {
-                $query->where('positions.id', $review->player->position_id);
-            })->count(),
-        ]);
 
-        $review->player->notify(new NotifyUserOfRatingSubmittedNotification($review->reviewer, $review->player, $review));
+        if ($ratingCategoryCount > 0) {
+            $review->player->update([
+                'rating' => $ratingCategoryCount,
+            ]);
+            $review->player->notify(new NotifyUserOfRatingSubmittedNotification($review->reviewer, $review->player, $review));
+        }
 
         return redirect()->route('home');
     }
