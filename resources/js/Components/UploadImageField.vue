@@ -68,7 +68,7 @@ const form = useForm({
     image: null,
 });
 const num = ref(Math.floor(Math.random() * 100))
-const cropFile = ref([])
+const cropFile = ref({})
 const openCropModal = ref(false)
 
 onMounted(() => {
@@ -86,13 +86,17 @@ watch(() => props.currentImageUrl, () => {
 })
 
 const selectNewPhoto = () => {
+    photoInput.value.value = ''
     photoInput.value.click();
 };
 
 const updatePhotoPreview = () => {
+
+    if (!photoInput.value.files.length) return;
+
+
     fileData.value = photoInput.value.files[0];
 
-    if (!fileData.value) return;
     cropLoading.value = true
     const reader = new FileReader();
 
@@ -104,9 +108,7 @@ const updatePhotoPreview = () => {
 
     reader.readAsDataURL(fileData.value);
     reader.onloadend = () => {
-        setTimeout(() => {
-            showCropModal(previewImageUrl)
-        }, 0)
+        showCropModal(previewImageUrl)
     };
 };
 
@@ -138,23 +140,24 @@ const upload = () => {
 function changeFiles(file, url, id) {
     fileData.value = file
     previewImageUrl.value = url
-    cropFile.value = []
+    cropFile.value = {}
 }
 let showCropModal = (url) => {
     cropFile.value = {
         name: fileData.value.name,
         url,
     }
-    console.log(document.querySelector('#img').clientWidth)
-    console.log(document.querySelector('#img').clientHeight)
+    // console.log(document.querySelector('#img').clientWidth)
+    // console.log(document.querySelector('#img').clientHeight)
+
     openCropModal.value = true
     cropLoading.value = false
 
 }
 function close() {
-    fileData.value = []
+    fileData.value = null
     previewImageUrl.value = ''
-    num.value += 1 
+    num.value += 1
     emit('close')
 }
 </script>
@@ -163,11 +166,11 @@ function close() {
     <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="close" :key="num">
         <div class="flex flex-col min-h-[500px] justify-between p-6">
             <div class="flex justify-center -mt-12">
-                <h2 class="text-xl text-primary font-bold uppercase">{{ $t('upload') }}</h2>
+                <h2 class="text-xl font-bold uppercase text-primary">{{ $t('upload') }}</h2>
             </div>
             <div class="flex items-center justify-center py-8 sm:px-20" v-loading="form.processing">
                 <div class="max-w-[300px] w-full">
-                    <input ref="photoInput" type="file" class="hidden" @change="updatePhotoPreview">
+                    <input ref="photoInput" type="file" class="hidden" @input="updatePhotoPreview">
 
                     <div class="flex items-center justify-center mb-6">
                         <button type="button"
@@ -189,8 +192,8 @@ function close() {
                 </div>
             </div>
             <div>
-                <Crop :img="cropFile" @crop="changeFiles" v-model:open="openCropModal" @update:open="() => openCropModal = false"
-                     />
+                <Crop :img="cropFile" @crop="changeFiles" v-model:open="openCropModal"
+                    @update:open="() => openCropModal = false" />
                 <PrimaryButton @click.prevent="upload" :disabled="form.processing">
                     {{ $t('upload') }}
                 </PrimaryButton>
