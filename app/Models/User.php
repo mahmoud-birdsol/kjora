@@ -135,7 +135,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'identity_status',
         'state_name',
         'played',
-        'missed'
+        'missed',
+        'latest_message'
 ];
 
     /**
@@ -501,5 +502,17 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         $this->forceFill([
             'phone_verified_at' => now()
         ])->save();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    public function latestMessage(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                return $this->messages()->with('conversation')->latest()->first();
+            },
+        );
     }
 }
