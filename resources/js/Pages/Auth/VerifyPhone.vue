@@ -66,12 +66,12 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
                                     <input @input="handleInput(index, $event);" @keydown="changeFocus(index, $event)"
                                            maxlength="1"
                                            type="text" :placeholder="index" ref="codeInputs"
-                                           class="p-4 text-lg font-bold text-center text-white bg-black rounded-md focus:border-primary focus:ring-0 w-14 aspect-square">
+                                           class="p-4 text-lg font-bold text-center text-white bg-black rounded-md focus:border-primary focus:ring-0 w-14 max-sm:w-12 aspect-square">
                                 </template>
                             </div>
 
                             <InputError :message="form.errors.code"/>
-                            <div class="flex justify-center gap-2">
+                            <div class="flex justify-center gap-2 max-md:flex-col">
                                 <Link :href="route('verification.phone.send')"
                                       class="text-sm text-gray-600 underline hover:text-gray-900">
                                     {{ $t('Resend Code') }}
@@ -81,7 +81,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
                                     {{ $t('Edit Profile') }}
                                 </Link>
 
-                                <Link :href="route('logout')" method="post" as="button"
+                                <Link :href="route('logout')"
                                       class="text-sm text-gray-600 underline hover:text-gray-900 ">
                                     {{ $t('log-out') }}
                                 </Link>
