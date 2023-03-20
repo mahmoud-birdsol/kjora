@@ -126,8 +126,8 @@ const removeFromFavorites = () => {
                                 <!--                                    score-template="{value}"/>-->
                                 <span class="flex items-center gap-1">
                                     <template v-for="i in 5">
-                                        <StarIconFilled class="w-5 h-5" v-if="player.rating >= i" />
-                                        <StarIconOutline class="w-5 h-5 text-white" v-else />
+                                        <StarIconFilled class="w-5 h-5" v-if="player.rating >= i" :class="state == 'Free' ? 'text-gold' : 'text-primary'" />
+                                        <StarIconOutline class="w-5 h-5" :class="state == 'Free' ? 'text-gold' : 'text-primary'" v-else />
                                     </template>
                                 </span>
 
