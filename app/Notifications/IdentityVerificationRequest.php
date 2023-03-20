@@ -58,8 +58,8 @@ class IdentityVerificationRequest extends Notification implements ShouldQueue
     public function toNova(): NovaNotification
     {
         return (new NovaNotification)
-            ->message($this->user->name.__(' has uploaded their identification documents.'))
-            ->action('Review', '/resources/users/'.$this->user->id)
+            ->message($this->user->name.__(' has uploaded their identification documents.', [] , $notifiable->locale ))
+            ->action(__('Review', [] , $notifiable->locale ), '/resources/users/'.$this->user->id)
             ->icon('check')
             ->type('success');
     }
