@@ -210,7 +210,7 @@ Route::middleware([
             $time = Carbon::parse($data['time']);
 
             $data['inviting_player_id'] = $request->user()->id;
-            $data['date'] = Carbon::parse( $data['date'])->setTime($time->hour, $time->minute);
+            $data['date'] = Carbon::parse( $data['date'])->addDay()->setTime($time->hour, $time->minute);
             unset($data['time']);
 
             $invitation = Invitation::create($data);
