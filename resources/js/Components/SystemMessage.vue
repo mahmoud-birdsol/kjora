@@ -19,7 +19,7 @@ onMounted(() => {
         <!-- Info Message -->
         <div v-if="message.type === 'info'" class="flex w-full bg-sky-500 px-6 py-4">
             <div class="w-full flex items-center justify-between space-x-4">
-                <p class="font-bold text-sky-50">{{ message.body }}</p>
+                <p class="font-bold text-sky-50 capitalize">{{ message.body }}</p>
                 <Link v-if="message.action" :href="message.action.url">
                 <SecondaryButton size="sm">{{ message.action.text }}</SecondaryButton>
                 </Link>
@@ -47,7 +47,7 @@ onMounted(() => {
         <!-- Danger Message -->
         <div v-if="message.type === 'danger'" class="flex w-full bg-rose-500 px-6 py-4">
             <div class="w-full flex items-center justify-between space-x-4">
-                <p class="font-bold text-rose-50">{{ message.body }}</p>
+                <p class="font-bold text-rose-50 capitalize">{{ message.body }}</p>
                 <Link v-if="message.action" :href="message.action.url">
                 <SecondaryButton size="sm">{{ message.action.text }}</SecondaryButton>
                 </Link>
@@ -61,7 +61,7 @@ onMounted(() => {
         <!-- Success Message -->
         <div v-if="message.type === 'success'" class="flex w-full bg-emerald-500 px-6 py-4">
             <div class="w-full flex items-center justify-between space-x-4">
-                <p class="font-bold text-emerald-50">{{ message.body }}</p>
+                <p class="font-bold text-emerald-50 capitalize">{{ message.body }}</p>
                 <Link v-if="message.action" :href="message.action.url">
                 <SecondaryButton size="sm">{{ message.action.text }}</SecondaryButton>
                 </Link>
