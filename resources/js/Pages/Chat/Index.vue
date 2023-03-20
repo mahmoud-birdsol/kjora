@@ -46,7 +46,8 @@ provide('conversation', null);
             </template>
             <template #footer>
                 <div class="grid p-10 bg-white place-items-center rounded-2xl">
-                    <button class="py-2 text-white bg-black px-28 rounded-3xl" @click="Inertia.get(route('chats.show', user.latest_message.conversation.id))">{{$t('ok')}}</button>
+                    <button class="py-2 text-white bg-black px-28 rounded-3xl" v-if="user.latest_message" @click="Inertia.get(route('chats.show', user.latest_message.conversation.id))">{{$t('ok')}}</button>
+                    <button class="py-2 text-white bg-black px-28 rounded-3xl" v-if="!user.latest_message">{{$t('ok')}}</button>
                 </div>
             </template>
         </ChatLayout>
