@@ -57,10 +57,10 @@ class LikeCreatedNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject($this->like->user->name . ' liked your ' . (get_class($this->likeable) == Comment::class ? 'comment!' : 'post!'))
-            ->line($this->like->user->name . ' liked your ' . (get_class($this->likeable) == Comment::class ? 'comment!' : 'post!'))
-            ->action('View', $this->likeable->url())
-            ->line('Thank you for using our application!');
+            ->subject($this->like->user->name . __(' liked your ', [] , $notifiable->locale ) . (get_class($this->likeable) == Comment::class ? __('comment!', [] , $notifiable->locale ) : __('post!', [] , $notifiable->locale )))
+            ->line($this->like->user->name . __(' liked your ', [] , $notifiable->locale ) . (get_class($this->likeable) == Comment::class ? __('comment!', [] , $notifiable->locale ) : __('post!', [] , $notifiable->locale )))
+            ->action(__('View', [] , $notifiable->locale ), $this->likeable->url())
+            ->line(__('Thank you for using our application!', [] , $notifiable->locale ));
     }
 
     /**
@@ -74,11 +74,11 @@ class LikeCreatedNotification extends Notification
         return (new NotificationData(
             displayType: 'user',
             state: 'success',
-            title: 'Like Notification',
-            subtitle: $this->like->user->name . ' liked your ' . (get_class($this->likeable) == Comment::class ? 'comment!' : 'post!'),
+            title: __('Like Notification', [] , $notifiable->locale ),
+            subtitle: $this->like->user->name . __(' liked your ', [] , $notifiable->locale ) . (get_class($this->likeable) == Comment::class ? __('comment!', [] , $notifiable->locale ) : __('post!', [] , $notifiable->locale )),
             actionData: new RouteActionData(
                 route: $this->likeable->url(),
-                text: 'View ' . (get_class($this->likeable) == Comment::class ? 'comment' : 'post'),
+                text: __('View ', [] , $notifiable->locale ) . (get_class($this->likeable) == Comment::class ? __('comment', [] , $notifiable->locale ) : __('post', [] , $notifiable->locale )),
             ),
             userAvatar: $notifiable->avatar_url,
             userName: $notifiable->name,

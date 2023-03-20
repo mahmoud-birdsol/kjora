@@ -79,11 +79,11 @@ class InvitationAcceptedNotification extends Notification implements ShouldQueue
         return (new NotificationData(
             displayType: 'simple',
             state: 'success',
-            title: __('Invitation'),
-            subtitle: __('Your invitation to ') . $this->invitation->invitedPlayer->name . __(' was accepted'),
+            title: __('Invitation', [] , $notifiable->locale ),
+            subtitle: __('Your invitation to ', [] , $notifiable->locale ) . $this->invitation->invitedPlayer->name . __(' was accepted', [] , $notifiable->locale ),
             actionData: new RouteActionData(
                 route: route('chats.show', $conversation),
-                text: __('Chat Now'),
+                text: __('Chat Now', [] , $notifiable->locale ),
             ),
         ))->toArray();
     }

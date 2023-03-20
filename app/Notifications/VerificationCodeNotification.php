@@ -46,9 +46,9 @@ class VerificationCodeNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Dear ' . $notifiable->name)
-                    ->line('Your verification code is ' . $this->code)
-                    ->line('Thank you for using our application!');
+                    ->subject(__('Dear ', [] , $notifiable->locale ) . $notifiable->name)
+                    ->line(__('Your verification code is ', [] , $notifiable->locale ) . $this->code)
+                    ->line(__('Thank you for using our application!', [] , $notifiable->locale ));
     }
 
     /**
