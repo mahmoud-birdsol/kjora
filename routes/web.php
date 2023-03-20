@@ -505,6 +505,14 @@ Route::any('nova/language/{language}', function (Request $request, $language) {
 
 
 
+Route::get('public/posts/{post}', function (Post $post) {
+
+    return Inertia::render('Public/Post', [
+        'post' => $post,
+        'user' => $post->user
+    ]);
+});
+
 Route::get('public/player/{player}', function (User $player) {
     $player->load('club');
 
@@ -530,11 +538,4 @@ Route::get('public/player/{player}', function (User $player) {
     ]);
 })->name('public.player');
 
-Route::get('public/posts/{post}', function (Post $post) {
-
-    return Inertia::render('Public/Post', [
-        'post' => $post,
-        'user' => $post->user
-    ]);
-})->name('public.post');
 
