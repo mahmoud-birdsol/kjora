@@ -61,9 +61,11 @@ const filesData = ref([]);
 const photoInput = ref(null);
 const isLoading = ref(false);
 const isDisabled = ref(false);
-const files = ref([]);
 const num = ref(0)
+
+
 const selectNewPhoto = () => {
+    photoInput.value.value = null
     photoInput.value.click();
 };
 
@@ -73,7 +75,6 @@ const updatePhotoPreview = () => {
     }
     ;
     const newFiles = Array.from(photoInput.value.files).map(file => { return { file: file, id: _.uniqueId("f") } })
-    files.value = files.value.concat(newFiles);
     newFiles.forEach(({ file, id }, i) => {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -92,25 +93,22 @@ const updatePhotoPreview = () => {
 
 const removePhoto = (i) => {
     filesData.value.splice(i, 1)
-    files.value.splice(i, 1)
     filesData.value.length === 0 ? showPreview.value = false : null;
 };
 
 const upload = () => {
-    if (!files.value.length) {
+    if (!filesData.value.length) {
         return
     }
-
     isLoading.value = true;
     isDisabled.value = true;
-    files.value = Array.from(files.value).map(file => file.file);
-    emit('upload', files.value, filesData.value)
+    let files = filesData.value.map(file => file.file);
+    emit('upload', files, filesData.value)
     reset()
 };
 
 function reset(e) {
     filesData.value = []
-    files.value = []
     isLoading.value = false
     isDisabled.value = false;
     num.value += 1
@@ -125,10 +123,10 @@ let showCropModal = (file) => {
 
 }
 function changeFiles(file, url, id) {
-    let index = files.value.findIndex((f) => f.id === id)
-    files.value.splice(index, 1, { file: file, id: id })
+
     let fileUrlIndex = filesData.value.findIndex((f) => f.id === id)
     filesData.value[fileUrlIndex].url = url
+    filesData.value[fileUrlIndex].file = file
     cropFile.value = []
 }
 
@@ -145,8 +143,7 @@ function changeFiles(file, url, id) {
 
                 <!-- input -->
                 <div class="max-w-[300px] sm:px-20 w-full">
-                    <input ref="photoInput" type="file" multiple accept="image/*,video/*,.pdf,.doc,.docx" class="hidden"
-                        @change="updatePhotoPreview">
+                    <input ref="photoInput" type="file" multiple accept="image/*,video/*,.pdf,.doc,.docx" class="hidden" @change="updatePhotoPreview">
                     <div class="flex items-center justify-center mb-6">
                         <button type="button" :disabled="isDisabled"
                             class="inline-flex items-center p-4 text-white bg-black border border-transparent rounded-full shadow-sm enabled: enabled:hover:bg-black enabled:focus:outline-none enabled:focus:ring-2 enabled:focus:ring-black enabled:focus:ring-offset-2 disabled:bg-stone-500"
@@ -159,43 +156,34 @@ function changeFiles(file, url, id) {
                 <div v-show="showPreview" class="relative overflow-auto hideScrollBar max-h-80" v-loading="isLoading">
                     <div class="relative grid grid-cols-3 gap-2">
                         <template v-for="(file, index) in filesData" :key="index">
-                            <div v-if="file.url.startsWith('data:image') || file.url.startsWith('data:video')"
-                                class="relative">
-                                <img v-if="file.url.startsWith('data:image')" :src="file.url" alt=""
-                                    class="object-contain w-full h-full rounded-lg aspect-square ">
-                                <video v-if="file.url.startsWith('data:video')" :src="file.url" alt=""
-                                    class="object-cover w-full h-full rounded-lg aspect-square" controls />
-                                <button @click.prevent="removePhoto(index)"
-                                    class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                            <div v-if="file.url.startsWith('data:image') || file.url.startsWith('data:video')" class="relative">
+                                <img v-if="file.url.startsWith('data:image')" :src="file.url" alt="" class="object-contain w-full h-full rounded-lg aspect-square ">
+                                <video v-if="file.url.startsWith('data:video')" :src="file.url" alt="" class="object-cover w-full h-full rounded-lg aspect-square" controls />
+                                <button @click.prevent="removePhoto(index)" class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
                                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
                                         <XMarkIcon class="w-5 h-5 text-stone-800" />
                                     </div>
                                 </button>
-                                <button class="absolute top-0 left-0 bg-white bg-opacity-90 rounded-br-xl"
-                                    @click="showCropModal(file)" v-if="file.url.startsWith('data:image')">
+                                <button class="absolute top-0 left-0 bg-white bg-opacity-90 rounded-br-xl" @click="showCropModal(file)" v-if="file.url.startsWith('data:image')">
                                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
                                         <CropIcon class="w-4" />
                                     </div>
                                 </button>
 
                             </div>
-                            <div v-else-if="file.url.startsWith('data:application/pdf')"
-                                class="relative flex flex-col gap-4 ">
+                            <div v-else-if="file.url.startsWith('data:application/pdf')" class="relative flex flex-col gap-4 ">
                                 <img class="mx-auto h-52" src="/images/pdf.png" />
                                 <p class="text-xs text-center text-gray-400 truncate">{{ file.name }}</p>
-                                <button @click.prevent="removePhoto(index)"
-                                    class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                                <button @click.prevent="removePhoto(index)" class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
                                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
                                         <XMarkIcon class="w-5 h-5 text-stone-800" />
                                     </div>
                                 </button>
                             </div>
-                            <div v-else-if="file.type.endsWith('.document') || file.type.startsWith('application/msword')"
-                                class="relative flex flex-col gap-4">
+                            <div v-else-if="file.type.endsWith('.document') || file.type.startsWith('application/msword')" class="relative flex flex-col gap-4">
                                 <img class="mx-auto h-52" src="/images/doc.png" />
                                 <p class="text-xs text-center text-gray-400 truncate">{{ file.name }}</p>
-                                <button @click.prevent="removePhoto(index)"
-                                    class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                                <button @click.prevent="removePhoto(index)" class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
                                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
                                         <XMarkIcon class="w-5 h-5 text-stone-800" />
                                     </div>
@@ -204,8 +192,7 @@ function changeFiles(file, url, id) {
                         </template>
 
                         <FadeInTransition>
-                            <div v-if="isLoading"
-                                class="absolute inset-0 z-20 grid w-full h-full p-4 bg-stone-400/50 place-content-center ">
+                            <div v-if="isLoading" class="absolute inset-0 z-20 grid w-full h-full p-4 bg-stone-400/50 place-content-center ">
                             </div>
                         </FadeInTransition>
                     </div>
