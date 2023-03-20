@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeMount, onMounted, ref, watch } from 'vue';
+import {computed, onBeforeMount, onMounted, onUpdated, ref, watch} from 'vue';
 import { Inertia, } from '@inertiajs/inertia';
 import { Link, usePage } from '@inertiajs/inertia-vue3';
 import Dropdown from '@/Components/Dropdown.vue';
@@ -34,12 +34,16 @@ let notificationsLength = ref(usePage().props.value.notifications.length)
 let notifications = ref(usePage().props.value.notifications)
 const showNotificationIndicator = ref(false)
 
-// watch(() => notificationsLength.value, () => {
-//     console.log(notificationsLength)
+watch(() => notificationsLength.value, (newValue) => {
+    console.log(newValue);
+    newValue > 0 ? showNotificationIndicator.value = true : showNotificationIndicator.value = false;
 
-// })
+})
 onMounted(() => {
-    notificationsLength ? showNotificationIndicator.value = true : showNotificationIndicator.value = false
+    notificationsLength.value > 0 ? showNotificationIndicator.value = true : showNotificationIndicator.value = false
+})
+onUpdated(() => {
+    notificationsLength.value > 0 ? showNotificationIndicator.value = true : showNotificationIndicator.value = false
 })
 
 
