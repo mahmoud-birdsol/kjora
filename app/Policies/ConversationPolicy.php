@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Admin;
+use App\Models\Conversation;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -25,7 +26,7 @@ class ConversationPolicy
      *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(Admin $user, User $model)
+    public function view(Admin $user, Conversation $model)
     {
         return $user->hasPermissionTo('view conversations');
     }
@@ -45,7 +46,7 @@ class ConversationPolicy
      *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(Admin $user, User $model)
+    public function update(Admin $user, Conversation $model)
     {
         return $user->hasPermissionTo('edit conversations');
     }
@@ -55,7 +56,7 @@ class ConversationPolicy
      *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(Admin $user, User $model)
+    public function delete(Admin $user, Conversation $model)
     {
         return $user->hasPermissionTo('delete conversations');
     }
@@ -65,7 +66,7 @@ class ConversationPolicy
      *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(Admin $user, User $model)
+    public function restore(Admin $user, Conversation $model)
     {
         return $user->hasPermissionTo('delete conversations');
     }
@@ -75,7 +76,7 @@ class ConversationPolicy
      *
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(Admin $user, User $model)
+    public function forceDelete(Admin $user, Conversation $model)
     {
         return $user->hasPermissionTo('delete conversations');
     }

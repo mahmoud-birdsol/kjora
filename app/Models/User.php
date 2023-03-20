@@ -480,7 +480,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function played(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->playerReviews()->whereHas('ratingCategories')->count()
+            get: fn() => $this->playerReviews()->where('is_attended', true)->count()
         );
     }
 
@@ -492,7 +492,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function missed(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->playerReviews()->whereDoesntHave('ratingCategories')->count()
+            get: fn() => $this->playerReviews()->where('is_attended', false)->count()
         );
     }
 

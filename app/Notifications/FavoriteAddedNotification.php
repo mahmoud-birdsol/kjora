@@ -64,11 +64,11 @@ class FavoriteAddedNotification extends Notification
         return (new NotificationData(
             displayType: 'user',
             state: 'success',
-            title: 'Favorite Notification',
-            subtitle: $this->user->name . ' has added you to his favorites',
+            title: __('Favorite Notification', [] , $notifiable->locale ),
+            subtitle: $this->user->name . __(' has added you to his favorites', [] , $notifiable->locale ),
             actionData: new RouteActionData(
                 route: route('favorites.index'),
-                text: __('View Now'),
+                text: __('View Now', [] , $notifiable->locale ),
             ),
             userAvatar: $notifiable->avatar_url,
             userName: $notifiable->name

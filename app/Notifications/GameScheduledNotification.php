@@ -49,8 +49,8 @@ class GameScheduledNotification extends Notification
     public function toMail($notifiable)
     {
         $event = Event::create()
-            ->name('Football match! ' . $this->invitation->date->toFormattedDateString())
-            ->description('Football match! ' . $this->invitation->date->toFormattedDateString() . ' at ' . $this->invitation->stadium->formattedAddress())
+            ->name(__('Football match! ', [] , $notifiable->locale ) . $this->invitation->date->toFormattedDateString())
+            ->description(__('Football match! ', [] , $notifiable->locale ) . $this->invitation->date->toFormattedDateString() . __(' at ', [] , $notifiable->locale ) . $this->invitation->stadium->formattedAddress())
             ->uniqueIdentifier('KJORA-' . $this->invitation->id)
             ->createdAt($this->invitation->created_at)
             ->startsAt($this->invitation->date)
@@ -69,8 +69,8 @@ class GameScheduledNotification extends Notification
         $calendar->appendProperty(TextProperty::create('METHOD', 'REQUEST'));
 
         return (new MailMessage)
-            ->subject('Game scheduled')
-            ->line('You have accepted the invitation to the event from ***' . $this->invitation->invitingPlayer->name . '***.')
+            ->subject(__('Game scheduled', [] , $notifiable->locale ))
+            ->line(__('You have accepted the invitation to the event from ***', [] , $notifiable->locale ) . $this->invitation->invitingPlayer->name . '***.')
             ->attachData($calendar->get(), 'invite.ics', [
                 'mime' => 'text/calendar; charset=UTF-8; method=REQUEST',
             ]);
