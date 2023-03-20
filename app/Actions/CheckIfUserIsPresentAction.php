@@ -17,6 +17,7 @@ class CheckIfUserIsPresentAction
      */
     public function __invoke(User $user, Conversation $conversation): bool
     {
+        $userIsPresent = false;
         $connection = config('broadcasting.connections.pusher');
         $pusher = new Pusher(
             $connection['key'],
@@ -25,8 +26,14 @@ class CheckIfUserIsPresentAction
             $connection['options'] ?? []
         );
 
-        $channel = $pusher->getChannelInfo('private-users.chat.'.$conversation->id);
+        $channel = $pusher->getPresenceUsers('presence-chat.'.$conversation->id);
 
-        return (bool) $channel->occupied;
+        foreach ($channel->users as $presentUser) {
+            if ($presentUser->id == $user->id) {
+                $userIsPresent = true;
+            }
+        }
+
+        return $userIsPresent;
     }
 }

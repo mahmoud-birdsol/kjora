@@ -29,6 +29,20 @@ props.conversations.forEach((conversation) => {
             updateConversationUserStatus(user, false);
             user.last_seen_at = dayjs();
         });
+
+    Echo.join('presence-chat.' + conversation.id)
+        .here(function (users) {
+            users.forEach(user => {
+                updateConversationUserStatus(user, true);
+            });
+        })
+        .joining(function (user) {
+            updateConversationUserStatus(user, true);
+        })
+        .leaving(function (user) {
+            updateConversationUserStatus(user, false);
+            user.last_seen_at = dayjs();
+        });
 })
 
 /**
