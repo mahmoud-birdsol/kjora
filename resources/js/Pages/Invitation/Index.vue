@@ -27,21 +27,19 @@ const props = defineProps({
                 <div class="flex items-center justify-end gap-3">
                     <Link :href="route('invitation.index')">
                     <button
-                        class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
+                        class="py-2 px-4  md:min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
                         :class="{ 'border-primary': route().current('invitation.index'), 'border-none': !route().current('invitation.index') }">
 
-                        <span
-                            :class="{ 'text-gray-500': !route().current('invitation.index'), 'text-black': route().current('invitation.index') }">
+                        <span :class="{ 'text-gray-500': !route().current('invitation.index'), 'text-black': route().current('invitation.index') }">
                             {{ $t('invitation') }}
                         </span>
                     </button>
                     </Link>
                     <Link :href="route('hire.index')">
                     <button
-                        class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
+                        class="py-2 px-4  md:min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
                         :class="{ 'border-primary': route().current('hire.index'), 'border-none': !route().current('hire.index') }">
-                        <span
-                            :class="{ 'text-gray-500': !route().current('hire.index'), 'text-black': route().current('hire.index') }">
+                        <span :class="{ 'text-gray-500': !route().current('hire.index'), 'text-black': route().current('hire.index') }">
                             {{ $t('hire') }}
                         </span>
                     </button>
@@ -51,10 +49,10 @@ const props = defineProps({
                 <div class="bg-white rounded-xl mt-4 min-h-[500px] p-2 md:p-6">
                     <div class="font-bold text-xs flex gap-1 mb-4" v-if="invitations.length">
                         <CalendarIcon class="w-4" />
-                        <DateTranslation :start="invitations[invitations.length - 1].date" format="DD MMMM YYYY" /> 
-                        <span v-if="dayjs(invitations[0].date).format('DD MMMM YYYY')  !== dayjs(invitations[invitations.length - 1].date).format('DD MMMM YYYY')">
+                        <DateTranslation :start="invitations[invitations.length - 1].date" format="DD MMMM YYYY" />
+                        <span v-if="dayjs(invitations[0].date).format('DD MMMM YYYY') !== dayjs(invitations[invitations.length - 1].date).format('DD MMMM YYYY')">
                             {{ $t('to') }}
-                            <DateTranslation :start="invitations[0].date" format="DD MMMM YYYY"  />
+                            <DateTranslation :start="invitations[0].date" format="DD MMMM YYYY" />
                         </span>
                     </div>
                     <div class="grid grid-cols-1 gap-4">
