@@ -53,8 +53,8 @@ const decline = () => {
                     <h2 class="text-center text-xl font-bold uppercase text-primary">{{$t('invitation')}}</h2>
                     <p class="mt-6 text-sm font-light text-gray-700">
                         {{ $t('you-have-received-an-invitation-from- :name ,-to-play-a-game-on',{ name : invitation.inviting_player.name}) }}
-                        <strong><DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date"/> </strong>{{ $t('at') }}
-                        <strong>{{ invitation.stadium.address }}, {{ invitation.stadium.city }}, {{ invitation.stadium.country }}</strong>
+                        <strong><DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date"/> </strong><span> {{ $t('at') }} </span> 
+                        <strong>{{ invitation.stadium.address }}, {{ invitation.stadium.city }}, {{ invitation.stadium.country }},({{ invitation.stadium.name }})</strong>
                     </p>
                 </div>
 

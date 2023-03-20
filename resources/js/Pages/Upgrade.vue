@@ -89,7 +89,7 @@ let expaireDate = computed(()=>{
                             </li>
                         </ul>
 
-                        <div class="text-gray-600 text-sm font-bold my-3">{{ $t('choose plan')}}</div>
+                        <div class="text-gray-600 text-sm font-bold my-3 uppercase" >{{ $t('choose plan')}}</div>
                         <RadioGroup v-model="form.payment_plan" class="flex flex-col gap-2">
                             <RadioGroupOption v-slot="{ checked }" value="monthly"
                                 class="[&_li]:py-3 [&_li]:pl-6 [&_li]:pr-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:list-none text-stone-500  flex flex-col  text-sm font-medium cursor-pointer">
