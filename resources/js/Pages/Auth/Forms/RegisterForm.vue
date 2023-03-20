@@ -107,7 +107,7 @@ const submit = () => {
             <div class="sm:col-span-2">
                 <div>
                     <InputLabel color="primary" for="username" :value="$t('username')" />
-                    <TextInput type="text" v-model="form.username" placeholder="username" auto-complete="username" aria-required="true" />
+                    <TextInput type="text" v-model="form.username" placeholder="username" autocomplete="username" aria-required="true" />
                     <InputError class="mt-2" :message="form.errors.username" />
                 </div>
             </div>
