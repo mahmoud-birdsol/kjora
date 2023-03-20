@@ -331,5 +331,7 @@
 	"Terms approved successfully": "تمت الموافقة على الشروط بنجاح",
 	"Post successfully updated.": "تم تحديث النشر بنجاح.",
 	"Please Upload Your Verification Documents .": "يرجى تحميل وثائق التحقق الخاصة بك.",
-	"Please wait to verify your identity.": "يرجى الانتظار للتحقق من هويتك."
+	"Please wait to verify your identity.": "يرجى الانتظار للتحقق من هويتك.",
+    "Verification code sent.": "تم ارسال الكود"
+
 }
