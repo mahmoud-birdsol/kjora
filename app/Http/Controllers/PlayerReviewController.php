@@ -27,7 +27,7 @@ class PlayerReviewController extends Controller
             ->map(function ($ratingCategory) use ($ratingCategoriesCount) {
                 return [
                     'ratingCategory' => $ratingCategory->first()->name,
-                    'value' => (float) $ratingCategory->sum('pivot.value') / $ratingCategoriesCount,
+                    'value' => (float) $ratingCategory->sum('pivot.value') / ($ratingCategoriesCount > 0 ? $ratingCategoriesCount : 1),
                 ];
             })->values();
 

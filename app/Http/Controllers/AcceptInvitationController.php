@@ -23,10 +23,11 @@ class AcceptInvitationController extends Controller
     ): RedirectResponse {
         $invitation->forceFill(['state' => 'accepted'])->save();
 
+        $createConversationAction($invitation);
+
         $invitation->invitingPlayer->notify(new InvitationAcceptedNotification($invitation));
         $invitation->invitedPlayer->notify(new GameScheduledNotification($invitation));
 
-        $createConversationAction($invitation);
 
         return redirect()->route('invitation.index');
     }
