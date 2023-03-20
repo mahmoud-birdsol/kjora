@@ -31,6 +31,7 @@ use App\Models\Stadium;
 use App\Models\User;
 use App\Notifications\InvitationCreatedNotification;
 use App\Notifications\InvitationDeclinedNotification;
+use App\Nova\Post;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -210,7 +211,7 @@ Route::middleware([
             $time = Carbon::parse($data['time']);
 
             $data['inviting_player_id'] = $request->user()->id;
-            $data['date'] = Carbon::parse( $data['date'])->addDay()->setTime($time->hour, $time->minute);
+            $data['date'] = Carbon::parse( $data['date'])->setTime($time->hour, $time->minute);
             unset($data['time']);
 
             $invitation = Invitation::create($data);
@@ -528,3 +529,12 @@ Route::get('public/player/{player}', function (User $player) {
         'positions' => $positions,
     ]);
 })->name('public.player');
+
+Route::get('public/posts/{post}', function (Post $post) {
+
+    return Inertia::render('Public/Post', [
+        'post' => $post,
+        'user' => $post->user
+    ]);
+})->name('public.post');
+
