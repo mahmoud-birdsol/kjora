@@ -59,6 +59,7 @@ const thumbsOptions = {
     isNavigation: true,
     updateOnMove: true,
     arrows: false,
+    width:props.media.length > 5 ? '100%' : '50%',
     perPage: props.media.length > 5 ? 5 : props.media.length,
     breakpoints: {
 		640: {
@@ -160,3 +161,8 @@ function handleSplideActive(e) {
         </div>
     </Modal>
 </template>
+<style>
+.splide__slide{
+    object-fit: contain;
+}
+</style>
