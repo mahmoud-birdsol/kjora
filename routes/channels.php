@@ -23,7 +23,7 @@ Broadcast::channel('users.chat.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('presence-chat.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+    return $user->conversations()->where('conversations.id', $id)->count();
 });
 
 Broadcast::channel('users.comment.{id}', function ($user, $id) {
