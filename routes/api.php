@@ -102,5 +102,5 @@ Route::post('update-location', UserLocationController::class)->name('api.locatio
 
 
 Route::post('notifications/mark-as-read/{notificationId}', MarkNotificationAsReadController::class)
-    ->name('api.notifications.mark-as-read');
+    ->name('api.notifications.mark-as-read')->middleware('throttle:200,1');
 
