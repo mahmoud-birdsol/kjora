@@ -13,7 +13,7 @@ class InvitationCreatedEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public Invitation $invitation;
+    private Invitation $invitation;
 
     /**
      * Create a new event instance.
@@ -34,7 +34,7 @@ class InvitationCreatedEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('users.'.$this->invitation->invitedPlayer->id);
+        return new PrivateChannel('users.' . $this->invitation->invitedPlayer->id);
     }
 
     /**
@@ -45,5 +45,17 @@ class InvitationCreatedEvent implements ShouldBroadcast
     public function broadcastAs()
     {
         return 'invitation.created';
+    }
+
+    /**
+     * Get the data to broadcast.
+     *
+     * @return array<string, mixed>
+     */
+    public function broadcastWith(): array
+    {
+        return [
+            'id' => $this->invitation->id
+        ];
     }
 }
