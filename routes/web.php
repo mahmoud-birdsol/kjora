@@ -539,3 +539,13 @@ Route::get('public/player/{player}', function (User $player) {
 })->name('public.player');
 
 
+Route::get('accept-chat-regulations', function (Request $request) {
+    $request->user()->update([
+        'accepted_chat_regulations_at' => now()
+    ]);
+
+    return redirect()->back();
+
+})->middleware('auth:sanctum')->name('accept-chat-regulations');
+
+
