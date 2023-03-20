@@ -17,7 +17,7 @@ class EnsureUploadedIdentityVerificationDocuments
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->user()->hasUploadedVerificationDocuments()) {
+        if (!$request->user()->hasUploadedVerificationDocuments() && !$request->user()->hasVerifiedPersonalIdentity()) {
             FlashMessage::make()->warning(
                 message: __('Please Upload Your Verification Documents .')
             )->action(route('identity.verification.create'), __('Upload Verification Documents'))->closeable()->send();
