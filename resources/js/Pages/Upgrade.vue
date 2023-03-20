@@ -49,8 +49,8 @@ let months = [
      {en:'December',ar:'ديسمبر'}]
 const currentDate = `${day} ${months[month][locale]} ${year}`
 let expaireDate = computed(()=>{
-    if(form.payment_plan == 'yearly') return `${day} ${months[month+1]} ${year}`
-    else  return `${day} ${months[month][locale]} ${year+1}`
+    if(form.payment_plan == 'yearly') return `${day} ${months[month][locale]} ${year+1}`
+    else  return `${day} ${months[month+1][locale]} ${year}`
 
 })
 </script>
@@ -96,7 +96,7 @@ let expaireDate = computed(()=>{
                                 <InputLabel :value="$t('monthly')" color="primary" />
                                 <li  class="flex justify-between items-center">
                                     <span>$10</span>
-                                    <CheckIcon class="w-6 rounded-full p-1 bg-golden text-black" v-if="form.payment_plan == 'monthly'"/>
+                                    <CheckIcon class="w-6 rounded-full p-1 bg-golden text-black" :class="form.payment_plan == 'monthly'? 'visible':'invisible'"/>
                                 </li>
                             </RadioGroupOption>
                             <RadioGroupOption v-slot="{ checked }" value="yearly"
@@ -105,7 +105,7 @@ let expaireDate = computed(()=>{
                                 <InputLabel :value="$t('yearly')" color="primary" />
                                 <li  class="flex justify-between items-center">
                                     <span>$25</span>
-                                    <CheckIcon class="w-6 text-black rounded-full p-1 bg-golden" v-if="form.payment_plan == 'yearly'"/>
+                                    <CheckIcon class="w-6 text-black rounded-full p-1 bg-golden" :class="form.payment_plan == 'yearly'? 'visible':'invisible'"/>
                                 </li>
                             </RadioGroupOption>
                         </RadioGroup>
