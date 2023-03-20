@@ -43,6 +43,17 @@ class PlayerReviewController extends Controller
 
     public function store(Request $request, Review $review): RedirectResponse
     {
+        $review->update([
+            'is_attended' => $request->input('attended')
+        ]);
+
+        if (!$review->refresh()->is_attended) {
+            FlashMessage::make()->success(
+                message: __('Review Submitted Successfully')
+            )->closeable()->send();
+
+            return redirect()->route('home');
+        }
         $value = 0;
         $review->ratingCategories()->detach();
         foreach ($request->input('ratingCategory') as $ratingCategory) {
