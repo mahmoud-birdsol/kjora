@@ -111,7 +111,7 @@ const removeFromFavorites = () => {
 
                     <div :class="state == 'Free' ? 'text-white' : 'text-primary'">
                         <Link :href="route('player.profile', player.id)">
-                        <h2 class="text-sm font-bold">
+                        <h2 class="text-sm font-bold capitalize">
                             {{ player.first_name }} {{ player.last_name }}
                         </h2>
                         </Link>

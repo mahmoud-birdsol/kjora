@@ -189,7 +189,7 @@
     "favorites": "Favorites",
     "chat": "Chat",
     "home": "Home",
-    "profile": "profile",
+    "profile": "Profile",
     "your": "Your",
     "edit": "Edit",
     "position": "Position",
@@ -317,12 +317,13 @@
     "User name changed successfully": "User name changed successfully",
     "Phone changed successfully": "Phone changed successfully",
     "Your contact request has reached us and we will review it shortly.": "Your contact request has reached us and we will review it shortly.",
-    "Thank you for uploading your verification documents we will verify the information provided and get back to you shortly.": "Thank you for uploading your verification documents we will verify the information provided and get back to you shortly.",
-    "Your identity verification has been successfully sent. Please wait for approval.": "Your identity verification has been successfully sent. Please wait for approval.",
+    "Thank you for uploading your verification documents we will verify the information provided and get back to you shortly.": "Thank You For Uploading Your Verification Documents We will verify the information provided and get back to you Shortly.",
+    "Your identity verification has been successfully sent. Please wait for approval.": "Your Identity Verification Has been successfully Sent. Please Wait for Approval.",
     "Review Submitted Successfully": "Review Submitted Successfully",
-    "Cookies approved successfully": "Cookies approved successfully",
-    "Private Policy approved successfully": "Private Policy approved successfully",
-    "Terms approved successfully": "Terms approved successfully",
-    "Post successfully updated.": "Post successfully updated."
-
+    "Cookies approved successfully": "Cookies Approved Successfully",
+    "Private Policy approved successfully": "Private Policy Approved Successfully",
+    "Terms approved successfully": "Terms Approved Successfully",
+    "Post successfully updated.": "Post Successfully Updated.",
+    "Please Upload Your Verification Documents .": "Please Upload Your Verification Documents .",
+    "Please wait to verify your identity.": "Your Identity Documents Has Been Submited. AWAITING APROVILE"
 }

@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref ,watch} from 'vue';
 import { Inertia, } from '@inertiajs/inertia';
 import { Link, usePage } from '@inertiajs/inertia-vue3';
 import Dropdown from '@/Components/Dropdown.vue';
@@ -23,13 +23,16 @@ import { XMarkIcon } from '@heroicons/vue/20/solid';
 
 const locale = usePage().props.value.locale
 const currentUser = usePage().props.value.auth.user
-const showingNavigationDropdown = ref(false);
+const showingNavigationDropdown  = ref(false);
 
 const logout = () => {
     Inertia.post(route('logout'));
 };
 let state = usePage().props.value.user.state_name
-
+let notifications =  ref(usePage().props.value.notifications.length)
+watch(()=>notifications.value, ()=>{
+    console.log (notifications)
+})
 </script>
 
 <template>
@@ -124,7 +127,7 @@ let state = usePage().props.value.user.state_name
                     <div class="relative">
                         <Dropdown :align="locale == 'en' ? 'right' : 'left'" width="96">
                             <template #trigger>
-                                <button>
+                                <button class="text-white">
                                     <BellIcon class="w-6 h-6 text-white"></BellIcon>
                                 </button>
                             </template>

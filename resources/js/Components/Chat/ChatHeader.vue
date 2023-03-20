@@ -60,9 +60,9 @@ watch(() => chat.search, () => {
                     border-color="primary" />
 
                 <div class="flex flex-col">
-                    <h4 class="mb-1 font-bold leading-none capitalize text-primary">
+                    <Link class="mb-1 font-bold leading-none capitalize text-primary" :href="route('player.profile', player.id)">
                         {{ player.name }}
-                    </h4>
+                    </Link>
                     <Link class="text-xs leading-none text-neutral-500" :href="route('player.profile', player.id)">
                     @{{ player.username }}
                     </Link>
