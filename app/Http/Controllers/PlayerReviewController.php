@@ -61,7 +61,9 @@ class PlayerReviewController extends Controller
         $review->player->update([
             'rating' => $value / RatingCategory::whereHas('positions', function (Builder $query) use ($review) {
                 $query->where('positions.id', $review->player->position_id);
-            })->count(),
+            })->count() > 0 ?  RatingCategory::whereHas('positions', function (Builder $query) use ($review) {
+                $query->where('positions.id', $review->player->position_id);
+            })->count() : 1,
         ]);
 
         $review->player->notify(new NotifyUserOfRatingSubmittedNotification($review->reviewer, $review->player, $review));
