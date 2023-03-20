@@ -30,6 +30,8 @@ const d = new Date();
 const currentStadium = ref(null);
 const currentUser = usePage().props.value.auth.user
 const createInvitation = () => {
+    form.date = dayjs(form.date).add(1).format('YYYY-MM-DD');
+    console.log(form.date);
     form.post(route('invitation.store'), {
         onSuccess: () => {
             showSuccessModal.value = true;
@@ -104,7 +106,12 @@ function changeMapMarker(e) {
                                 <div class="my-6">
                                     <InputLabel>{{ $t('Date') }}</InputLabel>
                                     <div class="px-4">
-                                        <ElDatePicker stype="date" :disabled-date="disabledDate" style="background-color: black;" v-model="form.date" @change="disabledHours()" class="w-full" placeholde="DD/MM/YYYY" />
+                                        <ElDatePicker stype="date" :disabled-date="disabledDate"
+                                                      style="background-color: black;"
+                                                      v-model="form.date"
+                                                      @change="disabledHours()"
+                                                      class="w-full"
+                                                      placeholde="DD/MM/YYYY"/>
                                     </div>
                                     <InputError class="mt-2" :message="form.errors.date" />
                                 </div>
