@@ -45,6 +45,8 @@ function markAllNotificationsAsRead() {
             if (i === notificationsLength.value - 1) {
                 showNotificationIndicator.value = false
             }
+        }).catch(err => console.error(err)).finally(() => {
+            showNotificationIndicator.value = false
         })
 
     })
@@ -142,7 +144,7 @@ function markAllNotificationsAsRead() {
                                     <div class="relative">
                                         <BellIcon class="w-6 h-6 text-white"></BellIcon>
                                         <div v-show="showNotificationIndicator" class="absolute top-0 grid w-2 h-2 p-1 text-xs rounded-full bg-primary -right-0 place-items-center">
-                                            <!-- <span class="scale-[0.25] origin-center text-xs">{{ $page.props.notifications.length }}</span> -->
+                                            <!-- <span class="text-xs origin-center ">{{ $page.props.notifications.length }}</span> -->
                                         </div>
                                     </div>
                                 </button>
@@ -228,8 +230,13 @@ function markAllNotificationsAsRead() {
                         <div class="relative grid place-items-center">
                             <Dropdown width="96" :align="locale == 'ar' ? 'left' : 'right'">
                                 <template #trigger>
-                                    <button>
-                                        <BellIcon class="w-6 h-6 text-white"></BellIcon>
+                                    <button @click="markAllNotificationsAsRead">
+                                        <div class="relative">
+                                            <BellIcon class="w-6 h-6 text-white"></BellIcon>
+                                            <div v-show="showNotificationIndicator" class="absolute top-0 grid w-2 h-2 p-1 text-xs rounded-full bg-primary -right-0 place-items-center">
+                                                <!-- <span class="text-xs origin-center ">{{ $page.props.notifications.length }}</span> -->
+                                            </div>
+                                        </div>
                                     </button>
                                 </template>
                                 <template #content>
