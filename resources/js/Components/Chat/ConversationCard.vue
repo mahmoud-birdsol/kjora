@@ -34,8 +34,7 @@ function removeConversation() {
 
 <template>
     <Link :href="route('chats.show', conversation.id)" :class="active ? 'border-2 border-primary rounded-2xl' : ''">
-    <div class="bg-[url(/images/player_bg_lg.png)] bg-cover relative rounded-2xl p-6 flex flex-col gap-8 items-start bg-[center_top]"
-        :class="active ? 'border-2 border-white' : ''">
+    <div class="bg-[url(/images/chatbg.png)] bg-cover relative rounded-2xl p-6 flex flex-col gap-8 items-start bg-[center_top]" :class="active ? 'border-2 border-white' : ''">
         <div class="flex flex-row items-center w-full gap-4" v-for="user in conversation.users">
             <div>
                 <Avatar :id="user.id" :image-url="user.avatar" size="sm" :username="user.name" :border="true" />
@@ -43,7 +42,7 @@ function removeConversation() {
             <div class="flex flex-col ">
                 <h4 class="m-0 text-lg leading-none text-white capitalize">{{ user.name }}</h4>
                 <!-- <Link :href="route('player.profile', user)" class="text-xs leading-none text-neutral-500"> @{{
-                                                                                                                                                                                                                user.username }} </Link> -->
+                                                                                                                                                                                                                        user.username }} </Link> -->
                 <span class="text-xs leading-none text-neutral-500 before:content-['a'] before:text-transparent"> @{{
                     user.username }} </span>
             </div>
@@ -71,20 +70,15 @@ function removeConversation() {
                 <TrashIcon class="w-5 text-stone-200 hover:text-red-600 active:scale-90 " />
             </button>
             <!-- confirm delete media modal -->
-            <Modal :show="showDeleteConvModal" @close="showDeleteConvModal = false" :closeable="true"
-                :show-close-icon="false" :max-width="'sm'">
+            <Modal :show="showDeleteConvModal" @close="showDeleteConvModal = false" :closeable="true" :show-close-icon="false" :max-width="'sm'">
                 <div class="flex flex-col justify-center p-6 text-stone-800 ">
                     <p class="mb-3 text-lg">
                         {{ $t('Are you sure you want delete this Conversation ? ') }}</p>
                     <div class="flex justify-center w-full gap-4">
-                        <button
-                            class="p-2 px-8 border-2 rounded-full border-primary hover:bg-primary text-primary hover:text-white active:scale-95 "
-                            @click="showDeleteConvModal = false">{{ $t('Cancel')
-                            }}
+                        <button class="p-2 px-8 border-2 rounded-full border-primary hover:bg-primary text-primary hover:text-white active:scale-95 " @click="showDeleteConvModal = false">{{ $t('Cancel')
+                        }}
                         </button>
-                        <button
-                            class="p-2 px-8 text-white bg-black border-2 border-black rounded-full hover:bg-transparent hover:text-black active:scale-95 "
-                            @click="removeConversation">{{ $t('Delete') }}
+                        <button class="p-2 px-8 text-white bg-black border-2 border-black rounded-full hover:bg-transparent hover:text-black active:scale-95 " @click="removeConversation">{{ $t('Delete') }}
                         </button>
                     </div>
                 </div>
