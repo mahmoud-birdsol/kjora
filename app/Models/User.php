@@ -48,6 +48,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'password',
         'joined_platform_at',
         // Profile information.
+        'email_verified_at',
         'country_id',
         'club_id',
         'position_id',
