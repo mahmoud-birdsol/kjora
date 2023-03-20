@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, ref, watch } from 'vue';
+import {computed, onBeforeMount, onMounted, onUpdated, ref, watch} from 'vue';
 import { Inertia, } from '@inertiajs/inertia';
 import { Link, usePage } from '@inertiajs/inertia-vue3';
 import Dropdown from '@/Components/Dropdown.vue';
@@ -32,14 +32,24 @@ const logout = () => {
 let state = usePage().props.value.user.state_name
 let notificationsLength = ref(usePage().props.value.notifications.length)
 let notifications = ref(usePage().props.value.notifications)
-const showNotificationIndicator = ref(true)
-watch(() => notificationsLength.value, () => {
-    console.log(notificationsLength)
+const showNotificationIndicator = ref(false)
+
+watch(() => notificationsLength.value, (newValue) => {
+    console.log(newValue);
+    newValue > 0 ? showNotificationIndicator.value = true : showNotificationIndicator.value = false;
+
+})
+onMounted(() => {
+    notificationsLength.value > 0 ? showNotificationIndicator.value = true : showNotificationIndicator.value = false
+})
+onUpdated(() => {
+    notificationsLength.value > 0 ? showNotificationIndicator.value = true : showNotificationIndicator.value = false
 })
 
 
 function markAllNotificationsAsRead() {
     if (!showNotificationIndicator.value) return
+
     notifications.value.forEach((n, i) => {
         axios.post(route('api.notifications.mark-as-read', n.id)).then(res => {
             if (i === notificationsLength.value - 1) {
