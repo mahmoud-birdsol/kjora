@@ -18,6 +18,6 @@ class FetchInvitationController extends Controller
      */
     public function __invoke(Request $request, Invitation $invitation)
     {
-        return InvitationResource::make($invitation);
+        return InvitationResource::make($invitation->load('stadium'));
     }
 }
