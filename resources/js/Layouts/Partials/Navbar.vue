@@ -256,7 +256,7 @@ function markAllNotificationsAsRead() {
                     <span>{{ $t('chat') }}</span>
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('invitation.index')" :active="route().current('invitation.index') || route().current('hire.index')">
-                    <FootBallIcon class="fill-primary" />
+                    <FootBallIcon class="fill-primary w-4 aspect-square" />
                     <span>{{ $t('invitations') }}</span>
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('favorites.index')" :active="route().current('favorites.index')">
