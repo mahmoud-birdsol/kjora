@@ -160,9 +160,9 @@ function changeMapMarker(e) {
         </div>
         <AddStadiumModal />
         <Modal :show="showSuccessModal" max-width="md" @close="showSuccessModal = false">
-            <div class="bg-white rounded-xl p-6 md:min-h-[500px]">
-                <div class="flex flex-col justify-between items-center h-56 md:min-h-[500px]">
-                    <div class="flex justify-center my-4">
+            <div class="bg-white rounded-xl p-6 md:min-h-[300px]">
+                <div class="flex flex-col justify-between items-center h-56 md:min-h-[300px]">
+                    <div class="flex justify-center">
                         <h2 class="text-xl text-primary font-bold uppercase">{{ $t('Invitation Sent') }}</h2>
                     </div>
                     <p class="">
