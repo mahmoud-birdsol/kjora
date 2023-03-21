@@ -66,7 +66,7 @@ function ready() {
 <template>
     <div v-if="open" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
     <div v-if="open"
-        class="absolute flex flex-col gap-4 p-6 -translate-x-1/2 -translate-y-1/2 bg-white top-1/2 left-1/2  rounded-xl sm:max-w-lg">
+        class="absolute flex flex-col gap-4 p-6 -translate-x-1/2 -translate-y-1/2 bg-white top-1/2 left-1/2 min-w-7xl rounded-xl ">
         <div class="flex w-full ">
             <XMarkIcon class="w-4 mis-auto " @click="$emit('update:open')" />
         </div>
