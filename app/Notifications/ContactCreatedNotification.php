@@ -11,7 +11,7 @@ use Laravel\Nova\Notifications\NovaChannel;
 use Laravel\Nova\Notifications\NovaNotification;
 use Laravel\Nova\URL;
 
-class AdminCreatedNotification extends Notification
+class ContactCreatedNotification extends Notification
 {
     use Queueable;
 

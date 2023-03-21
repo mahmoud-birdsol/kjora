@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Conversation extends Resource
@@ -42,6 +43,12 @@ class Conversation extends Resource
     {
         return [
             ID::make()->sortable(),
+
+            Text::make(__('Users'), function () {
+                $users = $this->resource->users()->pluck('username')->toArray();
+                return implode(', ', $users);
+            }),
+
             BelongsToMany::make('Users'),
             HasMany::make('Messages'),
         ];
