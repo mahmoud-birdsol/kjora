@@ -50,7 +50,7 @@ const url = usePage().props.value.ziggy.url + '/public/player/' + props.player.i
         <!-- <meta property="og:type" content="website" /> -->
         <meta property="og:title" content="Kjora" />
         <meta property="og:description" :content="`this is profile of ${player.name} on kjora website `" />
-        <meta property="og:image" :content="player.avatar_url" />
+        <meta property="og:image" :content="player.avatar_url ?? 'images/logo.png'" />
 
     </Head>
 

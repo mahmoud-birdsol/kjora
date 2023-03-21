@@ -48,9 +48,8 @@
                         <div v-if="comment.likes_count > 0">{{ comment.likes_count }}</div>
                         <LikeButton :isLiked="comment?.is_liked" :likeable_id="comment.id" :likeable_type="'App\\Models\\Comment'">
                             <template v-slot="{ isLiked }">
-                                <div class="transition-all duration-150 enabled:hover:underline hover:underline-offset-4" :class="isLiked ? 'text-primary' : ''">
-                                    {{ comment.likes_count === 1 ? $t('like') : $t('likes') }}
-                                </div>
+                                <div class="transition-all duration-150 hover:underline hover:underline-offset-4" :class="isLiked ? 'text-primary' : ''">
+                                    {{ comment.likes_count <= 1 ? $t('like') : $t('likes') }} </div>
                             </template>
                         </LikeButton>
                     </div>
@@ -58,9 +57,8 @@
                 <template v-else>
                     <template v-if="comment.likes_count > 0">
                         <div>{{ comment.likes_count }}</div>
-                        <div class="transition-all duration-150 enabled:hover:underline hover:underline-offset-4">
-                            {{ comment.likes_count === 1 ? $t('like') : $t('likes') }}
-                        </div>
+                        <div class="transition-all duration-150 ">
+                            {{ comment.likes_count <= 1 ? $t('like') : $t('likes') }} </div>
                     </template>
                 </template>
             </div>

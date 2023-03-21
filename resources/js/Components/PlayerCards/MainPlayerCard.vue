@@ -67,6 +67,8 @@ const backgroundImage = computed(() => {
 });
 
 const isCurrentUser = props.player.id === currentUser?.id
+const isPublic = usePage().url.value.includes('public/player')
+
 
 const addToFavorites = () => {
     const form = useForm({});
@@ -103,7 +105,7 @@ const removeFromFavorites = () => {
             <div class="flex items-start justify-between">
                 <div class="flex items-center justify-start gap-2 mb-2" :class="{ 'space-x-2': size == 'sm', 'space-x-8': size == 'lg' }">
                     <div class="relative">
-                        <Link :href="route('profile.edit')" v-if="isCurrentUser" class="absolute bottom-0 ltr:right-0 rtl:left-0 p-1 bg-white rounded-full hover:text-primary">
+                        <Link :href="route('profile.edit')" v-if="isCurrentUser && !isPublic" class="absolute bottom-0 ltr:right-0 rtl:left-0 p-1 bg-white rounded-full hover:text-primary">
                         <PencilIcon class="w-3 [&+div]:hover:block " />
                         <ToolTip :value="$t('edit-your-profile')" />
                         </Link>
