@@ -1,5 +1,5 @@
 <script setup>
-import {computed, onBeforeMount, onMounted, onUpdated, ref, watch} from 'vue';
+import { computed, onBeforeMount, onMounted, onUpdated, ref, watch } from 'vue';
 import { Inertia, } from '@inertiajs/inertia';
 import { Link, usePage } from '@inertiajs/inertia-vue3';
 import Dropdown from '@/Components/Dropdown.vue';
@@ -106,11 +106,11 @@ function markAllNotificationsAsRead() {
                 </div>
                 <div class="hidden md:flex md:gap-x-3 sm:items-center lg:ml-6">
                     <!-- upgrade button  -->
-                    <button class="rounded-full bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5" v-if="state !== 'Premium'">
+                    <button class="rounded-full   bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5" v-if="state !== 'Premium'">
                         <span class="bg-black rounded-full">
                             <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                         </span>
-                        <Link :href="route('upgrade')">{{ $t('upgrade') }}</Link>
+                        <Link class="capit" :href="route('upgrade')">{{ $t('upgrade') }}</Link>
                     </button>
                     <!-- user city  -->
                     <div class="flex items-center gap-1 ">
