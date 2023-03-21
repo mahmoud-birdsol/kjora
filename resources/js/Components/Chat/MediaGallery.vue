@@ -52,8 +52,8 @@ const thumbsOptions = {
     rewind: true,
     gap: "1rem",
     pagination: false,
-    fixedHeight: 110,
-    cover: true,
+    // fixedHeight: 150,
+    // cover: true,
     drag: 'free',
     snap: true,
     isNavigation: true,
@@ -63,7 +63,7 @@ const thumbsOptions = {
     perPage: props.media.length > 5 ? 5 : props.media.length,
     breakpoints: {
 		640: {
-			perPage: 2,
+			perPage: 3,
 		},
   }
    
@@ -81,7 +81,7 @@ function handleSplideActive(e) {
 }
 </script>
 <style scoped>
-[some-slider] li.is-active {
+[some-slider] li.is-active  img{
     transform: scale(0.9);
     outline: 1px solid rgb(0, 100, 0)
 }
@@ -140,15 +140,15 @@ function handleSplideActive(e) {
                 </Splide>
             </div>
             <div v-show="props.media.length > 1" class="" some-slider>
-                <Splide dir="ltr" :options="thumbsOptions" ref="thumbs" class="[&_ul]:justify-center">
-                    <SplideSlide v-for="item in media" :key="item.id" class="overflow-hidden rounded-lg"
+                <Splide dir="ltr" :options="thumbsOptions" ref="thumbs" class="[&_ul]:justify-center [&_ul]:items-center">
+                    <SplideSlide v-for="item in media" :key="item.id" class=""
                         style="border: none !important ;">
                         <!-- <img :src="'/images/selfie_example.png'" :alt="slide.alt" /> -->
                         <template v-if="item.mime_type.startsWith('image')">
-                            <img class="object-cover w-full h-full" :src="item?.original_url" alt="">
+                            <img class="object-contain w-full rounded-lg" :src="item?.original_url" alt="">
                         </template>
                         <template v-else-if="item.mime_type.startsWith('video')">
-                            <video class="object-cover w-full h-full">
+                            <video class="object-contain w-full rounded-lg">
                                 <source :src="item.original_url" :type="item.mime_type">
                             </video>
                         </template>
@@ -161,8 +161,4 @@ function handleSplideActive(e) {
         </div>
     </Modal>
 </template>
-<style>
-.splide__slide{
-    object-fit: contain;
-}
-</style>
+
