@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Models\Comment;
 use App\Models\Conversation;
 use App\Models\MediaLibrary;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -36,6 +37,7 @@ class ReportRequest extends FormRequest
                     MediaLibrary::class,
                     Conversation::class,
                     Comment::class,
+                    Post::class
                 ]),
             ],
             'user_id' => [
