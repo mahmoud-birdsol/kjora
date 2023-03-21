@@ -82,10 +82,6 @@ const showUploadFileModal = ref(false)
 const currentUser = usePage().props.value.auth.user
 const showDeleteMediaModal = ref(false)
 
-onMounted(() => {
-    console.log(isPublic);
-});
-
 function getFileFromId(id) {
     return props.posts.filter(item => item.id == id)[0]
 }

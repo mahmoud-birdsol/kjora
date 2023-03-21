@@ -8,6 +8,7 @@ import InputError from '@/Components/InputError.vue';
 import CropIcon from '@/Components/Icons/CropIcon.vue';
 import FadeInTransition from '@/Components/FadeInTransition.vue';
 import Crop from '@/Components/Crop.vue';
+import VueEasyLightbox, { useEasyLightbox } from 'vue-easy-lightbox'
 const props = defineProps({
     modelValue: {
         required: false,
@@ -62,7 +63,16 @@ const photoInput = ref(null);
 const isLoading = ref(false);
 const isDisabled = ref(false);
 const num = ref(0)
+const visibleRef = ref(false)
+const imgsRef = ref(null)
 
+const showLightBox = (url) => {
+    imgsRef.value = url
+    visibleRef.value = true
+}
+function hideLightBox() {
+visibleRef.value = false
+}
 
 const selectNewPhoto = () => {
     photoInput.value.value = null
@@ -157,14 +167,14 @@ function changeFiles(file, url, id) {
                     <div class="relative grid grid-cols-3 gap-2">
                         <template v-for="(file, index) in filesData" :key="index">
                             <div v-if="file.url.startsWith('data:image') || file.url.startsWith('data:video')" class="relative">
-                                <img v-if="file.url.startsWith('data:image')" :src="file.url" alt="" class="object-contain w-full h-full rounded-lg aspect-square ">
+                                <img v-if="file.url.startsWith('data:image')" :src="file.url" alt="" class="object-contain w-full h-full rounded-lg aspect-square " @click.stop="showLightBox(file.url)">
                                 <video v-if="file.url.startsWith('data:video')" :src="file.url" alt="" class="object-cover w-full h-full rounded-lg aspect-square" controls />
-                                <button @click.prevent="removePhoto(index)" class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                                <button @click.prevent.stop="removePhoto(index)" class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
                                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
                                         <XMarkIcon class="w-5 h-5 text-stone-800" />
                                     </div>
                                 </button>
-                                <button class="absolute top-0 left-0 bg-white bg-opacity-90 rounded-br-xl" @click="showCropModal(file)" v-if="file.url.startsWith('data:image')">
+                                <button class="absolute top-0 left-0 bg-white bg-opacity-90 rounded-br-xl" @click.stop="showCropModal(file)" v-if="file.url.startsWith('data:image')">
                                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
                                         <CropIcon class="w-4" />
                                     </div>
@@ -201,14 +211,17 @@ function changeFiles(file, url, id) {
             </div>
             <div>
                 <Crop :img="cropFile" @crop="changeFiles" v-model:open="openModal" @update:open="() => openModal = false" />
-                <div class="mb-2 text-sm text-center justify-self-end text-primary">
-                    {{ $t('video, images, PDFs and docs are allowed with max size(10 MB) are allowed') }}
+                    <div class="mb-2 text-sm text-center justify-self-end text-primary">
+                        {{ $t('video, images, PDFs and docs are allowed with max size(10 MB) are allowed') }}
+                    </div>
+                    <PrimaryButton @click.prevent="upload" :disabled="isDisabled">
+                        {{ $t('upload') }}
+                    </PrimaryButton>
+                    <!-- <InputError class="mt-2" :message="form.errors.image" /> -->
                 </div>
-                <PrimaryButton @click.prevent="upload" :disabled="isDisabled">
-                    {{ $t('upload') }}
-                </PrimaryButton>
-                <!-- <InputError class="mt-2" :message="form.errors.image" /> -->
             </div>
-        </div>
-    </Modal>
+            <Teleport to="body">
+                <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" @hide="hideLightBox"></vue-easy-lightbox>
+            </Teleport>
+        </Modal>
 </template>
