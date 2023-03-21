@@ -36,10 +36,21 @@
                                             class="p-2 px-8 text-white bg-red-800 border-2 border-red-800 rounded-full hover:bg-transparent hover:text-red-800 active:scale-95 "
                                             @click="removePost">{{ $t('Delete Post') }}
                                         </button>
+                                        
                                     </div>
                                 </div>
                             </Modal>
                         </button>
+                        <button @click="showShare" class="hover:text-gray-400 ">
+                            <li class="flex items-center justify-center gap-x-2">
+                                <Socials :id="postId" shareUrl='public/posts' >
+                                    <template #label>
+                                        <span> {{ $t('share') }}</span>
+                                    </template>
+                                </Socials>
+                            </li>
+                        </button>
+                        
                         <button class="hover:text-gray-400 group">
                             <li v-if="!isCurrentUser">
                                 <ReportModal :reportable-id="postId" :reportable-type="'App\\Models\\Post'">
@@ -69,6 +80,7 @@ import { EllipsisHorizontalIcon, TrashIcon, PencilIcon, FlagIcon } from '@heroic
 import FadeInTransition from '../FadeInTransition.vue';
 import Modal from '../Modal.vue';
 import ReportModal from '@/Components/ReportModal.vue';
+import Socials from '@/Components/Socials.vue';
 import { ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 

@@ -203,7 +203,7 @@ const removeFromFavorites = () => {
                         </Link>
                     </div>
 
-                    <Socials v-if="showShare" :id="player.id" />
+                    <Socials v-if="showShare" :id="player.id" shareUrl='public/player' />
 
                 </div>
             </div>

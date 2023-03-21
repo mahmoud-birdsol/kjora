@@ -9,11 +9,14 @@ import { ShareIcon, LinkIcon } from '@heroicons/vue/24/outline'
 let props = defineProps({
     id: {
         required: true,
-    }
+    },shareUrl: {
+        required: true,
+    },
+
 })
 let showSocials = ref(false)
 let show = ref(false)
-let url = usePage().props.value.ziggy.url + '/public/player/' + props.id
+let url = usePage().props.value.ziggy.url + '/'+ props.shareUrl +'/' + props.id
 function copy() {
     navigator.clipboard.writeText(url).then((
 
@@ -45,9 +48,11 @@ function copy() {
                 </div>
             </div>
         </Transition>
-        <button>
+        <button class="flex items-center justify-center gap-x-2" @click="showSocials = !showSocials">
+            <ShareIcon class="h-4 w-4"  />
+            <slot v-if="$slots.label" name="label">
 
-            <ShareIcon class="h-4 w-4" @click="showSocials = !showSocials" />
+            </slot>
         </button>
     </div>
 </template>

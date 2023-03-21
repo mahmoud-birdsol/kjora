@@ -62,7 +62,7 @@ const options = {
     rewind: false,
     pagination: true,
     // drag: "free",
-    fixedHeight:500,
+    fixedHeight:300,
     type: 'slide',
     focus: "center",
     cover:true,
