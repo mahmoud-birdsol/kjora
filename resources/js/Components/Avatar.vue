@@ -40,6 +40,7 @@ const props = defineProps({
 const currentUser = usePage().props.value?.auth?.user ?? null
 // console.log(currentUser);
 const isCurrentUser = currentUser?.id === props?.id
+const isPlayerProfile = usePage().url.value.includes('player/')
 // console.log(isCurrentUser);
 const sizeClasses = computed(() => {
     return {
@@ -80,29 +81,26 @@ function hideLightBox() {
 </script>
 
 <template>
-    <template v-if="route().current().includes('player.profile')" class="bg-white text-red-600">
-        <span @click="showLightBox" v-if="imageUrl"
-            class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer"
-            :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'" />
-        <span v-else class="block bg-center bg-no-repeat bg-cover rounded-full"
-            :class="[sizeClasses, borderClasses, borderColorClass]"
-            :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
+    <template v-if="isPlayerProfile" class="bg-white text-red-600">
+        <span @click="showLightBox" v-if="imageUrl" class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer" :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'" />
+        <span v-else class="block bg-center bg-no-repeat bg-cover rounded-full" :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
     </template>
 
     <template v-else>
-        <Link v-if="!isCurrentUser && imageUrl && id" :href="route('player.profile', id)"
-            class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer"
-            :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'">
+        <Link v-if="!isCurrentUser && imageUrl && id" :href="route('player.profile', id)" class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer" :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'">
         </Link>
-        <Link v-else-if="!isCurrentUser && !imageUrl && id" :href="route('player.profile', id)"
-            class="block bg-center bg-no-repeat bg-cover rounded-full"
-            :class="[sizeClasses, borderClasses, borderColorClass]"
+        <Link v-else-if="!isCurrentUser && !imageUrl && id" :href="route('player.profile', id)" class="block bg-center bg-no-repeat bg-cover rounded-full" :class="[sizeClasses, borderClasses, borderColorClass]"
             :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
-    <span @click="showLightBox" v-else-if="imageUrl"
-        class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer"
-        :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'" />
-    <span v-else class="block bg-center bg-no-repeat bg-cover rounded-full"
-        :class="[sizeClasses, borderClasses, borderColorClass]"
-        :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
+        <span @click="showLightBox" v-else-if="imageUrl" class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer" :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'" />
+        <span v-else class="block bg-center bg-no-repeat bg-cover rounded-full" :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
+    </template>
+    <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" @hide="hideLightBox"></vue-easy-lightbox>
 </template>
-<vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" @hide="hideLightBox"></vue-easy-lightbox></template>
+
+
+<style>
+.vel-img-wrapper {
+    overflow: hidden;
+    border-radius: 50%;
+}
+</style>
