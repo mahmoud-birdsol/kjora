@@ -15,7 +15,7 @@
                         </video>
                     </template>
 
-                    <div class="absolute items-center text-xs  bottom-2 right-2 flex gap-2 text-gray-100 ">
+                    <div class="absolute items-center text-xs  bottom-2 ltr:right-2 rtl:left-2 flex gap-2 text-gray-100 ">
                         <span class="shadow-md">{{ post.views_count }}</span>
                         <EyeIcon class="h-5 w-5 shadow-md " />
                     </div>
