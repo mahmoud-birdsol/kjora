@@ -1,8 +1,8 @@
 <template>
     <div class="ml-4 rtl:mr-4 text-white">
         <button @click="setLocale">
-            <span class="font-semibold" v-if="selectable_locale == 'ar'">العربية</span>
-            <span class="font-semibold" v-if="selectable_locale == 'en'">EN</span>
+            <span class="font-semibold" v-if="selectable_locale == 'ar'">ع</span>
+            <span class="" v-if="selectable_locale == 'en'">EN</span>
         </button>
     </div>
 </template>

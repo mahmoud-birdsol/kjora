@@ -11,7 +11,9 @@ const showMobileMenu = ref(false);
     <nav class="bg-transparent">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 justify-between items-center">
-                <div class="hidden lg:block sm:w-1/3"></div>
+                <div class="hidden lg:block sm:w-1/3">
+                    <GuestLanguageSelector class="w-full" />
+                </div>
                 <div class="sm:w-1/3 sm:flex sm:justify-center sm:items-center">
                     <img class="block h-20 mt-4 w-auto lg:hidden" src="/images/logo.png" alt="Your Company">
                     <img class="hidden h-20 mt-4 w-auto lg:block" src="/images/logo.png" alt="Your Company">
@@ -23,7 +25,6 @@ const showMobileMenu = ref(false);
                     </NavLink>
                     <NavLink :href="route('about')" :active="route().current('about')">{{$t('about')}}</NavLink>
                     <NavLink :href="route('contact')" :active="route().current('contact')">{{$t('contact')}}</NavLink>
-                    <GuestLanguageSelector class="w-full" />
 
                 </div>
                 <div class="-mr-2 flex items-center sm:hidden">
