@@ -90,7 +90,7 @@ function markAllNotificationsAsRead() {
                             </span>
                         </NavLink>
                         <NavLink :href="route('invitation.index')" :active="route().current('invitation.index') || route().current('hire.index')">
-                            <FootBallIcon class="fill-primary" />
+                            <FootBallIcon class="fill-primary w-4 h-4" />
 
                             <span>
                                 {{ $t('invitations') }}
