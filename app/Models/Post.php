@@ -41,7 +41,7 @@ class Post extends Model implements HasMedia, Likeable, Reportable
      */
     protected $appends = [
         'cover_photo',
-        'views-count'
+        'views_count'
     ];
 
     /**
