@@ -80,7 +80,6 @@ function hideLightBox() {
 </script>
 
 <template>
-    <div class="bg-white text-red-700"> {{ route().current().includes('player.profile') }}</div>
     <template v-if="route().current().includes('player.profile')" class="bg-white text-red-600">
         <span @click="showLightBox" v-if="imageUrl"
             class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer"
