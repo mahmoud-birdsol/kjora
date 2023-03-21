@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\MarkNotificationAsReadController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\NewMessagesController;
 use App\Http\Controllers\Api\UserLocationController;
+use App\Http\Resources\CommentResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -106,4 +107,13 @@ Route::post('notifications/mark-as-read/{notificationId}', MarkNotificationAsRea
     ->name('api.notifications.mark-as-read')->middleware('throttle:200,1');
 
 Route::get('invitations/{invitation}', FetchInvitationController::class)->name('api.invitations.index');
+
+
+Route::get('public/post/comments', function (Request $request) {
+    $modelType = (new ReflectionClass($request->input('commentable_type')))->newInstance();
+
+    $model = $modelType->findOrFail($request->input('commentable_id'));
+
+    return CommentResource::collection($model->comments->load('user')->load('replies'));
+})->name('public.post.comments');
 

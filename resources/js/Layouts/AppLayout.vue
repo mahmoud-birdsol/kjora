@@ -48,7 +48,7 @@ const errorCallback = (error) => {
 
         <Head :title="title" />
 
-        <div class="min-h-screen bg-gradient-to-b from-black to-primaryDark before:bg-[url(/images/ballkjoura.png)]  relative before:absolute before:inset-0 before:bg-no-repeat before:mix-blend-overlay isolate before:-z-10">
+        <div class="min-h-screen bg-gradient-to-b from-black to-primaryDark before:bg-[url(/images/ballkjoura.png)] relative before:absolute before:inset-0 before:bg-[center_-243px] before:bg-no-repeat before:mix-blend-overlay isolate before:-z-10">
             <div class="flex flex-col justify-between min-h-screen pt-6 space-y-4 sm:pt-0 ltr:font-sans rtl:font-tajawl">
                 <Navbar />
 

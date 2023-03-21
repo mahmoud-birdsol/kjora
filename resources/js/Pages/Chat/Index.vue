@@ -1,5 +1,5 @@
 <script setup>
-import { provide } from 'vue';
+import {onMounted, provide} from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import ChatLayout from '@/Layouts/ChatLayout.vue';
 import {Inertia} from "@inertiajs/inertia";
@@ -8,6 +8,27 @@ import {usePage} from "@inertiajs/inertia-vue3";
 const props = defineProps(['conversations', 'last_online_at']);
 
 const user = usePage().props.value.auth.user;
+
+const acceptChatRegulations = () => {
+    Inertia.get(route('accept-chat-regulations'), {}, {
+        preserveState: true,
+        preserveScroll: true,
+        onSuccess: () => {
+            Inertia.get(route('chats.show', user.latest_conversation.id),{}, {
+                preserveState:false
+
+            })
+        }
+    });
+}
+
+onMounted(() => {
+    if (user.accepted_chat_regulations_at != null) {
+        Inertia.get(route('chats.show', user.latest_conversation.id),{}, {
+            preserveState:false
+        })
+    }
+})
 
 provide('conversation', null);
 </script>
@@ -18,7 +39,7 @@ provide('conversation', null);
         </template>
 
         <ChatLayout :conversations="conversations">
-            <template #main>
+            <template #main v-if="user.accepted_chat_regulations_at == null">
                 <div class="flex flex-col gap-4 p-8">
                     <h2 class="text-2xl font-bold capitalize">{{$t('Welcome to chat!')}}</h2>
 
@@ -44,10 +65,10 @@ provide('conversation', null);
 
                 </div>
             </template>
-            <template #footer>
+            <template #footer v-if="user.accepted_chat_regulations_at == null">
                 <div class="grid p-10 bg-white place-items-center rounded-2xl">
-                    <button class="py-2 text-white bg-black px-28 rounded-3xl" v-if="user.latest_message" @click="Inertia.get(route('chats.show', user.latest_message.conversation.id))">{{$t('ok')}}</button>
-                    <button class="py-2 text-white bg-black px-28 rounded-3xl" v-if="!user.latest_message">{{$t('ok')}}</button>
+                    <button class="py-2 text-white bg-black px-28 rounded-3xl" v-if="user.latest_conversation" @click="acceptChatRegulations">{{$t('ok')}}</button>
+                    <button class="py-2 text-white bg-black px-28 rounded-3xl" v-if="!user.latest_conversation">{{$t('ok')}}</button>
                 </div>
             </template>
         </ChatLayout>

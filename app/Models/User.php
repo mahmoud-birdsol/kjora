@@ -83,7 +83,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'current_longitude',
         'locale',
         'state',
-        'geo_location'
+        'geo_location',
+        'accepted_chat_regulations_at'
     ];
 
     /**
@@ -114,7 +115,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'accepted_cookie_policy_at' => 'datetime',
         'rating' => 'float',
         'last_seen_at' => 'datetime',
-        'state' => UserPremiumState::class
+        'state' => UserPremiumState::class,
+        'accepted_chat_regulations_at' => 'datetime'
     ];
 
     /**
@@ -136,7 +138,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'state_name',
         'played',
         'missed',
-        'latest_message'
+        'latest_conversation'
 ];
 
     /**
@@ -507,11 +509,16 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     /**
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
-    public function latestMessage(): Attribute
+    public function latestConversation(): Attribute
     {
         return Attribute::make(
             get: function () {
-                return $this->messages()->with('conversation')->latest()->first();
+                $conversation = $this->messages()->latest()->first()?->conversation;
+
+                if (is_null($conversation)) {
+                    $conversation = $this->conversations()->first();
+                }
+                return $conversation;
             },
         );
     }
