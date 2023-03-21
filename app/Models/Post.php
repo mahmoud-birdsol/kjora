@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -38,7 +39,8 @@ class Post extends Model implements HasMedia, Likeable
      * @var array
      */
     protected $appends = [
-        'cover_photo'
+        'cover_photo',
+        'views-count'
     ];
 
     /**
@@ -88,7 +90,15 @@ class Post extends Model implements HasMedia, Likeable
     {
         return $this->morphMany(Report::class, 'reportable');
     }
-
+    /**
+     * Get the posts views
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function postViews(): HasMany
+    {
+        return $this->hasMany(PostView::class);
+    }
     /**
      * Get the cover Photo attribute
      *
@@ -100,7 +110,14 @@ class Post extends Model implements HasMedia, Likeable
             get: fn($value) => $this->getMedia('gallery')->where('id', $this->cover_id)->first()
         );
     }
-
+    /**
+     * Get the views count attribute
+     *
+     */
+    public function getViewsCountAttribute()
+    {
+        return $this->postViews->count();
+    }
     public function owner(): User|null
     {
         return $this->user;
