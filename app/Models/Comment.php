@@ -78,4 +78,9 @@ class Comment extends Model implements Reportable, Likeable
     {
         return url(route('posts.show', $this->commentable));
     }
+
+    public function reportedUser()
+    {
+        return $this->user;
+    }
 }
