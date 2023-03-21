@@ -93,7 +93,7 @@ const filterByPosition = (position) => {
         <template #header>
             <HelloUserHeader />
         </template>
-        <!-- <template #ads>
+        <template #ads>
             <Splide dir="ltr" class=" h-full w-[32rem] max-w-full self-end overflow-hidden  rounded-full md:ml-auto"
                 :options="options">
                 <template v-for="(advertisement, i) in advertisements" :key="i">
@@ -106,7 +106,7 @@ const filterByPosition = (position) => {
             </Splide>
 
 
-        </template> -->
+        </template>
         <div class="">
             <div class="">
                 <!-- Position Filters...
