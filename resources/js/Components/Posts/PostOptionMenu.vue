@@ -6,8 +6,7 @@
         <OnClickOutside @trigger="showOptions = false">
             <FadeInTransition>
                 <!-- media option menu -->
-                <div v-show="showOptions"
-                    class="absolute top-0 z-20 px-3 py-2 text-xs text-white bg-black border ltr:right-8 rtl:left-8 rounded-xl border-neutral-500 z-2 ">
+                <div v-show="showOptions" class="absolute top-0 z-20 px-3 py-2 text-xs text-white bg-black border ltr:right-8 rtl:left-8 rounded-xl border-neutral-500 z-2 ">
                     <ul class="flex flex-col justify-center gap-y-2">
                         <button class="hover:text-gray-400 group" v-if="isCurrentUser" @click="editCaption">
                             <li class="flex items-center gap-x-2">
@@ -21,36 +20,31 @@
                                 <span> {{ $t('delete') }}</span>
                             </li>
                             <!-- confirm delete media modal -->
-                            <Modal :show="showDeletePostModal" @close="showDeletePostModal = false" :closeable="true"
-                                :show-close-icon="false" :max-width="'sm'">
+                            <Modal :show="showDeletePostModal" @close="showDeletePostModal = false" :closeable="true" :show-close-icon="false" :max-width="'sm'">
                                 <div class="flex flex-col justify-center p-6 text-stone-800 ">
                                     <p class="mb-3 text-lg">
-                                        {{ $t('Are you sure you want delete this media ? ') }}</p>
+                                        {{ $t('Are you sure you want delete this post ? ') }}</p>
                                     <div class="flex justify-center w-full gap-4">
-                                        <button
-                                            class="p-2 px-8 border-2 rounded-full border-primary hover:bg-primary text-primary hover:text-white active:scale-95 "
-                                            @click="showDeletePostModal = false">{{ $t('Cancel')
-                                            }}
+                                        <button class="p-2 px-8 border-2 rounded-full border-primary hover:bg-primary text-primary hover:text-white active:scale-95 " @click="showDeletePostModal = false">{{ $t('Cancel')
+                                        }}
                                         </button>
-                                        <button
-                                            class="p-2 px-8 text-white bg-red-800 border-2 border-red-800 rounded-full hover:bg-transparent hover:text-red-800 active:scale-95 "
-                                            @click="removePost">{{ $t('Delete Post') }}
+                                        <button class="p-2 px-8 text-white bg-red-800 border-2 border-red-800 rounded-full hover:bg-transparent hover:text-red-800 active:scale-95 " @click="removePost">{{ $t('Delete Post') }}
                                         </button>
-                                        
+
                                     </div>
                                 </div>
                             </Modal>
                         </button>
                         <button @click="showShare" class="hover:text-gray-400 ">
                             <li class="flex items-center justify-center gap-x-2">
-                                <Socials :id="postId" shareUrl='public/posts' >
+                                <Socials :id="postId" shareUrl='public/posts'>
                                     <template #label>
                                         <span> {{ $t('share') }}</span>
                                     </template>
                                 </Socials>
                             </li>
                         </button>
-                        
+
                         <button class="hover:text-gray-400 group">
                             <li v-if="!isCurrentUser">
                                 <ReportModal :reportable-id="postId" :reportable-type="'App\\Models\\Post'">

@@ -11,14 +11,12 @@
     </OnClickOutside>
     <div class="flex items-center flex-grow ">
 
-        <textarea @keypress.enter.exact.prevent="(e) => addComment()" v-model="newComment" name="newComment" id="newComment"
-            rows="1" :placeholder="$t('Add a comment...')"
+        <textarea @keypress.enter.exact.prevent="(e) => addComment()" v-model="newComment" name="newComment" id="newComment" rows="1" :placeholder="$t('Add a comment...')"
             class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary "></textarea>
     </div>
 
     <button @click="(e) => addComment()" :disabled="isSending" class="p-1 group ">
-        <PaperAirplaneIcon class="w-5 group-hover:text-neutral-700"
-            :class="isSending ? 'text-neutral-200' : 'text-neutral-400'" />
+        <PaperAirplaneIcon class="w-5 group-hover:text-neutral-700 rtl:rotate-180" :class="isSending ? 'text-neutral-200' : 'text-neutral-400'" />
     </button>
 </template>
 
