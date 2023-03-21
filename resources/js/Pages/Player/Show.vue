@@ -32,7 +32,7 @@ const tabs = computed(() => {
 })
 
 function reloadMedia() {
-    Inertia.reload({ only: ['media'] })
+    Inertia.reload({ only: ['posts'] })
 }
 
 
@@ -51,10 +51,8 @@ function reloadMedia() {
                 <MainPlayerCard :player="player" size="lg" :show-report="false" />
                 <div class="flex justify-center p-2 bg-white rounded-full gap-x-3 ">
                     <template v-for="(tab, index) in tabs" :key="index">
-                        <button @click="currentTabId = tab.id" :data-tab="tab.name"
-                            class="text-sm font-semibold uppercase transition-colors duration-150 ease-in hover:text-stone-600 "
-                            :class="tab.id === currentTabId ? 'text-stone-800' : 'text-stone-400'">{{
-                                $t(tab.name) }} </button>
+                        <button @click="currentTabId = tab.id" :data-tab="tab.name" class="text-sm font-semibold uppercase transition-colors duration-150 ease-in hover:text-stone-600 " :class="tab.id === currentTabId ? 'text-stone-800' : 'text-stone-400'">{{
+                            $t(tab.name) }} </button>
                     </template>
 
                 </div>

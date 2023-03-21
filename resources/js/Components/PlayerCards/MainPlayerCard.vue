@@ -40,8 +40,12 @@ const props = defineProps({
         required: false,
         type: Boolean,
         default: true
-    }, countries: Array,
-    positions: Array,
+    }, showShare: {
+        required: false,
+        type: Boolean,
+        default: true
+    },
+
 });
 const showUploadAvatarModal = ref(false)
 const currentUser = usePage().props.value.auth.user
@@ -62,7 +66,7 @@ const backgroundImage = computed(() => {
     }
 });
 
-const isCurrentUser = props.player.id === currentUser.id
+const isCurrentUser = props.player.id === currentUser?.id
 
 const addToFavorites = () => {
     const form = useForm({});
@@ -196,7 +200,8 @@ const removeFromFavorites = () => {
                         <!-- <ChevronDoubleRightIcon class="inline w-4 h-4 text-white" /> -->
                         </Link>
                     </div>
-                    <Socials :id="player.id" />
+
+                    <Socials v-if="showShare" :id="player.id" />
 
                 </div>
             </div>

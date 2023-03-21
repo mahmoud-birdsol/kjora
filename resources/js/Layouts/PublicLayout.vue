@@ -6,11 +6,13 @@ import Navbar from '@/Layouts/Partials/Navbar.vue';
 import RealtimeNotifications from '@/Layouts/Partials/RealtimeNotifications.vue';
 import { onMounted, provide, ref } from 'vue';
 import { loadLanguageAsync } from 'laravel-vue-i18n';
-import axios from 'axios';
-import { usePermission } from '@vueuse/core';
-onMounted(() => {
-    loadLanguageAsync(usePage().props.value.locale)
-})
+import GuestNavbar from './Partials/GuestNavbar.vue';
+
+
+
+// onMounted(() => {
+//     loadLanguageAsync(usePage().props.value.locale)
+// })
 
 defineProps({
     title: String,
@@ -30,7 +32,7 @@ defineProps({
 
         <div class="min-h-screen bg-gradient-to-b from-black to-primaryDark before:bg-[url(/images/ballkjoura.png)]  relative before:absolute before:inset-0 before:bg-no-repeat before:mix-blend-overlay isolate before:-z-10">
             <div class="flex flex-col justify-between min-h-screen pt-6 space-y-4 sm:pt-0 ltr:font-sans rtl:font-tajawl">
-                <Navbar />
+                <GuestNavbar />
 
                 <header v-if="$slots.header" class="">
                     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -58,7 +60,6 @@ defineProps({
             </div>
         </div>
     </div>
-    <RealtimeNotifications />
 </template>
 
 
