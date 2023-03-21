@@ -94,7 +94,7 @@ const filterByPosition = (position) => {
             <HelloUserHeader />
         </template>
         <template #ads>
-            <Splide dir="ltr" class=" h-full w-[32rem] max-w-full self-end overflow-hidden  rounded-full md:ml-auto"
+            <Splide dir="ltr" class=" h-full w-[32rem] max-w-full self-end overflow-hidden  rounded-full ltr:md:ml-auto rtl:mr-auto"
                 :options="options">
                 <template v-for="(advertisement, i) in advertisements" :key="i">
                     <SplideSlide class="h-full">
