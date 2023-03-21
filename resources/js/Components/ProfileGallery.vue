@@ -3,7 +3,7 @@
         <div class="grid grid-cols-2 gap-4 overflow-auto sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 hideScrollBar ">
             <template v-for="(post, index) in posts " :key="post.id">
                 <FadeInTransition>
-                    <Link :href="route('posts.show', post.id)" class="relative w-full h-full overflow-hidden rounded-lg aspect-square group">
+                    <Link :href="isPublic ? route('public.posts', post.id) : route('posts.show', post.id)" class="relative w-full h-full overflow-hidden rounded-lg aspect-square group">
 
                     <template v-if="mimeType(post?.cover_photo?.mime_type) === 'image'">
                         <img :src="post?.cover_photo?.original_url" alt="" class="object-cover w-full h-full ">
@@ -72,14 +72,14 @@ const props = defineProps({
     shouldPreview: null
 })
 defineEmits(['reload'])
-
+const isPublic = usePage().url.value.includes('public/player')
 
 const showUploadFileModal = ref(false)
 const currentUser = usePage().props.value.auth.user
 const showDeleteMediaModal = ref(false)
 
 onMounted(() => {
-    // console.log(props.posts);
+    console.log(isPublic);
 });
 
 function getFileFromId(id) {

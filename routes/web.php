@@ -512,7 +512,7 @@ Route::any('nova/language/{language}', function (Request $request, $language) {
 
 Route::get('public/posts/{post}', function (Post $post) {
 
-    return Inertia::render('Public/Post', [
+    return Inertia::render('Public/PostView', [
         'post' => $post,
         'user' => $post->user
     ]);

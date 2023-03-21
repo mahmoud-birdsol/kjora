@@ -38,7 +38,8 @@ const tabs = computed(() => {
 function reloadMedia() {
     Inertia.reload({ only: ['posts'] })
 }
-let url = usePage().props.value.ziggy.url + '/public/player/' + props.player.id
+
+const url = usePage().props.value.ziggy.url + '/public/player/' + props.player.id
 
 
 </script>
