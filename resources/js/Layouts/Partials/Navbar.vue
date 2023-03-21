@@ -110,7 +110,7 @@ function markAllNotificationsAsRead() {
                         <span class="bg-black rounded-full">
                             <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                         </span>
-                        <Link class="capit" :href="route('upgrade')">{{ $t('upgrade') }}</Link>
+                        <Link class="capitalize" :href="route('upgrade')">{{ $t('upgrade') }}</Link>
                     </button>
                     <!-- user city  -->
                     <div class="flex items-center gap-1 ">
@@ -205,7 +205,7 @@ function markAllNotificationsAsRead() {
                             <span class="bg-black rounded-full">
                                 <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                             </span>
-                            <Link :href="route('upgrade')">{{ $t('upgrade') }}</Link>
+                            <Link class="capitalize" :href="route('upgrade')">{{ $t('upgrade') }}</Link>
                         </button>
 
                         <!-- Settings Dropdown -->
