@@ -76,6 +76,6 @@ class Comment extends Model implements Reportable, Likeable
 
     public function url(): string
     {
-        return url(route('gallery.show', $this->commentable));
+        return url(route('posts.show', $this->commentable));
     }
 }
