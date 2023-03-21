@@ -24,7 +24,7 @@ onMounted(() => {
                 <SecondaryButton size="sm">{{ message.action.text }}</SecondaryButton>
                 </Link>
 
-                <button @click="show = false" v-if="message.closeable && !message.action" class="absolute top-0 rtl:left-0 ltr:right-0 m-1">
+                <button @click="show = false" v-if="message.closeable && !message.action" class="absolute top-1 rtl:left-1 ltr:right-1">
                     <XMarkIcon class="w-6 h-6 text-white" />
                 </button>
             </div>
@@ -38,7 +38,7 @@ onMounted(() => {
                 <SecondaryButton size="sm">{{ message.action.text }}</SecondaryButton>
                 </Link>
 
-                <button @click="show = false" v-if="message.closeable && !message.action" class="absolute top-0 rtl:left-0 ltr:right-0 m-1">
+                <button @click="show = false" v-if="message.closeable && !message.action" class="absolute top-1 rtl:left-1 ltr:right-1">
                     <XMarkIcon class="w-6 h-6 text-stone-600" />
                 </button>
             </div>
@@ -52,7 +52,7 @@ onMounted(() => {
                 <SecondaryButton size="sm">{{ message.action.text }}</SecondaryButton>
                 </Link>
 
-                <button @click="show = false" v-if="message.closeable && !message.action" class="absolute top-0 rtl:left-0 ltr:right-0 m-1">
+                <button @click="show = false" v-if="message.closeable && !message.action" class="absolute top-1 rtl:left-1 ltr:right-1">
                     <XMarkIcon class="w-6 h-6 text-white" />
                 </button>
             </div>
@@ -66,7 +66,7 @@ onMounted(() => {
                 <SecondaryButton size="sm">{{ message.action.text }}</SecondaryButton>
                 </Link>
 
-                <button @click="show = false" v-if="message.closeable && !message.action" class="absolute top-0 rtl:left-0 ltr:right-0 m-1">
+                <button @click="show = false" v-if="message.closeable && !message.action" class="absolute top-1 rtl:left-1 ltr:right-1">
                     <XMarkIcon class="w-6 h-6 text-white" />
                 </button>
             </div>
