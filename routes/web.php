@@ -516,7 +516,7 @@ Route::get('public/posts/{post}', function (Post $post) {
         'post' => $post,
         'user' => $post->user
     ]);
-})->middleware('guest')->name('public.posts');
+})->name('public.posts');
 
 Route::get('public/player/{player}', function (User $player) {
     $player->load('club');
@@ -541,7 +541,7 @@ Route::get('public/player/{player}', function (User $player) {
         'countries' => $countries,
         'positions' => $positions,
     ]);
-})->middleware('guest')->name('public.player');
+})->name('public.player');
 
 
 Route::get('accept-chat-regulations', function (Request $request) {
