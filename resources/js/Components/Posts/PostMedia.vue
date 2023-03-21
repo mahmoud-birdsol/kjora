@@ -4,11 +4,11 @@
             <template v-for="media in postMedia" :key="media.id">
                 <SplideSlide class="">
                     <div @click="showMediaGallery = true"
-                        class="flex justify-center overflow-hidden group rounded-3xl aspect-video ">
+                        class="flex justify-center overflow-hidden group h-full">
                         <img v-if="media.mime_type.startsWith('image') || media.mime_type.startsWith('webp')"
-                            :src="media.original_url" alt="" class="object-contain h-full ">
+                            :src="media.original_url" alt="" class="object-contain h-full rounded-2xl">
                         <video v-if="media.mime_type.startsWith('video')" controls :src="media.original_url" alt=""
-                            class="object-contain h-full " />
+                            class="object-contain h-full rounded-2xl " />
                         <!-- delete single media -->
                         <!-- <button v-if="currentUser.id === user.id"
                                         @click.prevent.stop="showDeleteMediaModal = true"
@@ -37,7 +37,7 @@
                 </SplideSlide>
             </template>
         </Splide>
-        <div v-if="postMedia.length > 1" class="absolute top-2 right-2 bg-white shadow-md rounded-full p-1 ">
+        <div v-if="postMedia.length > 1" class="absolute top-2 right-2 text-stone-200 text-xs p-1 ">
             <span>{{ currentMediaIndex }}</span>
             <span>/</span>
             <span>{{ postMedia.length }} </span>
@@ -62,8 +62,10 @@ const options = {
     rewind: false,
     pagination: true,
     // drag: "free",
+    fixedHeight:500,
     type: 'slide',
     focus: "center",
+    cover:true,
     perPage: 1,
     perMove: 1,
     snap: true,

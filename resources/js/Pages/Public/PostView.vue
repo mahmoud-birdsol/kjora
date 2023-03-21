@@ -18,7 +18,7 @@
                 <PostMedia :postMedia="post.media" :user="user"></PostMedia>
             </template>
             <template #userImage>
-                <Avatar :id="user.id" :username="user.name" :image-url="user.avatar_url" :size="'lg'" :border="true" border-color="primary" />
+                <Avatar :id="user.id" :username="user.name" :image-url="user.avatar_url" :size="'md'" :border="true" border-color="primary" />
             </template>
             <template #userInfo>
                 <div class="flex justify-between w-full">
@@ -42,7 +42,18 @@
                         <span>|</span>
                         <DateTranslation :start="post.created_at" format="hh:mm A" />
                     </div>
-                    <div class="flex items-center gap-1">
+                </div>
+            </template>
+            <template #postCaption>
+                <PostCaptionFrom ref="postCaptionComp" :post="post"></PostCaptionFrom>
+            </template>
+
+            <template #commentsCount>
+                <div class="p-3 pt-5 text-sm border-b border-stone-300"> {{ $t('comments ( :count )', {
+                    count: numComments
+                }) }}
+                </div>
+                <div class="flex items-center gap-1">
                         <template v-if="post?.likes_count > 0">
                             <span class="text-sm">{{ post?.likes_count }}</span>
                             <div class="transition-all duration-150 ">
@@ -55,17 +66,6 @@
                             </template>
                         </LikeButton> -->
                     </div>
-                </div>
-            </template>
-            <template #postCaption>
-                <PostCaptionFrom ref="postCaptionComp" :post="post"></PostCaptionFrom>
-            </template>
-
-            <template #commentsCount>
-                <div class="p-3 pt-5 text-sm border-b border-stone-300"> {{ $t('comments ( :count )', {
-                    count: numComments
-                }) }}
-                </div>
             </template>
             <template #postComments>
                 <div ref="commentsContainer" @scroll="handleScroll" class="flex flex-col gap-4 w-full max-h-[500px] min-h-[480px]  hideScrollBar overflow-auto" v-if="postComments">
