@@ -25,7 +25,7 @@
     @inertiaHead
 </head>
 
-<body class="font-sans antialiased" dir="{{app()->getLocale() == 'ar' ? 'rtl' : 'ltr'}}">
+<body class="font-sans antialiased">
 @inertia
 </body>
 </html>

@@ -3,7 +3,7 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
 import { ref } from 'vue';
-
+import GuestLanguageSelector from "../../Shared/GuestLanguageSelector.vue";
 const showMobileMenu = ref(false);
 </script>
 
@@ -23,6 +23,8 @@ const showMobileMenu = ref(false);
                     </NavLink>
                     <NavLink :href="route('about')" :active="route().current('about')">{{$t('about')}}</NavLink>
                     <NavLink :href="route('contact')" :active="route().current('contact')">{{$t('contact')}}</NavLink>
+                    <GuestLanguageSelector class="w-full" />
+
                 </div>
                 <div class="-mr-2 flex items-center sm:hidden">
                     <!-- Mobile menu button -->
@@ -58,6 +60,7 @@ const showMobileMenu = ref(false);
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('about')">{{$t('about')}}</ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('contact')">{{$t('contact')}}</ResponsiveNavLink>
+
             </div>
         </div>
     </Transition>
