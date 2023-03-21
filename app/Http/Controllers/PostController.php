@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\PostViewAction;
 use App\Models\Post;
 use App\Services\FlashMessage;
 use Illuminate\Http\RedirectResponse;
@@ -16,8 +17,9 @@ class PostController extends Controller
      * @param \App\Models\Post $post
      * @return \Inertia\Response
      */
-    public function show(Post $post)
+    public function show(Post $post , PostViewAction $postViewAction)
     {
+        ($postViewAction)($post);
         return Inertia::render('Gallery/Show', [
             'post' => $post,
             'user' => $post->user
