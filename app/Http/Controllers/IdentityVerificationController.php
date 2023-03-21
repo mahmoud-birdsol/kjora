@@ -58,7 +58,6 @@ class IdentityVerificationController extends Controller
             ],
             'identity_selfie_image' => [
                 'required',
-                'max:2048'
             ],
         ]);
 
