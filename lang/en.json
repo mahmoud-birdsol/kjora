@@ -1,7 +1,7 @@
 {
-	"video, images, PDFs and docs are allowed with max size(10 MB) are allowed":"video, images, PDFs and docs are allowed with max size(10 MB) are allowed",
-	"Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS ? If you didn't receive the SMS, we will gladly send you another":"Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS ? If you didn't receive the SMS, we will gladly send you another",
-	"Lorem ipsum dolor sit amet":"Lorem ipsum dolor sit amet",
+	"video, images, PDFs and docs are allowed with max size(10 MB) are allowed": "video, images, PDFs and docs are allowed with max size(10 MB) are allowed",
+	"Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS ? If you didn't receive the SMS, we will gladly send you another": "Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS ? If you didn't receive the SMS, we will gladly send you another",
+	"Lorem ipsum dolor sit amet": "Lorem ipsum dolor sit amet",
 	"to": "To",
 	"Waiting for documents": "Waiting for documents",
 	"Add a comment...": "Add a comment...",
@@ -60,7 +60,7 @@
 	"rate": "Rate",
 	"A new verification code has been sent to the phone number you provided in your profile settings": "  A new verification code has been sent to the phone number you provided in your profile settings",
 	"Edit Profile": "Edit Profile",
-	"edit-your-profile-photo": "edit-your-profile-photo",
+	"edit-your-profile": "edit your profile",
 	"Resend Code": "Resend Code",
 	"Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS? If you didn't receive the SMS, we will gladly send you another": "Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS? If you didn't receive the SMS, we will gladly send you another",
 	"Verify Phone Number": "Verify Phone Number",
@@ -167,6 +167,7 @@
 	"hide": "Hide",
 	"replies": "Replies",
 	"like": "Like",
+	"likes": "Likes",
 	"reply": "Reply",
 	"comments( :count )": "Comments (:count)",
 	"remove photo": "remove photo",
@@ -331,5 +332,5 @@
 	"Post successfully updated.": "Post Successfully Updated.",
 	"Please Upload Your Verification Documents .": "Please Upload Your Verification Documents .",
 	"Please wait to verify your identity.": "Your Identity Documents Has Been Submitted. AWAITING APROVILE",
-    "Verification code sent.": "Verification code sent."
+	"Verification code sent.": "Verification code sent."
 }

@@ -1,7 +1,7 @@
 {
-	"video, images, PDFs and docs are allowed with max size(10 MB) are allowed":"يُسمح بالفيديو والصور وملفات PDF والمستندات بأقصى حجم (10 ميغابايت)",
-	"Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS ? If you didn't receive the SMS, we will gladly send you another":"قبل المتابعة ، هل يمكنك التحقق من رقم هاتفك عن طريق إدخال الرمز المكون من 4 أرقام الذي تم إرساله إليك في رسالة نصية قصيرة؟ إذا لم تتلق الرسالة القصيرة ، فسنرسل لك رسالة أخرى بكل سرور",
-	"Lorem ipsum dolor sit amet":" حقيقة مثبتة أن المحتوى المقروء لصفحة سيلهي القارئ",
+	"video, images, PDFs and docs are allowed with max size(10 MB) are allowed": "يُسمح بالفيديو والصور وملفات PDF والمستندات بأقصى حجم (10 ميغابايت)",
+	"Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS ? If you didn't receive the SMS, we will gladly send you another": "قبل المتابعة ، هل يمكنك التحقق من رقم هاتفك عن طريق إدخال الرمز المكون من 4 أرقام الذي تم إرساله إليك في رسالة نصية قصيرة؟ إذا لم تتلق الرسالة القصيرة ، فسنرسل لك رسالة أخرى بكل سرور",
+	"Lorem ipsum dolor sit amet": " حقيقة مثبتة أن المحتوى المقروء لصفحة سيلهي القارئ",
 	"to": "الى ",
 	"Waiting for documents": "في انتظار المستندات",
 	"Add a comment...": "اضف تعليق...",
@@ -170,6 +170,7 @@
 	"hide": "اخفاء",
 	"replies": "الردود",
 	"like": "أعجاب",
+	"likes": "أعجاب",
 	"reply": "رد",
 	"comments ( :count )": "التعليقات :count",
 	"remove photo": "حذف الصورة",
@@ -226,7 +227,7 @@
 	"favorites": "المفضلين",
 	"chat": "الدردشة",
 	"home": "الرئسية",
-	"edit-your-profile-photo": "تعديل الصورة الشخصية",
+	"edit-your-profile": "تعديل الصفحة الشخصية",
 	"profile": "الصفحة الشخصية",
 	"your": "ك",
 	"edit": "تعديل",
@@ -334,6 +335,5 @@
 	"Post successfully updated.": "تم تحديث النشر بنجاح.",
 	"Please Upload Your Verification Documents .": "يرجى تحميل وثائق التحقق الخاصة بك.",
 	"Please wait to verify your identity.": "يرجى الانتظار للتحقق من هويتك.",
-    "Verification code sent.": "تم ارسال الكود"
-
+	"Verification code sent.": "تم ارسال الكود"
 }

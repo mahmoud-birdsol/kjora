@@ -52,7 +52,8 @@ const thumbsOptions = {
     rewind: true,
     gap: "1rem",
     pagination: false,
-    // fixedHeight: 150,
+    fixedHeight: 150,
+    autoWidth:true,
     // cover: true,
     drag: 'free',
     snap: true,
@@ -145,7 +146,7 @@ function handleSplideActive(e) {
                         style="border: none !important ;">
                         <!-- <img :src="'/images/selfie_example.png'" :alt="slide.alt" /> -->
                         <template v-if="item.mime_type.startsWith('image')">
-                            <img class="object-contain w-full rounded-lg" :src="item?.original_url" alt="">
+                            <img class="object-contain h-full rounded-lg" :src="item?.original_url" alt="">
                         </template>
                         <template v-else-if="item.mime_type.startsWith('video')">
                             <video class="object-contain w-full rounded-lg">
