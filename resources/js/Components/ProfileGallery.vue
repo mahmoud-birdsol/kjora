@@ -44,7 +44,7 @@
             </template>
         </div>
     </div>
-    <FixedWrapper v-if="currentUser?.id === user?.id">
+    <FixedWrapper v-if="currentUser?.id === user?.id && !isPublic">
         <button class="flex items-center justify-center text-center bg-black rounded-full shadow-xl w-14 aspect-square" @click="showUploadFileModal = true">
             <PlusCircleIcon class="w-5 text-white" />
         </button>

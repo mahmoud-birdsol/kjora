@@ -51,12 +51,6 @@ class Message extends Resource
                 ->showOnPreview()
                 ->rules('required'),
 
-            BelongsTo::make('Parent', 'parent', Message::class)
-                ->nullable()
-                ->filterable()
-                ->showOnPreview()
-                ->sortable(),
-
             BelongsTo::make('Sender', 'sender', User::class)
                 ->sortable()
                 ->filterable()
