@@ -48,12 +48,12 @@ const reset = () => {
         </button>
         <Modal :show="showFiltersModal" max-width="sm" @close="showFiltersModal = false" :closeable="false">
             <div class="p-6 bg-black" v-loading="loading">
-                <div class="flex items-center justify-between">
-                    <p class="text-sm text-white">{{$t('filter')}} </p>
-    
-                    <button @click="showFiltersModal = false">
+                <div class="grid">
+                    <button @click="showFiltersModal = false" class="justify-self-end">
                         <XMarkIcon class="w-4 h-4 text-white" />
                     </button>
+                    <p class="text-sm text-white">{{$t('filter')}} </p>
+    
                 </div>
     
                 <form @submit.prevent="filter">
@@ -69,9 +69,9 @@ const reset = () => {
                     </div>
                     <div class="my-6">
                         <InputLabel>{{$t('search')}}</InputLabel>
-                        <div class="px-4">
+                        <div>
                             <input type="search" name="search" id="search" v-model="form.search"
-                                class="block w-full px-4 text-center text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
+                                class="block w-full text-center text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
                                 :placeholder="$t('search by name or username')" />
                         </div>
                     </div>
