@@ -67,4 +67,13 @@ class MediaLibrary extends Media implements Suspendable, Reportable, Likeable
     {
         return url(route('gallery.show', $this->id));
     }
+
+    public function reportedUser()
+    {
+        if($this->collection_name === 'gallery'){
+            return $this->model;
+        }
+
+        return null;
+    }
 }
