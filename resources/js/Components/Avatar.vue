@@ -55,6 +55,7 @@ const borderColorClass = computed(() => {
         'white': 'border-white',
         'primary': 'border-primary',
         'black': 'border-stone-800',
+        'blackDark': 'border-black',
     }[props.borderColor];
 });
 

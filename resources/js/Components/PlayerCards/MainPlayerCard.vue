@@ -109,7 +109,7 @@ const removeFromFavorites = () => {
                         <PencilIcon class="w-3 [&+div]:hover:block " />
                         <ToolTip :value="$t('edit-your-profile')" right="right-0"/>
                         </Link>
-                        <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true" />
+                        <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true" :borderColor="state == 'Free' ? 'primary':'blackDark' "/>
                     </div>
 
                     <div :class="state == 'Free' ? 'text-white' : 'text-primary'">
