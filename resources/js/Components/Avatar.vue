@@ -99,9 +99,10 @@ function hideLightBox() {
 </template>
 
 
-<style>
+<style scoped>
 .vel-img-wrapper {
     overflow: hidden;
     border-radius: 50%;
+    aspect-ratio: aspect-square;
 }
 </style>

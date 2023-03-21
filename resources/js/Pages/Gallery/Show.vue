@@ -85,7 +85,7 @@ import DateTranslation from '../../Components/DateTranslation.vue';
 import PostMedia from '../../Components/Posts/PostMedia.vue';
 import PostLayout from '../../Components/Posts/PostLayout.vue';
 import PostOptionMenu from '../../Components/Posts/PostOptionMenu.vue';
-import PostCaptionFrom from '../../Components/Posts/PostCaptionFrom.vue';
+import PostCaptionFrom from '../../Components/Posts/PostCaptionForm.vue';
 import PostCommentForm from '../../Components/Posts/PostCommentForm.vue';
 
 
