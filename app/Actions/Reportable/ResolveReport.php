@@ -19,6 +19,6 @@ class ResolveReport
             return;
         }
 
-        $report->reportable->reportedUser()?->notify(new ReportResolvedNotification($report, $message));
+        $report->user?->notify(new ReportResolvedNotification($report, $message));
     }
 }
