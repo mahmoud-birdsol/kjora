@@ -43,7 +43,12 @@
                         <DateTranslation :start="post.created_at" format="hh:mm A" />
                     </div>
                     <div class="flex items-center gap-1">
-                        <span class="text-sm">{{ post?.likes_count }}</span>
+                        <template v-if="post?.likes_count > 0">
+                            <span class="text-sm">{{ post?.likes_count }}</span>
+                            <div class="transition-all duration-150 ">
+                                {{ post?.likes_count === 1 ? $t('like') : $t('likes') }}
+                            </div>
+                        </template>
                         <!-- <LikeButton :isLiked="post?.is_liked" :likeable_id="post.id" :likeable_type="'App\\Models\\Post'">
                             <template v-slot="{ isLiked }">
                                 <HeartIcon class="w-5 stroke-current stroke-2 text-primary" :class="isLiked ? 'fill-current' : 'fill-transparent'" />
