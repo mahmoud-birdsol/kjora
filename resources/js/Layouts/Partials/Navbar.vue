@@ -118,32 +118,9 @@ function markAllNotificationsAsRead() {
                         <span class="text-white w-max">{{ currentUser.current_city }}</span>
                     </div> <!-- Settings Dropdown -->
                     <div class="relative ">
-                        <Dropdown :align="locale == 'en' ? 'right' : 'left'" width="48">
-                            <template #trigger>
-                                <button class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
-                                    <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url" :username="$page.props.auth.user.name" :border="true" border-color="primary" size="sm" :enable-light-box="false" />
-                                </button>
-                            </template>
-
-                            <template #content>
-                                <DropdownLink :href="route('profile.show')">
-                                    {{ $t('profile') }}
-                                </DropdownLink>
-
-                                <DropdownLink :href="route('identity.verification.create')">
-                                    {{ $t('identity-verification') }}
-                                </DropdownLink>
-
-                                <div class="border-t border-gray-100" />
-
-                                <!-- Authentication -->
-                                <form @submit.prevent="logout">
-                                    <DropdownLink as="button">
-                                        {{ $t('log-out') }}
-                                    </DropdownLink>
-                                </form>
-                            </template>
-                        </Dropdown>
+                        <Link :href="route('profile.show')" class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
+                        <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url" :username="$page.props.auth.user.name" :border="true" border-color="primary" size="sm" :enable-light-box="false" />
+                        </Link>
                     </div>
 
                     <!-- Notifications Dropdown -->
@@ -199,7 +176,7 @@ function markAllNotificationsAsRead() {
                         <!-- user city  -->
                         <div class="flex items-center gap-1">
                             <MapPinIcon class="w-4 h-4 text-primary" />
-                            <span class="text-white w-max">{{ currentUser.current_city }}</span>
+                            <span class="text-white w-max text-xs">{{ currentUser.current_city }}</span>
                         </div>
                         <button class="rounded-full bg-[#CFC27A] font-medium px-2 py-1 flex items-center gap-1" v-if="state !== 'Premium'">
                             <span class="bg-black rounded-full">
@@ -210,32 +187,9 @@ function markAllNotificationsAsRead() {
 
                         <!-- Settings Dropdown -->
                         <div class="relative ">
-                            <Dropdown :align="locale == 'en' ? 'right' : 'left'" width="48">
-                                <template #trigger>
-                                    <button class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
-                                        <Avatar :image-url="$page.props.auth.user.avatar_url" :id="$page.props.auth.user.id" :username="$page.props.auth.user.name" :border="true" border-color="primary" size="sm" :enable-light-box="false" />
-                                    </button>
-                                </template>
-
-                                <template #content>
-                                    <DropdownLink :href="route('profile.show')">
-                                        {{ $t('profile') }}
-                                    </DropdownLink>
-
-                                    <DropdownLink :href="route('identity.verification.create')">
-                                        {{ $t('identity-verification') }}
-                                    </DropdownLink>
-
-                                    <div class="border-t border-gray-100" />
-
-                                    <!-- Authentication -->
-                                    <form @submit.prevent="logout">
-                                        <DropdownLink as="button">
-                                            {{ $t('log-out') }}
-                                        </DropdownLink>
-                                    </form>
-                                </template>
-                            </Dropdown>
+                            <Link :href="route('profile.show')" class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
+                            <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url" :username="$page.props.auth.user.name" :border="true" border-color="primary" size="sm" :enable-light-box="false" />
+                            </Link>
                         </div>
                         <div class="relative grid place-items-center">
                             <Dropdown width="96" :align="locale == 'ar' ? 'left' : 'right'">

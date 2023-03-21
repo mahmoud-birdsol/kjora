@@ -36,10 +36,10 @@ const currentUser = usePage().props.value.auth.user
                     <template #body>
                         <div class="flex flex-col gap-4">
                             <div>
-                                <InputLabel color="black">{{ $t('verification') }}</InputLabel>
+                                <InputLabel color=" black">{{ $t('verification') }}</InputLabel>
                                 <MoreBtn :url="route('identity.verification.create')" v-if="currentUser.identity_status === 'Waiting for documents'"> {{
                                     $t(currentUser.identity_status) }}</MoreBtn>
-                                <div v-else class="block w-full px-6 py-2 text-gray-500 transition duration-150 border border-gray-500 rounded-full sm:text-sm disabled:bg-gray-100 text-start ">
+                                <div v-else class="block w-full px-6 py-2 text-gray-500 transition capitalize duration-150 border border-gray-500 rounded-full sm:text-sm disabled:bg-gray-100 text-start ">
                                     {{ $t(currentUser.identity_status) }}
                                 </div>
 
@@ -57,6 +57,10 @@ const currentUser = usePage().props.value.auth.user
                             <div>
                                 <InputLabel color="black">{{ $t('cookie-use') }}</InputLabel>
                                 <MoreBtn :url="route('cookies.policy.index')"> {{ $t('cookie-use') }}</MoreBtn>
+                            </div>
+                            <div>
+                                <InputLabel color="black">{{ $t('logout') }}</InputLabel>
+                                <MoreBtn :url="route('logout')" method="post"> {{ $t('logout') }}</MoreBtn>
                             </div>
                         </div>
                     </template>
