@@ -61,7 +61,7 @@ class ContactCreatedNotification extends Notification
     {
         return (new NovaNotification)
             ->message($this->contact->first_name.' has created a new contact message')
-            ->action('Check out', URL::make('/resources/contacts/'.$this->contact->id))
+            ->action('Check out', URL::make('/nova/resources/contacts/'.$this->contact->id))
             ->icon('check')
             ->type('success');
     }
