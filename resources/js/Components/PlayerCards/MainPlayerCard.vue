@@ -36,8 +36,16 @@ const props = defineProps({
         required: false,
         type: Boolean,
         default: true
-    }, countries: Array,
-    positions: Array,
+    }, showFavorite: {
+        required: false,
+        type: Boolean,
+        default: true
+    }, showShare: {
+        required: false,
+        type: Boolean,
+        default: true
+    },
+
 });
 const showUploadAvatarModal = ref(false)
 const currentUser = usePage().props.value.auth.user
@@ -58,7 +66,7 @@ const backgroundImage = computed(() => {
     }
 });
 
-const isCurrentUser = props.player.id === currentUser.id
+const isCurrentUser = props.player.id === currentUser?.id
 
 const addToFavorites = () => {
     const form = useForm({});
@@ -81,7 +89,7 @@ const removeFromFavorites = () => {
 
 <template>
     <div class="overflow-hidden rounded-xl" :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
-        <div v-if="player.id !== $page.props.auth.user.id" class="flex justify-end">
+        <div v-if="showFavorite" class="flex justify-end">
             <span class="rounded-lg ltr:rounded-bl-3xl rtl:rounded-br-3xl bg-white p-2 -mt-0.5 ltr:-mr-0.5 rtl:-ml-0.5">
                 <a href="javascript:;" @click="addToFavorites" v-if="!player.is_favorite">
                     <HeartIconOutline class="w-5 h-5 text-primary" />
@@ -192,7 +200,8 @@ const removeFromFavorites = () => {
                         <!-- <ChevronDoubleRightIcon class="inline w-4 h-4 text-white" /> -->
                         </Link>
                     </div>
-                    <Socials :id="player.id" />
+
+                    <Socials v-if="showShare" :id="player.id" />
 
                 </div>
             </div>

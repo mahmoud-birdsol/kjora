@@ -1,8 +1,6 @@
 <template>
-    <div class="">
+    <div v-if="posts.length" class="">
         <div class="grid grid-cols-2 gap-4 overflow-auto sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 hideScrollBar ">
-
-
             <template v-for="(post, index) in posts " :key="post.id">
                 <FadeInTransition>
                     <Link :href="route('posts.show', post.id)" class="relative w-full h-full overflow-hidden rounded-lg aspect-square group">
@@ -44,10 +42,9 @@
                     </Link>
                 </FadeInTransition>
             </template>
-
         </div>
     </div>
-    <FixedWrapper v-if="currentUser.id === user.id">
+    <FixedWrapper v-if="currentUser?.id === user?.id">
         <button class="flex items-center justify-center text-center bg-black rounded-full shadow-xl w-14 aspect-square" @click="showUploadFileModal = true">
             <PlusCircleIcon class="w-5 text-white" />
         </button>

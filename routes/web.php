@@ -14,11 +14,16 @@ use App\Http\Controllers\HireController;
 use App\Http\Controllers\IdentityVerificationController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\JoinPlatformController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerReviewController;
+use App\Http\Controllers\Policy\CookiesPolicyController;
+use App\Http\Controllers\Policy\PrivacyPolicyController;
+use App\Http\Controllers\Policy\TermsAndConditionController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\UpgradeMembershipController;
 use App\Http\Controllers\ResendVerificationCodeController;
 use App\Http\Controllers\UserProfileController;
@@ -27,11 +32,11 @@ use App\Models\Country;
 use App\Models\Invitation;
 use App\Models\MediaLibrary;
 use App\Models\Position;
+use App\Models\Post;
 use App\Models\Stadium;
 use App\Models\User;
 use App\Notifications\InvitationCreatedNotification;
 use App\Notifications\InvitationDeclinedNotification;
-use App\Nova\Post;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -211,7 +216,7 @@ Route::middleware([
             $time = Carbon::parse($data['time']);
 
             $data['inviting_player_id'] = $request->user()->id;
-            $data['date'] = Carbon::parse( $data['date'])->setTime($time->hour, $time->minute);
+            $data['date'] = Carbon::parse($data['date'])->setTime($time->hour, $time->minute);
             unset($data['time']);
 
             $invitation = Invitation::create($data);
@@ -379,10 +384,10 @@ Route::middleware([
      |--------------------------------------------------------------------------
     */
 
-    Route::post('like', [\App\Http\Controllers\LikeController::class, 'store'])->name('like.store');
-    Route::delete('like', [\App\Http\Controllers\LikeController::class, 'destroy'])->name('like.destroy');
+    Route::post('like', [LikeController::class, 'store'])->name('like.store');
+    Route::delete('like', [LikeController::class, 'destroy'])->name('like.destroy');
 
-    Route::post('stadiums', \App\Http\Controllers\StadiumController::class)->name('stadiums.store');
+    Route::post('stadiums', StadiumController::class)->name('stadiums.store');
 });
 /*
     |--------------------------------------------------------------------------
@@ -396,13 +401,13 @@ Route::prefix('policy')
         Route::get(
             'terms-and-condition',
             [
-                \App\Http\Controllers\Policy\TermsAndConditionController::class,
+                TermsAndConditionController::class,
                 'index'
             ]
         )->name('terms.and.condition.index');
 
         Route::patch('terms-and-condition/{termsAndConditions}', [
-            \App\Http\Controllers\Policy\TermsAndConditionController::class,
+            TermsAndConditionController::class,
             'store'
         ])->name('terms.and.condition.store');
 
@@ -411,13 +416,13 @@ Route::prefix('policy')
         Route::get(
             'privacy-policy',
             [
-                \App\Http\Controllers\Policy\PrivacyPolicyController::class,
+                PrivacyPolicyController::class,
                 'index'
             ]
         )->name('privacy.policy.index');
 
         Route::patch('privacy-policy/{privacyPolicy}', [
-            \App\Http\Controllers\Policy\PrivacyPolicyController::class,
+            PrivacyPolicyController::class,
             'store'
         ])->name('privacy.policy.store');
 
@@ -426,13 +431,13 @@ Route::prefix('policy')
         Route::get(
             'cookies-policy',
             [
-                \App\Http\Controllers\Policy\CookiesPolicyController::class,
+                CookiesPolicyController::class,
                 'index'
             ]
         )->name('cookies.policy.index');
 
         Route::patch('cookies-policy/{cookiePolicy}', [
-            \App\Http\Controllers\Policy\CookiesPolicyController::class,
+            CookiesPolicyController::class,
             'store'
         ])->name('cookies.policy.store');
     });
@@ -511,7 +516,7 @@ Route::get('public/posts/{post}', function (Post $post) {
         'post' => $post,
         'user' => $post->user
     ]);
-});
+})->name('public.posts');
 
 Route::get('public/player/{player}', function (User $player) {
     $player->load('club');
@@ -529,7 +534,7 @@ Route::get('public/player/{player}', function (User $player) {
     $countries = Country::active()->orderBy('name')->get();
     $positions = Position::all();
 
-    return Inertia::render('Public/Player', [
+    return Inertia::render('Public/PlayerView', [
         'player' => $player,
         'posts' => $player->posts->load('comments'),
         'playerRating' => $playerRating,
@@ -545,7 +550,4 @@ Route::get('accept-chat-regulations', function (Request $request) {
     ]);
 
     return redirect()->back();
-
 })->middleware('auth:sanctum')->name('accept-chat-regulations');
-
-
