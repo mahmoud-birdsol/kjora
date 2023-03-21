@@ -1,11 +1,19 @@
 <script setup>
 defineProps({
-    value:String
+    value:String,
+    right:{
+        default:'right-1/2'
+    },
+    left:{
+        default:'left-1/2'
+    }
 })
 </script>
 <template>
 
-        <div class="absolute top-full ltr:left-1/2 rtl:right-1/2 -translate-x-1/2 bg-black bg-opacity-50 text-white p-2 rounded-lg text-xs z-10 hidden whitespace-nowrap">
+        <div class="absolute top-full bg-black bg-opacity-50 text-white p-2 rounded-lg text-xs z-10 hidden whitespace-nowrap"
+        :class="`ltr:${left} rtl:${right}`"
+        >
             {{ value }}
         </div>
 </template>
