@@ -60,7 +60,7 @@ class Conversation extends Model implements Reportable
     {
         return Attribute::make(
             get: fn() => $this->messages()
-                ->where('sender_id', '!=', request()->user()->id)
+                ->where('sender_id', '!=', request()->user()?->id)
                 ->whereNull('read_at')
                 ->count()
         );
