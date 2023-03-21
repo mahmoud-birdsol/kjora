@@ -5,7 +5,8 @@ import { ElRate } from 'element-plus';
 import Avatar from '@/Components/Avatar.vue';
 import dayjs from "dayjs";
 import { CustomMarker, GoogleMap, Marker } from "vue3-google-map";
-import { CheckIcon, HandRaisedIcon, XMarkIcon } from '@heroicons/vue/24/solid';
+import { CheckIcon, HandRaisedIcon, XMarkIcon ,StarIcon as StarIconFilled} from '@heroicons/vue/24/solid';
+import { StarIcon as StarIconOutline } from '@heroicons/vue/24/outline';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import DateTranslation from '../DateTranslation.vue';
 onBeforeMount(() => {
@@ -37,7 +38,7 @@ const backgroundImage = computed(() => {
 const currentUser = usePage().props.value.auth.user
 const isCurrentUser = props.player.id === currentUser.id
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-
+const state = props.player.state_name
 
 const accept = () => {
     const form = useForm({});
@@ -89,14 +90,21 @@ function calcShouldRate() {
 
             <div class="flex flex-col items-center ">
                 <!-- image -->
-                <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true" />
+                <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name"
+                    :border="true" />
                 <!-- rating -->
-                <div class="flex items-center space-x-2 text-sm text-white">
-                    <span class="scale-[0.5]  flex items-center gap-x-1">
-                        <ElRate disabled v-model="player.rating" size="small" />
-                        {{ player.rating }}
-                    </span>
-                </div>
+                <p class="flex items-center justify-center space-x-2 text-sm ">
+                            <span class="scale-[0.7]  flex items-center gap-x-1" :class="txtColor == 'black' ? 'text-primary' : 'text-[#FF9900]'">
+                                <span class="flex items-center gap-1">
+                                    <template v-for="i in 5">
+                                        <StarIconFilled class="w-5 h-5" v-if="player.rating >= i" :class="state == 'Free' ? 'text-gold' : 'text-primary'" />
+                                        <StarIconOutline class="w-5 h-5" :class="state == 'Free' ? 'text-gold' : 'text-primary'" v-else />
+                                    </template>
+                                </span>
+
+                                <span class="ml-2 font-bold text-white text-md">{{ player.rating }}</span>
+                            </span>
+                        </p>
             </div>
             <!-- name and userName -->
             <div class="flex flex-col items-center ">
@@ -104,15 +112,16 @@ function calcShouldRate() {
                     <h2 class="">
                         {{ player.first_name }} {{ player.last_name }}
                     </h2>
-                    <Link class="hover:underline before:content-['a'] before:text-transparent" :href="route('player.profile', player.id)">@{{
-                        player.username }}</Link>
+                    <Link class="hover:underline before:content-['a'] before:text-transparent"
+                        :href="route('player.profile', player.id)">@{{
+                            player.username }}</Link>
                     <span>
                         <HandRaisedIcon class="w-4 text-yellow-300 rotate-[15deg]" />
                     </span>
                 </div>
                 <!-- invitation date -->
-                <p class="text-xs text-center text-stone-300/70">{{$t('Wants to invite you for a match in')}}
-                    <DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date"/>
+                <p class="text-xs text-center text-stone-300/70">{{ $t('Wants to invite you for a match in') }}
+                    <DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date" />
                 </p>
             </div>
             <!-- invite user location -->
@@ -150,17 +159,16 @@ function calcShouldRate() {
                 </div>
                 <Link :href="route('chats.index')" v-if="invitation.state == 'accepted' && !shouldRate"
                     class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
-                {{$t('chat')}}
+                {{ $t('chat') }}
                 </Link>
 
                 <Link :href="route('player.review.show', invitation.reviews[0].id)"
                     v-if="invitation.state == 'accepted' && shouldRate"
                     class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
-                {{$t('rate')}}
+                {{ $t('rate') }}
                 </Link>
             </div>
 
 
-        </div>
     </div>
-</template>
+</div></template>
