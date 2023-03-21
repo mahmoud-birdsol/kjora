@@ -212,7 +212,10 @@ function sendReply() {
 
 function deleteComment() {
     showDeleteCommentModal.value = false
-    Inertia.delete(route('comments.destroy', props.comment))
+    Inertia.delete(route('comments.destroy', props.comment), {
+        preserveScroll: true,
+        preserveState: false
+    })
 }
 
 function handleReplyClicked(e) {

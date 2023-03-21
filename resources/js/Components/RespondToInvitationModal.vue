@@ -9,8 +9,9 @@ import {
     MapPinIcon,
 } from '@heroicons/vue/24/outline';
 import MainPlayerCard from "./PlayerCards/MainPlayerCard.vue";
-import {Inertia} from "@inertiajs/inertia";
+import { Inertia } from "@inertiajs/inertia";
 import DateTranslation from '@/Components/DateTranslation.vue';
+import { CheckIcon, XMarkIcon } from "@heroicons/vue/24/solid";
 const props = defineProps({
     invitation: {
         required: true,
@@ -50,21 +51,27 @@ const decline = () => {
         <div class="rounded-xl bg-white min-h-[300px]">
             <div class="flex flex-col items-center justify-between px-6 pb-6">
                 <div class="w-full">
-                    <h2 class="text-center text-xl font-bold uppercase text-primary">{{$t('invitation')}}</h2>
+                    <h2 class="text-center text-xl font-bold uppercase text-primary">{{ $t('invitation') }}</h2>
                     <p class="mt-6 text-sm font-light text-gray-700">
-                        {{ $t('you-have-received-an-invitation-from- :name ,-to-play-a-game-on',{ name : invitation.inviting_player.name}) }}
-                        <strong><DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date"/> </strong><span> {{ $t('at') }} </span> 
+                        {{ $t('you-have-received-an-invitation-from- :name ,-to-play-a-game-on', { name: invitation.inviting_player.name }) }}
+                        <strong>
+                            <DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date" />
+                        </strong><span> {{ $t('at') }} </span>
                         <strong>{{ invitation.stadium.address }}, {{ invitation.stadium.city }}, {{ invitation.stadium.country }},({{ invitation.stadium.name }})</strong>
                     </p>
                 </div>
 
                 <div class="max-w-sm my-6">
-                    <MainPlayerCard :player="invitation.inviting_player" :show-invite="false" :show-location="false" :show-report="false"/>
+                    <MainPlayerCard :player="invitation.inviting_player" :show-invite="false" :show-location="false" :show-report="false" />
                 </div>
 
-                <div class="flex w-full flex-col space-y-4">
-                    <PrimaryButton @click="accept">{{$t('accept')}}</PrimaryButton>
-                    <PrimaryButton @click="decline">{{$t('decline')}}</PrimaryButton>
+                <div class="flex justify-center gap-6">
+                    <button @click="decline" class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
+                        <XMarkIcon class="w-6 text-red-600" />
+                    </button>
+                    <button @click="accept" class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
+                        <CheckIcon class="w-6 text-green-600" />
+                    </button>
                 </div>
             </div>
         </div>

@@ -8,8 +8,7 @@
                 <PostMedia :postMedia="post.media" :user="user"></PostMedia>
             </template>
             <template #userImage>
-                <Avatar :id="user.id" :username="user.name" :image-url="user.avatar_url" :size="'md'" :border="true"
-                    border-color="primary" />
+                <Avatar :id="user.id" :username="user.name" :image-url="user.avatar_url" :size="'md'" :border="true" border-color="primary" />
             </template>
             <template #userInfo>
                 <div class="flex justify-between w-full">
@@ -22,8 +21,7 @@
                         <Link :href="route('player.profile', user.id)" class="text-xs text-stone-400 ">@{{
                             user.username }} </Link>
                     </div>
-                    <PostOptionMenu :isCurrentUser="isCurrentUser" :postId="post.id"
-                        @editingCaption="postCaptionComp ? postCaptionComp.isEditingCaption = true : null">
+                    <PostOptionMenu :isCurrentUser="isCurrentUser" :postId="post.id" @editingCaption="postCaptionComp ? postCaptionComp.isEditingCaption = true : null">
                     </PostOptionMenu>
                 </div>
             </template>
@@ -47,23 +45,19 @@
                     }) }}
                     </div>
                     <div class="flex items-center gap-1">
-                            <span v-if="post?.likes_count > 0" class="text-sm">{{ post?.likes_count }}</span>
-                            <LikeButton :isLiked="post?.is_liked" :likeable_id="post.id" :likeable_type="'App\\Models\\Post'">
-                                <template v-slot="{ isLiked }">
-                                    <HeartIcon class="w-4 stroke-current stroke-2 text-primary"
-                                        :class="isLiked ? 'fill-current' : 'fill-transparent'" />
-                                </template>
-                            </LikeButton>
-                        </div>
+                        <span v-if="post?.likes_count > 0" class="text-sm">{{ post?.likes_count }}</span>
+                        <LikeButton :isLiked="post?.is_liked" :likeable_id="post.id" :likeable_type="'App\\Models\\Post'">
+                            <template v-slot="{ isLiked }">
+                                <HeartIcon class="w-4 stroke-current stroke-2 text-primary" :class="isLiked ? 'fill-current' : 'fill-transparent'" />
+                            </template>
+                        </LikeButton>
+                    </div>
                 </div>
             </template>
             <template #postComments>
-                <div ref="commentsContainer" @scroll="handleScroll"
-                    class="flex flex-col gap-4 w-full max-h-[500px] min-h-[480px]  hideScrollBar overflow-auto"
-                    v-if="postComments">
+                <div ref="commentsContainer" @scroll="handleScroll" class="flex flex-col gap-4 w-full max-h-[500px]   hideScrollBar overflow-auto" v-if="postComments">
                     <template v-for="comment in postComments.filter(c => !c.parent_id)" :key="comment.id">
-                        <Comment @addedReply="getPostComments" :comment="comment" ref="commentsComps"
-                            :parentOffset="commentsContainerOffset" />
+                        <Comment @addedReply="getPostComments" :comment="comment" ref="commentsComps" :parentOffset="commentsContainerOffset" />
                     </template>
                 </div>
             </template>
