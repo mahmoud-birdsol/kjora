@@ -1,11 +1,9 @@
 <template>
     <!-- comment  -->
-    <div class="grid grid-cols-[min-content_1fr] w-full justify-start gap-4 "
-         :class="comment.parent_id ? 'bg-white' : ''">
+    <div class="grid grid-cols-[min-content_1fr] w-full justify-start gap-4 " :class="comment.parent_id ? 'bg-white' : ''">
         <!-- image col 1 -->
         <div class="min-w-max z-[10] relative  " :class="guidesClassesAfter2">
-            <Avatar :id="comment.user.id" :username="comment.user.name" :image-url="comment.user.avatar_url" :size="'md'" :border="true"
-                    border-color="primary"/>
+            <Avatar :id="comment.user.id" :username="comment.user.name" :image-url="comment.user.avatar_url" :size="'md'" :border="true" border-color="primary" />
         </div>
         <!-- comment information col 2 -->
         <div class="relative flex flex-col max-w-full gap-1 " :class="[guidesClassesBefore, guidesClassesAfter]">
@@ -15,20 +13,22 @@
                 <div class="flex flex-row gap-1 md:flex-col ">
                     <div class="flex flex-row gap-2">
                         <h3 class="m-0 text-lg font-bold leading-none capitalize text-stone-800 ">{{
-                                comment.user.name
-                            }} </h3>
+                            comment.user.name
+                        }} </h3>
                         <span v-if="false">star icon</span>
                     </div>
                     <Link class="text-xs text-stone-400 " :href="route('player.profile', comment.user.id)">@{{
-                            comment.user.username
-                        }}
+                        comment.user.username
+                    }}
                     </Link>
                 </div>
                 <!-- date and time -->
                 <div class="flex flex-row gap-2 text-xs text-neutral-400/90">
-                    <span><DateTranslation type="range" :start="comment.created_at"/></span>
+                    <span>
+                        <DateTranslation type="range" :start="comment.created_at" />
+                    </span>
                     <span>|</span>
-                    <DateTranslation format='hh:mm A' :start="comment.created_at"/>
+                    <DateTranslation format='hh:mm A' :start="comment.created_at" />
                 </div>
             </div>
             <!-- comment or reply body  row 2-->
@@ -39,29 +39,34 @@
             </div>
             <!-- add reply & like buttons row 3 -->
             <div class="flex items-center justify-start w-full gap-2 mb-2 text-sm font-semibold text-stone-700">
-                <button @click="handleReplyClicked"
-                        class="p-1 transition-all duration-150 pis-0 enabled:hover:underline hover:underline-offset-4">
-                    {{ comment.replies.length > 0 ? comment.replies.length : '' }} {{ $t('reply') }}
-                </button>
+                <template v-if="!isPublic">
+                    <button @click="handleReplyClicked" class="p-1 transition-all duration-150 pis-0 enabled:hover:underline hover:underline-offset-4">
+                        {{ comment.replies.length > 0 ? comment.replies.length : '' }} {{ $t('reply') }}
+                    </button>
 
-                <div class="flex items-center">
+                    <div class="flex items-center">
+                        <div v-if="comment.likes_count > 0">{{ comment.likes_count }}</div>
+                        <LikeButton :isLiked="comment?.is_liked" :likeable_id="comment.id" :likeable_type="'App\\Models\\Comment'">
+                            <template v-slot="{ isLiked }">
+                                <div class="transition-all duration-150 enabled:hover:underline hover:underline-offset-4" :class="isLiked ? 'text-primary' : ''">
+                                    {{ $t('like') }}
+                                </div>
+                            </template>
+                        </LikeButton>
+                    </div>
+                </template>
+                <template v-else>
                     <div v-if="comment.likes_count > 0">{{ comment.likes_count }}</div>
-                    <LikeButton :isLiked="comment?.is_liked" :likeable_id="comment.id"
-                                :likeable_type="'App\\Models\\Comment'">
-                        <template v-slot="{ isLiked }">
-                            <div class="transition-all duration-150 enabled:hover:underline hover:underline-offset-4"
-                                 :class="isLiked ? 'text-primary' : ''">
-                                {{ $t('like') }}
-                            </div>
-                        </template>
-                    </LikeButton>
-                </div>
+                    <div class="transition-all duration-150 enabled:hover:underline hover:underline-offset-4">
+                        {{ $t('like') }}
+                    </div>
+                </template>
             </div>
 
             <!-- replies related to this comment row 4 -->
             <div v-show="showReplies" class="mt-2">
                 <template v-for="(reply, index) in comment.replies" :key="reply.id">
-                    <Comment @addedReply="handleAddedReply" :comment="reply"/>
+                    <Comment @addedReply="handleAddedReply" :comment="reply" />
                 </template>
             </div>
             <!-- new reply form row 5 -->
@@ -70,30 +75,26 @@
                     <OnClickOutside @trigger="showEmojiPicker = false">
                         <div class="relative flex items-center">
                             <button @click="toggleEmojiPicker" :data-cancel-blur="true">
-                                <FaceSmileIcon class="w-6 text-neutral-400"/>
+                                <FaceSmileIcon class="w-6 text-neutral-400" />
                             </button>
-                            <div class="absolute z-[1000] ltr:left-full rtl:right-full" :class="EmojiPickerClass"
-                                 v-show="showEmojiPicker">
-                                <EmojiPickerElement @selected-emoji="onSelectEmoji"/>
+                            <div class="absolute z-[1000] ltr:left-full rtl:right-full" :class="EmojiPickerClass" v-show="showEmojiPicker">
+                                <EmojiPickerElement @selected-emoji="onSelectEmoji" />
                             </div>
                         </div>
                     </OnClickOutside>
                     <div class="flex items-center flex-grow ">
-                        <textarea ref="replyInput" @keypress.enter.exact.prevent="addReply" v-model="newReply"
-                                  name="newReply" id="newReply" rows="1" placeholder="Add a comment..."
-                                  class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary "></textarea>
+                        <textarea ref="replyInput" @keypress.enter.exact.prevent="addReply" v-model="newReply" name="newReply" id="newReply" rows="1" placeholder="Add a comment..."
+                            class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary "></textarea>
                     </div>
 
                     <button @click="addReply" :disabled="isSending" class="p-1 group ">
 
-                        <PaperAirplaneIcon class="w-5 group-hover:text-neutral-700"
-                                           :class="isSending ? 'text-neutral-200' : 'text-neutral-400'"/>
+                        <PaperAirplaneIcon class="w-5 group-hover:text-neutral-700" :class="isSending ? 'text-neutral-200' : 'text-neutral-400'" />
                     </button>
                 </div>
             </OnClickOutside>
             <!-- view replies button row 6 -->
-            <button v-show="hasReplies" @click="toggleRepliesView"
-                    class="flex justify-start w-full gap-2 text-sm transition-all duration-300 text-stone-500 enabled:hover:underline hover:underline-offset-4 ">
+            <button v-show="hasReplies" @click="toggleRepliesView" class="flex justify-start w-full gap-2 text-sm transition-all duration-300 text-stone-500 enabled:hover:underline hover:underline-offset-4 ">
                 {{ showReplies ? $t('hide') : $t('view') }} {{ comment.replies?.length }} {{ $t('replies') }}
             </button>
 
@@ -105,10 +106,10 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 import Avatar from './Avatar.vue';
-import {computed, onBeforeMount, ref, watch} from 'vue';
-import {FaceSmileIcon} from '@heroicons/vue/24/outline';
-import {PaperAirplaneIcon} from '@heroicons/vue/24/solid';
-import {Link, usePage} from '@inertiajs/inertia-vue3';
+import { computed, onBeforeMount, ref, watch } from 'vue';
+import { FaceSmileIcon } from '@heroicons/vue/24/outline';
+import { PaperAirplaneIcon } from '@heroicons/vue/24/solid';
+import { Link, usePage } from '@inertiajs/inertia-vue3';
 import EmojiPickerElement from './EmojiPickerElement.vue';
 import DateTranslation from './DateTranslation.vue';
 
@@ -128,8 +129,12 @@ const newReply = ref('')
 const showReplyInput = ref(false)
 const isSending = ref(false)
 const showEmojiPicker = ref(false)
-
 const EmojiPickerClass = ref('');
+
+
+const isPublic = usePage().url.value.includes('public/posts')
+const isParentComment = !props.comment.parent_id
+
 
 defineExpose({
     showReplies
@@ -164,7 +169,7 @@ function addReply() {
     emit('addedReply')
 }
 
-const isParentComment = !props.comment.parent_id
+
 
 // function getParentId() {
 //     return isParentComment ? props.comment.id : props.comment.parent_id

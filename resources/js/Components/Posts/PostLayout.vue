@@ -5,7 +5,7 @@
             <div class="flex flex-col max-w-full gap-6 p-3 ">
                 <!-- media -->
 
-                <slot name="media"/>
+                <slot name="media" />
 
                 <!-- post information -->
                 <div class="grid xs:grid-cols-[min-content_1fr] gap-4">
@@ -38,7 +38,7 @@
                     <slot name="postComments"></slot>
                 </div>
                 <!-- new comment form -->
-                <div class="flex flex-row items-center self-end w-full p-3 border-t gap-x-3 border-stone-300">
+                <div v-if="!isPublic" class="flex flex-row items-center self-end w-full p-3 border-t gap-x-3 border-stone-300">
                     <slot name="newCommentForm"></slot>
                 </div>
 
@@ -48,7 +48,9 @@
 </template>
 
 <script setup>
+import { usePage } from '@inertiajs/inertia-vue3';
 
+const isPublic = usePage().url.value.includes('public/posts')
 </script>
 
 <style lang="scss" scoped></style>
