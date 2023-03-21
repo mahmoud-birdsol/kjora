@@ -49,23 +49,25 @@
             </template>
 
             <template #commentsCount>
-                <div class="p-3 pt-5 text-sm border-b border-stone-300"> {{ $t('comments ( :count )', {
-                    count: numComments
-                }) }}
-                </div>
-                <div class="flex items-center gap-1">
-                        <template v-if="post?.likes_count > 0">
-                            <span class="text-sm">{{ post?.likes_count }}</span>
-                            <div class="transition-all duration-150 ">
-                                {{ post?.likes_count === 1 ? $t('like') : $t('likes') }}
-                            </div>
-                        </template>
-                        <!-- <LikeButton :isLiked="post?.is_liked" :likeable_id="post.id" :likeable_type="'App\\Models\\Post'">
-                            <template v-slot="{ isLiked }">
-                                <HeartIcon class="w-5 stroke-current stroke-2 text-primary" :class="isLiked ? 'fill-current' : 'fill-transparent'" />
-                            </template>
-                        </LikeButton> -->
+                <div class="border-b border-stone-300 flex justify-between items-center p-4 pt-5">
+                    <div class="text-sm"> {{ $t('comments ( :count )', {
+                        count: numComments
+                    }) }}
                     </div>
+                    <div class="flex items-center gap-1">
+                            <template v-if="post?.likes_count > 0">
+                                <span class="text-sm">{{ post?.likes_count }}</span>
+                                <div class="transition-all duration-150 ">
+                                    {{ post?.likes_count === 1 ? $t('like') : $t('likes') }}
+                                </div>
+                            </template>
+                            <!-- <LikeButton :isLiked="post?.is_liked" :likeable_id="post.id" :likeable_type="'App\\Models\\Post'">
+                                <template v-slot="{ isLiked }">
+                                    <HeartIcon class="w-5 stroke-current stroke-2 text-primary" :class="isLiked ? 'fill-current' : 'fill-transparent'" />
+                                </template>
+                            </LikeButton> -->
+                        </div>
+                </div>
             </template>
             <template #postComments>
                 <div ref="commentsContainer" @scroll="handleScroll" class="flex flex-col gap-4 w-full max-h-[500px] min-h-[480px]  hideScrollBar overflow-auto" v-if="postComments">

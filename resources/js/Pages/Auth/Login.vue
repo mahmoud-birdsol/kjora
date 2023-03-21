@@ -48,13 +48,13 @@ const submit = () => {
                 <div class="grid grid-cols-1 gap-4">
                     <div>
                         <InputLabel for="email" :value="$t('sign in')" />
-                        <TextInput type="text" v-model="form.email" :placeholder="$t('enter') + $t('username') + $t('or') + $t('email')"
+                        <TextInput type="text" v-model="form.email" :placeholder="$t('please') + $t('enter') + $t('username') + $t('or') + $t('Email Address')"
                             auto-complete="email" aria-required="true" />
                         <InputError class="mt-2" :message="form.errors.email" />
                     </div>
                     <div>
                         <InputLabel for="password" :value="$t('password')" />
-                        <PasswordInput v-model="form.password" :placeholder="$t('enter') +  $t('password')" />
+                        <PasswordInput v-model="form.password" :placeholder="$t('please') + $t('enter') +  $t('password')" />
                         <InputError class="mt-2" :message="form.errors.password" />
                     </div>
 

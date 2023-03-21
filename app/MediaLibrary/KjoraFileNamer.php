@@ -9,7 +9,7 @@ class KjoraFileNamer extends FileNamer
 {
     public function originalFileName(string $fileName): string
     {
-        return pathinfo('kjora-'.date('Y-m-d H-i-s'), PATHINFO_FILENAME);
+        return pathinfo('kjora-'.date('Y-m-d').'-'.date('H-i-s'), PATHINFO_FILENAME);
     }
 
     public function conversionFileName(string $fileName, Conversion $conversion): string
