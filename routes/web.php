@@ -516,7 +516,7 @@ Route::get('public/posts/{post}', function (Post $post) {
         'post' => $post,
         'user' => $post->user
     ]);
-})->name('test');
+})->name('public.posts');
 
 Route::get('public/player/{player}', function (User $player) {
     $player->load('club');
