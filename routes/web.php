@@ -28,6 +28,7 @@ use App\Http\Controllers\UpgradeMembershipController;
 use App\Http\Controllers\ResendVerificationCodeController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\VerificationCodeController;
+use App\Http\Controllers\DeleteCommentController;
 use App\Models\Country;
 use App\Models\Invitation;
 use App\Models\MediaLibrary;
@@ -388,6 +389,13 @@ Route::middleware([
     Route::delete('like', [LikeController::class, 'destroy'])->name('like.destroy');
 
     Route::post('stadiums', StadiumController::class)->name('stadiums.store');
+    /*
+     |--------------------------------------------------------------------------
+     | comment routes...
+     |--------------------------------------------------------------------------
+    */
+    Route::delete('comments/{comment}', DeleteCommentController::class)->name('comments.destroy');
+
 });
 /*
     |--------------------------------------------------------------------------

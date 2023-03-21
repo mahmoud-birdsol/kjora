@@ -15,7 +15,10 @@
                         </video>
                     </template>
 
-
+                    <div class="absolute items-center text-xs  bottom-2 right-2 flex gap-2 text-gray-100 ">
+                        <span class="shadow-md">{{ post.views_count }}</span>
+                        <EyeIcon class="h-5 w-5 shadow-md " />
+                    </div>
                     <!-- delete post button -->
                     <!-- <button v-if="currentUser.id === user.id" @click.prevent.stop="showDeleteMediaModal = true"
                             class="absolute top-0 right-0 hidden bg-white group-hover:block bg-opacity-90 rounded-bl-xl">
@@ -62,6 +65,7 @@ import FadeInTransition from './FadeInTransition.vue';
 import { Link, usePage } from '@inertiajs/inertia-vue3';
 import { Inertia } from '@inertiajs/inertia';
 import FixedWrapper from '@/Components/FixedWrapper.vue';
+import { EyeIcon } from '@heroicons/vue/24/solid';
 
 const props = defineProps({
     user: {
