@@ -24,12 +24,6 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-    if (
-        usePage().props.value.auth.user.identity_type != null &&
-        usePage().props.value.auth.user.identity_issue_country !== null
-    ) {
-        completedFirstStep.value = true;
-    }
 
     if (
         usePage().props.value.auth.user.identity_front_image_url != null
@@ -58,7 +52,6 @@ const props = defineProps({
 const showIdentityFrontImageModal = ref(false);
 const showIdentityBackImageModal = ref(false);
 const showIdentitySelfieModal = ref(false);
-const completedFirstStep = ref(false);
 const identityBackImagePreview = ref(null);
 const identityFrontImagePreview = ref(null);
 const identitySelfieImagePreview = ref(null);
@@ -110,7 +103,6 @@ const save = () => {
         preserveScroll: false,
         preserveState: true,
         onSuccess: () => {
-            // completedFirstStep.value = true;
             showSuccessMessage.value = true;
         }
     });
@@ -162,11 +154,6 @@ const save = () => {
                                 <InputError class="mt-2" :message="form.errors.identity_type" />
                             </div>
                         </div>
-                    </template>
-                    <template #footer>
-                        <PrimaryButton v-show="completedFirstStep == false" :class="{ 'opacity-25': form.processing }" :disabled="form.processing || form.identity_type == null || form.identity_issue_country == null" @click="completedFirstStep = true">
-                            {{ $t('continue') }}
-                        </PrimaryButton>
                     </template>
                 </CardContent>
             </Card>
@@ -245,7 +232,7 @@ const save = () => {
                     </template>
                     <template #footer>
                         <div class="mt-4">
-                            <PrimaryButton v-show="completedFirstStep == true && !(identity_status === 'Verified')" :class="{ 'opacity-25': form.processing }" :disabled="form.processing" @click="save()">
+                            <PrimaryButton v-show="!(identity_status === 'Verified')" :class="{ 'opacity-25': form.processing }" :disabled="form.processing" @click="save()">
                                 {{ $t('Verify') }}
                             </PrimaryButton>
                         </div>

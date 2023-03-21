@@ -3,7 +3,7 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
 import { ref } from 'vue';
-
+import GuestLanguageSelector from "../../Shared/GuestLanguageSelector.vue";
 const showMobileMenu = ref(false);
 </script>
 
@@ -11,7 +11,9 @@ const showMobileMenu = ref(false);
     <nav class="bg-transparent">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 justify-between items-center">
-                <div class="hidden lg:block sm:w-1/3"></div>
+                <div class="hidden lg:block sm:w-1/3">
+                    <GuestLanguageSelector class="w-full" />
+                </div>
                 <div class="sm:w-1/3 sm:flex sm:justify-center sm:items-center">
                     <img class="block h-20 mt-4 w-auto lg:hidden" src="/images/logo.png" alt="Your Company">
                     <img class="hidden h-20 mt-4 w-auto lg:block" src="/images/logo.png" alt="Your Company">
@@ -23,6 +25,7 @@ const showMobileMenu = ref(false);
                     </NavLink>
                     <NavLink :href="route('about')" :active="route().current('about')">{{$t('about')}}</NavLink>
                     <NavLink :href="route('contact')" :active="route().current('contact')">{{$t('contact')}}</NavLink>
+
                 </div>
                 <div class="-mr-2 flex items-center sm:hidden">
                     <!-- Mobile menu button -->
@@ -58,6 +61,7 @@ const showMobileMenu = ref(false);
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('about')">{{$t('about')}}</ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('contact')">{{$t('contact')}}</ResponsiveNavLink>
+
             </div>
         </div>
     </Transition>

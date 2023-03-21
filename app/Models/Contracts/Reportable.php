@@ -10,4 +10,6 @@ interface Reportable
      * Get the reportable object reports.
      */
     public function reports(): MorphMany;
+
+    public function reportedUser();
 }

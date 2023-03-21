@@ -522,4 +522,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
             },
         );
     }
+
+    public function reportedUser()
+    {
+        return $this;
+    }
 }

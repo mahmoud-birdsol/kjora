@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Concerns\CanBeLiked;
 use App\Models\Concerns\CanBeReported;
 use App\Models\Contracts\Likeable;
+use App\Models\Contracts\Reportable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +16,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Post extends Model implements HasMedia, Likeable
+class Post extends Model implements HasMedia, Likeable, Reportable
 {
     use HasFactory;
     use InteractsWithMedia;
@@ -126,5 +127,10 @@ class Post extends Model implements HasMedia, Likeable
     public function url(): string
     {
         return url(route('posts.show', $this));
+    }
+
+    public function reportedUser()
+    {
+        return $this->user;
     }
 }

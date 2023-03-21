@@ -66,4 +66,8 @@ class Conversation extends Model implements Reportable
         );
     }
 
+    public function reportedUser()
+    {
+        return null;
+    }
 }

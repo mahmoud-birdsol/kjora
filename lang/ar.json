@@ -1,4 +1,5 @@
 {
+	"please":"برجاء ",
 	"share":"مشاركة",
 	"video, images, PDFs and docs are allowed with max size(10 MB) are allowed": "يُسمح بالفيديو والصور وملفات PDF والمستندات بأقصى حجم (10 ميغابايت)",
 	"Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS ? If you didn't receive the SMS, we will gladly send you another": "قبل المتابعة ، هل يمكنك التحقق من رقم هاتفك عن طريق إدخال الرمز المكون من 4 أرقام الذي تم إرساله إليك في رسالة نصية قصيرة؟ إذا لم تتلق الرسالة القصيرة ، فسنرسل لك رسالة أخرى بكل سرور",
@@ -96,7 +97,7 @@
 	"try another way": "جرب طريقة أخرى",
 	"The password must be at least 8 characters and at least one uppercase, one lowercase letter , one symbol and one number": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل ، وحرف واحد كبير على الأقل ، وحرف صغير واحد ، ورمز واحد ، ورقم واحد على الأقل",
 	"new password": "كلمة المرور الجديدة",
-	"current password": "كلمة السر الحالية",
+	"current password": "كلمة المرور الحالية",
 	"enter your new password": "أدخل كلمة المرور الجديدة",
 	"enter your current password": "أدخل كلمة المرور الحالية",
 	"update password": "تعديل كلمة السر",
