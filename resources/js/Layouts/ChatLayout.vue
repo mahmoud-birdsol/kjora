@@ -110,8 +110,11 @@ onBeforeUnmount(() => {
                 <div v-if="$slots.main" class="self-stretch p-4 contain">
                     <slot name="main"></slot>
                 </div>
-                <div v-if="$slots.footer" class="self-end p-2 border-t h-min border-t-stone-400">
-                    <slot name="footer"></slot>
+                <div v-if="$slots.footer" class="self-end py-2 border-t h-min border-t-stone-400">
+                    <div class="border-t-stone-400 border-t p-1">
+                        <slot name="footer"></slot>
+
+                    </div>
                 </div>
             </div>
         </div>
