@@ -59,7 +59,7 @@ class ReportSubmittedNotification extends Notification implements ShouldQueue
     {
         return (new NovaNotification)
             ->message($this->report->user->name . __(' has submitted a report.'))
-            ->action(__('Review'), '/resources/reports/' . $this->report->id)
+            ->action(__('Review'), '/nova/resources/reports/' . $this->report->id)
             ->icon('check')
             ->type(__('success'));
     }

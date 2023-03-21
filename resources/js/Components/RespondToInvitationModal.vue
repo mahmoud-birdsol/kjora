@@ -12,6 +12,7 @@ import MainPlayerCard from "./PlayerCards/MainPlayerCard.vue";
 import { Inertia } from "@inertiajs/inertia";
 import DateTranslation from '@/Components/DateTranslation.vue';
 import { CheckIcon, XMarkIcon } from "@heroicons/vue/24/solid";
+import InvitationPlayerCard from "./PlayerCards/InvitationPlayerCard.vue";
 const props = defineProps({
     invitation: {
         required: true,
@@ -60,19 +61,10 @@ const decline = () => {
                         <strong>{{ invitation.stadium.address }}, {{ invitation.stadium.city }}, {{ invitation.stadium.country }},({{ invitation.stadium.name }})</strong>
                     </p>
                 </div>
-
-                <div class="max-w-sm my-6">
-                    <MainPlayerCard :player="invitation.inviting_player" :show-invite="false" :show-location="false" :show-report="false" />
+                <div class="mt-4">
+                    <InvitationPlayerCard :player="invitation.inviting_player" :invitation="invitation" />
                 </div>
 
-                <div class="flex justify-center gap-6">
-                    <button @click="decline" class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
-                        <XMarkIcon class="w-6 text-red-600" />
-                    </button>
-                    <button @click="accept" class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
-                        <CheckIcon class="w-6 text-green-600" />
-                    </button>
-                </div>
             </div>
         </div>
     </Modal>
