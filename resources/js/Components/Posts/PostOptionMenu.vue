@@ -7,7 +7,7 @@
             <FadeInTransition>
                 <!-- media option menu -->
                 <div v-show="showOptions"
-                    class="absolute top-0 z-20 px-6 py-2 text-xs text-white bg-black border ltr:right-8 rtl:left-8 rounded-xl border-neutral-500 pie-10 z-2 ">
+                    class="absolute top-0 z-20 px-3 py-2 text-xs text-white bg-black border ltr:right-8 rtl:left-8 rounded-xl border-neutral-500 z-2 ">
                     <ul class="flex flex-col justify-center gap-y-2">
                         <button class="hover:text-gray-400 group" v-if="isCurrentUser" @click="editCaption">
                             <li class="flex items-center gap-x-2">

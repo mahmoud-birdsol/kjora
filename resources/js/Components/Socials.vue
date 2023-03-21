@@ -29,7 +29,7 @@ function copy() {
 </script>
 <template>
     <div class="fixed top-0 left-0 w-full h-full z-20" @click="showSocials = false" v-if="showSocials"></div>
-    <div class="relative mt-2">
+    <div class="relative">
         <Transition enter-from-class="scale-0" enter-to-class="scale-100" enter-active-class="transition-all duration-300" leave-to-class="scale-0" leave-active-class="transition-all duration-300">
             <div v-if="showSocials" class="bg-black bg-opacity-70 rounded-full p-1 flex gap-3 absolute -top-full ltr:right-1/2 rtl:left-1/2 z-30">
                 <a :data-href="'https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=' + url" :href="'https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=' + url" target="_blank">
