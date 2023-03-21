@@ -107,7 +107,7 @@ const removeFromFavorites = () => {
                     <div class="relative">
                         <Link :href="route('profile.edit')" v-if="isCurrentUser && !isPublic" class="absolute bottom-0 ltr:right-0 rtl:left-0 p-1 bg-white rounded-full hover:text-primary">
                         <PencilIcon class="w-3 [&+div]:hover:block " />
-                        <ToolTip :value="$t('edit-your-profile')" />
+                        <ToolTip :value="$t('edit-your-profile')" right="right-0"/>
                         </Link>
                         <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true" />
                     </div>
