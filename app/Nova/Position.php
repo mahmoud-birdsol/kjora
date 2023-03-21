@@ -61,7 +61,7 @@ class Position extends Resource
                 ->showOnPreview()
                 ->rules('required', 'max:254'),
 
-            BelongsToMany::make(__('Rating Categories'),'rating_categories' , RatingCategory::class),
+            BelongsToMany::make(__('Rating Categories'),'ratingCategories' , RatingCategory::class),
 
             HasMany::make('Users'),
         ];
