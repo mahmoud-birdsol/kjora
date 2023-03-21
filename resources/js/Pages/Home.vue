@@ -99,7 +99,7 @@ const filterByPosition = (position) => {
                 <template v-for="(advertisement, i) in advertisements" :key="i">
                     <SplideSlide class="h-full">
                         <a :href="route('advertisements.show', advertisement)" class="block" target="_blank">
-                            <img class="object-cover h-full " :src="advertisement.media[0].original_url" alt="">
+                            <img class="" :src="advertisement.media[0].original_url" alt="">
                         </a>
                     </SplideSlide>
                 </template>
