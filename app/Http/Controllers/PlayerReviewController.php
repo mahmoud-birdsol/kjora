@@ -17,10 +17,14 @@ class PlayerReviewController extends Controller
     /**
      * Get the show of the review
      *
-     * @return \Inertia\Response
+     * @return RedirectResponse|\Inertia\Response
      */
     public function show(Request $request, Review $review)
     {
+        if($review->ratingCategories()->count() > 0)
+        {
+            return redirect()->route('player.profile',$review->player->id);
+        }
         $ratingCategoriesCount = $review->player->playerReviews->count();
 
         $playerRating = $review->player->playerReviews->flatMap->ratingCategories->groupBy('name')

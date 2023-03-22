@@ -39,7 +39,6 @@ function reloadMedia() {
 </script>
 
 <template>
-    <Head title="Home" />
 
     <AppLayout title="Home">
         <template #header>

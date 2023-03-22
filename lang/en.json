@@ -1,4 +1,6 @@
 {
+	"share to twitter": "share to twitter",
+	"share to facebook": "Share To Facebook",
 	"copy link": "Copy Link",
 	"twitter": "Twitter",
 	"facebook": "Facebook",
@@ -344,5 +346,7 @@
 	"Please wait to verify your identity.": "Your Identity Documents Has Been Submitted. AWAITING APROVILE",
 	"Verification code sent.": "Verification code sent.",
 	"Your report has been submitted and will be reviewed by our admins shortly.": "Your report has been submitted and will be reviewed by our admins shortly.",
-	"sorry, we don't have any result": "نأسف، لا يوجد نتائج "
+	"sorry, we don't have any result": "نأسف، لا يوجد نتائج ",
+	"This is to notify you to rate player ": "This is to notify you to rate player ",
+	"Rate": "Rate"
 }

@@ -1,4 +1,6 @@
 {
+	"share to twitter": "المشاركة عبر التويتر",
+	"share to facebook": "المشاركة عبر الفيس بوك",
 	"copy link": "نسخ الرابط",
 	"twitter": "الارسال عبر التةيتر",
 	"facebook": "الارسال عبر فيس بوك",
@@ -347,5 +349,7 @@
 	"Please wait to verify your identity.": "يرجى الانتظار للتحقق من هويتك.",
 	"Verification code sent.": "تم ارسال الكود",
 	"Your report has been submitted and will be reviewed by our admins shortly.": "تم إرسال بلاغك وسيراجعه مسؤولونا قريبًا.",
-	"sorry, we don't have any result": "نأسف، لا يوجد نتائج "
+	"sorry, we don't have any result": "نأسف، لا يوجد نتائج ",
+	"This is to notify you to rate player ": "هذا لإعلامك لتقييم اللاعب",
+	"Rate": "تقييم"
 }
