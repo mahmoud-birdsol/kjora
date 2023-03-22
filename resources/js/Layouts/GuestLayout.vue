@@ -8,10 +8,10 @@ const socials = usePage().props.value.socials;
 
 <template>
     <div class="min-h-screen bg-gradient-to-b from-black to-primaryDark" :dir="$page.props.locale == 'ar' ? 'rtl' : 'ltr'">
-        <div class="min-h-screen flex flex-col justify-between pt-6 sm:pt-0 space-y-8 ltr:font-sans rtl:font-tajawl">
-            <GuestNavbar/>
+        <div class="min-h-screen flex flex-col justify-between pt-6 sm:pt-0 space-y-8 ltr:font-sans rtl:font-tahoma">
+            <GuestNavbar />
             <main class="flex justify-center my-4">
-                <slot/>
+                <slot />
             </main>
 
             <div class="w-full max-w-7xl mx-auto" v-if="route().current('login')">
@@ -26,7 +26,7 @@ const socials = usePage().props.value.socials;
 
             <footer>
                 <div class="h-10 flex justify-center">
-                    <CopyrightClaim/>
+                    <CopyrightClaim />
                 </div>
             </footer>
             <SystemMessage />

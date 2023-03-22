@@ -85,6 +85,7 @@
 	"We have sent you an email, please click on the provided link to verify your email address": "لقد أرسلنا لك بريدًا إلكترونيًا ، يرجى النقر على الرابط المقدم للتحقق من عنوان بريدك الإلكتروني",
 	"date to": "الى تاريخ",
 	"date from": "من تاريخ",
+	"date": "التاريخ",
 	"pick a date": "اختر تاريخًا",
 	"search by name or username": "البحث بالاسم أو اسم المستخدم",
 	"nationality": "الجنسية",
@@ -347,6 +348,7 @@
 	"Please Upload Your Verification Documents .": "يرجى تحميل وثائق التحقق الخاصة بك.",
 	"Please wait to verify your identity.": "يرجى الانتظار للتحقق من هويتك.",
 	"Verification code sent.": "تم ارسال الكود",
-    "Your report has been submitted and will be reviewed by our admins shortly.": "تم إرسال بلاغك وسيراجعه مسؤولونا قريبًا."
-
+	"Your report has been submitted and will be reviewed by our admins shortly.": "تم إرسال بلاغك وسيراجعه مسؤولونا قريبًا.",
+    "This is to notify you to rate player ": "هذا لإعلامك لتقييم اللاعب",
+    "Rate": "تقييم"
 }

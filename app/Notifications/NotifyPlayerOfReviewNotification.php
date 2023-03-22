@@ -56,8 +56,8 @@ class NotifyPlayerOfReviewNotification extends Notification
         return (new MailMessage)
             ->subject(__('Review Notification', [] , $notifiable->locale))
             ->line(__('Dear ' , [] , $notifiable->locale) . $this->reviewer->name)
-            ->line(__('This is to notify you to review player ',  [] , $notifiable->locale) . $this->player->name)
-            ->action(__('Review Now' , [] , $notifiable->locale), url(route('player.review.show', [
+            ->line(__('This is to notify you to rate player ',  [] , $notifiable->locale) . $this->player->name)
+            ->action(__('Rate' , [] , $notifiable->locale), url(route('player.review.show', [
                 'review' => $this->review,
                 'reviewing_user' => $this->reviewer->id,
             ])))
