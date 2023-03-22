@@ -126,7 +126,7 @@ function calcShouldRate() {
             </div>
             <!-- invite user location -->
 
-            <div class="w-full overflow-hidden rounded-lg ">
+            <a :href="'https://maps.google.com/?q='+position.lat+','+position.lng"  target="_blank" class="w-full overflow-hidden rounded-lg ">
                 <GoogleMap :api-key="apiKey" style="width: 100%; height: 150px" :center="position" :zoom="15">
                     <Marker :options="markerOptions" />
                     <CustomMarker :options="{ position: position, anchorPoint: 'TOP_RIGHT' }">
@@ -135,7 +135,7 @@ function calcShouldRate() {
                         </div>
                     </CustomMarker>
                 </GoogleMap>
-            </div>
+            </a>
 
 
             <!-- respond to invitation state buttons -->
