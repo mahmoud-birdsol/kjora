@@ -24,7 +24,7 @@ class PlayerController extends Controller
      */
     public function index(Request $request): Response
     {
-        $query = User::query()->whereNot('id', $request->user()->id);
+        $query = User::query();
 
         $request->whenFilled('position', fn() => $query->where('position_id', $request->input('position')));
         $request->whenFilled('ratingFrom', fn() => $query->where(function ($query) use ($request) {
