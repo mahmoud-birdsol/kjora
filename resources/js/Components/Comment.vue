@@ -54,21 +54,21 @@
                     </button>
 
                     <div class="flex items-center">
-                        <div v-if="comment.likes_count > 0">{{ comment.likes_count }}</div>
-                        <LikeButton :isLiked="comment?.is_liked" :likeable_id="comment.id" :likeable_type="'App\\Models\\Comment'">
+                        <div v-if="commentsLikeCount > 0">{{ commentsLikeCount }}</div>
+                        <LikeButton :isLiked="comment?.is_liked" :likeable_id="comment.id" :likeable_type="'App\\Models\\Comment'" @like="commentsLikeCount++" @disLike="commentsLikeCount--">
                             <template v-slot="{ isLiked }">
                                 <div class="transition-all duration-150 hover:underline hover:underline-offset-4" :class="isLiked ? 'text-primary' : ''">
-                                    {{ comment.likes_count <= 1 ? $t('like') : $t('likes') }} </div>
+                                    {{ commentsLikeCount <= 1 ? $t('like') : $t('likes') }} </div>
                             </template>
                         </LikeButton>
 
                     </div>
                 </template>
                 <template v-else>
-                    <template v-if="comment.likes_count > 0">
-                        <div>{{ comment.likes_count }}</div>
+                    <template v-if="commentsLikeCount > 0">
+                        <div>{{ commentsLikeCount }}</div>
                         <div class="transition-all duration-150 ">
-                            {{ comment.likes_count <= 1 ? $t('like') : $t('likes') }} </div>
+                            {{ commentsLikeCount <= 1 ? $t('like') : $t('likes') }} </div>
                     </template>
                 </template>
             </div>
@@ -144,6 +144,8 @@ const isSending = ref(false)
 const showEmojiPicker = ref(false)
 const EmojiPickerClass = ref('');
 const showDeleteCommentModal = ref(false)
+const commentsLikeCount = ref(props.comment.likes_count)
+
 
 const isPublic = usePage().url.value.includes('public/posts')
 const isParentComment = !props.comment.parent_id
