@@ -81,6 +81,7 @@
 	"We have sent you an email, please click on the provided link to verify your email address": "We have sent you an email, please click on the provided link to verify your email address",
 	"date from": "Date From",
 	"date to": "Date To",
+	"date": "Date",
 	"pick a date": "Pick a Date",
 	"search by name or username": "search by name or username",
 	"nationality": "nationality",
@@ -342,5 +343,5 @@
 	"Please Upload Your Verification Documents .": "Please Upload Your Verification Documents .",
 	"Please wait to verify your identity.": "Your Identity Documents Has Been Submitted. AWAITING APROVILE",
 	"Verification code sent.": "Verification code sent.",
-    "Your report has been submitted and will be reviewed by our admins shortly.": "Your report has been submitted and will be reviewed by our admins shortly."
+	"Your report has been submitted and will be reviewed by our admins shortly.": "Your report has been submitted and will be reviewed by our admins shortly."
 }
