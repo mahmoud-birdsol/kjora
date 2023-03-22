@@ -11,8 +11,8 @@ import { ElSlider } from 'element-plus';
 import InputLabel from '@/Components/InputLabel.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import FixedWrapper from '@/Components/FixedWrapper.vue';
-let age = ref([18,70])
-let rating = ref([0,5])
+let age = ref([18, 70])
+let rating = ref([0, 5])
 const props = defineProps({
     positions: Array,
     form: Object,
@@ -33,80 +33,77 @@ const distances = [5, 10, 20, 30, 40, 50];
 </script>
 <template>
     <FixedWrapper>
-        <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl"
-            @click="showFiltersModal = !showFiltersModal">
+        <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl" @click="showFiltersModal = !showFiltersModal">
             <AdjustmentsHorizontalIcon class="w-10 h-10 text-white" />
         </button>
         <Modal :show="showFiltersModal" max-width="sm" @close="showFiltersModal = false" :closeable="false">
-            <div class="p-6 bg-black">
-                <div class="flex items-center justify-between">
-                    <p class="text-sm text-white">{{$t('filter')}} </p>
-                    <button @click="showFiltersModal = false">
-                        <XMarkIcon class="w-4 h-4 text-white" />
-                    </button>
-                </div>
-                <form @submit.prevent="filter">
-                    <div class="my-6">
-                        <InputLabel>{{$t('age')}}</InputLabel>
-                        <div class="px-4 py-2 mx-4 border border-white  rounded-full">
-                            <el-slider v-model="age" range class="" :min="18" :max="70" @change="form.ageFrom=age[0] ; form.ageTo= age[1]"/>
-                        </div>
-                    </div>
-                    <div class="my-6">
-                        <InputLabel>{{$t('rating')}}</InputLabel>
-                        <div class="px-4 py-1 mx-4 border border-white rounded-full">
-                            <el-slider v-model="rating" range :min="0" :max="5"  @change="form.ratingFrom = rating[0]; form.ratingTo = rating[1]  " />
-                        </div>
-                    </div>
-                    <div class="my-6">
-                        <InputLabel>{{$t('search')}}</InputLabel>
-                        <div class="px-4">
-                            <input type="search" name="search" id="search" v-model="form.search"
-                                class="block w-full px-4 text-center text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
-                                :placeholder="$t('search by name or username')" />
-                        </div>
-                    </div>
-                    <div class="my-6">
-                        <InputLabel>{{$t('location')}}</InputLabel>
-                        <div class="px-4">
-                            <select id="location" name="location" v-model="form.location"
-                                class="block w-full py-2 pl-3 pr-10 mt-1 text-base text-center text-white bg-black border-white rounded-full focus:border-primary focus:outline-none focus:ring-primary sm:text-sm placeholder:center">
-                                <option :value="null">{{$t('distance')}}</option>
-                                <option v-for="distance in distances" :key="distance" :value="distance">{{
-                                    distance }} {{$t('Km')}}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="my-6">
-                        <InputLabel>{{$t('nationality')}}</InputLabel>
-                        <div class="px-4 py-1">
-                            <RichSelectInput :options="countries" value-name="id" text-name="name" image-name="flag"
-                                v-model="form.country_id" bgColor="black" txtColor="white" />
-                        </div>
-                    </div>
-                    <div class="my-6">
-                        <InputLabel>{{$t('position')}}</InputLabel>
-                        <div class="px-4">
-                            <select id="location" name="location" v-model="form.position"
-                                class="block w-full py-2 pl-3 pr-10 mt-1 text-base text-center text-white bg-black border-white rounded-full focus:border-primary focus:outline-none focus:ring-primary sm:text-sm placeholder:center">
-                                <option :value="null">{{ $t('All positions') }}</option>
-                                <option v-for="position in positions" :key="position.id" :value="position.id">{{
-                                    $t(position.name) }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="my-6 mt-4">
-                        <SecondaryButton @click="filter">{{$t('apply')}}</SecondaryButton>
-                    </div>
-                    <div class="flex items-center justify-center mt-4">
+            <div class="grid bg-black">
+                <button class="justify-self-end p-1" @click="showFiltersModal = false">
+                    <XMarkIcon class="w-4 h-4 text-white" />
+                </button>
+                <div class="p-6">
+                    <div class="flex items-center justify-between">
+                        <p class="text-sm text-white">{{ $t('filter') }} </p>
                         <button class="text-primary" @click="reset">
                             <!-- <XMarkIcon class="inline w-4 h-4 mr-4" /> -->
-                            {{$t('reset')}}
+                            {{ $t('reset') }}
                         </button>
                     </div>
-                </form>
+                    <form @submit.prevent="filter" @keydown.enter.exact="filter">
+                        <div class="my-6 px-4">
+                            <InputLabel>{{ $t('age') }}</InputLabel>
+                            <div class=" py-2  border border-white  rounded-full">
+                                <el-slider v-model="age" range class="p-4" :min="18" :max="70" @change="form.ageFrom = age[0] ; form.ageTo = age[1]" />
+                            </div>
+                        </div>
+                        <div class="my-6 px-4">
+                            <InputLabel>{{ $t('rating') }}</InputLabel>
+                            <div class=" py-1  border border-white rounded-full">
+                                <el-slider class="p-4" v-model="rating" range :min="0" :max="5" @change="form.ratingFrom = rating[0]; form.ratingTo = rating[1]  " />
+                            </div>
+                        </div>
+                        <div class="my-6 px-4">
+                            <InputLabel>{{ $t('search') }}</InputLabel>
+                            <div class="p-1">
+                                <input type="search" name="search" id="search" v-model="form.search" class="block w-full px-4 text-center text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
+                                    :placeholder="$t('search by name or username')" />
+                            </div>
+                        </div>
+                        <div class="my-6 px-4">
+                            <InputLabel>{{ $t('location') }}</InputLabel>
+                            <div class="">
+                                <select id="location" name="location" v-model="form.location" class="block w-full py-2 pl-3 pr-10 mt-1 text-base text-center text-white bg-black border-white rounded-full focus:border-primary focus:outline-none focus:ring-primary sm:text-sm placeholder:center">
+                                    <option :value="null">{{ $t('distance') }}</option>
+                                    <option v-for="distance in distances" :key="distance" :value="distance">{{
+                                        distance }} {{ $t('Km') }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="my-6 px-4">
+                            <InputLabel>{{ $t('nationality') }}</InputLabel>
+                            <div class=" py-1">
+                                <RichSelectInput :options="countries" value-name="id" text-name="name" image-name="flag" v-model="form.country_id" bgColor="black" txtColor="white" />
+                            </div>
+                        </div>
+                        <div class="my-6 px-4">
+                            <InputLabel>{{ $t('position') }}</InputLabel>
+                            <div class="p-1">
+                                <select id="location" name="location" v-model="form.position" class="block w-full py-2 pl-3 pr-10 mt-1 text-base text-center text-white bg-black border-white rounded-full focus:border-primary focus:outline-none focus:ring-primary sm:text-sm placeholder:center">
+                                    <option :value="null">{{ $t('All positions') }}</option>
+                                    <option v-for="position in positions" :key="position.id" :value="position.id">{{
+                                        $t(position.name) }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="my-6 mt-4">
+                            <SecondaryButton @click="filter">{{ $t('apply') }}</SecondaryButton>
+                        </div>
+                        <div class="flex items-center justify-center mt-4">
+                        </div>
+                    </form>
+                </div>
             </div>
         </Modal>
     </FixedWrapper>
