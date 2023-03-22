@@ -39,7 +39,14 @@ function reloadMedia() {
 </script>
 
 <template>
+    <Head title="Home">
+<!--        <meta property="og:url" :content="" />-->
+        <!-- <meta property="og:type" content="website" /> -->
+        <meta property="og:title" content="Kjora App" />
+        <meta property="og:description" :content="`this is profile of ${player.name} on kjora website `" />
+        <meta property="og:image" :content="player.avatar_url ?? 'images/logo.png'" />
 
+    </Head>
     <AppLayout title="Home">
         <template #header>
             <HelloUserHeader />
