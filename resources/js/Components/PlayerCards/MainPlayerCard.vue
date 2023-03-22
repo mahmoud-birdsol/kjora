@@ -222,7 +222,7 @@ const distanceBetweenPlayerAndMe = calculateDistance(parseFloat(currentUser.curr
                         <MapPinIcon class="inline w-4 h-4" />
                         {{ player.current_city }}
                     </p>
-                    <div v-if="!isCurrentUser && showDistance" class="text-xs">
+                    <div v-if="!isCurrentUser && showDistance" class="text-xs pt-[0.15rem]">
                         <span>{{ distanceBetweenPlayerAndMe }}</span><span>{{ $t('Km') }}</span>
                     </div>
                 </div>
