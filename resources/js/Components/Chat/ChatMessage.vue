@@ -15,6 +15,7 @@ import Avatar from '@/Components/Avatar.vue';
 import DateTranslation from '@/Components/DateTranslation.vue';
 
 import axios from 'axios';
+import ConfirmationModal from '../ConfirmationModal.vue';
 const chat = useChat();
 const props = defineProps({
     message: Object,
@@ -32,6 +33,7 @@ const currentUser = usePage().props.value.auth.user
 const showOptions = ref(false)
 const showMediaGallery = ref(false)
 const showSingleMediaGallery = ref(false)
+const showDeleteMessage = ref(false)
 const imagesVideosOnly = props.message.attachments.filter(a => a.mime_type.startsWith('image') || a.mime_type.startsWith('video'))
 const otherMedia = props.message.attachments.filter(a => !a.mime_type.startsWith('image') && !a.mime_type.startsWith('video'))
 
@@ -84,38 +86,29 @@ function deleteMessage() {
                         <h4 v-else>{{ currentUser.name }}</h4>
                     </div>
                     <span class="">{{ message.parent?.body }}</span>
-                    <MediaPreview v-if="message.parent.attachments[0]" :fileType="message.parent.attachments[0].mime_type"
-                        :filePreview="message.parent.attachments[0].original_url"
-                        :fileName="message.parent.attachments[0].name" />
+                    <MediaPreview v-if="message.parent.attachments[0]" :fileType="message.parent.attachments[0].mime_type" :filePreview="message.parent.attachments[0].original_url" :fileName="message.parent.attachments[0].name" />
                 </div>
                 <!-- media message -->
                 <template v-if="message.attachments && message.attachments.length === 1">
-                    <SingleMediaPreview @showGallery="showSingleMediaGallery = true" :media="message.attachments[0]"
-                        :is-current-user="isCurrentUser" class="cursor-pointer" />
-                    <ChatGallery :show="showSingleMediaGallery" @close="showSingleMediaGallery = false"
-                        :media="message.attachments" :user="message.message_sender" />
+                    <SingleMediaPreview @showGallery="showSingleMediaGallery = true" :media="message.attachments[0]" :is-current-user="isCurrentUser" class="cursor-pointer" />
+                    <ChatGallery :show="showSingleMediaGallery" @close="showSingleMediaGallery = false" :media="message.attachments" :user="message.message_sender" />
                 </template>
                 <!-- message.attachments && message.attachments.length > 1 -->
                 <template v-if="message.attachments.length > 1">
                     <!-- images and videos -->
-                    <div v-if="imagesVideosOnly.length" class="grid max-w-[200px] grid-cols-2 gap-2 place-items-center"
-                        :class="imagesVideosOnly.length > 2 ? 'grid-rows-2' : ''">
+                    <div v-if="imagesVideosOnly.length" class="grid max-w-[200px] grid-cols-2 gap-2 place-items-center" :class="imagesVideosOnly.length > 2 ? 'grid-rows-2' : ''">
                         <MediaThumbnails :media="imagesVideosOnly[0]" />
                         <MediaThumbnails v-if="imagesVideosOnly.length > 2" :media="imagesVideosOnly[1]" />
-                        <div v-if="imagesVideosOnly.length == 2" class="relative w-full aspect-square"
-                            @click="showMediaGallery = true">
+                        <div v-if="imagesVideosOnly.length == 2" class="relative w-full aspect-square" @click="showMediaGallery = true">
                             <MediaThumbnails :media="imagesVideosOnly[1]" />
-                            <div
-                                class="absolute inset-0 grid font-bold text-white rounded-md cursor-pointer max-sm:text-xs bg-stone-700/70 place-items-center">
+                            <div class="absolute inset-0 grid font-bold text-white rounded-md cursor-pointer max-sm:text-xs bg-stone-700/70 place-items-center">
                                 {{ `${$page.props.locale == 'en' ? 'show all' : 'عرض الجميع'}` }}
                             </div>
                         </div>
                         <MediaThumbnails v-if="imagesVideosOnly[2]" :media="imagesVideosOnly[2]" />
-                        <div v-if="imagesVideosOnly.length >= 3" class="relative w-full aspect-square"
-                            @click="showMediaGallery = true">
+                        <div v-if="imagesVideosOnly.length >= 3" class="relative w-full aspect-square" @click="showMediaGallery = true">
                             <MediaThumbnails :media="imagesVideosOnly[4]" />
-                            <div
-                                class="absolute inset-0 grid font-bold text-white rounded-md cursor-pointer bg-stone-700/70 place-items-center max-sm:text-xs">
+                            <div class="absolute inset-0 grid font-bold text-white rounded-md cursor-pointer bg-stone-700/70 place-items-center max-sm:text-xs">
                                 {{ imagesVideosOnly.length > 3 ? `+ ${imagesVideosOnly.length - 3} ${$page.props.locale
                                     == 'en' ? 'more...' : 'المزيد ...'}` :
                                     `${$page.props.locale == 'en' ? 'show all' : 'عرض الجميع'}`
@@ -129,8 +122,7 @@ function deleteMessage() {
                             <SingleMediaPreview :media="item" :is-current-user="isCurrentUser" />
                         </template>
                     </div>
-                    <ChatGallery :show="showMediaGallery" @close="showMediaGallery = false" :media="imagesVideosOnly"
-                        :user="message.message_sender" />
+                    <ChatGallery :show="showMediaGallery" @close="showMediaGallery = false" :media="imagesVideosOnly" :user="message.message_sender" />
                 </template>
                 <!-- text message -->
 
@@ -165,22 +157,23 @@ function deleteMessage() {
                 <EllipsisVerticalIcon class="w-6 text-neutral-500" />
             </button>
             <OnClickOutside @trigger="showOptions = false">
-                <Transition enterFromClass="opacity-0" enterToClass="opacity-100" leaveFromClass="opacity-100"
-                    leaveToClass="opacity-0" leave-active-class="transition-all duration-150 ease-in"
-                    enterActiveClass="transition-all duration-150 ease-out">
-                    <div v-show="showOptions"
-                        class="absolute z-20 px-6 py-2 text-xs text-white bg-black border -top-1 rounded-xl border-neutral-500 pie-10 z-2 rtl:left-7 ltr:right-7">
+                <Transition enterFromClass="opacity-0" enterToClass="opacity-100" leaveFromClass="opacity-100" leaveToClass="opacity-0" leave-active-class="transition-all duration-150 ease-in" enterActiveClass="transition-all duration-150 ease-out">
+                    <div v-show="showOptions" class="absolute z-20 px-6 py-2 text-xs text-white bg-black border -top-1 rounded-xl border-neutral-500 pie-10 z-2 rtl:left-7 ltr:right-7">
                         <ul class="flex flex-col justify-center gap-y-2">
-                            <button class="hover:text-gray-400 " @click="deleteMessage">
+                            <button class="hover:text-gray-400 " @click="showDeleteMessage = true">
                                 <li class="flex items-center justify-center gap-x-2 rtl:flex-row-reverse">
                                     <TrashIcon class="w-4" />
                                     <span> {{ $t('delete') }}</span>
                                 </li>
+                                <ConfirmationModal :show="showDeleteMessage" @close="showDeleteMessage = false" @delete="deleteMessage">
+                                    <template #body>
+                                        <span>{{ $t('Are you sure you want delete this message ? ') }}</span>
+                                    </template>
+                                </ConfirmationModal>
                             </button>
                             <button class="hover:text-gray-400 group" @click="handleReply">
                                 <li class="flex items-center justify-center gap-x-2 rtl:flex-row-reverse">
-                                    <ReplyIcon
-                                        class="cursor-pointer fill-transparent group-hover:stroke-gray-400 stroke-white rtl:mis-2 ">
+                                    <ReplyIcon class="cursor-pointer fill-transparent group-hover:stroke-gray-400 stroke-white rtl:mis-2 ">
                                     </ReplyIcon>
                                     <span>{{ $t('Quote') }}</span>
                                 </li>

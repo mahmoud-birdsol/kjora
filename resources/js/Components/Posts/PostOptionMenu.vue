@@ -20,20 +20,11 @@
                                 <span> {{ $t('delete') }}</span>
                             </li>
                             <!-- confirm delete media modal -->
-                            <Modal :show="showDeletePostModal" @close="showDeletePostModal = false" :closeable="true" :show-close-icon="false" :max-width="'sm'">
-                                <div class="flex flex-col justify-center p-6 text-stone-800 ">
-                                    <p class="mb-3 text-lg">
-                                        {{ $t('Are you sure you want delete this post ? ') }}</p>
-                                    <div class="flex justify-center w-full gap-4">
-                                        <button class="p-2 px-8 border-2 rounded-full border-primary hover:bg-primary text-primary hover:text-white active:scale-95 " @click="showDeletePostModal = false">{{ $t('Cancel')
-                                        }}
-                                        </button>
-                                        <button class="p-2 px-8 text-white bg-red-800 border-2 border-red-800 rounded-full hover:bg-transparent hover:text-red-800 active:scale-95 " @click="removePost">{{ $t('Delete Post') }}
-                                        </button>
-
-                                    </div>
-                                </div>
-                            </Modal>
+                            <ConfirmationModal :show="showDeletePostModal" @close="showDeletePostModal = false" @delete="removePost">
+                                <template #body>
+                                    <span>{{ $t('Are you sure you want delete this post ? ') }}</span>
+                                </template>
+                            </ConfirmationModal>
                         </button>
                         <button @click="showShare" class="hover:text-gray-400 ">
                             <li class="flex items-center justify-center gap-x-2">
@@ -77,6 +68,7 @@ import ReportModal from '@/Components/ReportModal.vue';
 import Socials from '@/Components/Socials.vue';
 import { ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
+import ConfirmationModal from '../ConfirmationModal.vue';
 
 const props = defineProps(['isCurrentUser', 'postId'])
 const emits = defineEmits(['editingCaption'])
