@@ -163,13 +163,13 @@
 	"Welcome to": "Welcome to",
 	"Don't have an account": "Don't have an account",
 	"sign up": "Sign up",
-	"or": "Or ",
-	"username": "Username ",
-	"password": "Password",
+	"or": "or",
+	"username": "username ",
+	"password": "password",
 	"remember me": "Remember me",
 	"sign in": "Sign In",
 	"please write a message or briefly what happen": "please write a message or briefly what happen",
-	"enter": "Enter ",
+	"enter": "enter ",
 	"subject": "Subject",
 	"email": "Email",
 	"message": "Message",
@@ -317,7 +317,7 @@
 
 	"First Name": "First Name",
 	"Surname": "Surname",
-	"Email Address": "Email Address",
+	"Email Address": " email address",
 	"Country": "Country",
 	"Favorite Club": "Favorite Club",
 	"Phone": "Phone",
@@ -348,6 +348,7 @@
 	"Please wait to verify your identity.": "Your Identity Documents Has Been Submitted. AWAITING APROVILE",
 	"Verification code sent.": "Verification code sent.",
 	"Your report has been submitted and will be reviewed by our admins shortly.": "Your report has been submitted and will be reviewed by our admins shortly.",
-    "This is to notify you to rate player ": "This is to notify you to rate player ",
-    "Rate": "Rate"
+	"sorry, we don't have any result": "نأسف، لا يوجد نتائج ",
+	"This is to notify you to rate player ": "This is to notify you to rate player ",
+	"Rate": "Rate"
 }

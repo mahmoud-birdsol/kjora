@@ -127,6 +127,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     protected $appends = [
         //        'profile_photo_url',
         'avatar_url',
+        'avatar_thumb_url',
         'identity_front_image_url',
         'identity_back_image_url',
         'identity_selfie_image_url',
@@ -206,7 +207,15 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
             get: fn () => $this->getFirstMedia('avatar')?->getFullUrl()
         );
     }
-
+    /**
+     * Get the user avatar url.
+     */
+    public function avatarThumbUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->getFirstMedia('avatar')?->getFullUrl('thumb')
+        );
+    }
     /**
      * Get the user identity_front_image url.
      */

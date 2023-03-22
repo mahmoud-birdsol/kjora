@@ -24,6 +24,8 @@ const props = defineProps({
     }
 })
 
+const emits = defineEmits(['like', 'disLike'])
+
 const isLiked = ref(props.isLiked)
 const isPending = ref(false)
 const form = useForm({
@@ -37,9 +39,10 @@ function toggleLike() {
         isLiked.value = true
         isPending.value = true
         form.post(route('like.store'), {
-            preserveState: false,
+            preserveState: true,
             preserveScroll: true,
             onSuccess: () => {
+                emits('like')
                 isPending.value = false
             }
         });
@@ -47,9 +50,10 @@ function toggleLike() {
         isLiked.value = false
         isPending.value = true
         form.delete(route('like.destroy'), {
-            preserveState: false,
+            preserveState: true,
             preserveScroll: true,
             onSuccess: () => {
+                emits('disLike')
                 isPending.value = false
             }
         });

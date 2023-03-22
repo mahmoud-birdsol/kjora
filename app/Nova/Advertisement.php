@@ -121,7 +121,7 @@ class Advertisement extends Resource
                 ->conversionOnIndexView('thumb')
                 ->mustCrop()
                 ->croppingConfigs([
-                    'aspectRatio' => 8 / 1,
+                    'aspectRatio' => 8 / 1.5,
                 ])
                 ->required()
                 ->rules('required'),

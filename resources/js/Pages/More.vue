@@ -60,7 +60,7 @@ const currentUser = usePage().props.value.auth.user
                             </div>
                             <div>
                                 <InputLabel color="black">{{ $t('logout') }}</InputLabel>
-                                <MoreBtn :url="route('logout')" method="post"> {{ $t('logout') }}</MoreBtn>
+                                <MoreBtn :url="route('logout')" method="post" as="button"> {{ $t('logout') }}</MoreBtn>
                             </div>
                         </div>
                     </template>

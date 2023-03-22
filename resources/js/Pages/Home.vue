@@ -94,8 +94,7 @@ const filterByPosition = (position) => {
             <HelloUserHeader />
         </template>
         <template #ads>
-            <Splide dir="ltr" class=" h-full w-[32rem] max-w-full self-end overflow-hidden  rounded-full ltr:md:ml-auto rtl:mr-auto"
-                :options="options">
+            <Splide dir="ltr" class=" h-full w-[32rem] max-w-full self-end overflow-hidden  rounded-full ltr:md:ml-auto rtl:mr-auto" :options="options">
                 <template v-for="(advertisement, i) in advertisements" :key="i">
                     <SplideSlide class="h-full">
                         <a :href="route('advertisements.show', advertisement)" class="block rounded-full" target="_blank">
@@ -110,60 +109,61 @@ const filterByPosition = (position) => {
         <div class="">
             <div class="">
                 <!-- Position Filters...
-                                                                                                                                                                                                                                                                                                        =====================================================-->
+                                                                                                                                                                                                                                                                                                                                            =====================================================-->
                 <div class="flex gap-4 mt-4 mb-8 overflow-x-auto hideScrollBar">
                     <button @click="filterByPosition(null)"
                         class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
                         :class="{ 'border-primary': form.position == null, 'border-none': form.position != null }">
-                        <span class="w-full text-center rtl:tracking-tight"
-                            :class="{ 'text-black': form.position == null, 'text-gray-400': form.position != null }">
+                        <span class="w-full text-center rtl:tracking-tight" :class="{ 'text-black': form.position == null, 'text-gray-400': form.position != null }">
                             {{ $t('All positions') }}
                         </span>
                     </button>
                     <template v-for="position in positions" :key="position.id">
                         <button @click="filterByPosition(position.id)"
                             class="py-2 px-4 min-w-[215px] w-1/5 text-center font-bold items-center bg-white border-2 border-gray-300 rounded-full  text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary   active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap">
-                            <span class="w-full text-center rtl:tracking-tight"
-                                :class="{ 'text-black': form.position == position.id, 'text-gray-400': form.position != position.id }">
+                            <span class="w-full text-center rtl:tracking-tight" :class="{ 'text-black': form.position == position.id, 'text-gray-400': form.position != position.id }">
                                 {{ $t(position.name) }}
                             </span>
                         </button>
                     </template>
                 </div>
                 <RadioGroup v-model="currentTabId" class="flex items-center justify-end w-full mb-2 rounded-sm">
-                    <RadioGroupOption v-slot="{ checked }" :value="1"
-                        class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white cursor-pointer hover:bg-stone-200 active:scale-95 "
-                        :class="currentTabId == 1 ? 'bg-primary bg-opacity-80' : ''">{{ $t('grid') }}</RadioGroupOption>
-                    <RadioGroupOption v-slot="{ checked }" :value="2"
-                        class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white cursor-pointer hover:bg-stone-200 active:scale-95 "
-                        :class="currentTabId == 2 ? ' bg-primary bg-opacity-80' : ''">{{ $t('map') }}</RadioGroupOption>
-
+                    <RadioGroupOption v-slot="{ checked }" :value="1" class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white cursor-pointer hover:bg-stone-200 active:scale-95 " :class="currentTabId == 1 ? 'bg-primary bg-opacity-80' : ''">{{ $t('grid') }}</RadioGroupOption>
+                    <RadioGroupOption v-slot="{ checked }" :value="2" class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white cursor-pointer hover:bg-stone-200 active:scale-95 " :class="currentTabId == 2 ? ' bg-primary bg-opacity-80' : ''">{{ $t('map') }}</RadioGroupOption>
                 </RadioGroup>
                 <!-- Current list...-->
-                <div v-show="currentTabId == 1" class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6"
-                    v-loading="loading">
-                    <div>
-                        <div class="flex items-start justify-start my-6">
-                            <p class="text-sm font-bold">{{ $t('total ( :count )', { count: players.total }) }}</p>
-                        </div>
-                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-                            <template v-for="player in players.data" :key="player.id">
-                                <MainPlayerCard :player="player" />
-                            </template>
-                        </div>
-                        <div class="flex items-center justify-center my-4">
-                            <Pagination :links="players.links" />
+                <template v-if="players.data.length">
+                    <div v-show="currentTabId == 1" class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
+                        <div>
+                            <div class="flex items-start justify-start my-6">
+                                <p class="text-sm font-bold">{{ $t('total ( :count )', { count: players.total }) }}</p>
+                            </div>
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+                                <template v-for="player in players.data" :key="player.id">
+                                    <MainPlayerCard :player="player" />
+                                </template>
+                            </div>
+                            <div class="flex items-center justify-center my-4">
+                                <Pagination :links="players.links" />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div v-show="currentTabId == 2" class="w-full overflow-hidden bg-white shadow-xl sm:rounded-lg ">
-                    <PlayersMap :players="players" />
-                </div>
+                    <div v-show="currentTabId == 2" class="w-full overflow-hidden bg-white shadow-xl sm:rounded-lg ">
+                        <PlayersMap :players="players" />
+                    </div>
+                </template>
+                <template v-else>
+                    <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
+                        <p class="text-sm font-bold">{{ $t('total ( :count )', { count: players.total }) }}</p>
+                        <div class="grid place-items-center min-h-[480px] h-full">
+                            <p class="font-bold text-sm text-black">{{ $t(`sorry, we don't have any result`) }} </p>
+                        </div>
+                    </div>
+                </template>
 
                 <!-- Filters Modal...
-                                                                                                                                                                                                                                                                                                        =====================================================-->
-                <FiltersModel :positions="positions" :countries="countries" v-model:form="form" @reset="reset"
-                    @filter="filter" :showFiltersModal="showFiltersModal" />
+                                                                                                                                                                                                                                                                                                                                            =====================================================-->
+                <FiltersModel :positions="positions" :countries="countries" v-model:form="form" @reset="reset" @filter="filter" :showFiltersModal="showFiltersModal" />
             </div>
         </div>
     </AppLayout>

@@ -51,10 +51,15 @@ const props = defineProps({
                             <DateTranslation :start="invitations[0].date" format="DD MMMM YYYY" />
                         </span>
                     </div>
-                    <div class="grid grid-cols-1 gap-4">
+
+                    <div v-if="invitations.length" class="grid grid-cols-1 gap-4">
                         <template v-for="invitation in invitations" :key="invitation.id">
                             <HireCard :invitation="invitation" />
                         </template>
+                    </div>
+
+                    <div v-else class="grid place-items-center min-h-[480px] h-full">
+                        <p class="font-bold text-sm text-black">{{ $t(`sorry, we don't have any result`) }} </p>
                     </div>
                 </div>
             </div>

@@ -45,16 +45,17 @@ const url = usePage().props.value.ziggy.url + '/public/player/' + props.player.i
 </script>
 
 <template>
-    <Head title="Home">
-        <meta property="og:url" :content="url" />
-        <!-- <meta property="og:type" content="website" /> -->
-        <meta property="og:title" content="Kjora" />
-        <meta property="og:description" :content="`this is profile of ${player.name} on kjora website `" />
-        <meta property="og:image" :content="player.avatar_url ?? 'images/logo.png'" />
 
-    </Head>
 
     <PublicLayout title="Home">
+<!--        <Head title="Home">-->
+<!--                    <meta property="og:url" :content="url" />-->
+<!--            &lt;!&ndash; <meta property="og:type" content="website" /> &ndash;&gt;-->
+<!--            <meta property="og:title" content="Kjora App" />-->
+<!--            <meta property="og:description" :content="`this is profile of ${player.name} on kjora website `" />-->
+<!--            <meta property="og:image" :content="player.avatar_url ?? 'images/logo.png'" />-->
+
+<!--        </Head>-->
         <template #header>
             <p class="text-2xl font-light">{{ $t('hello') }} ,</p>
             <p class="text-7xl font-bold">{{ player.first_name }} {{ player.last_name }}</p>

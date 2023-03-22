@@ -47,9 +47,11 @@ const reset = () => {
         </button>
         <Modal :show="showFiltersModal" max-width="sm" @close="showFiltersModal = false" :closeable="false">
             <div class=" bg-black" v-loading="loading">
-                <button @click="showFiltersModal = false" class="justify-self-end p-1">
-                    <XMarkIcon class="w-4 h-4 text-white" />
-                </button>
+                <div class="grid ">
+                    <button @click="showFiltersModal = false" class="justify-self-end p-1">
+                        <XMarkIcon class="w-4 h-4 text-white" />
+                    </button>
+                </div>
                 <div class="p-6">
                     <div class="flex gap-2 items-center justify-between">
                         <p class="text-sm text-white rtl:text-start  ">{{ $t('filter') }} </p>
@@ -58,7 +60,7 @@ const reset = () => {
                             {{ $t('reset') }}
                         </button>
                     </div>
-                    <form @submit.prevent="filter" class="rtl:text-start">
+                    <form @submit.prevent="filter" @keydown.enter.exact="filter" class="rtl:text-start">
                         <div class="my-6">
                             <InputLabel>{{ $t('date from') }}: </InputLabel>
                             <ElDatePicker v-model="form.dateFrom" class="w-full" type="datetime" :placeholder="$t('date')" format="YYYY/MM/DD hh:mm:ss" value-format="YYYY/MM/DD HH:mm:ss" />
