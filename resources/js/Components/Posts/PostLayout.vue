@@ -16,13 +16,16 @@
                         <slot name="userImage"></slot>
                     </div>
                     <!-- col 2 post information -->
-                    <div class="flex flex-col gap-3">
+                    <div class="flex flex-col">
                         <!-- user information row 1-->
                         <slot name="userInfo"></slot>
                         <!-- date and time and likes row 2-->
-                        <slot name="postCaption"></slot>
                         <slot name="postDate&Time"></slot>
                         <!-- caption row 3 -->
+                        <div class="mt-4">
+                            <slot name="postCaption"></slot>
+
+                        </div>
                     </div>
 
 

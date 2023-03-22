@@ -60,7 +60,7 @@ const thumbsOptions = {
     isNavigation: true,
     updateOnMove: true,
     arrows: false,
-    width:props.media.length > 5 ? '100%' : '50%',
+    width:props.media.length > 5 ? '100%' : '70%',
     perPage: props.media.length > 5 ? 5 : props.media.length,
     breakpoints: {
 		640: {
@@ -103,7 +103,7 @@ function handleSplideActive(e) {
                     </div>
                 </div>
                 <div class="flex gap-2">
-                    <a :href="currentMediaUrl" :download="currentMediaName">
+                    <a :href="currentMediaUrl" :download="currentMediaName" v-if="route().current('chats.show')">
                         <ArrowDownTrayIcon class="w-6 text-black cursor-pointer" @click="showSavePanel = true" />
                     </a>
                     <XMarkIcon class="w-6 text-black cursor-pointer" @click="$emit('close')" />
