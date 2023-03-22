@@ -202,8 +202,11 @@ const removeFromFavorites = () => {
                         <!-- <ChevronDoubleRightIcon class="inline w-4 h-4 text-white" /> -->
                         </Link>
                     </div>
+                    <div class="relative">
+                        <Socials v-if="showShare" :id="player.id" shareUrl='public/player' position="bottom-0" />
 
-                    <Socials v-if="showShare" :id="player.id" shareUrl='public/player' />
+                    </div>
+
 
                 </div>
             </div>

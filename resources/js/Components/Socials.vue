@@ -12,11 +12,15 @@ let props = defineProps({
     },shareUrl: {
         required: true,
     },
+    position:{
+        default:'top-0'
+    }
 
 })
-let showSocials = ref(false)
-let show = ref(false)
-let url = usePage().props.value.ziggy.url + '/'+ props.shareUrl +'/' + props.id
+const showSocials = ref(false)
+const show = ref(false)
+const url = usePage().props.value.ziggy.url + '/'+ props.shareUrl +'/' + props.id
+
 function copy() {
     navigator.clipboard.writeText(url).then((
 
@@ -32,7 +36,10 @@ function copy() {
         <onClickOutside @trigger="showSocials = false">
 
             <Transition enter-from-class="scale-0" enter-to-class="scale-100" enter-active-class="transition-all duration-300" leave-to-class="scale-0" leave-active-class="transition-all duration-300">
-                <div v-if="showSocials" class="bg-black rounded-lg p-3 flex flex-col gap-3 absolute top-0 ltr:right-0 rtl:left-0 z-30 text-xs ">
+                <div v-if="showSocials" 
+                class="bg-black rounded-lg p-3 flex flex-col gap-3 absolute ltr:right-0 rtl:left-0 z-30 text-xs text-white"
+                :class="position"
+                >
                     <a :data-href="'https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=' + url" :href="'https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=' + url" target="_blank"
                     class="relative flex items-center gap-2 [&>div]:hover:block"
                     @click="showSocials = false"
