@@ -73,7 +73,7 @@ function submitRatingForm() {
                     <p class="flex items-center font-bold text-sm text-primary">
                         {{ rating }} {{ $t('out of') }} 5
                     </p>
-                    <span class="text-stone-400 text-xs">{{ $t('based on :count players rating', { count: 245 }) }}</span>
+                    <span class="text-stone-400 text-xs">{{ $t('based on :count players rating', { count: review.player.played }) }}</span>
                 </div>
             </div>
 
