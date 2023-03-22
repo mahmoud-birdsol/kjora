@@ -87,6 +87,25 @@ const removeFromFavorites = () => {
         preserveScroll: true,
     });
 };
+
+
+function calculateDistance(lat1, lng1, lat2, lng2) {
+    const radius = 6371; // Earth’s radius in km
+    const dLat = toRadians(lat2 - lat1);
+    const dLng = toRadians(lng2 - lng1);
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = radius * c;
+    return distance.toFixed(1);
+}
+function toRadians(degree) {
+    return degree * (Math.PI / 180);
+}
+
+const distanceBetweenPlayerAndMe = calculateDistance(parseFloat(currentUser.current_latitude), parseFloat(currentUser.current_longitude), parseFloat(props.player.current_latitude), parseFloat(props.player.current_longitude))
+
 </script>
 
 <template>
@@ -198,7 +217,9 @@ const removeFromFavorites = () => {
                     <MapPinIcon class="inline w-4 h-4" />
                     {{ player.current_city }}
                 </p>
-
+                <div v-if="!isCurrentUser">
+                    {{ distanceBetweenPlayerAndMe }}
+                </div>
                 <div class="flex items-center gap-4">
                     <div class="flex space-x-2 bg-transparent" v-if="showInvite && player.id !== $page.props.auth.user.id">
                         <Link :href="route('invitation.create', player.id)" class="text-sm">{{ $t('send-invitation') }}
