@@ -553,8 +553,8 @@ Route::get('public/player/{player}', function (User $player) {
         'positions' => $positions,
         'social_meta' => [
             'title' => $player->name,
-            'image' => $player->avatar_url,
-            'description' =>  $player->name .'profile'
+            'image' => $player->avatar_thumb_url,
+            'description' =>  $player->name .' profile'
         ]
     ]);
 })->name('public.player');
