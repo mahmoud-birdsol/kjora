@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from '@vue/reactivity';
 import {
     Chart as ChartJS,
     RadialLinearScale,
@@ -37,7 +38,8 @@ let props = defineProps({
     }
 
 })
-const data = {
+const data = computed(()=>{
+    return {
     labels: props.labels,
     datasets: [
         {
@@ -53,6 +55,7 @@ const data = {
         }
     ]
 }
+})
 const options = {
     responsive: true,
     maintainAspectRatio: false,
