@@ -36,6 +36,6 @@ class NotifyReportedUserOfReportSubmission implements ShouldQueue
     {
 
 
-        $this->report->reportable->reportedUser()->each->notify(new ReportSubmittedNotification($this->report));
+        $this->report->reportable->reportedUser()->notify(new ReportSubmittedNotification($this->report));
     }
 }
