@@ -103,8 +103,8 @@ const showUploadAvatarModal = ref(false);
                         <InputError class="mt-2" :message="form.errors.club_id" />
                     </div>
                     <div>
-                        <InputLabel color="primary" for="date_of_birth" :value="$t('Date of birth')" />
-                        <ElDatePicker v-model="form.date_of_birth" class="w-full" placeholde="DD/MM/YYYY" />
+                        <InputLabel color="primary" for="date_of_birth" :value="$t('Date of birth')"  :disabled="true" />
+                        <ElDatePicker v-model="form.date_of_birth" class="w-full" placeholde="DD/MM/YYYY"  :disabled="true" />
                         <InputError class="mt-2" :message="form.errors.date_of_birth" />
                     </div>
                     <div>
@@ -128,13 +128,13 @@ const showUploadAvatarModal = ref(false);
                             <div class="ml-4">
                                 <div class="flex items-center space-x-2">
                                     <input type="radio" id="male" value="male" v-model="form.gender"
-                                        class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
+                                        class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary cursor-not-allowed"  disabled/>
                                     <label for="male" class="text-sm font-medium text-black">{{ $t('Male') }}</label>
                                 </div>
 
                                 <div class="flex items-center space-x-2">
                                     <input type="radio" id="female" value="female" v-model="form.gender"
-                                        class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
+                                        class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary cursor-not-allowed"  disabled />
                                     <label for="female" class="text-sm font-medium text-black">{{ $t('Female')
                                     }}</label>
                                 </div>
