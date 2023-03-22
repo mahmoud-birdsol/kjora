@@ -38,7 +38,7 @@ function removeConversation() {
 
 <template>
     <Link :href="route('chats.show', conversation.id)" :class="active ? 'border-2 border-primary rounded-2xl' : ''">
-    <div @click="showNewMessagesPopup = false" class="bg-[url(/images/chatbg.png)] bg-cover relative rounded-2xl p-6 flex flex-col gap-8 items-start bg-[center_top]" :class="active ? 'border-2 border-white' : ''">
+    <div @click="showNewMessagesPopup = false" class="bg-[url(/images/chatbg.png)] bg-cover relative rounded-2xl p-6 flex flex-col gap-8 items-start bg-[center_center]" :class="active ? 'border-2 border-white' : ''">
         <div class="flex flex-row items-center w-full gap-4" v-for="user in conversation.users">
             <div>
                 <Avatar :id="user.id" :image-url="user.avatar" size="sm" :username="user.name" :border="true" />
