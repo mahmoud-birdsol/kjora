@@ -217,12 +217,14 @@ const distanceBetweenPlayerAndMe = calculateDistance(parseFloat(currentUser.curr
             </div>
 
             <div class="flex items-center justify-between mt-2" :class="`text-${txtColor}`">
-                <p class="flex items-center text-sm" v-if="showLocation">
-                    <MapPinIcon class="inline w-4 h-4" />
-                    {{ player.current_city }}
-                </p>
-                <div v-if="!isCurrentUser && showDistance">
-                    {{ distanceBetweenPlayerAndMe }}
+                <div class="flex items-center gap-1">
+                    <p class="flex items-center text-sm" v-if="showLocation">
+                        <MapPinIcon class="inline w-4 h-4" />
+                        {{ player.current_city }}
+                    </p>
+                    <div v-if="!isCurrentUser && showDistance" class="text-xs">
+                        <span>{{ distanceBetweenPlayerAndMe }}</span><span>{{ $t('Km') }}</span>
+                    </div>
                 </div>
                 <div class="flex items-center gap-4">
                     <div class="flex space-x-2 bg-transparent" v-if="showInvite && player.id !== $page.props.auth.user.id">
@@ -232,7 +234,6 @@ const distanceBetweenPlayerAndMe = calculateDistance(parseFloat(currentUser.curr
                     </div>
                     <div class="relative">
                         <Socials v-if="showShare" :id="player.id" shareUrl='public/player' position="bottom-0" />
-
                     </div>
 
 

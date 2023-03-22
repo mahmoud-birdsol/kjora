@@ -1,8 +1,8 @@
 {
-	"we appreciate you taking the time to share your rating":"We appreciate you taking the time to share your rating",
-	"thank you for sharing your experience with us":"Thank you for sharing your experience with",
-	"share to twitter":"share to twitter",
-	"share to facebook":"Share To Facebook",
+	"we appreciate you taking the time to share your rating": "We appreciate you taking the time to share your rating",
+	"thank you for sharing your experience with us": "Thank you for sharing your experience with",
+	"share to twitter": "share to twitter",
+	"share to facebook": "Share To Facebook",
 	"copy link": "Copy Link",
 	"twitter": "Twitter",
 	"facebook": "Facebook",
@@ -314,7 +314,6 @@
 	"Language": "العربية",
 	"Locale": "ar",
 	"My Account": "My Account",
-
 	"First Name": "First Name",
 	"Surname": "Surname",
 	"Email Address": " email address",
