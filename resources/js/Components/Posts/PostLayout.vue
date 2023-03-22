@@ -1,6 +1,6 @@
 <template>
-    <div class="px-4 py-4 bg-white sm:p-8 rounded-3xl">
-        <div class="grid h-full gap-3 border max-w-[500px] mx-auto rounded-2xl border-stone-400 ">
+    <div class="px-4 py-4 sm:p-8 rounded-3xl">
+        <div class="grid h-full gap-3 border max-w-[500px] mx-auto rounded-2xl border-stone-400  bg-white ">
             <!-- image and caption left col -->
             <div class="flex flex-col max-w-full gap-6 p-3 ">
                 <!-- media -->

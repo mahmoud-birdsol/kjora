@@ -344,5 +344,7 @@
 	"Post successfully updated.": "تم تحديث النشر بنجاح.",
 	"Please Upload Your Verification Documents .": "يرجى تحميل وثائق التحقق الخاصة بك.",
 	"Please wait to verify your identity.": "يرجى الانتظار للتحقق من هويتك.",
-	"Verification code sent.": "تم ارسال الكود"
+	"Verification code sent.": "تم ارسال الكود",
+    "Your report has been submitted and will be reviewed by our admins shortly.": "تم إرسال بلاغك وسيراجعه مسؤولونا قريبًا."
+
 }
