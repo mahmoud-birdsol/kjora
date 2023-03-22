@@ -27,7 +27,7 @@
                             </ConfirmationModal>
                         </button>
                         <button @click="showShare" class="hover:text-gray-400 ">
-                            <li class="flex items-center justify-center gap-x-2">
+                            <li class="flex items-center justify-center">
                                 <Socials :id="postId" shareUrl='public/posts'>
                                     <template #label>
                                         <span> {{ $t('share') }}</span>
@@ -43,8 +43,7 @@
                                         <button class="flex items-center gap-x-2">
                                             <FlagIcon class="w-4" />
                                             <span>{{ $t('report') }}</span>
-                                        </button>
-
+                                        </button>nn
                                     </template>
                                 </ReportModal>
                             </li>
