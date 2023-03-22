@@ -91,7 +91,7 @@ const removeFromFavorites = () => {
 
 <template>
     <div class="overflow-hidden rounded-xl" :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
-        <div v-if="showFavorite" class="flex justify-end">
+        <div v-if="showFavorite && !isCurrentUser" class="flex justify-end">
             <span class="rounded-lg ltr:rounded-bl-3xl rtl:rounded-br-3xl bg-white p-2 -mt-0.5 ltr:-mr-0.5 rtl:-ml-0.5">
                 <a href="javascript:;" @click="addToFavorites" v-if="!player.is_favorite">
                     <HeartIconOutline class="w-5 h-5 text-primary" />
@@ -101,15 +101,18 @@ const removeFromFavorites = () => {
                 </a>
             </span>
         </div>
+        <div v-if="showFavorite && isCurrentUser" class="h-5 p-4">
+
+        </div>
         <div class="p-4">
             <div class="flex items-start justify-between">
                 <div class="flex items-center justify-start gap-2 mb-2" :class="{ 'space-x-2': size == 'sm', 'space-x-8': size == 'lg' }">
                     <div class="relative">
                         <Link :href="route('profile.edit')" v-if="isCurrentUser && !isPublic" class="absolute bottom-0 ltr:right-0 rtl:left-0 p-1 bg-white rounded-full hover:text-primary">
                         <PencilIcon class="w-3 [&+div]:hover:block " />
-                        <ToolTip :value="$t('edit-your-profile')" right="right-0"/>
+                        <ToolTip :value="$t('edit-your-profile')" right="right-0" />
                         </Link>
-                        <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true" :borderColor="state == 'Free' ? 'primary':'blackDark' "/>
+                        <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true" :borderColor="state == 'Free' ? 'primary' : 'blackDark'" />
                     </div>
 
                     <div :class="state == 'Free' ? 'text-white' : 'text-primary'">
@@ -209,7 +212,7 @@ const removeFromFavorites = () => {
             </div>
 
 
-            <div class="flex items-center justify-between mt-6" v-if="showReport">
+            <div class="flex items-center justify-between mt-6" v-if="showReport && !isCurrentUser">
                 <div></div>
                 <ReportModal :reportable-id="player.id" :reportable-type="'App\\Models\\User'">
                     <template #trigger>
