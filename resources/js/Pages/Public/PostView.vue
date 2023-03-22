@@ -22,7 +22,7 @@
             </template>
             <template #userInfo>
                 <div class="flex justify-between w-full">
-                    <div class="flex flex-col gap-1 ">
+                    <div class="flex flex-col">
                         <div class="flex flex-row gap-2">
                             <h3 class="m-0 text-lg font-bold leading-none capitalize ">{{ user.name
                             }} </h3>
@@ -36,8 +36,8 @@
                 </div>
             </template>
             <template #postDate&Time>
-                <div class="flex justify-between w-full gap-2 text-sm text-stone-700">
-                    <div class="flex flex-row gap-2">
+                <div class="flex justify-between w-full gap-2 text-[10px] text-stone-400">
+                    <div class="flex flex-row gap-1">
                         <DateTranslation :start="post.created_at" type="range" />
                         <span>|</span>
                         <DateTranslation :start="post.created_at" format="hh:mm A" />
@@ -70,7 +70,7 @@
                 </div>
             </template>
             <template #postComments>
-                <div ref="commentsContainer" @scroll="handleScroll" class="flex flex-col gap-4 w-full max-h-[500px] min-h-[480px]  hideScrollBar overflow-auto" v-if="postComments">
+                <div ref="commentsContainer" @scroll="handleScroll" class="flex flex-col gap-4 w-full max-h-[500px]  hideScrollBar overflow-auto" v-if="postComments">
                     <template v-for="comment in postComments.filter(c => !c.parent_id)" :key="comment.id">
                         <Comment @addedReply="getPostComments" :comment="comment" ref="commentsComps" :parentOffset="commentsContainerOffset" />
                     </template>
