@@ -44,6 +44,10 @@ const props = defineProps({
         required: false,
         type: Boolean,
         default: true
+    }, showDistance: {
+        required: false,
+        type: Boolean,
+        default: true
     },
 
 });
@@ -217,7 +221,7 @@ const distanceBetweenPlayerAndMe = calculateDistance(parseFloat(currentUser.curr
                     <MapPinIcon class="inline w-4 h-4" />
                     {{ player.current_city }}
                 </p>
-                <div v-if="!isCurrentUser">
+                <div v-if="!isCurrentUser && showDistance">
                     {{ distanceBetweenPlayerAndMe }}
                 </div>
                 <div class="flex items-center gap-4">
