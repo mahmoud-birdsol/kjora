@@ -43,20 +43,11 @@
                     <button @click="showDeleteCommentModal = true" class="p-1 transition-all duration-150 pis-0 enabled:hover:underline hover:underline-offset-4">
                         <TrashIcon class="w-4" />
                         <!-- confirm delete media modal -->
-                        <Modal :show="showDeleteCommentModal" @close="showDeleteCommentModal = false" :closeable="true" :show-close-icon="false" :max-width="'sm'">
-                            <div class="flex flex-col justify-center p-6 text-stone-800 ">
-                                <p class="mb-3 text-lg">
-                                    {{ $t('Are you sure you want delete this comment ? ') }}</p>
-                                <div class="flex justify-center w-full gap-4">
-                                    <button class="p-2 px-8 border-2 rounded-full border-primary hover:bg-primary text-primary hover:text-white active:scale-95 " @click="showDeleteCommentModal = false">{{ $t('Cancel')
-                                    }}
-                                    </button>
-                                    <button @click="deleteComment" class="p-2 px-8 text-white bg-black border-2 border-black rounded-full hover:bg-transparent hover:text-black active:scale-95 ">{{ $t('Delete Comment') }}
-                                    </button>
-
-                                </div>
-                            </div>
-                        </Modal>
+                        <ConfirmationModal :show="showDeleteCommentModal" @close="showDeleteCommentModal = false" @delete="deleteComment">
+                            <template #body>
+                                <span>{{ $t('Are you sure you want delete this comment ? ') }}</span>
+                            </template>
+                        </ConfirmationModal>
                     </button>
                     <button @click="handleReplyClicked" class="p-1 transition-all duration-150 pis-0 enabled:hover:underline hover:underline-offset-4">
                         {{ comment.replies.length > 0 ? comment.replies.length : '' }} {{ $t('reply') }}
@@ -135,6 +126,7 @@ import DateTranslation from './DateTranslation.vue';
 import LikeButton from './LikeButton.vue';
 import Modal from './Modal.vue';
 import { Inertia } from '@inertiajs/inertia';
+import ConfirmationModal from './ConfirmationModal.vue';
 
 const props = defineProps(['comment', 'parentOffset'])
 onBeforeMount(() => {

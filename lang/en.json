@@ -26,6 +26,7 @@
 	"Are you sure you want delete this post ? ": "Are you sure you want delete this Post?",
 	"Are you sure you want delete this message ? ": "Are you sure you want delete this Message?",
 	"Are you sure you want delete this comment ? ": "Are you sure you want delete this Comment?",
+	"Are you sure you want delete this conversation ? ": "Are you sure you want delete this Conversation?",
 	"Delete Post": "Delete Post",
 	"Delete Comment": "Delete Comment",
 	"post": "post",
@@ -340,5 +341,6 @@
 	"Post successfully updated.": "Post Successfully Updated.",
 	"Please Upload Your Verification Documents .": "Please Upload Your Verification Documents .",
 	"Please wait to verify your identity.": "Your Identity Documents Has Been Submitted. AWAITING APROVILE",
-	"Verification code sent.": "Verification code sent."
+	"Verification code sent.": "Verification code sent.",
+    "Your report has been submitted and will be reviewed by our admins shortly.": "Your report has been submitted and will be reviewed by our admins shortly."
 }
