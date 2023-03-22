@@ -48,13 +48,12 @@ const url = usePage().props.value.ziggy.url + '/public/player/' + props.player.i
 
 
     <PublicLayout title="Home">
-        <Head title="test">
-            <meta property="og:site_name" content="San Roque 2014 Pollos">
-            <meta property="og:title" content="San Roque 2014 Pollos" />
-            <meta property="og:description" content="Programa de fiestas" />
-            <meta property="og:image" itemprop="image" content="http://pollosweb.wesped.es/programa_pollos/play.png">
-            <meta property="og:type" content="website" />
-            <meta property="og:updated_time" content="1440432930" />
+        <Head title="Home">
+                    <meta property="og:url" :content="url" />
+            <!-- <meta property="og:type" content="website" /> -->
+            <meta property="og:title" content="Kjora App" />
+            <meta property="og:description" :content="`this is profile of ${player.name} on kjora website `" />
+            <meta property="og:image" :content="player.avatar_url ?? 'images/logo.png'" />
 
         </Head>
         <template #header>
