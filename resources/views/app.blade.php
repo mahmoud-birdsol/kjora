@@ -17,6 +17,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
+    <!--Social -->
+    @if(isset($page['props']['event']))
+        <meta name="twitter:card"
+              content="{{ (isset($page['props']['event']['card'])) ? $page['props']['event']['card'] : 'summary' }}"/>
+        <meta name="twitter:site" content="@sitename"/>
+        <meta property="og:title"
+              content="{{ (isset($page['props']['event']['title'])) ? ('My Website | '.$page['props']['event']['title']) : 'My Website | Page' }}"/>
+        <meta property="og:description"
+              content="{{ (isset($page['props']['event']['description'])) ? $page['props']['event']['description'] : '' }}"/>
+        <meta property="og:image"
+              content="{{  (isset($page['props']['event']['image'])) ? $page['props']['event']['image'] : asset('/img/logo.png') }}"/>
+    @endif
     <!-- Scripts -->
     @routes
     @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])

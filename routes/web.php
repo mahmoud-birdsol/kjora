@@ -551,6 +551,11 @@ Route::get('public/player/{player}', function (User $player) {
         'playerRating' => $playerRating,
         'countries' => $countries,
         'positions' => $positions,
+        'event' => [
+            'title' => 'Inventory',
+            'image' => asset('images/doc.png'),
+            'description' => 'My Website - Used Car inventory'
+        ]
     ]);
 })->name('public.player');
 
