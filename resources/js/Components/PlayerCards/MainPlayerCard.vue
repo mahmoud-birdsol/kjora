@@ -171,7 +171,7 @@ const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitud
                                     </template>
                                 </span>
 
-                                <span class="ml-2 font-bold text-white text-md">{{ player.rating }}</span>
+                                <span class="ml-2 font-bold text-md" :class="state == 'Free' ? 'text-gold' : 'text-primary'" >{{ player.rating }}</span>
                             </span>
                         </p>
                     </div>
@@ -245,8 +245,8 @@ const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitud
             </div>
 
 
-            <div class="flex items-center justify-between mt-6" v-if="showReport && !isCurrentUser">
-                <div></div>
+            <div v-if="showReport && isCurrentUser" class="h-5 p-4"></div>
+            <div class="flex justify-end mt-6" v-if="showReport && !isCurrentUser">
                 <ReportModal :reportable-id="player.id" :reportable-type="'App\\Models\\User'">
                     <template #trigger>
                         <button>
