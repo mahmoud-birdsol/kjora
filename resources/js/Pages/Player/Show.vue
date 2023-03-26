@@ -40,7 +40,7 @@ function reloadMedia() {
 
 <template>
     <Head title="Home">
-<!--        <meta property="og:url" :content="" />-->
+        <!--        <meta property="og:url" :content="" />-->
         <!-- <meta property="og:type" content="website" /> -->
         <meta property="og:title" content="Kjora App" />
         <meta property="og:description" :content="`this is profile of ${player.name} on kjora website `" />
@@ -74,8 +74,6 @@ function reloadMedia() {
 
             </div>
         </div>
-
-
     </AppLayout>
 </template>
 

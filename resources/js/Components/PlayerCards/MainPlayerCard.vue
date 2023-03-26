@@ -171,7 +171,7 @@ const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitud
                                     </template>
                                 </span>
 
-                                <span class="ml-2 font-bold text-md" :class="state == 'Free' ? 'text-gold' : 'text-primary'" >{{ player.rating }}</span>
+                                <span class="ml-2 font-bold text-md" :class="state == 'Free' ? 'text-gold' : 'text-primary'">{{ player.rating }}</span>
                             </span>
                         </p>
                     </div>
@@ -261,3 +261,6 @@ const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitud
         </div>
     </div>
 </template>
+
+
+<style ></style>

@@ -82,7 +82,7 @@ function hideLightBox() {
 </script>
 
 <template>
-    <template v-if="isPlayerProfile" class="bg-white text-red-600">
+    <template v-if="isPlayerProfile" class="text-red-600 bg-white">
         <span @click="showLightBox" v-if="imageUrl" class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer" :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'" />
         <span v-else class="block bg-center bg-no-repeat bg-cover rounded-full" :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
     </template>
@@ -95,14 +95,19 @@ function hideLightBox() {
         <span @click="showLightBox" v-else-if="imageUrl" class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer" :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'" />
         <span v-else class="block bg-center bg-no-repeat bg-cover rounded-full" :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
     </template>
-    <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" @hide="hideLightBox"></vue-easy-lightbox>
+    <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" @hide="hideLightBox" data-lightBox="avatar"></vue-easy-lightbox>
 </template>
 
 
-<style scoped>
-.vel-img-wrapper {
+<style >
+[data-lightBox="avatar"] .vel-img-wrapper {
     overflow: hidden;
     border-radius: 50%;
-    aspect-ratio: aspect-square;
+    aspect-ratio: 1/1;
+    border: 3px solid black
+}
+
+[data-lightBox="avatar"] .vel-img-wrapper img {
+    max-width: 200px;
 }
 </style>

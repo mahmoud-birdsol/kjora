@@ -54,14 +54,12 @@ watch(() => chat.search, () => {
             </div>
         </div>
         <div class="flex w-full" v-else>
-            <div
-                class="flex items-center flex-1 gap-4 p-4 ltr:border-r ltr:border-r-stone-400 rtl:border-l rtl:border-l-stone-400">
-                <Avatar :image-url="player.avatar_url" :id="player.id" :username="player.name" size="md" :border="true"
-                    border-color="primary" />
+            <div class="flex items-center flex-1 gap-4 p-4 ltr:border-r ltr:border-r-stone-400 rtl:border-l rtl:border-l-stone-400">
+                <Avatar :image-url="player.avatar_url" :id="player.id" :username="player.name" size="md" :border="true" border-color="primary" />
 
                 <div class="flex flex-col">
                     <Link class="mb-1 font-bold leading-none capitalize text-primary" :href="route('player.profile', player.id)">
-                        {{ player.name }}
+                    {{ player.name }}
                     </Link>
                     <Link class="text-xs leading-none text-neutral-500" :href="route('player.profile', player.id)">
                     @{{ player.username }}
