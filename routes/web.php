@@ -525,7 +525,13 @@ Route::get('public/posts/{post}', function (Post $post) {
 
     return Inertia::render('Public/PostView', [
         'post' => $post,
-        'user' => $post->user
+        'user' => $post->user,
+        'social_meta' => [
+            'url'=> \route('Public/PostView',$post->id),
+            'title' => $post->caption,
+            'image' => $post->avatar_thumb_url,
+            'description' =>  $player->name .' profile'
+        ]
     ]);
 })->name('public.posts');
 
