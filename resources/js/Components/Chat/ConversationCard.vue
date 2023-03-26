@@ -50,8 +50,8 @@ function removeConversation() {
             </div>
             <div class="flex gap-2 -mt-2 mis-auto">
                 <div v-if="!user.online">
-                    <p class="text-xs text-gray-300">{{ $t('Last seen') }}</p>
-                    <p class="text-xs text-gray-300">
+                    <p class="text-xs text-gray-300 max-sm:scale-75">{{ $t('Last seen') }}</p>
+                    <p class="text-xs text-gray-300 max-sm:scale-75">
                         <DateTranslation :end="user.last_seen_at" type="period" />
                     </p>
                 </div>

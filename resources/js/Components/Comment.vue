@@ -40,7 +40,7 @@
             <!-- add reply & like buttons row 3 -->
             <div class="flex items-center justify-start w-full gap-2 mb-2 text-sm font-semibold text-stone-700">
                 <template v-if="!isPublic">
-                    <button @click="showDeleteCommentModal = true" class="p-1 transition-all duration-150 pis-0 enabled:hover:underline hover:underline-offset-4">
+                    <button v-if="isCurrentUser" @click="showDeleteCommentModal = true" class="p-1 transition-all duration-150 pis-0 enabled:hover:underline hover:underline-offset-4">
                         <TrashIcon class="w-4" />
                         <!-- confirm delete media modal -->
                         <ConfirmationModal :show="showDeleteCommentModal" @close="showDeleteCommentModal = false" @delete="deleteComment">
@@ -146,7 +146,7 @@ const EmojiPickerClass = ref('');
 const showDeleteCommentModal = ref(false)
 const commentsLikeCount = ref(props.comment.likes_count)
 
-
+const isCurrentUser = currentUser.id === props.user.id
 const isPublic = usePage().url.value.includes('public/posts')
 const isParentComment = !props.comment.parent_id
 
