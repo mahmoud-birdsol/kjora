@@ -112,7 +112,7 @@ function calcShouldRate() {
             </div>
             <!-- name and userName -->
             <div class="flex flex-col items-center ">
-                <div class="text-white capitalize flex items-center gap-1">
+                <div class="text-white capitalize flex items-center gap-1" v-if="!invitation.state">
                     <span>
                         {{ $t('hi :receiver , :sender', {sender:invitation.inviting_player.name , receiver:invitation.invited_player.first_name} ) }}
                     </span>
@@ -120,8 +120,12 @@ function calcShouldRate() {
                        <HandRaisedIcon class="w-4 text-yellow-300 rotate-[15deg]" />
                    </span> 
                 </div>
+                <p class="text-[10px] text-center text-stone-300/70 -mt-3" v-if="invitation.state">
+                    {{ $t('match in') }}
+                    <DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date" />
+                </p>
                 <!-- invitation date -->
-                <p class="text-[10px] text-center text-stone-300/70">{{ $t('Wants to invite you for a match in') }}
+                <p v-else class="text-[10px] text-center text-stone-300/70">{{ $t('Wants to invite you for a match in') }}
                     <DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date" />
                 </p>
             </div>
