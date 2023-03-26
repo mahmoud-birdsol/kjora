@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm, Link } from '@inertiajs/inertia-vue3';
+import { Head, useForm, Link, usePage } from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -20,8 +20,8 @@ const props = defineProps({
 
 const labels = props.ratingCategories.map(r => r.name)
 const showMsg = ref(false)
-const rateColor = ['#D1C37A', '#D1C37A', '#D1C37A']
-
+const state = props.review.player.state_name
+const rateColor = state === 'Free' ? ['#006400', '#006400', '#006400'] :['#99A9BF', '#F7BA2A', '#FF9900']
 const rating = ref(props.review.player.rating)
 const ratingCategory = props.ratingCategories.map(cat => {
     return { id: cat.id, value: 0 }
@@ -85,8 +85,8 @@ function setRates() {
                     </div>
                 </div>
                 <div class="flex gap-4 item-center ">
-                    <ElRate v-model="rating" disabled size="small" :colors="rateColor" void-color="#D1C37A" disabled-void-color="#D1C37A" void-icon="star" />
-                    <p class="flex items-center text-sm font-bold text-primary">
+                    <ElRate v-model="rating" disabled size="small" :colors="rateColor" />
+                    <p class="flex items-center text-sm font-bold" :class="state==='Free'?'text-primary':'text-golden'">
                         {{ rating }}
                     </p>
                     <span class="flex items-center text-xs text-stone-400">{{ $t('based on :count players rating', {
