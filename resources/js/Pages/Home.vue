@@ -4,7 +4,6 @@ import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
 import dayjs from 'dayjs';
 import { Inertia } from "@inertiajs/inertia";
 import AppLayout from '@/Layouts/AppLayout.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
 import Pagination from '@/Components/Pagination.vue';
 import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
 import HelloUserHeader from '@/Components/HelloUserHeader.vue';
@@ -14,7 +13,7 @@ import {
     RadioGroup,
     RadioGroupOption,
 } from '@headlessui/vue'
-const showFiltersModal = ref(false);
+
 const props = defineProps({
     players: Object,
     positions: Array,
@@ -23,6 +22,7 @@ const props = defineProps({
 });
 
 
+const showFiltersModal = ref(false);
 const currentTabId = ref(1)
 const loading = ref(false);
 
@@ -109,7 +109,7 @@ const filterByPosition = (position) => {
         <div class="">
             <div class="">
                 <!-- Position Filters...
-                                                                                                                                                                                                                                                                                                                                            =====================================================-->
+                                                                                                                                                                                                                                                                                                                                                    =====================================================-->
                 <div class="flex gap-4 mt-4 mb-8 overflow-x-auto hideScrollBar">
                     <button @click="filterByPosition(null)"
                         class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
@@ -156,13 +156,13 @@ const filterByPosition = (position) => {
                     <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
                         <p class="text-sm font-bold">{{ $t('total ( :count )', { count: players.total }) }}</p>
                         <div class="grid place-items-center min-h-[480px] h-full">
-                            <p class="font-bold text-sm text-black">{{ $t(`sorry, we don't have any result`) }} </p>
+                            <p class="text-sm font-bold text-black">{{ $t(`sorry, we don't have any result`) }} </p>
                         </div>
                     </div>
                 </template>
 
                 <!-- Filters Modal...
-                                                                                                                                                                                                                                                                                                                                            =====================================================-->
+                                                                                                                                                                                                                                                                                                                                                    =====================================================-->
                 <FiltersModel :positions="positions" :countries="countries" v-model:form="form" @reset="reset" @filter="filter" :showFiltersModal="showFiltersModal" />
             </div>
         </div>

@@ -1,5 +1,5 @@
 <template>
-    <AppLayout title="gallery">
+    <AppLayout title="gallery" :showBall="false">
         <template #header>
             <p>{{ $t('post') }}</p>
         </template>
@@ -39,7 +39,7 @@
             </template>
 
             <template #commentsCount>
-                <div class="border-b border-stone-300 flex justify-between items-center p-4 pt-5">
+                <div class="flex items-center justify-between p-4 pt-5 border-b border-stone-300">
                     <div class="text-sm"> {{ $t('comments ( :count )', {
                         count: numComments
                     }) }}

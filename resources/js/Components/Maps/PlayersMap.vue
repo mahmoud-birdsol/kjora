@@ -8,6 +8,7 @@ const props = defineProps(['players'])
 
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const filteredPlayers = props.players.data.filter(p => p.current_latitude != null || p.current_longitude != null)
+
 const showInfoWindow = ref(false)
 const infoOptions = ref(null)
 const infoPlayer = ref(null)

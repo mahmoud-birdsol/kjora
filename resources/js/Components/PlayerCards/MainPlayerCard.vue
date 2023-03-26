@@ -8,9 +8,7 @@ import { FlagIcon, HeartIcon as HeartIconOutline, MapPinIcon, StarIcon as StarIc
 import ReportModal from "@/Components/ReportModal.vue";
 import Socials from '@/Components/Socials.vue';
 import ToolTip from "@/Components/ToolTip.vue";
-import Modal from '../Modal.vue';
-import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue'
-import UploadImageField from '../UploadImageField.vue';
+
 
 const props = defineProps({
     player: {
@@ -51,7 +49,7 @@ const props = defineProps({
     },
 
 });
-const showUploadAvatarModal = ref(false)
+
 const currentUser = usePage().props.value.auth.user
 const state = props.player.state_name
 const txtColor = state == 'Free' ? 'white' : 'black'
@@ -93,11 +91,16 @@ const removeFromFavorites = () => {
 };
 
 
-function calculateDistance(lat1, lng1, lat2, lng2) {
+function calculateDistance(lat1Str, lng1Str, lat2Str, lng2Str) {
+    let lat1 = parseFloat(lat1Str);
+    let lng1 = parseFloat(lng1Str);
+    let lat2 = parseFloat(lat2Str);
+    let lng2 = parseFloat(lng2Str);
     const radius = 6371; // Earth’s radius in km
     const dLat = toRadians(lat2 - lat1);
     const dLng = toRadians(lng2 - lng1);
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
         Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
         Math.sin(dLng / 2) * Math.sin(dLng / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
@@ -108,11 +111,12 @@ function toRadians(degree) {
     return degree * (Math.PI / 180);
 }
 
-const distanceBetweenPlayerAndMe = calculateDistance(parseFloat(currentUser.current_latitude), parseFloat(currentUser.current_longitude), parseFloat(props.player.current_latitude), parseFloat(props.player.current_longitude))
+const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitude, currentUser.current_longitude, props.player.current_latitude, props.player.current_longitude)
 
 </script>
 
 <template>
+    <!-- favorite icon -->
     <div class="overflow-hidden rounded-xl" :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
         <div v-if="showFavorite && !isCurrentUser" class="flex justify-end">
             <span class="rounded-lg ltr:rounded-bl-3xl rtl:rounded-br-3xl bg-white p-2 -mt-0.5 ltr:-mr-0.5 rtl:-ml-0.5">
@@ -124,14 +128,14 @@ const distanceBetweenPlayerAndMe = calculateDistance(parseFloat(currentUser.curr
                 </a>
             </span>
         </div>
-        <div v-if="showFavorite && isCurrentUser" class="h-5 p-4">
+        <div v-if="showFavorite && isCurrentUser" class="h-5 p-4"></div>
 
-        </div>
+
         <div class="p-4">
             <div class="flex items-start justify-between">
                 <div class="flex items-center justify-start gap-2 mb-2" :class="{ 'space-x-2': size == 'sm', 'space-x-8': size == 'lg' }">
                     <div class="relative">
-                        <Link :href="route('profile.edit')" v-if="isCurrentUser && !isPublic" class="absolute bottom-0 ltr:right-0 rtl:left-0 p-1 bg-white rounded-full hover:text-primary">
+                        <Link :href="route('profile.edit')" v-if="isCurrentUser && !isPublic" class="absolute bottom-0 p-1 bg-white rounded-full ltr:right-0 rtl:left-0 hover:text-primary">
                         <PencilIcon class="w-3 [&+div]:hover:block " />
                         <ToolTip :value="$t('edit-your-profile')" right="right-0" />
                         </Link>
@@ -179,7 +183,7 @@ const distanceBetweenPlayerAndMe = calculateDistance(parseFloat(currentUser.curr
                 </div>
             </div>
 
-            <div class="grid gap-4 border-b" :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' }, `border-${txtColor}`, `text-${txtColor}`">
+            <div class="grid border-b gap-1 sm:gap-4" :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' }, `border-${txtColor}`, `text-${txtColor}`">
                 <div v-if="size == 'lg'" class="relative">
 
                     <p class="text-xs text-center" :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">
@@ -200,23 +204,23 @@ const distanceBetweenPlayerAndMe = calculateDistance(parseFloat(currentUser.curr
                     <p class="text-xs text-center " :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
                         $t('played')
                     }}</p>
-                    <p class="text-sm text-center font-semi-bold">0</p>
+                    <p class="text-sm text-center font-semi-bold"> {{ player.played }}</p>
                 </div>
                 <div>
                     <p class="text-xs text-center" :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
                         $t('missed')
                     }}</p>
-                    <p class="text-sm text-center font-semi-bold">0</p>
+                    <p class="text-sm text-center font-semi-bold"> {{ player.missed }} </p>
                 </div>
                 <div>
                     <p class="text-xs text-center" :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
                         $t('position')
                     }}</p>
-                    <p class="text-sm text-center font-semi-bold">{{ $t(player.position.name) }}</p>
+                    <p class="text-xs text-center font-semi-bold">{{ $t(player.position.name) }}</p>
                 </div>
             </div>
 
-            <div class="flex items-center justify-between mt-2" :class="`text-${txtColor}`">
+            <div class="flex items-center justify-between gap-2 mt-2" :class="`text-${txtColor}`">
                 <div class="flex items-center gap-1">
                     <p class="flex items-center text-sm" v-if="showLocation">
                         <MapPinIcon class="inline w-4 h-4" />

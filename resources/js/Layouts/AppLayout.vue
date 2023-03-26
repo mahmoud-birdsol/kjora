@@ -7,27 +7,27 @@ import RealtimeNotifications from '@/Layouts/Partials/RealtimeNotifications.vue'
 import { onMounted, provide, ref } from 'vue';
 import { loadLanguageAsync } from 'laravel-vue-i18n';
 import axios from 'axios';
-import { usePermission } from '@vueuse/core';
 onMounted(() => {
     loadLanguageAsync(usePage().props.value.locale)
 })
 
 defineProps({
     title: String,
+    showBall: {
+        type: Boolean,
+        default: true,
+        required: false,
+    },
 });
 
 
 const height = ref(null)
 onMounted(() => {
-
-
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { enableHighAccuracy: true });
 
     // navigator.permissions.query({ name: "geolocation" }).then((result) => {
     //     console.log(result);
     // });
-
-
 })
 const successCallback = (position) => {
 
@@ -48,13 +48,13 @@ const errorCallback = (error) => {
 
         <Head :title="title" />
 
-        <div class="min-h-screen bg-gradient-to-b from-black to-primaryDark  isolate before:-z-10 relative" :class="!route().current('posts.show') ? 'before:bg-[url(/images/ballkjoura.png)]  before:absolute before:inset-0 before:bg-[center_-243px] before:bg-no-repeat before:mix-blend-overlay' : ''">
-            <div class="flex flex-col justify-between min-h-screen pt-6 space-y-4 sm:pt-0 ltr:font-sans rtl:font-tahoma">
+        <div class="relative min-h-screen bg-gradient-to-b from-black to-primaryDark isolate before:-z-10" :class="{ 'before:bg-[url(/images/ballkjoura.png)]  before:absolute before:inset-0 before:bg-[center_-243px] before:bg-no-repeat before:mix-blend-overlay': showBall }">
+            <div class="flex flex-col justify-between min-h-screen pt-6 space-y-4  sm:pt-0 ltr:font-sans rtl:font-tahoma">
                 <Navbar />
 
                 <header v-if="$slots.header" class="">
                     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                        <div class="flex gap-6  md:flex-row  flex-col ">
+                        <div class="flex flex-col gap-6 md:flex-row ">
                             <h1 class="text-2xl font-bold text-white uppercase sm:text-7xl">
                                 <slot name="header" />
                             </h1>
