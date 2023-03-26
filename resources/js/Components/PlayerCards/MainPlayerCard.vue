@@ -222,14 +222,11 @@ const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitud
 
             <div class="flex items-center justify-between gap-1 mt-2 sm:text-xs" :class="`text-${txtColor}`">
                 <div class="flex items-center gap-1">
-
-                    <p class="flex items-center text-sm scale-[0.85] ltr:origin-left rtl:origin-right" v-if="showLocation">
+                    <p class="flex gap-1 items-center text-sm scale-[0.85] ltr:origin-left rtl:origin-right" v-if="showLocation">
                         <MapPinIcon class="inline w-4 h-4" />
                         {{ player.current_city && player.current_city?.split(' ')[0] }}
                     </p>
-                    <div v-if="!isCurrentUser && showDistance" class="text-xs scale-[0.85] ltr:origin-left rtl:origin-right pt-[0.15rem]">
-                        <span>{{ distanceBetweenPlayerAndMe }}</span><span>{{ $t('Km') }}</span>
-                    </div>
+
 
                 </div>
                 <div class="flex items-center gap-4">
@@ -243,7 +240,11 @@ const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitud
                     </div>
                 </div>
             </div>
-
+            <div class="pis-4 sm:text-xs" :class="`text-${txtColor}`">
+                <div v-if="!isCurrentUser && showDistance" class="text-xs scale-[0.85] ltr:origin-left rtl:origin-right">
+                    <span>{{ distanceBetweenPlayerAndMe }}</span><span>{{ $t('Km') }}</span>
+                </div>
+            </div>
 
             <div class="flex items-center justify-between mt-6" v-if="showReport && !isCurrentUser">
                 <div></div>
