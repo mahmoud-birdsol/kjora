@@ -54,7 +54,7 @@ function submit() {
                         </div>
                     </template>
                     <template #footer>
-                        <PrimaryButton @click="submit" class="align-bottom">{{$t('edit')}}</PrimaryButton>
+                        <PrimaryButton @click="submit" class="align-bottom">{{$t('update')}}</PrimaryButton>
                     </template>
                 </CardContent>
             </Card>
