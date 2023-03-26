@@ -33,6 +33,8 @@ function addStadium() {
     emits('close')
 }
 function setPlace(e) {
+
+    form.name = e.formatted_address
     form.google_place_id = e.place_id
     form.latitude = e.geometry.location.lat()
     form.longitude = e.geometry.location.lng()
@@ -52,14 +54,13 @@ function closeModal() {
 </script>
 <template>
     <FixedWrapper>
-        <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl"
-            @click="openModal">
+        <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl" @click="openModal">
             <PlusCircleIcon class="w-8 h-8 text-white" />
         </button>
         <Modal :show="showAddStadiumModal" max-width="sm" @close="closeModal" :closeable="true" :show-close-icon="false">
             <div class="p-6 bg-black">
                 <div class="flex items-center justify-between">
-                    <p class="text-lg text-white">{{$t('Add new Stadium')}} </p>
+                    <p class="text-lg text-white">{{ $t('Add new Stadium') }} </p>
 
                     <button @click="showAddStadiumModal = false">
                         <XMarkIcon class="w-4 h-4 text-white" />
@@ -68,19 +69,16 @@ function closeModal() {
 
                 <form @submit.prevent="addStadium">
                     <div class="my-6">
-                        <InputLabel>{{$t('Stadium Name')}}</InputLabel>
-                        <input type="text" name="search" id="search" v-model="form.name"
-                            class="block w-full px-4  text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
-                            :placeholder=" $t('Stadium Name') + '...'" />
+                        <InputLabel>{{ $t('Stadium Name') }}</InputLabel>
+                        <input type="text" name="search" id="search" v-model="form.name" class="block w-full px-4 text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center" :placeholder="$t('Stadium Name') + '...'" />
                     </div>
                     <div class="my-6">
-                        <InputLabel>{{$t('choose stadium place')}} </InputLabel>
-                        <GMapAutocomplete :placeholder="$t('choose from map')" @place_changed="setPlace"
-                            class="block w-full px-4  text-white bg-black border-white border p-2 rounded-full focus:border focus:border-primary focus:ring-primary sm:text-sm placeholder:center">
+                        <InputLabel>{{ $t('choose stadium place') }} </InputLabel>
+                        <GMapAutocomplete :placeholder="$t('choose from map')" @place_changed="setPlace" class="block w-full p-2 px-4 text-white bg-black border border-white rounded-full focus:border focus:border-primary focus:ring-primary sm:text-sm placeholder:center">
                         </GMapAutocomplete>
                     </div>
                     <div class="my-6 mt-4">
-                        <SecondaryButton @click="addStadium">{{$t('Add')}}</SecondaryButton>
+                        <SecondaryButton @click="addStadium">{{ $t('Add') }}</SecondaryButton>
                     </div>
 
                 </form>
