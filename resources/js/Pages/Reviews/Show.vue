@@ -9,6 +9,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import { computed, ref } from 'vue';
 import RatingChart from '../../Components/RatingChart.vue';
 import Avatar from '../../Components/Avatar.vue';
+import { XMarkIcon } from '@heroicons/vue/24/outline';
 const props = defineProps({
     review: null,
     ratingCategories: Array,
@@ -129,14 +130,17 @@ function setRates() {
             </div>
         </div>
 
-        <Modal :show="showMsg" max-width="md" @close="showMsg = false">
+        <Modal :show="showMsg" :closeable="false" max-width="md" :showCloseIcon="false">
+            <XMarkIcon class="w-4 mis-auto m-1" @click="showMsg = false"/>
             <div class="bg-white rounded-xl p-6 md:min-h-[300px]">
-                <div class="flex flex-col justify-between items-center h-56 md:min-h-[300px]">
+                <div class="flex flex-col justify-between items-center h-56 md:min-h-[200px]">
                     <div class="flex justify-center">
                         <h2 class="text-xl font-bold uppercase text-primary">{{ $t('rate') }}</h2>
                     </div>
-                    <p class="">{{ $t('thank you for sharing your experience with us') }}.</p>
-                    <p class="">{{ $t('we appreciate you taking the time to share your rating') }}.</p>
+                    <div class="text-center">
+                        <p class="">{{ $t('thank you for sharing your experience with us') }}.</p>
+                        <p class="">{{ $t('we appreciate you taking the time to share your rating') }}.</p>
+                    </div>
 
                     <Link :href="route('home')" class="flex w-full min-w-full">
                     <PrimaryButton class="w-full" @click="showSuccessModal = false">{{ $t('Ok') }}</PrimaryButton>
