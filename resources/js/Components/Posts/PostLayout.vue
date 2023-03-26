@@ -33,7 +33,7 @@
                 </div>
             </div>
             <!-- comment and replies right col -->
-            <div class="flex flex-col h-full gap-2 max-lg:border-t ltr:lg:border-l rtl:lg:border-r border-stone-300">
+            <div class="flex flex-col h-full gap-2 border-t border-stone-300 ">
                 <!-- header -->
                 <slot name="commentsCount"></slot>
                 <!-- comments -->
