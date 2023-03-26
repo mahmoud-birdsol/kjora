@@ -53,7 +53,17 @@ class Post extends Model implements HasMedia, Likeable, Reportable
     {
         $this->addMediaCollection('gallery');
     }
-
+    /**
+     * Register the model media conversions.
+     *
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
+     */
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->width(130)
+            ->height(130);
+    }
     /**
      * Get the user who created this post
      *
@@ -109,6 +119,12 @@ class Post extends Model implements HasMedia, Likeable, Reportable
     {
         return Attribute::make(
             get: fn($value) => $this->getMedia('gallery')->where('id', $this->cover_id)->first()
+        );
+    }
+    public function coverThumbPhoto(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $this->getMedia('thumb')->where('id', $this->cover_id)->first()
         );
     }
     /**

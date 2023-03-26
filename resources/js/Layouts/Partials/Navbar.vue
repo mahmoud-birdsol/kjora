@@ -106,7 +106,7 @@ function markAllNotificationsAsRead() {
                 </div>
                 <div class="hidden md:flex md:gap-x-3 sm:items-center lg:ml-6">
                     <!-- upgrade button  -->
-                    <button class="rounded-full   bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5" v-if="state !== 'Premium'">
+                    <button class="rounded-full   bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5">
                         <span class="bg-black rounded-full">
                             <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                         </span>
@@ -178,7 +178,7 @@ function markAllNotificationsAsRead() {
                             <MapPinIcon class="w-4 h-4 text-primary" />
                             <span class="text-white w-max text-xs">{{ currentUser.current_city }}</span>
                         </div>
-                        <button class="rounded-full bg-[#CFC27A] font-medium px-2 py-1 flex items-center gap-1" v-if="state !== 'Premium'">
+                        <button class="rounded-full bg-[#CFC27A] font-medium px-2 py-1 flex items-center gap-1">
                             <span class="bg-black rounded-full">
                                 <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                             </span>
