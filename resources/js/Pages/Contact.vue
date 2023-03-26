@@ -48,26 +48,26 @@ function submit() {
                         <form class="grid grid-cols-2 gap-4" @submit.prevent="submit" v-loading="form.processing">
                             <div class="col-span-1">
                                 <InputLabel color="text-primary"> {{$t('first-name')}}</InputLabel>
-                                <TextInput type="text" v-model="form.first_name" :placeholder="$t('enter') + $t('first-name')"
+                                <TextInput type="text" v-model="form.first_name" :placeholder="$t('please')+$t('enter') + $t('first-name')"
                                            auto-complete="given-name" aria-required="true"/>
                                 <InputError :message="form.errors.first_name" class="px-4"/>
                             </div>
                             <div class="col-span-1">
-                                <InputLabel color="text-primary"> {{$t('last-name')}} </InputLabel>
-                                <TextInput type="text" v-model="form.surName" :placeholder="$t('enter') + $t('last-name')"
+                                <InputLabel color="text-primary"> {{$t('surname')}} </InputLabel>
+                                <TextInput type="text" v-model="form.surName" :placeholder="$t('please')+$t('enter') + $t('surname')"
                                     auto-complete="family-name" aria-required="true" />
                                 <InputError :message="form.errors.last_name" class="px-4"/>
                             </div>
                             <div class="col-span-2">
                                 <InputLabel color="text-primary"> {{$t('email')}}</InputLabel>
-                                <TextInput type="text" v-model="form.email" :placeholder="$t('enter') + $t('email')"
+                                <TextInput type="text" v-model="form.email" :placeholder="$t('please')+$t('enter') + $t('Email Address')"
                                            auto-complete="email"
                                            aria-required="true"/>
                                 <InputError :message="form.errors.email" class="px-4"/>
                             </div>
                             <div class="col-span-2">
                                 <InputLabel color="text-primary"> {{$t('subject')}} </InputLabel>
-                                <TextInput type="text" v-model="form.subject" :placeholder="$t('enter') + $t('subject')" />
+                                <TextInput type="text" v-model="form.subject" :placeholder="$t('please')+$t('enter') + $t('subject')" />
                                 <InputError :message="form.errors.subject" class="px-4"/>
                             </div>
                             <div class="col-span-2 relative">
