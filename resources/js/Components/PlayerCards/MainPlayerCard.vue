@@ -171,7 +171,7 @@ const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitud
                                     </template>
                                 </span>
 
-                                <span class="ml-2 font-bold text-white text-md">{{ player.rating }}</span>
+                                <span class="ml-2 font-bold text-md" :class="state == 'Free' ? 'text-gold' : 'text-primary'" >{{ player.rating }}</span>
                             </span>
                         </p>
                     </div>
@@ -188,8 +188,8 @@ const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitud
 
                     <p class="text-xs text-center" :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">
                         {{ $t('favorite-club') }}</p>
-                    <div class="flex justify-center item-center [&+div]:hover:block">
-                        <img :src="player.club?.logo_thumb" class="w-5 h-5 border-2 border-white rounded-full" />
+                    <div class="flex justify-center item-center [&+div]:hover:block rounded-full overflow-hidden w-fit p-1 bg-white mx-auto">
+                        <img :src="player.club?.logo_thumb" class="w-5 h-5 " />
                     </div>
                     <ToolTip :value="player.club?.name" />
                 </div>
@@ -246,8 +246,8 @@ const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitud
                 </div>
             </div>
 
-            <div class="flex items-center justify-between mt-6" v-if="showReport && !isCurrentUser">
-                <div></div>
+            <div v-if="showReport && isCurrentUser" class="h-5 p-4"></div>
+            <div class="flex justify-end mt-6" v-if="showReport && !isCurrentUser">
                 <ReportModal :reportable-id="player.id" :reportable-type="'App\\Models\\User'">
                     <template #trigger>
                         <button>

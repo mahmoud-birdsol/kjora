@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm, Link } from '@inertiajs/inertia-vue3';
+import { Head, useForm, Link, usePage } from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -9,6 +9,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import { computed, ref } from 'vue';
 import RatingChart from '../../Components/RatingChart.vue';
 import Avatar from '../../Components/Avatar.vue';
+import { XMarkIcon } from '@heroicons/vue/24/outline';
 const props = defineProps({
     review: null,
     ratingCategories: Array,
@@ -20,8 +21,8 @@ const props = defineProps({
 
 const labels = props.ratingCategories.map(r => r.name)
 const showMsg = ref(false)
-const rateColor = ['#D1C37A', '#D1C37A', '#D1C37A']
-
+const state = props.review.player.state_name
+const rateColor = state === 'Free' ? ['#006400', '#006400', '#006400'] :['#99A9BF', '#F7BA2A', '#FF9900']
 const rating = ref(props.review.player.rating)
 const ratingCategory = props.ratingCategories.map(cat => {
     return { id: cat.id, value: 0 }
@@ -85,8 +86,8 @@ function setRates() {
                     </div>
                 </div>
                 <div class="flex gap-4 item-center ">
-                    <ElRate v-model="rating" disabled size="small" :colors="rateColor" void-color="#D1C37A" disabled-void-color="#D1C37A" void-icon="star" />
-                    <p class="flex items-center text-sm font-bold text-primary">
+                    <ElRate v-model="rating" disabled size="small" :colors="rateColor" />
+                    <p class="flex items-center text-sm font-bold" :class="state==='Free'?'text-primary':'text-golden'">
                         {{ rating }}
                     </p>
                     <span class="flex items-center text-xs text-stone-400">{{ $t('based on :count players rating', {
@@ -129,14 +130,17 @@ function setRates() {
             </div>
         </div>
 
-        <Modal :show="showMsg" max-width="md" @close="showMsg = false">
+        <Modal :show="showMsg" :closeable="false" max-width="md" :showCloseIcon="false">
+            <XMarkIcon class="w-4 mis-auto m-1" @click="showMsg = false"/>
             <div class="bg-white rounded-xl p-6 md:min-h-[300px]">
-                <div class="flex flex-col justify-between items-center h-56 md:min-h-[300px]">
+                <div class="flex flex-col justify-between items-center h-56 md:min-h-[200px]">
                     <div class="flex justify-center">
                         <h2 class="text-xl font-bold uppercase text-primary">{{ $t('rate') }}</h2>
                     </div>
-                    <p class="">{{ $t('thank you for sharing your experience with us') }}.</p>
-                    <p class="">{{ $t('we appreciate you taking the time to share your rating') }}.</p>
+                    <div class="text-center">
+                        <p class="">{{ $t('thank you for sharing your experience with us') }}.</p>
+                        <p class="">{{ $t('we appreciate you taking the time to share your rating') }}.</p>
+                    </div>
 
                     <Link :href="route('home')" class="flex w-full min-w-full">
                     <PrimaryButton class="w-full" @click="showSuccessModal = false">{{ $t('Ok') }}</PrimaryButton>

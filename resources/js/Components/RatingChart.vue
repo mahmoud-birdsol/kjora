@@ -81,9 +81,14 @@ const options = {
             },
             pointLabels: {
                 color: props.theme,
+                font:{
+                    weight:900,
+                    size:14,
+
+                }
             },
         }
-    }
+    },
 }
     // scales: {
     //     r: {
@@ -113,5 +118,5 @@ const options = {
     // },
 </script>
 <template>
-    <Radar :data="data" :options="options" />
+    <Radar :data="data" :options="options"/>
 </template>

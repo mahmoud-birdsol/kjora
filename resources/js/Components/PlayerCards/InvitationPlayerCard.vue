@@ -101,7 +101,7 @@ function calcShouldRate() {
                             </template>
                         </span>
 
-                        <span class="ml-2 font-bold text-white text-md">{{ player.rating }}</span>
+                        <span class="ml-2 font-bold text-md" :class="state == 'Free' ? 'text-gold' : 'text-primary'" >{{ player.rating }}</span>
                     </span>
                 </p>
             </div>

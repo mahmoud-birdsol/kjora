@@ -37,7 +37,7 @@ function copy() {
 
             <Transition enter-from-class="scale-0" enter-to-class="scale-100" enter-active-class="transition-all duration-300" leave-to-class="scale-0" leave-active-class="transition-all duration-300">
                 <div v-if="showSocials" 
-                class="bg-black rounded-lg p-3 flex flex-col gap-3 absolute ltr:right-0 rtl:left-0 z-30 text-xs text-white"
+                class="bg-black rounded-lg p-3 flex flex-col gap-3 absolute ltr:-right-1 rtl:-left-1 z-30 text-xs text-white border border-neutral-500"
                 :class="position"
                 >
                     <a :data-href="'https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=' + url" :href="'https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=' + url" target="_blank"
