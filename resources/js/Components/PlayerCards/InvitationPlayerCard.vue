@@ -91,6 +91,11 @@ function calcShouldRate() {
             <div class="flex flex-col items-center ">
                 <!-- image -->
                 <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true" />
+                <div class="flex flex-col items-center text-sm text-white ">
+                    <Link class="hover:underline before:content-['a'] before:text-transparent" :href="route('player.profile', player.id)">@{{
+                        player.username }}</Link>
+                    
+                </div>
                 <!-- rating -->
                 <p class="flex items-center justify-center space-x-2 text-sm ">
                     <span class="scale-[0.7]  flex items-center gap-x-1" :class="txtColor == 'black' ? 'text-primary' : 'text-[#FF9900]'">
@@ -107,18 +112,16 @@ function calcShouldRate() {
             </div>
             <!-- name and userName -->
             <div class="flex flex-col items-center ">
-                <div class="flex items-center gap-2 text-sm text-white ">
-                    <h2 class="">
-                        {{ player.first_name }} {{ player.last_name }}
-                    </h2>
-                    <Link class="hover:underline before:content-['a'] before:text-transparent" :href="route('player.profile', player.id)">@{{
-                        player.username }}</Link>
+                <div class="text-white capitalize flex items-center gap-1">
                     <span>
-                        <HandRaisedIcon class="w-4 text-yellow-300 rotate-[15deg]" />
+                        {{ $t('hi :receiver , :sender', {sender:invitation.inviting_player.name , receiver:invitation.invited_player.first_name} ) }}
                     </span>
+                   <span>
+                       <HandRaisedIcon class="w-4 text-yellow-300 rotate-[15deg]" />
+                   </span> 
                 </div>
                 <!-- invitation date -->
-                <p class="text-xs text-center text-stone-300/70">{{ $t('Wants to invite you for a match in') }}
+                <p class="text-[10px] text-center text-stone-300/70">{{ $t('Wants to invite you for a match in') }}
                     <DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date" />
                 </p>
             </div>
