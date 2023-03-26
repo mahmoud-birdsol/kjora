@@ -127,7 +127,7 @@ function changeMapMarker(e) {
                                 <div class="my-6">
                                     <InputLabel>{{ $t('Time') }}</InputLabel>
                                     <div class="px-4">
-                                        <ElTimePicker placeholder="Pick the time " v-model="form.time" :disabled-hours="disabledHours" />
+                                        <ElTimePicker placeholder="Pick the time " format="HH:mm" v-model="form.time" :disabled-hours="disabledHours" />
                                     </div>
                                     <InputError class="mt-2" :message="form.errors.time" />
                                 </div>
