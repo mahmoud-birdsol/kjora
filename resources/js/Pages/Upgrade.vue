@@ -23,6 +23,9 @@ function send(){
     form.post(route('membership.upgrade'),{
         preserveState: true,
         preserveScroll: true,
+        onSuccess:()=>{
+            state.value='Premium'
+        },
         onFinish: () => {
             loading.value = false;
         }
@@ -31,6 +34,7 @@ function send(){
 }
 const date = new Date();
 const locale = usePage().props.value.locale
+const state = ref(usePage().props.value.user.state_name)
 let day = date.getDate();
 let month = date.getMonth() ;
 let year = date.getFullYear();
@@ -106,7 +110,7 @@ let expaireDate = computed(()=>{
                             </RadioGroupOption>
                         </RadioGroup>
 
-                        <PrimaryButton class="my-3" @click="send" :disabled="!form.payment_plan">{{$t('upgrade')}}</PrimaryButton>
+                        <PrimaryButton class="my-3" @click="send" :disabled="!form.payment_plan | state!=='Premium'" >{{$t('upgrade')}}</PrimaryButton>
                     </template>
                 </CardContent>
             </Card>
