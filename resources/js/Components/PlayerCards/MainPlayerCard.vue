@@ -220,15 +220,17 @@ const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitud
                 </div>
             </div>
 
-            <div class="flex items-center justify-between gap-2 mt-2 sm:text-xs" :class="`text-${txtColor}`">
+            <div class="flex items-center justify-between gap-1 mt-2 sm:text-xs" :class="`text-${txtColor}`">
                 <div class="flex items-center gap-1">
+
                     <p class="flex items-center text-sm scale-[0.85] ltr:origin-left rtl:origin-right" v-if="showLocation">
                         <MapPinIcon class="inline w-4 h-4" />
-                        {{ player.current_city }}
+                        {{ player.current_city && player.current_city?.split(' ')[0] }}
                     </p>
                     <div v-if="!isCurrentUser && showDistance" class="text-xs scale-[0.85] ltr:origin-left rtl:origin-right pt-[0.15rem]">
                         <span>{{ distanceBetweenPlayerAndMe }}</span><span>{{ $t('Km') }}</span>
                     </div>
+
                 </div>
                 <div class="flex items-center gap-4">
                     <div class="flex space-x-2 bg-transparent" v-if="showInvite && player.id !== $page.props.auth.user.id">
@@ -239,8 +241,6 @@ const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitud
                     <div class="relative">
                         <Socials v-if="showShare" :id="player.id" shareUrl='public/player' position="bottom-0" />
                     </div>
-
-
                 </div>
             </div>
 
