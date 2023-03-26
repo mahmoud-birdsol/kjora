@@ -188,8 +188,8 @@ const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitud
 
                     <p class="text-xs text-center" :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">
                         {{ $t('favorite-club') }}</p>
-                    <div class="flex justify-center item-center [&+div]:hover:block">
-                        <img :src="player.club?.logo_thumb" class="w-5 h-5 border-2 border-white rounded-full" />
+                    <div class="flex justify-center item-center [&+div]:hover:block rounded-full overflow-hidden w-fit p-1 bg-white">
+                        <img :src="player.club?.logo_thumb" class="w-5 h-5 " />
                     </div>
                     <ToolTip :value="player.club?.name" />
                 </div>
