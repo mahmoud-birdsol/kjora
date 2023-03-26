@@ -12,7 +12,7 @@
                 <!-- user information -->
                 <div class="flex flex-row gap-1 md:flex-col ">
                     <div class="flex flex-row gap-2">
-                        <h3 class="m-0 text-lg font-bold leading-none capitalize text-stone-800 ">{{
+                        <h3 class="m-0 text-sm sm:text-lg font-bold leading-none capitalize text-stone-800 ">{{
                             comment.user.name
                         }} </h3>
                         <span v-if="false">star icon</span>
