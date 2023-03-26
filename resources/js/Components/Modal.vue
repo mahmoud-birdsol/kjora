@@ -96,9 +96,9 @@ const maxWidthClass = computed(() => {
                     leave-to-class="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95">
                     <div v-show="show" class="">
                         <div v-show="position == 'center'"
-                            class="mb-6 overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:w-full sm:mx-auto"
+                            class="mb-6 overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:w-full sm:mx-auto max-xs:mx-10"
                             :class="maxWidthClass">
-                            <div class="flex justify-end px-6 py-6" v-if="closeable && showCloseIcon">
+                            <div class="flex justify-end p-1" v-if="closeable && showCloseIcon">
                                 <button @click="$emit('close')">
                                     <XMarkIcon class="w-4 h-4 text-gray-900 hover:text-gray=500" />
                                 </button>
