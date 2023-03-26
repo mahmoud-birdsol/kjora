@@ -183,7 +183,7 @@ const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitud
                 </div>
             </div>
 
-            <div class="grid border-b gap-1 sm:gap-4" :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' }, `border-${txtColor}`, `text-${txtColor}`">
+            <div class="grid gap-1 border-b sm:gap-4" :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' }, `border-${txtColor}`, `text-${txtColor}`">
                 <div v-if="size == 'lg'" class="relative">
 
                     <p class="text-xs text-center" :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">
@@ -220,19 +220,19 @@ const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitud
                 </div>
             </div>
 
-            <div class="flex items-center justify-between gap-2 mt-2" :class="`text-${txtColor}`">
+            <div class="flex items-center justify-between gap-2 mt-2 sm:text-xs" :class="`text-${txtColor}`">
                 <div class="flex items-center gap-1">
-                    <p class="flex items-center text-sm" v-if="showLocation">
+                    <p class="flex items-center text-sm scale-[0.85] ltr:origin-left rtl:origin-right" v-if="showLocation">
                         <MapPinIcon class="inline w-4 h-4" />
                         {{ player.current_city }}
                     </p>
-                    <div v-if="!isCurrentUser && showDistance" class="text-xs pt-[0.15rem]">
+                    <div v-if="!isCurrentUser && showDistance" class="text-xs scale-[0.85] ltr:origin-left rtl:origin-right pt-[0.15rem]">
                         <span>{{ distanceBetweenPlayerAndMe }}</span><span>{{ $t('Km') }}</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-4">
                     <div class="flex space-x-2 bg-transparent" v-if="showInvite && player.id !== $page.props.auth.user.id">
-                        <Link :href="route('invitation.create', player.id)" class="text-sm">{{ $t('send-invitation') }}
+                        <Link :href="route('invitation.create', player.id)" class="text-sm scale-[0.85]  ltr:origin-left rtl:origin-right">{{ $t('send-invitation') }}
                         <!-- <ChevronDoubleRightIcon class="inline w-4 h-4 text-white" /> -->
                         </Link>
                     </div>
