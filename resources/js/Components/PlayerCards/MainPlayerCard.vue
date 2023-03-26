@@ -186,7 +186,7 @@ const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitud
             <div class="grid gap-1 border-b sm:gap-4" :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' }, `border-${txtColor}`, `text-${txtColor}`">
                 <div v-if="size == 'lg'" class="relative">
 
-                    <p class="text-xs text-center" :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">
+                    <p class="text-xs text-center whitespace-nowrap" :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">
                         {{ $t('favorite-club') }}</p>
                     <div class="flex justify-center item-center [&+div]:hover:block rounded-full overflow-hidden w-fit p-1 bg-white mx-auto">
                         <img :src="player.club?.logo_thumb" class="w-5 h-5 " />
