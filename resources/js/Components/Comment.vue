@@ -57,7 +57,7 @@
                         <div v-if="commentsLikeCount > 0">{{ commentsLikeCount }}</div>
                         <LikeButton :isLiked="comment?.is_liked" :likeable_id="comment.id" :likeable_type="'App\\Models\\Comment'" @like="commentsLikeCount++" @disLike="commentsLikeCount--">
                             <template v-slot="{ isLiked }">
-                                <div class="transition-all duration-150 hover:underline hover:underline-offset-4" :class="isLiked ? 'text-primary' : ''">
+                                <div class="transition-all duration-150" :class="isLiked ? 'text-primary' : ''">
                                     {{ commentsLikeCount <= 1 ? $t('like') : $t('likes') }} </div>
                             </template>
                         </LikeButton>
