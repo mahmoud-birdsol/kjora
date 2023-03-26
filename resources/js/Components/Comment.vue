@@ -23,7 +23,7 @@
                     </Link>
                 </div>
                 <!-- date and time -->
-                <div class="flex flex-row gap-2 text-xs text-neutral-400/90">
+                <div class="flex flex-row gap-2 text-xs scale-[0.8] ltr:origin-right rtl:origin-left text-neutral-400/90">
                     <span>
                         <DateTranslation type="range" :start="comment.created_at" />
                     </span>
@@ -146,7 +146,7 @@ const EmojiPickerClass = ref('');
 const showDeleteCommentModal = ref(false)
 const commentsLikeCount = ref(props.comment.likes_count)
 
-const isCurrentUser = currentUser.id === props.user.id
+const isCurrentUser = currentUser.id === props.comment.user.id
 const isPublic = usePage().url.value.includes('public/posts')
 const isParentComment = !props.comment.parent_id
 
