@@ -25,8 +25,8 @@ const close = () => {
 
 <template>
     <Modal :show="show" :max-width="'sm'" :closeable="closeable" @close="close" :showCloseIcon="false">
-        <div class="flex flex-col justify-center p-6 text-stone-800 ">
-            <p class="mb-3 text-lg">
+        <div class="flex flex-col justify-center gap-6 p-6 text-stone-800 ">
+            <p class="font-bold text-center text-md">
                 <slot name="body" />
             </p>
             <div class="flex justify-center w-full gap-4">
