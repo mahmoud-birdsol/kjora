@@ -1,6 +1,6 @@
 {
-	"hi :receiver , :sender":"hi :receiver , :sender",
-	"forgot":"Forgot ",
+	"hi :receiver , :sender": "hi :receiver , :sender",
+	"forgot": "Forgot ",
 	"we appreciate you taking the time to share your rating": "We appreciate you taking the time to share your rating",
 	"thank you for sharing your experience with us": "Thank you for sharing your experience with us",
 	"share to twitter": "share to twitter",
@@ -216,7 +216,7 @@
 	"edit": "Edit",
 	"position": "Position",
 	"played": "Played",
-	"missed":"Missed",
+	"missed": "Missed",
 	"age": "Age",
 	"hello": "Hello",
 	"favorite": "favorite",
@@ -350,7 +350,7 @@
 	"Please wait to verify your identity.": "Your Identity Documents Has Been Submitted. AWAITING APROVILE",
 	"Verification code sent.": "Verification code sent.",
 	"Your report has been submitted and will be reviewed by our admins shortly.": "Your report has been submitted and will be reviewed by our admins shortly.",
-	"sorry, we don't have any result": "نأسف، لا يوجد نتائج ",
+	"sorry, we don't have any result": "Sorry, We don't have any result",
 	"This is to notify you to rate player ": "This is to notify you to rate player ",
 	"Rate": "Rate"
 }
