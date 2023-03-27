@@ -21,9 +21,8 @@ class PlayerReviewController extends Controller
      */
     public function show(Request $request, Review $review)
     {
-        if($review->ratingCategories()->count() > 0)
-        {
-            return redirect()->route('player.profile',$review->player->id);
+        if ($review->ratingCategories()->count() > 0) {
+            return redirect()->route('player.profile', $review->player->id);
         }
         $ratingCategoriesCount = $review->player->playerReviews->count();
 
@@ -80,9 +79,10 @@ class PlayerReviewController extends Controller
             message: __('Review Submitted Successfully')
         )->closeable()->send();
 
+
         if ($ratingCategoryCount > 0) {
             $review->player->update([
-                'rating' => $value / $ratingCategoryCount,
+                'rating' => (($review->player->rating * $review->player->playerReviews->count()) + ($value / $ratingCategoryCount)) / ($review->player->playerReviews->count() + 1),
             ]);
             $review->player->notify(new NotifyUserOfRatingSubmittedNotification($review->reviewer, $review->player, $review));
         }
