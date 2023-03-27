@@ -192,7 +192,7 @@ function markAllNotificationsAsRead() {
                             </Link>
                         </div>
                         <div class="relative grid place-items-center">
-                            <Dropdown width="96" :align="locale == 'ar' ? 'left' : 'right'">
+                            <Dropdown width="80" :align="locale == 'ar' ? 'left' : 'right'">
                                 <template #trigger>
                                     <button @click="markAllNotificationsAsRead">
                                         <div class="relative">
