@@ -88,7 +88,7 @@ function setRates() {
                     </div>
                 </div>
                 <div class="flex justify-center gap-4 item-center ">
-                    <span class="flex items-center gap-x-1 text-gold">
+                    <span class="flex items-center scale-90 ltr:origin-right rtl:origin-left gap-x-1 text-gold">
                         <span class="flex items-center gap-1">
                             <template v-for="i in 5">
                                 <StarIconFilled class="w-5 h-5 " v-if="review.player.rating >= i" />
@@ -98,7 +98,7 @@ function setRates() {
 
                         <span class="ml-2 font-bold text-md ">{{ review.player.rating }}</span>
                     </span>
-                    <span class="flex items-center text-xs text-stone-400">{{ $t('based on :count players rating', {
+                    <span class="flex items-center text-xs text-stone-400">{{ $t('based on :count players', {
                         count:
                             review.player.played
                     }) }}
