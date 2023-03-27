@@ -71,7 +71,7 @@ const showLightBox = (url) => {
     visibleRef.value = true
 }
 function hideLightBox() {
-visibleRef.value = false
+    visibleRef.value = false
 }
 
 const selectNewPhoto = () => {
@@ -144,8 +144,8 @@ function changeFiles(file, url, id) {
 
 <template>
     <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="reset" :key="num">
-        <div class=" flex flex-col min-h-[500px] justify-between p-6">
-            <div class="flex justify-center -mt-12">
+        <div class=" flex flex-col min-h-[500px] justify-between p-6 pt-0">
+            <div class="flex justify-center ">
                 <h2 class="text-xl font-bold uppercase text-primary">{{ $t('upload') }}</h2>
             </div>
             <!-- v-loading="" -->
@@ -211,17 +211,17 @@ function changeFiles(file, url, id) {
             </div>
             <div>
                 <Crop :img="cropFile" @crop="changeFiles" v-model:open="openModal" @update:open="() => openModal = false" />
-                    <div class="mb-2 text-sm text-center justify-self-end text-primary">
-                        {{ $t('video, images, PDFs and docs are allowed with max size(10 MB) are allowed') }}
-                    </div>
-                    <PrimaryButton @click.prevent="upload" :disabled="isDisabled">
-                        {{ $t('upload') }}
-                    </PrimaryButton>
-                    <!-- <InputError class="mt-2" :message="form.errors.image" /> -->
+                <div class="mb-2 text-sm text-center justify-self-end text-primary">
+                    {{ $t('video, images, PDFs and docs are allowed with max size(10 MB) are allowed') }}
                 </div>
+                <PrimaryButton @click.prevent="upload" :disabled="isDisabled">
+                    {{ $t('upload') }}
+                </PrimaryButton>
+                <!-- <InputError class="mt-2" :message="form.errors.image" /> -->
             </div>
-            <Teleport to="body">
-                <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" @hide="hideLightBox"></vue-easy-lightbox>
-            </Teleport>
-        </Modal>
+        </div>
+        <Teleport to="body">
+            <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" @hide="hideLightBox"></vue-easy-lightbox>
+        </Teleport>
+    </Modal>
 </template>
