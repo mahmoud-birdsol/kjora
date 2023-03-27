@@ -395,7 +395,6 @@ Route::middleware([
      |--------------------------------------------------------------------------
     */
     Route::delete('comments/{comment}', DeleteCommentController::class)->name('comments.destroy');
-
 });
 /*
     |--------------------------------------------------------------------------
@@ -505,9 +504,9 @@ Route::get('test', function () {
 Route::any('language/{language}', function (Request $request, $language) {
     if (\Illuminate\Support\Facades\Auth::check()) {
         auth()->user()->update(['locale' => $language]);
-    }else{
-    $request->session()->put('locale', $language);
-    session()->put('locale', $language);
+    } else {
+        $request->session()->put('locale', $language);
+        session()->put('locale', $language);
     }
 
     return redirect()->back();
@@ -527,10 +526,10 @@ Route::get('public/posts/{post}', function (Post $post) {
         'post' => $post,
         'user' => $post->user,
         'social_meta' => [
-            'url'=> \route('Public/PostView',$post->id),
+            'url' => \route('Public/PostView', $post->id),
             'title' => $post->caption,
             'image' => $post->avatar_thumb_url,
-            'description' =>  $player->name .' profile'
+            'description' =>  $post->user->name . ' profile'
         ]
     ]);
 })->name('public.posts');
@@ -558,10 +557,10 @@ Route::get('public/player/{player}', function (User $player) {
         'countries' => $countries,
         'positions' => $positions,
         'social_meta' => [
-            'url'=> \route('public.player',$player->id),
+            'url' => \route('public.player', $player->id),
             'title' => $player->name,
             'image' => $player->avatar_thumb_url,
-            'description' =>  $player->name .' profile'
+            'description' =>  $player->name . ' profile'
         ]
     ]);
 })->name('public.player');

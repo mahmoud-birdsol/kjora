@@ -21,9 +21,8 @@ class PlayerReviewController extends Controller
      */
     public function show(Request $request, Review $review)
     {
-        if($review->ratingCategories()->count() > 0)
-        {
-            return redirect()->route('player.profile',$review->player->id);
+        if ($review->ratingCategories()->count() > 0) {
+            return redirect()->route('player.profile', $review->player->id);
         }
         $ratingCategoriesCount = $review->player->playerReviews->count();
 
@@ -48,7 +47,8 @@ class PlayerReviewController extends Controller
     public function store(Request $request, Review $review): RedirectResponse
     {
         $review->update([
-            'is_attended' => $request->input('attended')
+            'is_attended' => $request->input('attended'),
+            'reviewed_at' => now()
         ]);
 
         if (!$review->refresh()->is_attended) {
@@ -80,9 +80,10 @@ class PlayerReviewController extends Controller
             message: __('Review Submitted Successfully')
         )->closeable()->send();
 
+
         if ($ratingCategoryCount > 0) {
             $review->player->update([
-                'rating' => $value / $ratingCategoryCount,
+                'rating' => (($review->player->rating * $review->player->playerReviews()->where('reviewed_at', '!=', null)->count()) + ($value / $ratingCategoryCount)) / ($review->player->playerReviews()->where('reviewed_at', '!=', null)->count() + 1),
             ]);
             $review->player->notify(new NotifyUserOfRatingSubmittedNotification($review->reviewer, $review->player, $review));
         }

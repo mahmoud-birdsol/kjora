@@ -152,23 +152,23 @@ let props = defineProps({
     }
 
 })
-const data = computed(()=>{
+const data = computed(() => {
     return {
-    labels: props.labels,
-    datasets: [
-        {
-            label: 'My Second Dataset',
-            data: props.data,
-            fill: true,
-            backgroundColor: props.overlay,
-            borderColor: props.theme,
-            pointBackgroundColor: props.theme,
-            pointBorderColor: props.theme,
-            pointHoverBackgroundColor: props.theme,
-            pointHoverBorderColor: 'rgb(54, 162, 235)'
-        }
-    ]
-}
+        labels: props.labels,
+        datasets: [
+            {
+                label: 'My Second Dataset',
+                data: props.data,
+                fill: true,
+                backgroundColor: props.overlay,
+                borderColor: props.theme,
+                pointBackgroundColor: props.theme,
+                pointBorderColor: props.theme,
+                pointHoverBackgroundColor: props.theme,
+                pointHoverBorderColor: 'rgb(54, 162, 235)'
+            }
+        ]
+    }
 })
 const options = {
     responsive: true,
@@ -195,9 +195,9 @@ const options = {
             },
             pointLabels: {
                 color: props.theme,
-                font:{
-                    weight:900,
-                    size:14,
+                font: {
+                    weight: 900,
+                    size: 11,
 
                 }
             },
