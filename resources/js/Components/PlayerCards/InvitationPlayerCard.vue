@@ -92,9 +92,9 @@ function calcShouldRate() {
                 <!-- image -->
                 <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true" />
                 <div class="flex flex-col items-center text-sm text-white ">
-                    <Link class="hover:underline before:content-['a'] before:text-transparent" :href="route('player.profile', player.id)">@{{
+                    <Link class="hover:underline rtl:before:content-['a'] rtl:before:text-transparent" :href="route('player.profile', player.id)">@{{
                         player.username }}</Link>
-                    
+
                 </div>
                 <!-- rating -->
                 <p class="flex items-center justify-center space-x-2 text-sm ">
@@ -106,19 +106,19 @@ function calcShouldRate() {
                             </template>
                         </span>
 
-                        <span class="ml-2 font-bold text-md" :class="state == 'Free' ? 'text-gold' : 'text-primary'" >{{ player.rating }}</span>
+                        <span class="ml-2 font-bold text-md" :class="state == 'Free' ? 'text-gold' : 'text-primary'">{{ player.rating }}</span>
                     </span>
                 </p>
             </div>
             <!-- name and userName -->
             <div class="flex flex-col items-center ">
-                <div class="text-white capitalize flex items-center gap-1" v-if="!invitation.state">
+                <div class="flex items-center gap-1 text-white capitalize" v-if="!invitation.state">
                     <span>
-                        {{ $t('hi :receiver , :sender', {sender:invitation.inviting_player.name , receiver:invitation.invited_player.first_name} ) }}
+                        {{ $t('hi :receiver , :sender', { sender: invitation.inviting_player.name, receiver: invitation.invited_player.first_name }) }}
                     </span>
-                   <span>
-                       <HandRaisedIcon class="w-4 text-yellow-300 rotate-[15deg]" />
-                   </span> 
+                    <span>
+                        <HandRaisedIcon class="w-4 text-yellow-300 rotate-[15deg]" />
+                    </span>
                 </div>
                 <p class="text-[10px] text-center text-stone-300/70 -mt-3" v-if="invitation.state">
                     {{ $t('match in') }}

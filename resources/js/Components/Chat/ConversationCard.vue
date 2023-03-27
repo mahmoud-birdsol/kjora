@@ -45,7 +45,7 @@ function removeConversation() {
             </div>
             <div class="flex flex-col ">
                 <h4 class="m-0 text-lg leading-none text-white capitalize">{{ user.name }}</h4>
-                <span class="text-xs leading-none text-neutral-500 before:content-['a'] before:text-transparent"> @{{
+                <span class="text-xs leading-none text-neutral-400 rtl:before:content-['a'] rtl:before:text-transparent"> @{{
                     user.username }} </span>
             </div>
             <div class="flex gap-2 -mt-2 mis-auto">

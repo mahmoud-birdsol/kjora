@@ -20,7 +20,8 @@ module.exports = {
 			colors: {
 				primary: 'rgb(0, 100, 0)',
 				primaryDark: 'rgb(9, 70, 9)',
-				golden: '#D1C37A'
+				golden: '#D1C37A',
+				gold: '#FF9900'
 			}
 		},
 		screens: {
