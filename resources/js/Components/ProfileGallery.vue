@@ -15,9 +15,9 @@
                         </video>
                     </template>
 
-                    <div class="absolute items-center text-xs  bottom-2 ltr:right-2 rtl:left-2 flex gap-2 text-gray-100 ">
-                        <span class="shadow-md">{{ post.views_count }}</span>
-                        <EyeIcon class="h-5 w-5 shadow-md " />
+                    <div class="absolute flex items-center gap-2 text-xs text-gray-100 bottom-2 ltr:right-2 rtl:left-2 ">
+                        <span class="filter-[drop-shadow(1px_1px_1px_rgb(0_0_0/.4)]">{{ post.views_count }}</span>
+                        <EyeIcon class="h-5 w-5 filter-[drop-shadow(1px_1px_1px_rgb(0_0_0/.4)]" />
                     </div>
                     <!-- delete post button -->
                     <!-- <button v-if="currentUser.id === user.id" @click.prevent.stop="showDeleteMediaModal = true"
