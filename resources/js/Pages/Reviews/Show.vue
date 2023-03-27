@@ -112,7 +112,7 @@ function setRates() {
                         <RatingChart :data="graphData" :labels="labels" theme="rgb(0,100,0)" overlay='rgba(0,100,0,0.2)' />
                     </div>
                 </div>
-                <form @submit.prevent="submitRatingForm" class="flex flex-col gap-4 px-5">
+                <form class="flex flex-col gap-4 px-5">
                     <div class="flex items-center gap-x-2">
                         <input type="checkbox" id="male" value="male" v-model="ratingForm.attended" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
                         <label for="male" class="text-sm font-medium text-black">{{ $t('attended') }}</label>

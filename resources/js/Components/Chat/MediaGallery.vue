@@ -8,6 +8,7 @@ import { XMarkIcon, ArrowDownTrayIcon } from "@heroicons/vue/24/outline";
 import ArrowRight from "../Icons/ArrowRight.vue";
 import Modal from "../Modal.vue";
 import Avatar from '@/Components/Avatar.vue';
+import DateTranslation from "@/Components/DateTranslation.vue";
 
 const props = defineProps({
     show: {
@@ -60,11 +61,12 @@ const thumbsOptions = {
     isNavigation: true,
     updateOnMove: true,
     arrows: false,
-    width:props.media.length > 5 ? '100%' : '70%',
     perPage: props.media.length > 5 ? 5 : props.media.length,
+    width:'100%',
     breakpoints: {
-		640: {
-			perPage: 3,
+        640: {
+            perPage: 3,
+            width:props.media.length > 5 ? '100%' : '70%',
 		},
   }
    
@@ -86,6 +88,9 @@ function handleSplideActive(e) {
     transform: scale(0.9);
     outline: 1px solid rgb(0, 100, 0)
 }
+.splide{
+    margin: auto;
+}
 </style>
 <template>
     <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="$emit('close')"
@@ -99,7 +104,7 @@ function handleSplideActive(e) {
                         <Link class="text-xs text-gray-400" :href="route('player.profile', user.id)">@{{ user.username
                                                 }}
                         </Link>
-                        <div class="text-xs text-gray-400">10/01/2021 at 1:30 pm</div>
+                        <div class="text-xs text-gray-400"><DateTranslation :start="media[0].created_at" format="DD/MM/YYYY hh:mm a" /></div>
                     </div>
                 </div>
                 <div class="flex gap-2">
@@ -149,7 +154,7 @@ function handleSplideActive(e) {
                             <img class="object-contain h-full rounded-lg" :src="item?.original_url" alt="">
                         </template>
                         <template v-else-if="item.mime_type.startsWith('video')">
-                            <video class="object-contain w-full rounded-lg">
+                            <video class="object-contain h-full rounded-lg">
                                 <source :src="item.original_url" :type="item.mime_type">
                             </video>
                         </template>
@@ -162,4 +167,5 @@ function handleSplideActive(e) {
         </div>
     </Modal>
 </template>
+
 
