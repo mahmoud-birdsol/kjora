@@ -1,5 +1,7 @@
 
 <script setup>
+import { computed } from '@vue/reactivity';
+
 const props = defineProps({
     labels: {
         type: Array,
@@ -86,11 +88,14 @@ const options = {
     //     },
     // }]
 };
-const series = [{
+const series = computed(()=>{
+    return [{
     name: 'series-1',
     // data: props.data
     data: props.data
 }]
+})
+
 </script>
 <template>
     <apexchart width="100%" type="radar" :options="options" :series="series"></apexchart>
