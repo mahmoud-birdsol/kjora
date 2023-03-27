@@ -255,7 +255,6 @@ const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitud
                         <button>
                             <FlagIcon class="w-4 h-4 text-red-500" />
                         </button>
-
                     </template>
                 </ReportModal>
 

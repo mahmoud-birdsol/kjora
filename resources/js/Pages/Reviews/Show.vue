@@ -10,6 +10,8 @@ import { computed, ref } from 'vue';
 import RatingChart from '../../Components/RatingChart.vue';
 import Avatar from '../../Components/Avatar.vue';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
+import { StarIcon as StarIconFilled } from '@heroicons/vue/20/solid'
+import { StarIcon as StarIconOutline } from '@heroicons/vue/24/outline';
 const props = defineProps({
     review: null,
     ratingCategories: Array,
@@ -22,7 +24,7 @@ const props = defineProps({
 const labels = props.ratingCategories.map(r => r.name)
 const showMsg = ref(false)
 const state = props.review.player.state_name
-const rateColor = state === 'Free' ? ['#006400', '#006400', '#006400'] :['#99A9BF', '#F7BA2A', '#FF9900']
+const rateColor = state === 'Free' ? ['#006400', '#006400', '#006400'] : ['#99A9BF', '#F7BA2A', '#FF9900']
 const rating = ref(props.review.player.rating)
 const ratingCategory = props.ratingCategories.map(cat => {
     return { id: cat.id, value: 0 }
@@ -85,15 +87,22 @@ function setRates() {
                         </div>
                     </div>
                 </div>
-                <div class="flex gap-4 item-center ">
-                    <ElRate v-model="rating" disabled size="small" :colors="rateColor" />
-                    <p class="flex items-center text-sm font-bold" :class="state==='Free'?'text-primary':'text-golden'">
-                        {{ rating }}
-                    </p>
+                <div class="flex justify-center gap-4 item-center ">
+                    <span class="flex items-center gap-x-1 text-gold">
+                        <span class="flex items-center gap-1">
+                            <template v-for="i in 5">
+                                <StarIconFilled class="w-5 h-5 " v-if="review.player.rating >= i" />
+                                <StarIconOutline class="w-5 h-5 " v-else />
+                            </template>
+                        </span>
+
+                        <span class="ml-2 font-bold text-md ">{{ review.player.rating }}</span>
+                    </span>
                     <span class="flex items-center text-xs text-stone-400">{{ $t('based on :count players rating', {
                         count:
                             review.player.played
-                    }) }}</span>
+                    }) }}
+                    </span>
                 </div>
             </div>
 
@@ -131,7 +140,7 @@ function setRates() {
         </div>
 
         <Modal :show="showMsg" :closeable="false" max-width="md" :showCloseIcon="false">
-            <XMarkIcon class="w-4 mis-auto m-1" @click="showMsg = false"/>
+            <XMarkIcon class="w-4 m-1 mis-auto" @click="showMsg = false" />
             <div class="bg-white rounded-xl p-6 md:min-h-[300px]">
                 <div class="flex flex-col justify-between items-center h-56 md:min-h-[200px]">
                     <div class="flex justify-center">
