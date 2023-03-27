@@ -47,7 +47,8 @@ class PlayerReviewController extends Controller
     public function store(Request $request, Review $review): RedirectResponse
     {
         $review->update([
-            'is_attended' => $request->input('attended')
+            'is_attended' => $request->input('attended'),
+            'reviewed_at' => now()
         ]);
 
         if (!$review->refresh()->is_attended) {
@@ -82,7 +83,7 @@ class PlayerReviewController extends Controller
 
         if ($ratingCategoryCount > 0) {
             $review->player->update([
-                'rating' => (($review->player->rating * $review->player->playerReviews->count()) + ($value / $ratingCategoryCount)) / ($review->player->playerReviews->count() + 1),
+                'rating' => (($review->player->rating * $review->player->playerReviews()->where('reviewed_at', '!=', null)->count()) + ($value / $ratingCategoryCount)) / ($review->player->playerReviews()->where('reviewed_at', '!=', null)->count() + 1),
             ]);
             $review->player->notify(new NotifyUserOfRatingSubmittedNotification($review->reviewer, $review->player, $review));
         }
