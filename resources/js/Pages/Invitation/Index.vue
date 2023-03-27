@@ -18,7 +18,6 @@ const props = defineProps({
 
     <AppLayout title="Invitations">
         <template #header>
-
             <p class="text-4xl font-black md:text-7xl">{{ $t('invitations') }}</p>
         </template>
 

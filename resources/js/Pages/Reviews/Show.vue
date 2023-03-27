@@ -126,7 +126,7 @@ function setRates() {
                                         c.id === item.id)[0].value }}</span>
                                 </div>
                                 <div class="px-6 py-1 mx-4 border border-white rounded-full bg-stone-300">
-                                    <el-slider v-model="ratingForm.ratingCategory.filter(c => c.id === item.id)[0].value" @change="setRates" :step="0.5" :min="0" :max="5" input-size="small" height="1" />
+                                    <el-slider v-model="ratingForm.ratingCategory.filter(c => c.id === item.id)[0].value" @change="setRates" :step="0.1" :min="0" :max="5" input-size="small" height="1" />
                                 </div>
                             </div>
                         </template>
