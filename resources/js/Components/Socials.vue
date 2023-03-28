@@ -46,7 +46,6 @@ function copy() {
                     >
                         <Facebook class="h-4 w-4" />
                         <span class="whitespace-nowrap">{{ $t('share to facebook') }}</span>
-                        <ToolTip :value="$t('facebook')" right="left-0" />
                     </a>
                     <a :href="'https://twitter.com/intent/tweet?hashtags=kjora&original_referer=' + url" target="_blank"
                     class="relative flex items-center gap-2 [&>div]:hover:block"
@@ -54,13 +53,11 @@ function copy() {
                     >
                         <Twitter class="h-4 w-4" />
                         <span class="whitespace-nowrapp">{{ $t('share to twitter') }}</span>
-                        <ToolTip :value="$t('twitter')"  right="left-0"/>
                     </a>
                     <div class="relative flex items-center gap-2 [&>div]:hover:block" @click="copy">
                         <span class="bg-white text-black text-[8px] font-bold rounded absolute ltr:right-0 rtl:left-0 bottom-[110%] p-1" v-if="show">{{ $t('copied') }}!</span>
                         <LinkIcon class="h-4 w-4 text-white"  />
                         <span class="whitespace-nowrap">{{ $t('copy link') }}</span>
-                        <ToolTip :value="$t('copy link')" right="left-0" />
                     </div>
                 </div>
             </Transition>
