@@ -80,7 +80,7 @@ const type = (event) => {
                     <img :src="selected[imageName]" alt="" class="h-6 w-6 flex-shrink-0 rounded cursor-pointer" @click="showDropDown = !showDropDown">
                     <input type="text" :value="modelValue" @input="type" class="block w-full px-4 py-0 my-0 border-none text-sm disabled:bg-gray-100 focus:ring-none focus:border-none ring-transparent">
                 </span>
-                <span class="cursor-pointer absolute inset-y-0 ltr:right-0 rtl:left mie-3 flex items-center pr-2" @click="showDropDown = !showDropDown">
+                <span class="cursor-pointer absolute inset-y-0 ltr:right-0 rtl:left-0 mie-3 flex items-center pr-2" @click="showDropDown = !showDropDown">
                     <ChevronDownIcon class="h-5 w-5 text-gray-400" />
                 </span>
             </button>
