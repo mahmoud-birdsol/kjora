@@ -33,6 +33,7 @@ module.exports = {
 	plugins: [
 		require('@tailwindcss/forms'),
 		require('@tailwindcss/typography'),
-		require('tailwindcss-logical')
+		require('tailwindcss-logical'),
+		require('tailwindcss-dir')()
 	]
 };
