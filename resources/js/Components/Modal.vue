@@ -96,7 +96,7 @@ const maxWidthClass = computed(() => {
                     leave-to-class="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95">
                     <div v-show="show" class="">
                         <div v-show="position == 'center'"
-                            class="mb-6 overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:w-full sm:mx-auto max-xs:mx-10"
+                            class="mb-6 overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:w-full sm:mx-auto"
                             :class="maxWidthClass">
                             <div class="flex justify-end p-1" v-if="closeable && showCloseIcon">
                                 <button @click="$emit('close')">

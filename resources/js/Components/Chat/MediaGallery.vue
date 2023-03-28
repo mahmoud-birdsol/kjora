@@ -133,7 +133,7 @@ function handleSplideActive(e) {
                         <SplideSlide v-for="item in media" :key="item.id" class="w-full my-4 ">
                             <!-- <img :src="'/images/selfie_example.png'" alt="" /> -->
                             <template v-if="item.mime_type.startsWith('image')">
-                                <img class="h-full mx-auto rounded-lg w-[min(500px , 90%)]" :src="item?.original_url"
+                                <img class="object-contain h-full mx-auto rounded-lg w-[min(500px , 90%)]" :src="item?.original_url"
                                     alt="">
                             </template>
                             <template v-else-if="item.mime_type.startsWith('video')">

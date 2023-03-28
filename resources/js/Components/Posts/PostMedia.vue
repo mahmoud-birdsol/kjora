@@ -38,8 +38,9 @@
             </template>
         </Splide>
         <div v-if="postMedia.length > 1" class="absolute top-2 right-2 text-stone-200 text-xs p-1 ">
-            <div>{{ currentMediaIndex }}</div>
-            <div>{{ postMedia.length }} </div>
+            <span>{{ currentMediaIndex }}</span>
+            <span>/</span>
+            <span>{{ postMedia.length }} </span>
         </div>
         <ChatGallery :show="showMediaGallery" @close="showMediaGallery = false" :media="postMedia" :user="user" />
     </div>
