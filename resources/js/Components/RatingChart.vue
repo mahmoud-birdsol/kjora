@@ -40,15 +40,16 @@ const options = {
         max: 5,
         tickAmount: 5,
         labels: {
-          show: true,
-          style: {
-              fontSize: '12px',
-              fontWeight: 900,
-          },
+            show: true,
+            style: {
+                fontSize: '12px',
+                fontWeight: 900,
+            },
         }
     },
-    stroke:{
-        show:false,
+    stroke: {
+        show: true,
+        colors: ['rgba(0,100,0)'],
     },
     // colors: ['#2E93fA', '#66DA26', '#546E7A', '#E91E63', '#FF9800']
     fill: {
@@ -63,17 +64,19 @@ const options = {
                 strokeColors: '#aaaaaa',
                 fill: {
                     // colors: ['#f8f8f8', 'rgba(0,100,0)'],
-                  }
-                
+                }
+
             }
         }
     },
 
     markers: {
-        size: 2,
-        colors: ['#CCC'],
+        size: 3,
+        colors: ['#fff'],
+        strokeColor: 'rgba(0, 100, 0)',
+        strokeWidth: 1,
         hover: {
-            size: 10
+            size: 4
         }
     },
     tooltip: {
@@ -88,7 +91,7 @@ const options = {
     //     },
     // }]
 };
-const series = computed(()=>{
+const series = computed(() => {
     return [{
     name: 'series-1',
     data: props.data
@@ -108,7 +111,8 @@ const series = computed(()=>{
 .apexcharts-canvas {
     margin: auto;
 }
-.apexcharts-series{
+
+.apexcharts-series path:nth-child(2) {
     mix-blend-mode: multiply;
 }
 </style>

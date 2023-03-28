@@ -526,7 +526,7 @@ Route::get('public/posts/{post}', function (Post $post) {
         'post' => $post,
         'user' => $post->user,
         'social_meta' => [
-            'url' => \route('Public/PostView', $post->id),
+            'url' => \route('public.posts', $post->id),
             'title' => $post->caption,
             'image' => $post->avatar_thumb_url,
             'description' =>  $post->user->name . ' profile'
