@@ -70,25 +70,57 @@ const backgroundImage = computed(() => {
 
 const isCurrentUser = props.player.id === currentUser?.id
 const isPublic = usePage().url.value.includes('public/player')
+const isFavorite = ref(props.player.is_favorite)
+const isPending = ref(false)
 
+const form = useForm({});
+function toggleFavorite() {
+    if (isPending.value) return
 
-const addToFavorites = () => {
-    const form = useForm({});
+    if (!isFavorite.value) {
+        form.post(route('favorites.store', { favorite: props.player.id }), {
+            preserveState: false,
+            preserveScroll: true,
+            onStart: () => {
+                isFavorite.value = true
+                isPending.value = true
+            },
+            onFinish: () => {
+                isPending.value = false
+            }
+        });
+    } else {
+        form.delete(route('favorites.destroy', { favorite: props.player.id }), {
+            preserveState: false,
+            preserveScroll: true,
+            onStart: () => {
+                isFavorite.value = false
+                isPending.value = true
+            },
+            onFinish: () => {
+                isPending.value = false
+            }
+        });
+    }
+}
 
-    form.post(route('favorites.store', { favorite: props.player.id }), {
-        preserveState: false,
-        preserveScroll: true,
-    });
-};
-const removeFromFavorites = () => {
-    const form = useForm({});
-    props.player.is_favorite = false;
+// const addToFavorites = () => {
+//     const form = useForm({});
 
-    form.delete(route('favorites.destroy', { favorite: props.player.id }), {
-        preserveState: false,
-        preserveScroll: true,
-    });
-};
+//     form.post(route('favorites.store', { favorite: props.player.id }), {
+//         preserveState: false,
+//         preserveScroll: true,
+//     });
+// };
+// const removeFromFavorites = () => {
+//     const form = useForm({});
+//     props.player.is_favorite = false;
+
+//     form.delete(route('favorites.destroy', { favorite: props.player.id }), {
+//         preserveState: false,
+//         preserveScroll: true,
+//     });
+// };
 
 
 function calculateDistance(lat1Str, lng1Str, lat2Str, lng2Str) {
@@ -120,10 +152,10 @@ const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitud
     <div class="overflow-hidden rounded-xl" :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
         <div v-if="showFavorite && !isCurrentUser" class="flex justify-end">
             <span class="rounded-lg ltr:rounded-bl-3xl rtl:rounded-br-3xl bg-white p-2 -mt-0.5 ltr:-mr-0.5 rtl:-ml-0.5">
-                <a href="javascript:;" @click="addToFavorites" v-if="!player.is_favorite">
+                <a href="javascript:;" @click="toggleFavorite" v-if="!isFavorite">
                     <HeartIconOutline class="w-5 h-5 text-primary" />
                 </a>
-                <a href="javascript:;" @click="removeFromFavorites" v-if="player.is_favorite">
+                <a href="javascript:;" @click="toggleFavorite" v-if="isFavorite">
                     <HeartIcon class="w-5 h-5 text-primary" />
                 </a>
             </span>
