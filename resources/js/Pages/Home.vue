@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
 import dayjs from 'dayjs';
 import { Inertia } from "@inertiajs/inertia";
@@ -23,8 +23,12 @@ const props = defineProps({
 
 
 const showFiltersModal = ref(false);
-const currentTabId = ref(1)
+const currentTabId = ref(window.localStorage.getItem('currentTab') ?? 1)
 const loading = ref(false);
+
+watch(currentTabId, (id) => {
+    window.localStorage.setItem('currentTab', id)
+})
 
 const form = useForm({
     position: null,
@@ -109,7 +113,7 @@ const filterByPosition = (position) => {
         <div class="">
             <div class="">
                 <!-- Position Filters...
-                                                                                                                                                                                                                                                                                                                                                    =====================================================-->
+                                                                                                                                                                                                                                                                                                                                                                =====================================================-->
                 <div class="flex gap-4 mt-4 mb-8 overflow-x-auto hideScrollBar">
                     <button @click="filterByPosition(null)"
                         class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
@@ -162,7 +166,7 @@ const filterByPosition = (position) => {
                 </template>
 
                 <!-- Filters Modal...
-                                                                                                                                                                                                                                                                                                                                                    =====================================================-->
+                                                                                                                                                                                                                                                                                                                                                                =====================================================-->
                 <FiltersModel :positions="positions" :countries="countries" v-model:form="form" @reset="reset" @filter="filter" :showFiltersModal="showFiltersModal" />
             </div>
         </div>
