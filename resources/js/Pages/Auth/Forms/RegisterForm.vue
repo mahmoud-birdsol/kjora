@@ -54,7 +54,7 @@ const submit = () => {
 </script>
 
 <template>
-    <form @submit.prevent="submit" @keypress.enter.exact.prevent="submit">
+    <form @submit.prevent="submit" @keypress.enter.exact.prevent="submit" class="tracking-tight">
         <div class="flex items-center justify-center sm:justify-end sm:-mt-12">
             <button class="mt-2" @click.prevent="showUploadAvatarModal = true">
                 <Avatar :image-url="avatarPreview" size="lg" :id="0" :enableLightBox="false" />
