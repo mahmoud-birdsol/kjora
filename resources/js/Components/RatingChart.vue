@@ -21,24 +21,16 @@ const options = {
         id: 'vuechart-example',
         redrawOnWindowResize: true,
         foreColor: '#000',
-        dropShadow: {
-            enabled: true,
-            enabledOnSeries: true,
-            top: 0,
-            left: 0,
-            blur: 3,
-            color: '#000',
-            opacity: 0.35
-        }
     },
     xaxis: {
-        categories: props.labels
+        categories: props.labels,
     },
+
     yaxis: {
         show: true,
         min: 0,
         max: 5,
-        tickAmount: 5,
+        tickAmount: 10,
         labels: {
             show: true,
             style: {
@@ -50,6 +42,7 @@ const options = {
     stroke: {
         show: true,
         colors: ['rgba(0,100,0)'],
+
     },
     fill: {
         colors: ['rgba(0,100,0)'],
@@ -59,8 +52,11 @@ const options = {
     plotOptions: {
         radar: {
             polygons: {
-                strokeWidth: 10,
-                strokeColors: '#aaaaaa',
+                strokeWidth: 0,
+                // strokeColors: '#FFF',
+                fill:{
+                    colors:['rgb(0,100,0)','#FFF']
+                }
             }
         }
     },
@@ -80,9 +76,9 @@ const options = {
 };
 const series = computed(() => {
     return [{
-    name: 'series-1',
-    data: props.data
-}]
+        name: 'series-1',
+        data: props.data
+    }]
 })
 
 </script>
