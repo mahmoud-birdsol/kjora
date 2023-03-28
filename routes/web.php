@@ -528,7 +528,7 @@ Route::get('public/posts/{post}', function (Post $post) {
         'social_meta' => [
             'url' => \route('public.posts', $post->id),
             'title' => $post->caption,
-            'image' => $post->avatar_thumb_url,
+            'image' => $post->cover_thumb_photo,
             'description' =>  $post->user->name . ' profile'
         ]
     ]);
