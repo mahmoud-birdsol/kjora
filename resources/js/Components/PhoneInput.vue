@@ -97,10 +97,10 @@ const type = (event) => {
                     <li v-for="option in filteredOptions" @click="select(option)" class="text-gray-900 relative cursor-pointer select-none py-2 pl-3 pr-9 hover:bg-primary hover:text-white" id="listbox-option-0" role="option">
                         <div class="flex items-center">
                             <img :src="option[imageName]" alt="" class="h-6 w-6 flex-shrink-0 rounded">
-                            <span class="font-normal mie block truncate" :class="{ 'font-semibold': option[valueName] == selected[valueName], 'font-normal': option[valueName] != selected[valueName] }">{{ option[textName] }}</span>
+                            <span class="font-normal mis-3 block truncate" :class="{ 'font-semibold': option[valueName] == selected[valueName], 'font-normal': option[valueName] != selected[valueName] }">{{ option[textName] }}</span>
                         </div>
 
-                        <span class="absolute inset-y-0 rtl:right-0 ltr:left-0 flex items-center pis-4" :class="{ 'text-primary': option[valueName] == selected[valueName], 'text-white': option[valueName] != selected[valueName] }">
+                        <span class="absolute inset-y-0 right-0  flex items-center pr-4" :class="{ 'text-primary': option[valueName] == selected[valueName], 'text-white': option[valueName] != selected[valueName] }">
                             <CheckIcon class="h-5 w-5" />
                         </span>
                     </li>
