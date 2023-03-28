@@ -40,7 +40,7 @@ class HireController extends Controller
 
 
         return Inertia::render('Hire/Index', [
-            'invitations' => $query->get(),
+            'invitations' => $query->paginate(10),
         ]);
     }
 }

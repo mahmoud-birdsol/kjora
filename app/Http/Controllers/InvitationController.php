@@ -40,7 +40,7 @@ class InvitationController extends Controller
             fn () => $query->where('date', '<=', \Carbon\Carbon::parse($request->input('dateTo'))->toDatetimeString())
         );
         return Inertia::render('Invitation/Index', [
-            'invitations' => $query->get(),
+            'invitations' => $query->paginate(10),
         ]);
     }
 }
