@@ -100,7 +100,7 @@ const type = (event) => {
                             <span class="font-normal mie block truncate" :class="{ 'font-semibold': option[valueName] == selected[valueName], 'font-normal': option[valueName] != selected[valueName] }">{{ option[textName] }}</span>
                         </div>
 
-                        <span class="absolute inset-y-0 right-0 flex items-center pr-4" :class="{ 'text-primary': option[valueName] == selected[valueName], 'text-white': option[valueName] != selected[valueName] }">
+                        <span class="absolute inset-y-0 rtl:right-0 ltr:left-0 flex items-center pis-4" :class="{ 'text-primary': option[valueName] == selected[valueName], 'text-white': option[valueName] != selected[valueName] }">
                             <CheckIcon class="h-5 w-5" />
                         </span>
                     </li>
