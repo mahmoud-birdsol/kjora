@@ -30,7 +30,7 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Log in" />
+    <Head title="Login" />
 
     <GuestLayout>
         <div class="w-full sm:max-w-md mt-6 px-6 py-4">
@@ -48,12 +48,12 @@ const submit = () => {
                 <div class="grid grid-cols-1 gap-4">
                     <div>
                         <InputLabel for="email" :value="$t('sign in')" />
-                        <TextInput type="text" v-model="form.email" :placeholder="$t('please') + $t('enter') + $t('username') + $t('or') + '' + $t('Email Address')" auto-complete="email" aria-required="true" />
+                        <TextInput type="text" v-model="form.email" :placeholder="$t('Please enter username or email address')" auto-complete="email" aria-required="true" />
                         <InputError class="mt-2" :message="form.errors.email" />
                     </div>
                     <div>
                         <InputLabel for="password" :value="$t('password')" />
-                        <PasswordInput v-model="form.password" :placeholder="$t('please') + $t('enter') + $t('password')" />
+                        <PasswordInput v-model="form.password" :placeholder="$t('Please enter password')" />
                         <InputError class="mt-2" :message="form.errors.password" />
                     </div>
 

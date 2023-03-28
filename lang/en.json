@@ -354,5 +354,7 @@
   "sorry, we don't have any result": "Sorry, We don't have any result",
   "This is to notify you to rate player ": "This is to notify you to rate player ",
   "Rate": "Rate",
-  "from": "From"
+  "from": "From",
+  "Please enter username or email address": "Please enter username or email address",
+  "Please enter password": "Please enter password"
 }
