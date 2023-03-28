@@ -13,6 +13,7 @@ import FixedWrapper from '@/Components/FixedWrapper.vue';
 const props = defineProps({
     url: String,
 })
+const emits = defineEmits(['filter'])
 
 let showFiltersModal = ref(false)
 let loading = ref(false);
@@ -28,6 +29,7 @@ const filter = () => {
         preserveState: true,
         preserveScroll: true,
         onSuccess: () => {
+            emits('filter', form.dateFrom, form.dateTo)
             loading.value = false;
             showFiltersModal.value = false;
         }

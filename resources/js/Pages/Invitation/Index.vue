@@ -5,12 +5,37 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import InvitationCard from "./Partials/InvitationCard.vue";
 import DateTranslation from '@/Components/DateTranslation.vue';
 import InvitationsFilter from '@/Components/InvitationsFilter.vue';
+import Pagination from '@/Components/Pagination.vue';
 import { CalendarIcon } from "@heroicons/vue/20/solid";
 import dayjs from 'dayjs';
+import { computed, ref } from 'vue';
+import { paginationEmits } from 'element-plus';
 const props = defineProps({
     invitations: Array,
 });
 
+const fromDate = ref(null)
+const toDate = ref(null)
+
+function groupInvitationsByDate(invitations) {
+    return invitations.reduce((groups, invitation) => {
+        const date = dayjs(invitation.date).format('DD MMMM YYYY');
+        if (groups[date]) {
+            groups[date].push(invitation);
+        } else {
+            groups[date] = [invitation];
+        }
+        return groups;
+    }, {});
+}
+
+const invitationsGroups = computed(() => groupInvitationsByDate(props.invitations.data))
+console.log(invitationsGroups.value);
+
+function showFromToDates(date1, date2) {
+    fromDate.value = dayjs(date1).format('DD MMMM YYYY')
+    toDate.value = dayjs(date2).format('DD MMMM YYYY')
+}
 </script>
 
 <template>
@@ -46,27 +71,39 @@ const props = defineProps({
                 </div>
 
                 <div class="bg-white rounded-xl mt-4 min-h-[500px] p-2 md:p-6">
-                    <div class="flex gap-1 mb-4 text-xs font-bold" v-if="invitations.length">
+                    <div class="flex gap-1 mb-4 text-xs font-bold" v-if="fromDate && toDate">
                         <CalendarIcon class="w-4" />
-                        <DateTranslation :start="invitations[invitations.length - 1].date" format="DD MMMM YYYY" />
-                        <span v-if="dayjs(invitations[0].date).format('DD MMMM YYYY') !== dayjs(invitations[invitations.length - 1].date).format('DD MMMM YYYY')">
-                            {{ $t('to') }}
-                            <DateTranslation :start="invitations[0].date" format="DD MMMM YYYY" />
+                        <span>
+                            {{ $t('from') }}
                         </span>
+                        <DateTranslation :start="fromDate" format="DD MMMM YYYY" />
+                        <span>
+                            {{ $t('to') }}
+                        </span>
+                        <DateTranslation :start="toDate" format="DD MMMM YYYY" />
                     </div>
-                    <div v-if="invitations.length" class="grid grid-cols-1 gap-4">
-                        <template v-for="invitation in invitations" :key="invitation.id">
-                            <InvitationCard :invitation="invitation" />
+                    <div v-if="invitations.data.length" class="grid grid-cols-1 gap-4">
+                        <template v-for="( invitationsGroup, date) in invitationsGroups" :key="date">
+                            <div class="text-xs font-bold flex gap-1">
+                                <CalendarIcon class="w-4" />
+                                <DateTranslation :start="date" format="DD MMMM YYYY" />
+                            </div>
+                            <template v-for="(invitation, index) in invitationsGroup" :key="invitation.id">
+                                <InvitationCard :invitation="invitation" />
+                            </template>
                         </template>
                     </div>
 
                     <div v-else class="grid place-items-center min-h-[480px] h-full">
                         <p class="text-sm font-bold text-black">{{ $t(`sorry, we don't have any result`) }} </p>
                     </div>
+                    <div class="mt-4 flex justify-center">
+                        <Pagination :links="invitations.links"></Pagination>
+                    </div>
                 </div>
             </div>
         </div>
-        <InvitationsFilter url="invitation.index" />
+        <InvitationsFilter url="invitation.index" @filter="showFromToDates" />
     </AppLayout>
 </template>
 <style>

@@ -7,9 +7,36 @@ import HireCard from './Partials/HireCard.vue';
 import DateTranslation from '@/Components/DateTranslation.vue';
 import { CalendarIcon } from "@heroicons/vue/20/solid";
 import dayjs from 'dayjs';
+import { computed, ref } from 'vue';
+import Pagination from '../../Components/Pagination.vue';
 const props = defineProps({
     invitations: Array,
 });
+
+
+const fromDate = ref(null)
+const toDate = ref(null)
+
+function groupInvitationsByDate(invitations) {
+    return invitations.reduce((groups, invitation) => {
+        const date = dayjs(invitation.date).format('DD MMMM YYYY');
+        if (groups[date]) {
+            groups[date].push(invitation);
+        } else {
+            groups[date] = [invitation];
+        }
+        return groups;
+    }, {});
+}
+
+const invitationsGroups = computed(() => groupInvitationsByDate(props.invitations.data))
+
+
+function showFromToDates(date1, date2) {
+    fromDate.value = dayjs(date1).format('DD MMMM YYYY')
+    toDate.value = dayjs(date2).format('DD MMMM YYYY')
+}
+
 </script>
 
 <template>
@@ -20,7 +47,7 @@ const props = defineProps({
         </template>
         <div class="py-12">
             <div class="">
-                <div class="flex items-center justify-end gap-3 ">
+                <div class="flex items-center justify-end gap-3">
                     <Link :href="route('invitation.index')">
                     <button
                         class="py-2 px-4 min-w-[120px] sm:min-w-[215px]  font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
@@ -42,28 +69,41 @@ const props = defineProps({
                     </Link>
                 </div>
 
-                <div class="bg-white rounded-xl mt-4 min-h-[500px] p-6">
-                    <div class="flex gap-1 mb-4 text-xs font-bold" v-if="invitations.length">
+                <div class="bg-white rounded-xl mt-4 min-h-[500px] p-2 md:p-6">
+                    <div class="flex gap-1 mb-4 text-xs font-bold" v-if="fromDate && toDate">
                         <CalendarIcon class="w-4" />
-                        <DateTranslation :start="invitations[invitations.length - 1].date" format="DD MMMM YYYY" />
-                        <span v-if="dayjs(invitations[0].date).format('DD MMMM YYYY') !== dayjs(invitations[invitations.length - 1].date).format('DD MMMM YYYY')">
-                            {{ $t('to') }}
-                            <DateTranslation :start="invitations[0].date" format="DD MMMM YYYY" />
+                        <span>
+                            {{ $t('from') }}
                         </span>
+                        <DateTranslation :start="fromDate" format="DD MMMM YYYY" />
+                        <span>
+                            {{ $t('to') }}
+                        </span>
+                        <DateTranslation :start="toDate" format="DD MMMM YYYY" />
                     </div>
-
-                    <div v-if="invitations.length" class="grid grid-cols-1 gap-4">
-                        <template v-for="invitation in invitations" :key="invitation.id">
-                            <HireCard :invitation="invitation" />
+                    <div v-if="invitations.data.length" class="grid grid-cols-1 gap-4">
+                        <template v-for="( invitationsGroup, date) in invitationsGroups" :key="date">
+                            <div class="text-xs font-bold flex gap-1">
+                                <CalendarIcon class="w-4" />
+                                <DateTranslation :start="date" format="DD MMMM YYYY" />
+                            </div>
+                            <template v-for="(invitation, index) in invitationsGroup" :key="invitation.id">
+                                <HireCard :invitation="invitation" />
+                            </template>
                         </template>
                     </div>
 
                     <div v-else class="grid place-items-center min-h-[480px] h-full">
                         <p class="text-sm font-bold text-black">{{ $t(`sorry, we don't have any result`) }} </p>
                     </div>
+
+                    <div class="mt-4 flex justify-center">
+                        <Pagination :links="invitations.links"></Pagination>
+                    </div>
                 </div>
             </div>
         </div>
-        <InvitationsFilter url="hire.index" />
+        <InvitationsFilter url="hire.index" @filter="showFromToDates" />
+
     </AppLayout>
 </template>
