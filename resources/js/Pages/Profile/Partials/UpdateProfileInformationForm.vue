@@ -114,45 +114,43 @@ const showUploadAvatarModal = ref(false);
                 <div class="mt-4 sm:flex sm:justify-between">
                     <div class="w-full mt-4 sm:w-1/3 sm:mt-0">
                         <div>
-                            <InputLabel color="primary" :value="$t('Gender')" />
+                            <InputLabel color="primary" :value="$t('gender')" />
 
-                            <div class="ml-4">
-                                <div class="flex items-center space-x-2">
-                                    <input type="radio" id="male" value="male" v-model="form.gender" class="cursor-not-allowed accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" disabled />
-                                    <label for="male" class="text-sm font-medium text-black">{{ $t('Male') }}</label>
+                            <div class="mie-4">
+                                <div class="flex items-center gap-x-2">
+                                    <input type="radio" id="male" value="male" v-model="form.gender" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
+                                    <label for="male" class="text-sm font-medium text-black">{{ $t('male') }}</label>
                                 </div>
 
-                                <div class="flex items-center space-x-2">
-                                    <input type="radio" id="female" value="female" v-model="form.gender" class="cursor-not-allowed accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" disabled />
-                                    <label for="female" class="text-sm font-medium text-black">{{ $t('Female')
-                                    }}</label>
+                                <div class="flex items-center gap-x-2">
+                                    <input type="radio" id="female" value="female" v-model="form.gender" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
+                                    <label for="female" class="text-sm font-medium text-black">{{ $t('female') }}</label>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="w-full mt-4 sm:w-1/3 sm:mt-0">
-                        <InputLabel color="primary" :value="$t('Position')" />
+                        <InputLabel color="primary" :value="$t('position')" />
 
-                        <div class="ml-4">
-                            <div class="flex items-center space-x-2" v-for="position in positions">
-                                <input type="radio" :id="position.name" :value="position.id" v-model="form.position_id" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
-                                <label :for="position.name" class="text-sm font-medium text-black">{{ position.name
-                                }}</label>
+                        <div class="mie-4">
+                            <div class="flex items-center gap-x-2" v-for="position in positions">
+                                <input type="radio" :id="position.name" :value="position.id" v-model="form.position_id" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
+                                <label :for="position.name" class="text-sm font-medium text-black">{{ $t(position.name) }}</label>
                             </div>
                         </div>
                     </div>
                     <div class="w-full mt-4 sm:w-1/3 sm:mt-0">
                         <InputLabel color="primary" :value="$t('Preferred Foot')" />
 
-                        <div class="ml-4">
-                            <div class="flex items-center space-x-2">
-                                <input type="radio" id="left" value="left" v-model="form.preferred_foot" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
-                                <label for="left" class="text-sm font-medium text-black">{{ $t('Left') }}</label>
+                        <div class="mie-4">
+                            <div class="flex items-center gap-x-2">
+                                <input type="radio" id="left" value="left" v-model="form.preferred_foot" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
+                                <label for="left" class="text-sm font-medium text-black">{{ $t('left') }}</label>
                             </div>
 
-                            <div class="flex items-center space-x-2">
-                                <input type="radio" id="right" value="right" v-model="form.preferred_foot" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
-                                <label for="right" class="text-sm font-medium text-black">{{ $t('Right') }}</label>
+                            <div class="flex items-center gap-x-2">
+                                <input type="radio" id="right" value="right" v-model="form.preferred_foot" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
+                                <label for="right" class="text-sm font-medium text-black">{{ $t('right') }}</label>
                             </div>
                         </div>
                     </div>
