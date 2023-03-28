@@ -529,7 +529,7 @@ Route::get('public/posts/{post}', function (Post $post) {
             'url' => \route('public.posts', $post->id),
             'title' => $post->caption,
             'image' => $post->cover_thumb_photo,
-            'description' =>  $post->user->name . ' profile'
+            'description' =>  $post->user->name . ' post'
         ]
     ]);
 })->name('public.posts');
