@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, onUpdated, ref } from 'vue';
 import { CheckIcon, ChevronDownIcon } from '@heroicons/vue/24/solid';
-
+// import { ElInfiniteScroll } from 'element-plus'
 
 const props = defineProps({
     modelValue: [String, Number],
@@ -60,7 +60,7 @@ onMounted(() => {
     } else {
         axios.get(props.source).then(response => {
             filteredOptions.value = response.data.data;
-            nextPageUrl.value = response.data.next_page_url;
+            nextPageUrl.value = response.data.links.next;
 
             if (props.append) {
                 let exists = false;
@@ -119,7 +119,7 @@ const search = () => {
             }
         }).then(response => {
             filteredOptions.value = response.data.data;
-            nextPageUrl.value = response.data.next_page_url;
+            nextPageUrl.value = response.data.links.next;
         }).catch(error => console.log(error.response));
     }
 
@@ -140,24 +140,29 @@ const loadMore = () => {
         return;
     }
 
-    console.log(nextPageUrl.value);
 
     axios.get(nextPageUrl.value).then(response => {
         filteredOptions.value = filteredOptions.value.concat(response.data.data);
         loading.value = false;
-        nextPageUrl.value = response.data.next_page_url;
+        nextPageUrl.value = response.data.links.next;
     }).catch(error => console.log(error.response));
 };
+
+
+const handleScroll = (e) => {
+
+    if (e.target.scrollTop + e.target.clientHeight + 2 >= e.target.scrollHeight) {
+        loadMore()
+    }
+}
 </script>
 
 <template>
     <div>
         <!--        <div class="fixed top-0 left-0 z-20 w-full h-full" @click="showDropDown = false" v-if="showDropDown"></div>-->
         <div class="relative mt-1">
-            <button type="button" @click="showDropDown = !showDropDown"
-                class="relative w-full pl-3 pr-10 text-left border border-gray-300 rounded-full shadow-sm cursor-pointer focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
-                :class="[`bg-${bgColor} text-${txtColor}`, selected != '' ? 'py-2' : 'py-4']" aria-haspopup="listbox"
-                aria-expanded="true" aria-labelledby="listbox-label">
+            <button type="button" @click="showDropDown = !showDropDown" class="relative w-full pl-3 pr-10 text-left border border-gray-300 rounded-full shadow-sm cursor-pointer focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
+                :class="[`bg-${bgColor} text-${txtColor}`, selected != '' ? 'py-2' : 'py-4']" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
                 <span class="flex items-center" v-if="selected">
                     <img :src="selected[imageName]" alt="" class="flex-shrink-0 w-6 h-6 rounded">
                     <span class="block truncate mis-3">{{ selected[textName] }}</span>
@@ -167,34 +172,24 @@ const loadMore = () => {
                 </span>
             </button>
 
-            <transition enter-active-class="transition duration-100 ease-in" enter-from-class="opacity-0"
-                enter-to-class="opacity-100" leave-active-class="transition duration-100 ease-in"
-                leave-from-class="opacity-100" leave-to-class="opacity-0">
-                <ul v-if="showDropDown" v-infinite-scroll="loadMore" v-loading="loading"
-                    class="absolute z-30 w-full py-1 mt-1 overflow-auto text-base rounded-lg shadow-lg max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-                    :class="`bg-${bgColor}`" tabindex="-1" role="listbox" aria-labelledby="listbox-label"
-                    aria-activedescendant="listbox-option-3">
+            <transition enter-active-class="transition duration-100 ease-in" enter-from-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition duration-100 ease-in" leave-from-class="opacity-100" leave-to-class="opacity-0">
+                <ul v-if="showDropDown" v-infinite-scroll="loadMore" infinite-scroll-distance="5" v-loading="loading" class="absolute z-30 w-full py-1 mt-1 overflow-auto text-base rounded-lg shadow-lg max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" :class="`bg-${bgColor}`"
+                    tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3">
                     <li>
                         <div class="flex p-4">
-                            <input type="search" v-model="searchValue"
-                                class="block w-full px-4 border-gray-300 rounded shadow-sm focus:border-primary focus:ring-primary sm:text-sm disabled:bg-gray-100"
-                                @input="search" placeholder="Search">
+                            <input type="search" v-model="searchValue" class="block w-full px-4 border-gray-300 rounded shadow-sm focus:border-primary focus:ring-primary sm:text-sm disabled:bg-gray-100" @input="search" placeholder="Search">
                         </div>
                     </li>
 
-                    <li v-if="filteredOptions.length" v-for="option in filteredOptions" @click="select(option)"
-                        class="relative py-2 pl-3 cursor-pointer select-none pr-9 hover:bg-primary hover:text-white"
-                        :class="`text-${txtColor}`" id="listbox-option-0" role="option">
+                    <li v-if="filteredOptions.length" v-for="option in filteredOptions" @click="select(option)" class="relative py-2 pl-3 cursor-pointer select-none pr-9 hover:bg-primary hover:text-white" :class="`text-${txtColor}`" id="listbox-option-0" role="option">
                         <div class="flex items-center">
                             <img :src="option[imageName]" alt="" class="flex-shrink-0 w-6 h-6 rounded">
-                            <span class="block font-normal truncate mis-3"
-                                :class="{ 'font-semibold': option[valueName] == selected[valueName], 'font-normal': option[valueName] != selected[valueName] }">{{
-                                    option[textName]
-                                }}</span>
+                            <span class="block font-normal truncate mis-3" :class="{ 'font-semibold': option[valueName] == selected[valueName], 'font-normal': option[valueName] != selected[valueName] }">{{
+                                option[textName]
+                            }}</span>
                         </div>
 
-                        <span class="absolute inset-y-0 right-0 flex items-center pr-4"
-                            :class="{ 'text-primary': option[valueName] == selected[valueName], 'text-white': option[valueName] != selected[valueName] }">
+                        <span class="absolute inset-y-0 right-0 flex items-center pr-4" :class="{ 'text-primary': option[valueName] == selected[valueName], 'text-white': option[valueName] != selected[valueName] }">
                             <CheckIcon class="w-5 h-5" />
                         </span>
                     </li>
