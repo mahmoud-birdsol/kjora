@@ -163,8 +163,8 @@ function close() {
 
 <template>
     <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="close" :key="num">
-        <div class="flex flex-col min-h-[500px] justify-between p-6">
-            <div class="flex justify-center -mt-12">
+        <div class="flex flex-col min-h-[500px] justify-between p-6 pt-0">
+            <div class="flex justify-center ">
                 <h2 class="text-xl font-bold uppercase text-primary">{{ $t('upload') }}</h2>
             </div>
             <div class="flex items-center justify-center py-8 sm:px-20" v-loading="form.processing">
