@@ -66,7 +66,7 @@ class Club extends Resource
                 ->showOnPreview()
                 ->rules('required', 'max:254'),
 
-            Images::make(__('Logo'),'Logo')
+            Images::make(__('Logo'),'logo')
                 ->showOnPreview()
                 ->conversionOnIndexView('thumb')
                 ->croppingConfigs(['aspectRatio' => 1 / 1])

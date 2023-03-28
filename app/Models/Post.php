@@ -41,6 +41,7 @@ class Post extends Model implements HasMedia, Likeable, Reportable
      */
     protected $appends = [
         'cover_photo',
+        'cover_thumb_photo',
         'views_count'
     ];
 
@@ -124,7 +125,7 @@ class Post extends Model implements HasMedia, Likeable, Reportable
     public function coverThumbPhoto(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->getMedia('thumb')->where('id', $this->cover_id)->first()
+            get: fn($value) => $this->getMedia('gallery')->where('id', $this->cover_id)->first()?->getFullUrl('thumb')
         );
     }
     /**

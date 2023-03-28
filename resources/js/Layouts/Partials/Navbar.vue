@@ -115,7 +115,7 @@ function markAllNotificationsAsRead() {
                     <!-- user city  -->
                     <div class="flex items-center gap-1 ">
                         <MapPinIcon class="w-4 h-4 text-primary" />
-                        <span class="text-white w-max">{{ currentUser.current_city }}</span>
+                        <span class="text-white w-max">{{ currentUser.current_city.split(' ')[0] }}</span>
                     </div> <!-- Settings Dropdown -->
                     <div class="relative ">
                         <Link :href="route('profile.show')" class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
@@ -176,7 +176,7 @@ function markAllNotificationsAsRead() {
                         <!-- user city  -->
                         <div class="flex items-center gap-1">
                             <MapPinIcon class="w-4 h-4 text-primary" />
-                            <span class="text-white w-max text-xs">{{ currentUser.current_city }}</span>
+                            <span class="text-white w-max text-xs">{{ currentUser.current_city.split(' ')[0] }}</span>
                         </div>
                         <button class="rounded-full bg-[#CFC27A] font-medium px-2 py-1 flex items-center gap-1">
                             <span class="bg-black rounded-full">

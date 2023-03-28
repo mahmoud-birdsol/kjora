@@ -34,24 +34,31 @@ const form = useForm({
 })
 function toggleLike() {
     if (isPending.value) return
-    console.log('sending request')
+
     if (!isLiked.value) {
-        isLiked.value = true
-        isPending.value = true
+
         form.post(route('like.store'), {
             preserveState: true,
             preserveScroll: true,
+            onStart: () => {
+                isLiked.value = true
+                isPending.value = true
+            },
             onSuccess: () => {
                 emits('like')
                 isPending.value = false
             }
+
         });
     } else {
-        isLiked.value = false
-        isPending.value = true
+
         form.delete(route('like.destroy'), {
             preserveState: true,
             preserveScroll: true,
+            onStart: () => {
+                isLiked.value = false
+                isPending.value = true
+            },
             onSuccess: () => {
                 emits('disLike')
                 isPending.value = false
