@@ -104,23 +104,7 @@ function toggleFavorite() {
     }
 }
 
-// const addToFavorites = () => {
-//     const form = useForm({});
 
-//     form.post(route('favorites.store', { favorite: props.player.id }), {
-//         preserveState: false,
-//         preserveScroll: true,
-//     });
-// };
-// const removeFromFavorites = () => {
-//     const form = useForm({});
-//     props.player.is_favorite = false;
-
-//     form.delete(route('favorites.destroy', { favorite: props.player.id }), {
-//         preserveState: false,
-//         preserveScroll: true,
-//     });
-// };
 
 
 function calculateDistance(lat1Str, lng1Str, lat2Str, lng2Str) {
