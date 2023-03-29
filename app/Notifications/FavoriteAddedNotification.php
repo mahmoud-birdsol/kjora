@@ -67,7 +67,7 @@ class FavoriteAddedNotification extends Notification
             title: __('Favorite Notification', [] , $notifiable->locale ),
             subtitle: $this->user->name . __(' has added you to his favorites', [] , $notifiable->locale ),
             actionData: new RouteActionData(
-                route: route('favorites.index'),
+                route: route('player.profile', $this->user->id),
                 text: __('View Now', [] , $notifiable->locale ),
             ),
             userAvatar: $notifiable->avatar_url,
