@@ -4,6 +4,7 @@ import { CustomMarker, GoogleMap, InfoWindow, Marker, MarkerCluster } from "vue3
 import Avatar from '@/Components/Avatar.vue'
 import MainPlayerCard from "../PlayerCards/MainPlayerCard.vue";
 import { ref } from "vue";
+import { onClickOutside } from "@vueuse/core";
 const props = defineProps(['players'])
 
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -44,13 +45,23 @@ function openInfoWindow(player, options) {
             </CustomMarker>
 
         </template>
+
         <InfoWindow v-if="showInfoWindow" :options="infoOptions">
             <MainPlayerCard :player="infoPlayer" />
         </InfoWindow>
+
 
     </GoogleMap>
 </template>
 
 
 
-<style scoped></style>
+<style >
+.gm-style .gm-style-iw-c {
+    padding: 0 !important;
+}
+
+.gm-style-iw-c>button>span {
+    background-color: white !important;
+}
+</style>
