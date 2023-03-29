@@ -59,12 +59,8 @@ function removeConversation() {
                     <CheckCircleIcon class="inline w-3 h-3 mr-1 text-green-500" />
                     Online
                 </p>
-                <FadeInTransition>
-                    <div v-if="conversation.unread_messages !== 0 && showNewMessagesPopup" class="flex items-center justify-center p-2">
-                        <span class="grid w-6 h-6 p-1 text-xs bg-white rounded-full place-items-center">
-                            {{ conversation.unread_messages }}</span>
-                    </div>
-                </FadeInTransition>
+
+
             </div>
         </div>
         <div class="flex w-full gap-6">
@@ -80,8 +76,14 @@ function removeConversation() {
                     <span>{{ $t('Are you sure you want delete this Conversation ? ') }}</span>
                 </template>
             </ConfirmationModal>
-
         </div>
+        <FadeInTransition>
+            <div v-if="conversation.unread_messages !== 0 && showNewMessagesPopup" class="absolute ltr:right-1 top-1 rtl:left-1   p-2">
+                <span class="grid w-6 h-6 p-1 text-xs bg-white rounded-full place-items-center">
+                    {{ conversation.unread_messages }}</span>
+            </div>
+        </FadeInTransition>
     </div>
     </Link>
 </template>
+
