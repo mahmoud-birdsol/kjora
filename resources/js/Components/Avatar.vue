@@ -109,5 +109,7 @@ function hideLightBox() {
 
 [data-lightBox="avatar"] .vel-img-wrapper img {
     max-width: 200px;
+    height: 100%;
+    object-fit: cover;
 }
 </style>
