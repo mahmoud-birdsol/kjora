@@ -77,8 +77,8 @@ function removeConversation() {
                 </template>
             </ConfirmationModal>
         </div>
-        <FadeInTransition>
-            <div v-if="conversation.unread_messages !== 0 && showNewMessagesPopup" class="absolute ltr:right-1 top-1 rtl:left-1   p-2">
+         <FadeInTransition>
+            <div v-if="conversation.unread_messages !== 0 && showNewMessagesPopup"  class="absolute ltr:right-0 top-1 rtl:left-0 p-1">
                 <span class="grid w-6 h-6 p-1 text-xs bg-white rounded-full place-items-center">
                     {{ conversation.unread_messages }}</span>
             </div>
