@@ -11,7 +11,7 @@ const height = ref(null)
 onMounted(() => {
     if (message) height.value = document.querySelector('#SysMessage').offsetHeight
 
-    if (message.type === 'success') {
+    if (message?.type === 'success') {
         setTimeout(() => {
             showSystemMessage.value = false
         }, 20000)

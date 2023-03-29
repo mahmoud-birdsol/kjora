@@ -27,9 +27,11 @@ function copy() {
     ) => {
         show.value = true
 
-        setTimeout(() => { show.value = false }, 3000)
+        setTimeout(() => { 
+            show.value = false 
+            // showSocials.value = false
+        }, 2000)
     })
-    showSocials.value = false
 }
 </script>
 <template>
@@ -46,8 +48,8 @@ function copy() {
                     <Twitter class="h-4 w-4" />
                     <span class="whitespace-nowrapp">{{ $t('share to twitter') }}</span>
                 </a>
-                <div class="relative flex items-center gap-2 [&>div]:hover:block cursor-pointer" @click="copy">
-                    <span class="bg-white text-black text-[8px] font-bold rounded absolute ltr:right-0 rtl:left-0 bottom-[110%] p-1" v-if="show">{{ $t('copied') }}!</span>
+                <div class=" flex items-center gap-2 [&>div]:hover:block cursor-pointer" @click="copy">
+                    <span class="bg-black text-white text-[10px] font-bold rounded absolute ltr:left-2 rtl:right-2 bottom-0 -my-4 p-1" v-if="show">{{ $t('the link has been copied') }}!</span>
                     <LinkIcon class="h-4 w-4 text-white" />
                     <span class="whitespace-nowrap">{{ $t('copy link') }}</span>
                 </div>
