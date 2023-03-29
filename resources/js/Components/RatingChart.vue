@@ -24,6 +24,15 @@ const options = {
     },
     xaxis: {
         categories: props.labels,
+        labels: {
+            style: {
+              colors: [],
+              fontSize: '12px',
+              fontFamily: 'Helvetica, Arial, sans-serif',
+              fontWeight: 400,
+              cssClass: 'apexcharts-xaxis-label',
+          },
+        }
     },
 
     yaxis: {
@@ -54,8 +63,8 @@ const options = {
             polygons: {
                 strokeWidth: 0,
                 // strokeColors: '#FFF',
-                fill:{
-                    colors:['rgb(0,100,0)','#FFF']
+                fill: {
+                    colors: ['rgb(0,100,0)', '#FFF']
                 }
             }
         }
@@ -77,7 +86,7 @@ const options = {
 const series = computed(() => {
     return [{
         name: 'series-1',
-        data: props.data
+        data: props.data.length ? props.data : new Array(props.labels?.length).fill(0)
     }]
 })
 
@@ -97,5 +106,8 @@ const series = computed(() => {
 
 .apexcharts-series path:nth-child(2) {
     mix-blend-mode: multiply;
+}
+.apexcharts-datalabel{
+    direction: ltr;
 }
 </style>
