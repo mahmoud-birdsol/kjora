@@ -44,9 +44,9 @@ const options = {
             show: true,
             style: {
                 fontSize: '12px',
-                fontWeight: 900,
+                fontWeight: 800,
             },
-        }
+        },
     },
     stroke: {
         show: true,
