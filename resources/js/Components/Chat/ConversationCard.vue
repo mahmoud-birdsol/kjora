@@ -43,7 +43,7 @@ function removeConversation() {
             <div>
                 <Avatar :id="user.id" :image-url="user.avatar_url" size="lg" :username="user.name" :border="true" />
             </div>
-            <div class="flex flex-col ">
+            <div class="flex flex-col gap-1 ">
                 <h4 class="m-0 text-lg leading-none text-white capitalize">{{ user.name }}</h4>
                 <span class="text-xs leading-none text-neutral-400 rtl:before:content-['a'] rtl:before:text-transparent"> @{{
                     user.username }} </span>
@@ -77,8 +77,8 @@ function removeConversation() {
                 </template>
             </ConfirmationModal>
         </div>
-         <FadeInTransition>
-            <div v-if="conversation.unread_messages !== 0 && showNewMessagesPopup"  class="absolute ltr:right-0 top-1 rtl:left-0 p-1">
+        <FadeInTransition>
+            <div v-if="conversation.unread_messages !== 0 && showNewMessagesPopup" class="absolute ltr:right-0 top-1 rtl:left-0 p-1">
                 <span class="grid w-6 h-6 p-1 text-xs bg-white rounded-full place-items-center">
                     {{ conversation.unread_messages }}</span>
             </div>
