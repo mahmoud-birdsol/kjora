@@ -44,7 +44,7 @@ watch(() => chat.search, () => {
         <div v-if="showSearchForm" class="w-full">
             <div class="flex items-center justify-between gap-4 p-4">
                 <div class="grow">
-                    <TextInput type="search" v-model="chat.search" placeholder="Search" />
+                    <TextInput type="search" v-model="chat.search" :placeholder="$t('Search')" />
                 </div>
                 <div class="flex-none">
                     <button @click="handleExitSearch" class="p-1 rounded-full group hover:ring-primary hover:ring">
