@@ -55,9 +55,9 @@ function removeConversation() {
                         <DateTranslation :end="user.last_seen_at" type="period" />
                     </p>
                 </div>
-                <p class="flex items-center text-xs text-white" v-else>
+                <p class="flex rtl:flex-row-reverse items-center text-xs text-white" v-else>
                     <CheckCircleIcon class="inline w-3 h-3 mr-1 text-green-500" />
-                    Online
+                    <span>Online</span>
                 </p>
 
 
