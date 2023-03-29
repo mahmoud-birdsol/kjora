@@ -105,88 +105,22 @@ function markAllNotificationsAsRead() {
                         </NavLink>
                     </div>
                 </div>
-                <div class="hidden md:flex md:gap-x-3 sm:items-center lg:ml-6">
-                    <!-- upgrade button  -->
-
-                    <button class="rounded-full   bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5">
-                        <span class="bg-black rounded-full">
-                            <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
-                        </span>
-                        <Link class="uppercase" :href="route('upgrade')">{{ $t('upgrade') }}</Link>
-                    </button>
-                    <!-- user city  -->
-                    <div class="flex rtl:flex-row-reverse items-center gap-1 ">
-                        <MapPinIcon class="w-4 h-4 text-primary" />
-                        <span class="text-white w-max">{{ currentUser.current_city?.split(' ')[0] }}</span>
-                    </div>
-                    <!-- Settings Dropdown -->
-                    <div class="relative ">
-                        <Link :href="route('profile.show')" class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
-                        <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url" :username="$page.props.auth.user.name" :border="true" border-color="primary" size="sm" :enable-light-box="false" />
-                        </Link>
-                    </div>
-
-                    <!-- Notifications Dropdown -->
-                    <div class="relative">
-                        <Dropdown :align="locale == 'en' ? 'right' : 'left'" width="96">
-                            <template #trigger>
-                                <button class="text-white " @click="markAllNotificationsAsRead">
-                                    <div class="relative">
-                                        <BellIcon class="w-6 h-6 text-white"></BellIcon>
-                                        <div v-show="showNotificationIndicator" class="absolute top-0 grid w-2 h-2 p-1 text-xs rounded-full bg-primary -right-0 place-items-center">
-                                            <!-- <span class="text-xs origin-center ">{{ $page.props.notifications.length }}</span> -->
-                                        </div>
-                                    </div>
-                                </button>
-                            </template>
-
-                            <template #content>
-                                <!-- Notifications -->
-                                <div class="block px-4 py-2 text-xs text-gray-400">
-                                    {{ $t('notifications') }}
-                                </div>
-
-                                <div v-if="$page.props.notifications.length">
-                                    <ul role="list" class="divide-y divide-gray-200 max-h-[calc(100dvh-200px)] overflow-y-auto">
-                                        <template v-for="notification in $page.props.notifications">
-                                            <NotificationComponent :notification="notification" />
-                                        </template>
-                                    </ul>
-                                </div>
-
-                                <div v-else>
-                                    <div class="block px-4 py-2 text-xs text-center text-gray-500">
-                                        {{ $t("you-don't-have-any-new-notifications") }}.
-                                    </div>
-                                </div>
-
-                                <div class="block px-4 py-2 text-xs text-center ">
-                                    <Link :href="route('notification.index')" class="text-primary hover:text-primaryDark">
-                                    {{ $t('view-all') }}
-                                    </Link>
-                                </div>
-                            </template>
-                        </Dropdown>
-                    </div>
-                </div>
-
-                <!-- Mobile navigation menu. -->
-                <div class="flex items-center justify-between w-full md:hidden">
-                    <button class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none hover:bg-transparent focus:text-gray-500" @click="showingNavigationDropdown = !showingNavigationDropdown">
+                <div class="flex md:gap-x-3 items-center  max-md:justify-between max-md:w-full lg:ml-6">
+                    <button class="md:hidden inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none hover:bg-transparent focus:text-gray-500" @click="showingNavigationDropdown = !showingNavigationDropdown">
                         <Bars3Icon class="w-6 h-6" />
                     </button>
-                    <div class="flex justify-between gap-2">
-
-                        <button class="rounded-full bg-[#CFC27A] font-medium px-2 py-1 flex items-center gap-1">
+                    <div class="flex justify-between items-center gap-2">
+                        <!-- upgrade button  -->
+                        <button class="rounded-full   bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5">
                             <span class="bg-black rounded-full">
                                 <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                             </span>
                             <Link class="uppercase" :href="route('upgrade')">{{ $t('upgrade') }}</Link>
                         </button>
                         <!-- user city  -->
-                        <div class="flex rtl:flex-row-reverse items-center gap-1">
+                        <div class="flex rtl:flex-row-reverse items-center gap-1 ">
                             <MapPinIcon class="w-4 h-4 text-primary" />
-                            <span class="text-white w-max text-xs">{{ currentUser.current_city?.split(' ')[0] }}</span>
+                            <span class="text-white w-max">{{ currentUser.current_city?.split(' ')[0] }}</span>
                         </div>
                         <!-- Settings Dropdown -->
                         <div class="relative ">
@@ -194,10 +128,12 @@ function markAllNotificationsAsRead() {
                             <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url" :username="$page.props.auth.user.name" :border="true" border-color="primary" size="sm" :enable-light-box="false" />
                             </Link>
                         </div>
-                        <div class="relative grid place-items-center">
-                            <Dropdown width="80" :align="locale == 'ar' ? 'left' : 'right'">
+
+                        <!-- Notifications Dropdown -->
+                        <div class="relative">
+                            <Dropdown :align="locale == 'en' ? 'right' : 'left'" width="96">
                                 <template #trigger>
-                                    <button @click="markAllNotificationsAsRead">
+                                    <button class="text-white " @click="markAllNotificationsAsRead">
                                         <div class="relative">
                                             <BellIcon class="w-6 h-6 text-white"></BellIcon>
                                             <div v-show="showNotificationIndicator" class="absolute top-0 grid w-2 h-2 p-1 text-xs rounded-full bg-primary -right-0 place-items-center">
@@ -206,6 +142,7 @@ function markAllNotificationsAsRead() {
                                         </div>
                                     </button>
                                 </template>
+
                                 <template #content>
                                     <!-- Notifications -->
                                     <div class="block px-4 py-2 text-xs text-gray-400">
@@ -226,7 +163,7 @@ function markAllNotificationsAsRead() {
                                         </div>
                                     </div>
 
-                                    <div class="block px-4 py-2 text-xs text-center">
+                                    <div class="block px-4 py-2 text-xs text-center ">
                                         <Link :href="route('notification.index')" class="text-primary hover:text-primaryDark">
                                         {{ $t('view-all') }}
                                         </Link>
@@ -234,9 +171,9 @@ function markAllNotificationsAsRead() {
                                 </template>
                             </Dropdown>
                         </div>
-
                     </div>
                 </div>
+
             </div>
         </div>
 
