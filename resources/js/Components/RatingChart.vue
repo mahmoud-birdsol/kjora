@@ -22,16 +22,30 @@ const options = {
         redrawOnWindowResize: true,
         foreColor: '#000',
     },
+    responsive: [{
+        breakpoint: 500,
+        options: {
+            yaxis: {
+                min: 0,
+                max: 5,
+                tickAmount: 10,
+                labels: {
+                    style: {
+                        fontSize: '9px',
+                    },
+                },
+            },
+        },
+    }],
     xaxis: {
         categories: props.labels,
         labels: {
             style: {
-              colors: [],
-              fontSize: '12px',
-              fontFamily: 'Helvetica, Arial, sans-serif',
-              fontWeight: 400,
-              cssClass: 'apexcharts-xaxis-label',
-          },
+                fontSize: '12px',
+                fontFamily: 'Helvetica, Arial, sans-serif',
+                fontWeight: 400,
+                cssClass: 'apexcharts-xaxis-label',
+            },
         }
     },
 

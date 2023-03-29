@@ -66,7 +66,7 @@ function setRates() {
         <template #header>
             {{ $t('rate') }}
         </template>
-        <div class="w-full h-full p-6 bg-white rounded-xl md:w-1/2 md:mx-auto">
+        <div class="w-full h-full py-6 sm:p-6 bg-white rounded-xl md:w-1/2 md:mx-auto">
             <div class="flex flex-col items-center justify-between gap-2 mb-4 text-black">
                 <div class="flex flex-col gap-3">
                     <div class="relative mx-auto min-w-max">
@@ -108,9 +108,7 @@ function setRates() {
 
             <div class="flex flex-col gap-4 mt-6">
                 <div class="flex flex-col justify-between h-full md:justify-self-end ">
-                    <div class="p-2 ">
                         <RatingChart :data="graphData" :labels="labels" theme="rgb(0,100,0)" overlay='rgba(0,100,0,0.2)' />
-                    </div>
                 </div>
                 <form class="flex flex-col gap-4 px-5">
                     <div class="flex items-center gap-x-2">
