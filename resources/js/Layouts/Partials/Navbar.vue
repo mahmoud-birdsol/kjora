@@ -78,7 +78,7 @@ function markAllNotificationsAsRead() {
                                 {{ $t('home') }}
                             </span>
                         </NavLink>
-                        <NavLink :href="route('chats.index')" :active="route().current('chats.index')" class="">
+                        <NavLink :href="route('chats.index')" :active="route().current('chats.index') || route().current('chats.show')" class="">
                             <ChatIcon class="w-4 h-4 text-primary" />
                             <span>
                                 {{ $t('chat') }}
@@ -191,7 +191,7 @@ function markAllNotificationsAsRead() {
                     <HomeIcon class="w-4 h-4 text-primary" />
                     <span>{{ $t('home') }}</span>
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('chats.index')" :active="route().current('chats.index')">
+                <ResponsiveNavLink :href="route('chats.index')" :active="route().current('chats.index') || route().current('chats.show')">
                     <ChatIcon class="w-4 h-4 text-primary" />
                     <span>{{ $t('chat') }}</span>
                 </ResponsiveNavLink>
