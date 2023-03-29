@@ -66,17 +66,17 @@ const submit = () => {
         <div class="grid grid-cols-1 gap-4 mt-12 tracking-tight sm:grid-cols-2 ">
             <div>
                 <InputLabel color="primary" for="first_name" :value="$t('first-name')" />
-                <TextInput type="text" v-model="form.first_name" :placeholder="$t('please enter your first name')" auto-complete="given-name" aria-required="true" autofocus />
+                <TextInput type="text" v-model="form.first_name" :placeholder="$t('please enter your first name')" auto-complete="given-name" name="sur-name" aria-required="true" autofocus />
                 <InputError class="mt-2" :message="form.errors.first_name" />
             </div>
             <div>
                 <InputLabel color="primary" for="last_name" :value="$t('surname')" />
-                <TextInput type="text" v-model="form.last_name" :placeholder="$t('please enter your last name')" auto-complete="sur-name" aria-required="true" />
+                <TextInput type="text" v-model="form.last_name" :placeholder="$t('please enter your last name')" auto-complete="sur-name" name="sur-name" aria-required="true" />
                 <InputError class="mt-2" :message="form.errors.last_name" />
             </div>
             <div>
                 <InputLabel color="primary" for="email" :value="$t('email')" />
-                <TextInput type="text" v-model="form.email" :placeholder="$t('please enter your email address')" auto-complete="email" aria-required="true" />
+                <TextInput type="text" v-model="form.email" :placeholder="$t('please enter your email address')" auto-complete="email" name="email" aria-required="true" />
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
             <div>
@@ -107,7 +107,7 @@ const submit = () => {
             <div class="sm:col-span-2">
                 <div>
                     <InputLabel color="primary" id='username' for="username" :value="$t('username')" />
-                    <TextInput type="text" v-model="form.username" placeholder="username" autocomplete="username" aria-labelledby="username" aria-required="true" />
+                    <TextInput type="text" v-model="form.username" placeholder="username" autocomplete="username" name="username" aria-labelledby="username" aria-required="true" />
                     <InputError class="mt-2" :message="form.errors.username" />
                 </div>
             </div>

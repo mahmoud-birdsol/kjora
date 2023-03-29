@@ -189,7 +189,7 @@ const handleScroll = (e) => {
                             }}</span>
                         </div>
 
-                        <span class="absolute inset-y-0 right-0 flex items-center pr-4" :class="{ 'text-primary': option[valueName] == selected[valueName], 'text-white': option[valueName] != selected[valueName] }">
+                        <span class="absolute inset-y-0 rtl:left-0 ltr:right-0 flex items-center pie-4" :class="{ 'text-primary': option[valueName] == selected[valueName], 'text-white': option[valueName] != selected[valueName] }">
                             <CheckIcon class="w-5 h-5" />
                         </span>
                     </li>
