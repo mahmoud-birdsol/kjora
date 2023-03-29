@@ -21,6 +21,7 @@ import {
 import Avatar from "@/Components/Avatar.vue";
 import { XMarkIcon } from '@heroicons/vue/20/solid';
 import axios from 'axios';
+import SlideInTransition from '../../Components/SlideInTransition.vue';
 
 const locale = usePage().props.value.locale
 const currentUser = usePage().props.value.auth.user
@@ -240,7 +241,7 @@ function markAllNotificationsAsRead() {
         <!-- Responsive Navigation Menu -->
         <!-- Responsive Navigation Menu -->
         <div class="fixed top-0 bottom-0 left-0 right-0 z-40 bg-black bg-opacity-50" :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }" @click="showingNavigationDropdown = false"></div>
-        <Transition enter-from-class="ltr:-left-full rtl:-right-full" enter-to-class="ltr:left-0 rtl:right-0" enter-active-class="transition-all duration-700" leave-to-class="ltr:-left-full rtl:-right-full" leave-from-class="ltr:left-0 rtl:right-0" leave-active-class="transition-all duration-700">
+        <SlideInTransition>
             <div class="pt-2 pb-3 space-y-1 fixed top-0  bg-black h-full w-[max(20em,50%)] z-50" v-if="showingNavigationDropdown">
                 <div class="flex">
                     <XMarkIcon class="w-5 m-3 mis-auto text-white" @click="showingNavigationDropdown = false" />
@@ -269,6 +270,6 @@ function markAllNotificationsAsRead() {
                 </ResponsiveNavLink>
 
             </div>
-        </Transition>
+        </SlideInTransition>
     </nav>
 </template>
