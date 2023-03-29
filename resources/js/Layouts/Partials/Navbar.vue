@@ -107,6 +107,7 @@ function markAllNotificationsAsRead() {
                 </div>
                 <div class="hidden md:flex md:gap-x-3 sm:items-center lg:ml-6">
                     <!-- upgrade button  -->
+
                     <button class="rounded-full   bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5">
                         <span class="bg-black rounded-full">
                             <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
@@ -114,10 +115,11 @@ function markAllNotificationsAsRead() {
                         <Link class="uppercase" :href="route('upgrade')">{{ $t('upgrade') }}</Link>
                     </button>
                     <!-- user city  -->
-                    <div class="flex items-center gap-1 ">
+                    <div class="flex rtl:flex-row-reverse items-center gap-1 ">
                         <MapPinIcon class="w-4 h-4 text-primary" />
                         <span class="text-white w-max">{{ currentUser.current_city?.split(' ')[0] }}</span>
-                    </div> <!-- Settings Dropdown -->
+                    </div>
+                    <!-- Settings Dropdown -->
                     <div class="relative ">
                         <Link :href="route('profile.show')" class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
                         <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url" :username="$page.props.auth.user.name" :border="true" border-color="primary" size="sm" :enable-light-box="false" />
@@ -174,18 +176,18 @@ function markAllNotificationsAsRead() {
                         <Bars3Icon class="w-6 h-6" />
                     </button>
                     <div class="flex justify-between gap-2">
-                        <!-- user city  -->
-                        <div class="flex items-center gap-1">
-                            <MapPinIcon class="w-4 h-4 text-primary" />
-                            <span class="text-white w-max text-xs">{{ currentUser.current_city?.split(' ')[0] }}</span>
-                        </div>
+
                         <button class="rounded-full bg-[#CFC27A] font-medium px-2 py-1 flex items-center gap-1">
                             <span class="bg-black rounded-full">
                                 <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                             </span>
                             <Link class="uppercase" :href="route('upgrade')">{{ $t('upgrade') }}</Link>
                         </button>
-
+                        <!-- user city  -->
+                        <div class="flex rtl:flex-row-reverse items-center gap-1">
+                            <MapPinIcon class="w-4 h-4 text-primary" />
+                            <span class="text-white w-max text-xs">{{ currentUser.current_city?.split(' ')[0] }}</span>
+                        </div>
                         <!-- Settings Dropdown -->
                         <div class="relative ">
                             <Link :href="route('profile.show')" class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
