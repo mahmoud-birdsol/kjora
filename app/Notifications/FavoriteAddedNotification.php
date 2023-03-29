@@ -49,7 +49,7 @@ class FavoriteAddedNotification extends Notification
         return (new MailMessage)
                     ->subject('Dear ' . $notifiable->name)
                     ->line('Player ' . $this->user->name . ' Has added you to his favorites')
-                    ->action('View', url(route('favorites.index')))
+                    ->action('View', url(route('player.profile' , $this->user->id)))
                     ->line('Thank you for using our application!');
     }
 
