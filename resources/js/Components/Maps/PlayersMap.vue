@@ -47,7 +47,10 @@ function openInfoWindow(player, options) {
         </template>
 
         <InfoWindow v-if="showInfoWindow" :options="infoOptions">
-            <MainPlayerCard :player="infoPlayer" />
+            <div class="min-w-[250px] xs:min-w-[400px]">
+
+                <MainPlayerCard :player="infoPlayer" />
+            </div>
         </InfoWindow>
 
 
@@ -59,9 +62,14 @@ function openInfoWindow(player, options) {
 <style >
 .gm-style .gm-style-iw-c {
     padding: 0 !important;
+    border-radius: 0.75rem !important;
+    max-width: none !important;
+
 }
 
 .gm-style-iw-c>button>span {
     background-color: white !important;
+
+
 }
 </style>
