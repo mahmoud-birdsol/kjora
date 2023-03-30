@@ -91,7 +91,7 @@ function markAllNotificationsAsRead() {
                             </span>
                         </NavLink>
                         <NavLink :href="route('invitation.index')" :active="route().current('invitation.index') || route().current('hire.index')">
-                            <FootBallIcon class="fill-primary w-4 h-4" />
+                            <FootBallIcon class="w-4 h-4 fill-primary" />
 
                             <span>
                                 {{ $t('invitations') }}
@@ -105,20 +105,20 @@ function markAllNotificationsAsRead() {
                         </NavLink>
                     </div>
                 </div>
-                <div class="flex md:gap-x-3 items-center  max-md:justify-between max-md:w-full lg:ml-6">
-                    <button class="md:hidden inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none hover:bg-transparent focus:text-gray-500" @click="showingNavigationDropdown = !showingNavigationDropdown">
+                <div class="flex items-center md:gap-x-3 max-md:justify-between max-md:w-full lg:ml-6">
+                    <button class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md md:hidden hover:text-gray-500 hover:bg-gray-100 focus:outline-none hover:bg-transparent focus:text-gray-500" @click="showingNavigationDropdown = !showingNavigationDropdown">
                         <Bars3Icon class="w-6 h-6" />
                     </button>
-                    <div class="flex justify-between items-center gap-2">
+                    <div class="flex items-center justify-between gap-2">
                         <!-- upgrade button  -->
-                        <button class="rounded-full   bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 mie-5">
+                        <button class="rounded-full   bg-[#CFC27A] font-medium px-4 py-1 flex items-center gap-1 ">
                             <span class="bg-black rounded-full">
                                 <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                             </span>
                             <Link class="uppercase" :href="route('upgrade')">{{ $t('upgrade') }}</Link>
                         </button>
                         <!-- user city  -->
-                        <div class="flex rtl:flex-row-reverse items-center gap-1 ">
+                        <div class="flex items-center gap-1 rtl:flex-row-reverse ">
                             <MapPinIcon class="w-4 h-4 text-primary" />
                             <span class="text-white w-max">{{ currentUser.current_city?.split(' ')[0] }}</span>
                         </div>
@@ -183,7 +183,7 @@ function markAllNotificationsAsRead() {
         <SlideInTransition>
             <div class="pt-2 pb-3 space-y-1 fixed top-0  bg-black h-full w-[max(20em,50%)] z-50" v-if="showingNavigationDropdown">
                 <div class="flex">
-                    <XMarkIcon class="w-5 m-3 mis-auto text-white" @click="showingNavigationDropdown = false" />
+                    <XMarkIcon class="w-5 m-3 text-white mis-auto" @click="showingNavigationDropdown = false" />
                 </div>
 
                 <!-- Responsive Settings Options -->
@@ -196,7 +196,7 @@ function markAllNotificationsAsRead() {
                     <span>{{ $t('chat') }}</span>
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('invitation.index')" :active="route().current('invitation.index') || route().current('hire.index')">
-                    <FootBallIcon class="fill-primary w-4 aspect-square" />
+                    <FootBallIcon class="w-4 fill-primary aspect-square" />
                     <span>{{ $t('invitations') }}</span>
                 </ResponsiveNavLink>
                 <ResponsiveNavLink :href="route('favorites.index')" :active="route().current('favorites.index')">
