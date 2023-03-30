@@ -57,7 +57,7 @@ const options = {
     },
 
     yaxis: {
-        show: true,
+        show: false,
         min: 0,
         max: 5,
         tickAmount: 10,
@@ -66,15 +66,6 @@ const options = {
             style: {
                 fontSize: '12px',
                 fontWeight: 800,
-            },
-        },
-        crosshairs: {
-            show: true,
-            position: 'back',
-            stroke: {
-                color: '#b6b6b6',
-                width: 1,
-                dashArray: 0,
             },
         },
     },
@@ -121,7 +112,7 @@ const options = {
 const series = computed(() => {
     return [{
         name: 'Rating',
-        data: props.data.length ? props.data : new Array(props.labels?.length).fill(0)
+        data: props.data.length ? props.data : props.labels?.length ? new Array(props.labels?.length).fill(0) :[0,0,0,0,0,0]
     }]
 })
 
@@ -132,7 +123,7 @@ const series = computed(() => {
 <style>
 .apexcharts-toolbar,
 .apexcharts-menu-icon {
-    display: none;
+    display: none !important;
 }
 
 .apexcharts-canvas {
@@ -145,5 +136,13 @@ const series = computed(() => {
 
 .apexcharts-datalabel {
     direction: ltr;
+}
+@media (max-width: 567px) {
+    .vue-apexcharts svg{
+        
+        transform: scale(1.5);
+        transform-origin: top;
+    }
+    
 }
 </style>
