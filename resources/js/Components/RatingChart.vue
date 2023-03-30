@@ -35,6 +35,13 @@ const options = {
                     },
                 },
             },
+            xaxis: {
+                labels: {
+                    style: {
+                        fontSize: '9px',
+                    },
+                }
+            },
         },
     }],
     xaxis: {
@@ -121,7 +128,8 @@ const series = computed(() => {
 .apexcharts-series path:nth-child(2) {
     mix-blend-mode: multiply;
 }
-.apexcharts-datalabel{
+
+.apexcharts-datalabel {
     direction: ltr;
 }
 </style>

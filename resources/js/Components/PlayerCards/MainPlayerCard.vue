@@ -9,7 +9,6 @@ import ReportModal from "@/Components/ReportModal.vue";
 import Socials from '@/Components/Socials.vue';
 import ToolTip from "@/Components/ToolTip.vue";
 
-
 const props = defineProps({
     player: {
         required: true,
@@ -54,6 +53,7 @@ const currentUser = usePage().props.value.auth.user
 const state = props.player.state_name
 const txtColor = state == 'Free' ? 'white' : 'black'
 const colors = ref(['#99A9BF', state == "Free" ? '#FF9900' : 'rgb(0, 100, 0)', state == "Free" ? '#FF9900' : 'rgb(0, 100, 0)'])
+const copiedMsg = ref(false)
 const backgroundImage = computed(() => {
     if (state == 'Premium') {
         return {
@@ -128,6 +128,12 @@ function toRadians(degree) {
 }
 
 const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitude, currentUser.current_longitude, props.player.current_latitude, props.player.current_longitude)
+function showCopied() {
+    copiedMsg.value = true
+    setTimeout(() => {
+        copiedMsg.value = false
+    }, 2000)
+}
 
 </script>
 
@@ -255,7 +261,9 @@ const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitud
                         </Link>
                     </div>
                     <div class="relative">
-                        <Socials v-if="showShare" :id="player.id" shareUrl='public/player' position="bottom-0" />
+                        <Socials v-if="showShare" :id="player.id" shareUrl='public/player' position="bottom-0" @showCopied="showCopied" />
+                        <span class="bg-black text-white text-[10px] font-bold rounded absolute ltr:left-[-570%] rtl:right-[-520%] bottom-0 -my-4 p-1 whitespace-nowrap" v-if="copiedMsg">{{
+                            $t('the link has been copied') }}!</span>
                     </div>
                 </div>
             </div>

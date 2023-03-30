@@ -6,7 +6,7 @@ import Twitter from "@/Components/Icons/Twitter.vue";
 import Linkedin from "@/Components/Icons/Linkedin.vue";
 import { ShareIcon, LinkIcon } from '@heroicons/vue/24/outline'
 import ToolTip from "@/Components/ToolTip.vue";
-let props = defineProps({
+const props = defineProps({
     id: {
         required: true,
     }, shareUrl: {
@@ -17,20 +17,15 @@ let props = defineProps({
     }
 
 })
+const emits = defineEmits(['showCopied'])
 const showSocials = ref(false)
 const show = ref(false)
 const url = usePage().props.value.ziggy.url + '/' + props.shareUrl + '/' + props.id
 
 function copy() {
-    navigator.clipboard.writeText(url).then((
-
-    ) => {
-        show.value = true
-
-        setTimeout(() => { 
-            show.value = false 
-            // showSocials.value = false
-        }, 2000)
+    navigator.clipboard.writeText(url).then(() => {
+        showSocials.value = false
+        emits('showCopied')
     })
 }
 </script>
@@ -49,7 +44,6 @@ function copy() {
                     <span class="whitespace-nowrapp">{{ $t('share to twitter') }}</span>
                 </a>
                 <div class=" flex items-center gap-2 [&>div]:hover:block cursor-pointer" @click="copy">
-                    <span class="bg-black text-white text-[10px] font-bold rounded absolute ltr:left-2 rtl:right-2 bottom-0 -my-4 p-1" v-if="show">{{ $t('the link has been copied') }}!</span>
                     <LinkIcon class="h-4 w-4 text-white" />
                     <span class="whitespace-nowrap">{{ $t('copy link') }}</span>
                 </div>
