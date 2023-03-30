@@ -6,7 +6,8 @@
         <OnClickOutside @trigger="showOptions = false">
             <FadeInTransition>
                 <!-- media option menu -->
-                <div v-show="showOptions" class="absolute top-0 z-20 px-3 py-2 text-xs text-white bg-black border ltr:right-8 rtl:left-8 rounded-xl border-neutral-500 z-2 ">
+                <div v-show="showOptions"
+                    class="absolute top-0 z-20 px-3 py-2 text-xs text-white bg-black border ltr:right-8 rtl:left-8 rounded-xl border-neutral-500 z-2 ">
                     <ul class="flex flex-col justify-center gap-y-2">
                         <button class="hover:text-gray-400 group" v-if="isCurrentUser" @click="editCaption">
                             <li class="flex items-center gap-x-2">
@@ -20,7 +21,8 @@
                                 <span> {{ $t('delete') }}</span>
                             </li>
                             <!-- confirm delete media modal -->
-                            <ConfirmationModal :show="showDeletePostModal" @close="showDeletePostModal = false" @delete="removePost">
+                            <ConfirmationModal :show="showDeletePostModal" @close="showDeletePostModal = false"
+                                @delete="removePost">
                                 <template #body>
                                     <span>{{ $t('Are you sure you want delete this post ? ') }}</span>
                                 </template>
@@ -28,7 +30,7 @@
                         </button>
                         <button @click="showShare" class="hover:text-gray-400 ">
                             <li class="flex items-center justify-center">
-                                <Socials :id="postId" shareUrl='public/posts' position="-top-1">
+                                <Socials :id="postId" shareUrl='public/posts' position="-top-1" @showCopied="showCopied">
                                     <template #label>
                                         <span> {{ $t('share') }}</span>
                                     </template>
@@ -54,6 +56,9 @@
                 </div>
             </FadeInTransition>
         </OnClickOutside>
+        <span class="bg-black text-white text-[10px] font-bold rounded absolute ltr:left-0 rtl:right-0 bottom-0 -my-4 p-1 whitespace-nowrap"
+            v-if="copiedMsg">{{
+                $t('the link has been copied') }}!</span>
 
     </div>
 </template>
@@ -73,6 +78,7 @@ const props = defineProps(['isCurrentUser', 'postId'])
 const emits = defineEmits(['editingCaption'])
 const showDeletePostModal = ref(false);
 const showOptions = ref(false);
+const copiedMsg = ref(false)
 
 function openRemoveMediaModal() {
     showOptions.value = false
@@ -90,6 +96,13 @@ function removePost() {
     Inertia.delete(route('posts.destroy', props.postId), {
     })
 
+}
+function showCopied() {
+    copiedMsg.value = true
+    showOptions.value = false
+    setTimeout(() => {
+        copiedMsg.value = false
+    }, 2000)
 }
 </script>
 
