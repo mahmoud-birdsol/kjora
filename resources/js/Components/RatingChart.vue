@@ -68,6 +68,15 @@ const options = {
                 fontWeight: 800,
             },
         },
+        crosshairs: {
+            show: true,
+            position: 'back',
+            stroke: {
+                color: '#b6b6b6',
+                width: 1,
+                dashArray: 0,
+            },
+        },
     },
     stroke: {
         show: true,
@@ -101,12 +110,17 @@ const options = {
         }
     },
     tooltip: {
-        enabled: false,
+        enabled: true,
+        custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+            return '<div class="arrow_box">' +
+                '<span style="font-size:9px; padding:0px 10px; color:black; ">' + series[seriesIndex][dataPointIndex].toFixed(2) + '</span>' +
+                '</div>'
+        },
     },
 };
 const series = computed(() => {
     return [{
-        name: 'series-1',
+        name: 'Rating',
         data: props.data.length ? props.data : new Array(props.labels?.length).fill(0)
     }]
 })
