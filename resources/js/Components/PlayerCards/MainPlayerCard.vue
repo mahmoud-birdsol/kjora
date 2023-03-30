@@ -238,7 +238,8 @@ const distanceBetweenPlayerAndMe = calculateDistance(currentUser.current_latitud
 
             <div class="flex items-center justify-between gap-1 mt-2 sm:text-xs" :class="`text-${txtColor}`">
                 <div class="flex items-center gap-1">
-                    <a :href="'https://maps.google.com/?q=' + player.current_latitude + ',' + player.current_longitude" target="_blank" class="w-full overflow-hidden rounded-lg ">
+
+                    <a :href="`https://www.google.com/maps/dir/Current+Location/${player.current_latitude},${player.current_longitude}`" target="_blank" class="w-full overflow-hidden rounded-lg ">
                         <p class="flex gap-1 items-center text-sm scale-[0.85] ltr:origin-left rtl:origin-right" v-if="showLocation">
                             <MapPinIcon class="inline w-4 h-4" />
                             {{ player.current_city && player.current_city?.split(' ')[0] }}
