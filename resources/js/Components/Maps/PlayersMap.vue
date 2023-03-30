@@ -70,6 +70,20 @@ function openInfoWindow(player, options) {
 .gm-style-iw-c>button>span {
     background-color: white !important;
 
+}
 
+.gm-style-iw-c button {
+    top: -3px !important;
+
+}
+
+[dir='rtl'] .gm-style-iw-c button {
+    right: -3px !important;
+    left: auto;
+}
+
+[dir='ltr'] .gm-style-iw-c button {
+    left: -3px !important;
+    right: auto;
 }
 </style>
