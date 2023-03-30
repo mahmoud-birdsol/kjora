@@ -68,7 +68,7 @@ function markAllNotificationsAsRead() {
     <nav class="bg-transparent">
         <!-- Primary Navigation Menu -->
         <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="flex items-center h-16 md:justify-between">
+            <div class="flex items-center h-16 gap-1 md:justify-between">
                 <div class="hidden md:flex">
                     <!-- Navigation Links -->
                     <div class="items-center hidden gap-2 lg:gap-8 sm:-my-px md:flex">
@@ -105,7 +105,7 @@ function markAllNotificationsAsRead() {
                         </NavLink>
                     </div>
                 </div>
-                <div class="flex items-center md:gap-x-3 max-md:justify-between max-md:w-full lg:ml-6">
+                <div class="flex items-center md:gap-x-3 max-md:justify-between max-md:w-full ">
                     <button class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md md:hidden hover:text-gray-500 hover:bg-gray-100 focus:outline-none hover:bg-transparent focus:text-gray-500" @click="showingNavigationDropdown = !showingNavigationDropdown">
                         <Bars3Icon class="w-6 h-6" />
                     </button>
