@@ -43,13 +43,19 @@ function removeConversation() {
             <div>
                 <Avatar :id="user.id" :image-url="user.avatar_url" size="lg" :username="user.name" :border="true" />
             </div>
-            <div class="flex flex-col gap-1 ">
+            <div class="flex flex-col gap-1 max-sm:flex-1 ">
                 <h4 class="m-0 text-lg leading-none text-white capitalize">{{ user.name }}</h4>
                 <span class="text-xs leading-none text-neutral-400 rtl:before:content-['a'] rtl:before:text-transparent"> @{{
                     user.username }} </span>
+                    <div class="flex sm:hidden " v-if="!user.online">
+                    <p class="text-xs text-gray-300 max-sm:scale-75 rtl:origin-right ltr:origin-left ">{{ $t('Last seen') }}</p>
+                    <p class="text-xs text-gray-300 max-sm:scale-75 rtl:origin-right ltr:origin-left -mis-2 ">
+                        <DateTranslation :end="user.last_seen_at" type="period" />
+                    </p>
+                </div>
             </div>
             <div class="flex gap-2 -mt-2 mis-auto">
-                <div v-if="!user.online">
+                <div class="max-sm:hidden " v-if="!user.online">
                     <p class="text-xs text-gray-300 max-sm:scale-75">{{ $t('Last seen') }}</p>
                     <p class="text-xs text-gray-300 max-sm:scale-75">
                         <DateTranslation :end="user.last_seen_at" type="period" />
