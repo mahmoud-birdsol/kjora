@@ -12,7 +12,7 @@
                 <!-- user information -->
                 <div class="flex flex-row gap-1 md:flex-col ">
                     <div class="flex flex-row gap-2">
-                        <h3 class="m-0 text-sm sm:text-lg font-bold leading-none capitalize text-stone-800 ">{{
+                        <h3 class="m-0 text-sm font-bold leading-none capitalize sm:text-lg text-stone-800 ">{{
                             comment.user.name
                         }} </h3>
                         <span v-if="false">star icon</span>
@@ -23,7 +23,7 @@
                     </Link>
                 </div>
                 <!-- date and time -->
-                <div class="flex flex-row gap-2 text-xs scale-[0.8] ltr:origin-right rtl:origin-left text-neutral-400/90">
+                <div class="flex flex-row gap-2 text-[8px] ltr:origin-right rtl:origin-left text-neutral-400/90">
                     <span>
                         <DateTranslation type="range" :start="comment.created_at" />
                     </span>
