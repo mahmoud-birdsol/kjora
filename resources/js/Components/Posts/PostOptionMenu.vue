@@ -56,7 +56,7 @@
                 </div>
             </FadeInTransition>
         </OnClickOutside>
-        <span class="bg-black text-white text-[10px] font-bold rounded absolute ltr:left-0 rtl:right-0 bottom-0 -my-4 p-1 whitespace-nowrap"
+        <span class="bg-black text-white text-[10px] font-bold rounded absolute ltr:-left-16 rtl:-right-7 bottom-0 -my-4 p-1 whitespace-nowrap"
             v-if="copiedMsg">{{
                 $t('the link has been copied') }}!</span>
 
