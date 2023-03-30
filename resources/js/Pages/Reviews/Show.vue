@@ -131,7 +131,7 @@ function setRates() {
                     </template>
 
                 </form>
-                <button @click="submitRatingForm" class="w-full p-3 px-6 mt-4 text-white bg-black rounded-full">
+                <button @click="submitRatingForm" class="m-4 p-3 px-6 mt-4 text-white bg-black rounded-full">
                     {{ $t('rate') }}
                 </button>
             </div>
