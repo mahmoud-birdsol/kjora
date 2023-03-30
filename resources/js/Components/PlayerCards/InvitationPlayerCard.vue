@@ -131,7 +131,7 @@ function calcShouldRate() {
             </div>
             <!-- invite user location -->
 
-            <a :href="'https://maps.google.com/?q=' + position.lat + ',' + position.lng" target="_blank" class="w-full overflow-hidden rounded-lg ">
+            <a :href="`https://www.google.com/maps/dir/Current+Location/${position.lat},${position.lng}`" target="_blank" class="w-full overflow-hidden rounded-lg ">
                 <GoogleMap :api-key="apiKey" style="width: 100%; height: 150px" :center="position" :zoom="15">
                     <Marker :options="markerOptions" />
                     <CustomMarker :options="{ position: position, anchorPoint: 'TOP_RIGHT' }">
