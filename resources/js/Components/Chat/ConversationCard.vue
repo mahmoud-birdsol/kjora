@@ -55,7 +55,7 @@ function removeConversation() {
                         <DateTranslation :end="user.last_seen_at" type="period" />
                     </p>
                 </div>
-                <p class="flex rtl:flex-row-reverse items-center text-xs text-white" v-else>
+                <p class="flex items-center text-xs text-white rtl:flex-row-reverse" v-else>
                     <CheckCircleIcon class="inline w-3 h-3 mr-1 text-green-500" />
                     <span>Online</span>
                 </p>
@@ -78,7 +78,7 @@ function removeConversation() {
             </ConfirmationModal>
         </div>
         <FadeInTransition>
-            <div v-if="conversation.unread_messages !== 0 && showNewMessagesPopup" class="absolute ltr:right-0 top-1 rtl:left-0 p-1">
+            <div v-if="conversation.unread_messages !== 0 && showNewMessagesPopup" class="absolute p-1 ltr:right-1 top-1 rtl:left-1">
                 <span class="grid w-6 h-6 p-1 text-xs bg-white rounded-full place-items-center">
                     {{ conversation.unread_messages }}</span>
             </div>
