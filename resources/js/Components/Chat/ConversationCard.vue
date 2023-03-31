@@ -10,6 +10,7 @@ import DateTranslation from '../DateTranslation.vue';
 import { Inertia } from '@inertiajs/inertia';
 import Modal from '../Modal.vue';
 import FadeInTransition from '@/Components/FadeInTransition.vue'
+
 dayjs.extend(relativeTime)
 
 const currentConversation = inject('conversation');
@@ -38,7 +39,7 @@ function removeConversation() {
 
 <template>
     <Link :href="route('chats.show', conversation.id)" :class="active ? 'border-2 border-primary rounded-2xl' : ''">
-    <div @click="showNewMessagesPopup = false" class="bg-[url(/images/chatbg.png)] bg-cover relative rounded-2xl p-6 flex flex-col gap-8 items-start bg-[center_center]" :class="active ? 'border-2 border-white' : ''">
+    <div @click="showNewMessagesPopup = false" style="background-image: url('/images/chatbg.png');" class=" bg-cover relative rounded-2xl p-6 flex flex-col gap-8 items-start bg-[center_center]" :class="active ? 'border-2 border-white' : ''">
         <div class="flex flex-row items-center w-full gap-4" v-for="user in conversation.users">
             <div>
                 <Avatar :id="user.id" :image-url="user.avatar_url" size="lg" :username="user.name" :border="true" />
@@ -47,7 +48,7 @@ function removeConversation() {
                 <h4 class="m-0 text-lg leading-none text-white capitalize">{{ user.name }}</h4>
                 <span class="text-xs leading-none text-neutral-400 rtl:before:content-['a'] rtl:before:text-transparent"> @{{
                     user.username }} </span>
-                    <div class="flex gap-1 sm:hidden " v-if="!user.online">
+                <div class="flex gap-1 sm:hidden " v-if="!user.online">
                     <p class="text-xs text-gray-300">{{ $t('Last seen') }}</p>
                     <p class="text-xs text-gray-300">
                         <DateTranslation :end="user.last_seen_at" type="period" />

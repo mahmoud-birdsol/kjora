@@ -1,12 +1,12 @@
 <script setup>
-import { Head, useForm, usePage } from '@inertiajs/inertia-vue3';
+import { Head, usePage } from '@inertiajs/inertia-vue3';
 import SystemMessage from '@/Components/SystemMessage.vue';
 import CopyrightClaim from '@/Components/CopyrightClaim.vue';
 import Navbar from '@/Layouts/Partials/Navbar.vue';
 import RealtimeNotifications from '@/Layouts/Partials/RealtimeNotifications.vue';
-import { onMounted, provide, ref } from 'vue';
+import { onMounted } from 'vue';
 import { loadLanguageAsync } from 'laravel-vue-i18n';
-import axios from 'axios';
+
 onMounted(() => {
     loadLanguageAsync(usePage().props.value.locale)
 })
@@ -21,10 +21,9 @@ defineProps({
 });
 
 
-const height = ref(null)
+
 onMounted(() => {
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { enableHighAccuracy: true });
-
     // navigator.permissions.query({ name: "geolocation" }).then((result) => {
     //     console.log(result);
     // });
@@ -41,6 +40,7 @@ const successCallback = (position) => {
 const errorCallback = (error) => {
     console.log(error);
 };
+
 </script>
 
 <template>
@@ -48,7 +48,8 @@ const errorCallback = (error) => {
 
         <Head :title="title" />
 
-        <div class="relative min-h-screen bg-gradient-to-b from-black to-primaryDark isolate before:-z-10" :class="{ 'before:bg-[url(/images/ballkjoura.png)] before:hidden sm:before:block before:absolute before:inset-0 before:bg-[center_-243px] before:bg-no-repeat before:mix-blend-overlay': showBall }">
+        <div class="relative min-h-screen bg-gradient-to-b from-black to-primaryDark isolate before:-z-10"
+            :class="showBall ? ` before:bg-[url('../images/ballkjoura.png')] before:hidden sm:before:block before:absolute before:inset-0 before:bg-[center_-243px] before:bg-no-repeat before:mix-blend-overlay` : ''">
             <div class="flex flex-col justify-between min-h-screen pt-6 space-y-4 sm:pt-0 ltr:font-sans rtl:font-tahoma">
                 <Navbar />
 
