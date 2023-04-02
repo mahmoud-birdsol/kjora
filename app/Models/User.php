@@ -536,4 +536,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     {
         return $this;
     }
+
+    public function routeNotificationForTwilio()
+    {
+        return $this->phone;
+    }
 }
