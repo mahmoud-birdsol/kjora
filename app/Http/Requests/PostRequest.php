@@ -25,13 +25,12 @@ class PostRequest extends FormRequest
     {
         return [
             'caption' => [
-                'required'
+                'nullable'
             ],
 
             'cover' => [
                 'required',
-                'mimes:jpg,jpeg,png',
-                'max:1024'
+                'max:2048'
             ]
         ];
     }
