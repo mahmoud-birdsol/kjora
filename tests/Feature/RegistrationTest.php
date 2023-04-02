@@ -50,18 +50,18 @@ class RegistrationTest extends TestCase
             'first_name' => 'john',
             'last_name' => 'doe',
             'email' => 'test@example.com',
-            'password' => 'password',
-            'password_confirmation' => 'password',
+            'password' => 'Pp@ssw0rd1!',
+            'password_confirmation' => 'Pp@ssw0rd1!',
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature(),
             'country_id' => Country::factory()->create()->id,
             'club_id' => Club::factory()->create()->id,
-            'date_of_birth' => now(),
-            'phone' => $this->faker->phoneNumber(),
+            'date_of_birth' => now()->subYears(20),
+            'phone' => '+201118870334',
             'position_id' => Position::factory()->create()->id,
             'gender' => 'male',
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
+        $response->assertRedirect(route('phone.verify'));
     }
 }

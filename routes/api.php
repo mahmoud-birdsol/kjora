@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\MarkMessageAsReadController;
 use App\Http\Controllers\Api\MarkNotificationAsReadController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\NewMessagesController;
+use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\UserLocationController;
 use App\Http\Resources\CommentResource;
 use App\Models\Post;
@@ -53,20 +54,7 @@ Route::post(
 
 Route::delete('message/{message}/delete', [MessageController::class, 'destroy'])->middleware('auth:sanctum')->name('api.messages.delete');
 
-Route::post('posts', function (Request $request) {
-    $post = Post::create([
-        'user_id' => $request->user()->id,
-        'caption' => $request->input('caption')
-    ]);
-
-    $cover = $post->addMedia($request->file('cover'))->toMediaCollection('gallery');
-
-    $post->update([
-        'cover_id' => $cover->id
-    ]);
-
-    return $post->toArray();
-})->name('api.posts.store');
+Route::post('posts', PostController::class)->name('api.posts.store');
 
 
 Route::post(
