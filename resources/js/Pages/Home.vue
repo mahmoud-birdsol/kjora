@@ -160,7 +160,7 @@ const filterByPosition = (position) => {
                     <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
                         <p class="text-sm font-bold">{{ $t('total ( :count )', { count: players.total }) }}</p>
                         <div class="grid place-items-center min-h-[480px] h-full">
-                            <p class="text-sm font-bold text-black">{{ $t(`sorry, we don't have any result`) }} </p>
+                            <p class="text-sm font-bold text-black">{{ $t(`Sorry, we couldn't find any results`) }} </p>
                         </div>
                     </div>
                 </template>
