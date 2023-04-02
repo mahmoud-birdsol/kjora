@@ -124,7 +124,7 @@ const uploadFiles = () => {
             postId = res.data.id
             sendPostMedia(postId)
         }).catch(error => {
-            console.log(error);
+            console.error(error)
             if (Object.keys(error.response.data.errors).length) {
                 showAsError.value = true
                 removeFile(filesData.value[0])
@@ -144,14 +144,12 @@ function sendPostMedia(postId) {
     if (filesData.value.slice(1).length > 0) {
         filesData.value.slice(1).forEach((fileData, i) => {
             let { file, id } = fileData
-            console.log(fileData.type);
             if (file.type.startsWith("image") || file.type.startsWith('video')) {
                 axios.postForm(route('api.gallery.upload', postId), {
                     gallery: file,
                 }).then().catch(error => {
-                    console.error('there is error while uploading file' + file.name);
+                    console.error(error);
                     if (Object.keys(error.response.data.errors).length) {
-                        console.log('should set showaserror to true');
                         showAsError.value = true
                         removeFile(file)
                         isLoading.value = false
