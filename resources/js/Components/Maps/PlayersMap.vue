@@ -67,6 +67,10 @@ function openInfoWindow(player, options) {
 
 }
 
+[data-map="players-map"] .gm-style-iw-c .gm-style-iw-d {
+    overflow: auto !important;
+}
+
 [data-map="players-map"] .gm-style-iw-c>button>span {
     background-color: white !important;
 
