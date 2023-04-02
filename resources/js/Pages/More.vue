@@ -37,9 +37,9 @@ const currentUser = usePage().props.value.auth.user
                         <div class="flex flex-col gap-4">
                             <div>
                                 <InputLabel color=" black">{{ $t('verification') }}</InputLabel>
-                                <MoreBtn :url="route('identity.verification.create')" v-if="currentUser.identity_status === 'Waiting for documents'"> {{
+                                <MoreBtn :url="route('identity.verification.create')" v-if="currentUser.identity_status === 'Please verify'"> {{
                                     $t(currentUser.identity_status) }}</MoreBtn>
-                                <div v-else class="block w-full px-6 py-2 text-gray-500 transition capitalize duration-150 border border-gray-500 rounded-full sm:text-sm disabled:bg-gray-100 text-start ">
+                                <div v-else class="block w-full px-6 py-2 text-gray-500 capitalize transition duration-150 border border-gray-500 rounded-full sm:text-sm disabled:bg-gray-100 text-start ">
                                     {{ $t(currentUser.identity_status) }}
                                 </div>
 
