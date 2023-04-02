@@ -25,16 +25,16 @@ const options = {
     responsive: [{
         breakpoint: 500,
         options: {
-            yaxis: {
-                min: 0,
-                max: 5,
-                tickAmount: 10,
-                labels: {
-                    style: {
-                        fontSize: '9px',
-                    },
-                },
-            },
+            // yaxis: {
+            //     min: 0,
+            //     max: 5,
+            //     tickAmount: 10,
+            //     labels: {
+            //         style: {
+            //             fontSize: '9px',
+            //         },
+            //     },
+            // },
             xaxis: {
                 labels: {
                     style: {

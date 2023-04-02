@@ -1,5 +1,5 @@
 <template>
-    <div class="text-xl text-center text-white capitalize">
+    <div class="text-xl text-center text-white capitalize overflow-hidden max-sm:pb-20 ">
         <RatingChart :data="data" :labels="labels" />
     </div>
 </template>
