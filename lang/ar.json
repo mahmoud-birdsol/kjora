@@ -1,4 +1,5 @@
 {
+	"no rating categories for this position untill now": "لا توجد فئات تصنيف لهذا المركز حتى الآن",
 	"hi :receiver , :sender": "مرحبا :receiver , :sender",
 	"we appreciate you taking the time to share your rating": "نحن نقدر لك الوقت الذي استغرقته لمشاركة تقييمك",
 	"thank you for sharing your experience with us": "شكرا لكم لتبادل الخبرات الخاصة بك معنا",
@@ -14,7 +15,6 @@
 	"Lorem ipsum dolor sit amet": " حقيقة مثبتة أن المحتوى المقروء لصفحة سيلهي القارئ",
 	"to": "الى ",
 	"Waiting for documents": "في انتظار المستندات",
-	"Please verify": "يرجى تأكيد مستنداتك",
 	"Add a comment...": "اضف تعليق...",
 	"choose from map": "اختار من الخريطة",
 	"Add": "اضافة",
@@ -354,7 +354,7 @@
 	"Please wait to verify your identity.": "يرجى الانتظار للتحقق من هويتك.",
 	"Verification code sent.": "تم ارسال الكود",
 	"Your report has been submitted and will be reviewed by our admins shortly.": "تم إرسال بلاغك وسيراجعه مسؤولونا قريبًا.",
-	"sorry, we don't have any result": "نأسف، لا يوجد نتائج ",
+	"Sorry, we couldn't find any results": "نأسف، لا يوجد نتائج ",
 	"This is to notify you to rate player ": "هذا لإعلامك لتقييم اللاعب",
 	"Rate": "تقييم",
 	"from": "إلى",

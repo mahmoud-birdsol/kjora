@@ -18,7 +18,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="p-6 px-8 bg-gray-100 rounded-2xl">
+    <div class="p-2 md:p-8 bg-gray-100 rounded-2xl">
         <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             <div>
                 <div class="max-w-sm">

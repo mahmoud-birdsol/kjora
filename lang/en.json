@@ -1,4 +1,5 @@
 {
+	"no rating categories for this position untill now": "No rating categories for this position untill now",
 	"match in": "match in",
 	"hi :receiver , :sender": "hi :receiver , :sender",
 	"forgot": "Forgot ",
@@ -16,7 +17,6 @@
 	"Lorem ipsum dolor sit amet": "Lorem ipsum dolor sit amet",
 	"to": "To",
 	"Waiting for documents": "Waiting for documents",
-	"Please verify": "Please verify",
 	"Add a comment...": "Add a comment...",
 	"choose from map": "choose from map",
 	"Add": "Add",
@@ -352,12 +352,13 @@
 	"Please wait to verify your identity.": "Your Identity Documents Has Been Submitted. AWAITING APROVILE",
 	"Verification code sent.": "Verification code sent.",
 	"Your report has been submitted and will be reviewed by our admins shortly.": "Your report has been submitted and will be reviewed by our admins shortly.",
-	"sorry, we don't have any result": "Sorry, We don't have any result",
+	"Sorry, we couldn't find any results": "Sorry, we couldn't find any results",
 	"This is to notify you to rate player ": "This is to notify you to rate player ",
 	"Rate": "Rate",
 	"from": "From",
 	"Please enter username or email address": "Please enter username or email address",
 	"Please enter password": "Please enter password",
 	"Search": "Search",
-	"you do not have any new notifications": "You do not have any new notifications"
+	"you do not have any new notifications": "You do not have any new notifications",
+	"Please verify": "Please verify"
 }
