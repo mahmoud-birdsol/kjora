@@ -3,7 +3,7 @@
         <Splide @splide:moved="(e) => { currentMediaIndex = e.index + 1 }" dir="ltr" class="" :options="options">
             <template v-for="media in postMedia" :key="media.id">
                 <SplideSlide class="">
-                    <div @click="showMediaGallery = true"
+                    <div
                         class="flex justify-center overflow-hidden group h-full">
                         <img v-if="media.mime_type.startsWith('image') || media.mime_type.startsWith('webp')"
                             :src="media.original_url" alt="" class="object-contain h-full rounded-2xl">
@@ -42,7 +42,6 @@
             <span>/</span>
             <span>{{ postMedia.length }} </span>
         </div>
-        <ChatGallery :show="showMediaGallery" @close="showMediaGallery = false" :media="postMedia" :user="user" />
     </div>
 </template>
 
@@ -50,12 +49,8 @@
 import { Splide, SplideSlide } from "@splidejs/vue-splide";
 import { ref } from "vue";
 
-import ChatGallery from "../Chat/MediaGallery.vue";
-
 const props = defineProps(['postMedia', 'user'])
 const currentMediaIndex = ref(1)
-const showMediaGallery = ref(false)
-const showDeleteMediaModal = ref(false);
 // slider option
 const options = {
     arrows: false,
