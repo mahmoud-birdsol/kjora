@@ -21,7 +21,7 @@ const props = defineProps({
 
 // const data = props.playerRating.map(r => r.value)
 
-const labels = props.ratingCategories.map(r => r.name)
+const labels = props.ratingCategories?.length ? props.ratingCategories.map(r => r.name):['Agility', 'Stamina', 'Sttrngth', 'Passing', 'Shooting', 'pace',]
 const showMsg = ref(false)
 const state = props.review.player.state_name
 const rateColor = state === 'Free' ? ['#006400', '#006400', '#006400'] : ['#99A9BF', '#F7BA2A', '#FF9900']
