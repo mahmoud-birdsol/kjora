@@ -67,12 +67,13 @@ const caption = ref('');
 const cropFile = ref([])
 const openCropModal = ref(false)
 const num = ref(0)
-const errorMessage = ref(null);
+const showAsError = ref(false);
+let postId = null
 
 
 const selectNewFile = () => {
     fileInput.value.value = null
-    errorMessage.value = null
+    showAsError.value = false
     fileInput.value.click();
 };
 
@@ -112,58 +113,72 @@ const uploadFiles = () => {
 
     isLoading.value = true;
     isDisabled.value = true;
-
-    let postId
-
-    axios.postForm(route('api.posts.store'), {
-        cover: filesData.value[0].file,
-        caption: caption.value
-    }).then((res) => {
-        postId = res.data.id
-        if (filesData.value.slice(1).length > 0) {
-            filesData.value.slice(1).forEach(({ file }, i) => {
-                if (file.type.startsWith("image") || file.type.startsWith('video')) {
-                    axios.postForm(route('api.gallery.upload', postId), {
-                        gallery: file,
-                    }).then().catch(err => {
-                        console.log('there is error while uploading file' + file.name);
-                        if (error.response.status == 413) {
-                            errorMessage.value = 'the maximum file size is 2 MB'
-                        }
-                    }).finally(() => {
-                        // if (i === filesData.value.length - 2) {
-                        //     reset()
-                        //     emit('reload');
-                        // }
-                    })
-                }
-            })
-        }
-        // else {
-        //     reset()
-        //     emit('reload')
-        // }
-    }).catch(error => {
-        console.log('there is error while uploading the post cover');
-        errorMessage.value = 'the maximum file size is 2 MB'
-        console.log(error.response.status == 413);
-        if (error.response.status == 413) {
-        }
-    }).finally(() => {
-        if (!errorMessage.value) {
-            // console.log('should reset here');
-            reset()
-            emit('reload')
-        }
-    })
+    showAsError.value = false
 
 
+    if (!postId) {
+        axios.postForm(route('api.posts.store'), {
+            cover: filesData.value[0].file,
+            caption: caption.value.trim()
+        }).then((res) => {
+            postId = res.data.id
+            sendPostMedia(postId)
+        }).catch(error => {
+            console.log(error);
+            if (Object.keys(error.response.data.errors).length) {
+                showAsError.value = true
+                removeFile(filesData.value[0])
+                isLoading.value = false
+                isDisabled.value = false;
+            }
+        }).finally(() => {
+
+        })
+    } else {
+        sendPostMedia(postId)
+    }
 };
+
+function sendPostMedia(postId) {
+
+    if (filesData.value.slice(1).length > 0) {
+        filesData.value.slice(1).forEach((fileData, i) => {
+            let { file, id } = fileData
+            console.log(fileData.type);
+            if (file.type.startsWith("image") || file.type.startsWith('video')) {
+                axios.postForm(route('api.gallery.upload', postId), {
+                    gallery: file,
+                }).then().catch(error => {
+                    console.error('there is error while uploading file' + file.name);
+                    if (Object.keys(error.response.data.errors).length) {
+                        console.log('should set showaserror to true');
+                        showAsError.value = true
+                        removeFile(file)
+                        isLoading.value = false
+                        isDisabled.value = false;
+                    }
+                }).finally(() => {
+                    if (i === filesData.value.length - 2) {
+                        reset()
+                        emit('reload')
+
+                    }
+                })
+            }
+        })
+    }
+    else {
+        reset()
+        emit('reload')
+    }
+}
 
 function reset(e) {
     filesData.value = []
     isLoading.value = false
     isDisabled.value = false;
+    showAsError.value = false
+    postId = null
     caption.value = ''
     num.value += 1
     emit('close');
@@ -236,14 +251,12 @@ let showCropModal = (file) => {
             </div>
             <div>
                 <Crop :img="cropFile" @crop="changeFiles" v-model:open="openCropModal" @update:open="() => openCropModal = false" />
-                <div class="mb-2 text-sm text-center justify-self-end text-primary">
+                <div class="mb-2 text-sm text-center justify-self-end " :class="showAsError ? 'text-red-500' : 'text-primary'">
                     {{ $t('only videos and images with max size (2MB) are allowed') }}
                 </div>
-
                 <PrimaryButton @click.prevent="uploadFiles" :disabled="isDisabled">
                     {{ $t('upload') }}
                 </PrimaryButton>
-                <InputError class="mt-2" :message="errorMessage" />
             </div>
         </div>
     </Modal>
