@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { ElDatePicker, ElTimePicker } from 'element-plus';
+import { ElAutocomplete, ElDatePicker, ElTimePicker } from 'element-plus';
 import dayjs from 'dayjs';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -11,6 +11,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import Modal from '@/Components/Modal.vue';
 import MainPlayerCard from "@/Components/PlayerCards/MainPlayerCard.vue";
 import AddStadiumModal from '../../Components/AddStadiumModal.vue';
+import RichSelectInput from '@/Components/RichSelectInput.vue';
 
 const props = defineProps({
     invited: Object,
@@ -26,7 +27,7 @@ const form = useForm({
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const showSuccessModal = ref(false);
 const showMap = ref(true)
-const d = new Date();
+const date = new Date();
 const isDisabled = ref(false)
 const currentStadium = ref(null);
 const currentUser = usePage().props.value.auth.user
@@ -62,8 +63,8 @@ const disabledDate = (time) => {
     return dayjs(time).isBefore(dayjs().subtract(1, 'day'));
 }
 const disabledHours = () => {
-    if (dayjs(form.date).format('dddd, DD MMMM YYYY') === dayjs(d).format('dddd, DD MMMM YYYY')) {
-        let hour = d.getHours();
+    if (dayjs(form.date).format('dddd, DD MMMM YYYY') === dayjs(date).format('dddd, DD MMMM YYYY')) {
+        let hour = date.getHours();
         return makeRange(0, hour + 1)
     }
 }
@@ -96,7 +97,13 @@ function changeMapMarker(e) {
     currentStadium.value = std
 
 }
-
+const querySearch = (queryString, cb) => {
+    const results = queryString
+        ? props.stadiums.filter((stadium) => stadium.name.includes(queryString))
+        : props.stadiums
+    // call callback function to return suggestions
+    cb(results)
+}
 
 </script>
 
@@ -119,7 +126,7 @@ function changeMapMarker(e) {
                                 <div class="my-6">
                                     <InputLabel>{{ $t('Date') }}</InputLabel>
                                     <div class="px-4">
-                                        <ElDatePicker stype="date" :disabled-date="disabledDate" style="background-color: black;" v-model="form.date" @change="disabledHours()" class="w-full" placeholde="DD/MM/YYYY" />
+                                        <ElDatePicker type="date" :disabled-date="disabledDate" style="background-color: black;" v-model="form.date" @change="disabledHours()" class="w-full" placeholde="DD/MM/YYYY" />
                                     </div>
                                     <InputError class="mt-2" :message="form.errors.date" />
                                 </div>
@@ -134,14 +141,8 @@ function changeMapMarker(e) {
 
                                 <div class="my-6">
                                     <InputLabel>{{ $t('Stadium') }}</InputLabel>
-                                    <div class="px-4">
-                                        <select id="stadium" name="stadium" v-model="form.stadium_id" @change="changeMapMarker"
-                                            class="block w-full py-2 pl-3 pr-10 mt-1 text-base text-center text-white bg-black border-white rounded-full focus:border-primary focus:outline-none focus:ring-primary sm:text-sm placeholder:center">
-                                            <option v-for="stadium in stadiums" :key="stadium.id" :value="stadium.id">{{
-                                                stadium.name
-                                            }}
-                                            </option>
-                                        </select>
+                                    <div class="px-4 ">
+                                        <RichSelectInput :options="stadiums" value-name="id" text-name="name" :image-name="null" v-model="form.stadium_id" bgColor="black" txtColor="white" @selected="changeMapMarker" />
                                     </div>
                                     <InputError class="mt-2" :message="form.errors.stadium_id" />
                                 </div>
