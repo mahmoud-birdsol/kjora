@@ -26,7 +26,6 @@ class GalleryUploadRequest extends FormRequest
         return [
             'gallery' => [
                 'required',
-                'mimes:jpg,jpeg,png',
                 'max:2048'
             ]
         ];
