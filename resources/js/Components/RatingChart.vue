@@ -112,7 +112,7 @@ const options = {
 const series = computed(() => {
     return [{
         name: 'Rating',
-        data: props.data.length ? props.data : props.labels?.length ? new Array(props.labels?.length).fill(0) :[0,0,0,0,0,0]
+        data: props.data.length ? props.data : new Array(props.labels?.length).fill(0)
     }]
 })
 
