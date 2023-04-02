@@ -8,7 +8,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 import Crop from './Crop.vue';
 import { usePage } from '@inertiajs/inertia-vue3';
-
+import CropIcon from '@/Components/Icons/CropIcon.vue';
 const props = defineProps({
     show: {
         type: Boolean,
@@ -165,7 +165,7 @@ const submit = () => {
                     </div>
                     <div class="flex items-center justify-center w-full">
                         <input ref="photoInput" type="file" class="hidden" @change="updatePhotoPreview">
-                        <div class="grid grid-cols-1 gap-4 my-8 w-full ">
+                        <div class="grid grid-cols-1 gap-4 my-8 w-full relative">
                             <video v-show="cameraIsOpen && !loadingCamera && !captured" ref="camera" class="-scale-x-100"
                                 :width="resolution.width" :height="resolution.height" autoplay></video>
                             <div v-if="!cameraIsOpen && !captured"
@@ -182,9 +182,9 @@ const submit = () => {
                             </div>
                             <canvas v-show="captured" id="photoTaken" ref="canvas" :class='`max-w-full`'
                                 :width="resolution.width" :height="resolution.height"></canvas>
-                            <PrimaryButton v-if="captured" @click="showCropModal">
-                                {{ $t('Crop') }}
-                            </PrimaryButton>
+                            <button v-if="captured" @click="showCropModal" class="absolute top-0 left-0 w-fit bg-black p-2">
+                                <CropIcon class="w-4" fill="#FFF"/>
+                            </button>
                             <Crop :img="cropFile" @crop="changeFiles" v-model:open="openCropModal"
                                 @update:open="() => openCropModal = false" />
                             <div class="flex justify-center">
