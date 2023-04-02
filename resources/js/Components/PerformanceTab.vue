@@ -9,8 +9,7 @@ import RatingChart from './RatingChart.vue';
 const props = defineProps(['playerRating'])
 
 const data = props.playerRating.map(r => r.value)
-// if no playerRating [empty array ] the chart will disappear even if in the chart component default values for props.labels
-const labels = props.playerRating?.length ? props.playerRating.map(r => r.ratingCategory) : ['Agility', 'Stamina', 'Sttrngth', 'Passing', 'Shooting', 'pace',]
+const labels = props.playerRating.map(r => r.ratingCategory)
 </script>
 
 <style lang="scss" scoped></style>
