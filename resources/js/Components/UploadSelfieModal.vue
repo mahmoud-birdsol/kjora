@@ -182,8 +182,8 @@ const submit = () => {
                             </div>
                             <canvas v-show="captured" id="photoTaken" ref="canvas" :class='`max-w-full`'
                                 :width="resolution.width" :height="resolution.height"></canvas>
-                            <button v-if="captured" @click="showCropModal" class="absolute top-0 left-0 w-fit bg-black p-2">
-                                <CropIcon class="w-4" fill="#FFF"/>
+                            <button v-if="captured" @click="showCropModal" class="absolute top-0 left-0 w-fit bg-white p-2">
+                                <CropIcon class="w-4" />
                             </button>
                             <Crop :img="cropFile" @crop="changeFiles" v-model:open="openCropModal"
                                 @update:open="() => openCropModal = false" />
