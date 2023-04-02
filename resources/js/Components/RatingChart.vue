@@ -25,16 +25,16 @@ const options = {
     responsive: [{
         breakpoint: 500,
         options: {
-            yaxis: {
-                min: 0,
-                max: 5,
-                tickAmount: 10,
-                labels: {
-                    style: {
-                        fontSize: '9px',
-                    },
-                },
-            },
+            // yaxis: {
+            //     min: 0,
+            //     max: 5,
+            //     tickAmount: 10,
+            //     labels: {
+            //         style: {
+            //             fontSize: '9px',
+            //         },
+            //     },
+            // },
             xaxis: {
                 labels: {
                     style: {
@@ -112,13 +112,15 @@ const options = {
 const series = computed(() => {
     return [{
         name: 'Rating',
-        data: props.data.length ? props.data : props.labels?.length ? new Array(props.labels?.length).fill(0) :[0,0,0,0,0,0]
+        data: props.data.length ? props.data : new Array(props.labels?.length).fill(0)
     }]
 })
 
 </script>
 <template>
-    <apexchart width="100%" type="radar" :options="options" :series="series"></apexchart>
+
+    <apexchart width="100%" type="radar" :options="options" :series="series" v-if="labels.length"></apexchart>
+    <div v-else class="text-sm font-normal text-gray-100 h-56 grid place-items-center normal-case">{{ $t('no rating categories for this position untill now') }}</div>
 </template>
 <style>
 .apexcharts-toolbar,

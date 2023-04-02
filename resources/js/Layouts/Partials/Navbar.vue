@@ -159,7 +159,7 @@ function markAllNotificationsAsRead() {
 
                                     <div v-else>
                                         <div class="block px-4 py-2 text-xs text-center text-gray-500">
-                                            {{ $t("you-don't-have-any-new-notifications") }}.
+                                            {{ $t("you do not have any new notifications") }}
                                         </div>
                                     </div>
 

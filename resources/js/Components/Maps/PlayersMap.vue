@@ -22,7 +22,7 @@ function openInfoWindow(player, options) {
 
 
 <template>
-    <GoogleMap :api-key="apiKey" style="width: 100%; height:500px; " :center="{
+    <GoogleMap data-map="players-map" :api-key="apiKey" style="width: 100%; height:500px; " :center="{
         lat: parseFloat($page.props.auth.user.current_latitude),
         lng: parseFloat($page.props.auth.user.current_longitude)
     }" :zoom="5">
@@ -60,29 +60,33 @@ function openInfoWindow(player, options) {
 
 
 <style >
-.gm-style .gm-style-iw-c {
+[data-map="players-map"] .gm-style .gm-style-iw-c {
     padding: 0 !important;
     border-radius: 0.75rem !important;
     max-width: none !important;
 
 }
 
-.gm-style-iw-c>button>span {
+[data-map="players-map"] .gm-style-iw-c .gm-style-iw-d {
+    overflow: auto !important;
+}
+
+[data-map="players-map"] .gm-style-iw-c>button>span {
     background-color: white !important;
 
 }
 
-.gm-style-iw-c button {
+[data-map="players-map"] .gm-style-iw-c button {
     top: -3px !important;
 
 }
 
-[dir='rtl'] .gm-style-iw-c button {
+[dir='rtl'] [data-map="players-map"] .gm-style-iw-c button {
     right: -3px !important;
     left: auto;
 }
 
-[dir='ltr'] .gm-style-iw-c button {
+[dir='ltr'] [data-map="players-map"] .gm-style-iw-c button {
     left: -3px !important;
     right: auto;
 }
