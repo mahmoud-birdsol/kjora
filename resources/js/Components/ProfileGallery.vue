@@ -5,14 +5,12 @@
                 <FadeInTransition>
                     <Link :href="isPublic ? route('public.posts', post.id) : route('posts.show', post.id)" class="relative w-full h-full overflow-hidden rounded-lg aspect-square group">
 
-                    <template v-if="mimeType(post?.cover_photo?.mime_type) === 'image'">
+                    <template v-if="post?.cover_photo?.mime_type.startsWith('image')">
                         <img :src="post?.cover_photo?.original_url" alt="" class="object-cover w-full h-full ">
                     </template>
 
-                    <template v-if="mimeType(post?.cover_photo?.mime_type) === 'video'">
-                        <video :src="post?.cover_photo?.original_url" :type="post?.cover_photo?.mime_type" class="object-cover object-left w-full h-full max-w-full mx-auto rounded-lg">
-
-                        </video>
+                    <template v-if="post?.cover_photo?.mime_type.startsWith('video')">
+                        <video :src="post?.cover_photo?.original_url" :type="post?.cover_photo?.mime_type" class="object-cover object-left w-full h-full max-w-full mx-auto rounded-lg" />
                     </template>
 
                     <div class="absolute flex items-center gap-2 text-xs text-gray-100 bottom-2 ltr:right-2 rtl:left-2 ">
