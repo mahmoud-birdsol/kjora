@@ -113,6 +113,23 @@ const showUploadAvatarModal = ref(false);
 
                 <div class="mt-4 sm:flex sm:justify-between">
                     <div class="w-full mt-4 sm:w-1/3 sm:mt-0">
+                        <div>
+                            <InputLabel color="primary" :value="$t('gender')" />
+
+                            <div class="mie-4">
+                                <div class="flex items-center gap-x-2">
+                                    <input type="radio" id="male" value="male" disabled v-model="form.gender" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
+                                    <label for="male" class="text-sm font-medium text-black">{{ $t('male') }}</label>
+                                </div>
+
+                                <div class="flex items-center gap-x-2">
+                                    <input type="radio" id="female" value="female" disabled v-model="form.gender" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
+                                    <label for="female" class="text-sm font-medium text-black">{{ $t('female') }}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full mt-4 sm:w-1/3 sm:mt-0">
                         <InputLabel color="primary" :value="$t('position')" />
 
                         <div class="mie-4">
