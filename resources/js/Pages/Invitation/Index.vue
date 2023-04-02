@@ -12,7 +12,7 @@ import { computed, ref } from 'vue';
 import { paginationEmits } from 'element-plus';
 import InvitationHireTaps from '../../Components/InvitationHireTaps.vue';
 const props = defineProps({
-    invitations: Array,
+    invitations: Object,
 });
 
 const fromDate = ref(null)

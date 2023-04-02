@@ -166,21 +166,23 @@ function changeMapMarker(e) {
             </div>
         </div>
         <AddStadiumModal />
-        <Modal :show="showSuccessModal" max-width="md" @close="showSuccessModal = false">
-            <div class="bg-white rounded-xl p-6 md:min-h-[300px]">
-                <div class="flex flex-col justify-between items-center h-56 md:min-h-[300px]">
-                    <div class="flex justify-center">
-                        <h2 class="text-xl font-bold uppercase text-primary">{{ $t('Invitation Sent') }}</h2>
+        <div class="px-4">
+            <Modal :show="showSuccessModal" max-width="md" @close="showSuccessModal = false">
+                <div class="bg-white rounded-xl p-6 md:min-h-[300px]">
+                    <div class="flex flex-col justify-between items-center h-56 md:min-h-[300px]">
+                        <div class="flex justify-center">
+                            <h2 class="text-xl font-bold uppercase text-primary">{{ $t('Invitation Sent') }}</h2>
+                        </div>
+                        <p class="">
+                            {{ $t('Your invitation will be sent and you will receive an email updating you on the status of your request') }}.</p>
+    
+                        <Link :href="route('home')" class="flex w-full min-w-full">
+                        <PrimaryButton class="w-full" @click="showSuccessModal = false">{{ $t('Ok') }}</PrimaryButton>
+                        </Link>
                     </div>
-                    <p class="">
-                        {{ $t('Your invitation will be sent and you will receive an email updating you on the status of your request') }}.</p>
-
-                    <Link :href="route('home')" class="flex w-full min-w-full">
-                    <PrimaryButton class="w-full" @click="showSuccessModal = false">{{ $t('Ok') }}</PrimaryButton>
-                    </Link>
                 </div>
-            </div>
-        </Modal>
+            </Modal>
+        </div>
     </AppLayout>
 </template>
 
