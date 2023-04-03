@@ -1,5 +1,6 @@
 {
-	"pending for accept":"Pending for accept",
+	"accepted":"Accept",
+	"pending":"Pending",
 	"no rating categories for this position untill now": "No rating categories for this position untill now",
 	"match in": "match in",
 	"hi :receiver , :sender": "hi :receiver , :sender",

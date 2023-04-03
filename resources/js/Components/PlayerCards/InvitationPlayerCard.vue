@@ -37,7 +37,7 @@ const backgroundImage = computed(() => {
 
 const currentUser = usePage().props.value.auth.user
 const isCurrentUser = props.player.id === currentUser.id
-const isHireing = props.invitation.inviting_player.id === currentUser.id
+const isHiring = props.invitation.inviting_player.id === currentUser.id
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const state = props.player.state_name
 const txtColor = state == 'Free' ? 'white' : 'black'
@@ -113,7 +113,7 @@ function calcShouldRate() {
             </div>
             <!-- name and userName -->
             <div class="flex flex-col items-center ">
-                <div class="flex items-center gap-1 text-white capitalize" v-if="!invitation.state && !isHireing">
+                <div class="flex items-center gap-1 text-white capitalize" v-if="!invitation.state && !isHiring">
                     <span>
                         {{ $t('hi :receiver , :sender', { sender: invitation.inviting_player.name, receiver: invitation.invited_player.first_name }) }}
                     </span>
@@ -121,12 +121,18 @@ function calcShouldRate() {
                         <HandRaisedIcon class="w-4 text-yellow-300 rotate-[15deg]" />
                     </span>
                 </div>
-                <div v-if="isHireing" class="flex items-center gap-1 text-white capitalize">
-                    <span>
-                        {{ $t('pending for accept') }}
+                <div v-if="isHiring " class="flex items-center gap-1 text-white capitalize">
+                    <span v-if="invitation.state == null" >
+                        {{ $t('pending') }}
+                    </span>
+                    <span v-if="invitation.state == 'accepted'" >
+                        {{ $t('accepted') }}
+                    </span>
+                    <span v-if="invitation.state == 'declined'" >
+                        {{ $t('declined') }}
                     </span>
                 </div>
-                <p class="text-[10px] text-center text-stone-300/70" v-if="invitation.state || isHireing">
+                <p class="text-[10px] text-center text-stone-300/70" v-if="invitation.state || isHiring">
                     {{ $t('match in') }}
                     <DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date" />
                 </p>
@@ -151,7 +157,7 @@ function calcShouldRate() {
 
             <!-- respond to invitation state buttons -->
             <div class="self-stretch text-sm font-bold">
-                <div v-if="invitation.state == null && invitation.inviting_player_id !== currentUser.id && dayjs(props.invitation?.date).diff(dayjs(), 'hour') > 0" class="flex justify-center gap-6">
+                <div v-if="invitation.state == null && !isHiring && dayjs(props.invitation?.date).diff(dayjs(), 'hour') > 0" class="flex justify-center gap-6">
                     <button @click="decline" class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                         <XMarkIcon class="w-6 text-red-600" />
                     </button>

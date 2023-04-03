@@ -1,5 +1,6 @@
 {
-	"pending for accept":"معلق للقبول",
+	"accepted":"تم الموافقة",
+	"pending":"انتظار",
 	"no rating categories for this position untill now": "لا توجد فئات تصنيف لهذا المركز حتى الآن",
 	"hi :receiver , :sender": "مرحبا :receiver , :sender",
 	"we appreciate you taking the time to share your rating": "نحن نقدر لك الوقت الذي استغرقته لمشاركة تقييمك",
