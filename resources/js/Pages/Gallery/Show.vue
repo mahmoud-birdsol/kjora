@@ -16,7 +16,7 @@
                         <div class="flex flex-row gap-2">
                             <h3 class="m-0 text-lg font-bold leading-none capitalize ">{{ user.name
                             }} </h3>
-                            <span v-if="false">star icon</span>
+                            <!-- <span v-if="false">star icon</span> -->
                         </div>
                         <Link :href="route('player.profile', user.id)" class="text-xs text-stone-400 ">@{{
                             user.username }} </Link>
@@ -45,7 +45,10 @@
                     }) }}
                     </div>
                     <div class="flex items-center gap-1">
-                        <span v-if="post?.likes_count > 0" class="text-sm">{{ post?.likes_count }}</span>
+                        <button v-if="post?.likes_count > 0" @click="showLikesModal = true">
+                            <span class="text-sm">{{ post?.likes_count }}</span>
+                            <LikesModal :show="showLikesModal" :users="post.likes?.map(like => like.user)" @close="showLikesModal = false" />
+                        </button>
                         <LikeButton :isLiked="post?.is_liked" :likeable_id="post.id" :likeable_type="'App\\Models\\Post'">
                             <template v-slot="{ isLiked }">
                                 <HeartIcon class="w-4 stroke-current stroke-2 text-primary" :class="isLiked ? 'fill-current' : 'fill-transparent'" />
@@ -87,6 +90,7 @@ import PostLayout from '../../Components/Posts/PostLayout.vue';
 import PostOptionMenu from '../../Components/Posts/PostOptionMenu.vue';
 import PostCaptionFrom from '../../Components/Posts/PostCaptionForm.vue';
 import PostCommentForm from '../../Components/Posts/PostCommentForm.vue';
+import LikesModal from '../../Components/LikesModal.vue';
 
 
 onBeforeMount(() => {
@@ -102,6 +106,7 @@ const props = defineProps({
 const commentsContainer = ref(null);
 const postCaptionComp = ref(null);
 const postComments = ref([])
+const showLikesModal = ref(false)
 const currentUser = usePage().props.value.auth.user
 const isCurrentUser = currentUser.id === props.user.id
 

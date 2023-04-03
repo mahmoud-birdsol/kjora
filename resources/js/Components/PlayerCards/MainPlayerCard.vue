@@ -3,11 +3,12 @@ import { computed, ref } from 'vue';
 import { Link, useForm, usePage } from '@inertiajs/inertia-vue3';
 import { ElRate } from 'element-plus';
 import Avatar from '@/Components/Avatar.vue';
-import { HeartIcon, PencilIcon, StarIcon as StarIconFilled , ChevronDoubleRightIcon } from '@heroicons/vue/20/solid'
+import { HeartIcon, PencilIcon, StarIcon as StarIconFilled, ChevronDoubleRightIcon } from '@heroicons/vue/20/solid'
 import { FlagIcon, HeartIcon as HeartIconOutline, MapPinIcon, StarIcon as StarIconOutline } from '@heroicons/vue/24/outline';
 import ReportModal from "@/Components/ReportModal.vue";
 import Socials from '@/Components/Socials.vue';
 import ToolTip from "@/Components/ToolTip.vue";
+import FavouriteButton from '../FavouriteButton.vue';
 
 const props = defineProps({
     player: {
@@ -70,39 +71,10 @@ const backgroundImage = computed(() => {
 
 const isCurrentUser = props.player.id === currentUser?.id
 const isPublic = usePage().url.value.includes('public/player')
-const isFavorite = ref(props.player.is_favorite)
-const isPending = ref(false)
 
-const form = useForm({});
-function toggleFavorite() {
-    if (isPending.value) return
 
-    if (!isFavorite.value) {
-        form.post(route('favorites.store', { favorite: props.player.id }), {
-            preserveState: false,
-            preserveScroll: true,
-            onStart: () => {
-                isFavorite.value = true
-                isPending.value = true
-            },
-            onFinish: () => {
-                isPending.value = false
-            }
-        });
-    } else {
-        form.delete(route('favorites.destroy', { favorite: props.player.id }), {
-            preserveState: false,
-            preserveScroll: true,
-            onStart: () => {
-                isFavorite.value = false
-                isPending.value = true
-            },
-            onFinish: () => {
-                isPending.value = false
-            }
-        });
-    }
-}
+
+
 
 
 
@@ -142,12 +114,7 @@ function showCopied() {
     <div class="overflow-hidden rounded-xl" :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
         <div v-if="showFavorite && !isCurrentUser" class="flex justify-end">
             <span class="rounded-lg ltr:rounded-bl-3xl rtl:rounded-br-3xl bg-white p-2 -mt-0.5 ltr:-mr-0.5 rtl:-ml-0.5">
-                <a href="javascript:;" @click="toggleFavorite" v-if="!isFavorite">
-                    <HeartIconOutline class="w-5 h-5 text-primary" />
-                </a>
-                <a href="javascript:;" @click="toggleFavorite" v-if="isFavorite">
-                    <HeartIcon class="w-5 h-5 text-primary" />
-                </a>
+                <FavouriteButton :user="player" />
             </span>
         </div>
         <div v-if="showFavorite && isCurrentUser" class="h-[34px]"></div>
@@ -257,7 +224,7 @@ function showCopied() {
                 <div class="flex items-center gap-4">
                     <div class="flex space-x-2 bg-transparent" v-if="showInvite && player.id !== $page.props.auth.user.id">
                         <Link :href="route('invitation.create', player.id)" class="text-sm scale-[0.85]  ltr:origin-left rtl:origin-right">
-                            {{ $t('send-invitation') }}
+                        {{ $t('send-invitation') }}
                         <ChevronDoubleRightIcon class="inline w-4 h-4 rtl:rotate-180 ltr:rotate-0" :class="`text-${txtColor}`" />
                         </Link>
                     </div>
