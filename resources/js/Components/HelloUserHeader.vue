@@ -2,7 +2,7 @@
 import DateTranslation from '@/Components/DateTranslation.vue';
 import { inject, onMounted , ref } from 'vue';
 
-// const greetings = inject('greetings')
+const greetings = inject('greetings')
 
 // function resize_to_fit(name ,container) {
 //     let fontSize = window.getComputedStyle(name).fontSize;
@@ -21,7 +21,7 @@ import { inject, onMounted , ref } from 'vue';
 </script>
 
 <template>
-    <p class="text-2xl font-light">{{ $t('hello') }} ,</p>
+    <p class="text-2xl font-light">{{ greetings[$page.props.locale] ??  $t('hello') }} ,</p>
     <div class="container w-full">
         <p class="text-3xl font-bold name max-sm:whitespace-nowrap lg:text-5xl">{{ $page.props.auth.user.first_name }} {{
             $page.props.auth.user.last_name }}</p>
