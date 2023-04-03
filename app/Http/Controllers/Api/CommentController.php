@@ -30,7 +30,7 @@ class CommentController extends Controller
 
         $model = $modelType->findOrFail($request->input('commentable_id'));
 
-        return CommentResource::collection($model->comments->load('user')->load('replies'));
+        return CommentResource::collection($model->comments->load('user')->load('replies')->load('likes.user:id,username'));
     }
 
     /**
