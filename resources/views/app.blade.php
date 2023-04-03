@@ -28,6 +28,8 @@
         <meta property="og:type" content="website" />
         <meta property="og:image"
               content="{{  (isset($page['props']['social_meta']['image'])) ? $page['props']['social_meta']['image'] : asset('/images/logo.png') }}"/>
+        <meta property="og:image:alt"
+              content="{{  (isset($page['props']['social_meta']['image'])) ? $page['props']['social_meta']['image'] : asset('/images/logo.png') }}"/>
     @endif
     <!-- Scripts -->
     @routes
