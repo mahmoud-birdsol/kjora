@@ -229,7 +229,7 @@ function showCopied() {
                         </Link>
                     </div>
                     <div class="relative">
-                        <Socials v-if="showShare" :id="player.id" shareUrl='public/player' position="bottom-0" @showCopied="showCopied" />
+                        <Socials v-if="showShare" :player="player" shareUrl='public/player' position="bottom-0" @showCopied="showCopied" />
                         <span class="bg-black text-white text-[10px] font-bold rounded absolute ltr:left-[-570%] rtl:right-[-520%] bottom-0 -my-4 p-1 whitespace-nowrap" v-if="copiedMsg">{{
                             $t('the link has been copied') }}!</span>
                     </div>
