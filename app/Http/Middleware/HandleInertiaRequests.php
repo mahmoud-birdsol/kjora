@@ -57,7 +57,12 @@ class HandleInertiaRequests extends Middleware
 
             'reportOptions' => fn () => ReportOption::all(),
 
-            'locale' =>  app()->getLocale()
+            'locale' =>  app()->getLocale(),
+
+            'greetings' => [
+                'ar' => nova_get_setting('greetings_text_ar'),
+                'en' => nova_get_setting('greetings_text_en'),
+            ]
         ]);
     }
 }

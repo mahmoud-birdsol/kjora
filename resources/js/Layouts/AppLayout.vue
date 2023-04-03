@@ -9,7 +9,9 @@ import { loadLanguageAsync } from 'laravel-vue-i18n';
 
 onMounted(() => {
     loadLanguageAsync(usePage().props.value.locale)
-})
+});
+
+const greetings = usePage().props.value.greetings;
 
 defineProps({
     title: String,

@@ -48,7 +48,7 @@ class InvitationCreatedNotification extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->subject(__('You have been invited to a football match' , [] , $notifiable->locale ))
-            ->line(__('You have been invited by **' , [] , $notifiable->locale ).$this->invitation->invitingPlayer->name.__('** للعب مباراة كرة قدم **', [] , $notifiable->locale ).$this->invitation->date->toDateTimeString().__('** at **', [] , $notifiable->locale ).$this->invitation->stadium->name.'**.')
+            ->line(__('You have been invited by **' , [] , $notifiable->locale ).$this->invitation->invitingPlayer->name.__('** to play a football match on **', [] , $notifiable->locale ).$this->invitation->date->toDateTimeString().__('** at **', [] , $notifiable->locale ).$this->invitation->stadium->name.'**.')
             ->action(__('Respond Now', [] , $notifiable->locale ), url(route('invitation.index', [] , $notifiable->locale )))
             ->line(__('Thank you for using our application!', [] , $notifiable->locale ));
     }

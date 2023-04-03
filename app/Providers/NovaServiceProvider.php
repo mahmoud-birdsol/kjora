@@ -42,6 +42,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Menu\MenuGroup;
 use Laravel\Nova\Menu\MenuItem;
 use Laravel\Nova\Menu\MenuSection;
@@ -173,7 +174,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
             Select::make(__('Default Club'), 'default_club')->options(function () {
                 return \App\Models\Club::all()->pluck('name', 'id');
-            })->displayUsingLabels()->searchable()
+            })->displayUsingLabels()->searchable(),
+
+            Text::make(__('Greetings Text Ar'), 'greetings_text_ar'),
+            Text::make(__('Greetings Text En'), 'greetings_text_en')
+                ->rules('required_with:greetings_text_ar'),
         ]);
     }
 
