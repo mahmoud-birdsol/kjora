@@ -37,6 +37,7 @@ const backgroundImage = computed(() => {
 
 const currentUser = usePage().props.value.auth.user
 const isCurrentUser = props.player.id === currentUser.id
+const isHireing = props.invitation.inviting_player.id === currentUser.id
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const state = props.player.state_name
 const txtColor = state == 'Free' ? 'white' : 'black'
@@ -112,7 +113,7 @@ function calcShouldRate() {
             </div>
             <!-- name and userName -->
             <div class="flex flex-col items-center ">
-                <div class="flex items-center gap-1 text-white capitalize" v-if="!invitation.state">
+                <div class="flex items-center gap-1 text-white capitalize" v-if="!invitation.state && !isHireing">
                     <span>
                         {{ $t('hi :receiver , :sender', { sender: invitation.inviting_player.name, receiver: invitation.invited_player.first_name }) }}
                     </span>
@@ -120,7 +121,12 @@ function calcShouldRate() {
                         <HandRaisedIcon class="w-4 text-yellow-300 rotate-[15deg]" />
                     </span>
                 </div>
-                <p class="text-[10px] text-center text-stone-300/70 -mt-3" v-if="invitation.state">
+                <div v-if="isHireing" class="flex items-center gap-1 text-white capitalize">
+                    <span>
+                        {{ $t('pending for accept') }}
+                    </span>
+                </div>
+                <p class="text-[10px] text-center text-stone-300/70" v-if="invitation.state || isHireing">
                     {{ $t('match in') }}
                     <DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date" />
                 </p>
