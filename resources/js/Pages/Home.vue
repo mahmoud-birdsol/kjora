@@ -71,6 +71,7 @@ const options = {
     // rewind: true,
     pagination: true,
     // drag: "free",
+    gap: '1rem',
     type: props.advertisements.length > 1 ? "loop" : 'slide',
     focus: "center",
     perPage: 1,
@@ -113,7 +114,7 @@ const filterByPosition = (position) => {
         <div class="">
             <div class="">
                 <!-- Position Filters...
-                                                                                                                                                                                                                                                                                                                                                                =====================================================-->
+                                                                                                                                                                                                                                                                                                                                                                        =====================================================-->
                 <div class="flex gap-4 mt-4 mb-8 overflow-x-auto hideScrollBar">
                     <button @click="filterByPosition(null)"
                         class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
@@ -166,7 +167,7 @@ const filterByPosition = (position) => {
                 </template>
 
                 <!-- Filters Modal...
-                                                                                                                                                                                                                                                                                                                                                                =====================================================-->
+                                                                                                                                                                                                                                                                                                                                                                        =====================================================-->
                 <FiltersModel :positions="positions" :countries="countries" v-model:form="form" @reset="reset" @filter="filter" :showFiltersModal="showFiltersModal" />
             </div>
         </div>
