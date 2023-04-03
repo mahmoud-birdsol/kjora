@@ -536,7 +536,7 @@ Route::get('public/posts/{post}', function (Post $post) {
     ]);
 })->name('public.posts');
 
-Route::get('public/player/{player}', function (User $player) {
+Route::get('public/player/{player:username}', function (User $player) {
     $player->load('club');
 
     $ratingCategoriesCount = $player->playerReviews->count();
