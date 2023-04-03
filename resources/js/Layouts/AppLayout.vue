@@ -4,7 +4,7 @@ import SystemMessage from '@/Components/SystemMessage.vue';
 import CopyrightClaim from '@/Components/CopyrightClaim.vue';
 import Navbar from '@/Layouts/Partials/Navbar.vue';
 import RealtimeNotifications from '@/Layouts/Partials/RealtimeNotifications.vue';
-import { onMounted } from 'vue';
+import { onMounted, provide } from 'vue';
 import { loadLanguageAsync } from 'laravel-vue-i18n';
 
 onMounted(() => {
@@ -12,6 +12,7 @@ onMounted(() => {
 });
 
 const greetings = usePage().props.value.greetings;
+provide('greetings', greetings)
 
 defineProps({
     title: String,
