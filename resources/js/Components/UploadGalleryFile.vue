@@ -9,6 +9,7 @@ import FadeInTransition from './FadeInTransition.vue';
 import InputLabel from '@/Components/InputLabel.vue'
 import CropIcon from '@/Components/Icons/CropIcon.vue';
 import Crop from '@/Components/Crop.vue';
+
 const props = defineProps({
     modelValue: {
         required: false,
@@ -106,7 +107,7 @@ const removeFile = ({ file, url, id }) => {
     filesData.value.length === 0 ? showPreview.value = false : null;
 };
 
-const uploadFiles = () => {
+const uploadFiles = async () => {
     if (!filesData.value.length) {
         return
     }
@@ -117,58 +118,69 @@ const uploadFiles = () => {
 
 
     if (!postId) {
-        axios.postForm(route('api.posts.store'), {
-            cover: filesData.value[0].file,
-            caption: caption.value.trim()
-        }).then((res) => {
+        try {
+            const res = await axios.postForm(route('api.posts.store'), {
+                cover: filesData.value[0].file,
+                caption: caption.value.trim()
+            })
             postId = res.data.id
             sendPostMedia(postId)
-        }).catch(error => {
-            console.error(error)
-            if (Object.keys(error.response.data.errors).length) {
-                showAsError.value = true
-                removeFile(filesData.value[0])
-                isLoading.value = false
-                isDisabled.value = false;
-            }
-        }).finally(() => {
+        } catch (error) {
 
-        })
-    } else {
+            console.log('there is error uploading this file (cover) ' + filesData.value[0].name);
+            handleError(error, filesData.value[0])
+            console.log({ postId });
+        }
+    } else if (filesData.value.slice(1).length > 0) {
         sendPostMedia(postId)
+    } else {
+        handleSuccess()
     }
-};
+}
+
 
 function sendPostMedia(postId) {
 
-    if (filesData.value.slice(1).length > 0) {
-        filesData.value.slice(1).forEach((fileData, i) => {
-            let { file, id } = fileData
-            if (file.type.startsWith("image") || file.type.startsWith('video')) {
-                axios.postForm(route('api.gallery.upload', postId), {
-                    gallery: file,
-                }).then().catch(error => {
-                    console.error(error);
-                    if (Object.keys(error.response.data.errors).length) {
-                        showAsError.value = true
-                        removeFile(file)
-                        isLoading.value = false
-                        isDisabled.value = false;
-                    }
-                }).finally(() => {
-                    if (i === filesData.value.length - 2) {
-                        reset()
-                        emit('reload')
+    const promises = filesData.value.slice(1).map((fileData, i) => {
+        const { file, id } = fileData;
+        if (file.type.startsWith("image") || file.type.startsWith("video")) {
+            return axios.postForm(route("api.gallery.upload", postId), {
+                gallery: file
+            }).catch(error => {
+                console.log('there is error uploading this file ' + file.name);
+                handleError(error, file)
+                // throw (error)
+            });
+        }
+    });
 
-                    }
-                })
-            }
+    Promise.all(promises)
+        .then(() => {
+            handleSuccess()
         })
+        .catch((error) => {
+
+        })
+        .finally(() => {
+            isLoading.value = false;
+            isDisabled.value = false;
+        });
+}
+
+
+function handleError(error, file) {
+    console.error(error)
+    if (Object.keys(error.response.data.errors).length) {
+        showAsError.value = true
+        removeFile(file)
+        isLoading.value = false
+        isDisabled.value = false;
     }
-    else {
-        reset()
-        emit('reload')
-    }
+}
+
+function handleSuccess() {
+    reset();
+    emit("reload");
 }
 
 function reset(e) {
