@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Models\Admin;
 use Illuminate\Support\Facades\Gate;
-use Laravel\Horizon\Horizon;
 use Laravel\Horizon\HorizonApplicationServiceProvider;
 
 class HorizonServiceProvider extends HorizonApplicationServiceProvider
@@ -36,7 +35,7 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
     {
         Gate::define('viewHorizon', function ($user) {
             if ($user instanceof Admin) {
-                return $user->hasPermissionTo('access horizon');
+                return true;
             }
 
             return false;
