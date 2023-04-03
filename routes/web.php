@@ -522,8 +522,10 @@ Route::any('nova/language/{language}', function (Request $request, $language) {
 
 Route::get('public/posts/{post}', function (Post $post) {
 
+    $data = Post::where('id' , $post->id)->with(['likes.user:id,username,first_name,last_name'])->first();
+
     return Inertia::render('Public/PostView', [
-        'post' => $post,
+        'post' => $data,
         'user' => $post->user,
         'social_meta' => [
             'url' => \route('public.posts', $post->id),

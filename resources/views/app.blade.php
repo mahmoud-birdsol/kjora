@@ -19,8 +19,7 @@
 
     <!--Social -->
     @if(isset($page['props']['social_meta']))
-        <meta name="twitter:card"
-              content="{{ (isset($page['props']['social_meta']['card'])) ? $page['props']['social_meta']['card'] : 'summary' }}"/>
+
         <meta property="og:url" content="{{ (isset($page['props']['social_meta']['url'])) ? ($page['props']['social_meta']['url']) : '' }}" />
         <meta property="og:title"
               content="{{ (isset($page['props']['social_meta']['title'])) ? ('Kjora | '.$page['props']['social_meta']['title']) : '' }}"/>
@@ -28,6 +27,8 @@
               content="{{ (isset($page['props']['social_meta']['description'])) ? $page['props']['social_meta']['description'] : '' }}"/>
         <meta property="og:type" content="website" />
         <meta property="og:image"
+              content="{{  (isset($page['props']['social_meta']['image'])) ? $page['props']['social_meta']['image'] : asset('/images/logo.png') }}"/>
+        <meta property="og:image:alt"
               content="{{  (isset($page['props']['social_meta']['image'])) ? $page['props']['social_meta']['image'] : asset('/images/logo.png') }}"/>
     @endif
     <!-- Scripts -->
