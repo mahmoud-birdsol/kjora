@@ -34,11 +34,7 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewHorizon', function ($user) {
-            if ($user instanceof Admin) {
-                return true;
-            }
-
-            return false;
+            return true;
         });
     }
 }
