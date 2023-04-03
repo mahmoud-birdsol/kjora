@@ -47,8 +47,7 @@ function openInfoWindow(player, options) {
         </template>
 
         <InfoWindow v-if="showInfoWindow" :options="infoOptions">
-            <div class="min-w-[250px] xs:min-w-[400px]">
-
+            <div class="min-w-[270px] xs:min-w-[400px]">
                 <MainPlayerCard :player="infoPlayer" />
             </div>
         </InfoWindow>
