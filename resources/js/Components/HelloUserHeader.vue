@@ -23,9 +23,9 @@ import { inject, onMounted , ref } from 'vue';
 <template>
     <p class="text-2xl font-light">{{ $t('hello') }} ,</p>
     <div class="container w-full">
-        <p class="text-3xl font-bold name max-sm:whitespace-nowrap lg:text-5xl">ahmed alshardahskdl</p>
-            <!-- <p class="text-3xl font-bold name max-sm:whitespace-nowrap md:text-7xl">{{ $page.props.auth.user.first_name }} {{
-            $page.props.auth.user.last_name }}</p> -->
+        <p class="text-3xl font-bold name max-sm:whitespace-nowrap lg:text-5xl">{{ $page.props.auth.user.first_name }} {{
+            $page.props.auth.user.last_name }}</p>
+            
     </div>
     <p class="text-base font-semibold">
         <DateTranslation />
