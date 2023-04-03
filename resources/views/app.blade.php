@@ -19,8 +19,7 @@
 
     <!--Social -->
     @if(isset($page['props']['social_meta']))
-        <meta name="twitter:card"
-              content="{{ (isset($page['props']['social_meta']['card'])) ? $page['props']['social_meta']['card'] : 'summary' }}"/>
+
         <meta property="og:url" content="{{ (isset($page['props']['social_meta']['url'])) ? ($page['props']['social_meta']['url']) : '' }}" />
         <meta property="og:title"
               content="{{ (isset($page['props']['social_meta']['title'])) ? ('Kjora | '.$page['props']['social_meta']['title']) : '' }}"/>
