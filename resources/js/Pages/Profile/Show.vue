@@ -16,9 +16,13 @@ const props = defineProps({
     playerRating: Array,
     countries: Array,
     positions: Array,
+    tabId:{
+        default:2
+        ,type:Number,
+    }
 });
 
-const currentTabId = ref(2)
+const currentTabId = ref(props.tabId)
 
 const tabs = computed(() => {
     return [

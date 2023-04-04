@@ -1,20 +1,14 @@
 
 <script setup>
-import PublicLayout from '../../Layouts/PublicLayout.vue';
-import { Head, useForm, usePage } from '@inertiajs/inertia-vue3';
-import AppLayout from '@/Layouts/AppLayout.vue';
-import HelloUserHeader from '@/Components/HelloUserHeader.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import PerformanceTab from '@/Components/PerformanceTab.vue';
-import ProfileGallery from '@/Components/ProfileGallery.vue';
-import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
-import { computed, onMounted, ref } from 'vue';
-import { Inertia } from '@inertiajs/inertia'
-import FadeInTransition from '../../Components/FadeInTransition.vue';
-import Modal from '../../Components/Modal.vue';
-import { ElSlider } from 'element-plus';
-import InputLabel from '@/Components/InputLabel.vue';
 import DateTranslation from '@/Components/DateTranslation.vue';
+import PerformanceTab from '@/Components/PerformanceTab.vue';
+import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
+import ProfileGallery from '@/Components/ProfileGallery.vue';
+import { Inertia } from '@inertiajs/inertia';
+import { usePage } from '@inertiajs/inertia-vue3';
+import { computed, onMounted, ref } from 'vue';
+import FadeInTransition from '../../Components/FadeInTransition.vue';
+import PublicLayout from '../../Layouts/PublicLayout.vue';
 
 
 const props = defineProps({

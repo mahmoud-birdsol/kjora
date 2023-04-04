@@ -83,7 +83,19 @@ class PlayerReviewController extends Controller
 
         if ($ratingCategoryCount > 0) {
             $review->player->update([
-                'rating' => (($review->player->rating * $review->player->playerReviews()->where('reviewed_at', '!=', null)->where('id', '!=', $review->id)->count()) + ($value / $ratingCategoryCount)) / ($review->player->playerReviews()->where('reviewed_at', '!=', null)->where('id', '!=', $review->id)->count() + 1),
+                'rating' => (
+                    ($review->player->rating *
+                        $review->player
+                            ->playerReviews()
+                            ->where('reviewed_at', '!=', null)
+                            ->where('is_attended', true)
+                            ->where('id', '!=', $review->id)->count())
+                    + ($value / $ratingCategoryCount)) / ($review->player
+                            ->playerReviews()
+                            ->where('reviewed_at', '!=', null)
+                            ->where('is_attended', true)
+                            ->where('id', '!=', $review->id)->count() + 1)
+                ,
             ]);
             $review->player->notify(new NotifyUserOfRatingSubmittedNotification($review->reviewer, $review->player, $review));
         }

@@ -30,7 +30,7 @@
                         </button>
                         <button @click="showShare" class="hover:text-gray-400 ">
                             <li class="flex items-center justify-center">
-                                <Socials :id="postId" shareUrl='public/posts' position="-top-1" @showCopied="showCopied">
+                                <Socials :shareUrl='`public/posts/${postId}`' position="-top-1" @showCopied="showCopied">
                                     <template #label>
                                         <span> {{ $t('share') }}</span>
                                     </template>
