@@ -54,7 +54,7 @@ function closeModal() {
 </script>
 <template>
     <FixedWrapper>
-        <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl" @click="openModal">
+        <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl pointer-events-auto" @click="openModal">
             <PlusCircleIcon class="w-8 h-8 text-white" />
         </button>
         <Modal :show="showAddStadiumModal" max-width="sm" @close="closeModal" :closeable="true" :show-close-icon="false">
