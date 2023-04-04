@@ -11,7 +11,7 @@ import { computed, ref } from 'vue';
 import Pagination from '../../Components/Pagination.vue';
 import InvitationHireTaps from '../../Components/InvitationHireTaps.vue';
 const props = defineProps({
-    invitations: Array,
+    invitations: Object,
 });
 
 
