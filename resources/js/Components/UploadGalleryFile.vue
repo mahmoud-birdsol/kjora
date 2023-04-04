@@ -168,7 +168,7 @@ function sendPostMedia(postId) {
 
 function handleError(error, file) {
     console.error(error)
-    if (Object.keys(error.response.data.errors).length || error.response.status === 413) {
+    if (Object.keys(error?.response?.data?.errors)?.length || error?.response?.status === 413) {
         showAsError.value = true
         removeFile(file)
         isLoading.value = false
