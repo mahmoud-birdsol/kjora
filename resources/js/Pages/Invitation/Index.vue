@@ -31,7 +31,7 @@ function groupInvitationsByDate(invitations) {
 }
 
 const invitationsGroups = computed(() => groupInvitationsByDate(props.invitations.data))
-console.log(invitationsGroups.value);
+
 
 function showFromToDates(date1, date2) {
     fromDate.value = dayjs(date1).format('DD MMMM YYYY')
