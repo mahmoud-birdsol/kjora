@@ -46,7 +46,7 @@
         </div>
     </div>
     <FixedWrapper v-if="currentUser?.id === user?.id && !isPublic">
-        <button class="flex items-center justify-center text-center bg-black rounded-full shadow-xl w-14 aspect-square" @click="showUploadFileModal = true">
+        <button class="flex items-center justify-center text-center bg-black rounded-full shadow-xl pointer-events-auto w-14 aspect-square" @click="showUploadFileModal = true">
             <PlusCircleIcon class="w-5 text-white" />
         </button>
         <UploadGalleryFile :show="showUploadFileModal" @close="showUploadFileModal = false" @reload="$emit('reload')" :should-upload="true" />

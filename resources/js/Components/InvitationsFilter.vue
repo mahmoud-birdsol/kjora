@@ -44,7 +44,7 @@ const reset = () => {
 </script>
 <template>
     <FixedWrapper>
-        <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl" @click="showFiltersModal = !showFiltersModal">
+        <button class="flex items-center justify-center w-16 h-16 text-center pointer-events-auto bg-black rounded-full shadow-xl" @click="showFiltersModal = !showFiltersModal">
             <AdjustmentsHorizontalIcon class="w-10 h-10 text-white" />
         </button>
         <Modal :show="showFiltersModal" max-width="sm" @close="showFiltersModal = false" :closeable="false">
