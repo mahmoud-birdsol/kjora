@@ -126,10 +126,8 @@ const uploadFiles = async () => {
             postId = res.data.id
             sendPostMedia(postId)
         } catch (error) {
-
             console.log('there is error uploading this file (cover) ' + filesData.value[0].name);
             handleError(error, filesData.value[0])
-            console.log({ postId });
         }
     } else if (filesData.value.slice(1).length > 0) {
         sendPostMedia(postId)
