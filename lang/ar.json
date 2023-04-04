@@ -1,6 +1,6 @@
 {
-	"accepted":"تم الموافقة",
-	"pending":"انتظار",
+	"accepted": "تم الموافقة",
+	"pending": "انتظار",
 	"no rating categories for this position untill now": "لا توجد فئات تصنيف لهذا المركز حتى الآن",
 	"hi :receiver , :sender": "مرحبا :receiver , :sender",
 	"we appreciate you taking the time to share your rating": "نحن نقدر لك الوقت الذي استغرقته لمشاركة تقييمك",
@@ -165,7 +165,7 @@
 	"Click on the following link to open the camera": "اضغط على الرابط التالي لفتح الكاميرا",
 	"open camera": "افتح الكاميرا",
 	"please write caption": "الرجاء كتابة تعليق",
-	"only videos and images with max size (2MB) are allowed": "يسمح فقط بمقاطع الفيديو والصور ذات الحجم الأقصى (2 ميجا بايت)",
+	"only videos and images with max size (3MB) are allowed": "يسمح فقط بمقاطع الفيديو والصور ذات الحجم الأقصى (3 ميجا بايت)",
 	"upload": "تحميل",
 	"Welcome to": "مرحبا بك",
 	"Don't have an account": "ليس لديك حساب",

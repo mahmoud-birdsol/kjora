@@ -261,8 +261,8 @@ let showCropModal = (file) => {
             </div>
             <div>
                 <Crop :img="cropFile" @crop="changeFiles" v-model:open="openCropModal" @update:open="() => openCropModal = false" />
-                <div class="mb-2 text-sm text-center justify-self-end " :class="showAsError ? 'text-red-500' : 'text-primary'">
-                    {{ $t('only videos and images with max size (2MB) are allowed') }}
+                <div class="mb-2 text-sm text-center justify-self-end sha " :class="showAsError ? 'text-red-500' : 'text-primary'">
+                    {{ $t('only videos and images with max size (3MB) are allowed') }}
                 </div>
                 <PrimaryButton @click.prevent="uploadFiles" :disabled="isDisabled">
                     {{ $t('upload') }}
