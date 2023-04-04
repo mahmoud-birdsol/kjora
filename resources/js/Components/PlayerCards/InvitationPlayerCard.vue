@@ -46,9 +46,9 @@ const accept = () => {
     const form = useForm({});
     form.patch(route('invitation.accept', props.invitation.id), {
         preserveState: false,
-        onFinish: () => {
-            emit('close');
-        }
+        // onFinish: () => {
+        //     emit('close');
+        // }
     });
 };
 
