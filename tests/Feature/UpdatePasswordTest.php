@@ -17,11 +17,11 @@ class UpdatePasswordTest extends TestCase
 
         $response = $this->put('/user/password', [
             'current_password' => 'password',
-            'password' => 'new-password',
-            'password_confirmation' => 'new-password',
+            'password' => 'Pp@ssw0rd1!',
+            'password_confirmation' => 'Pp@ssw0rd1!',
         ]);
 
-        $this->assertTrue(Hash::check('new-password', $user->fresh()->password));
+        $this->assertTrue(Hash::check('Pp@ssw0rd1!', $user->fresh()->password));
     }
 
     public function test_current_password_must_be_correct()
