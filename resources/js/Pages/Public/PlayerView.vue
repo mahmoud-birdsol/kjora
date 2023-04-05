@@ -50,7 +50,7 @@ const url = usePage().props.value.ziggy.url + '/public/player/' + props.player.i
         <!--        </Head>-->
         <template #header>
             <p class="text-2xl font-light">{{ $t('hello') }} ,</p>
-            <p class="text-7xl font-bold">{{ player.first_name }} {{ player.last_name }}</p>
+            <p class="font-bold text-7xl">{{ player.first_name }} {{ player.last_name }}</p>
             <p class="text-base font-semibold">
                 <DateTranslation />
             </p>
@@ -67,7 +67,7 @@ const url = usePage().props.value.ziggy.url + '/public/player/' + props.player.i
                     </template>
 
                 </div>
-                <div>
+                <div class="min-h-[350px] md:min-h-[550px]">
                     <FadeInTransition>
                         <template v-for="(tab, index) in tabs" :key="index">
                             <div v-if="tab.id === currentTabId">
