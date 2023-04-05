@@ -111,7 +111,7 @@ function showCopied() {
 
 <template>
     <!-- favorite icon -->
-    <div class="overflow-hidden rounded-xl" :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
+    <div class="overflow-hidden rounded-xl" :style="`background-image: url('${backgroundImage}'); background-size: cover; background-position: center;`">
         <div v-if="showFavorite && !isCurrentUser" class="flex justify-end">
             <span class="rounded-lg ltr:rounded-bl-3xl rtl:rounded-br-3xl bg-white p-2 -mt-0.5 ltr:-mr-0.5 rtl:-ml-0.5">
                 <FavouriteButton :user="player" />

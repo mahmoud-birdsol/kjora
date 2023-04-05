@@ -16,9 +16,9 @@ const props = defineProps({
     playerRating: Array,
     countries: Array,
     positions: Array,
-    tabId:{
-        default:2
-        ,type:Number,
+    tabId: {
+        default: 2
+        , type: Number,
     }
 });
 
