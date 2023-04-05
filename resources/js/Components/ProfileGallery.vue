@@ -1,6 +1,6 @@
 <template>
     <div v-if="posts?.length" class="">
-        <div class="grid grid-cols-2 gap-4 overflow-auto sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 hideScrollBar ">
+        <div class="grid grid-cols-2 gap-4 overflow-auto max-h-[500px] sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 hideScrollBar ">
             <template v-for="(post, index) in posts " :key="post.id">
                 <FadeInTransition>
                     <Link :href="isPublic ? route('public.posts', post.id) : route('posts.show', post.id)" class="relative w-full h-full overflow-hidden rounded-lg aspect-square group">
@@ -18,21 +18,22 @@
                         <EyeIcon class="h-5 w-5 filter-[drop-shadow(1px_1px_1px_rgb(0_0_0/.4)]" />
                     </div>
                     <!-- delete post button -->
-                    <button v-if="currentUser.id === user.id" @click.prevent.stop="showDeletePostModal = true" class="absolute top-0 right-0 hidden bg-white group-hover:block bg-opacity-90 rounded-bl-xl">
+                    <!-- <button v-if="currentUser.id === user.id" @click.prevent.stop="postIdToDelete = post.id; showDeletePostModal = true" class="absolute top-0 right-0 hidden bg-white group-hover:block bg-opacity-90 rounded-bl-xl">
                         <div class="flex flex-col items-start justify-center h-full p-1 opacity-100 ">
                             <XMarkIcon class="w-5 h-5 text-stone-800" />
                         </div>
-                        <ConfirmationModal :show="showDeletePostModal" @close="showDeletePostModal = false" @delete="removePost(post.id)">
-                            <template #body>
-                                <span>{{ $t('Are you sure you want delete this post ? ') }}</span>
-                            </template>
-                        </ConfirmationModal>
-                    </button>
+
+                    </button> -->
                     </Link>
                 </FadeInTransition>
             </template>
         </div>
     </div>
+    <ConfirmationModal :show="showDeletePostModal" @close="showDeletePostModal = false" @delete="removePost(postIdToDelete)">
+        <template #body>
+            <span>{{ $t('Are you sure you want delete this post ? ') }}</span>
+        </template>
+    </ConfirmationModal>
     <FixedWrapper v-if="currentUser?.id === user?.id && !isPublic">
         <button class="flex items-center justify-center text-center bg-black rounded-full shadow-xl pointer-events-auto w-14 aspect-square" @click="showUploadFileModal = true">
             <PlusCircleIcon class="w-5 text-white" />
@@ -68,7 +69,7 @@ const isPublic = usePage().url.value.includes('public/player')
 const showUploadFileModal = ref(false)
 const currentUser = usePage().props.value.auth.user
 const showDeletePostModal = ref(false)
-
+const postIdToDelete = ref(null)
 
 function removePost(id) {
 
