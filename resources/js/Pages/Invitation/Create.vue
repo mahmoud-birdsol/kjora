@@ -112,7 +112,7 @@ const querySearch = (queryString, cb) => {
 
     <AppLayout :title="$t('send-invitation')">
         <template #header>
-            <p class="font-black text-7xl">{{ $t('send-invitation') }}</p>
+            <p class="text-4xl font-black md:text-7xl">{{ $t('send-invitation') }}</p>
         </template>
 
         <div class="py-12">
