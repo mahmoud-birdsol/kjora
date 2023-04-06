@@ -22,7 +22,7 @@ onMounted(() => {
             </main>
 
             <div class="w-full mx-auto max-w-7xl pis-4" v-if="route().current('login')">
-                <div class="flex items-center justify-start space-x-4">
+                <div class="flex items-center justify-start gap-4">
                     <template v-for="social in socials" :key="social.id">
                         <a :href="social.url">
                             <img :src="social.icon" alt="" class="w-10 h-10">
