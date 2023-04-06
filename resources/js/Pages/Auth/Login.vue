@@ -33,14 +33,14 @@ const submit = () => {
     <Head title="Login" />
 
     <GuestLayout>
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4">
+        <div class="w-full px-6 py-4 mt-6 sm:max-w-md">
 
             <div class="my-8">
-                <h2 class="text-white text-2xl font-light uppercase">{{ $t('Welcome to') }}</h2>
-                <h1 class="text-white text-6xl font-black uppercase">KJORA</h1>
+                <h2 class="text-2xl font-light text-white uppercase">{{ $t('Welcome to') }}</h2>
+                <h1 class="text-6xl font-black text-white uppercase">KJORA</h1>
             </div>
 
-            <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+            <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
                 {{ status }}
             </div>
 
@@ -59,7 +59,7 @@ const submit = () => {
 
                     <div class="flex items-center gap-1 my-2">
                         <Checkbox id="remember" v-model:checked="form.remember" name="remember" />
-                        <span class="text-xs text-white font-semibold uppercase">{{ $t('remember me') }}</span>
+                        <span class="text-xs font-semibold text-white uppercase">{{ $t('remember me') }}</span>
                     </div>
 
                     <div class="my-2">
@@ -71,14 +71,14 @@ const submit = () => {
             </form>
 
             <div class="flex justify-end py-2">
-                <Link v-if="canResetPassword" :href="route('password.request')" class="text-xs text-white font-bold hover:text-gray-200">
+                <Link v-if="canResetPassword" :href="route('password.request')" class="text-xs font-bold text-white hover:text-gray-200">
                 {{ $t('forgot') }} {{ $t('password') }}?
                 </Link>
             </div>
 
-            <div class="flex justify-end items-center">
-                <span class="text-white text-xs font-bold">{{ $t("Don't have an account") }}</span> &nbsp;
-                <Link :href="route('register')"><span class="text-blue-500 text-xs font-bold">{{ $t('sign up') }}</span></Link>
+            <div class="flex items-center justify-end">
+                <span class="text-xs font-bold text-white">{{ $t("Don't have an account") }}</span> &nbsp;
+                <Link :href="route('register')"><span class="text-xs font-bold text-sky-500">{{ $t('sign up') }}</span></Link>
             </div>
         </div>
     </GuestLayout>
