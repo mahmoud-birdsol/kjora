@@ -44,7 +44,7 @@ const distances = [5, 10, 20, 30, 40, 50];
             </button>
             <div class="p-6">
                 <div class="flex items-center justify-between">
-                    <p class="text-sm text-white">{{ $t('filter') }} </p>
+                    <p class="absolute text-sm text-white inset-4">{{ $t('filter') }} </p>
                     <button class="text-primary" @click="reset">
                         <!-- <XMarkIcon class="inline w-4 h-4 mr-4" /> -->
                         {{ $t('reset') }}
