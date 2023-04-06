@@ -1,29 +1,28 @@
 <script setup>
 import DateTranslation from '@/Components/DateTranslation.vue';
 import { inject, onMounted , onUnmounted, ref } from 'vue';
-
+import { useResizeFont } from '@/Composables/useResizeFont';
 const greetings = inject('greetings')
 
-function resize_to_fit(name ,container) {
-    if(!name || !container  ) return;
-    let fontSize = window.getComputedStyle(name).fontSize;
-    if (name.clientWidth >= container.clientWidth) {
-        name.style.fontSize = (parseFloat(fontSize) - 1) + 'px';
-        resize_to_fit(name , container)
-    }
-}
+// function resize_to_fit(name ,container) {
+//     if(!name || !container  ) return;
+//     let fontSize = window.getComputedStyle(name).fontSize;
+//     if (name.clientWidth >= container.clientWidth) {
+//         name.style.fontSize = (parseFloat(fontSize) - 1) + 'px';
+//         resize_to_fit(name , container)
+//     }
+// }
 let userName ,container ,fontSize;
+let { resizeFont } = useResizeFont()
 const changeFontSize =(e)=>{
         userName.style.fontSize=fontSize
-        resize_to_fit(userName , container)
-    }
+        resizeFont(userName , container)
+}
 onMounted(() => {
     userName = document.querySelector('.name');
     container = document.querySelector('.container');
     fontSize = window.getComputedStyle(userName).fontSize;
-    resize_to_fit(userName , container)
-
-   
+    resizeFont(userName , container)
     window.addEventListener('resize',changeFontSize)
 })
 onUnmounted(()=>{

@@ -120,7 +120,7 @@ function showCopied() {
         <div v-if="showFavorite && isCurrentUser" class="h-[34px]"></div>
 
 
-        <div class="p-4">
+        <div class="px-4 py-1">
             <div class="flex items-start justify-between">
                 <div class="flex items-center justify-start gap-2 mb-2" :class="{ 'space-x-2': size == 'sm', 'space-x-8': size == 'lg' }">
                     <div class="relative">
@@ -242,8 +242,8 @@ function showCopied() {
                 <div v-else class="h-[16px]"></div>
             </div>
 
-            <div v-if="showReport && isCurrentUser" class="h-[43.2px]"></div>
-            <div class="flex justify-end mt-6" v-if="showReport && !isCurrentUser">
+            <div v-if="showReport && isCurrentUser" class="h-[24px]"></div>
+            <div class="flex justify-end" v-if="showReport && !isCurrentUser">
                 <ReportModal :reportable-id="player.id" :reportable-type="'App\\Models\\User'">
                     <template #trigger>
                         <button>

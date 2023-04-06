@@ -62,7 +62,7 @@ let expaireDate = computed(()=>{
     <Head :title="$t('upgrade')" />
     <AppLayout>
         <template #header>{{$t('upgrade')}}</template>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-5">
+        <div class="grid grid-cols-1 gap-8 my-5 md:grid-cols-2">
 
             <Card v-loading="loading">
                 <CardContent :title="$t('upgrade account')">
@@ -70,7 +70,7 @@ let expaireDate = computed(()=>{
                         <h1 class="text-7xl">{{$t('upgrade account')}}</h1>
                     </template>
                     <template #body>
-                        <ul class="flex flex-col gap-3 items-center text-xs text-gray-800">
+                        <ul class="flex flex-col items-center gap-3 text-xs text-gray-800">
                             <li class="flex gap-5">
                                 <CheckIcon class="w-5 text-primary" />
                                 <span>{{$t('Lorem ipsum dolor sit amet')}} </span>
@@ -89,23 +89,23 @@ let expaireDate = computed(()=>{
                             </li>
                         </ul>
 
-                        <div class="text-gray-600 text-sm font-bold my-3 uppercase" >{{ $t('choose plan')}}</div>
+                        <div class="my-3 text-sm font-bold text-gray-600 uppercase" >{{ $t('choose plan')}}</div>
                         <RadioGroup v-model="form.payment_plan" class="flex flex-col gap-2">
                             <RadioGroupOption v-slot="{ checked }" value="monthly"
                                 class="[&_li]:py-3 [&_li]:pl-6 [&_li]:pr-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:list-none text-stone-500  flex flex-col  text-sm font-medium cursor-pointer">
                                 <InputLabel :value="$t('monthly')" color="primary" />
-                                <li  class="flex justify-between items-center">
+                                <li  class="flex items-center justify-between">
                                     <span>$10</span>
-                                    <CheckIcon class="w-6 rounded-full p-1 bg-golden text-black" :class="form.payment_plan == 'monthly'? 'visible':'invisible'"/>
+                                    <CheckIcon class="w-6 p-1 text-black rounded-full bg-golden" :class="form.payment_plan == 'monthly'? 'visible':'invisible'"/>
                                 </li>
                             </RadioGroupOption>
                             <RadioGroupOption v-slot="{ checked }" value="yearly"
                                 class="[&_li]:py-3 [&_li]:pl-6 [&_li]:pr-3 [&_li]:rounded-full [&_li]:border-2 [&_li]:list-none text-stone-500  flex flex-col  text-sm font-medium cursor-pointer">
 
                                 <InputLabel :value="$t('yearly')" color="primary" />
-                                <li  class="flex justify-between items-center">
+                                <li  class="flex items-center justify-between">
                                     <span>$25</span>
-                                    <CheckIcon class="w-6 text-black rounded-full p-1 bg-golden" :class="form.payment_plan == 'yearly'? 'visible':'invisible'"/>
+                                    <CheckIcon class="w-6 p-1 text-black rounded-full bg-golden" :class="form.payment_plan == 'yearly'? 'visible':'invisible'"/>
                                 </li>
                             </RadioGroupOption>
                         </RadioGroup>
@@ -125,14 +125,14 @@ let expaireDate = computed(()=>{
                         enter-to-class="opacity-100"
                         enter-active-class="transition-all duration-200"
                         >
-                            <div class="relative  rounded-xl mx-auto w-full bg-no-repeat bg-cover max-w-sm text-sm text-black"
+                            <div class="relative w-full max-w-sm mx-auto text-sm text-black bg-no-repeat bg-cover rounded-xl"
                             v-if="form.payment_plan==='monthly'"
                             >
-                                <img src="/images/player_bg_sm_gold.png" class="absolute top-0 left-0 w-full h-full" />
-                                <div class="bg-black rounded-full absolute top-0 right-0 m-4">
+                                <img src="/images/player_bg_sm_gold.png" class="absolute top-0 left-0 w-full h-full rounded-xl" />
+                                <div class="absolute top-0 right-0 m-4 bg-black rounded-full">
                                     <StarIcon class="w-4 h-4 fill-golden" />
                                 </div>
-                                <div class="p-8 font-bold z-10 relative">
+                                <div class="relative z-10 p-8 font-bold">
                                     <div class="mt-5 mb-16">
                                         <h2 class="uppercase text-primary" v-if="form.payment_plan=='monthly'">{{$t('monthly')}}</h2>
 
@@ -150,14 +150,14 @@ let expaireDate = computed(()=>{
                                     </div>
                                 </div>
                             </div>
-                            <div class="relative  rounded-xl mx-auto w-full bg-no-repeat bg-cover max-w-sm text-sm text-black"
+                            <div class="relative w-full max-w-sm mx-auto text-sm text-black bg-no-repeat bg-cover rounded-xl"
                             v-else-if="form.payment_plan==='yearly'"
                             >
-                                <img src="/images/player_bg_sm_gold.png" class="absolute top-0 left-0 w-full h-full" />
-                                <div class="bg-black rounded-full absolute top-0 right-0 m-4">
+                                <img src="/images/player_bg_sm_gold.png" class="absolute top-0 left-0 w-full h-full rounded-xl" />
+                                <div class="absolute top-0 right-0 m-4 bg-black rounded-full">
                                     <StarIcon class="w-4 h-4 fill-golden" />
                                 </div>
-                                <div class="p-8 font-bold z-10 relative">
+                                <div class="relative z-10 p-8 font-bold">
                                     <div class="mt-5 mb-16">
                                         <h2 class="uppercase text-primary">{{$t('yearly')}}</h2>
 
@@ -176,20 +176,20 @@ let expaireDate = computed(()=>{
                                     </div>
                                 </div>
                             </div>
-                            <div class="relative mx-auto w-full bg-no-repeat bg-cover max-w-sm text-sm text-black"
+                            <div class="relative w-full max-w-sm mx-auto text-sm text-black bg-no-repeat bg-cover"
                             v-else
                             >
-                                <img src="/images/player_bg_sm.png" class="absolute  rounded-xl top-0 left-0 w-full h-full" />
-                                <div class="bg-black rounded-full absolute top-0 right-0 m-4">
+                                <img src="/images/player_bg_sm.png" class="absolute top-0 left-0 w-full h-full rounded-xl" />
+                                <div class="absolute top-0 right-0 m-4 bg-black rounded-full">
                                     <StarIcon class="w-4 h-4 fill-primary" />
                                 </div>
-                                <div class="p-8 font-bold z-10 relative">
+                                <div class="relative z-10 p-8 font-bold">
                                     <div class="mt-5 mb-16">
-                                        <h2 class="uppercase text-white">{{$t('free plan')}}</h2>
+                                        <h2 class="text-white uppercase">{{$t('free plan')}}</h2>
                                     </div>
                                 </div>
                                 <div class="flex justify-center py-6">
-                                            <div class="uppercase text-white opacity-50">{{$t('minimal features')}}</div>
+                                            <div class="text-white uppercase opacity-50">{{$t('minimal features')}}</div>
 
                                 </div>
                             </div>

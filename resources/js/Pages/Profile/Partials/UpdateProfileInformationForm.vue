@@ -118,13 +118,8 @@ const showUploadAvatarModal = ref(false);
 
                             <div class="mie-4">
                                 <div class="flex items-center gap-x-2">
-                                    <input type="radio" id="male" value="male" disabled v-model="form.gender" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
-                                    <label for="male" class="text-sm font-medium text-black">{{ $t('male') }}</label>
-                                </div>
-
-                                <div class="flex items-center gap-x-2">
-                                    <input type="radio" id="female" value="female" disabled v-model="form.gender" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
-                                    <label for="female" class="text-sm font-medium text-black">{{ $t('female') }}</label>
+                                    <input type="radio" checked :id="user.gender" :value="user.gender" disabled v-model="form.gender" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
+                                    <label :for="user.gender" class="text-sm font-medium text-black">{{ $t(user.gender) }}</label>
                                 </div>
                             </div>
                         </div>
