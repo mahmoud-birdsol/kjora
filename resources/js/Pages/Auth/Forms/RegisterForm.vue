@@ -160,10 +160,10 @@ const submit = () => {
 
         <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
             <p class="text-xs font-light text-black">
-                {{ $t('By signing up, you agree to the') }} <a target="_blank" :href="route('terms.and.condition.index')" class="font-bold text-sky-500 hover:text-sky-700">{{ $t('Terms of Service') }}</a> {{ $t('and') }}
-                <a target="_blank" :href="route('privacy.policy.index')" class="font-bold text-sky-500 hover:text-sky-700">{{ $t('Privacy Policy') }}</a>
+                {{ $t('By signing up, you agree to the') }} <a target="_blank" :href="route('terms.and.condition.index')" class="font-bold text-blue-500 hover:text-sky-700">{{ $t('Terms of Service') }}</a> {{ $t('and') }}
+                <a target="_blank" :href="route('privacy.policy.index')" class="font-bold text-blue-500 hover:text-sky-700">{{ $t('Privacy Policy') }}</a>
                 {{ $t('including') }}
-                <Link target="_blank" :href="route('cookies.policy.index')" class="font-bold text-sky-500 hover:text-sky-700">{{ $t('cookie use') }}</Link>
+                <Link target="_blank" :href="route('cookies.policy.index')" class="font-bold text-blue-500 hover:text-sky-700">{{ $t('cookie use') }}</Link>
             </p>
         </div>
 

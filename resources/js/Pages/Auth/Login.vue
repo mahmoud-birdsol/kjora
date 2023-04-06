@@ -78,7 +78,7 @@ const submit = () => {
 
             <div class="flex items-center justify-end">
                 <span class="text-xs font-bold text-white">{{ $t("Don't have an account") }}</span> &nbsp;
-                <Link :href="route('register')"><span class="text-xs font-bold text-sky-500">{{ $t('sign up') }}</span></Link>
+                <Link :href="route('register')"><span class="text-xs font-bold text-blue-500">{{ $t('sign up') }}</span></Link>
             </div>
         </div>
     </GuestLayout>
