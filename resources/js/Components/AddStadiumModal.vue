@@ -10,7 +10,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import { PlusCircleIcon } from '@heroicons/vue/24/outline';
-import FixedWrapper from '@/Components/FixedWrapper.vue';
+import FixedActionBtn from '@/Components/FixedActionBtn.vue';
 
 
 
@@ -53,36 +53,37 @@ function closeModal() {
 }
 </script>
 <template>
-    <FixedWrapper>
-        <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl pointer-events-auto" @click="openModal">
-            <PlusCircleIcon class="w-8 h-8 text-white" />
-        </button>
-        <Modal :show="showAddStadiumModal" max-width="sm" @close="closeModal" :closeable="true" :show-close-icon="false">
-            <div class="p-6 bg-black">
-                <div class="flex items-center justify-between">
-                    <p class="text-lg text-white">{{ $t('Add new Stadium') }} </p>
+    <FixedActionBtn @click="openModal">
+        <PlusCircleIcon class="w-8 h-8 text-white" />
+    </FixedActionBtn>
+    <Modal :show="showAddStadiumModal" max-width="sm" @close="closeModal" :closeable="true" :show-close-icon="false">
+        <div class="p-6 bg-black">
+            <div class="flex items-center justify-between">
+                <p class="text-lg text-white">{{ $t('Add new Stadium') }} </p>
 
-                    <button @click="showAddStadiumModal = false">
-                        <XMarkIcon class="w-4 h-4 text-white" />
-                    </button>
+                <button @click="showAddStadiumModal = false">
+                    <XMarkIcon class="w-4 h-4 text-white" />
+                </button>
+            </div>
+
+            <form @submit.prevent="addStadium">
+                <div class="my-6">
+                    <InputLabel>{{ $t('Stadium Name') }}</InputLabel>
+                    <input type="text" name="search" id="search" v-model="form.name"
+                        class="block w-full px-4 text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
+                        :placeholder="$t('Stadium Name') + '...'" />
+                </div>
+                <div class="my-6">
+                    <InputLabel>{{ $t('choose stadium place') }} </InputLabel>
+                    <GMapAutocomplete :placeholder="$t('choose from map')" @place_changed="setPlace"
+                        class="block w-full p-2 px-4 text-white bg-black border border-white rounded-full focus:border focus:border-primary focus:ring-primary sm:text-sm placeholder:center">
+                    </GMapAutocomplete>
+                </div>
+                <div class="my-6 mt-4">
+                    <SecondaryButton @click="addStadium">{{ $t('Add') }}</SecondaryButton>
                 </div>
 
-                <form @submit.prevent="addStadium">
-                    <div class="my-6">
-                        <InputLabel>{{ $t('Stadium Name') }}</InputLabel>
-                        <input type="text" name="search" id="search" v-model="form.name" class="block w-full px-4 text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center" :placeholder="$t('Stadium Name') + '...'" />
-                    </div>
-                    <div class="my-6">
-                        <InputLabel>{{ $t('choose stadium place') }} </InputLabel>
-                        <GMapAutocomplete :placeholder="$t('choose from map')" @place_changed="setPlace" class="block w-full p-2 px-4 text-white bg-black border border-white rounded-full focus:border focus:border-primary focus:ring-primary sm:text-sm placeholder:center">
-                        </GMapAutocomplete>
-                    </div>
-                    <div class="my-6 mt-4">
-                        <SecondaryButton @click="addStadium">{{ $t('Add') }}</SecondaryButton>
-                    </div>
-
-                </form>
-            </div>
-        </Modal>
-    </FixedWrapper>
+            </form>
+        </div>
+    </Modal>
 </template>
