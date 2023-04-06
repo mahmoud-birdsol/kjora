@@ -25,6 +25,8 @@ function filter() {
     emit('filter')
 }
 function reset() {
+    age.value = [18, 70]
+    rating.value = [0, 5]
     emit('reset')
 }
 
