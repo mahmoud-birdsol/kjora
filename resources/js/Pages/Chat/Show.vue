@@ -5,6 +5,7 @@ import ChatLayout from '@/Layouts/ChatLayout.vue';
 import ChatMessagesContainer from "@/Components/Chat/ChatMessagesContainer.vue";
 import ChatHeader from '@/Components/Chat/ChatHeader.vue';
 import ChatForm from '@/Components/Chat/ChatForm.vue';
+import dayjs from 'dayjs';
 
 const props = defineProps({
     conversation: null,
@@ -18,7 +19,7 @@ provide('conversation', props.conversation);
 <template>
     <AppLayout title="Chat">
         <template #header>
-            {{$t('chat')}}
+            {{ $t('chat') }}
         </template>
 
         <ChatLayout :conversations="conversations">
@@ -26,6 +27,7 @@ provide('conversation', props.conversation);
                 <ChatHeader :conversation="conversation" :player="player" />
             </template>
             <template #main>
+                <div class="flex justify-center text-xs ">{{ dayjs().format('DD MMMM YYYY') }}</div>
                 <ChatMessagesContainer :conversation="conversation" :player="player" />
             </template>
             <template #footer>
