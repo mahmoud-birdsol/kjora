@@ -78,7 +78,7 @@ function calcShouldRate() {
     if (props.invitation?.reviews?.length) {
         shouldRate.value = true;
     }
-    // if (props.invitation.updated_at && dayjs(props.invitation?.updated_at).diff(dayjs(), 'hour') > 2 && props.invitation.state == 'accepted') {
+    // if (props.invitation.date && dayjs(props.invitation?.updated_at).diff(dayjs(), 'hour') > 2 && props.invitation.state == 'accepted') {
     //     shouldRate.value = true;
 
     // }
@@ -86,30 +86,24 @@ function calcShouldRate() {
 </script>
 
 <template>
-    <div class="rounded-xl"
-        :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
+    <div class="rounded-xl" :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
         <div class="flex flex-col items-center justify-center gap-3 p-4 ">
 
             <div class="flex flex-col items-center ">
                 <!-- image -->
-                <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name"
-                    :border="true" />
+                <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true" />
                 <div class="flex flex-col items-center text-sm text-white ">
-                    <Link class="hover:underline rtl:before:content-['a'] rtl:before:text-transparent"
-                        :href="route('player.profile', player.id)">@{{
-                            player.username }}</Link>
+                    <Link class="hover:underline rtl:before:content-['a'] rtl:before:text-transparent" :href="route('player.profile', player.id)">@{{
+                        player.username }}</Link>
 
                 </div>
                 <!-- rating -->
                 <p class="flex items-center justify-center space-x-2 text-sm ">
-                    <span class="scale-[0.7]  flex items-center gap-x-1"
-                        :class="txtColor == 'black' ? 'text-primary' : 'text-[#FF9900]'">
+                    <span class="scale-[0.7]  flex items-center gap-x-1" :class="txtColor == 'black' ? 'text-primary' : 'text-[#FF9900]'">
                         <span class="flex items-center gap-1">
                             <template v-for="i in 5">
-                                <StarIconFilled class="w-5 h-5" v-if="player.rating >= i"
-                                    :class="state == 'Free' ? 'text-gold' : 'text-primary'" />
-                                <StarIconOutline class="w-5 h-5" :class="state == 'Free' ? 'text-gold' : 'text-primary'"
-                                    v-else />
+                                <StarIconFilled class="w-5 h-5" v-if="player.rating >= i" :class="state == 'Free' ? 'text-gold' : 'text-primary'" />
+                                <StarIconOutline class="w-5 h-5" :class="state == 'Free' ? 'text-gold' : 'text-primary'" v-else />
                             </template>
                         </span>
 
@@ -153,14 +147,13 @@ function calcShouldRate() {
                     <DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date" />
                 </p>
                 <!-- invitation date -->
-                <p v-else-if="!isHiring && !invitation.state" class="text-[10px] text-center text-stone-300/70">{{ $t('Wants to invite you for a match in ') }}
+                <p v-else-if="!isHiring && !invitation.state" class="text-[10px] text-center text-stone-300/70">{{ $t('Wants to invite you for a match in') }}
                     <DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date" />
                 </p>
             </div>
             <!-- invite user location -->
 
-            <a :href="`https://www.google.com/maps/dir/Current+Location/${position.lat},${position.lng}`" target="_blank"
-                class="w-full overflow-hidden rounded-lg ">
+            <a :href="`https://www.google.com/maps/dir/Current+Location/${position.lat},${position.lng}`" target="_blank" class="w-full overflow-hidden rounded-lg ">
                 <GoogleMap :api-key="apiKey" style="width: 100%; height: 150px" :center="position" :zoom="15">
                     <Marker :options="markerOptions" />
                     <CustomMarker :options="{ position: position, anchorPoint: 'TOP_RIGHT' }">
@@ -174,31 +167,24 @@ function calcShouldRate() {
 
             <!-- respond to invitation state buttons -->
             <div class="self-stretch text-sm font-bold">
-                <div v-if="invitation.state == null && !isHiring && dayjs(props.invitation?.date).diff(dayjs(), 'hour') > 0"
-                    class="flex justify-center gap-6">
-                    <button @click="decline"
-                        class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
+                <div v-if="invitation.state == null && !isHiring && dayjs(props.invitation?.date).diff(dayjs(), 'hour') > 0" class="flex justify-center gap-6">
+                    <button @click="decline" class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                         <XMarkIcon class="w-6 text-red-600" />
                     </button>
-                    <button @click="accept"
-                        class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
+                    <button @click="accept" class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                         <CheckIcon class="w-6 text-green-600" />
                     </button>
                 </div>
                 <div v-if="invitation.state == 'declined'" class="flex justify-center">
-                    <button :disabled="true"
-                        class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-200 enabled:hover:bg-opacity-90 enabled:active:scale-95">
+                    <button :disabled="true" class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-200 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                         <XMarkIcon class="w-6 text-red-600" />
                     </button>
                 </div>
-                <Link :href="route('chats.index')" v-if="invitation.state == 'accepted' && !shouldRate"
-                    class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
+                <Link :href="route('chats.index')" v-if="invitation.state == 'accepted' && !shouldRate" class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                 {{ $t('chat') }}
                 </Link>
 
-                <Link :href="route('player.review.show', invitation.reviews[0].id)"
-                    v-if="invitation.state == 'accepted' && shouldRate"
-                    class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
+                <Link :href="route('player.review.show', invitation.reviews[0].id)" v-if="invitation.state == 'accepted' && shouldRate" class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                 {{ $t('rate') }}
                 </Link>
             </div>
