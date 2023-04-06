@@ -59,17 +59,17 @@ const arLocaleConfig = {
     relativeTime: {
         future: 'بعد %s',
         past: 'منذ %s',
-        s: '١ ث',
-        m: '١ ق',
-        mm: '%d ق',
-        h: '١ س',
-        hh: '%d س',
-        d: '١ يوم',
-        dd: '%d أيام',
-        M: '١ شهر',
-        MM: '%d أشهر',
-        y: '١ عام',
-        yy: '%d أعوام'
+        s: '١ث',
+        m: '١ق',
+        mm: '%dق',
+        h: '١س',
+        hh: '%dس',
+        d: '١يوم',
+        dd: '%dأيام',
+        M: '١شهر',
+        MM: '%dأشهر',
+        y: '١عام',
+        yy: '%dأعوام'
     },
     meridiem: (hour, minute, isLowercase) => {
         // OPTIONAL, AM/PM
@@ -106,16 +106,16 @@ const enLocaleConfig = {
         future: "in %s",
         past: "%s ago",
         s: 'a few sec',
-        m: "1 min",
-        mm: "%d mins",
-        h: "hr",
-        hh: "%d hrs",
-        d: "1 d",
-        dd: "%d d",
-        M: "1 m",
-        MM: "%d m",
-        y: "1 y",
-        yy: "%d ys"
+        m: "1min",
+        mm: "%dmins",
+        h: "1hr",
+        hh: "%dhrs",
+        d: "1d",
+        dd: "%dd",
+        M: "1m",
+        MM: "%dm",
+        y: "1y",
+        yy: "%dyrs"
     }
 }
 
