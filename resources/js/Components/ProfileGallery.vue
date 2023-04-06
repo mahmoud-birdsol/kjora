@@ -34,13 +34,10 @@
             <span>{{ $t('Are you sure you want delete this post ? ') }}</span>
         </template>
     </ConfirmationModal>
-    <FixedWrapper v-if="currentUser?.id === user?.id && !isPublic">
-        <button class="flex items-center justify-center text-center bg-black rounded-full shadow-xl pointer-events-auto w-14 aspect-square" @click="showUploadFileModal = true">
-            <PlusCircleIcon class="w-5 text-white" />
-        </button>
-        <UploadGalleryFile :show="showUploadFileModal" @close="showUploadFileModal = false" @reload="$emit('reload')" :should-upload="true" />
-
-    </FixedWrapper>
+    <FixedActionBtn v-if="currentUser?.id === user?.id && !isPublic"  @click="showUploadFileModal = true">
+        <PlusCircleIcon class="w-5 text-white" />
+    </FixedActionBtn>
+    <UploadGalleryFile :show="showUploadFileModal" @close="showUploadFileModal = false" @reload="$emit('reload')" :should-upload="true" />
 </template>
 
 <script setup>
@@ -51,7 +48,7 @@ import FadeInTransition from './FadeInTransition.vue';
 
 import { Link, usePage } from '@inertiajs/inertia-vue3';
 import { Inertia } from '@inertiajs/inertia';
-import FixedWrapper from '@/Components/FixedWrapper.vue';
+import FixedActionBtn from '@/Components/FixedActionBtn.vue';
 import { EyeIcon, XMarkIcon } from '@heroicons/vue/24/solid';
 import ConfirmationModal from './ConfirmationModal.vue';
 
