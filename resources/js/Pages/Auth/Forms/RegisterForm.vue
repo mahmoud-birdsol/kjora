@@ -118,7 +118,7 @@ const submit = () => {
                 <div>
                     <InputLabel color="primary" :value="$t('gender')" />
 
-                    <div class="mie-4">
+                    <div class="mis-5">
                         <div class="flex items-center gap-x-2">
                             <input type="radio" id="male" value="male" v-model="form.gender" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
                             <label for="male" class="text-sm font-medium text-black">{{ $t('male') }}</label>
@@ -134,7 +134,7 @@ const submit = () => {
             <div class="w-full mt-4 sm:w-1/3 sm:mt-0">
                 <InputLabel color="primary" :value="$t('position')" />
 
-                <div class="mie-4">
+                <div class="mis-5">
                     <div class="flex items-center gap-x-2" v-for="position in positions">
                         <input type="radio" :id="position.name" :value="position.id" v-model="form.position_id" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
                         <label :for="position.name" class="text-sm font-medium text-black">{{ $t(position.name) }}</label>
@@ -144,7 +144,7 @@ const submit = () => {
             <div class="w-full mt-4 sm:w-1/3 sm:mt-0">
                 <InputLabel color="primary" :value="$t('Preferred Foot')" />
 
-                <div class="mie-4">
+                <div class="mis-5">
                     <div class="flex items-center gap-x-2">
                         <input type="radio" id="left" value="left" v-model="form.preferred_foot" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
                         <label for="left" class="text-sm font-medium text-black">{{ $t('left') }}</label>
