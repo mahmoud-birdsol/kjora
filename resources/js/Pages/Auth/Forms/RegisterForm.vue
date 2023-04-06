@@ -114,7 +114,7 @@ const submit = () => {
         </div>
 
         <div class="mt-4 sm:flex sm:justify-between">
-            <div class="w-full mt-4 sm:w-1/3 sm:mt-0">
+            <div class="mt-4 sm:mt-0">
                 <div>
                     <InputLabel color="primary" :value="$t('gender')" />
 
@@ -131,7 +131,7 @@ const submit = () => {
                     </div>
                 </div>
             </div>
-            <div class="w-full mt-4 sm:w-1/3 sm:mt-0">
+            <div class="mt-4 sm:mt-0">
                 <InputLabel color="primary" :value="$t('position')" />
 
                 <div class="mis-5">
@@ -141,7 +141,7 @@ const submit = () => {
                     </div>
                 </div>
             </div>
-            <div class="w-full mt-4 sm:w-1/3 sm:mt-0">
+            <div class="mt-4 sm:mt-0">
                 <InputLabel color="primary" :value="$t('Preferred Foot')" />
 
                 <div class="mis-5">
@@ -160,10 +160,10 @@ const submit = () => {
 
         <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
             <p class="text-xs font-light text-black">
-                {{ $t('By signing up, you agree to the') }} <a target="_blank" :href="route('terms.and.condition.index')" class="font-bold text-blue-500 hover:text-sky-700">{{ $t('Terms of Service') }}</a> {{ $t('and') }}
-                <a target="_blank" :href="route('privacy.policy.index')" class="font-bold text-blue-500 hover:text-sky-700">{{ $t('Privacy Policy') }}</a>
+                {{ $t('By signing up, you agree to the') }} <a target="_blank" :href="route('terms.and.condition.index')" class="font-bold text-blue-500 hover:text-blue-700">{{ $t('Terms of Service') }}</a> {{ $t('and') }}
+                <a target="_blank" :href="route('privacy.policy.index')" class="font-bold text-blue-500 hover:text-blue-700">{{ $t('Privacy Policy') }}</a>
                 {{ $t('including') }}
-                <Link target="_blank" :href="route('cookies.policy.index')" class="font-bold text-blue-500 hover:text-sky-700">{{ $t('cookie use') }}</Link>
+                <Link target="_blank" :href="route('cookies.policy.index')" class="font-bold text-blue-500 hover:text-blue-700">{{ $t('cookie use') }}</Link>
             </p>
         </div>
 

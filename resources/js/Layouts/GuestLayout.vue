@@ -14,7 +14,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="min-h-screen bg-gradient-to-b from-black to-primaryDark" :dir="$page.props.locale == 'ar' ? 'rtl' : 'ltr'">
+    <div class="min-h-screen bg-gradient-to-b from-black to-primaryDark ltr:font-sans rtl:font-tahoma" :dir="$page.props.locale == 'ar' ? 'rtl' : 'ltr'">
         <div class="flex flex-col justify-between min-h-screen pt-6 space-y-8 sm:pt-0 ltr:font-sans rtl:font-tahoma">
             <GuestNavbar />
             <main class="flex justify-center my-4">
