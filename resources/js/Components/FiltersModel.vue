@@ -43,7 +43,7 @@ const distances = [5, 10, 20, 30, 40, 50];
                 <XMarkIcon class="w-4 h-4 text-white" />
             </button>
             <div class="p-6">
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-end">
                     <p class="absolute text-sm text-white inset-4">{{ $t('filter') }} </p>
                     <button class="text-primary" @click="reset">
                         <!-- <XMarkIcon class="inline w-4 h-4 mr-4" /> -->
