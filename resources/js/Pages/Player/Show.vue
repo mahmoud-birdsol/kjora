@@ -62,7 +62,7 @@ function reloadMedia() {
                     </template>
 
                 </div>
-                <div>
+                <div class="min-h-[350px] md:min-h-[550px]">
                     <FadeInTransition>
                         <template v-for="(tab, index) in tabs" :key="index">
                             <div v-if="tab.id === currentTabId">
