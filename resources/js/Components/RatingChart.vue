@@ -71,11 +71,11 @@ const options = {
     },
     stroke: {
         show: true,
-        colors: ['rgba(0,100,0)'],
+        colors: ['rgb(253,224,60)'],
 
     },
     fill: {
-        colors: ['rgba(0,100,0)'],
+        colors: ['rgb(253 ,224 ,71)'],
         opacity: 1,
         type: 'solid',
     },
@@ -118,7 +118,6 @@ const series = computed(() => {
 
 </script>
 <template>
-
     <apexchart width="100%" type="radar" :options="options" :series="series" v-if="labels.length"></apexchart>
     <div v-else class="text-sm font-normal text-gray-100 h-56 grid place-items-center normal-case">{{ $t('no rating categories for this position untill now') }}</div>
 </template>
@@ -133,18 +132,19 @@ const series = computed(() => {
 }
 
 .apexcharts-series path:nth-child(2) {
-    mix-blend-mode: multiply;
+    mix-blend-mode: lighten;
 }
 
 .apexcharts-datalabel {
     direction: ltr;
 }
+
 @media (max-width: 567px) {
-    .vue-apexcharts svg{
-        
+    .vue-apexcharts svg {
+
         transform: scale(1.5);
         transform-origin: top;
     }
-    
+
 }
 </style>
