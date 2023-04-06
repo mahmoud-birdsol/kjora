@@ -132,7 +132,7 @@ const series = computed(() => {
 }
 
 .apexcharts-series path:nth-child(2) {
-    mix-blend-mode: multiply;
+    mix-blend-mode: lighten;
 }
 
 .apexcharts-datalabel {
