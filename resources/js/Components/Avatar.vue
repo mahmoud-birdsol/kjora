@@ -105,18 +105,22 @@ function hideLightBox() {
     overflow: hidden;
     border-radius: 50%;
     aspect-ratio: 1/1;
-    border: 3px solid black
+    border: 3px solid black;
+    max-width: 250px;
 }
 
 [data-lightBox="avatar"] .vel-img-wrapper img {
-    max-width: 200px;
+
     height: 100%;
+    width: 100%;
     object-fit: cover;
 }
 
 /* @media (max-width:640px) { */
-    [data-lightBox="avatar"] .vel-toolbar .toolbar-btn__zoomin ,[data-lightBox="avatar"] .vel-toolbar .toolbar-btn__zoomout{
+[data-lightBox="avatar"] .vel-toolbar .toolbar-btn__zoomin,
+[data-lightBox="avatar"] .vel-toolbar .toolbar-btn__zoomout {
     display: none;
-    }
+}
+
 /* } */
 </style>
