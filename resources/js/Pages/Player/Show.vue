@@ -24,7 +24,7 @@ const currentTabId = ref(2)
 
 const tabs = computed(() => {
     return [
-        { name: 'performance', id: 1, component: PerformanceTab, compProps: { playerRating: props.playerRating?.toFixed(2) } },
+        { name: 'performance', id: 1, component: PerformanceTab, compProps: { playerRating: props.playerRating } },
         {
             name: 'gallery', id: 2, component: ProfileGallery, compProps:
                 { user: props.player, posts: props.posts, }
