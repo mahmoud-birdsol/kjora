@@ -182,7 +182,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function name(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->first_name . ' ' . $this->last_name
+            get: fn() => $this->first_name . ' ' . $this->last_name
         );
     }
 
@@ -191,12 +191,12 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
-    //    public function rating(): Attribute
-    //    {
-    //        return Attribute::make(
-    //            get: fn($value) => round($value)
-    //        );
-    //    }
+    public function rating(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => number_format($value , 2)
+        );
+    }
 
     /**
      * Get the user avatar url.
@@ -204,25 +204,27 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function avatarUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMedia('avatar')?->getFullUrl()
+            get: fn() => $this->getFirstMedia('avatar')?->getFullUrl()
         );
     }
+
     /**
      * Get the user avatar url.
      */
     public function avatarThumbUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMedia('avatar')?->getFullUrl('thumb')
+            get: fn() => $this->getFirstMedia('avatar')?->getFullUrl('thumb')
         );
     }
+
     /**
      * Get the user identity_front_image url.
      */
     public function identityFrontImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMedia('identity_front_image')?->getFullUrl()
+            get: fn() => $this->getFirstMedia('identity_front_image')?->getFullUrl()
         );
     }
 
@@ -232,7 +234,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function identityBackImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMedia('identity_back_image')?->getFullUrl()
+            get: fn() => $this->getFirstMedia('identity_back_image')?->getFullUrl()
         );
     }
 
@@ -242,7 +244,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function identitySelfieImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMedia('identity_selfie_image')?->getFullUrl()
+            get: fn() => $this->getFirstMedia('identity_selfie_image')?->getFullUrl()
         );
     }
 
@@ -252,7 +254,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function age(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->date_of_birth?->age,
+            get: fn($value) => $this->date_of_birth?->age,
         );
     }
 
@@ -262,7 +264,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function hasVerifiedIdentity(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->hasVerifiedPersonalIdentity()
+            get: fn($value) => $this->hasVerifiedPersonalIdentity()
         );
     }
 
@@ -272,11 +274,12 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function isFavorite(): Attribute
     {
         return Attribute::make(
-            get: fn () => Auth::check() && Auth::user() instanceof User
+            get: fn() => Auth::check() && Auth::user() instanceof User
                 ? Auth::user()->favorites->contains($this)
                 : false,
         );
     }
+
     /**
      * Get the user identety status .
      *
@@ -285,9 +288,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function identityStatus(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->hasVerifiedPersonalIdentity() ? 'Verified' : ($this->hasUploadedVerificationDocuments() ? 'Pending' : 'Please verify')
+            get: fn() => $this->hasVerifiedPersonalIdentity() ? 'Verified' : ($this->hasUploadedVerificationDocuments() ? 'Pending' : 'Please verify')
         );
     }
+
     /**
      * Get the advertisement clicks.
      */
@@ -481,7 +485,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function stateName(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->state?->name()
+            get: fn($value) => $this->state?->name()
         );
     }
 
@@ -493,7 +497,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function played(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->playerReviews()->where('is_attended', true)->count()
+            get: fn() => $this->playerReviews()->where('is_attended', true)->count()
         );
     }
 
@@ -505,7 +509,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function missed(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->playerReviews()->where('is_attended', false)->count()
+            get: fn() => $this->playerReviews()->where('is_attended', false)->count()
         );
     }
 
