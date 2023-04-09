@@ -108,7 +108,7 @@ function calcShouldRate() {
                         </span>
 
                         <span class="ml-2 font-bold text-md" :class="state == 'Free' ? 'text-gold' : 'text-primary'">{{
-                            player.rating?.toFixed(2) }}</span>
+                            player.rating }}</span>
                     </span>
                 </p>
             </div>
