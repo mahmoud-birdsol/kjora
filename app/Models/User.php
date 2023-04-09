@@ -194,7 +194,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function rating(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => round($value)
+            get: fn($value) => number_format($value , 2)
         );
     }
 
