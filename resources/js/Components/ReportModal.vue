@@ -53,7 +53,7 @@ const submit = () => {
                     <RadioGroup v-model="form.report_option_id" class=" [&_li]:py-3 [&_li]:rounded-full [&_li]:border-2 text-stone-500  flex flex-col gap-4 text-sm font-medium cursor-pointer">
                         <template v-for="option in options">
                             <RadioGroupOption v-slot="{ checked }" :value="option.id">
-                                <li class="text-black px-4 min-h-[60px]  flex items-center justify-center text-[10px]" :class="checked ? 'border-primary text-primary ' : 'border-black'"><div class="first-letter:capitalize text-justify">{{ option.body[$page.props.locale] }}</div></li>
+                                <li class="text-black px-4 min-h-[60px]  flex items-center justify-center text-sm" :class="checked ? 'border-primary text-primary ' : 'border-black'"><div class="text-justify first-letter:capitalize">{{ option.body[$page.props.locale] }}</div></li>
                             </RadioGroupOption>
                         </template>
                     </RadioGroup>
