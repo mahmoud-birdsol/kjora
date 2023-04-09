@@ -96,7 +96,7 @@ function setRates() {
                             </template>
                         </span>
 
-                        <span class="ml-2 font-bold text-md ">{{ review.player.rating }}</span>
+                        <span class="ml-2 font-bold text-md ">{{ review.player.rating?.toFixed(2) }}</span>
                     </span>
                     <span class="flex items-center text-xs text-stone-400">{{ $t('based on :count players', {
                         count:
