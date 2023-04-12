@@ -26,6 +26,8 @@ function copy() {
         emits('showCopied')
     })
 }
+
+console.log(url);
 </script>
 <template>
     <onClickOutside @trigger="showSocials = false">
@@ -37,7 +39,7 @@ function copy() {
                     <Facebook class="h-4 w-4" />
                     <span class="whitespace-nowrap">{{ $t('share to facebook') }}</span>
                 </a>
-                <a :href="'https://twitter.com/intent/tweet?hashtags=kjora&original_referer=' + url" target="_blank" class="relative flex items-center gap-2 [&>div]:hover:block" @click="showSocials = false">
+                <a :href="'https://twitter.com/intent/tweet?hashtags=kjora&text=' + url" target="_blank" class="relative flex items-center gap-2 [&>div]:hover:block" @click="showSocials = false">
                     <Twitter class="h-4 w-4" />
                     <span class="whitespace-nowrapp">{{ $t('share to twitter') }}</span>
                 </a>
