@@ -46,10 +46,10 @@ class ReportSubmittedNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject(__('New report submitted ⚠️' , [] , $notifiable->locale))
-            ->line($this->report->user->name . __(' has submitted a report.', [] , $notifiable->locale))
-            ->action(__('Review', [] , $notifiable->locale), 'nova/resources/reports/' . $this->report->id)
-            ->line(__('Thank you for using our application!', [] , $notifiable->locale));
+            ->subject(__('New report submitted ⚠️', [], $notifiable->locale))
+            ->line($this->report->user->name.__(' has submitted a report.', [], $notifiable->locale))
+            ->action(__('Review', [], $notifiable->locale), 'nova/resources/reports/'.$this->report->id)
+            ->line(__('Thank you for using our application!', [], $notifiable->locale));
     }
 
     /**
@@ -58,8 +58,8 @@ class ReportSubmittedNotification extends Notification implements ShouldQueue
     public function toNova(): NovaNotification
     {
         return (new NovaNotification)
-            ->message($this->report->user->name . __(' has submitted a report.'))
-            ->action(__('Review'), '/resources/reports/' . $this->report->id)
+            ->message($this->report->user->name.__(' has submitted a report.'))
+            ->action(__('Review'), '/resources/reports/'.$this->report->id)
             ->icon('check')
             ->type(__('success'));
     }

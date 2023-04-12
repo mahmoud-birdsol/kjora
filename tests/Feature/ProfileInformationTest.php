@@ -28,9 +28,8 @@ class ProfileInformationTest extends TestCase
             'last_name' => 'Name',
             'country_id' => $country->id,
             'club_id' => $club->id,
-            'position_id' => $position->id
+            'position_id' => $position->id,
         ]);
-
 
         $this->assertEquals('Test Name', $user->fresh()->username);
         $this->assertEquals('test@example.com', $user->fresh()->email);

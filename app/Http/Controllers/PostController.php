@@ -14,16 +14,16 @@ class PostController extends Controller
     /**
      * Show the post object
      *
-     * @param \App\Models\Post $post
      * @return \Inertia\Response
      */
-    public function show(Post $post , PostViewAction $postViewAction)
+    public function show(Post $post, PostViewAction $postViewAction)
     {
-        $data = Post::where('id' , $post->id)->with(['likes.user:id,username,first_name,last_name'])->first();
+        $data = Post::where('id', $post->id)->with(['likes.user:id,username,first_name,last_name'])->first();
         ($postViewAction)($post);
+
         return Inertia::render('Gallery/Show', [
             'post' => $data,
-            'user' => $post->user
+            'user' => $post->user,
         ]);
     }
 
@@ -45,8 +45,6 @@ class PostController extends Controller
     /**
      * Delete the post
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Post $post
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Request $request, Post $post)

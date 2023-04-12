@@ -15,29 +15,23 @@ class PrivacyPolicyController extends Controller
 {
     /**
      * Display policy
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Inertia\Response
      */
     public function index(Request $request): Response
     {
         return Inertia::render('PrivacyPolicy', [
-            'policy' => PrivacyPolicy::latest()->whereNotNull('published_at')->orderBy('published_at', 'desc')->first()
+            'policy' => PrivacyPolicy::latest()->whereNotNull('published_at')->orderBy('published_at', 'desc')->first(),
         ]);
     }
+
     /**
      * verify policy.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param PrivacyPolicy $privacyPolicy
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(
         Request $request,
         PrivacyPolicy $privacyPolicy,
         AssignThePrivacyVersion $assignThePrivacyVersion
     ): RedirectResponse {
-        $user =  $request->user();
+        $user = $request->user();
         ($assignThePrivacyVersion)($user, $privacyPolicy);
         FlashMessage::make()->success(
             message: __('Private Policy approved successfully')

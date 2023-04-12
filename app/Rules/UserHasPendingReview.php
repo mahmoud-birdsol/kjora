@@ -7,14 +7,11 @@ use Illuminate\Contracts\Validation\Rule;
 
 class UserHasPendingReview implements Rule
 {
-    /**
-     * @var \App\Models\User
-     */
     private User $user;
+
     /**
      * Create a new rule instance.
      *
-     * @param \App\Models\User $user
      * @return void
      */
     public function __construct(User $user)

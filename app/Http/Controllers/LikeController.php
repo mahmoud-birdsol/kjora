@@ -25,6 +25,7 @@ class LikeController extends Controller
         if ($like->likeable->owner()->id != $request->user()->id) {
             $like->likeable->owner()->notify(new LikeCreatedNotification($like->likeable, $like));
         }
+
         return redirect()->back();
     }
 

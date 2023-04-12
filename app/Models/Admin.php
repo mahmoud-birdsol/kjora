@@ -32,7 +32,7 @@ class Admin extends Authenticatable
         'email',
         'password',
         'joined_platform_at',
-        'locale'
+        'locale',
     ];
 
     /**

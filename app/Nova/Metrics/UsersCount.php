@@ -45,6 +45,7 @@ class UsersCount extends Value
     {
         return now()->addMinutes(5);
     }
+
     /**
      * Set the label for the metric.
      *

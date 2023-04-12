@@ -15,29 +15,23 @@ class CookiesPolicyController extends Controller
 {
     /**
      * Display cookie
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Inertia\Response
      */
     public function index(Request $request): Response
     {
         return Inertia::render('CookiesPolicy', [
-            'cookies' => CookiePolicy::latest()->whereNotNull('published_at')->orderBy('published_at', 'desc')->first()
+            'cookies' => CookiePolicy::latest()->whereNotNull('published_at')->orderBy('published_at', 'desc')->first(),
         ]);
     }
+
     /**
      * verify cookie.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param CookiePolicy $cookiePolicy
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(
         Request $request,
         CookiePolicy $cookiePolicy,
         AssignTheCookiesVersion $assignTheCookiesVersion
     ): RedirectResponse {
-        $user =  $request->user();
+        $user = $request->user();
         ($assignTheCookiesVersion)($user, $cookiePolicy);
         FlashMessage::make()->success(
             message: __('Cookies approved successfully')

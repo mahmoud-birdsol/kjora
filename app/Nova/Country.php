@@ -36,15 +36,15 @@ class Country extends Resource
     public static $search = [
         'id', 'name', 'code',
     ];
+
     /**
      * Get the displayable label of the resource.
-     *
-     * @return string
      */
     public static function label(): string
     {
-        return __("Countries");
+        return __('Countries');
     }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -55,23 +55,23 @@ class Country extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make(__('Name'),'name')
+            Text::make(__('Name'), 'name')
                 ->showOnPreview()
                 ->rules('required', 'max:254'),
 
-            Text::make(__('Code'),'Code')
+            Text::make(__('Code'), 'Code')
                 ->nullable()
                 ->showOnPreview()
                 ->hideFromIndex()
                 ->rules('nullable', 'max:254'),
 
-            Text::make(__('Calling Code'),'calling_code')
+            Text::make(__('Calling Code'), 'calling_code')
                 ->nullable()
                 ->showOnPreview()
                 ->hideFromIndex()
                 ->rules('nullable', 'max:254'),
 
-            Images::make(__('Flag'),'flag')
+            Images::make(__('Flag'), 'flag')
                 ->showOnPreview()
                 ->croppingConfigs(['aspectRatio' => 1 / 1])
                 ->mustCrop()

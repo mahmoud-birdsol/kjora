@@ -8,8 +8,6 @@ class PostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -25,13 +23,13 @@ class PostRequest extends FormRequest
     {
         return [
             'caption' => [
-                'nullable'
+                'nullable',
             ],
 
             'cover' => [
                 'required',
-                'max:2048'
-            ]
+                'max:2048',
+            ],
         ];
     }
 }

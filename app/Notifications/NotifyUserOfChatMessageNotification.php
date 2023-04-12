@@ -54,12 +54,11 @@ class NotifyUserOfChatMessageNotification extends Notification implements Should
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject(__('New Chat Message Notification', [] , $notifiable->locale))
-            ->line(__('Dear ' , [] , $notifiable->locale) . $this->user->name)
-            ->line(__('This is to notify you that a new chat message has been created on your platform.', [] , $notifiable->locale))
-            ->action(__('Chat Now', [] , $notifiable->locale), url(route('chats.show', $this->conversation)))
-            ->line(__('Thank you for using our application!' ,[] , $notifiable->locale));
-
+            ->subject(__('New Chat Message Notification', [], $notifiable->locale))
+            ->line(__('Dear ', [], $notifiable->locale).$this->user->name)
+            ->line(__('This is to notify you that a new chat message has been created on your platform.', [], $notifiable->locale))
+            ->action(__('Chat Now', [], $notifiable->locale), url(route('chats.show', $this->conversation)))
+            ->line(__('Thank you for using our application!', [], $notifiable->locale));
     }
 
     /**
@@ -73,11 +72,11 @@ class NotifyUserOfChatMessageNotification extends Notification implements Should
         return (new NotificationData(
             displayType: 'simple',
             state: 'success',
-            title: __('Chat Notification', [] , $notifiable->locale),
-            subtitle: __('User ') . $this->notifier->name . __('has sent you a message', [] , $notifiable->locale),
+            title: __('Chat Notification', [], $notifiable->locale),
+            subtitle: __('User ').$this->notifier->name.__('has sent you a message', [], $notifiable->locale),
             actionData: new RouteActionData(
                 route: route('chats.show', $this->conversation),
-                text: __('Chat Now', [] , $notifiable->locale),
+                text: __('Chat Now', [], $notifiable->locale),
             ),
         ))->toArray();
     }

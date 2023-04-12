@@ -3,10 +3,8 @@
 namespace App\Events;
 
 use App\Models\Message;
-use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -16,9 +14,6 @@ class MessageReadEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    /**
-     * @var \App\Models\Message
-     */
     private Message $message;
 
     /**
@@ -33,8 +28,6 @@ class MessageReadEvent implements ShouldBroadcast
 
     /**
      * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|\Illuminate\Broadcasting\PrivateChannel|array
      */
     public function broadcastOn(): Channel|PrivateChannel|array
     {
@@ -43,8 +36,6 @@ class MessageReadEvent implements ShouldBroadcast
 
     /**
      * The event's broadcast name.
-     *
-     * @return string
      */
     public function broadcastAs(): string
     {

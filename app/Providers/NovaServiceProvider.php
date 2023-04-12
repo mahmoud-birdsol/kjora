@@ -2,14 +2,13 @@
 
 namespace App\Providers;
 
-use App\Nova\Comment;
-use App\Nova\Contact;
-use App\Nova\Conversation;
-use App\Nova\Invitation;
 use App\Nova\Admin;
 use App\Nova\Advertisement;
 use App\Nova\Click;
 use App\Nova\Club;
+use App\Nova\Comment;
+use App\Nova\Contact;
+use App\Nova\Conversation;
 use App\Nova\CookiePolicy;
 use App\Nova\Country;
 use App\Nova\Dashboards\AdminDashboard;
@@ -17,13 +16,13 @@ use App\Nova\Dashboards\AdvertisementDashboard;
 use App\Nova\Dashboards\Main;
 use App\Nova\Dashboards\UserDashboard;
 use App\Nova\Impression;
+use App\Nova\Invitation;
 use App\Nova\Label;
 use App\Nova\Lenses\ActiveAdvertisement;
 use App\Nova\Lenses\ArchivedAdvertisement;
 use App\Nova\Lenses\ExpiringAdvertisement;
 use App\Nova\Lenses\UnverifiedUsers;
 use App\Nova\Like;
-use App\Nova\MediaLibrary;
 use App\Nova\Message;
 use App\Nova\Position;
 use App\Nova\Post;
@@ -37,7 +36,6 @@ use App\Nova\Social;
 use App\Nova\Stadium;
 use App\Nova\TermsAndConditions;
 use App\Nova\User;
-use App\Nova\Venue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
@@ -149,7 +147,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
                 ])->icon('envelope')->collapsable(),
 
-
                 MenuSection::make(__('Reports'), [
                     MenuItem::resource(ReportOption::class),
                     MenuItem::resource(Report::class),
@@ -157,7 +154,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
                 MenuItem::make(__('Language'))
                     ->method('POST')
-                    ->path(route('nova.language', __('Locale')))->external()
+                    ->path(route('nova.language', __('Locale')))->external(),
             ];
         });
 

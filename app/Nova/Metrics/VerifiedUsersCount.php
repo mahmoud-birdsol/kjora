@@ -45,6 +45,7 @@ class VerifiedUsersCount extends Value
     {
         return now()->addMinutes(5);
     }
+
     /**
      * Sey the label for the metric.
      *

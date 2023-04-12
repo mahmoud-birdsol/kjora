@@ -2,17 +2,16 @@
 
 namespace App\Actions\Verification;
 
-use App\Actions\Verification\DeleteExistingVerificationCodesForNumber;
-use App\Actions\Verification\GenerateRandomCodeNumber;
-use App\Actions\Verification\SendVerificationCodeSMSNotification;
-use App\Actions\Verification\StoreVerificationCodeInDatabase;
 use App\Models\User;
 
 class CreateVerificationCode
 {
     private DeleteExistingVerificationCodesForNumber $deleteExistingVerificationCodesForNumber;
+
     private GenerateRandomCodeNumber $generateRandomCodeNumber;
+
     private StoreVerificationCodeInDatabase $storeVerificationCodeInDatabase;
+
     private SendVerificationCodeSMSNotification $sendVerificationCodeSMSNotification;
 
     public function __construct(
@@ -30,8 +29,6 @@ class CreateVerificationCode
     /**
      * Create a verification code for the mobile number
      *
-     * @param User $user
-     * @return void
      * @throws \Exception
      */
     public function __invoke(User $user): void

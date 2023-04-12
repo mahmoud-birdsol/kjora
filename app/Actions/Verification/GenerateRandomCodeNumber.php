@@ -7,7 +7,6 @@ class GenerateRandomCodeNumber
     /**
      * Generates a random code
      *
-     * @return int
      * @throws \Exception
      */
     public function __invoke(): int

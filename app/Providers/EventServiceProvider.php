@@ -5,7 +5,6 @@ namespace App\Providers;
 use App\Events\AdvertisementRetrieved;
 use App\Listeners\RecordAdvertisementImpression;
 use App\Listeners\SendVerificationCodeNotification;
-use App\Listeners\StoreVerifyTermsAndCondition;
 use App\Listeners\VerifyCookies;
 use App\Listeners\VerifyPrivacyPolicy;
 use App\Listeners\VerifyTermsAndCondition;
@@ -32,7 +31,6 @@ class EventServiceProvider extends ServiceProvider
         AdvertisementRetrieved::class => [
             RecordAdvertisementImpression::class,
         ],
-
 
     ];
 

@@ -35,15 +35,15 @@ class Review extends Resource
     public static $search = [
         'id',
     ];
+
     /**
      * Get the displayable label of the resource.
-     *
-     * @return string
      */
     public static function label(): string
     {
-        return __("Reviews");
+        return __('Reviews');
     }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -87,7 +87,7 @@ class Review extends Resource
                     'exists:invitations,id',
                 ]),
 
-            DateTime::make(__('Reviewed At'),'reviewed_at')
+            DateTime::make(__('Reviewed At'), 'reviewed_at')
                 ->nullable()
                 ->sortable()
                 ->filterable()

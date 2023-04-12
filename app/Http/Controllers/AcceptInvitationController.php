@@ -6,10 +6,8 @@ use App\Actions\CreateConversationAction;
 use App\Models\Invitation;
 use App\Notifications\GameScheduledNotification;
 use App\Notifications\InvitationAcceptedNotification;
-use DateTime;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Spatie\IcalendarGenerator\Components\Event;
 
 class AcceptInvitationController extends Controller
 {
@@ -27,7 +25,6 @@ class AcceptInvitationController extends Controller
 
         $invitation->invitingPlayer->notify(new InvitationAcceptedNotification($invitation));
         $invitation->invitedPlayer->notify(new GameScheduledNotification($invitation));
-
 
         return redirect()->route('invitation.index');
     }

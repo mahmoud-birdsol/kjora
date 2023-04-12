@@ -27,10 +27,12 @@ class Social extends Resource
      * @var string
      */
     public static $title = 'name';
+
     public static function label(): string
     {
-        return __("Socials");
+        return __('Socials');
     }
+
     /**
      * The columns that should be searched.
      *
@@ -50,7 +52,7 @@ class Social extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make(__('Name'),'name')
+            Text::make(__('Name'), 'name')
                 ->required()
                 ->showOnPreview()
                 ->sortable()
@@ -63,7 +65,7 @@ class Social extends Resource
                 ->copyable()
                 ->rules('required', 'string', 'max:255', 'url'),
 
-            Images::make(__('Icon'),'icon')
+            Images::make(__('Icon'), 'icon')
                 ->showOnPreview()
                 ->rules('required'),
 

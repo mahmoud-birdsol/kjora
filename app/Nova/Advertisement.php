@@ -11,7 +11,6 @@ use App\Nova\Metrics\ExpiringAdvertisementTable;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
@@ -44,10 +43,9 @@ class Advertisement extends Resource
     public static $search = [
         'id', 'name', 'link',
     ];
+
     /**
      * Get the displayable label of the resource.
-     *
-     * @return string
      */
     public static function label(): string
     {
@@ -56,8 +54,6 @@ class Advertisement extends Resource
 
     /**
      * Get the displayable singular label of the resource.
-     *
-     * @return string
      */
     public static function singularLabel(): string
     {
@@ -76,7 +72,7 @@ class Advertisement extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make(__('country'),'country',Country::class)
+            BelongsTo::make(__('country'), 'country', Country::class)
                 ->showCreateRelationButton()
                 ->showOnPreview()
                 ->sortable()
@@ -84,12 +80,12 @@ class Advertisement extends Resource
                 ->searchable()
                 ->rules('required'),
 
-            Text::make(__('Name'),'name')
+            Text::make(__('Name'), 'name')
                 ->showOnPreview()
                 ->required()
                 ->rules('required', 'max:254'),
 
-            URL::make(__('Link'),'link')
+            URL::make(__('Link'), 'link')
                 ->showOnPreview()
                 ->required()
                 ->rules('required', 'url', 'max:254'),
@@ -99,7 +95,7 @@ class Advertisement extends Resource
                 ->onlyOnDetail()
                 ->copyable(),
 
-            Number::make(__('Priority') , 'priority')
+            Number::make(__('Priority'), 'priority')
                 ->showOnPreview()
                 ->required()
                 ->sortable()
@@ -107,12 +103,12 @@ class Advertisement extends Resource
                 ->rules('required', 'integer')
                 ->help('This will determine the display order of the advertisement in relation to other advertisements for the specified country if the priority is duplicated the advertisement ID will determine the order.'),
 
-            DateTime::make(__('Start Date'),'start_date')
+            DateTime::make(__('Start Date'), 'start_date')
                 ->showOnPreview()
                 ->required()
                 ->rules('required'),
 
-            DateTime::make(__('End Date'),'end_date')
+            DateTime::make(__('End Date'), 'end_date')
                 ->showOnPreview()
                 ->required()
                 ->rules('required'),

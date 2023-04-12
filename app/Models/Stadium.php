@@ -24,7 +24,7 @@ class Stadium extends Model
         'longitude',
         'latitude',
         'approved_at',
-        'user_id'
+        'user_id',
     ];
 
     /**
@@ -38,13 +38,11 @@ class Stadium extends Model
 
     public function formattedAddress(): string
     {
-        return $this->street_address . ' ' . $this->city . ', ' . $this->country;
+        return $this->street_address.' '.$this->city.', '.$this->country;
     }
 
     /**
      * Get the user who created the stadium
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(): BelongsTo
     {

@@ -20,7 +20,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         Translatable::defaultLocales(['en', 'ar']);
-
     }
 
     /**

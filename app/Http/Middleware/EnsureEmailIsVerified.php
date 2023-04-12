@@ -2,9 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\User;
 use App\Services\FlashMessage;
-
 use Closure;
 use Illuminate\Http\Request;
 
@@ -21,7 +19,7 @@ class EnsureEmailIsVerified
         if (! $request->user()->hasVerifiedEmail()) {
             FlashMessage::make()->warning(
                 message: __('Please verify your email through the link sent to your email.')
-            )->action(route('verification.notice') , __('Request another email'))->closeable()->send();
+            )->action(route('verification.notice'), __('Request another email'))->closeable()->send();
         }
 
         return $next($request);

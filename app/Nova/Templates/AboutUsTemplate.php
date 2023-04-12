@@ -7,12 +7,11 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Murdercode\TinymceEditor\TinymceEditor;
 use Whitecube\NovaPage\Pages\Template;
 
-class AboutUsTemplate extends Template {
-
+class AboutUsTemplate extends Template
+{
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest $request
      * @return array
      */
     public function fields(NovaRequest $request)
@@ -27,14 +26,13 @@ class AboutUsTemplate extends Template {
             TinymceEditor::make(__('Body En'), 'body_en')
                 ->rules('required'),
             TinymceEditor::make(__('Body Ar'), 'body_ar')
-                ->rules('required')
+                ->rules('required'),
         ];
     }
 
     /**
      * Get the cards available for the request.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
     public function cards(NovaRequest $request)

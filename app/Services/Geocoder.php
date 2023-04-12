@@ -1,17 +1,21 @@
 <?php
+
 namespace App\Services;
 
 use GuzzleHttp\Client;
 
-class Geocoder {
+class Geocoder
+{
     /**
      * holds google api key
+     *
      * @var string
      */
     private $googleApiKey;
 
     /**
      * guzzle client
+     *
      * @var Client
      */
     private $client;
@@ -19,7 +23,7 @@ class Geocoder {
     /**
      * base URL
      */
-    const API_BASE_URL = "https://maps.googleapis.com/maps/api/geocode/";
+    const API_BASE_URL = 'https://maps.googleapis.com/maps/api/geocode/';
 
     /**
      * saves google api key and initializes guzzle client
@@ -34,19 +38,20 @@ class Geocoder {
 
     /**
      * makes request to google maps api to fetch coordinates of location
-     * @param  String $location - location to be converted to coordinates
+     *
+     * @param  string  $location - location to be converted to coordinates
      * @return array            - longitude and latitude of location
      */
     public function getCoordinates($location)
     {
-        $queryString = $this->constructQueryString($location, "geocoding");
+        $queryString = $this->constructQueryString($location, 'geocoding');
         $response = $this->client->get($queryString);
         $results = json_decode($response->getBody(), true, 512);
 
         if (isset($results['error_message'])) {
             return null;
         }
-        if(isset($results['status']) && $results['status'] == 'ZERO_RESULTS'){
+        if (isset($results['status']) && $results['status'] == 'ZERO_RESULTS') {
             return null;
         }
 
@@ -56,16 +61,17 @@ class Geocoder {
     /**
      * makes request to googlemaps api to fetch address of
      * coordinates using reverse geocoding
-     * @param  float $longitude   - longitudinal coordinate
-     * @param  float $latitude    - latitudinal coordinate
-     * @return String             - plain address of coordinates
+     *
+     * @param  float  $longitude   - longitudinal coordinate
+     * @param  float  $latitude    - latitudinal coordinate
+     * @return string             - plain address of coordinates
      */
     public function getAddress($longitude, $latitude)
     {
         $queryString = $this->constructQueryString([
             'lng' => $longitude,
-            'lat' => $latitude
-        ], "reverse_geocoding");
+            'lat' => $latitude,
+        ], 'reverse_geocoding');
 
         $response = $this->client->get($queryString);
         $results = json_decode($response->getBody(), true, 512);
@@ -79,10 +85,11 @@ class Geocoder {
 
     /**
      * fetches the distance between to locations (points)
+     *
      * @param  array  $point1     - coordinates of first location
      * @param  array  $point2     - coordinates of second location
      * @param  string  $unit      - unit of location (km/mi/nmi)
-     * @param  integer $decimals  - precision
+     * @param  int  $decimals  - precision
      * @return string             - distance
      */
     public function getDistanceBetween($point1, $point2, $unit = 'km', $decimals = 2)
@@ -111,8 +118,9 @@ class Geocoder {
     /**
      * calculates the distance between two points using
      * Haversine formula
-     * @param  float $point1  - coordinates of first point
-     * @param  float $point2  - coordinates of second point
+     *
+     * @param  float  $point1  - coordinates of first point
+     * @param  float  $point2  - coordinates of second point
      * @return float          - distance between both points
      */
     private function calcDistance($point1, $point2)
@@ -126,17 +134,18 @@ class Geocoder {
 
     /**
      * constructs the query string used in the google api request
+     *
      * @param  string/array $locationOrCoordinates  - location or coordinates
-     * @param  string $type                         - geocoding request or a reverse geocoding request
+     * @param  string  $type                         - geocoding request or a reverse geocoding request
      * @return string
      */
     private function constructQueryString($locationOrCoordinates, $type)
     {
         switch($type) {
-            case "geocoding":
+            case 'geocoding':
                 $queryString = 'json?address='.urlencode($locationOrCoordinates).'&key='.$this->googleApiKey;
                 break;
-            case "reverse_geocoding":
+            case 'reverse_geocoding':
                 $lat = $locationOrCoordinates['lat'];
                 $lng = $locationOrCoordinates['lng'];
                 $queryString = 'json?latlng='.$lat.','.$lng.'&sensor=true&key='.$this->googleApiKey;
@@ -147,6 +156,7 @@ class Geocoder {
 
     /**
      * returns options for the guzzle client
+     *
      * @return array
      */
     private function guzzleClientOptions()
@@ -155,7 +165,7 @@ class Geocoder {
             'base_uri' => self::API_BASE_URL,
             'defaults' => [
                 'verify' => 'true',
-            ]
+            ],
         ];
     }
 }

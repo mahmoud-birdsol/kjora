@@ -8,8 +8,6 @@ class GalleryUploadRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -26,8 +24,8 @@ class GalleryUploadRequest extends FormRequest
         return [
             'gallery' => [
                 'required',
-                'max:2048'
-            ]
+                'max:2048',
+            ],
         ];
     }
 }

@@ -8,8 +8,6 @@ class ContactRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -26,25 +24,25 @@ class ContactRequest extends FormRequest
         return [
             'first_name' => [
                 'required',
-                'string'
+                'string',
             ],
             'last_name' => [
                 'required',
-                'string'
+                'string',
             ],
             'email' => [
                 'required',
                 'email',
-                'string'
+                'string',
             ],
             'subject' => [
                 'required',
-                'string'
+                'string',
             ],
             'message' => [
                 'required',
-                'string'
-            ]
+                'string',
+            ],
         ];
     }
 }

@@ -46,10 +46,10 @@ class IdentityVerificationRequest extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject($this->user->name.__(' has uploaded their identification documents.', [] , $notifiable->locale ))
-            ->line($this->user->name.__(' has uploaded their identification documents and are waiting for review.', [] , $notifiable->locale ))
-            ->action(__('Review', [] , $notifiable->locale ), url('/nova/resources/users/'.$this->user->id))
-            ->line(__('Thank you for using our application!', [] , $notifiable->locale ));
+            ->subject($this->user->name.__(' has uploaded their identification documents.', [], $notifiable->locale))
+            ->line($this->user->name.__(' has uploaded their identification documents and are waiting for review.', [], $notifiable->locale))
+            ->action(__('Review', [], $notifiable->locale), url('/nova/resources/users/'.$this->user->id))
+            ->line(__('Thank you for using our application!', [], $notifiable->locale));
     }
 
     /**
@@ -58,8 +58,8 @@ class IdentityVerificationRequest extends Notification implements ShouldQueue
     public function toNova($notifiable): NovaNotification
     {
         return (new NovaNotification)
-            ->message($this->user->name.__(' has uploaded their identification documents.', [] , $notifiable->locale ))
-            ->action(__('Review', [] , $notifiable->locale ), '/resources/users/'.$this->user->id)
+            ->message($this->user->name.__(' has uploaded their identification documents.', [], $notifiable->locale))
+            ->action(__('Review', [], $notifiable->locale), '/resources/users/'.$this->user->id)
             ->icon('check')
             ->type('success');
     }

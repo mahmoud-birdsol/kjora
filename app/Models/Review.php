@@ -21,7 +21,7 @@ class Review extends Model
         'player_id',
         'invitation_id',
         'reviewed_at',
-        'is_attended'
+        'is_attended',
     ];
 
     /**

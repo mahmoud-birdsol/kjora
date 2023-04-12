@@ -12,7 +12,6 @@ class SetLocaleMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
@@ -20,12 +19,12 @@ class SetLocaleMiddleware
     {
         app()->setLocale(config('app.locale'));
 
-        if(Auth::check()){
+        if (Auth::check()) {
             app()->setLocale(auth()->user()->locale);
-        }elseif(session()->has('locale')) {
+        } elseif (session()->has('locale')) {
             app()->setLocale(session('locale'));
         }
-        if (auth('admin')->user()){
+        if (auth('admin')->user()) {
             app()->setLocale(auth('admin')->user()->locale);
 
             if (app()->getLocale() == 'ar') {

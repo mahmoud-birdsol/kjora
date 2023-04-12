@@ -12,10 +12,6 @@ class AdvertisementController extends Controller
 {
     /**
      * Record the click on the advertisement and redirect to the advertisement url
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Advertisement $advertisement
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function show(Request $request, Advertisement $advertisement): RedirectResponse
     {
@@ -23,7 +19,7 @@ class AdvertisementController extends Controller
             'advertisement_id' => $advertisement->id,
             'ip' => $request->user()->last_known_ip,
             'source' => $request->input('source'),
-            'user_id' => $request->user()->id
+            'user_id' => $request->user()->id,
         ]);
 
         return redirect()->away($advertisement->link);
