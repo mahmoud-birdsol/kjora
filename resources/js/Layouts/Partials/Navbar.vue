@@ -72,32 +72,39 @@ function markAllNotificationsAsRead() {
                 <div class="hidden md:flex">
                     <!-- Navigation Links -->
                     <div class="items-center hidden gap-2 lg:gap-8 sm:-my-px md:flex">
-                        <NavLink :href="route('home')" :active="route().current('home')" class="">
+                        <NavLink :href="route('home')"
+                                 :active="route().current('home')"
+                                 class="">
                             <HomeIcon class="w-4 h-4 text-primary" />
                             <span class="">
                                 {{ $t('home') }}
                             </span>
                         </NavLink>
-                        <NavLink :href="route('chats.index')" :active="route().current('chats.index') || route().current('chats.show')" class="">
+                        <NavLink :href="route('chats.index')"
+                                 :active="route().current('chats.index') || route().current('chats.show')"
+                                 class="">
                             <ChatIcon class="w-4 h-4 text-primary" />
                             <span>
                                 {{ $t('chat') }}
                             </span>
                         </NavLink>
-                        <NavLink :href="route('favorites.index')" :active="route().current('favorites.index')">
+                        <NavLink :href="route('favorites.index')"
+                                 :active="route().current('favorites.index')">
                             <HeartIcon class="w-4 h-4 text-primary" />
                             <span>
                                 {{ $t('favorites') }}
                             </span>
                         </NavLink>
-                        <NavLink :href="route('invitation.index')" :active="route().current('invitation.index') || route().current('hire.index')">
+                        <NavLink :href="route('invitation.index')"
+                                 :active="route().current('invitation.index') || route().current('hire.index')">
                             <FootBallIcon class="w-4 h-4 fill-primary" />
 
                             <span>
                                 {{ $t('invitations') }}
                             </span>
                         </NavLink>
-                        <NavLink :href="route('more')" :active="route().current('more')">
+                        <NavLink :href="route('more')"
+                                 :active="route().current('more')">
                             <EllipsisHorizontalCircleIcon class="w-4 h-4 text-primary" />
                             <span>
                                 {{ $t('more') }}
@@ -106,7 +113,8 @@ function markAllNotificationsAsRead() {
                     </div>
                 </div>
                 <div class="flex items-center md:gap-x-3 max-md:justify-between max-md:w-full ">
-                    <button class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md md:hidden hover:text-gray-500 hover:bg-gray-100 focus:outline-none hover:bg-transparent focus:text-gray-500" @click="showingNavigationDropdown = !showingNavigationDropdown">
+                    <button class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md md:hidden hover:text-gray-500 hover:bg-gray-100 focus:outline-none hover:bg-transparent focus:text-gray-500"
+                            @click="showingNavigationDropdown = !showingNavigationDropdown">
                         <Bars3Icon class="w-6 h-6" />
                     </button>
                     <div class="flex items-center justify-between gap-2">
@@ -115,28 +123,39 @@ function markAllNotificationsAsRead() {
                             <span class="bg-black rounded-full">
                                 <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                             </span>
-                            <Link class="uppercase" :href="route('upgrade')">{{ $t('upgrade') }}</Link>
+                            <Link class="uppercase"
+                                  :href="route('upgrade')">{{ $t('upgrade') }}</Link>
                         </button>
                         <!-- user city  -->
                         <div class="flex items-center gap-1 rtl:flex-row-reverse ">
                             <MapPinIcon class="w-4 h-4 text-primary" />
-                            <span class="text-white w-max">{{ currentUser.current_city?.split(' ')[0] }}</span>
+                            <span class="text-white w-max">{{ currentUser.current_city }}</span>
                         </div>
                         <!-- Settings Dropdown -->
                         <div class="relative ">
-                            <Link :href="route('profile.show')" class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
-                            <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url" :username="$page.props.auth.user.name" :border="true" border-color="primary" size="sm" :enable-light-box="false" />
+                            <Link :href="route('profile.show')"
+                                  class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
+                            <Avatar :id="$page.props.auth.user.id"
+                                    :image-url="$page.props.auth.user.avatar_url"
+                                    :username="$page.props.auth.user.name"
+                                    :border="true"
+                                    border-color="primary"
+                                    size="sm"
+                                    :enable-light-box="false" />
                             </Link>
                         </div>
 
                         <!-- Notifications Dropdown -->
                         <div class="relative">
-                            <Dropdown :align="locale == 'en' ? 'right' : 'left'" width="96">
+                            <Dropdown :align="locale == 'en' ? 'right' : 'left'"
+                                      width="96">
                                 <template #trigger>
-                                    <button class="text-white " @click="markAllNotificationsAsRead">
+                                    <button class="text-white "
+                                            @click="markAllNotificationsAsRead">
                                         <div class="relative">
                                             <BellIcon class="w-6 h-6 text-white"></BellIcon>
-                                            <div v-show="showNotificationIndicator" class="absolute top-0 grid w-2 h-2 p-1 text-xs rounded-full bg-primary -right-0 place-items-center">
+                                            <div v-show="showNotificationIndicator"
+                                                 class="absolute top-0 grid w-2 h-2 p-1 text-xs rounded-full bg-primary -right-0 place-items-center">
                                                 <!-- <span class="text-xs origin-center ">{{ $page.props.notifications.length }}</span> -->
                                             </div>
                                         </div>
@@ -150,7 +169,8 @@ function markAllNotificationsAsRead() {
                                     </div>
 
                                     <div v-if="$page.props.notifications.length">
-                                        <ul role="list" class="divide-y divide-gray-200 max-h-[calc(100dvh-200px)] overflow-y-auto">
+                                        <ul role="list"
+                                            class="divide-y divide-gray-200 max-h-[calc(100dvh-200px)] overflow-y-auto">
                                             <template v-for="notification in $page.props.notifications">
                                                 <NotificationComponent :notification="notification" />
                                             </template>
@@ -164,7 +184,8 @@ function markAllNotificationsAsRead() {
                                     </div>
 
                                     <div class="block px-4 py-2 text-xs text-center ">
-                                        <Link :href="route('notification.index')" class="text-primary hover:text-primaryDark">
+                                        <Link :href="route('notification.index')"
+                                              class="text-primary hover:text-primaryDark">
                                         {{ $t('view-all') }}
                                         </Link>
                                     </div>
@@ -179,36 +200,44 @@ function markAllNotificationsAsRead() {
 
         <!-- Responsive Navigation Menu -->
         <!-- Responsive Navigation Menu -->
-        <div class="fixed top-0 bottom-0 left-0 right-0 z-40 bg-black bg-opacity-50" :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }" @click="showingNavigationDropdown = false"></div>
+        <div class="fixed top-0 bottom-0 left-0 right-0 z-40 bg-black bg-opacity-50"
+             :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }"
+             @click="showingNavigationDropdown = false"></div>
         <SlideInTransition>
-            <div class="pt-2 pb-3 space-y-1 fixed top-0  bg-black h-full w-[max(20em,50%)] z-50" v-if="showingNavigationDropdown">
+            <div class="pt-2 pb-3 space-y-1 fixed top-0  bg-black h-full w-[max(20em,50%)] z-50"
+                 v-if="showingNavigationDropdown">
                 <div class="flex">
-                    <XMarkIcon class="w-5 m-3 text-white mis-auto" @click="showingNavigationDropdown = false" />
+                    <XMarkIcon class="w-5 m-3 text-white mis-auto"
+                               @click="showingNavigationDropdown = false" />
                 </div>
 
                 <!-- Responsive Settings Options -->
-                <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
-                    <HomeIcon class="w-4 h-4 text-primary" />
-                    <span>{{ $t('home') }}</span>
-                </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('chats.index')" :active="route().current('chats.index') || route().current('chats.show')">
-                    <ChatIcon class="w-4 h-4 text-primary" />
-                    <span>{{ $t('chat') }}</span>
-                </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('invitation.index')" :active="route().current('invitation.index') || route().current('hire.index')">
-                    <FootBallIcon class="w-4 fill-primary aspect-square" />
-                    <span>{{ $t('invitations') }}</span>
-                </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('favorites.index')" :active="route().current('favorites.index')">
-                    <HeartIcon class="w-4 h-4 text-primary" />
-                    <span>{{ $t('favorites') }}</span>
-                </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('more')" :active="route().current('more')">
-                    <EllipsisHorizontalCircleIcon class="w-4 h-4 text-primary" />
-                    <span>{{ $t('more') }}</span>
-                </ResponsiveNavLink>
+                <ResponsiveNavLink :href="route('home')"
+                                   :active="route().current('home')">
+                <HomeIcon class="w-4 h-4 text-primary" />
+                <span>{{ $t('home') }}</span>
+            </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('chats.index')"
+                               :active="route().current('chats.index') || route().current('chats.show')">
+                <ChatIcon class="w-4 h-4 text-primary" />
+                <span>{{ $t('chat') }}</span>
+            </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('invitation.index')"
+                               :active="route().current('invitation.index') || route().current('hire.index')">
+                <FootBallIcon class="w-4 fill-primary aspect-square" />
+                <span>{{ $t('invitations') }}</span>
+            </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('favorites.index')"
+                               :active="route().current('favorites.index')">
+                <HeartIcon class="w-4 h-4 text-primary" />
+                <span>{{ $t('favorites') }}</span>
+            </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('more')"
+                               :active="route().current('more')">
+                <EllipsisHorizontalCircleIcon class="w-4 h-4 text-primary" />
+                <span>{{ $t('more') }}</span>
+            </ResponsiveNavLink>
 
-            </div>
-        </SlideInTransition>
-    </nav>
-</template>
+        </div>
+    </SlideInTransition>
+</nav></template>
