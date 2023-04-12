@@ -5,6 +5,8 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\Twilio\TwilioChannel;
+use NotificationChannels\Twilio\TwilioSmsMessage;
 
 class VerificationCodeNotification extends Notification
 {
@@ -30,7 +32,7 @@ class VerificationCodeNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return [TwilioChannel::class];
     }
 
     /**
@@ -45,6 +47,12 @@ class VerificationCodeNotification extends Notification
                     ->subject(__('Dear ', [], $notifiable->locale).$notifiable->name)
                     ->line(__('Your verification code is ', [], $notifiable->locale).$this->code)
                     ->line(__('Thank you for using our application!', [], $notifiable->locale));
+    }
+
+    public function toTwilio($notifiable)
+    {
+        return (new TwilioSmsMessage())
+            ->content("Your verification code is " . $this->code);
     }
 
     /**
