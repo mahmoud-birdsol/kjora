@@ -23,10 +23,12 @@ class ReportOption extends Resource
      * @var string
      */
     public static $title = 'body';
+
     public static function label(): string
     {
-        return __("Report Options");
+        return __('Report Options');
     }
+
     /**
      * The columns that should be searched.
      *
@@ -44,7 +46,7 @@ class ReportOption extends Resource
         return [
             ID::make()->sortable(),
             Translatable::make([
-                Text::make(__('Body'),'body')
+                Text::make(__('Body'), 'body')
                     ->showOnPreview()
                     ->sortable()
                     ->required()

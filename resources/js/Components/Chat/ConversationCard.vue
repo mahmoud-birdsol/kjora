@@ -11,7 +11,7 @@ import { Inertia } from '@inertiajs/inertia';
 import Modal from '../Modal.vue';
 import FadeInTransition from '@/Components/FadeInTransition.vue'
 
-dayjs.extend(relativeTime)
+
 
 const currentConversation = inject('conversation');
 const showDeleteConvModal = ref(false)
@@ -49,7 +49,6 @@ function removeConversation() {
                 <span class="text-xs leading-none text-neutral-400 rtl:before:content-['a'] rtl:before:text-transparent"> @{{
                     user.username }} </span>
                 <div class="flex gap-1 sm:hidden " v-if="!user.online">
-                    <p class="text-xs text-gray-300">{{ $t('Last seen') }}</p>
                     <p class="text-xs text-gray-300">
                         <DateTranslation :end="user.last_seen_at" type="period" />
                     </p>
@@ -57,7 +56,6 @@ function removeConversation() {
             </div>
             <div class="flex gap-2 -mt-2 mis-auto">
                 <div class="max-sm:hidden " v-if="!user.online">
-                    <p class="text-xs text-gray-300 max-sm:scale-75">{{ $t('Last seen') }}</p>
                     <p class="text-xs text-gray-300 max-sm:scale-75">
                         <DateTranslation :end="user.last_seen_at" type="period" />
                     </p>

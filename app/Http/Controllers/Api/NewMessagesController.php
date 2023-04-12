@@ -13,10 +13,6 @@ class NewMessagesController extends Controller
 {
     /**
      * Fetch the new messages
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Conversation $conversation
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function __invoke(Request $request, Conversation $conversation): AnonymousResourceCollection
     {
@@ -24,7 +20,6 @@ class NewMessagesController extends Controller
             ->where('conversation_id', $conversation->id)
             ->whereNull('read_at')
             ->where('created_at', '<=', now()->addMinute())->get();
-
 
         return MessageResource::collection($messages);
     }

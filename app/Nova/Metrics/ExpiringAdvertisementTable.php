@@ -10,7 +10,6 @@ use Laravel\Nova\Metrics\Table;
 
 class ExpiringAdvertisementTable extends Table
 {
-
     /**
      * Calculate the value of the metric.
      *

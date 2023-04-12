@@ -24,15 +24,15 @@ class Stadium extends Resource
      * @var string
      */
     public static $title = 'name';
+
     /**
      * Get the displayable label of the resource.
-     *
-     * @return string
      */
     public static function label(): string
     {
-        return __("Stadiums");
+        return __('Stadiums');
     }
+
     /**
      * The columns that should be searched.
      *
@@ -52,12 +52,12 @@ class Stadium extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make(__('Name') , 'name')
+            Text::make(__('Name'), 'name')
                 ->sortable()
                 ->showOnPreview()
                 ->rules('required', 'max:255'),
 
-            Text::make(__('Google place ID'),'google_place_iD')
+            Text::make(__('Google place ID'), 'google_place_iD')
                 ->sortable()
                 ->showOnPreview()
                 ->rules('nullable', 'max:255'),
@@ -67,22 +67,22 @@ class Stadium extends Resource
                 ->showOnPreview()
                 ->rules('nullable', 'max:255'),
 
-            Text::make(__('Street Address') , 'street_address')
+            Text::make(__('Street Address'), 'street_address')
                 ->sortable()
                 ->showOnPreview()
                 ->rules('nullable', 'max:255'),
 
-            Text::make(__('Longitude'),'longitude')
+            Text::make(__('Longitude'), 'longitude')
                 ->sortable()
                 ->showOnPreview()
                 ->rules('nullable', 'max:255'),
 
-            Text::make(__('Latitude') , 'latitude')
+            Text::make(__('Latitude'), 'latitude')
                 ->sortable()
                 ->showOnPreview()
                 ->rules('nullable', 'max:255'),
 
-            DateTime::make(__('Approved at'),'approved_at')
+            DateTime::make(__('Approved at'), 'approved_at')
                 ->sortable()
                 ->filterable()
                 ->showOnPreview()
@@ -128,7 +128,7 @@ class Stadium extends Resource
     public function actions(NovaRequest $request)
     {
         return [
-            ApproveStadium::make()
+            ApproveStadium::make(),
         ];
     }
 }

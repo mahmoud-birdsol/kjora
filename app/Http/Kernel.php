@@ -2,7 +2,6 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\LocationDetector;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -45,6 +44,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\SetLocaleMiddleware::class,
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
+            \App\Http\Middleware\ReviewUserMiddleware::class,
         ],
 
         'api' => [
@@ -77,6 +77,7 @@ class Kernel extends HttpKernel
         'location.detect' => \App\Http\Middleware\LocationDetector::class,
         'player.review' => \App\Http\Middleware\ReviewUserMiddleware::class,
         'policy.checker' => \App\Http\Middleware\EnsurePoliciesVerified::class,
-        'detect.location' => \App\Http\Middleware\LocationDetector::class
+        'detect.location' => \App\Http\Middleware\LocationDetector::class,
+        'loadNovaPage' => \Whitecube\NovaPage\Http\Middleware\LoadPageForCurrentRoute::class,
     ];
 }

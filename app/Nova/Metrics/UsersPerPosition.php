@@ -39,6 +39,7 @@ class UsersPerPosition extends Partition
     {
         return 'users-per-position';
     }
+
     /**
      * Sey the label for the metric.
      *

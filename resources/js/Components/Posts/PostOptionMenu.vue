@@ -1,36 +1,45 @@
 <template>
     <div class="relative">
-        <button class="p-1" @click="showOptions = !showOptions">
+        <button class="p-1"
+                @click="showOptions = !showOptions">
             <EllipsisHorizontalIcon class="w-6" />
         </button>
         <OnClickOutside @trigger="showOptions = false">
             <FadeInTransition>
                 <!-- media option menu -->
                 <div v-show="showOptions"
-                    class="absolute top-0 z-20 px-3 py-2 text-xs text-white bg-black border ltr:right-8 rtl:left-8 rounded-xl border-neutral-500 z-2 ">
+                     class="absolute top-0 z-20 px-3 py-2 text-xs text-white bg-black border ltr:right-8 rtl:left-8 rounded-xl border-neutral-500 z-2 ">
                     <ul class="flex flex-col justify-center gap-y-2">
-                        <button class="hover:text-gray-400 group" v-if="isCurrentUser" @click="editCaption">
+                        <button class="hover:text-gray-400 group"
+                                v-if="isCurrentUser"
+                                @click="editCaption">
                             <li class="flex items-center gap-x-2">
                                 <PencilIcon class="w-4 " />
                                 <span>{{ $t('edit') }}</span>
                             </li>
                         </button>
-                        <button @click="openRemoveMediaModal" class="hover:text-gray-400 " v-if="isCurrentUser">
+                        <button @click="openRemoveMediaModal"
+                                class="hover:text-gray-400 "
+                                v-if="isCurrentUser">
                             <li class="flex items-center justify-center gap-x-2">
                                 <TrashIcon class="w-4" />
                                 <span> {{ $t('delete') }}</span>
                             </li>
                             <!-- confirm delete media modal -->
-                            <ConfirmationModal :show="showDeletePostModal" @close="showDeletePostModal = false"
-                                @delete="removePost">
+                            <ConfirmationModal :show="showDeletePostModal"
+                                               @close="showDeletePostModal = false"
+                                               @delete="removePost">
                                 <template #body>
                                     <span>{{ $t('Are you sure you want delete this post ? ') }}</span>
                                 </template>
                             </ConfirmationModal>
                         </button>
-                        <button @click="showShare" class="hover:text-gray-400 ">
+                        <button @click="showShare"
+                                class="hover:text-gray-400 ">
                             <li class="flex items-center justify-center">
-                                <Socials :id="postId" shareUrl='public/posts' position="-top-1" @showCopied="showCopied">
+                                <Socials :shareUrl='`public/posts/${postId}`'
+                                         position="-top-1"
+                                         @showCopied="showCopied">
                                     <template #label>
                                         <span> {{ $t('share') }}</span>
                                     </template>
@@ -40,7 +49,8 @@
 
                         <button class="hover:text-gray-400 group">
                             <li v-if="!isCurrentUser">
-                                <ReportModal :reportable-id="postId" :reportable-type="'App\\Models\\Post'">
+                                <ReportModal :reportable-id="postId"
+                                             :reportable-type="'App\\Models\\Post'">
                                     <template #trigger>
                                         <button class="flex items-center gap-x-2">
                                             <FlagIcon class="w-4" />
@@ -56,9 +66,9 @@
                 </div>
             </FadeInTransition>
         </OnClickOutside>
-        <span class="bg-black text-white text-[7px] font-bold rounded absolute ltr:-left-16 rtl:-right-7 bottom-0 -my-4 p-1 whitespace-nowrap"
-            v-if="copiedMsg">{{
-                $t('the link has been copied') }}!</span>
+        <span class="bg-black text-white text-[7px] font-bold rounded absolute ltr:right-0 rtl:left-0 bottom-0 -my-4 p-1 whitespace-nowrap"
+              v-if="copiedMsg">{{
+                  $t('copied') }}!</span>
 
     </div>
 </template>

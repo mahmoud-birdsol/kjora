@@ -25,16 +25,16 @@ const options = {
     responsive: [{
         breakpoint: 500,
         options: {
-            yaxis: {
-                min: 0,
-                max: 5,
-                tickAmount: 10,
-                labels: {
-                    style: {
-                        fontSize: '9px',
-                    },
-                },
-            },
+            // yaxis: {
+            //     min: 0,
+            //     max: 5,
+            //     tickAmount: 10,
+            //     labels: {
+            //         style: {
+            //             fontSize: '9px',
+            //         },
+            //     },
+            // },
             xaxis: {
                 labels: {
                     style: {
@@ -71,11 +71,11 @@ const options = {
     },
     stroke: {
         show: true,
-        colors: ['rgba(0,100,0)'],
+        colors: ['rgb(253,224,60)'],
 
     },
     fill: {
-        colors: ['rgba(0,100,0)'],
+        colors: ['rgb(253 ,224 ,71)'],
         opacity: 1,
         type: 'solid',
     },
@@ -112,13 +112,14 @@ const options = {
 const series = computed(() => {
     return [{
         name: 'Rating',
-        data: props.data.length ? props.data : props.labels?.length ? new Array(props.labels?.length).fill(0) :[0,0,0,0,0,0]
+        data: props.data.length ? props.data : new Array(props.labels?.length).fill(0)
     }]
 })
 
 </script>
 <template>
-    <apexchart width="100%" type="radar" :options="options" :series="series"></apexchart>
+    <apexchart width="100%" type="radar" :options="options" :series="series" v-if="labels.length"></apexchart>
+    <div v-else class="text-sm font-normal text-gray-100 h-56 grid place-items-center normal-case">{{ $t('no rating categories for this position untill now') }}</div>
 </template>
 <style>
 .apexcharts-toolbar,
@@ -131,18 +132,19 @@ const series = computed(() => {
 }
 
 .apexcharts-series path:nth-child(2) {
-    mix-blend-mode: multiply;
+    mix-blend-mode: lighten;
 }
 
 .apexcharts-datalabel {
     direction: ltr;
 }
+
 @media (max-width: 567px) {
-    .vue-apexcharts svg{
-        
+    .vue-apexcharts svg {
+
         transform: scale(1.5);
         transform-origin: top;
     }
-    
+
 }
 </style>

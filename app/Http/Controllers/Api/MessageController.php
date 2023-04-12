@@ -74,9 +74,6 @@ class MessageController extends Controller
 
     /**
      * Delete the selected Message
-     *
-     * @param \App\Models\Message $message
-     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Message $message): JsonResponse
     {

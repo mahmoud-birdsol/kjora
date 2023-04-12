@@ -2,14 +2,13 @@
 
 namespace App\Providers;
 
-use App\Nova\Comment;
-use App\Nova\Contact;
-use App\Nova\Conversation;
-use App\Nova\Invitation;
 use App\Nova\Admin;
 use App\Nova\Advertisement;
 use App\Nova\Click;
 use App\Nova\Club;
+use App\Nova\Comment;
+use App\Nova\Contact;
+use App\Nova\Conversation;
 use App\Nova\CookiePolicy;
 use App\Nova\Country;
 use App\Nova\Dashboards\AdminDashboard;
@@ -17,13 +16,13 @@ use App\Nova\Dashboards\AdvertisementDashboard;
 use App\Nova\Dashboards\Main;
 use App\Nova\Dashboards\UserDashboard;
 use App\Nova\Impression;
+use App\Nova\Invitation;
 use App\Nova\Label;
 use App\Nova\Lenses\ActiveAdvertisement;
 use App\Nova\Lenses\ArchivedAdvertisement;
 use App\Nova\Lenses\ExpiringAdvertisement;
 use App\Nova\Lenses\UnverifiedUsers;
 use App\Nova\Like;
-use App\Nova\MediaLibrary;
 use App\Nova\Message;
 use App\Nova\Position;
 use App\Nova\Post;
@@ -37,11 +36,11 @@ use App\Nova\Social;
 use App\Nova\Stadium;
 use App\Nova\TermsAndConditions;
 use App\Nova\User;
-use App\Nova\Venue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Menu\MenuGroup;
 use Laravel\Nova\Menu\MenuItem;
 use Laravel\Nova\Menu\MenuSection;
@@ -139,13 +138,14 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::link('Settings', 'nova-settings/general'),
                     MenuItem::resource(Label::class),
                     MenuItem::resource(Social::class),
+                    MenuItem::make(__('Pages'))->path('resources/nova-page'),
+
                 ])->icon('cog')->collapsable(),
 
                 MenuSection::make(__('Contact Messages'), [
                     MenuItem::resource(Contact::class),
 
                 ])->icon('envelope')->collapsable(),
-
 
                 MenuSection::make(__('Reports'), [
                     MenuItem::resource(ReportOption::class),
@@ -154,7 +154,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
                 MenuItem::make(__('Language'))
                     ->method('POST')
-                    ->path(route('nova.language', __('Locale')))->external()
+                    ->path(route('nova.language', __('Locale')))->external(),
             ];
         });
 
@@ -173,7 +173,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
             Select::make(__('Default Club'), 'default_club')->options(function () {
                 return \App\Models\Club::all()->pluck('name', 'id');
-            })->displayUsingLabels()->searchable()
+            })->displayUsingLabels()->searchable(),
+
+            Text::make(__('Greetings Text Ar'), 'greetings_text_ar'),
+            Text::make(__('Greetings Text En'), 'greetings_text_en')
+                ->rules('required_with:greetings_text_ar'),
         ]);
     }
 
@@ -240,7 +244,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             NovaPermissions::make(),
-            NovaSettings::make()
+            NovaSettings::make(),
+            \Whitecube\NovaPage\NovaPageTool::make(),
+
         ];
     }
 

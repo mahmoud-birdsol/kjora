@@ -55,8 +55,8 @@ class NotifyPlayerOfReviewNotification extends Notification
     {
         return (new MailMessage)
             ->subject(__('Rate Notification', [], $notifiable->locale))
-            ->line(__('Dear ', [], $notifiable->locale) . $this->reviewer->name)
-            ->line(__('This is to notify you to rate player ',  [], $notifiable->locale) . $this->player->name)
+            ->line(__('Dear ', [], $notifiable->locale).$this->reviewer->name)
+            ->line(__('This is to notify you to rate player ', [], $notifiable->locale).$this->player->name)
             ->action(__('Rate', [], $notifiable->locale), url(route('player.review.show', [
                 'review' => $this->review,
                 'reviewing_user' => $this->reviewer->id,
@@ -75,7 +75,7 @@ class NotifyPlayerOfReviewNotification extends Notification
             displayType: 'simple',
             state: 'success',
             title: __('Rate Notification', [], $notifiable->locale),
-            subtitle: __('You now can rate Player ', [], $notifiable->locale) . $this->player->name,
+            subtitle: __('You now can rate Player ', [], $notifiable->locale).$this->player->name,
             actionData: new RouteActionData(
                 route: route('player.review.show', [
                     'review' => $this->review,

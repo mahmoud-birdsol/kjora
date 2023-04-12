@@ -1,7 +1,27 @@
 <script setup>
 import { usePage } from '@inertiajs/inertia-vue3';
 import dayjs from 'dayjs';
-const localei18n = usePage().props.value.locale
+import updateLocale from 'dayjs/plugin/updateLocale'
+import relativeTime from 'dayjs/plugin/relativeTime.js';
+import { onBeforeMount, onMounted } from 'vue';
+
+
+defineProps({
+    format: {
+        default: 'dddd, DD MMMM YYYY',
+    },
+    type: {
+        default: 'normal', //normal is 22 sunday 2023 , range is 30 day ago
+    },
+    start: String,
+    end: String,
+})
+onBeforeMount(() => {
+    dayjs.extend(updateLocale)
+    dayjs.extend(relativeTime)
+});
+
+const currentLocale = usePage().props.value.locale
 const months = 'يناير_فبراير_مارس_أبريل_مايو_يونيو_يوليو_أغسطس_سبتمبر_أكتوبر_نوفمبر_ديسمبر'.split('_')
 const symbolMap = {
     1: '١',
@@ -15,7 +35,6 @@ const symbolMap = {
     9: '٩',
     0: '٠'
 }
-
 const numberMap = {
     '١': '1',
     '٢': '2',
@@ -29,7 +48,7 @@ const numberMap = {
     '٠': '0'
 }
 
-const locale = {
+const arLocaleConfig = {
     name: 'ar',
     weekdays: 'الأحد_الإثنين_الثلاثاء_الأربعاء_الخميس_الجمعة_السبت'.split('_'),
     weekdaysShort: 'أحد_إثنين_ثلاثاء_أربعاء_خميس_جمعة_سبت'.split('_'),
@@ -39,24 +58,24 @@ const locale = {
     weekStart: 6,
     relativeTime: {
         future: 'بعد %s',
-        past: 'منذ %s',
-        s: 'ثانية واحدة',
-        m: 'دقيقة واحدة',
-        mm: '%d دقائق',
-        h: 'ساعة واحدة',
-        hh: '%d ساعات',
-        d: 'يوم واحد',
+        past: '%s',
+        s: '١ ث',
+        m: '١ ق',
+        mm: '%d ق',
+        h: '١ س',
+        hh: '%d س',
+        d: '١ يوم',
         dd: '%d أيام',
-        M: 'شهر واحد',
+        M: '١ شهر',
         MM: '%d أشهر',
-        y: 'عام واحد',
+        y: '١ عام',
         yy: '%d أعوام'
     },
     meridiem: (hour, minute, isLowercase) => {
-    // OPTIONAL, AM/PM
-    if(localei18n == 'en') return hour > 12 ? 'PM' : 'AM'
-    else return hour > 12 ? 'م' : 'ًص'
-  },
+        // OPTIONAL, AM/PM
+        if (currentLocale == 'en') return hour > 12 ? 'PM' : 'AM'
+        else return hour > 12 ? 'م' : 'ص'
+    },
     preparse(string) {
         return string
             .replace(
@@ -80,22 +99,37 @@ const locale = {
         LLLL: 'dddd D MMMM YYYY HH:mm'
     }
 }
-defineProps({
-    format:{
-        default:'dddd, DD MMMM YYYY',
-    },
-    type:{
-        default: 'normal' , //normal is 22 sunday 2023 , range is 30 day ago
-    },
-    start:String,
-    end:String,
+
+
+const enLocaleConfig = {
+    relativeTime: {
+        future: "in %s",
+        past: "%s",
+        s: 'a few sec',
+        m: "1 min",
+        mm: "%d mins",
+        h: "1 hr",
+        hh: "%d hrs",
+        d: "1 d",
+        dd: "%d d",
+        M: "1m",
+        MM: "%d m",
+        y: "1 y",
+        yy: "%d yrs"
+    }
+}
+
+onMounted(() => {
+    dayjs.locale(arLocaleConfig, null, true)
+    dayjs.updateLocale('en', enLocaleConfig)
+
 })
 
-dayjs.locale(locale, null, true)
+
 
 </script>
 <template>
-    <span v-if="type==='normal'">{{ dayjs(start).locale(localei18n).format(format) }}</span>
-    <span v-else-if="type==='range'">{{ dayjs(start).locale(localei18n).fromNow() }}</span>
-    <span v-else-if="type==='period'">{{ dayjs().locale(localei18n).to(dayjs(end)) }}</span>
+    <span v-if="type === 'normal'">{{ dayjs(start).locale(currentLocale).format(format) }}</span>
+    <span v-else-if="type === 'range'">{{ dayjs(start).locale(currentLocale).fromNow() }}</span>
+    <span v-else-if="type === 'period'">{{ dayjs().locale(currentLocale).to(dayjs(end, true)) }}</span>
 </template>

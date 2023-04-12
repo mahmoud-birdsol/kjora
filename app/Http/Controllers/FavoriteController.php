@@ -20,24 +20,24 @@ class FavoriteController extends Controller
 
         $request->whenFilled('position', fn () => $query->where('position_id', $request->input('position')));
 
-        $request->whenFilled('ratingFrom',fn() => $query->where(function ($query) use ($request) {
+        $request->whenFilled('ratingFrom', fn () => $query->where(function ($query) use ($request) {
             $query->where('rating', '>=', $request->input('ratingFrom'));
         })
         );
-        $request->whenFilled('ratingTo',fn() => $query->where(function ($query) use ($request) {
+        $request->whenFilled('ratingTo', fn () => $query->where(function ($query) use ($request) {
             $query->where('rating', '<=', $request->input('ratingTo'));
         })
         );
         $request->whenFilled('ageFrom',
-            fn() => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('ageFrom')))
+            fn () => $query->whereDate('date_of_birth', '<=', now()->subYears($request->input('ageFrom')))
         );
 
         $request->whenFilled('ageTo',
-            fn() => $query->whereDate('date_of_birth', '>=', now()->subYears($request->input('ageTo')))
+            fn () => $query->whereDate('date_of_birth', '>=', now()->subYears($request->input('ageTo')))
         );
 
         $request->whenFilled('country_id',
-            fn() => $query->where('country_id', $request->input('country_id'))
+            fn () => $query->where('country_id', $request->input('country_id'))
         );
 
         $request->whenFilled('search', fn () => $query->where(function ($query) use ($request) {
@@ -47,7 +47,7 @@ class FavoriteController extends Controller
                 ->orWhere('username', 'LIKE', '%'.$request->input('search').'%');
         }));
 
-        $request->whenFilled('location', fn() => $query->having('distance', '<', $request->input('location'))
+        $request->whenFilled('location', fn () => $query->having('distance', '<', $request->input('location'))
             ->select(DB::raw("
                      (3959 * ACOS(COS(RADIANS({$request->user()->current_latitude}))
                            * COS(RADIANS(current_latitude))
@@ -56,11 +56,10 @@ class FavoriteController extends Controller
                            * SIN(RADIANS(current_latitude)))) AS distance")
             ));
 
-
         return Inertia::render('Favorites/Index', [
             'players' => $query->paginate(20),
             'positions' => Position::all(),
-            'countries' => Country::active()->orderBy('name')->get()
+            'countries' => Country::active()->orderBy('name')->get(),
         ]);
     }
 
@@ -76,7 +75,7 @@ class FavoriteController extends Controller
         $favorite->notify(new FavoriteAddedNotification($request->user()));
 
         FlashMessage::make()->success(
-            message: $favorite->name . __(' has been successfully added to your favorites.')
+            message: $favorite->name.__(' has been successfully added to your favorites.')
 
         )->closeable()->send();
 
@@ -93,7 +92,7 @@ class FavoriteController extends Controller
         $request->user()->favorites()->detach($favorite);
 
         FlashMessage::make()->success(
-            message: $favorite->name . __(' has been successfully removed from your favorites.')
+            message: $favorite->name.__(' has been successfully removed from your favorites.')
 
         )->closeable()->send();
 

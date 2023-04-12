@@ -1,20 +1,14 @@
 
 <script setup>
-import PublicLayout from '../../Layouts/PublicLayout.vue';
-import { Head, useForm, usePage } from '@inertiajs/inertia-vue3';
-import AppLayout from '@/Layouts/AppLayout.vue';
-import HelloUserHeader from '@/Components/HelloUserHeader.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import PerformanceTab from '@/Components/PerformanceTab.vue';
-import ProfileGallery from '@/Components/ProfileGallery.vue';
-import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
-import { computed, onMounted, ref } from 'vue';
-import { Inertia } from '@inertiajs/inertia'
-import FadeInTransition from '../../Components/FadeInTransition.vue';
-import Modal from '../../Components/Modal.vue';
-import { ElSlider } from 'element-plus';
-import InputLabel from '@/Components/InputLabel.vue';
 import DateTranslation from '@/Components/DateTranslation.vue';
+import PerformanceTab from '@/Components/PerformanceTab.vue';
+import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
+import ProfileGallery from '@/Components/ProfileGallery.vue';
+import { Inertia } from '@inertiajs/inertia';
+import { usePage } from '@inertiajs/inertia-vue3';
+import { computed, onMounted, ref } from 'vue';
+import FadeInTransition from '../../Components/FadeInTransition.vue';
+import PublicLayout from '../../Layouts/PublicLayout.vue';
 
 
 const props = defineProps({
@@ -56,7 +50,7 @@ const url = usePage().props.value.ziggy.url + '/public/player/' + props.player.i
         <!--        </Head>-->
         <template #header>
             <p class="text-2xl font-light">{{ $t('hello') }} ,</p>
-            <p class="text-7xl font-bold">{{ player.first_name }} {{ player.last_name }}</p>
+            <p class="font-bold text-7xl">{{ player.first_name }} {{ player.last_name }}</p>
             <p class="text-base font-semibold">
                 <DateTranslation />
             </p>
@@ -73,7 +67,7 @@ const url = usePage().props.value.ziggy.url + '/public/player/' + props.player.i
                     </template>
 
                 </div>
-                <div>
+                <div class="min-h-[350px] md:min-h-[550px]">
                     <FadeInTransition>
                         <template v-for="(tab, index) in tabs" :key="index">
                             <div v-if="tab.id === currentTabId">

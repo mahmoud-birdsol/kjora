@@ -10,10 +10,6 @@ class StoreVerificationCodeInDatabase
 {
     /**
      * Stores the code in the table
-     *
-     * @param \App\Models\User $user
-     * @param int $code
-     * @return void
      */
     public function __invoke(User $user, int $code): void
     {

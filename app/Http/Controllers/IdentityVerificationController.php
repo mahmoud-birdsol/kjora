@@ -50,11 +50,11 @@ class IdentityVerificationController extends Controller
             ],
             'identity_front_image' => [
                 'required',
-                'max:2048'
+                'max:4096',
             ],
             'identity_back_image' => [
                 'required',
-                'max:2048'
+                'max:4096',
             ],
             'identity_selfie_image' => [
                 'required',
@@ -82,7 +82,7 @@ class IdentityVerificationController extends Controller
             $user = $request->user();
             $user
                 ->addMediaFromBase64($request->input('identity_selfie_image'))
-                ->setFileName($user->id . '_selfie_image.jpg')
+                ->setFileName($user->id.'_selfie_image.jpg')
                 ->withCustomProperties(['mime-type' => 'image/jpeg'])
                 ->toMediaCollection('identity_selfie_image');
         }

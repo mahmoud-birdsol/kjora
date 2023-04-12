@@ -6,7 +6,6 @@ use App\Data\NotificationData;
 use App\Data\RouteActionData;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -31,7 +30,6 @@ class FavoriteAddedNotification extends Notification
      * Get the notification's delivery channels.
      *
      * @param  mixed  $notifiable
-     * @return array
      */
     public function via($notifiable): array
     {
@@ -47,9 +45,9 @@ class FavoriteAddedNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Dear ' . $notifiable->name)
-                    ->line('Player ' . $this->user->name . ' Has added you to his favorites')
-                    ->action('View', url(route('player.profile' , $this->user->id)))
+                    ->subject('Dear '.$notifiable->name)
+                    ->line('Player '.$this->user->name.' Has added you to his favorites')
+                    ->action('View', url(route('player.profile', $this->user->id)))
                     ->line('Thank you for using our application!');
     }
 
@@ -64,11 +62,11 @@ class FavoriteAddedNotification extends Notification
         return (new NotificationData(
             displayType: 'user',
             state: 'success',
-            title: __('Favorite Notification', [] , $notifiable->locale ),
-            subtitle: $this->user->name . __(' has added you to his favorites', [] , $notifiable->locale ),
+            title: __('Favorite Notification', [], $notifiable->locale),
+            subtitle: $this->user->name.__(' has added you to his favorites', [], $notifiable->locale),
             actionData: new RouteActionData(
                 route: route('player.profile', $this->user->id),
-                text: __('View Now', [] , $notifiable->locale ),
+                text: __('View Now', [], $notifiable->locale),
             ),
             userAvatar: $notifiable->avatar_url,
             userName: $notifiable->name
@@ -78,7 +76,7 @@ class FavoriteAddedNotification extends Notification
     /**
      * Get the broadcastable representation of the notification.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return BroadcastMessage
      */
     public function toBroadcast($notifiable)

@@ -116,6 +116,7 @@ class ExpiringAdvertisement extends Lens
     {
         return 'expiring-advertisement';
     }
+
     /**
      * Set the label for the metric.
      *

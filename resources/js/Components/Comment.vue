@@ -54,7 +54,11 @@
                     </button>
 
                     <div class="flex items-center">
-                        <div v-if="commentsLikeCount > 0">{{ commentsLikeCount }}</div>
+                        <!-- <span class="text-sm">{{ commentsLikeCount }}</span> -->
+                        <button v-show="commentsLikeCount > 0" @click="showLikesModal = true">
+                            <span class="text-sm">{{ commentsLikeCount }}</span>
+                            <LikesModal :show="showLikesModal" :users="comment.likes?.map(like => like.user)" @close="showLikesModal = false" />
+                        </button>
                         <LikeButton :isLiked="comment?.is_liked" :likeable_id="comment.id" :likeable_type="'App\\Models\\Comment'" @like="commentsLikeCount++" @disLike="commentsLikeCount--">
                             <template v-slot="{ isLiked }">
                                 <div class="transition-all duration-150" :class="isLiked ? 'text-primary' : ''">
@@ -66,7 +70,10 @@
                 </template>
                 <template v-else>
                     <template v-if="commentsLikeCount > 0">
-                        <div>{{ commentsLikeCount }}</div>
+                        <button @click="showLikesModal = true">
+                            <span class="text-sm">{{ commentsLikeCount }}</span>
+                            <LikesModal :show="showLikesModal" :users="comment.likes?.map(like => like.user)" @close="showLikesModal = false" />
+                        </button>
                         <div class="transition-all duration-150 ">
                             {{ commentsLikeCount <= 1 ? $t('like') : $t('likes') }} </div>
                     </template>
@@ -127,6 +134,7 @@ import LikeButton from './LikeButton.vue';
 import Modal from './Modal.vue';
 import { Inertia } from '@inertiajs/inertia';
 import ConfirmationModal from './ConfirmationModal.vue';
+import LikesModal from './LikesModal.vue';
 
 const props = defineProps(['comment', 'parentOffset'])
 onBeforeMount(() => {
@@ -145,6 +153,7 @@ const showEmojiPicker = ref(false)
 const EmojiPickerClass = ref('');
 const showDeleteCommentModal = ref(false)
 const commentsLikeCount = ref(props.comment.likes_count)
+const showLikesModal = ref(false)
 
 const isCurrentUser = currentUser.id === props.comment.user.id
 const isPublic = usePage().url.value.includes('public/posts')

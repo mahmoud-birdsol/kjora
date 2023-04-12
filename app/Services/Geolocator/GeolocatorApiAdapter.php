@@ -4,14 +4,15 @@ namespace App\Services\Geolocator;
 
 class GeolocatorApiAdapter
 {
- private GeoLocatorApiInterface $geoLocatorApi;
- public function __construct(GeoLocatorApiInterface $geoLocatorApi)
- {
-     $this->geoLocatorApi = $geoLocatorApi;
- }
+    private GeoLocatorApiInterface $geoLocatorApi;
 
-    public function getDetails()
+    public function __construct(GeoLocatorApiInterface $geoLocatorApi)
     {
-        return $this->geoLocatorApi->getDetails();
+        $this->geoLocatorApi = $geoLocatorApi;
     }
+
+       public function getDetails()
+       {
+           return $this->geoLocatorApi->getDetails();
+       }
 }

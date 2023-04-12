@@ -52,8 +52,8 @@ class NotifyUserOfRatingSubmittedNotification extends Notification
     {
         return (new MailMessage)
             ->subject(__('New Chat Message Notification', [], $notifiable->locale))
-            ->line(__('Dear ', [], $notifiable->locale) . $this->player->name)
-            ->line(__('Player ') . $this->reviewer->name . __(' has submitted a review for you', [], $notifiable->locale))
+            ->line(__('Dear ', [], $notifiable->locale).$this->player->name)
+            ->line(__('Player ').$this->reviewer->name.__(' has submitted a review for you', [], $notifiable->locale))
             ->action(__('Click here to review ', [], $notifiable->locale), url(route('player.review.show', [
                 'review' => Review::where('reviewer_id', $this->player->id)->where('player_id', $this->reviewer->id)->first(),
                 'reviewing_player' => $this->player->id,
@@ -73,7 +73,7 @@ class NotifyUserOfRatingSubmittedNotification extends Notification
             displayType: 'simple',
             state: 'success',
             title: __('Rate Notification', [], $notifiable->locale),
-            subtitle: __('Player ', [], $notifiable->locale) . $this->reviewer->name . __(' has submitted a review for you', [], $notifiable->locale),
+            subtitle: __('Player ', [], $notifiable->locale).$this->reviewer->name.__(' has submitted a review for you', [], $notifiable->locale),
             actionData: new RouteActionData(
                 route: route('player.review.show', [
                     'review' => Review::where('reviewer_id', $this->player->id)->where('player_id', $this->reviewer->id)->first(),

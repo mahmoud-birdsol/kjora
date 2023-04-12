@@ -12,7 +12,7 @@ import { computed, ref } from 'vue';
 import { paginationEmits } from 'element-plus';
 import InvitationHireTaps from '../../Components/InvitationHireTaps.vue';
 const props = defineProps({
-    invitations: Array,
+    invitations: Object,
 });
 
 const fromDate = ref(null)
@@ -31,7 +31,7 @@ function groupInvitationsByDate(invitations) {
 }
 
 const invitationsGroups = computed(() => groupInvitationsByDate(props.invitations.data))
-console.log(invitationsGroups.value);
+
 
 function showFromToDates(date1, date2) {
     fromDate.value = dayjs(date1).format('DD MMMM YYYY')
@@ -76,7 +76,7 @@ function showFromToDates(date1, date2) {
                     </div>
 
                     <div v-else class="grid place-items-center min-h-[480px] h-full">
-                        <p class="text-sm font-bold text-black">{{ $t(`sorry, we don't have any result`) }} </p>
+                        <p class="text-sm font-bold text-black">{{ $t(`Sorry, we couldn't find any results`) }} </p>
                     </div>
                     <div class="mt-4 flex justify-center">
                         <Pagination :links="invitations.links"></Pagination>

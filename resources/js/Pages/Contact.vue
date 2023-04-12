@@ -70,7 +70,7 @@ function submit() {
                                 <TextInput type="text" v-model="form.subject" :placeholder="$t('please')+$t('enter') + $t('subject')" />
                                 <InputError :message="form.errors.subject" class="px-4"/>
                             </div>
-                            <div class="col-span-2 relative">
+                            <div class="relative col-span-2">
                                 <InputLabel color="text-primary"> {{$t('message')}}</InputLabel>
                                 <textarea :placeholder="$t('please write a message or briefly what happen')" class="
                                     block

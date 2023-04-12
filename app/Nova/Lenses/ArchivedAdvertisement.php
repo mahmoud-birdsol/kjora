@@ -116,6 +116,7 @@ class ArchivedAdvertisement extends Lens
     {
         return 'archived-advertisement';
     }
+
     /**
      * Set the label for the metric.
      *

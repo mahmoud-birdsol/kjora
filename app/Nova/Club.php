@@ -37,15 +37,15 @@ class Club extends Resource
     public static $search = [
         'id', 'name',
     ];
+
     /**
      * Get the displayable label of the resource.
-     *
-     * @return string
      */
     public static function label(): string
     {
-        return __("Clubs");
+        return __('Clubs');
     }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -56,17 +56,17 @@ class Club extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make(__('Country'),'country' )
+            Text::make(__('Country'), 'country')
                 ->showOnPreview()
                 ->sortable()
                 ->filterable()
                 ->rules('required'),
 
-            Text::make(__('Name'),'name')
+            Text::make(__('Name'), 'name')
                 ->showOnPreview()
                 ->rules('required', 'max:254'),
 
-            Images::make(__('Logo'),'logo')
+            Images::make(__('Logo'), 'logo')
                 ->showOnPreview()
                 ->conversionOnIndexView('thumb')
                 ->croppingConfigs(['aspectRatio' => 1 / 1])

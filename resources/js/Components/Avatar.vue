@@ -95,7 +95,8 @@ function hideLightBox() {
         <span @click="showLightBox" v-else-if="imageUrl" class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer" :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'" />
         <span v-else class="block bg-center bg-no-repeat bg-cover rounded-full" :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
     </template>
-    <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" @hide="hideLightBox" data-lightBox="avatar"></vue-easy-lightbox>
+    <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" @hide="hideLightBox" data-lightBox="avatar" :zoomDisabled="true" :minZoom="1" :moveDisabled="true">
+    </vue-easy-lightbox>
 </template>
 
 
@@ -104,12 +105,22 @@ function hideLightBox() {
     overflow: hidden;
     border-radius: 50%;
     aspect-ratio: 1/1;
-    border: 3px solid black
+    border: 3px solid black;
+    max-width: 250px;
 }
 
 [data-lightBox="avatar"] .vel-img-wrapper img {
-    max-width: 200px;
+
     height: 100%;
+    width: 100%;
     object-fit: cover;
 }
+
+/* @media (max-width:640px) { */
+[data-lightBox="avatar"] .vel-toolbar .toolbar-btn__zoomin,
+[data-lightBox="avatar"] .vel-toolbar .toolbar-btn__zoomout {
+    display: none;
+}
+
+/* } */
 </style>

@@ -40,6 +40,7 @@ class UsersPerGender extends Partition
     {
         return 'users-per-gender';
     }
+
     /**
      * Sey the label for the metric.
      *

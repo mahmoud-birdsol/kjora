@@ -30,8 +30,8 @@ class VerificationReminderNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject(__('Verification Reminder', [] , $notifiable->locale))
-            ->line(__('This is a reminder that you haven\'t uploaded your verification documents to ', [] , $notifiable->locale).config('app.name'))
+            ->subject(__('Verification Reminder', [], $notifiable->locale))
+            ->line(__('This is a reminder that you haven\'t uploaded your verification documents to ', [], $notifiable->locale).config('app.name'))
             ->action(__('Verify Account'), url(route('profile.show')))
             ->line(__('Thank you for using our application!'));
     }
@@ -46,8 +46,8 @@ class VerificationReminderNotification extends Notification
     {
         return [
             'type' => 'warning',
-            'title' => __('Identity verification.', [] , $notifiable->locale),
-            'subtitle' => __('Please upload your identity verification documents for review.', [] , $notifiable->locale),
+            'title' => __('Identity verification.', [], $notifiable->locale),
+            'subtitle' => __('Please upload your identity verification documents for review.', [], $notifiable->locale),
             'action' => route('profile.show'),
         ];
     }

@@ -42,18 +42,17 @@ class Post extends Model implements HasMedia, Likeable, Reportable
     protected $appends = [
         'cover_photo',
         'cover_thumb_photo',
-        'views_count'
+        'views_count',
     ];
 
     /**
      * Register the user media collection.
-     *
-     * @return void
      */
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('gallery');
     }
+
     /**
      * Register the model media conversions.
      *
@@ -65,19 +64,15 @@ class Post extends Model implements HasMedia, Likeable, Reportable
             ->width(130)
             ->height(130);
     }
+
     /**
      * Get the user who created this post
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function cover(): BelongsTo
     {
         return $this->belongsTo(Media::class, 'cover_id');
@@ -85,8 +80,6 @@ class Post extends Model implements HasMedia, Likeable, Reportable
 
     /**
      * Get the media comments
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function comments(): MorphMany
     {
@@ -95,47 +88,45 @@ class Post extends Model implements HasMedia, Likeable, Reportable
 
     /**
      * Get the media reports
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function reports(): MorphMany
     {
         return $this->morphMany(Report::class, 'reportable');
     }
+
     /**
      * Get the posts views
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function postViews(): HasMany
     {
         return $this->hasMany(PostView::class);
     }
+
     /**
      * Get the cover Photo attribute
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function coverPhoto(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->getMedia('gallery')->where('id', $this->cover_id)->first()
+            get: fn ($value) => $this->getMedia('gallery')->where('id', $this->cover_id)->first()
         );
     }
+
     public function coverThumbPhoto(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->getMedia('gallery')->where('id', $this->cover_id)->first()?->getFullUrl('thumb')
+            get: fn ($value) => $this->getMedia('gallery')->where('id', $this->cover_id)->first()?->getFullUrl('thumb')
         );
     }
+
     /**
      * Get the views count attribute
-     *
      */
     public function getViewsCountAttribute()
     {
         return $this->postViews->count();
     }
+
     public function owner(): User|null
     {
         return $this->user;

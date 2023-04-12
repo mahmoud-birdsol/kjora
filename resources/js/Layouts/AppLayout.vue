@@ -4,12 +4,15 @@ import SystemMessage from '@/Components/SystemMessage.vue';
 import CopyrightClaim from '@/Components/CopyrightClaim.vue';
 import Navbar from '@/Layouts/Partials/Navbar.vue';
 import RealtimeNotifications from '@/Layouts/Partials/RealtimeNotifications.vue';
-import { onMounted } from 'vue';
+import { onMounted, provide } from 'vue';
 import { loadLanguageAsync } from 'laravel-vue-i18n';
 
 onMounted(() => {
     loadLanguageAsync(usePage().props.value.locale)
-})
+});
+
+const greetings = usePage().props.value.greetings;
+provide('greetings', greetings)
 
 defineProps({
     title: String,
@@ -55,7 +58,7 @@ const errorCallback = (error) => {
 
                 <header v-if="$slots.header" class="">
                     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                        <div class="flex flex-col gap-6 md:flex-row ">
+                        <div class="flex flex-col gap-6 md:grid md:grid-cols-2 ">
                             <h1 class="text-2xl font-bold text-white uppercase sm:text-7xl">
                                 <slot name="header" />
                             </h1>

@@ -77,14 +77,14 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
                                     {{ $t('Resend Code') }}
                                 </Link>
 
-                                <Link :href="route('profile.edit')" class="text-sm text-gray-600 underline hover:text-gray-900">
+                                <!-- <Link :href="route('profile.edit')" class="text-sm text-gray-600 underline hover:text-gray-900">
                                     {{ $t('Edit Profile') }}
                                 </Link>
 
                                 <Link :href="route('logout')"
                                       class="text-sm text-gray-600 underline hover:text-gray-900 ">
                                     {{ $t('log-out') }}
-                                </Link>
+                                </Link> -->
                             </div>
 
                             <form @submit.prevent="submit">

@@ -14,7 +14,7 @@ defineProps({
 <template>
     <Head title="Profile" />
 
-    <AppLayout title="Profile">
+    <AppLayout title="Profile" :showBall="false">
         <template #header>
             <HelloUserHeader />
         </template>

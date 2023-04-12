@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Models\Admin;
 use App\Models\Report;
 use App\Notifications\ReportSubmittedNotification;
 use Illuminate\Bus\Queueable;
@@ -34,8 +33,6 @@ class NotifyReportedUserOfReportSubmission implements ShouldQueue
      */
     public function handle()
     {
-
-
         $this->report->reportable->reportedUser()->notify(new ReportSubmittedNotification($this->report));
     }
 }

@@ -41,6 +41,7 @@ class ImpressionPerAdvertisement extends Partition
     {
         return 'impression-per-advertisement';
     }
+
     public function name()
     {
         return __('Impression Per Advertisement');

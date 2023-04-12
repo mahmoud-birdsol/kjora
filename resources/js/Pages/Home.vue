@@ -71,6 +71,7 @@ const options = {
     // rewind: true,
     pagination: true,
     // drag: "free",
+    gap: '1rem',
     type: props.advertisements.length > 1 ? "loop" : 'slide',
     focus: "center",
     perPage: 1,
@@ -98,11 +99,11 @@ const filterByPosition = (position) => {
             <HelloUserHeader />
         </template>
         <template #ads>
-            <Splide dir="ltr" class=" h-full w-[32rem] max-w-full self-end overflow-hidden  rounded-full ltr:md:ml-auto rtl:mr-auto" :options="options">
+            <Splide dir="ltr" class="  max-w-[32rem] aspect-[8/1.5] self-end overflow-hidden  rounded-full ltr:md:ml-auto rtl:mr-auto" :options="options">
                 <template v-for="(advertisement, i) in advertisements" :key="i">
                     <SplideSlide class="h-full">
-                        <a :href="route('advertisements.show', advertisement)" class="block rounded-full" target="_blank">
-                            <img class="rounded-full" :src="advertisement.media[0].original_url" alt="">
+                        <a :href="route('advertisements.show', advertisement)" class="block rounded-full h-full" target="_blank">
+                            <img class="rounded-full h-full" :src="advertisement.media[0].original_url" alt="">
                         </a>
                     </SplideSlide>
                 </template>
@@ -113,7 +114,7 @@ const filterByPosition = (position) => {
         <div class="">
             <div class="">
                 <!-- Position Filters...
-                                                                                                                                                                                                                                                                                                                                                                =====================================================-->
+                                                                                                                                                                                                                                                                                                                                                                                    =====================================================-->
                 <div class="flex gap-4 mt-4 mb-8 overflow-x-auto hideScrollBar">
                     <button @click="filterByPosition(null)"
                         class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
@@ -160,13 +161,13 @@ const filterByPosition = (position) => {
                     <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
                         <p class="text-sm font-bold">{{ $t('total ( :count )', { count: players.total }) }}</p>
                         <div class="grid place-items-center min-h-[480px] h-full">
-                            <p class="text-sm font-bold text-black">{{ $t(`sorry, we don't have any result`) }} </p>
+                            <p class="text-sm font-bold text-black">{{ $t(`Sorry, we couldn't find any results`) }} </p>
                         </div>
                     </div>
                 </template>
 
                 <!-- Filters Modal...
-                                                                                                                                                                                                                                                                                                                                                                =====================================================-->
+                                                                                                                                                                                                                                                                                                                                                                                    =====================================================-->
                 <FiltersModel :positions="positions" :countries="countries" v-model:form="form" @reset="reset" @filter="filter" :showFiltersModal="showFiltersModal" />
             </div>
         </div>
@@ -184,5 +185,9 @@ const filterByPosition = (position) => {
 
 .el-slider__runway {
     height: 0.15rem;
+}
+
+.splide__track {
+    height: 100%;
 }
 </style>

@@ -58,7 +58,6 @@ class LikeControllerTest extends TestCase
                 'likeable_type' => get_class($comment),
             ])->assertRedirect();
 
-
         $this->assertDatabaseMissing('likes', [
             'user_id' => $user->id,
             'likeable_id' => $comment->id,

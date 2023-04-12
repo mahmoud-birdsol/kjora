@@ -7,6 +7,7 @@ export const useChat = defineStore('chat', {
 			messages: [],
 			page: 1,
 			lastPage: 0,
+			showLastPageNotice: false,
 			loading: false,
 			container: null,
 			conversation: null,
@@ -78,9 +79,26 @@ export const useChat = defineStore('chat', {
 			this.interval = setInterval(this.fetchNewMessages, 30000);
 			// Add event listener for the container
 			// scroll to load more messages.
-			this.registerScrollListener();
+			setTimeout(() => {
+				this.registerScrollListener();
+			}, 3000);
 		},
-
+		/**
+		 * Subscribe to the conversation channel.
+		 */
+		subscribeToConversation() {
+			Echo.private(`users.chat.${this.conversation.id}`)
+				.listen('.message-sent', (event) => {
+					if (this.currentUserId !== event.sender_id) {
+						this.messages.unshift({ ...event, new: true });
+						this.scrollToMessagesBottom();
+						axios.post(route('api.message.mark-as-read', event.id));
+					}
+				})
+				.listen('.message-read', (event) => {
+					this.setMessageAsRead(event);
+				});
+		},
 		/**
 		 * Fetch the conversation messages from api.
 		 *
@@ -112,14 +130,7 @@ export const useChat = defineStore('chat', {
 				return error;
 			}
 		},
-		/**
-		 *
-		 */
-		setMessageAsRead(message) {
-			let oldMessageIndex = this.messages.findIndex((m) => m.id === message.id);
 
-			this.messages[oldMessageIndex].read_at = message.read_at;
-		},
 		/**
 		 * Fetch the new conversation  messages from api .
 		 *
@@ -132,13 +143,12 @@ export const useChat = defineStore('chat', {
 
 				let newMessages = response.data.data;
 				newMessages.forEach((newM) => {
+					// check if the pusher didn't work correctly then the message will not be in the messages array
 					if (!this.messages.some((m) => m.id === newM.id)) {
 						this.messages.unshift({ ...newM, new: true });
+						this.scrollToMessagesBottom();
 					}
 				});
-				// this.messages = this.messages.concat(response.data.data);
-				// this.loading = false;
-				this.page === 1 ? this.scrollToMessagesBottom() : null;
 			} catch (error) {
 				this.loading = false;
 				return error;
@@ -159,25 +169,15 @@ export const useChat = defineStore('chat', {
 			let index = this.messages.findIndex((m) => m.id === id);
 			this.messages.splice(index, 1);
 		},
-		/**
-		 * Subscribe to the conversation channel.
-		 */
-		subscribeToConversation() {
-			Echo.private(`users.chat.${this.conversation.id}`)
-				.listen('.message-sent', (event) => {
-					if (this.currentUserId !== event.sender_id) {
-						this.messages.unshift({ ...event, new: true });
-						this.scrollToMessagesBottom();
-						axios.post(route('api.message.mark-as-read', event.id));
-						// console.log("event message sent occured");
-					}
-				})
-				.listen('.message-read', (event) => {
-					// console.log("message-read");
-					this.setMessageAsRead(event);
-				});
-		},
 
+		/**
+		 * mark message as read in ui
+		 * @param message
+		 */
+		setMessageAsRead(message) {
+			let oldMessageIndex = this.messages.findIndex((m) => m.id === message.id);
+			this.messages[oldMessageIndex].read_at = message.read_at;
+		},
 		/**
 		 * Register the container scroll listener.
 		 */
@@ -256,6 +256,7 @@ export const useChat = defineStore('chat', {
 
 			if (this.lastPageReached) {
 				// Do nothing.
+				this.showLastPageNotice = true;
 				return;
 			}
 

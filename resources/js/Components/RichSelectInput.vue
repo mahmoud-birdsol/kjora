@@ -91,11 +91,12 @@ const showDropDown = ref(false);
 
 const selected = ref(null);
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'selected']);
 
 const select = (option) => {
     selected.value = option;
     emit('update:modelValue', selected.value[props.valueName]);
+    emit('selected')
     if (props.options.length) {
         searchValue.value = '';
         filteredOptions.value = props.options;
@@ -148,13 +149,6 @@ const loadMore = () => {
     }).catch(error => console.log(error.response));
 };
 
-
-const handleScroll = (e) => {
-
-    if (e.target.scrollTop + e.target.clientHeight + 2 >= e.target.scrollHeight) {
-        loadMore()
-    }
-}
 </script>
 
 <template>
@@ -162,9 +156,9 @@ const handleScroll = (e) => {
         <!--        <div class="fixed top-0 left-0 z-20 w-full h-full" @click="showDropDown = false" v-if="showDropDown"></div>-->
         <div class="relative mt-1">
             <button type="button" @click="showDropDown = !showDropDown" class="relative w-full pl-3 pr-10 text-left border border-gray-300 rounded-full shadow-sm cursor-pointer focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
-                :class="[`bg-${bgColor} text-${txtColor}`, selected != '' ? 'py-2' : 'py-4']" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
+                :class="[`bg-${bgColor} text-${txtColor}`, selected != '' ? 'py-2' : 'py-5']" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
                 <span class="flex items-center" v-if="selected">
-                    <img :src="selected[imageName]" alt="" class="flex-shrink-0 w-6 h-6 rounded">
+                    <img v-if="imageName" :src="selected[imageName]" alt="" class="flex-shrink-0 w-6 h-6 rounded">
                     <span class="block truncate mis-3">{{ selected[textName] }}</span>
                 </span>
                 <span class="absolute inset-y-0 flex items-center pr-2 pointer-events-none mie-3 ltr:right-0 rtl:left-0">
@@ -182,14 +176,14 @@ const handleScroll = (e) => {
                     </li>
 
                     <li v-if="filteredOptions.length" v-for="option in filteredOptions" @click="select(option)" class="relative py-2 pl-3 cursor-pointer select-none pr-9 hover:bg-primary hover:text-white" :class="`text-${txtColor}`" id="listbox-option-0" role="option">
-                        <div class="flex items-center">
-                            <img :src="option[imageName]" alt="" class="flex-shrink-0 w-6 h-6 rounded">
+                        <div class="flex items-center ">
+                            <img v-if="imageName" :src="option[imageName]" alt="" class="flex-shrink-0 w-6 h-6 rounded">
                             <span class="block font-normal truncate mis-3" :class="{ 'font-semibold': option[valueName] == selected[valueName], 'font-normal': option[valueName] != selected[valueName] }">{{
                                 option[textName]
                             }}</span>
                         </div>
 
-                        <span class="absolute inset-y-0 rtl:left-0 ltr:right-0 flex items-center pie-4" :class="{ 'text-primary': option[valueName] == selected[valueName], 'text-white': option[valueName] != selected[valueName] }">
+                        <span class="absolute inset-y-0 flex items-center rtl:left-0 ltr:right-0 pie-4" :class="{ 'text-primary': option[valueName] == selected[valueName], [`text-${bgColor}`]: option[valueName] != selected[valueName] }">
                             <CheckIcon class="w-5 h-5" />
                         </span>
                     </li>

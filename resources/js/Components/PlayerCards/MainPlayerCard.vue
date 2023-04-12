@@ -3,11 +3,12 @@ import { computed, ref } from 'vue';
 import { Link, useForm, usePage } from '@inertiajs/inertia-vue3';
 import { ElRate } from 'element-plus';
 import Avatar from '@/Components/Avatar.vue';
-import { HeartIcon, PencilIcon, StarIcon as StarIconFilled } from '@heroicons/vue/20/solid'
+import { HeartIcon, PencilIcon, StarIcon as StarIconFilled, ChevronDoubleRightIcon } from '@heroicons/vue/20/solid'
 import { FlagIcon, HeartIcon as HeartIconOutline, MapPinIcon, StarIcon as StarIconOutline } from '@heroicons/vue/24/outline';
 import ReportModal from "@/Components/ReportModal.vue";
 import Socials from '@/Components/Socials.vue';
 import ToolTip from "@/Components/ToolTip.vue";
+import FavouriteButton from '../FavouriteButton.vue';
 
 const props = defineProps({
     player: {
@@ -70,39 +71,10 @@ const backgroundImage = computed(() => {
 
 const isCurrentUser = props.player.id === currentUser?.id
 const isPublic = usePage().url.value.includes('public/player')
-const isFavorite = ref(props.player.is_favorite)
-const isPending = ref(false)
 
-const form = useForm({});
-function toggleFavorite() {
-    if (isPending.value) return
 
-    if (!isFavorite.value) {
-        form.post(route('favorites.store', { favorite: props.player.id }), {
-            preserveState: false,
-            preserveScroll: true,
-            onStart: () => {
-                isFavorite.value = true
-                isPending.value = true
-            },
-            onFinish: () => {
-                isPending.value = false
-            }
-        });
-    } else {
-        form.delete(route('favorites.destroy', { favorite: props.player.id }), {
-            preserveState: false,
-            preserveScroll: true,
-            onStart: () => {
-                isFavorite.value = false
-                isPending.value = true
-            },
-            onFinish: () => {
-                isPending.value = false
-            }
-        });
-    }
-}
+
+
 
 
 
@@ -139,29 +111,36 @@ function showCopied() {
 
 <template>
     <!-- favorite icon -->
-    <div class="overflow-hidden rounded-xl" :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
-        <div v-if="showFavorite && !isCurrentUser" class="flex justify-end">
+    <div class="overflow-hidden rounded-xl"
+         :style="`background-image: url('${backgroundImage}'); background-size: cover; background-position: center;`">
+        <div v-if="showFavorite && !isCurrentUser"
+             class="flex justify-end">
             <span class="rounded-lg ltr:rounded-bl-3xl rtl:rounded-br-3xl bg-white p-2 -mt-0.5 ltr:-mr-0.5 rtl:-ml-0.5">
-                <a href="javascript:;" @click="toggleFavorite" v-if="!isFavorite">
-                    <HeartIconOutline class="w-5 h-5 text-primary" />
-                </a>
-                <a href="javascript:;" @click="toggleFavorite" v-if="isFavorite">
-                    <HeartIcon class="w-5 h-5 text-primary" />
-                </a>
+                <FavouriteButton :user="player" />
             </span>
         </div>
-        <div v-if="showFavorite && isCurrentUser" class="h-5 p-4"></div>
+        <div v-if="showFavorite && isCurrentUser"
+             class="h-[34px]"></div>
 
 
-        <div class="p-4">
+        <div class="px-4 py-1">
             <div class="flex items-start justify-between">
-                <div class="flex items-center justify-start gap-2 mb-2" :class="{ 'space-x-2': size == 'sm', 'space-x-8': size == 'lg' }">
+                <div class="flex items-center justify-start gap-2 mb-2"
+                     :class="{ 'space-x-2': size == 'sm', 'space-x-8': size == 'lg' }">
                     <div class="relative">
-                        <Link :href="route('profile.edit')" v-if="isCurrentUser && !isPublic" class="absolute bottom-0 p-1 bg-white rounded-full ltr:right-0 rtl:left-0 hover:text-primary">
+                        <Link :href="route('profile.edit')"
+                              v-if="isCurrentUser && !isPublic"
+                              class="absolute bottom-0 p-1 bg-white rounded-full ltr:right-0 rtl:left-0 hover:text-primary">
                         <PencilIcon class="w-3 [&+div]:hover:block " />
-                        <ToolTip :value="$t('edit-your-profile')" right="right-0" />
+                        <ToolTip :value="$t('edit-your-profile')"
+                                 right="right-0" />
                         </Link>
-                        <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true" :borderColor="state == 'Free' ? 'primary' : 'blackDark'" />
+                        <Avatar :id="player.id"
+                                :image-url="player.avatar_url"
+                                :size="'lg'"
+                                :username="player.name"
+                                :border="true"
+                                :borderColor="state == 'Free' ? 'primary' : 'blackDark'" />
                     </div>
 
                     <div :class="state == 'Free' ? 'text-white' : 'text-primary'">
@@ -171,12 +150,14 @@ function showCopied() {
                         </h2>
                         </Link>
 
-                        <Link class="text-xs opacity-50" :href="route('player.profile', player.id)">@{{
-                            player.username
-                        }}
+                        <Link class="text-xs opacity-50"
+                              :href="route('player.profile', player.id)">@{{
+                                  player.username
+                              }}
                         </Link>
                         <p class="flex items-center space-x-2 text-sm ">
-                            <span class="scale-[0.7] ltr:origin-left rtl:origin-right  flex items-center gap-x-1" :class="txtColor == 'black' ? 'text-primary' : 'text-[#FF9900]'">
+                            <span class="scale-[0.7] ltr:origin-left rtl:origin-right  flex items-center gap-x-1"
+                                  :class="txtColor == 'black' ? 'text-primary' : 'text-[#FF9900]'">
                                 <!--                                <ElRate disabled v-model="player.rating" size="small" :colors="colors"/>-->
                                 <!--                                {{ player.rating }}-->
 
@@ -188,105 +169,137 @@ function showCopied() {
                                 <!--                                    score-template="{value}"/>-->
                                 <span class="flex items-center gap-1">
                                     <template v-for="i in 5">
-                                        <StarIconFilled class="w-5 h-5" v-if="player.rating >= i" :class="state == 'Free' ? 'text-gold' : 'text-primary'" />
-                                        <StarIconOutline class="w-5 h-5" :class="state == 'Free' ? 'text-gold' : 'text-primary'" v-else />
+                                        <StarIconFilled class="w-5 h-5"
+                                                        v-if="player.rating >= i"
+                                                        :class="state == 'Free' ? 'text-gold' : 'text-primary'" />
+                                        <StarIconOutline class="w-5 h-5"
+                                                         :class="state == 'Free' ? 'text-gold' : 'text-primary'"
+                                                         v-else />
                                     </template>
                                 </span>
 
-                                <span class="ml-2 font-bold text-md" :class="state == 'Free' ? 'text-gold' : 'text-primary'">{{ player.rating }}</span>
+                                <span class="ml-2 font-bold text-md"
+                                      :class="state == 'Free' ? 'text-gold' : 'text-primary'">{{ player.rating }}</span>
                             </span>
                         </p>
                     </div>
                 </div>
 
                 <div class="flex flex-col items-center gap-1">
-                    <p :class="state == 'Free' ? 'text-white' : 'text-primary'" class="text-sm font-bold ">
+                    <p :class="state == 'Free' ? 'text-white' : 'text-primary'"
+                       class="text-sm font-bold ">
                         {{ player.preferred_foot === 'right' ? 'R' : 'L' }}</p>
                 </div>
             </div>
 
-            <div class="grid gap-1 border-b sm:gap-4" :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' }, `border-${txtColor}`, `text-${txtColor}`">
-                <div v-if="size == 'lg'" class="relative">
+            <div class="grid gap-1 border-b sm:gap-4"
+                 :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' }, `border-${txtColor}`, `text-${txtColor}`">
+                <div v-if="size == 'lg'"
+                     class="relative">
 
-                    <p class="text-xs text-center whitespace-nowrap" :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">
+                    <p class="text-xs text-center whitespace-nowrap"
+                       :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">
                         {{ $t('favorite-club') }}</p>
                     <div class="flex justify-center item-center [&+div]:hover:block rounded-full overflow-hidden w-fit p-1 bg-white mx-auto">
-                        <img :src="player.club?.logo_thumb" class="w-5 h-5 " />
+                        <img :src="player.club?.logo_thumb"
+                             class="w-5 h-5 " />
                     </div>
                     <ToolTip :value="player.club?.name" />
                 </div>
                 <div>
 
-                    <p class="text-xs text-center" :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
-                        $t('age')
-                    }}</p>
+                    <p class="text-xs text-center"
+                       :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
+                           $t('age')
+                       }}</p>
                     <p class="text-sm text-center font-semi-bold">{{ player.age }}</p>
                 </div>
                 <div>
-                    <p class="text-xs text-center " :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
-                        $t('played')
-                    }}</p>
+                    <p class="text-xs text-center "
+                       :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
+                           $t('played')
+                       }}</p>
                     <p class="text-sm text-center font-semi-bold"> {{ player.played }}</p>
                 </div>
                 <div>
-                    <p class="text-xs text-center" :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
-                        $t('missed')
-                    }}</p>
+                    <p class="text-xs text-center"
+                       :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
+                           $t('missed')
+                       }}</p>
                     <p class="text-sm text-center font-semi-bold"> {{ player.missed }} </p>
                 </div>
                 <div>
-                    <p class="text-xs text-center" :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
-                        $t('position')
-                    }}</p>
+                    <p class="text-xs text-center"
+                       :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
+                           $t('position')
+                       }}</p>
                     <p class="text-xs text-center font-semi-bold">{{ $t(player.position.name) }}</p>
                 </div>
             </div>
 
-            <div class="flex items-center justify-between gap-1 mt-2 sm:text-xs" :class="`text-${txtColor}`">
+            <div class="flex items-center justify-between gap-1 mt-2 sm:text-xs"
+                 :class="`text-${txtColor}`">
                 <div class="flex items-center gap-1">
 
-                    <a :href="`https://www.google.com/maps/dir/Current+Location/${player.current_latitude},${player.current_longitude}`" target="_blank" class="w-full overflow-hidden rounded-lg ">
-                        <p class="flex gap-1 items-center text-sm scale-[0.85] ltr:origin-left rtl:origin-right" v-if="showLocation">
+                    <a :href="`https://www.google.com/maps/dir/Current+Location/${player.current_latitude},${player.current_longitude}`"
+                       target="_blank"
+                       class="w-full overflow-hidden rounded-lg ">
+                        <p class="flex gap-1 items-center text-sm scale-[0.85] ltr:origin-left rtl:origin-right"
+                           v-if="showLocation">
                             <MapPinIcon class="inline w-4 h-4" />
-                            {{ player.current_city && player.current_city?.split(' ')[0] }}
+                            {{ player.current_city }}
                         </p>
                     </a>
 
 
                 </div>
                 <div class="flex items-center gap-4">
-                    <div class="flex space-x-2 bg-transparent" v-if="showInvite && player.id !== $page.props.auth.user.id">
-                        <Link :href="route('invitation.create', player.id)" class="text-sm scale-[0.85]  ltr:origin-left rtl:origin-right">{{ $t('send-invitation') }}
-                        <!-- <ChevronDoubleRightIcon class="inline w-4 h-4 text-white" /> -->
-                        </Link>
-                    </div>
-                    <div class="relative">
-                        <Socials v-if="showShare" :id="player.id" shareUrl='public/player' position="bottom-0" @showCopied="showCopied" />
-                        <span class="bg-black text-white text-[10px] font-bold rounded absolute ltr:left-[-570%] rtl:right-[-520%] bottom-0 -my-4 p-1 whitespace-nowrap" v-if="copiedMsg">{{
-                            $t('the link has been copied') }}!</span>
-                    </div>
+                    <div class="flex space-x-2 bg-transparent"
+                         v-if="showInvite && player.id !== $page.props.auth.user.id">
+                        <Link :href="route('invitation.create', player.id)"
+                              class="text-sm scale-[0.85]  ltr:origin-left rtl:origin-right">
+                        {{ $t('send-invitation') }}
+                        <ChevronDoubleRightIcon class="inline w-4 h-4 rtl:rotate-180 ltr:rotate-0"
+                                            :class="`text-${txtColor}`" />
+                    </Link>
                 </div>
-            </div>
-            <div class="pis-4 sm:text-xs" :class="`text-${txtColor}`">
-                <div v-if="!isCurrentUser && showDistance" class="text-xs scale-[0.85] ltr:origin-left rtl:origin-right">
-                    <span>{{ distanceBetweenPlayerAndMe }}</span><span>{{ $t('Km') }}</span>
+                <div class="relative">
+                    <Socials v-if="showShare"
+                             :shareUrl="`public/player/${player.username}`"
+                             position="bottom-0"
+                             @showCopied="showCopied" />
+                    <span class="bg-black text-white text-[10px] font-bold rounded absolute ltr:right-0 rtl:left-0 -bottom-3 -my-4 p-1 whitespace-nowrap"
+                          v-if="copiedMsg">{{
+                        $t('copied') }}!</span>
                 </div>
-            </div>
-
-            <div v-if="showReport && isCurrentUser" class="h-5 p-4"></div>
-            <div class="flex justify-end mt-6" v-if="showReport && !isCurrentUser">
-                <ReportModal :reportable-id="player.id" :reportable-type="'App\\Models\\User'">
-                    <template #trigger>
-                        <button>
-                            <FlagIcon class="w-4 h-4 text-red-500" />
-                        </button>
-                    </template>
-                </ReportModal>
-
             </div>
         </div>
+        <div class="pis-4 sm:text-xs"
+             :class="`text-${txtColor}`">
+            <div v-if="!isCurrentUser && showDistance"
+                 class="text-xs scale-[0.85] ltr:origin-left rtl:origin-right">
+                <span>{{ distanceBetweenPlayerAndMe }}</span><span>{{ $t('Km') }}</span>
+            </div>
+            <div v-else
+                 class="h-[16px]"></div>
+        </div>
+
+        <div v-if="showReport && isCurrentUser"
+             class="h-[24px]"></div>
+        <div class="flex justify-end"
+             v-if="showReport && !isCurrentUser">
+            <ReportModal :reportable-id="player.id"
+                         :reportable-type="'App\\Models\\User'">
+                <template #trigger>
+                    <button>
+                        <FlagIcon class="w-4 h-4 text-red-500" />
+                    </button>
+                </template>
+            </ReportModal>
+
+        </div>
     </div>
-</template>
+</div></template>
 
 
 <style ></style>

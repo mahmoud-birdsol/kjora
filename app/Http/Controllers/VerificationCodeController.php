@@ -12,20 +12,18 @@ class VerificationCodeController extends Controller
     /**
      * Show the verification code form
      *
-     * @param \Illuminate\Http\Request $request
      * @return \Inertia\Response
      */
     public function create(Request $request)
     {
         return Inertia::render('Auth/VerifyPhone', [
-            'user' => $request->user()
+            'user' => $request->user(),
         ]);
     }
 
     /**
      * Verify the phone of the user
      *
-     * @param \App\Http\Requests\VerifyPhoneRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(VerifyPhoneRequest $request)
@@ -35,7 +33,6 @@ class VerificationCodeController extends Controller
         FlashMessage::make()->success(
             message: __('Thank you for verifying your phone')
         )->closeable()->send();
-
 
         return redirect()->route('home');
     }

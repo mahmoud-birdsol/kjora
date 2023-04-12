@@ -12,8 +12,6 @@ class FetchInvitationController extends Controller
     /**
      * Return the invitation after the invitation created event
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Invitation $invitation
      * @return \App\Http\Resources\InvitationResource
      */
     public function __invoke(Request $request, Invitation $invitation)

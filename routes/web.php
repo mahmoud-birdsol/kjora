@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\UserNameController;
 use App\Http\Controllers\Auth\UserPhoneController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DeleteCommentController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HireController;
 use App\Http\Controllers\IdentityVerificationController;
@@ -23,12 +24,11 @@ use App\Http\Controllers\Policy\PrivacyPolicyController;
 use App\Http\Controllers\Policy\TermsAndConditionController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ResendVerificationCodeController;
 use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\UpgradeMembershipController;
-use App\Http\Controllers\ResendVerificationCodeController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\VerificationCodeController;
-use App\Http\Controllers\DeleteCommentController;
 use App\Models\Country;
 use App\Models\Invitation;
 use App\Models\MediaLibrary;
@@ -38,6 +38,8 @@ use App\Models\Stadium;
 use App\Models\User;
 use App\Notifications\InvitationCreatedNotification;
 use App\Notifications\InvitationDeclinedNotification;
+use App\Rules\UserHasPendingReview;
+use App\Services\FlashMessage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -122,7 +124,6 @@ Route::middleware([
         'update',
     ])->name('phone.update');
 
-
     Route::middleware([
         'verified.email',
         'verified.identity',
@@ -161,7 +162,7 @@ Route::middleware([
             'player/review/{review}',
             [
                 PlayerReviewController::class,
-                'show'
+                'show',
             ]
         )->name('player.review.show');
 
@@ -169,7 +170,7 @@ Route::middleware([
             'player/review/{review}',
             [
                 PlayerReviewController::class,
-                'store'
+                'store',
             ]
         )->name('player.review.store');
 
@@ -204,14 +205,26 @@ Route::middleware([
         })->name('invitation.create');
 
         Route::post('invitations', function (Request $request) {
+            if ($request->user()->hasPendingReviews()) {
+                FlashMessage::make()->success(
+                    message: "You can't invite another player because you have a pending review"
+                )->closeable()->send();
+
+                return redirect()->back()->withErrors([
+                    'review' => "You can't invite another player because you have a pending review",
+                ]);
+            }
+
             $data = $request->validate([
                 'stadium_id' => ['required', 'integer', 'exists:stadia,id'],
                 'invited_player_id' => ['required', 'integer', 'exists:users,id'],
                 'date' => [
                     'required',
-                    'after_or_equal:today'
+                    'after_or_equal:today',
                 ],
                 'time' => ['required'],
+
+                new UserHasPendingReview($request->user()),
             ]);
 
             $time = Carbon::parse($data['time']);
@@ -225,7 +238,7 @@ Route::middleware([
             // Notify the invited user
             $invitation->invitedPlayer->notify(new InvitationCreatedNotification($invitation));
 
-            return redirect()->back();
+            return redirect()->route('home');
         })->name('invitation.store');
 
         // Accept invitation
@@ -362,7 +375,6 @@ Route::middleware([
         'store',
     ])->name('report.store');
 
-
     /*
      |--------------------------------------------------------------------------
      | Advertisement Routes...
@@ -375,7 +387,7 @@ Route::middleware([
         'advertisements/{advertisement}',
         [
             AdvertisementController::class,
-            'show'
+            'show',
         ]
     )->name('advertisements.show');
 
@@ -409,13 +421,13 @@ Route::prefix('policy')
             'terms-and-condition',
             [
                 TermsAndConditionController::class,
-                'index'
+                'index',
             ]
         )->name('terms.and.condition.index');
 
         Route::patch('terms-and-condition/{termsAndConditions}', [
             TermsAndConditionController::class,
-            'store'
+            'store',
         ])->name('terms.and.condition.store');
 
         /*privacy*/
@@ -424,13 +436,13 @@ Route::prefix('policy')
             'privacy-policy',
             [
                 PrivacyPolicyController::class,
-                'index'
+                'index',
             ]
         )->name('privacy.policy.index');
 
         Route::patch('privacy-policy/{privacyPolicy}', [
             PrivacyPolicyController::class,
-            'store'
+            'store',
         ])->name('privacy.policy.store');
 
         /*cookies*/
@@ -439,13 +451,13 @@ Route::prefix('policy')
             'cookies-policy',
             [
                 CookiesPolicyController::class,
-                'index'
+                'index',
             ]
         )->name('cookies.policy.index');
 
         Route::patch('cookies-policy/{cookiePolicy}', [
             CookiesPolicyController::class,
-            'store'
+            'store',
         ])->name('cookies.policy.store');
     });
 //     // Example 2: Get all the connected users for a specific channel
@@ -469,9 +481,11 @@ Route::get('gallery/{mediaLibrary}', function (MediaLibrary $mediaLibrary) {
     ]);
 })->name('gallery.show');
 
-Route::get('about', function () {
-    return Inertia::render('About');
-})->name('about');
+Route::get('about', function (Whitecube\NovaPage\Pages\Template $template) {
+    return Inertia::render('About', [
+        'template' => $template->getAttributes(),
+    ]);
+})->template(\App\Nova\Templates\AboutUsTemplate::class)->middleware('loadNovaPage')->name('about');
 Route::get('contact', function () {
     return Inertia::render('Contact');
 })->name('contact');
@@ -515,26 +529,26 @@ Route::any('nova/language/{language}', function (Request $request, $language) {
     if (\Illuminate\Support\Facades\Auth::check()) {
         auth()->user()->update(['locale' => $language]);
     }
+
     return redirect()->back();
 })->middleware('auth:admin')->name('nova.language');
 
-
-
 Route::get('public/posts/{post}', function (Post $post) {
+    $data = Post::where('id', $post->id)->with(['likes.user:id,username,first_name,last_name'])->first();
 
     return Inertia::render('Public/PostView', [
-        'post' => $post,
+        'post' => $data,
         'user' => $post->user,
         'social_meta' => [
             'url' => \route('public.posts', $post->id),
             'title' => $post->caption,
             'image' => $post->cover_thumb_photo,
-            'description' =>  $post->user->name . ' post'
-        ]
+            'description' => $post->user->name.' post',
+        ],
     ]);
 })->name('public.posts');
 
-Route::get('public/player/{player}', function (User $player) {
+Route::get('public/player/{player:username}', function (User $player) {
     $player->load('club');
 
     $ratingCategoriesCount = $player->playerReviews->count();
@@ -543,7 +557,7 @@ Route::get('public/player/{player}', function (User $player) {
         ->map(function ($ratingCategory) use ($ratingCategoriesCount) {
             return [
                 'ratingCategory' => $ratingCategory->first()->name,
-                'value' => (float)$ratingCategory->sum('pivot.value') / $ratingCategoriesCount,
+                'value' => (float) $ratingCategory->sum('pivot.value') / $ratingCategoriesCount,
             ];
         })->values();
 
@@ -560,15 +574,14 @@ Route::get('public/player/{player}', function (User $player) {
             'url' => \route('public.player', $player->id),
             'title' => $player->name,
             'image' => $player->avatar_thumb_url,
-            'description' =>  $player->name . ' profile'
-        ]
+            'description' => $player->name.' profile',
+        ],
     ]);
 })->name('public.player');
 
-
 Route::get('accept-chat-regulations', function (Request $request) {
     $request->user()->update([
-        'accepted_chat_regulations_at' => now()
+        'accepted_chat_regulations_at' => now(),
     ]);
 
     return redirect()->back();

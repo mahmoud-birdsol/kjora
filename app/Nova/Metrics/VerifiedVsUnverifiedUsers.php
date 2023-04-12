@@ -43,6 +43,7 @@ class VerifiedVsUnverifiedUsers extends Partition
     {
         return 'verified-vs-unverified-users';
     }
+
     /**
      * Sey the label for the metric.
      *

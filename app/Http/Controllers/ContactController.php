@@ -7,8 +7,6 @@ use App\Models\Admin;
 use App\Models\Contact;
 use App\Notifications\ContactCreatedNotification;
 use App\Services\FlashMessage;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {

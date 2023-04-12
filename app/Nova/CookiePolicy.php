@@ -36,10 +36,12 @@ class CookiePolicy extends Resource
     public static $search = [
         'id', 'version',
     ];
+
     public static function label(): string
     {
-        return __("Cookie Policies");
+        return __('Cookie Policies');
     }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -50,14 +52,14 @@ class CookiePolicy extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make(__('Version'),'version')
+            Text::make(__('Version'), 'version')
                 ->showOnPreview()
                 ->required()
                 ->rules('required')
                 ->creationRules('unique:cookie_policies,version')
                 ->updateRules('unique:cookie_policies,version,{{resourceId}}'),
 
-            Trix::make(__('Content'),'Content')
+            Trix::make(__('Content'), 'Content')
                 ->showOnPreview()
                 ->rules('required'),
 
@@ -70,7 +72,7 @@ class CookiePolicy extends Resource
                 })
                 ->sortable(),
 
-            DateTime::make(__('Published at') ,'published_at')
+            DateTime::make(__('Published at'), 'published_at')
                 ->showOnPreview()
                 ->hideWhenCreating()
                 ->hideWhenUpdating()

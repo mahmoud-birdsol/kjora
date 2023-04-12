@@ -22,12 +22,11 @@ class InvitationController extends Controller
             }])
             ->with('stadium');
 
-
         $request->whenFilled('search', fn () => $query->where(function ($query) use ($request) {
             $query->whereHas('invitingPlayer', function ($q) use ($request) {
-                $q->where('first_name', 'LIKE', '%' . $request->input('search') . '%')
-                    ->orWhere('last_name', 'LIKE', '%' . $request->input('search') . '%')
-                    ->orWhere('username', 'LIKE', '%' . $request->input('search') . '%');
+                $q->where('first_name', 'LIKE', '%'.$request->input('search').'%')
+                    ->orWhere('last_name', 'LIKE', '%'.$request->input('search').'%')
+                    ->orWhere('username', 'LIKE', '%'.$request->input('search').'%');
             });
         }));
 
@@ -39,6 +38,7 @@ class InvitationController extends Controller
             'dateTo',
             fn () => $query->where('date', '<=', \Carbon\Carbon::parse($request->input('dateTo'))->toDatetimeString())
         );
+
         return Inertia::render('Invitation/Index', [
             'invitations' => $query->paginate(10),
         ]);

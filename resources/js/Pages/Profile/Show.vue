@@ -16,9 +16,13 @@ const props = defineProps({
     playerRating: Array,
     countries: Array,
     positions: Array,
+    tabId: {
+        default: 2
+        , type: Number,
+    }
 });
 
-const currentTabId = ref(2)
+const currentTabId = ref(props.tabId)
 
 const tabs = computed(() => {
     return [
@@ -53,7 +57,7 @@ function reloadMedia() {
                     </template>
 
                 </div>
-                <div>
+                <div class="min-h-[350px] md:min-h-[550px]">
                     <FadeInTransition>
                         <template v-for="(tab, index) in tabs" :key="index">
                             <div v-if="tab.id === currentTabId">

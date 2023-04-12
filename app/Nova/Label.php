@@ -22,10 +22,12 @@ class Label extends Resource
      * @var string
      */
     public static $title = 'name';
+
     public static function label(): string
     {
-        return __("Labels");
+        return __('Labels');
     }
+
     /**
      * The columns that should be searched.
      *
@@ -45,7 +47,7 @@ class Label extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make(__('Name') , 'name')
+            Text::make(__('Name'), 'name')
                 ->showOnPreview()
                 ->sortable()
                 ->required()

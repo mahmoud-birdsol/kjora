@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Country;
-use App\Models\MediaLibrary;
 use App\Models\Position;
-use App\Models\Post;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;

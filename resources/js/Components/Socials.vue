@@ -4,23 +4,21 @@ import { usePage } from '@inertiajs/inertia-vue3';
 import Facebook from "@/Components/Icons/Facebook.vue";
 import Twitter from "@/Components/Icons/Twitter.vue";
 import Linkedin from "@/Components/Icons/Linkedin.vue";
-import { ShareIcon, LinkIcon } from '@heroicons/vue/24/outline'
+import { ShareIcon, LinkIcon, PlayCircleIcon } from '@heroicons/vue/24/outline'
 import ToolTip from "@/Components/ToolTip.vue";
 const props = defineProps({
-    id: {
-        required: true,
-    }, shareUrl: {
+    shareUrl: {
         required: true,
     },
     position: {
         default: 'top-0'
-    }
+    },
 
 })
 const emits = defineEmits(['showCopied'])
 const showSocials = ref(false)
 const show = ref(false)
-const url = usePage().props.value.ziggy.url + '/' + props.shareUrl + '/' + props.id
+const url = usePage().props.value.ziggy.url + '/' + props.shareUrl
 
 function copy() {
     navigator.clipboard.writeText(url).then(() => {

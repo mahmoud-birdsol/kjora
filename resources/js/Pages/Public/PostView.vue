@@ -55,18 +55,21 @@
                     }) }}
                     </div>
                     <div class="flex items-center gap-1">
-                            <template v-if="post?.likes_count > 0">
+                        <template v-if="post?.likes_count > 0">
+                            <button v-if="post?.likes_count > 0" @click="showLikesModal = true">
                                 <span class="text-sm">{{ post?.likes_count }}</span>
-                                <div class="transition-all duration-150 ">
-                                    {{ post?.likes_count === 1 ? $t('like') : $t('likes') }}
-                                </div>
-                            </template>
-                            <!-- <LikeButton :isLiked="post?.is_liked" :likeable_id="post.id" :likeable_type="'App\\Models\\Post'">
+                                <LikesModal :show="showLikesModal" :users="post.likes?.map(like => like.user)" @close="showLikesModal = false" />
+                            </button>
+                            <div class="transition-all duration-150 ">
+                                {{ post?.likes_count === 1 ? $t('like') : $t('likes') }}
+                            </div>
+                        </template>
+                        <!-- <LikeButton :isLiked="post?.is_liked" :likeable_id="post.id" :likeable_type="'App\\Models\\Post'">
                                 <template v-slot="{ isLiked }">
                                     <HeartIcon class="w-5 stroke-current stroke-2 text-primary" :class="isLiked ? 'fill-current' : 'fill-transparent'" />
                                 </template>
                             </LikeButton> -->
-                        </div>
+                    </div>
                 </div>
             </template>
             <template #postComments>
@@ -103,6 +106,7 @@ import PostOptionMenu from '../../Components/Posts/PostOptionMenu.vue';
 import PostCaptionFrom from '../../Components/Posts/PostCaptionForm.vue';
 import PostCommentForm from '../../Components/Posts/PostCommentForm.vue';
 import PublicLayout from '../../Layouts/PublicLayout.vue';
+import LikesModal from '../../Components/LikesModal.vue';
 
 
 onBeforeMount(() => {
@@ -121,6 +125,7 @@ const postComments = ref([])
 const currentUser = usePage().props.value.auth.user
 const isCurrentUser = currentUser?.id === props?.user?.id
 const isPublic = usePage().url.value.includes('public/posts')
+const showLikesModal = ref(false)
 
 const numComments = computed(() => postComments.value ? postComments.value.filter(c => !c.parent_id)?.length : 0)
 const commentsContainerOffset = computed(() => {
