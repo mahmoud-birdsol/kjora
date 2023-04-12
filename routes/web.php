@@ -78,18 +78,17 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified.phone',
     'verified.email',
-    'verified.identity',
     // 'player.review'
 ])->group(function () {
-    Route::get('/verification/identity', [
-        IdentityVerificationController::class,
-        'create',
-    ])->name('identity.verification.create');
-
-    Route::post('/verification/identity', [
-        IdentityVerificationController::class,
-        'store',
-    ])->name('identity.verification.store');
+//    Route::get('/verification/identity', [
+//        IdentityVerificationController::class,
+//        'create',
+//    ])->name('identity.verification.create');
+//
+//    Route::post('/verification/identity', [
+//        IdentityVerificationController::class,
+//        'store',
+//    ])->name('identity.verification.store');
 
     Route::get('/change-password', [PasswordController::class, 'edit'])->name('password.edit');
     Route::patch('/change-password', [PasswordController::class, 'update'])->name('password.change');
@@ -126,7 +125,6 @@ Route::middleware([
 
     Route::middleware([
         'verified.email',
-        'verified.identity',
     ])->group(function () {
         Route::get('/dashboard', function () {
             return Inertia::render('Dashboard');
