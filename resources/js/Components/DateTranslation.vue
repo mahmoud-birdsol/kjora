@@ -131,5 +131,5 @@ onMounted(() => {
 <template>
     <span v-if="type === 'normal'">{{ dayjs(start).locale(currentLocale).format(format) }}</span>
     <span v-else-if="type === 'range'">{{ dayjs(start).locale(currentLocale).fromNow() }}</span>
-    <span v-else-if="type === 'period'">{{ dayjs().locale(currentLocale).to(dayjs(end)) }}</span>
+    <span v-else-if="type === 'period'">{{ dayjs().locale(currentLocale).to(dayjs(end, true)) }}</span>
 </template>
