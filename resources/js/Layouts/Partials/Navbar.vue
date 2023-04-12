@@ -123,7 +123,7 @@ function markAllNotificationsAsRead() {
                             <span class="bg-black rounded-full">
                                 <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                             </span>
-                            <Link class="uppercase"
+                            <Link class="uppercase max-xs:text-xs"
                                   :href="route('upgrade')">{{ $t('upgrade') }}</Link>
                         </button>
                         <!-- user city  -->
@@ -214,30 +214,31 @@ function markAllNotificationsAsRead() {
                 <!-- Responsive Settings Options -->
                 <ResponsiveNavLink :href="route('home')"
                                    :active="route().current('home')">
-                <HomeIcon class="w-4 h-4 text-primary" />
-                <span>{{ $t('home') }}</span>
-            </ResponsiveNavLink>
-            <ResponsiveNavLink :href="route('chats.index')"
-                               :active="route().current('chats.index') || route().current('chats.show')">
-                <ChatIcon class="w-4 h-4 text-primary" />
-                <span>{{ $t('chat') }}</span>
-            </ResponsiveNavLink>
-            <ResponsiveNavLink :href="route('invitation.index')"
-                               :active="route().current('invitation.index') || route().current('hire.index')">
-                <FootBallIcon class="w-4 fill-primary aspect-square" />
-                <span>{{ $t('invitations') }}</span>
-            </ResponsiveNavLink>
-            <ResponsiveNavLink :href="route('favorites.index')"
-                               :active="route().current('favorites.index')">
-                <HeartIcon class="w-4 h-4 text-primary" />
-                <span>{{ $t('favorites') }}</span>
-            </ResponsiveNavLink>
-            <ResponsiveNavLink :href="route('more')"
-                               :active="route().current('more')">
-                <EllipsisHorizontalCircleIcon class="w-4 h-4 text-primary" />
-                <span>{{ $t('more') }}</span>
-            </ResponsiveNavLink>
+                    <HomeIcon class="w-4 h-4 text-primary" />
+                    <span>{{ $t('home') }}</span>
+                </ResponsiveNavLink>
+                <ResponsiveNavLink :href="route('chats.index')"
+                                   :active="route().current('chats.index') || route().current('chats.show')">
+                    <ChatIcon class="w-4 h-4 text-primary" />
+                    <span>{{ $t('chat') }}</span>
+                </ResponsiveNavLink>
+                <ResponsiveNavLink :href="route('invitation.index')"
+                                   :active="route().current('invitation.index') || route().current('hire.index')">
+                    <FootBallIcon class="w-4 fill-primary aspect-square" />
+                    <span>{{ $t('invitations') }}</span>
+                </ResponsiveNavLink>
+                <ResponsiveNavLink :href="route('favorites.index')"
+                                   :active="route().current('favorites.index')">
+                    <HeartIcon class="w-4 h-4 text-primary" />
+                    <span>{{ $t('favorites') }}</span>
+                </ResponsiveNavLink>
+                <ResponsiveNavLink :href="route('more')"
+                                   :active="route().current('more')">
+                    <EllipsisHorizontalCircleIcon class="w-4 h-4 text-primary" />
+                    <span>{{ $t('more') }}</span>
+                </ResponsiveNavLink>
 
-        </div>
-    </SlideInTransition>
-</nav></template>
+            </div>
+        </SlideInTransition>
+    </nav>
+</template>
