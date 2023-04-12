@@ -78,6 +78,7 @@ class Kernel extends HttpKernel
         'location.detect' => \App\Http\Middleware\LocationDetector::class,
         'player.review' => \App\Http\Middleware\ReviewUserMiddleware::class,
         'policy.checker' => \App\Http\Middleware\EnsurePoliciesVerified::class,
-        'detect.location' => \App\Http\Middleware\LocationDetector::class
+        'detect.location' => \App\Http\Middleware\LocationDetector::class,
+        'loadNovaPage' => \Whitecube\NovaPage\Http\Middleware\LoadPageForCurrentRoute::class,
     ];
 }

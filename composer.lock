@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7fa61b536dbcbcfb81c0cb83ed1beb83",
+    "content-hash": "169c2ab13d8a11496777e17e0a0b45a7",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -3997,6 +3997,57 @@
                 }
             ],
             "time": "2023-02-06T13:44:46+00:00"
+        },
+        {
+            "name": "murdercode/nova4-tinymce-editor",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/murdercode/Nova4-TinymceEditor.git",
+                "reference": "b73e514c3447d7daa10be6318f0378df1edd300c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/murdercode/Nova4-TinymceEditor/zipball/b73e514c3447d7daa10be6318f0378df1edd300c",
+                "reference": "b73e514c3447d7daa10be6318f0378df1edd300c",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": "^4.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Murdercode\\TinymceEditor\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Murdercode\\TinymceEditor\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Boost your Laravel Nova with the TinyMCE editor.",
+            "keywords": [
+                "editor",
+                "laravel",
+                "nova",
+                "tinymce"
+            ],
+            "support": {
+                "issues": "https://github.com/murdercode/Nova4-TinymceEditor/issues",
+                "source": "https://github.com/murdercode/Nova4-TinymceEditor/tree/v1.0.4"
+            },
+            "time": "2023-01-26T12:15:40+00:00"
         },
         {
             "name": "myclabs/deep-copy",

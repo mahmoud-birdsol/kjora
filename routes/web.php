@@ -484,9 +484,11 @@ Route::get('gallery/{mediaLibrary}', function (MediaLibrary $mediaLibrary) {
     ]);
 })->name('gallery.show');
 
-Route::get('about', function () {
-    return Inertia::render('About');
-})->name('about');
+Route::get('about', function (\Whitecube\NovaPage\Pages\Template $template) {
+    return Inertia::render('About', [
+        'template' => $template->getAttributes()
+    ]);
+})->template(\App\Nova\Templates\AboutUsTemplate::class)->middleware('loadNovaPage')->name('about');
 Route::get('contact', function () {
     return Inertia::render('Contact');
 })->name('contact');

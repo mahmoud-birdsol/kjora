@@ -140,6 +140,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::link('Settings', 'nova-settings/general'),
                     MenuItem::resource(Label::class),
                     MenuItem::resource(Social::class),
+                    MenuItem::make(__('Pages'))->path('resources/nova-page'),
+
                 ])->icon('cog')->collapsable(),
 
                 MenuSection::make(__('Contact Messages'), [
