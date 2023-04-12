@@ -245,7 +245,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             NovaPermissions::make(),
-            NovaSettings::make()
+            NovaSettings::make(),
+            \Whitecube\NovaPage\NovaPageTool::make(),
+
         ];
     }
 
