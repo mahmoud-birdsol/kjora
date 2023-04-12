@@ -58,12 +58,12 @@ const arLocaleConfig = {
     weekStart: 6,
     relativeTime: {
         future: 'بعد %s',
-        past: 'منذ %s',
-        s: '١ث',
-        m: '١ق',
-        mm: '%dق',
-        h: '١س',
-        hh: '%dس',
+        past: '%s',
+        s: '١ ث',
+        m: '١ ق',
+        mm: '%d ق',
+        h: '١ س',
+        hh: '%d س',
         d: '١ يوم',
         dd: '%d أيام',
         M: '١ شهر',
@@ -104,18 +104,18 @@ const arLocaleConfig = {
 const enLocaleConfig = {
     relativeTime: {
         future: "in %s",
-        past: "%s ago",
+        past: "%s",
         s: 'a few sec',
-        m: "1min",
-        mm: "%dmins",
-        h: "1hr",
-        hh: "%dhrs",
-        d: "1d",
-        dd: "%dd",
+        m: "1 min",
+        mm: "%d mins",
+        h: "1 hr",
+        hh: "%d hrs",
+        d: "1 d",
+        dd: "%d d",
         M: "1m",
-        MM: "%dm",
-        y: "1y",
-        yy: "%dyrs"
+        MM: "%d m",
+        y: "1 y",
+        yy: "%d yrs"
     }
 }
 
