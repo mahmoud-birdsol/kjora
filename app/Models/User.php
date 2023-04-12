@@ -6,6 +6,7 @@ use App\Models\Concerns\CanBeReported;
 use App\Models\Contracts\Reportable;
 use App\Models\States\UserPremiumState;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -497,7 +498,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function played(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->playerReviews()->where('is_attended', true)->count()
+            get: fn() => $this->playerReviews()->whereHas('invitation', function (Builder $query) {
+                $query->where('state', 'accepted');
+            })->whereNotNull('reviewed_at')->where('is_attended', true)->count()
         );
     }
 
@@ -509,7 +512,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function missed(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->playerReviews()->where('is_attended', false)->count()
+            get: fn() => $this->playerReviews()->whereHas('invitation', function (Builder $query) {
+                $query->where('state', 'accepted');
+            })->whereNotNull('reviewed_at')->where('is_attended', false)->count()
         );
     }
 
@@ -537,7 +542,17 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         );
     }
 
-    public function reportedUser()
+    /**
+     * Check if the user can invite or not
+     *
+     * @return bool
+     */
+    public function hasPendingReviews(): bool
+    {
+        return $this->reviewerReviews()->whereNull('reviewed_at')->count() > 0;
+    }
+
+    public function reportedUser(): static
     {
         return $this;
     }
