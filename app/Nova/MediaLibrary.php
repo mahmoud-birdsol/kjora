@@ -37,7 +37,6 @@ class MediaLibrary extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
      * @return array
      */
     public function fields(NovaRequest $request)
@@ -76,7 +75,6 @@ class MediaLibrary extends Resource
      *
 <<<<<<< HEAD
 =======
-     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
 >>>>>>> main
      * @return array
      */
@@ -90,7 +88,6 @@ class MediaLibrary extends Resource
      *
 <<<<<<< HEAD
 =======
-     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
 >>>>>>> main
      * @return array
      */
@@ -104,7 +101,6 @@ class MediaLibrary extends Resource
      *
 <<<<<<< HEAD
 =======
-     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
 >>>>>>> main
      * @return array
      */
@@ -118,7 +114,6 @@ class MediaLibrary extends Resource
      *
 <<<<<<< HEAD
 =======
-     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
 >>>>>>> main
      * @return array
      */

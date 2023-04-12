@@ -46,15 +46,15 @@ class User extends Resource
     public static $search = [
         'id', 'username', 'email', 'phone', 'first_name', 'last_name',
     ];
+
     /**
      * Get the displayable label of the resource.
-     *
-     * @return string
      */
     public static function label(): string
     {
-        return __("Users");
+        return __('Users');
     }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -74,7 +74,7 @@ class User extends Resource
                 ->nullable()
                 ->rules('nullable'),
 
-            BelongsTo::make(__('Country'),'country' ,Country::class)
+            BelongsTo::make(__('Country'), 'country', Country::class)
                 ->showOnPreview()
                 ->showCreateRelationButton()
                 ->searchable()
@@ -82,7 +82,7 @@ class User extends Resource
                 ->nullable()
                 ->rules('nullable'),
 
-            BelongsTo::make(__('Club') , 'club' , Club::class)
+            BelongsTo::make(__('Club'), 'club', Club::class)
                 ->showOnPreview()
                 ->showCreateRelationButton()
                 ->searchable()
@@ -90,7 +90,7 @@ class User extends Resource
                 ->nullable()
                 ->rules('nullable'),
 
-            BelongsTo::make(__('Position'),'position' , Position::class)
+            BelongsTo::make(__('Position'), 'position', Position::class)
                 ->showOnPreview()
                 ->showCreateRelationButton()
                 ->hideFromIndex()
@@ -99,17 +99,17 @@ class User extends Resource
                 ->nullable()
                 ->rules('nullable'),
 
-            Text::make(__('Username'),'username')
+            Text::make(__('Username'), 'username')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            Text::make(__('Email') , 'email')
+            Text::make(__('Email'), 'email')
                 ->sortable()
                 ->rules('required', 'email', 'max:254')
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
 
-            Password::make(__('Password'),'password')
+            Password::make(__('Password'), 'password')
                 ->onlyOnForms()
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),
@@ -125,40 +125,40 @@ class User extends Resource
              |--------------------------------------------------------------------------
              */
 
-            Text::make(__('First name') , 'first_name')
+            Text::make(__('First name'), 'first_name')
                 ->showOnPreview()
                 ->sortable()
                 ->hideFromIndex()
                 ->rules('required', 'max:255'),
 
-            Text::make(__('Last name') ,'last_name')
+            Text::make(__('Last name'), 'last_name')
                 ->showOnPreview()
                 ->sortable()
                 ->hideFromIndex()
                 ->rules('required', 'max:255'),
 
-            Text::make(__('Phone') ,'phone')
+            Text::make(__('Phone'), 'phone')
                 ->showOnPreview()
                 ->sortable()
                 ->hideFromIndex()
                 ->rules('required', 'max:255'),
 
-            Select::make(__('Gender') ,'gender')->options([
+            Select::make(__('Gender'), 'gender')->options([
                 'male' => 'Male',
                 'female' => 'Female',
             ])->displayUsingLabels()->showOnPreview()->sortable()->filterable()->required()->rules('required'),
 
-            Date::make(__('Date of birth') ,'date_of_birth')
+            Date::make(__('Date of birth'), 'date_of_birth')
                 ->showOnPreview()
                 ->filterable()
                 ->sortable()
                 ->required()
                 ->rules('required'),
 
-            Number::make(__('Age') , 'age')
+            Number::make(__('Age'), 'age')
                 ->onlyOnDetail(),
 
-            Select::make(__('Preferred Foot') ,'preferred_foot')->options([
+            Select::make(__('Preferred Foot'), 'preferred_foot')->options([
                 'left' => 'Left',
                 'right' => 'Right',
             ])->displayUsingLabels()->showOnPreview()->sortable()->filterable()->required()->rules('required'),
@@ -170,7 +170,7 @@ class User extends Resource
                     ->hideWhenUpdating()
                     ->hideWhenCreating(),
 
-                Select::make(__('Identity issue country') ,'identity_issue_country')
+                Select::make(__('Identity issue country'), 'identity_issue_country')
                     ->options(\App\Models\Country::all()->pluck('name', 'name')->toArray())
                     ->hideFromIndex()
                     ->displayUsingLabels()
@@ -180,58 +180,57 @@ class User extends Resource
                     ->required()
                     ->rules('required'),
 
-                Select::make(__('Identity Type') ,'identity_type')->options([
+                Select::make(__('Identity Type'), 'identity_type')->options([
                     'national_id' => 'National ID',
                     'passport' => 'Passport',
                 ])->hideFromIndex()->displayUsingLabels()->showOnPreview()->sortable()->filterable()->required()->rules('required'),
 
-                Images::make(__('Identity Front Image') ,'identity_front_image')
+                Images::make(__('Identity Front Image'), 'identity_front_image')
                     ->hideFromIndex()
                     ->nullable()
                     ->rules('nullable'),
 
-                Images::make(__('Identity Back Image') ,'identity_back_image')
+                Images::make(__('Identity Back Image'), 'identity_back_image')
                     ->hideFromIndex()
                     ->nullable()
                     ->rules('nullable'),
 
-                Images::make(__('Identity selfie Image') ,'identity_selfie_image')
+                Images::make(__('Identity selfie Image'), 'identity_selfie_image')
                     ->hideFromIndex()
                     ->nullable()
                     ->rules('nullable'),
             ]),
-            Text::make(__('Last Known Ip') ,'last_known_ip')
+            Text::make(__('Last Known Ip'), 'last_known_ip')
                 ->showOnPreview()
                 ->sortable()
                 ->hideFromIndex()
                 ->rules('nullable'),
 
-            Text::make(__('Current country') ,'current_country')
+            Text::make(__('Current country'), 'current_country')
                 ->showOnPreview()
                 ->sortable()
                 ->hideFromIndex()
                 ->rules('nullable'),
 
-
-            Text::make(__('Current Region') ,'current_region')
+            Text::make(__('Current Region'), 'current_region')
                 ->showOnPreview()
                 ->sortable()
                 ->hideFromIndex()
                 ->rules('nullable'),
 
-            Text::make(__('Current City') ,'current_city')
+            Text::make(__('Current City'), 'current_city')
                 ->showOnPreview()
                 ->sortable()
                 ->hideFromIndex()
                 ->rules('nullable'),
 
-            Text::make(__('Current Latitude') ,'current_latitude')
+            Text::make(__('Current Latitude'), 'current_latitude')
                 ->showOnPreview()
                 ->sortable()
                 ->hideFromIndex()
                 ->rules('nullable'),
 
-            Text::make(__('Current Longitude') ,'current_longitude')
+            Text::make(__('Current Longitude'), 'current_longitude')
                 ->showOnPreview()
                 ->sortable()
                 ->hideFromIndex()

@@ -10,7 +10,6 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
-use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 class JoinPlatformControllerTest extends TestCase
@@ -21,7 +20,7 @@ class JoinPlatformControllerTest extends TestCase
     public function test_it_displays_the_form_to_join_platform()
     {
         $user = User::factory()->create([
-            'state' => Free::class
+            'state' => Free::class,
         ]);
         $token = Str::random();
 

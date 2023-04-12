@@ -34,7 +34,6 @@ class PlayerReviewController extends Controller
                 ];
             })->values();
 
-
         return Inertia::render('Reviews/Show', [
             'review' => $review->load('player'),
             'ratingCategories' => RatingCategory::whereHas('positions', function (Builder $query) use ($review) {
@@ -48,10 +47,10 @@ class PlayerReviewController extends Controller
     {
         $review->update([
             'is_attended' => $request->input('attended'),
-            'reviewed_at' => now()
+            'reviewed_at' => now(),
         ]);
 
-        if (!$review->refresh()->is_attended) {
+        if (! $review->refresh()->is_attended) {
             FlashMessage::make()->success(
                 message: __('Review Submitted Successfully')
             )->closeable()->send();
@@ -74,12 +73,9 @@ class PlayerReviewController extends Controller
             $query->where('positions.id', $review->player->position_id);
         })->count();
 
-
-
         FlashMessage::make()->success(
             message: __('Review Submitted Successfully')
         )->closeable()->send();
-
 
         if ($ratingCategoryCount > 0) {
             $review->player->update([
@@ -94,8 +90,7 @@ class PlayerReviewController extends Controller
                             ->playerReviews()
                             ->where('reviewed_at', '!=', null)
                             ->where('is_attended', true)
-                            ->where('id', '!=', $review->id)->count() + 1)
-                ,
+                            ->where('id', '!=', $review->id)->count() + 1),
             ]);
             $review->player->notify(new NotifyUserOfRatingSubmittedNotification($review->reviewer, $review->player, $review));
         }

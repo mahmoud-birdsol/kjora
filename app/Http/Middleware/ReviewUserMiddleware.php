@@ -23,7 +23,7 @@ class ReviewUserMiddleware
                 message: __('You have a pending player to review')
             )->action(route('player.review.show', [
                 'review' => $review->id,
-                'reviewing_user' => Auth::id()
+                'reviewing_user' => Auth::id(),
             ]), __('Review'))->closeable()->send();
         }
 

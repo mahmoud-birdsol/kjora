@@ -34,7 +34,7 @@ class InvitationCreatedEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('users.' . $this->invitation->invitedPlayer->id);
+        return new PrivateChannel('users.'.$this->invitation->invitedPlayer->id);
     }
 
     /**
@@ -55,7 +55,7 @@ class InvitationCreatedEvent implements ShouldBroadcast
     public function broadcastWith(): array
     {
         return [
-            'id' => $this->invitation->id
+            'id' => $this->invitation->id,
         ];
     }
 }

@@ -24,14 +24,13 @@ class Impression extends Resource
      * @var string
      */
     public static $title = 'id';
+
     /**
      * Get the displayable label of the resource.
-     *
-     * @return string
      */
     public static function label(): string
     {
-        return __("Impressions");
+        return __('Impressions');
     }
 
     /**
@@ -46,8 +45,8 @@ class Impression extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
      * @return array
+     *
      * @throws \Exception
      */
     public function fields(NovaRequest $request)
@@ -55,21 +54,21 @@ class Impression extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make(__('User'),'user' ,User::class)
+            BelongsTo::make(__('User'), 'user', User::class)
                 ->showOnPreview()
                 ->filterable()
                 ->sortable()
                 ->searchable()
                 ->rules('required'),
 
-            BelongsTo::make(__('Advertisement'),'advertisement' , Advertisement::class)
+            BelongsTo::make(__('Advertisement'), 'advertisement', Advertisement::class)
                 ->showOnPreview()
                 ->filterable()
                 ->sortable()
                 ->searchable()
                 ->rules('required'),
 
-            URL::make(__('Source'),'source')
+            URL::make(__('Source'), 'source')
                 ->showOnPreview()
                 ->required()
                 ->rules('required', 'url', 'max:254'),

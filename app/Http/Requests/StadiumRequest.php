@@ -8,8 +8,6 @@ class StadiumRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -27,23 +25,23 @@ class StadiumRequest extends FormRequest
             'name' => [
                 'required',
                 'string',
-                'max:256'
+                'max:256',
             ],
             'longitude' => [
-                'required'
+                'required',
             ],
             'latitude' => [
-                'required'
+                'required',
             ],
             'google_place_id' => [
-                'nullable'
+                'nullable',
             ],
             'user_id' => [
-                'nullable'
+                'nullable',
             ],
             'approved_at' => [
-                'nullable'
-            ]
+                'nullable',
+            ],
         ];
     }
 }

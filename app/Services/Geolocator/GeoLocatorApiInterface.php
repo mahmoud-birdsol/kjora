@@ -4,5 +4,5 @@ namespace App\Services\Geolocator;
 
 interface GeoLocatorApiInterface
 {
-    public  function getDetails();
+    public function getDetails();
 }

@@ -12,7 +12,6 @@ use App\Http\Controllers\Api\NewMessagesController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\UserLocationController;
 use App\Http\Resources\CommentResource;
-use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -48,14 +47,13 @@ Route::post(
     'chats/{conversation}/messages',
     [
         MessageController::class,
-        'store'
+        'store',
     ]
 )->middleware('auth:sanctum')->name('api.messages.store');
 
 Route::delete('message/{message}/delete', [MessageController::class, 'destroy'])->middleware('auth:sanctum')->name('api.messages.delete');
 
 Route::post('posts', PostController::class)->name('api.posts.store');
-
 
 Route::post(
     'gallery/upload/{post}',
@@ -81,7 +79,6 @@ Route::post('/elvis-has-left-the-building', function (Request $request) {
     ])->save();
 })->middleware('auth:sanctum')->name('api.user.left');
 
-
 Route::post('message/{message}/mark-as-read', MarkMessageAsReadController::class)
     ->middleware('auth:sanctum')
     ->name('api.message.mark-as-read');
@@ -90,12 +87,10 @@ Route::get('chats/{conversation}/new-messages', NewMessagesController::class)
 
 Route::post('update-location', UserLocationController::class)->name('api.location.store');
 
-
 Route::post('notifications/mark-as-read/{notificationId}', MarkNotificationAsReadController::class)
     ->name('api.notifications.mark-as-read')->middleware('throttle:200,1');
 
 Route::get('invitations/{invitation}', FetchInvitationController::class)->name('api.invitations.index');
-
 
 Route::get('public/post/comments', function (Request $request) {
     $modelType = (new ReflectionClass($request->input('commentable_type')))->newInstance();
@@ -104,4 +99,3 @@ Route::get('public/post/comments', function (Request $request) {
 
     return CommentResource::collection($model->comments->load('user')->load('replies'));
 })->name('public.post.comments');
-

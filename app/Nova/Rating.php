@@ -32,10 +32,12 @@ class Rating extends Resource
     public static $search = [
         'id',
     ];
+
     public static function label(): string
     {
-        return __("Ratings");
+        return __('Ratings');
     }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -46,7 +48,7 @@ class Rating extends Resource
         return [
             ID::make()->sortable(),
 
-            Number::make(__('Rating from'),'rating_from')
+            Number::make(__('Rating from'), 'rating_from')
                 ->showOnPreview()
                 ->required()
                 ->rules('required')
@@ -54,7 +56,7 @@ class Rating extends Resource
                 ->filterable()
                 ->step(0.1),
 
-            Number::make(__('Rating to'),'rating_to')
+            Number::make(__('Rating to'), 'rating_to')
                 ->showOnPreview()
                 ->required()
                 ->rules('required')

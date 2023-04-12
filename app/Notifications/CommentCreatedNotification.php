@@ -35,7 +35,7 @@ class CommentCreatedNotification extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -46,14 +46,14 @@ class CommentCreatedNotification extends Notification
     /**
      * Get the mail representation of the notification.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
         return (new MailMessage)
             ->subject(__('Comment Notification', [], $notifiable->locale))
-            ->line(__('Dear ', [], $notifiable->locale) . $this->user->name)
+            ->line(__('Dear ', [], $notifiable->locale).$this->user->name)
             ->line(__('This is to notify you that a new comment has been created', [], $notifiable->locale))
             ->action(__('Chat Now', [], $notifiable->locale), url(route('posts.show', $this->commentable)))
             ->line(__('Thank you for using our application!', [], $notifiable->locale));
@@ -62,7 +62,7 @@ class CommentCreatedNotification extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array
      */
     public function toArray($notifiable)
@@ -71,7 +71,7 @@ class CommentCreatedNotification extends Notification
             displayType: 'user',
             state: 'success',
             title: __('Comment Notification', [], $notifiable->locale),
-            subtitle: __('User ', [], $notifiable->locale) . $this->notifier->name . __(' commented on your post', [], $notifiable->locale),
+            subtitle: __('User ', [], $notifiable->locale).$this->notifier->name.__(' commented on your post', [], $notifiable->locale),
             actionData: new RouteActionData(
                 route: route('posts.show', $this->commentable),
                 text: __('View Now', [], $notifiable->locale),
@@ -84,7 +84,7 @@ class CommentCreatedNotification extends Notification
     /**
      * Get the broadcastable representation of the notification.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return BroadcastMessage
      */
     public function toBroadcast($notifiable)

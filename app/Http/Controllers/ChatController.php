@@ -13,8 +13,6 @@ class ChatController extends Controller
 {
     /**
      * Display all the users conversations
-     * @param \Illuminate\Http\Request $request
-     * @return \Inertia\Response
      */
     public function index(Request $request): Response
     {
@@ -51,7 +49,6 @@ class ChatController extends Controller
     {
         $userConversationsIds = request()->user()->conversations->pluck('id');
 
-
         $conversations = Conversation::query()->whereHas('users', function (Builder $query) use ($userConversationsIds) {
             $query->whereIn('conversation_user.conversation_id', $userConversationsIds)
                 ->whereNot('conversation_user.user_id', request()->user()->id)
@@ -72,7 +69,6 @@ class ChatController extends Controller
     /**
      * Delete the conversation for me
      *
-     * @param \App\Models\Conversation $conversation
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Conversation $conversation)
@@ -80,7 +76,7 @@ class ChatController extends Controller
         $user = $conversation->users()->where('conversation_user.user_id', '!=', request()->user()->id)->first();
         $conversation->users()
             ->updateExistingPivot($user->id, [
-                'is_deleted' => true
+                'is_deleted' => true,
             ]);
 
         FlashMessage::make()->success(

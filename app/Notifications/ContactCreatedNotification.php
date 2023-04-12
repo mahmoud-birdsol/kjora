@@ -4,7 +4,6 @@ namespace App\Notifications;
 
 use App\Models\Contact;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Laravel\Nova\Notifications\NovaChannel;
@@ -54,8 +53,6 @@ class ContactCreatedNotification extends Notification
 
     /**
      * Get the nova representation of the notification
-     *
-     * @return NovaNotification
      */
     public function toNova(): NovaNotification
     {

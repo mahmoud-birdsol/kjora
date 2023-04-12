@@ -26,6 +26,7 @@ class UserDashboard extends Dashboard
             UsersPerPosition::make(),
         ];
     }
+
     /**
      * Get the displayable name of the dashboard.
      */
@@ -33,6 +34,7 @@ class UserDashboard extends Dashboard
     {
         return __('User dashboard');
     }
+
     /**
      * Get the URI key for the dashboard.
      *

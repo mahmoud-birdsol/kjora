@@ -39,6 +39,7 @@ class AdminsPerRole extends Partition
     {
         return 'admins-per-role';
     }
+
     /**
      * Sey the label for the metric.
      *

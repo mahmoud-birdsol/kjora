@@ -33,10 +33,9 @@ class Click extends Resource
     public static $search = [
         'id', 'user.name', 'advertisement.name',
     ];
+
     /**
      * Get the displayable label of the resource.
-     *
-     * @return string
      */
     public static function label(): string
     {
@@ -45,13 +44,12 @@ class Click extends Resource
 
     /**
      * Get the displayable singular label of the resource.
-     *
-     * @return string
      */
     public static function singularLabel(): string
     {
         return __('Click');
     }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -62,7 +60,7 @@ class Click extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make(__('User') ,'user' , User::class  )
+            BelongsTo::make(__('User'), 'user', User::class)
                 ->showCreateRelationButton()
                 ->showOnPreview()
                 ->filterable()
@@ -70,7 +68,7 @@ class Click extends Resource
                 ->searchable()
                 ->rules('required'),
 
-            BelongsTo::make(__('Advertisement'),'advertisement' , Advertisement::class)
+            BelongsTo::make(__('Advertisement'), 'advertisement', Advertisement::class)
                 ->showCreateRelationButton()
                 ->showOnPreview()
                 ->filterable()
@@ -78,7 +76,7 @@ class Click extends Resource
                 ->searchable()
                 ->rules('required'),
 
-            URL::make(__('Source'),'source')
+            URL::make(__('Source'), 'source')
                 ->showOnPreview()
                 ->required()
                 ->rules('required', 'url', 'max:254'),

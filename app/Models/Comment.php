@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Concerns\CanBeReported;
-use App\Models\Contracts\Reportable;
 use App\Models\Concerns\CanBeLiked;
+use App\Models\Concerns\CanBeReported;
 use App\Models\Contracts\Likeable;
+use App\Models\Contracts\Reportable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

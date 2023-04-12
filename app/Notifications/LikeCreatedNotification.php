@@ -16,14 +16,8 @@ class LikeCreatedNotification extends Notification
 {
     use Queueable;
 
-    /**
-     * @var \App\Models\Contracts\Likeable
-     */
     private Likeable $likeable;
 
-    /**
-     * @var \App\Models\Like
-     */
     private Like $like;
 
     /**
@@ -40,7 +34,7 @@ class LikeCreatedNotification extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -51,22 +45,22 @@ class LikeCreatedNotification extends Notification
     /**
      * Get the mail representation of the notification.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject($this->like->user->name . __(' liked your ', [] , $notifiable->locale ) . (get_class($this->likeable) == Comment::class ? __('comment!', [] , $notifiable->locale ) : __('post!', [] , $notifiable->locale )))
-            ->line($this->like->user->name . __(' liked your ', [] , $notifiable->locale ) . (get_class($this->likeable) == Comment::class ? __('comment!', [] , $notifiable->locale ) : __('post!', [] , $notifiable->locale )))
-            ->action(__('View', [] , $notifiable->locale ), $this->likeable->url())
-            ->line(__('Thank you for using our application!', [] , $notifiable->locale ));
+            ->subject($this->like->user->name.__(' liked your ', [], $notifiable->locale).(get_class($this->likeable) == Comment::class ? __('comment!', [], $notifiable->locale) : __('post!', [], $notifiable->locale)))
+            ->line($this->like->user->name.__(' liked your ', [], $notifiable->locale).(get_class($this->likeable) == Comment::class ? __('comment!', [], $notifiable->locale) : __('post!', [], $notifiable->locale)))
+            ->action(__('View', [], $notifiable->locale), $this->likeable->url())
+            ->line(__('Thank you for using our application!', [], $notifiable->locale));
     }
 
     /**
      * Get the array representation of the notification.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return array
      */
     public function toArray($notifiable)
@@ -74,11 +68,11 @@ class LikeCreatedNotification extends Notification
         return (new NotificationData(
             displayType: 'user',
             state: 'success',
-            title: __('Like Notification', [] , $notifiable->locale ),
-            subtitle: $this->like->user->name . __(' liked your ', [] , $notifiable->locale ) . (get_class($this->likeable) == Comment::class ? __('comment!', [] , $notifiable->locale ) : __('post!', [] , $notifiable->locale )),
+            title: __('Like Notification', [], $notifiable->locale),
+            subtitle: $this->like->user->name.__(' liked your ', [], $notifiable->locale).(get_class($this->likeable) == Comment::class ? __('comment!', [], $notifiable->locale) : __('post!', [], $notifiable->locale)),
             actionData: new RouteActionData(
                 route: $this->likeable->url(),
-                text: __('View ', [] , $notifiable->locale ) . (get_class($this->likeable) == Comment::class ? __('comment', [] , $notifiable->locale ) : __('post', [] , $notifiable->locale )),
+                text: __('View ', [], $notifiable->locale).(get_class($this->likeable) == Comment::class ? __('comment', [], $notifiable->locale) : __('post', [], $notifiable->locale)),
             ),
             userAvatar: $notifiable->avatar_url,
             userName: $notifiable->name,
@@ -88,7 +82,7 @@ class LikeCreatedNotification extends Notification
     /**
      * Get the broadcastable representation of the notification.
      *
-     * @param mixed $notifiable
+     * @param  mixed  $notifiable
      * @return BroadcastMessage
      */
     public function toBroadcast($notifiable)

@@ -9,14 +9,9 @@ class AssignThePrivacyVersion
 {
     /**
      * Assign the user privacy  as version,
-     *
-     * @param  \App\Models\User  $user
-     * @param  PrivacyPolicy $privacyPolicy
-     * @return void
      */
-    public function __invoke(User $user , PrivacyPolicy $privacyPolicy): void
+    public function __invoke(User $user, PrivacyPolicy $privacyPolicy): void
     {
-        $user->update(['accepted_privacy_policy_version'=>$privacyPolicy->version]);
-
+        $user->update(['accepted_privacy_policy_version' => $privacyPolicy->version]);
     }
 }

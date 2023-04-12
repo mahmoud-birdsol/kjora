@@ -4,8 +4,8 @@ namespace App\Models;
 
 use App\Models\Concerns\CanBeLiked;
 use App\Models\Concerns\CanBeReported;
-use App\Models\Contracts\Reportable;
 use App\Models\Contracts\Likeable;
+use App\Models\Contracts\Reportable;
 use App\Models\Contracts\Suspendable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -56,7 +56,7 @@ class MediaLibrary extends Media implements Suspendable, Reportable, Likeable
 
     public function owner(): User|null
     {
-        if($this->collection_name === 'gallery'){
+        if ($this->collection_name === 'gallery') {
             return $this->model;
         }
 
@@ -70,7 +70,7 @@ class MediaLibrary extends Media implements Suspendable, Reportable, Likeable
 
     public function reportedUser()
     {
-        if($this->collection_name === 'gallery'){
+        if ($this->collection_name === 'gallery') {
             return $this->model;
         }
 

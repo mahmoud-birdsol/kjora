@@ -37,7 +37,7 @@ class ReportRequest extends FormRequest
                     MediaLibrary::class,
                     Conversation::class,
                     Comment::class,
-                    Post::class
+                    Post::class,
                 ]),
             ],
             'user_id' => [

@@ -46,6 +46,7 @@ class Conversation extends Resource
 
             Text::make(__('Users'), function () {
                 $users = $this->resource->users()->pluck('username')->toArray();
+
                 return implode(', ', $users);
             }),
 

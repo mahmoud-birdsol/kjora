@@ -103,7 +103,7 @@ return [
         HandleInertiaRequests::class,
         DispatchServingNovaEvent::class,
         BootTools::class,
-        \App\Http\Middleware\SetLocaleMiddleware::class
+        \App\Http\Middleware\SetLocaleMiddleware::class,
     ],
 
     'api_middleware' => [

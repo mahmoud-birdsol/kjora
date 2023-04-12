@@ -15,28 +15,26 @@ class PasswordController extends Controller
     /**
      * Display the password edit view.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Inertia\Response
      */
     public function edit(Request $request)
     {
         return Inertia::render('Auth/UpdatePassword');
-
     }
+
     /**
      * Update the user's password.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request)
     {
-         $request->validate([
+        $request->validate([
             'current_password' => ['required', 'current_password'],
             'new_password' => ['required', Password::defaults()],
         ]);
-        #Match The Old Password
-        if(!Hash::check($request->current_password, auth()->user()->password)){
+        //Match The Old Password
+        if (! Hash::check($request->current_password, auth()->user()->password)) {
             FlashMessage::make()->error(
                 message: 'Old Password Doesnt match!.'
             )->closeable()->send();
@@ -44,17 +42,18 @@ class PasswordController extends Controller
             return redirect()->back();
         }
 
-        if(strcmp($request->get('current_password'), $request->get('new_password')) == 0){
+        if (strcmp($request->get('current_password'), $request->get('new_password')) == 0) {
             // Current password and new password same
 
             FlashMessage::make()->error(
                 message: __('New Password cannot be same as your current password.')
             )->closeable()->send();
+
             return redirect()->back();
         }
         $user = Auth::user();
         $user->update([
-            'password' => Hash::make($request->get('new_password'))
+            'password' => Hash::make($request->get('new_password')),
         ]);
         FlashMessage::make()->success(
             message: __('Password changed successfully')

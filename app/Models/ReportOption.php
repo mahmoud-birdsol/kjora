@@ -19,6 +19,7 @@ class ReportOption extends Model
     protected $fillable = [
         'body',
     ];
+
     /**
      * The attributes that are translatable
      *

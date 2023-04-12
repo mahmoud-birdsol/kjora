@@ -85,7 +85,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'locale',
         'state',
         'geo_location',
-        'accepted_chat_regulations_at'
+        'accepted_chat_regulations_at',
     ];
 
     /**
@@ -117,7 +117,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'rating' => 'float',
         'last_seen_at' => 'datetime',
         'state' => UserPremiumState::class,
-        'accepted_chat_regulations_at' => 'datetime'
+        'accepted_chat_regulations_at' => 'datetime',
     ];
 
     /**
@@ -140,7 +140,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         'state_name',
         'played',
         'missed',
-        'latest_conversation'
+        'latest_conversation',
     ];
 
     /**
@@ -183,19 +183,17 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function name(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->first_name . ' ' . $this->last_name
+            get: fn () => $this->first_name.' '.$this->last_name
         );
     }
 
     /**
      * Get the rating value rounded
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function rating(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => number_format($value , 2)
+            get: fn ($value) => number_format($value, 2)
         );
     }
 
@@ -205,7 +203,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function avatarUrl(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->getFirstMedia('avatar')?->getFullUrl()
+            get: fn () => $this->getFirstMedia('avatar')?->getFullUrl()
         );
     }
 
@@ -215,7 +213,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function avatarThumbUrl(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->getFirstMedia('avatar')?->getFullUrl('thumb')
+            get: fn () => $this->getFirstMedia('avatar')?->getFullUrl('thumb')
         );
     }
 
@@ -225,7 +223,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function identityFrontImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->getFirstMedia('identity_front_image')?->getFullUrl()
+            get: fn () => $this->getFirstMedia('identity_front_image')?->getFullUrl()
         );
     }
 
@@ -235,7 +233,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function identityBackImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->getFirstMedia('identity_back_image')?->getFullUrl()
+            get: fn () => $this->getFirstMedia('identity_back_image')?->getFullUrl()
         );
     }
 
@@ -245,7 +243,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function identitySelfieImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->getFirstMedia('identity_selfie_image')?->getFullUrl()
+            get: fn () => $this->getFirstMedia('identity_selfie_image')?->getFullUrl()
         );
     }
 
@@ -255,7 +253,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function age(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->date_of_birth?->age,
+            get: fn ($value) => $this->date_of_birth?->age,
         );
     }
 
@@ -265,7 +263,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function hasVerifiedIdentity(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->hasVerifiedPersonalIdentity()
+            get: fn ($value) => $this->hasVerifiedPersonalIdentity()
         );
     }
 
@@ -275,7 +273,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function isFavorite(): Attribute
     {
         return Attribute::make(
-            get: fn() => Auth::check() && Auth::user() instanceof User
+            get: fn () => Auth::check() && Auth::user() instanceof User
                 ? Auth::user()->favorites->contains($this)
                 : false,
         );
@@ -283,13 +281,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * Get the user identety status .
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function identityStatus(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->hasVerifiedPersonalIdentity() ? 'Verified' : ($this->hasUploadedVerificationDocuments() ? 'Pending' : 'Please verify')
+            get: fn () => $this->hasVerifiedPersonalIdentity() ? 'Verified' : ($this->hasUploadedVerificationDocuments() ? 'Pending' : 'Please verify')
         );
     }
 
@@ -303,8 +299,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * Get the user posts
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function posts(): HasMany
     {
@@ -395,7 +389,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
      */
     public function hasVerifiedPhone(): bool
     {
-        return !is_null($this->phone_verified_at);
+        return ! is_null($this->phone_verified_at);
     }
 
     /**
@@ -403,7 +397,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
      */
     public function hasVerifiedPersonalIdentity(): bool
     {
-        return !is_null($this->identity_verified_at);
+        return ! is_null($this->identity_verified_at);
     }
 
     /**
@@ -412,9 +406,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function hasUploadedVerificationDocuments(): bool
     {
         return
-            !is_null($this->identity_type) &&
-            !is_null($this->getFirstMedia('identity_front_image')?->exists()) &&
-            !is_null($this->getFirstMedia('identity_back_image')?->exists());
+            ! is_null($this->identity_type) &&
+            ! is_null($this->getFirstMedia('identity_front_image')?->exists()) &&
+            ! is_null($this->getFirstMedia('identity_back_image')?->exists());
     }
 
     /**
@@ -446,7 +440,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * Get the users invitations
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function invitations(): HasMany
     {
@@ -455,7 +448,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * Get the users hires
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function hires(): HasMany
     {
@@ -475,30 +467,23 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
      */
     public function receivesBroadcastNotificationsOn(): string
     {
-        return 'users.' . $this->id;
+        return 'users.'.$this->id;
     }
 
-    /**
-     *
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
-     */
     public function stateName(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->state?->name()
+            get: fn ($value) => $this->state?->name()
         );
     }
 
     /**
      * Get the count of the played matches
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function played(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->playerReviews()->whereHas('invitation', function (Builder $query) {
+            get: fn () => $this->playerReviews()->whereHas('invitation', function (Builder $query) {
                 $query->where('state', 'accepted');
             })->whereNotNull('reviewed_at')->where('is_attended', true)->count()
         );
@@ -506,13 +491,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * Get the count of the user missed matches
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     public function missed(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->playerReviews()->whereHas('invitation', function (Builder $query) {
+            get: fn () => $this->playerReviews()->whereHas('invitation', function (Builder $query) {
                 $query->where('state', 'accepted');
             })->whereNotNull('reviewed_at')->where('is_attended', false)->count()
         );
@@ -521,13 +504,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function verifyPhone(): void
     {
         $this->forceFill([
-            'phone_verified_at' => now()
+            'phone_verified_at' => now(),
         ])->save();
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
-     */
     public function latestConversation(): Attribute
     {
         return Attribute::make(
@@ -537,6 +517,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
                 if (is_null($conversation)) {
                     $conversation = $this->conversations()->first();
                 }
+
                 return $conversation;
             },
         );
@@ -544,8 +525,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
 
     /**
      * Check if the user can invite or not
-     *
-     * @return bool
      */
     public function hasPendingReviews(): bool
     {

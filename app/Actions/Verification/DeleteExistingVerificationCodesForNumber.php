@@ -9,9 +9,6 @@ class DeleteExistingVerificationCodesForNumber
 {
     /**
      * Delete the verification code for this phone number if it exists
-     *
-     * @param \App\Models\User $user
-     * @return void
      */
     public function __invoke(User $user): void
     {

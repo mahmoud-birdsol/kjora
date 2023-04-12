@@ -49,9 +49,9 @@ class ReportResolvedNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject(__('Report incident has been resolved.', [] , $notifiable->locale))
+            ->subject(__('Report incident has been resolved.', [], $notifiable->locale))
             ->line($this->message)
-            ->line(__('Thank you for using our application!', [] , $notifiable->locale));
+            ->line(__('Thank you for using our application!', [], $notifiable->locale));
     }
 
     /**
@@ -64,11 +64,11 @@ class ReportResolvedNotification extends Notification
         return (new NotificationData(
             displayType: 'simple',
             state: 'success',
-            title: __('Report Incident', [] , $notifiable->locale),
-            subtitle: __('Your report incident has been resolved, please check your email.', [] , $notifiable->locale),
+            title: __('Report Incident', [], $notifiable->locale),
+            subtitle: __('Your report incident has been resolved, please check your email.', [], $notifiable->locale),
             actionData: new RouteActionData(
                 route: route('notification.index'),
-                text: __('View', [] , $notifiable->locale),
+                text: __('View', [], $notifiable->locale),
             ),
         ))->toArray();
     }

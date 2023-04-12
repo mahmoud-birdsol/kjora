@@ -28,7 +28,7 @@ class VerifyPhoneRequest extends FormRequest
         return [
             'user_id' => [
                 'required',
-                'exists:users,id'
+                'exists:users,id',
             ],
             'code' => [
                 'required',

@@ -15,6 +15,7 @@ class NotificationData extends Data
     public string $subtitle;
 
     public string|null $userAvatar = null;
+
     public string|null $userName = null;
 
     /**
@@ -23,15 +24,14 @@ class NotificationData extends Data
     public RouteActionData $actionData;
 
     public function __construct(
-        string          $displayType,
-        string          $state,
-        string          $title,
-        string          $subtitle,
+        string $displayType,
+        string $state,
+        string $title,
+        string $subtitle,
         RouteActionData $actionData,
-        ?string         $userAvatar = null,
-        ?string         $userName = null,
-    )
-    {
+        ?string $userAvatar = null,
+        ?string $userName = null,
+    ) {
         $this->displayType = $displayType;
         $this->state = $state;
         $this->title = $title;

@@ -4,14 +4,13 @@ namespace App\Models\Concerns;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Support\Carbon;
 
 trait CanBePublished
 {
     /**
      * Mark the model as published.
      */
-    public function publish( $date = null): void
+    public function publish($date = null): void
     {
         $this->forceFill([
             'published_at' => $date ?? now(),

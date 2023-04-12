@@ -25,7 +25,7 @@ class RegisterResponse implements RegisterViewResponse
             'countries' => $countries,
             'positions' => $positions,
             'defaultClub' => $defaultClub,
-            'defaultCountryId' => $defaultCountryId
+            'defaultCountryId' => $defaultCountryId,
         ])->toResponse($request);
     }
 }

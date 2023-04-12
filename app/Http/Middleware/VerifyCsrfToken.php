@@ -13,6 +13,6 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'language/*',
-        'nova/language/*'
+        'nova/language/*',
     ];
 }

@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Club;
 use App\Models\Country;
 use App\Models\Position;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Fortify\Features;

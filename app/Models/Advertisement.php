@@ -51,7 +51,7 @@ class Advertisement extends Model implements HasMedia
     /**
      * Create a new Eloquent query builder for the model.
      *
-     * @param \Illuminate\Database\Query\Builder $query
+     * @param  \Illuminate\Database\Query\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder|static
      */
     public function newEloquentBuilder($query): AdvertisementQueryBuilder
@@ -86,7 +86,7 @@ class Advertisement extends Model implements HasMedia
     public function image(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->getFirstMediaUrl('main'),
+            get: fn () => $this->getFirstMediaUrl('main'),
         );
     }
 

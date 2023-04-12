@@ -27,10 +27,12 @@ class Report extends Resource
      * @var string
      */
     public static $title = 'id';
+
     public static function label(): string
     {
-        return __("Reports");
+        return __('Reports');
     }
+
     /**
      * The columns that should be searched.
      *
@@ -67,16 +69,16 @@ class Report extends Resource
                 User::class
             )->showOnPreview()->required(),
 
-            Textarea::make(__('Body'),'body')
+            Textarea::make(__('Body'), 'body')
                 ->showOnPreview()
                 ->nullable()
                 ->rules('nullable'),
 
-            Boolean::make(__('Resolved'),'resolved')
+            Boolean::make(__('Resolved'), 'resolved')
                 ->hideWhenCreating()
                 ->hideWhenUpdating(),
 
-            DateTime::make(__('Resolved at'),'resolved_at')
+            DateTime::make(__('Resolved at'), 'resolved_at')
                 ->showOnPreview()
                 ->hideFromIndex()
                 ->nullable()

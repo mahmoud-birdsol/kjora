@@ -12,15 +12,12 @@ class UserLocationController extends Controller
     /**
      * Update the user location
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Services\Geocoder $geocoder
      * @return \Illuminate\Http\JsonResponse
      */
     public function __invoke(
         Request $request,
         Geocoder $geocoder
-    )
-    {
+    ) {
         $request->validate([
             'latitude' => [
                 'required',
@@ -40,8 +37,8 @@ class UserLocationController extends Controller
                 'current_longitude' => $request->input('longitude'),
                 'current_city' => isset($address[4]) ? $address[4]['long_name'] : null,
                 'current_region' => isset($address[3]) ? $address[3]['long_name'] : null,
-                'current_country' =>  isset($address[5]) ? $address[5]['long_name'] : null,
-                'geo_location' => true
+                'current_country' => isset($address[5]) ? $address[5]['long_name'] : null,
+                'geo_location' => true,
             ]);
         }
 
