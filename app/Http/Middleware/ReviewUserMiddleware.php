@@ -17,8 +17,8 @@ class ReviewUserMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $review = $request->user()->reviewerReviews()->whereNull('reviewed_at')->first();
-        if (!is_null($review)) {
+        $review = $request->user()?->reviewerReviews()?->whereNull('reviewed_at')?->first();
+        if ($request->user()?->hasPendingReviews()) {
             FlashMessage::make()->warning(
                 message: __('You have a pending player to review')
             )->action(route('player.review.show', [

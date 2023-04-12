@@ -148,6 +148,8 @@ const querySearch = (queryString, cb) => {
                                 </div>
 
                                 <div class="my-6 mt-4">
+                                    <InputError class="my-2" :message="form.errors.review" />
+
                                     <SecondaryButton @click="createInvitation">{{ $t('Send') }}</SecondaryButton>
                                 </div>
                             </form>
@@ -176,7 +178,7 @@ const querySearch = (queryString, cb) => {
                         </div>
                         <p class="">
                             {{ $t('Your invitation will be sent and you will receive an email updating you on the status of your request') }}.</p>
-    
+
                         <Link :href="route('home')" class="flex w-full min-w-full">
                         <PrimaryButton class="w-full" @click="showSuccessModal = false">{{ $t('Ok') }}</PrimaryButton>
                         </Link>

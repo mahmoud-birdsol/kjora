@@ -38,6 +38,8 @@ use App\Models\Stadium;
 use App\Models\User;
 use App\Notifications\InvitationCreatedNotification;
 use App\Notifications\InvitationDeclinedNotification;
+use App\Rules\UserHasPendingReview;
+use App\Services\FlashMessage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -204,6 +206,17 @@ Route::middleware([
         })->name('invitation.create');
 
         Route::post('invitations', function (Request $request) {
+
+            if ($request->user()->hasPendingReviews()) {
+                FlashMessage::make()->success(
+                    message: "You can't invite another player because you have a pending review"
+                )->closeable()->send();
+
+                return redirect()->back()->withErrors([
+                    'review' => "You can't invite another player because you have a pending review"
+                ]);
+            }
+
             $data = $request->validate([
                 'stadium_id' => ['required', 'integer', 'exists:stadia,id'],
                 'invited_player_id' => ['required', 'integer', 'exists:users,id'],
@@ -212,6 +225,8 @@ Route::middleware([
                     'after_or_equal:today'
                 ],
                 'time' => ['required'],
+
+                new UserHasPendingReview($request->user())
             ]);
 
             $time = Carbon::parse($data['time']);
@@ -225,7 +240,7 @@ Route::middleware([
             // Notify the invited user
             $invitation->invitedPlayer->notify(new InvitationCreatedNotification($invitation));
 
-            return redirect()->back();
+            return redirect()->route('home');
         })->name('invitation.store');
 
         // Accept invitation
