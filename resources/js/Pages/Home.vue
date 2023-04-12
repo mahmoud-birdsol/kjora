@@ -99,7 +99,7 @@ const filterByPosition = (position) => {
             <HelloUserHeader />
         </template>
         <template #ads>
-            <Splide dir="ltr" class=" h-full max-w-[32rem] self-end overflow-hidden  rounded-full ltr:md:ml-auto rtl:mr-auto" :options="options">
+            <Splide dir="ltr" class="  max-w-[32rem] aspect-[8/1.5] self-end overflow-hidden  rounded-full ltr:md:ml-auto rtl:mr-auto" :options="options">
                 <template v-for="(advertisement, i) in advertisements" :key="i">
                     <SplideSlide class="h-full">
                         <a :href="route('advertisements.show', advertisement)" class="block rounded-full h-full" target="_blank">
@@ -114,7 +114,7 @@ const filterByPosition = (position) => {
         <div class="">
             <div class="">
                 <!-- Position Filters...
-                                                                                                                                                                                                                                                                                                                                                                        =====================================================-->
+                                                                                                                                                                                                                                                                                                                                                                                    =====================================================-->
                 <div class="flex gap-4 mt-4 mb-8 overflow-x-auto hideScrollBar">
                     <button @click="filterByPosition(null)"
                         class="py-2 px-4  min-w-[215px] w-1/5 font-bold  text-center items-center bg-white border-2 border-gray-300 rounded-full text-xs  text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary active:text-gray-800 active:bg-gray-50 disabled:opacity-25 transition whitespace-nowrap"
@@ -167,7 +167,7 @@ const filterByPosition = (position) => {
                 </template>
 
                 <!-- Filters Modal...
-                                                                                                                                                                                                                                                                                                                                                                        =====================================================-->
+                                                                                                                                                                                                                                                                                                                                                                                    =====================================================-->
                 <FiltersModel :positions="positions" :countries="countries" v-model:form="form" @reset="reset" @filter="filter" :showFiltersModal="showFiltersModal" />
             </div>
         </div>
@@ -186,7 +186,8 @@ const filterByPosition = (position) => {
 .el-slider__runway {
     height: 0.15rem;
 }
-.splide__track{
+
+.splide__track {
     height: 100%;
 }
 </style>

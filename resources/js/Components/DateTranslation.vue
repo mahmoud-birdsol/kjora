@@ -64,12 +64,12 @@ const arLocaleConfig = {
         mm: '%dق',
         h: '١س',
         hh: '%dس',
-        d: '١يوم',
-        dd: '%dأيام',
-        M: '١شهر',
-        MM: '%dأشهر',
-        y: '١عام',
-        yy: '%dأعوام'
+        d: '١ يوم',
+        dd: '%d أيام',
+        M: '١ شهر',
+        MM: '%d أشهر',
+        y: '١ عام',
+        yy: '%d أعوام'
     },
     meridiem: (hour, minute, isLowercase) => {
         // OPTIONAL, AM/PM
