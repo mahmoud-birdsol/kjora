@@ -13,8 +13,14 @@ import { CheckIcon, StarIcon  } from '@heroicons/vue/24/outline';
 import { CheckCircleIcon } from  "@heroicons/vue/20/solid"
 import PrimaryButton from '@/Components/PrimaryButton.vue'
 import FadeInTransition from "@/Components/FadeInTransition.vue";
+import { computed , ref, onMounted} from 'vue'
 
-import { computed , ref} from 'vue'
+
+const props = defineProps([
+    'template'
+]);
+
+
 let form = useForm({
     payment_plan: null
 })
@@ -51,11 +57,18 @@ let months = [
      {en:'October',ar:'اكتوبر'},
      {en:'November',ar:'نوفمبر'},
      {en:'December',ar:'ديسمبر'}]
+
 const currentDate = `${day} ${months[month][locale]} ${year}`
+
 let expaireDate = computed(()=>{
     if(form.payment_plan == 'yearly') return `${day} ${months[month][locale]} ${year+1}`
     else  return `${day} ${months[month+1][locale]} ${year}`
 
+})
+
+const upgradeContent = computed(() => JSON.parse(props.template.upgrade_content))
+
+onMounted(() => {
 })
 </script>
 <template>
@@ -71,21 +84,11 @@ let expaireDate = computed(()=>{
                     </template>
                     <template #body>
                         <ul class="flex flex-col items-center gap-3 text-xs text-gray-800">
-                            <li class="flex gap-5">
+
+                            <li class="flex gap-5" v-for="content in upgradeContent">
                                 <CheckIcon class="w-5 text-primary" />
-                                <span>{{$t('Lorem ipsum dolor sit amet')}} </span>
-                            </li>
-                            <li class="flex gap-5">
-                                <CheckIcon class="w-5 text-primary" />
-                                <span>{{$t('Lorem ipsum dolor sit amet')}} </span>
-                            </li>
-                           <li class="flex gap-5">
-                                <CheckIcon class="w-5 text-primary" />
-                                <span>{{$t('Lorem ipsum dolor sit amet')}} </span>
-                            </li>
-                           <li class="flex gap-5">
-                                <CheckIcon class="w-5 text-primary" />
-                                <span>{{$t('Lorem ipsum dolor sit amet')}} </span>
+                                <span v-if="locale == 'en'">{{content.attributes.content_en}}</span>
+                                <span v-if="locale == 'ar'">{{content.attributes.content_ar}}</span>
                             </li>
                         </ul>
 

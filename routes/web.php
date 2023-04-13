@@ -38,6 +38,7 @@ use App\Models\Stadium;
 use App\Models\User;
 use App\Notifications\InvitationCreatedNotification;
 use App\Notifications\InvitationDeclinedNotification;
+use App\Nova\Templates\UpgradePageTemplate;
 use App\Rules\UserHasPendingReview;
 use App\Services\FlashMessage;
 use Carbon\Carbon;
@@ -487,9 +488,11 @@ Route::get('about', function (Whitecube\NovaPage\Pages\Template $template) {
 Route::get('contact', function () {
     return Inertia::render('Contact');
 })->name('contact');
-Route::get('upgrade', function () {
-    return Inertia::render('Upgrade');
-})->name('upgrade');
+Route::get('upgrade', function (\Whitecube\NovaPage\Pages\Template $template) {
+    return Inertia::render('Upgrade', [
+        'template' => $template->getAttributes()
+    ]);
+})->template(UpgradePageTemplate::class)->middleware('loadNovaPage')->name('upgrade');
 
 Route::get('update-password', function () {
     return Inertia::render('Auth/UpdatePassword');

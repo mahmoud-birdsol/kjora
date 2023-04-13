@@ -1,0 +1,33 @@
+{
+    "title": "Upgrade",
+    "created_at": "2023-04-13 03:38:36",
+    "updated_at": "2023-04-13 01:38:54",
+    "attributes": {
+        "upgrade_content": [
+            {
+                "layout": "wysiwyg",
+                "key": "cfHROaNH3fB7F4SV",
+                "attributes": {
+                    "content_en": "Lorem ipsum dolor sit amet",
+                    "content_ar": "Lorem ipsum dolor sit amet"
+                }
+            },
+            {
+                "layout": "wysiwyg",
+                "key": "cF3ipavfJojk0vOo",
+                "attributes": {
+                    "content_en": "Lorem ipsum dolor sit amet",
+                    "content_ar": "Lorem ipsum dolor sit amet"
+                }
+            },
+            {
+                "layout": "wysiwyg",
+                "key": "cAPFnXCaZqZni27y",
+                "attributes": {
+                    "content_en": "Lorem ipsum dolor sit amet",
+                    "content_ar": "Lorem ipsum dolor sit amet"
+                }
+            }
+        ]
+    }
+}
