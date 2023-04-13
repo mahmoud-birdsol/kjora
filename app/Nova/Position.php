@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Spatie\NovaTranslatable\Translatable;
 
 class Position extends Resource
 {
@@ -53,13 +54,15 @@ class Position extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make(__('Name'), 'name')
-                ->showOnPreview()
-                ->rules('required', 'max:254'),
+            Translatable::make([
+                Text::make(__('Name'), 'name')
+                    ->showOnPreview()
+                    ->rules('required', 'max:254'),
 
-            Textarea::make(__('Description'), 'Description')
-                ->showOnPreview()
-                ->rules('required', 'max:254'),
+                Textarea::make(__('Description'), 'Description')
+                    ->showOnPreview()
+                    ->rules('required', 'max:254'),
+            ]),
 
             BelongsToMany::make(__('Rating Categories'), 'ratingCategories', RatingCategory::class),
 

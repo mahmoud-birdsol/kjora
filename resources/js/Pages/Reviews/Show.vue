@@ -29,6 +29,8 @@ const rating = ref(props.review.player.rating)
 const ratingCategory = props.ratingCategories.map(cat => {
     return { id: cat.id, value: 0 }
 })
+
+const locale = usePage().props.value.locale;
 const ratingForm = useForm(
     {
         ratingCategory,
@@ -83,7 +85,7 @@ function setRates() {
                             <span>{{ $t('age') }}: {{ review.player.age }}</span>
                             <span>{{ $t('played') }}: {{ review.player.played }}</span>
                             <span>{{ $t('missed') }}: {{ review.player.missed }}</span>
-                            <span>{{ $t('Position') }}: {{ review.player.position.name }}</span>
+                            <span>{{ $t('Position') }}: {{ review.player.position.name[locale] }}</span>
                         </div>
                     </div>
                 </div>

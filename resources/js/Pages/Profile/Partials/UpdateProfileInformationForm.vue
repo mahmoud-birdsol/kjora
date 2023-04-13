@@ -18,6 +18,8 @@ const props = defineProps({
     positions: Array,
 });
 
+const locale = usePage().props.value.locale;
+
 const form = useForm({
     _method: 'PUT',
     first_name: props.user.first_name,
@@ -129,8 +131,8 @@ const showUploadAvatarModal = ref(false);
 
                         <div class="mie-4">
                             <div class="flex items-center gap-x-2" v-for="position in positions">
-                                <input type="radio" :id="position.name" :value="position.id" v-model="form.position_id" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
-                                <label :for="position.name" class="text-sm font-medium text-black">{{ $t(position.name) }}</label>
+                                <input type="radio" :id="position.name[locale]" :value="position.id" v-model="form.position_id" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
+                                <label :for="position.name[locale]" class="text-sm font-medium text-black">{{ position.name[locale] }}</label>
                             </div>
                         </div>
                     </div>

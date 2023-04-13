@@ -72,12 +72,7 @@ const backgroundImage = computed(() => {
 const isCurrentUser = props.player.id === currentUser?.id
 const isPublic = usePage().url.value.includes('public/player')
 
-
-
-
-
-
-
+const locale = usePage().props.value.locale;
 
 function calculateDistance(lat1Str, lng1Str, lat2Str, lng2Str) {
     let lat1 = parseFloat(lat1Str);
@@ -233,7 +228,7 @@ function showCopied() {
                        :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">{{
                            $t('position')
                        }}</p>
-                    <p class="text-xs text-center font-semi-bold">{{ $t(player.position.name) }}</p>
+                    <p class="text-xs text-center font-semi-bold">{{ player.position.name[locale] }}</p>
                 </div>
             </div>
 

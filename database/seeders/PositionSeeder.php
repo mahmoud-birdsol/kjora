@@ -14,44 +14,17 @@ class PositionSeeder extends Seeder
      */
     public function run()
     {
-//        $positions = [
-//            'Forward',
-//            'Midfielder',
-//            'Defender',
-//            'Goalkeeper',
-//        ];
         $positions = [
-            [
-                'en' => 'Forward',
-                'ar' => 'مهاجم'
-            ],
-            [
-                'en' => 'Midfielder',
-                'ar' => 'خط وسط'
-            ],
-            [
-                'en' => 'Defender',
-                'ar' => 'مدافع'
-            ],
-            [
-                'en' => 'Goalkeeper',
-                'ar' => 'حارس مرمى'
-            ],
+            'Forward',
+            'Midfielder',
+            'Defender',
+            'Goalkeeper',
         ];
 
-        $currentPositions = Position::all();
-
-        foreach ($currentPositions as $index => $currentPosition) {
-            $currentPosition->update([
-                'name' => $positions[$index]
+        foreach ($positions as $position) {
+            Position::create([
+                'name' => $position,
             ]);
-
         }
-//
-//        foreach ($positions as $position) {
-//            Position::create([
-//                'name' => $position,
-//            ]);
-//        }
     }
 }

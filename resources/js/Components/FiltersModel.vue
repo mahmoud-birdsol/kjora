@@ -30,6 +30,8 @@ function reset() {
     emit('reset')
 }
 
+const locale = usePage().props.value.locale;
+
 const distances = [5, 10, 20, 30, 40, 50];
 
 </script>
@@ -129,7 +131,7 @@ const distances = [5, 10, 20, 30, 40, 50];
                                 <option v-for="position in positions"
                                         :key="position.id"
                                         :value="position.id">{{
-                                            $t(position.name) }}
+                                            position.name[locale] }}
                                 </option>
                             </select>
                         </div>

@@ -140,12 +140,12 @@ const locale = usePage().props.value.locale;
             <div class="mt-4 sm:mt-0">
                 <InputLabel color="primary" :value="$t('position')" />
 
-<!--                <div class="mis-5">-->
-<!--                    <div class="flex items-center gap-x-2" v-for="position in positions">-->
-<!--                        <input type="radio" :id="position?.name[locale]" :value="position.id" v-model="form.position_id" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />-->
-<!--                        <label :for="position?.name[locale]" class="text-sm font-medium text-black">{{ position?.name[locale] }}</label>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <div class="mis-5">
+                    <div class="flex items-center gap-x-2" v-for="position in positions">
+                        <input type="radio" :id="position?.name[locale]" :value="position.id" v-model="form.position_id" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
+                        <label :for="position?.name[locale]" class="text-sm font-medium text-black">{{ position?.name[locale] }}</label>
+                    </div>
+                </div>
             </div>
             <div class="mt-4 sm:mt-0">
                 <InputLabel color="primary" :value="$t('Preferred Foot')" />
