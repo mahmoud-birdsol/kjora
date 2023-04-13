@@ -49,6 +49,7 @@ use Laravel\Nova\NovaApplicationServiceProvider;
 use Outl1ne\NovaSettings\NovaSettings;
 use Pktharindu\NovaPermissions\Nova\Role;
 use Pktharindu\NovaPermissions\NovaPermissions;
+use Spatie\NovaTranslatable\Translatable;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -155,8 +156,12 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 MenuItem::make(__('Language'))
                     ->method('POST')
                     ->path(route('nova.language', __('Locale')))->external(),
+
             ];
+
         });
+
+        Translatable::defaultLocales(['en', 'ar']);
 
         Nova::footer(function ($request) {
             return Blade::render('

@@ -20,10 +20,6 @@ class StadiumController extends Controller
             'approved_at' => now(),
         ]);
 
-        FlashMessage::make()->success(
-            message: 'Stadium Created successfully and is pending approval'
-        )->closeable()->send();
-
         return redirect()->back();
     }
 }

@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Nova\Actions\Actionable;
+use Spatie\Translatable\HasTranslations;
 
 class Position extends Model
 {
     use HasFactory;
     use Actionable;
+    use HasTranslations;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +23,16 @@ class Position extends Model
     protected $fillable = [
         'name',
         'description',
+    ];
+
+    /**
+     * The attributes that should be translated
+     *
+     * @var array<string>
+     */
+    public $translatable = [
+        'name',
+        'description'
     ];
 
     /**
