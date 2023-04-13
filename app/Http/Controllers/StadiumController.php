@@ -17,7 +17,7 @@ class StadiumController extends Controller
             'latitude' => $request->input('latitude'),
             'google_place_id' => $request->input('google_place_id'),
             'user_id' => auth()->user()->id,
-            'approved_at' => null,
+            'approved_at' => now(),
         ]);
 
         FlashMessage::make()->success(
