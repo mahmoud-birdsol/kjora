@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laravel\Nova\Actions\Actionable;
+use Spatie\Translatable\HasTranslations;
 
 class RatingCategory extends Model
 {
     use HasFactory;
     use Actionable;
+    use HasTranslations;
 
     /**
      * The attributes that are mass assignable.
@@ -20,6 +22,10 @@ class RatingCategory extends Model
     protected $fillable = [
         'name',
         'description',
+    ];
+
+    public $translatable = [
+        'name'
     ];
 
     /**

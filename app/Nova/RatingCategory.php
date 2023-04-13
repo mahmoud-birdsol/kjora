@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Spatie\NovaTranslatable\Translatable;
 
 class RatingCategory extends Resource
 {
@@ -50,11 +51,13 @@ class RatingCategory extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make(__('Name'), 'name')
-                ->showOnPreview()
-                ->sortable()
-                ->required()
-                ->rules('required', 'string', 'max:255'),
+            Translatable::make([
+                Text::make(__('Name'), 'name')
+                    ->showOnPreview()
+                    ->sortable()
+                    ->required()
+                    ->rules('required', 'string', 'max:255'),
+            ]),
 
             Textarea::make(__('Description'), 'description')
                 ->showOnPreview()
