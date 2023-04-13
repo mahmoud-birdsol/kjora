@@ -69,5 +69,11 @@ class TranslatedRatingCategory extends Seeder
 
 
         $translatedRatingCategories = RatingCategory::all();
+
+        foreach ($translatedRatingCategories as $index => $translatedRatingCategory) {
+            $translatedRatingCategory->update([
+                'name' => $ratingCategories[$index]
+            ]);
+        }
     }
 }

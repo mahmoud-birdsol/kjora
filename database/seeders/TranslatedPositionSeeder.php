@@ -40,7 +40,6 @@ class TranslatedPositionSeeder extends Seeder
             $currentPosition->update([
                 'name' => $positions[$index]
             ]);
-
         }
     }
 }
