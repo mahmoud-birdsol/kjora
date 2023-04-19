@@ -31,6 +31,9 @@
         <meta property="og:image:alt"
               content="{{  (isset($page['props']['social_meta']['image'])) ? $page['props']['social_meta']['image'] : asset('/images/logo.png') }}"/>
     @endif
+
+    <script type="text/javascript">!function(e,t,n){function a(){var e=t.getElementsByTagName("script")[0],n=t.createElement("script");n.type="text/javascript",n.async=!0,n.src="https://beacon-v2.helpscout.net",e.parentNode.insertBefore(n,e)}if(e.Beacon=n=function(t,n,a){e.Beacon.readyQueue.push({method:t,options:n,data:a})},n.readyQueue=[],"complete"===t.readyState)return a();e.attachEvent?e.attachEvent("onload",a):e.addEventListener("load",a,!1)}(window,document,window.Beacon||function(){});
+    </script><script type="text/javascript">window.Beacon('init', '290f1635-e165-406b-a964-96cf65fc2efd')</script>
     <!-- Scripts -->
     @routes
     @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
