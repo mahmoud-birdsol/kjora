@@ -11,14 +11,12 @@ class StadiumController extends Controller
 {
     public function __invoke(StadiumRequest $request): RedirectResponse
     {
-        Stadium::create([
-            'name' => $request->input('name'),
-            'longitude' => $request->input('longitude'),
-            'latitude' => $request->input('latitude'),
-            'google_place_id' => $request->input('google_place_id'),
-            'user_id' => auth()->user()->id,
+        $request->merge([
+            'user_id' => $request->user_id,
             'approved_at' => now(),
         ]);
+
+        Stadium::create($request->all());
 
         return redirect()->back();
     }

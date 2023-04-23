@@ -57,13 +57,20 @@ class Stadium extends Resource
                 ->showOnPreview()
                 ->rules('required', 'max:255'),
 
-            Text::make(__('Google place ID'), 'google_place_iD')
+            Text::make(__('Google place ID'), 'google_place_id')
                 ->sortable()
                 ->showOnPreview()
                 ->rules('nullable', 'max:255'),
 
             \Laravel\Nova\Fields\Country::make('Country')
                 ->sortable()
+                ->filterable()
+                ->showOnPreview()
+                ->rules('nullable', 'max:255'),
+
+            Text::make('City', 'city')
+                ->sortable()
+                ->filterable()
                 ->showOnPreview()
                 ->rules('nullable', 'max:255'),
 

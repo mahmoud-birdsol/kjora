@@ -21,7 +21,7 @@ const props = defineProps({
 
 // const data = props.playerRating.map(r => r.value)
 
-const labels = props.ratingCategories.map(r => r.name)
+const labels = props.ratingCategories.map(r => r.name[usePage().props.value.locale])
 const showMsg = ref(false)
 const state = props.review.player.state_name
 const rateColor = state === 'Free' ? ['#006400', '#006400', '#006400'] : ['#99A9BF', '#F7BA2A', '#FF9900']
@@ -115,13 +115,13 @@ function setRates() {
                 <form class="flex flex-col gap-4 px-5">
                     <div class="flex items-center gap-x-2">
                         <input type="checkbox" id="male" value="male" v-model="ratingForm.attended" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
-                        <label for="male" class="text-sm font-medium text-black">{{ $t('attended') }}</label>
+                        <label for="male" class="text-sm font-medium text-black">{{ $t('Attended') }}</label>
                     </div>
                     <template v-if="ratingForm.attended">
                         <template v-for="item in  ratingCategories" :key="item.id">
                             <div class="flex flex-col gap-2 ">
                                 <div class="flex justify-between">
-                                    <InputLabel color="black">{{ item.name }}</InputLabel>
+                                    <InputLabel color="black">{{ item.name[$page.props.locale] }}</InputLabel>
                                     <span class="text-sm font-bold text-primary">{{ ratingForm.ratingCategory.filter(c =>
                                         c.id === item.id)[0].value }}</span>
                                 </div>

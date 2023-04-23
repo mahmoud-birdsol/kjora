@@ -119,7 +119,7 @@ const series = computed(() => {
 </script>
 <template>
     <apexchart width="100%" type="radar" :options="options" :series="series" v-if="labels.length"></apexchart>
-    <div v-else class="text-sm font-normal text-gray-100 h-56 grid place-items-center normal-case">{{ $t('no rating categories for this position untill now') }}</div>
+    <div v-else class="text-sm font-normal text-gray-100 h-56 grid place-items-center normal-case">{{ $t('no rating categories for this position till now') }}</div>
 </template>
 <style>
 .apexcharts-toolbar,
