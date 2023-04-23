@@ -15,15 +15,30 @@ class PositionSeeder extends Seeder
     public function run()
     {
         $positions = [
-            'Forward',
-            'Midfielder',
-            'Defender',
-            'Goalkeeper',
+            [
+                'en' => 'Forward',
+                'ar' => 'مهاجم'
+            ],
+            [
+                'en' => 'Midfielder',
+                'ar' => 'خط وسط'
+            ],
+            [
+                'en' => 'Defender',
+                'ar' => 'مدافع'
+            ],
+            [
+                'en' => 'Goalkeeper',
+                'ar' => 'حارس مرمي'
+            ],
         ];
 
         foreach ($positions as $position) {
             Position::create([
-                'name' => $position,
+                'name' => [
+                    'en' => $position['en'],
+                    'ar' => $position['ar'],
+                ],
             ]);
         }
     }
