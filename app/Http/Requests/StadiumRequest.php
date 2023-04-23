@@ -25,7 +25,7 @@ class StadiumRequest extends FormRequest
             'name' => [
                 'required',
                 'string',
-                'max:256',
+                'max:254',
             ],
             'longitude' => [
                 'required',
@@ -36,11 +36,20 @@ class StadiumRequest extends FormRequest
             'google_place_id' => [
                 'nullable',
             ],
-            'user_id' => [
-                'nullable',
+            'street_address' => [
+                'required',
+                'string',
+                'max:254',
             ],
-            'approved_at' => [
-                'nullable',
+            'country' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'city' => [
+                'required',
+                'string',
+                'max:255',
             ],
         ];
     }
