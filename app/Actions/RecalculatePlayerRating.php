@@ -15,6 +15,14 @@ class RecalculatePlayerRating
             return $review->ratingCategories->avg('pivot.value');
         });
 
+        if (is_null($rating)) {
+            $player->forceFill([
+                'rating' => 0.0
+            ])->save();
+
+            return 0.0;
+        }
+
         $player->forceFill([
             'rating' => $rating
         ])->save();
