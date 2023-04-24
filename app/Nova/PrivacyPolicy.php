@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Murdercode\TinymceEditor\TinymceEditor;
 
 class PrivacyPolicy extends Resource
 {
@@ -62,7 +63,7 @@ class PrivacyPolicy extends Resource
                 ->creationRules('unique:privacy_policies,version')
                 ->updateRules('unique:privacy_policies,version,{{resourceId}}'),
 
-            Trix::make(__('Content'), 'content')
+            TinymceEditor::make(__('Content'), 'content')
                 ->showOnPreview()
                 ->rules('required'),
 

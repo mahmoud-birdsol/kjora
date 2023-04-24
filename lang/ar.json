@@ -1,6 +1,7 @@
 {
 	"accepted": "تم الموافقة",
 	"pending": "انتظار",
+    "canceled": "ألغيت",
 	"no rating categories for this position till now": "لا توجد فئات تصنيف لهذا المركز حتى الآن",
 	"hi :receiver , :sender": "مرحبا :receiver , :sender",
 	"we appreciate you taking the time to share your rating": "نحن نقدر لك الوقت الذي استغرقته لمشاركة تقييمك",
@@ -364,5 +365,6 @@
 	"Please enter password": "الرجاء إدخال كلمة المرور",
 	"Search": "بحث",
 	"you do not have any new notifications": "لا يوجد لديك اى اشعارات جديدة",
-	"Please verify": "يرجى تأكيد مستنداتك"
+	"Please verify": "يرجى تأكيد مستنداتك",
+    "Rating Submitted": "تقييم"
 }

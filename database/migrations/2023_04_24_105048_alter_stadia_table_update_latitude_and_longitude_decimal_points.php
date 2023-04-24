@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('positions', function (Blueprint $table) {
-            $table->dropColumn(['name', 'description']);
+        Schema::table('stadia', function (Blueprint $table) {
+            $table->decimal('longitude', 10, 7)->nullable()->change();
+            $table->decimal('latitude', 10, 7)->nullable()->change();
         });
     }
 
@@ -25,9 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('positions', function (Blueprint $table) {
-            $table->string('name');
-            $table->text('description');
-        });
+        //
     }
 };

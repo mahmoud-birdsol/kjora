@@ -139,7 +139,7 @@ onMounted(() => {
                                     <div class="mt-5 mb-16">
                                         <h2 class="uppercase text-primary" v-if="form.payment_plan=='monthly'">{{$t('monthly')}}</h2>
 
-                                        <span>10</span>
+                                        <span>10$</span>
                                     </div>
                                     <div class="flex justify-between">
                                         <div>

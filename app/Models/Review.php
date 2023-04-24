@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -68,5 +69,10 @@ class Review extends Model
             foreignPivotKey: 'review_id',
             relatedPivotKey: 'rating_category_id'
         )->using(ReviewRatingCategory::class)->withPivot('value');
+    }
+
+    public function scopeReviewed(Builder $query): Builder
+    {
+        return $query->whereNotNull('reviewed_at');
     }
 }

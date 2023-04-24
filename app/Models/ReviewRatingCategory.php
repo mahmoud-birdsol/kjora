@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\ReviewRatingCategoryUpdated;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
@@ -16,6 +17,10 @@ class ReviewRatingCategory extends Pivot
         'review_id',
         'rating_category_id',
         'value',
+    ];
+
+    protected $dispatchesEvents = [
+        'updated' => ReviewRatingCategoryUpdated::class
     ];
 
     /**
