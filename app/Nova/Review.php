@@ -96,6 +96,7 @@ class Review extends Resource
             BelongsToMany::make('Rating Categories')->fields(function () {
                 return [
                     Number::make('Value')
+                        ->step('any')
                         ->rules([
                             'required',
                             'max:5',

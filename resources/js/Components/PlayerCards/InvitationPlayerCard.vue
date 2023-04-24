@@ -129,26 +129,31 @@ function calcShouldRate() {
                     <p v-if="invitation.state == null" class="text-[10px] text-center text-stone-300/70">
                         {{ $t('pending') }}
                         {{ $t('match in') }}
-                        <DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date" />
+                        <DateTranslation format="DD MMMM YYYY, hh:mm A" :start="invitation.date" />
                     </p>
                     <p v-if="invitation.state == 'accepted'" class="text-[10px] text-center text-stone-300/70">
                         {{ $t('accepted') }}
                         {{ $t('match in') }}
-                        <DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date" />
+                        <DateTranslation format="DD MMMM YYYY, hh:mm A" :start="invitation.date" />
                     </p>
                     <p v-if="invitation.state == 'declined'" class="text-[10px] text-center text-stone-300/70">
                         {{ $t('declined') }}
                         {{ $t('match in') }}
-                        <DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date" />
+                        <DateTranslation format="DD MMMM YYYY, hh:mm A" :start="invitation.date" />
+                    </p>
+                    <p v-if="invitation.state == 'canceled'" class="text-[10px] text-center text-stone-300/70">
+                        {{ $t('canceled') }}
+                        {{ $t('match in') }}
+                        <DateTranslation format="DD MMMM YYYY, hh:mm A" :start="invitation.date" />
                     </p>
                 </div>
                 <p class="text-[10px] text-center text-stone-300/70" v-if="invitation.state && !isHiring">
                     {{ $t('match in') }}
-                    <DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date" />
+                    <DateTranslation format="DD MMMM YYYY, hh:mm A" :start="invitation.date" />
                 </p>
                 <!-- invitation date -->
                 <p v-else-if="!isHiring && !invitation.state" class="text-[10px] text-center text-stone-300/70">{{ $t('Wants to invite you for a match in') }}
-                    <DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date" />
+                    <DateTranslation format="DD MMMM YYYY, hh:mm A" :start="invitation.date" />
                 </p>
             </div>
             <!-- invite user location -->
@@ -180,6 +185,10 @@ function calcShouldRate() {
                         <XMarkIcon class="w-6 text-red-600" />
                     </button>
                 </div>
+
+                <Link :href="route('home')" v-if="invitation.state == 'canceled' && !shouldRate" class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
+                    {{ $t('canceled') }}
+                </Link>
                 <Link :href="route('chats.index')" v-if="invitation.state == 'accepted' && !shouldRate" class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                 {{ $t('chat') }}
                 </Link>

@@ -1,6 +1,6 @@
 <x-mail::message>
     <div dir="rtl">
-        <img style=" width: 15%" src="{{asset('images/logo.png')}}" alt="{{config('app.name')}}">
+        <img style=" width: 15%" src="{{asset('images/logo_full.png')}}" alt="{{config('app.name')}}">
     </div>
 {{-- Greeting --}}
 @if (! empty($greeting))

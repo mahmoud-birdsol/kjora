@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\CancelStaleInvitations;
 use App\Jobs\CreateReviewForInvitationJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -19,6 +20,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(new PruneStaleAttachments)->daily();
 
         $schedule->job(new CreateReviewForInvitationJob())->everyMinute();
+        $schedule->job(new CancelStaleInvitations())->everyMinute();
 //        $schedule->call(CreateReviewForInvitationJob::dispatch())->everyMinute();
     }
 

@@ -83,12 +83,13 @@ class Invitation extends Resource
             Select::make(__('State'), 'state')->options([
                 'accepted' => 'Accepted',
                 'declined' => 'Declined',
+                'canceled' => 'Canceled',
             ])->displayUsingLabels()
                 ->filterable()
                 ->sortable()
                 ->showOnPreview()
-                ->required()
-                ->rules('required'),
+                ->nullable()
+                ->rules('nullable'),
         ];
     }
 

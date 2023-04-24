@@ -6,9 +6,7 @@ use App\Nova\Actions\MarkAsVerified;
 use App\Nova\Actions\SendIdentityVerificationReminder;
 use App\Nova\Lenses\UnverifiedUsers;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
-use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
-use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Date;
@@ -163,7 +161,7 @@ class User extends Resource
                 'right' => 'Right',
             ])->displayUsingLabels()->showOnPreview()->sortable()->filterable()->required()->rules('required'),
 
-            Panel::make('Identity Verification', fn () => [
+            Panel::make('Identity Verification', fn() => [
                 Boolean::make(__('Verified'), 'has_verified_identity')
                     ->filterable()
                     ->sortable()
@@ -235,6 +233,9 @@ class User extends Resource
                 ->sortable()
                 ->hideFromIndex()
                 ->rules('nullable'),
+
+            DateTime::make('Last Active', 'last_seen_at')
+                ->readonly(),
 
             // Todo after security feature is done.
             //            'accepted_terms_and_conditions_version',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\RecalculatePlayerRating;
 use App\Models\RatingCategory;
 use App\Models\Review;
 use App\Models\ReviewRatingCategory;
@@ -24,6 +25,7 @@ class PlayerReviewController extends Controller
         if ($review->ratingCategories()->count() > 0) {
             return redirect()->route('player.profile', $review->player->id);
         }
+
         $ratingCategoriesCount = $review->player->playerReviews->count();
 
         $playerRating = $review->player->playerReviews->flatMap->ratingCategories->groupBy('name')
@@ -43,7 +45,7 @@ class PlayerReviewController extends Controller
         ]);
     }
 
-    public function store(Request $request, Review $review): RedirectResponse
+    public function store(Request $request, Review $review, RecalculatePlayerRating $recalculatePlayerRating): RedirectResponse
     {
         $review->update([
             'is_attended' => $request->input('attended'),
@@ -78,20 +80,8 @@ class PlayerReviewController extends Controller
         )->closeable()->send();
 
         if ($ratingCategoryCount > 0) {
-            $review->player->update([
-                'rating' => (
-                    ($review->player->rating *
-                        $review->player
-                            ->playerReviews()
-                            ->where('reviewed_at', '!=', null)
-                            ->where('is_attended', true)
-                            ->where('id', '!=', $review->id)->count())
-                    + ($value / $ratingCategoryCount)) / ($review->player
-                            ->playerReviews()
-                            ->where('reviewed_at', '!=', null)
-                            ->where('is_attended', true)
-                            ->where('id', '!=', $review->id)->count() + 1),
-            ]);
+            $recalculatePlayerRating($review->player);
+
             $review->player->notify(new NotifyUserOfRatingSubmittedNotification($review->reviewer, $review->player, $review));
         }
 

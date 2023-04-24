@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Murdercode\TinymceEditor\TinymceEditor;
 
 class CookiePolicy extends Resource
 {
@@ -59,7 +60,7 @@ class CookiePolicy extends Resource
                 ->creationRules('unique:cookie_policies,version')
                 ->updateRules('unique:cookie_policies,version,{{resourceId}}'),
 
-            Trix::make(__('Content'), 'Content')
+            TinymceEditor::make(__('Content'), 'Content')
                 ->showOnPreview()
                 ->rules('required'),
 
