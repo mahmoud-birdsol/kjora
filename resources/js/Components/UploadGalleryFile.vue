@@ -105,6 +105,10 @@ const removeFile = ({ file, url, id }) => {
     let fileDataIndex = filesData.value.findIndex((f) => f.id === id)
     filesData.value.splice(fileDataIndex, 1)
     filesData.value.length === 0 ? showPreview.value = false : null;
+    if(cropFile.value.id === id){
+         cropFile.value = []
+         openCropModal.value = false
+        }
 };
 
 const uploadFiles = async () => {

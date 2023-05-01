@@ -114,6 +114,8 @@ const updatePhotoPreview = () => {
 const removePhoto = () => {
     showPreview.value = false;
     previewImageUrl.value = null;
+    cropFile.value ={}
+    openCropModal.value = false
 };
 
 const upload = () => {

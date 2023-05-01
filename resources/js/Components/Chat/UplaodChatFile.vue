@@ -102,6 +102,10 @@ const updatePhotoPreview = () => {
 };
 
 const removePhoto = (i) => {
+    if(cropFile.value.id , filesData.value[i].id){
+        cropFile.value ={}
+        openModal.value = false
+    }
     filesData.value.splice(i, 1)
     filesData.value.length === 0 ? showPreview.value = false : null;
 };
