@@ -57,7 +57,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
             <Card>
                 <CardContent :title="$t('Verify Phone Number')">
                     <template #body>
-                        <div class="text-sm text-gray-500 text-center py-10">
+                        <div class="py-10 text-sm text-center text-gray-500">
                             {{$t("Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS ? If you didn't receive the SMS, we will gladly send you another")}}
                         </div>
                         <div class="flex flex-col gap-4 px-6">
@@ -65,7 +65,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
                                 <template v-for="(input, index) in inputs" :key="index">
                                     <input @input="handleInput(index, $event);" @keydown="changeFocus(index, $event)"
                                            maxlength="1"
-                                           type="text" :placeholder="index" ref="codeInputs"
+                                           type="text" ref="codeInputs"
                                            class="p-4 text-lg font-bold text-center text-white bg-black rounded-md focus:border-primary focus:ring-0 w-14 max-sm:w-12 aspect-square">
                                 </template>
                             </div>
