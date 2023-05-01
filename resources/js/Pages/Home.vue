@@ -101,7 +101,7 @@ const locale = usePage().props.value.locale;
             <HelloUserHeader />
         </template>
         <template #ads>
-            <Splide dir="ltr" class="  max-w-[32rem] aspect-[8/1.5] self-center sm:self-end overflow-hidden  rounded-full ltr:md:ml-auto rtl:mr-auto max-sm:min-h-[75px]" :options="options">
+            <Splide dir="ltr" class="  max-w-[32rem] aspect-[8/1.5] self-center sm:self-end overflow-hidden  rounded-full ltr:md:ml-auto rtl:mr-auto max-sm:min-h-[70px]" :options="options">
                 <template v-for="(advertisement, i) in advertisements" :key="i">
                     <SplideSlide class="h-full">
                         <a :href="route('advertisements.show', advertisement)" class="block w-full h-full rounded-full" target="_blank">
