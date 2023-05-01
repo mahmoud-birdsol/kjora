@@ -104,7 +104,7 @@ const locale = usePage().props.value.locale;
             <Splide dir="ltr" class="  max-w-[32rem] aspect-[8/1.5] self-center sm:self-end overflow-hidden  rounded-full ltr:md:ml-auto rtl:mr-auto max-sm:min-h-[70px]" :options="options">
                 <template v-for="(advertisement, i) in advertisements" :key="i">
                     <SplideSlide class="h-full">
-                        <a :href="route('advertisements.show', advertisement)" class="block w-full h-full rounded-full" target="_blank">
+                        <a :href="route('advertisements.show', advertisement)" class="block w-full rounded-full" target="_blank">
                             <img class="h-full rounded-full" :src="advertisement.media[0].original_url" alt="">
                         </a>
                     </SplideSlide>
