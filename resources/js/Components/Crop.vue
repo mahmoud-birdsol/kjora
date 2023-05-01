@@ -1,10 +1,9 @@
 <script setup>
 import VuePictureCropper, { cropper } from 'vue-picture-cropper'
-import { ScissorsIcon } from '@heroicons/vue/24/outline';
+import { CheckIcon } from '@heroicons/vue/24/outline';
 import { ref, reactive, computed } from 'vue'
 import { XMarkIcon } from '@heroicons/vue/24/outline';
-import Modal from './Modal.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SlideDownTransition from '@/Components/SlideDownTransition.vue'
 const props = defineProps({
     img: Object,
     open: Boolean,
@@ -24,8 +23,8 @@ const options = {
     dragMode: 'crop',
     responsive: true,
     aspectRatio: props.aspectRatio,
-    background:false,
-    highlight:false
+    background: false,
+    highlight: false
 }
 let boxStyle = {
     width: '100%',
@@ -33,7 +32,7 @@ let boxStyle = {
     backgroundColor: '#FFF',
     margin: 'auto',
 }
-const isLoading =ref(true)
+const isLoading = ref(true)
 const imageObj = computed(() => {
     return props.img
 })
@@ -57,23 +56,30 @@ async function getResult() {
 function ready() {
 
     if (cropper.cropped && cropper.ready && cropper.originalUrl == imageObj.value.url) {
-        isLoading.value=false
+        isLoading.value = false
     } else {
         num.value += 1
     }
 }
 </script>
 <template>
-    <div v-if="open" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
-    <div v-if="open"
-        class="absolute flex flex-col gap-4 p-6 -translate-x-1/2 -translate-y-1/2 bg-white top-1/2 left-1/2 min-w-7xl rounded-xl ">
-        <div class="flex w-full ">
-            <XMarkIcon class="w-4 mis-auto " @click="$emit('update:open')" />
-        </div>
-        <div v-loading="isLoading">
-            <VuePictureCropper :boxStyle="boxStyle" :img="imageObj?.url" :options="options" @ready="ready" :key="num" />
-        </div>
-        <PrimaryButton @click="getResult">done</PrimaryButton>
+    <div class="overflow-hidden">
+        <SlideDownTransition>
+            <div v-if="open" class="flex flex-col gap-4 p-6 bg-white border-t min-w-7xl">
+                <div v-loading="isLoading">
+                    <VuePictureCropper :boxStyle="boxStyle" :img="imageObj?.url" :options="options" @ready="ready" :key="num" />
+                </div>
+                <div class="flex justify-center w-full gap-4 ">
+                    <button @click="getResult" class="self-center">
+                        <CheckIcon class="w-8 p-1 text-green-600 rounded-full bg-stone-100" />
+                    </button>
+                    <button  @click="$emit('update:open')">
+                        <XMarkIcon class="w-8 p-1 text-red-600 rounded-full bg-stone-100" />
+                    </button>
+                </div>
+        
+            </div>
+        </SlideDownTransition>
     </div>
 </template>
 <style scoped>
@@ -91,7 +97,8 @@ function ready() {
     max-width: 100%;
     max-height: 100%;
 }
-.cropper-modal{
+
+.cropper-modal {
     background-color: #fff !important;
 }
 </style>
