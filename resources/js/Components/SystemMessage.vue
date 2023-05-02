@@ -75,7 +75,7 @@ onMounted(() => {
                     <button
                         @click="showSystemMessage = false"
                         v-if="message.closeable && !message.action"
-                        class="absolute top-1 rtl:-left-2 ltr:-right-2"
+                        class="absolute top-1 rtl:-left-[67px] ltr:-right-[67px]"
                     >
                         <XMarkIcon class="w-6 h-6 text-stone-600" />
                     </button>
