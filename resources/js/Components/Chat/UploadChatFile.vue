@@ -212,7 +212,6 @@ function changeFiles(file, url, id) {
                                     :src="file.url"
                                     alt=""
                                     class="object-cover w-full h-full rounded-lg aspect-square"
-                                    controls
                                 />
                                 <button
                                     @click.prevent.stop="removePhoto(index)"
