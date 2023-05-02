@@ -1,9 +1,11 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref, computed } from "vue";
 import ChatMessage from "@/Components/Chat/ChatMessage.vue";
 import ChatNotice from "@/Components/Chat/ChatNotice.vue";
 import { useChat } from "@/stores/chat";
 import { usePage } from "@inertiajs/inertia-vue3";
+import dayjs from "dayjs";
+import DateTranslation from "@/Components/DateTranslation.vue";
 
 const props = defineProps({
     conversation: {
@@ -13,18 +15,32 @@ const props = defineProps({
     player: {
         required: true,
         type: Object,
-    }
+    },
 });
 
 const chat = useChat();
 const messagesContainer = ref(null);
+
+function groupMessagesByDate(messages) {
+    return messages.reverse().reduce((groups, message) => {
+        const date = dayjs(message.created_at).format("DD MMMM YYYY");
+        if (groups[date]) {
+            groups[date].push(message);
+        } else {
+            groups[date] = [message];
+        }
+        return groups;
+    }, {});
+}
+const messagesGroups = computed(() => groupMessagesByDate(chat.messageList));
+
 onMounted(() => {
-    const currentUser = usePage().props.value.auth.user
+    const currentUser = usePage().props.value.auth.user;
 
     chat.initialize({
         conversation: props.conversation,
         container: messagesContainer.value,
-        currentUserId: currentUser.id
+        currentUserId: currentUser.id,
     });
 });
 
@@ -36,13 +52,22 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div ref="messagesContainer" v-loading="chat.isLoading" class="relative overscroll-contain flex flex-col gap-y-4 overflow-auto p-2 min-h-[300px] max-h-[350px] hideScrollBar md:min-h-[400px] md:max-h-[450px]">
-
-        <ChatNotice v-if="chat.showLastPageNotice">No more messages to load.</ChatNotice>
+    <div
+        ref="messagesContainer"
+        v-loading="chat.isLoading"
+        class="relative overscroll-contain flex flex-col gap-y-4 overflow-auto p-2 min-h-[300px] max-h-[350px] hideScrollBar md:min-h-[400px] md:max-h-[450px]"
+    >
+        <ChatNotice v-if="chat.showLastPageNotice"
+            >No more messages to load.</ChatNotice
+        >
         <ChatNotice v-if="chat.isLoading">Loading.</ChatNotice>
-
-        <template v-for="message in [...chat.messageList].reverse()" :key="message.id">
-            <ChatMessage :message="message" :player="player" />
+        <template v-for="(messagesGroup, date) in messagesGroups" :key="date">
+            <div class="flex justify-center gap-1 text-xs font-bold">
+                <DateTranslation :start="date" format="DD MMMM YYYY" />
+            </div>
+            <template v-for="message in [...messagesGroup]" :key="message.id">
+                <ChatMessage :message="message" :player="player" />
+            </template>
         </template>
     </div>
 </template>
