@@ -215,6 +215,7 @@ Route::middleware([
                 ]);
             }
 
+
             $data = $request->validate([
                 'stadium_id' => ['required', 'integer', 'exists:stadia,id'],
                 'invited_player_id' => ['required', 'integer', 'exists:users,id'],
@@ -232,6 +233,20 @@ Route::middleware([
             $data['inviting_player_id'] = $request->user()->id;
             $data['date'] = Carbon::parse($data['date'])->setTime($time->hour, $time->minute);
             unset($data['time']);
+
+            // checks if the invited player has an invitation at the same time
+            $invitedPlayer = User::findOrFail($request->input('invited_player_id'));
+
+            if ($invitedPlayer->invitations()->whereBetween('date', [$data['date'], $data['date']->addHours(2)])
+                    ->where('state', 'accepted')->get()->count() > 0) {
+                FlashMessage::make()->success(
+                    message: "You can't invite this player because he has an invitation at the same time"
+                )->closeable()->send();
+
+                return redirect()->back()->withErrors([
+                    'date' => "You can't invite this player because he has an invitation at the same time",
+                ]);
+            }
 
             $invitation = Invitation::create($data);
 
