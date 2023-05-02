@@ -66,7 +66,11 @@ onMounted(() => {
                     class="flex flex-col items-center justify-between w-full mt-3 space-x-4 gap-y-2 md:flex-row"
                 >
                     <p class="font-bold text-gray-700">{{ message.body }}</p>
-                    <Link v-if="message.action" :href="message.action.url">
+                    <Link
+                        v-if="message.action"
+                        :href="message.action.url"
+                        class="px-[67px]"
+                    >
                         <SecondaryButton size="sm">{{
                             message.action.text
                         }}</SecondaryButton>
@@ -75,7 +79,7 @@ onMounted(() => {
                     <button
                         @click="showSystemMessage = false"
                         v-if="message.closeable && !message.action"
-                        class="absolute top-1 rtl:-left-[67px] ltr:-right-[67px]"
+                        class="absolute top-1 rtl:-left-2 ltr:-right-2"
                     >
                         <XMarkIcon class="w-6 h-6 text-stone-600" />
                     </button>
