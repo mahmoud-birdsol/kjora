@@ -367,6 +367,7 @@
 	"you do not have any new notifications": "لا يوجد لديك اى اشعارات جديدة",
 	"Please verify": "يرجى تأكيد مستنداتك",
     "Rating Submitted": "تقييم",
-    "Invitation Cancelled Successfully": "تم إلغاء الدعوة بنجاح"
+    "Invitation Cancelled Successfully": "تم إلغاء الدعوة بنجاح",
+    "Sorry you cannot approve cancelled invitation": "عذرا لا يمكنك الموافقة على الدعوة الملغاة"
 
 }

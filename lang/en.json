@@ -365,5 +365,6 @@
 	"you do not have any new notifications": "You do not have any new notifications",
 	"Please verify": "Please verify",
     "Rating Submitted": "Rating Submitted Notification",
-    "Invitation Cancelled Successfully": "Invitation Cancelled Successfully"
+    "Invitation Cancelled Successfully": "Invitation Cancelled Successfully",
+    "Sorry you cannot approve cancelled invitation": "Sorry you cannot approve cancelled invitation"
 }
