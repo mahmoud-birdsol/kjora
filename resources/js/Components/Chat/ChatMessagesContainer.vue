@@ -22,7 +22,7 @@ const chat = useChat();
 const messagesContainer = ref(null);
 
 function groupMessagesByDate(messages) {
-    return messages.reverse().reduce((groups, message) => {
+    return messages.reduce((groups, message) => {
         const date = dayjs(message.created_at).format("DD MMMM YYYY");
         if (groups[date]) {
             groups[date].push(message);
@@ -32,7 +32,9 @@ function groupMessagesByDate(messages) {
         return groups;
     }, {});
 }
-const messagesGroups = computed(() => groupMessagesByDate(chat.messageList));
+const messagesGroups = computed(() =>
+    groupMessagesByDate([...chat.messageList].reverse())
+);
 
 onMounted(() => {
     const currentUser = usePage().props.value.auth.user;
