@@ -26,6 +26,7 @@ function groupMessagesByDate(messages) {
         const date = dayjs(message.created_at).format("DD MMMM YYYY");
         if (groups[date]) {
             groups[date].push(message);
+            // groups[date].unshift(message);
         } else {
             groups[date] = [message];
         }
@@ -54,20 +55,15 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div
-        ref="messagesContainer"
-        v-loading="chat.isLoading"
-        class="relative overscroll-contain flex flex-col gap-y-4 overflow-auto p-2 min-h-[300px] max-h-[350px] hideScrollBar md:min-h-[400px] md:max-h-[450px]"
-    >
-        <ChatNotice v-if="chat.showLastPageNotice"
-            >No more messages to load.</ChatNotice
-        >
+    <div ref="messagesContainer" v-loading="chat.isLoading"
+        class="relative overscroll-contain flex flex-col gap-y-4 overflow-auto p-2 min-h-[300px] max-h-[350px] hideScrollBar md:min-h-[400px] md:max-h-[450px]">
+        <ChatNotice v-if="chat.showLastPageNotice">No more messages to load.</ChatNotice>
         <ChatNotice v-if="chat.isLoading">Loading.</ChatNotice>
         <template v-for="(messagesGroup, date) in messagesGroups" :key="date">
             <div class="flex justify-center gap-1 text-xs font-bold">
                 <DateTranslation :start="date" format="DD MMMM YYYY" />
             </div>
-            <template v-for="message in [...messagesGroup].reverse()" :key="message.id">
+            <template v-for="message in [...messagesGroup]" :key="message.id">
                 <ChatMessage :message="message" :player="player" />
             </template>
         </template>

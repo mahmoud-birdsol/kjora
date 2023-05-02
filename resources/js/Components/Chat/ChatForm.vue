@@ -9,7 +9,8 @@
             <div v-if="chat.repliedMessage"
                 class="relative flex flex-row items-center justify-between w-full px-2 py-2 text-sm bg-gray-100 group rounded-xl">
                 <div v-if="chat.repliedMessage" class="flex items-center justify-start space-x-4">
-                    <Avatar :id="chat.repliedMessage.message_sender.id" :image-url="chat.repliedMessage.message_sender.avatar_url"
+                    <Avatar :id="chat.repliedMessage.message_sender.id"
+                        :image-url="chat.repliedMessage.message_sender.avatar_url"
                         :username="chat.repliedMessage.message_sender.name" :border="true" border-color="primary"
                         size="sm" />
                     <div class="font-bold capitalize text-primary pis-3">
@@ -52,26 +53,28 @@
             enter-active-class="transition-all duration-150 ease-out"
             leave-active-class="transition-all duration-150 ease-in" leave-from-class="opacity-100"
             leave-to-class="opacity-0">
-            <div v-loading='loading' v-if="filesData"
-                class="grid grid-cols-4 gap-2 ml-auto overflow-hidden overflow-y-auto max-h-32 hideScrollBar place-items-center">
-                <!-- {{ form.attachments }} -->
-                <template v-for="(file, index) in filesData">
-                    <div class="relative w-full">
-                        <MediaPreview :fileType="file.type" :filePreview="file.url" :fileName="file.name" />
-                        <button @click.prevent="removePhoto(index)"
-                            class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
-                            <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
-                                <XMarkIcon class="w-5 h-5 text-stone-800" />
-                            </div>
-                        </button>
-                    </div>
-                </template>
+            <div v-loading='loading'>
+                <div v-if="filesData"
+                    class="grid grid-cols-4 gap-2 ml-auto overflow-hidden overflow-y-auto max-h-32 hideScrollBar place-items-center">
+                    <!-- {{ form.attachments }} -->
+                    <template v-for="(file, index) in filesData">
+                        <div class="relative w-full">
+                            <MediaPreview :fileType="file.type" :filePreview="file.url" :fileName="file.name" />
+                            <button @click.prevent="removePhoto(index)"
+                                class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                                <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
+                                    <XMarkIcon class="w-5 h-5 text-stone-800" />
+                                </div>
+                            </button>
+                        </div>
+                    </template>
+                </div>
             </div>
         </transition>
 
         <div class="flex flex-row items-center w-full gap-x-3">
 
-              <OnClickOutside class="hidden sm:block" @trigger="showEmojiPicker = false">
+            <OnClickOutside class="hidden sm:block" @trigger="showEmojiPicker = false">
                 <div class="relative flex items-center">
                     <button @click="showEmojiPicker = !showEmojiPicker" :data-cancel-blur="true">
                         <FaceSmileIcon class="w-6 text-neutral-400" />
@@ -82,15 +85,14 @@
                 </div>
             </OnClickOutside>
             <div class="flex items-center flex-grow p-1 rounded-full bg-stone-100 ">
-                 <textarea v-model="form.body" @keypress.enter.exact.prevent="submit" name="body" id="body" rows="1"
-                                :placeholder="$t('Type your Message Here')"
-                                    class="w-full p-2 px-4 border-none rounded-full resize-none max-sm:placeholder:text-xs focus:ring-primary bg-stone-100 placeholder:text-neutral-400 text-stone-700 hideScrollBar"></textarea>
+                <textarea v-model="form.body" @keypress.enter.exact.prevent="submit" name="body" id="body" rows="1"
+                    :placeholder="$t('Type your Message Here')"
+                    class="w-full p-2 px-4 border-none rounded-full resize-none max-sm:placeholder:text-xs focus:ring-primary bg-stone-100 placeholder:text-neutral-400 text-stone-700 hideScrollBar"></textarea>
             </div>
             <button class="relative" @click="openUploadModal = true">
                 <PhotoIcon class="w-6 h-6 text-neutral-400" />
                 <span class="absolute bottom-0 rounded-full bg-white -right-[1px]">
-                    <UploadChatFile :show="openUploadModal" @close="openUploadModal = false"
-                        @upload="addFiles" />
+                    <UploadChatFile :show="openUploadModal" @close="openUploadModal = false" @upload="addFiles" />
                     <ArrowUpCircleIcon class="w-2 h-2 text-neutral-400 " />
                 </span>
             </button>
