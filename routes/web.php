@@ -29,6 +29,7 @@ use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\UpgradeMembershipController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\VerificationCodeController;
+use App\Http\Controllers\CancelInvitationController;
 use App\Models\Country;
 use App\Models\Invitation;
 use App\Models\MediaLibrary;
@@ -256,6 +257,12 @@ Route::middleware([
             return redirect()->route('invitation.index');
         })->name('invitation.decline');
 
+        // Cancel invitation
+        Route::patch(
+            'invitations/{invitation}/cancel',
+            CancelInvitationController::class
+        )
+            ->name('invitation.cancel');
         /*
          |--------------------------------------------------------------------------
          | Notifications Routes...
