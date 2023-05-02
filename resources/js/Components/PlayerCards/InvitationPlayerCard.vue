@@ -1,14 +1,19 @@
 <script setup>
-import { computed, ref, onBeforeMount, onMounted } from 'vue';
-import { Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { ElRate } from 'element-plus';
-import Avatar from '@/Components/Avatar.vue';
+import { computed, ref, onBeforeMount, onMounted } from "vue";
+import { Link, useForm, usePage } from "@inertiajs/inertia-vue3";
+import { ElRate } from "element-plus";
+import Avatar from "@/Components/Avatar.vue";
 import dayjs from "dayjs";
 import { CustomMarker, GoogleMap, Marker } from "vue3-google-map";
-import { CheckIcon, HandRaisedIcon, XMarkIcon, StarIcon as StarIconFilled } from '@heroicons/vue/24/solid';
-import { StarIcon as StarIconOutline } from '@heroicons/vue/24/outline';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import DateTranslation from '../DateTranslation.vue';
+import {
+    CheckIcon,
+    HandRaisedIcon,
+    XMarkIcon,
+    StarIcon as StarIconFilled,
+} from "@heroicons/vue/24/solid";
+import { StarIcon as StarIconOutline } from "@heroicons/vue/24/outline";
+import relativeTime from "dayjs/plugin/relativeTime";
+import DateTranslation from "../DateTranslation.vue";
 onBeforeMount(() => {
     dayjs.extend(relativeTime);
 });
@@ -20,7 +25,7 @@ const props = defineProps({
     size: {
         required: false,
         type: String,
-        default: 'sm'
+        default: "sm",
     },
     invitation: {
         required: true,
@@ -30,21 +35,21 @@ const props = defineProps({
 
 const backgroundImage = computed(() => {
     return {
-        'sm': '/images/player_bg_sm.png',
-        'lg': '/images/player_bg_lg.png',
+        sm: "/images/player_bg_sm.png",
+        lg: "/images/player_bg_lg.png",
     }[props.size];
 });
 
-const currentUser = usePage().props.value.auth.user
-const isCurrentUser = props.player.id === currentUser.id
-const isHiring = props.invitation.inviting_player.id === currentUser.id
+const currentUser = usePage().props.value.auth.user;
+const isCurrentUser = props.player.id === currentUser.id;
+const isHiring = props.invitation.inviting_player.id === currentUser.id;
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-const state = props.player.state_name
-const txtColor = state == 'Free' ? 'white' : 'black'
+const state = props.player.state_name;
+const txtColor = state == "Free" ? "white" : "black";
 
 const accept = () => {
     const form = useForm({});
-    form.patch(route('invitation.accept', props.invitation.id), {
+    form.patch(route("invitation.accept", props.invitation.id), {
         preserveState: false,
         // onFinish: () => {
         //     emit('close');
@@ -54,27 +59,34 @@ const accept = () => {
 
 const decline = () => {
     const form = useForm({});
-    form.patch(route('invitation.decline', props.invitation.id), {
+    form.patch(route("invitation.decline", props.invitation.id), {
         preserveState: false,
         onFinish: () => {
-            emit('close');
-        }
+            // emit('close');
+        },
+    });
+};
+
+const cancel = () => {
+    const form = useForm({});
+    form.patch(route("invitation.cancel", props.invitation.id), {
+        preserveState: false,
+        onFinish: () => {},
     });
 };
 
 let position = {
     lat: parseFloat(props.invitation.stadium.latitude),
     lng: parseFloat(props.invitation.stadium.longitude),
-}
+};
 const markerOptions = { position: position };
 
 onMounted(() => {
     calcShouldRate();
 });
 
-const shouldRate = ref(false)
+const shouldRate = ref(false);
 function calcShouldRate() {
-
     if (props.invitation?.reviews?.length) {
         shouldRate.value = true;
     }
@@ -86,119 +98,267 @@ function calcShouldRate() {
 </script>
 
 <template>
-    <div class="rounded-xl" :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
-        <div class="flex flex-col items-center justify-center gap-3 p-4 ">
-
-            <div class="flex flex-col items-center ">
+    <div
+        class="rounded-xl"
+        :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`"
+    >
+        <div class="flex flex-col items-center justify-center gap-3 p-4">
+            <div class="flex flex-col items-center">
                 <!-- image -->
-                <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true" />
-                <div class="flex flex-col items-center text-sm text-white ">
-                    <Link class="hover:underline rtl:before:content-['a'] rtl:before:text-transparent" :href="route('player.profile', player.id)">@{{
-                        player.username }}</Link>
-
+                <Avatar
+                    :id="player.id"
+                    :image-url="player.avatar_url"
+                    :size="'lg'"
+                    :username="player.name"
+                    :border="true"
+                />
+                <div class="flex flex-col items-center text-sm text-white">
+                    <Link
+                        class="hover:underline rtl:before:text-transparent rtl:before:content-['a']"
+                        :href="route('player.profile', player.id)"
+                        >@{{ player.username }}</Link
+                    >
                 </div>
                 <!-- rating -->
-                <p class="flex items-center justify-center space-x-2 text-sm ">
-                    <span class="scale-[0.7]  flex items-center gap-x-1" :class="txtColor == 'black' ? 'text-primary' : 'text-[#FF9900]'">
+                <p class="flex items-center justify-center space-x-2 text-sm">
+                    <span
+                        class="flex scale-[0.7] items-center gap-x-1"
+                        :class="
+                            txtColor == 'black'
+                                ? 'text-primary'
+                                : 'text-[#FF9900]'
+                        "
+                    >
                         <span class="flex items-center gap-1">
                             <template v-for="i in 5">
-                                <StarIconFilled class="w-5 h-5" v-if="player.rating >= i" :class="state == 'Free' ? 'text-gold' : 'text-primary'" />
-                                <StarIconOutline class="w-5 h-5" :class="state == 'Free' ? 'text-gold' : 'text-primary'" v-else />
+                                <StarIconFilled
+                                    class="h-5 w-5"
+                                    v-if="player.rating >= i"
+                                    :class="
+                                        state == 'Free'
+                                            ? 'text-gold'
+                                            : 'text-primary'
+                                    "
+                                />
+                                <StarIconOutline
+                                    class="h-5 w-5"
+                                    :class="
+                                        state == 'Free'
+                                            ? 'text-gold'
+                                            : 'text-primary'
+                                    "
+                                    v-else
+                                />
                             </template>
                         </span>
 
-                        <span class="ml-2 font-bold text-md" :class="state == 'Free' ? 'text-gold' : 'text-primary'">{{
-                            player.rating }}</span>
+                        <span
+                            class="text-md ml-2 font-bold"
+                            :class="
+                                state == 'Free' ? 'text-gold' : 'text-primary'
+                            "
+                            >{{ player.rating }}</span
+                        >
                     </span>
                 </p>
             </div>
             <!-- name and userName -->
-            <div class="flex flex-col items-center ">
-                <div class="flex items-center gap-1 text-white capitalize" v-if="!invitation.state && !isHiring">
+            <div class="flex flex-col items-center">
+                <div
+                    class="flex items-center gap-1 capitalize text-white"
+                    v-if="!invitation.state && !isHiring"
+                >
                     <span>
-                        {{ $t('hi :receiver , :sender', {
-                            sender: invitation.inviting_player.name, receiver:
-                                invitation.invited_player.first_name
-                        }) }}
+                        {{
+                            $t("hi :receiver , :sender", {
+                                sender: invitation.inviting_player.name,
+                                receiver: invitation.invited_player.first_name,
+                            })
+                        }}
                     </span>
                     <span>
-                        <HandRaisedIcon class="w-4 text-yellow-300 rotate-[15deg]" />
+                        <HandRaisedIcon
+                            class="w-4 rotate-[15deg] text-yellow-300"
+                        />
                     </span>
                 </div>
-                <div v-if="isHiring" class="flex items-center gap-1 text-white capitalize">
-                    <p v-if="invitation.state == null" class="text-[10px] text-center text-stone-300/70">
-                        {{ $t('pending') }}
-                        {{ $t('match in') }}
-                        <DateTranslation format="DD MMMM YYYY, hh:mm A" :start="invitation.date" />
+                <div
+                    v-if="isHiring"
+                    class="flex items-center gap-1 capitalize text-white"
+                >
+                    <p
+                        v-if="invitation.state == null"
+                        class="text-center text-[10px] text-stone-300/70"
+                    >
+                        {{ $t("pending") }}
+                        {{ $t("match in") }}
+                        <DateTranslation
+                            format="DD MMMM YYYY, hh:mm A"
+                            :start="invitation.date"
+                        />
                     </p>
-                    <p v-if="invitation.state == 'accepted'" class="text-[10px] text-center text-stone-300/70">
-                        {{ $t('accepted') }}
-                        {{ $t('match in') }}
-                        <DateTranslation format="DD MMMM YYYY, hh:mm A" :start="invitation.date" />
+                    <p
+                        v-if="invitation.state == 'accepted'"
+                        class="text-center text-[10px] text-stone-300/70"
+                    >
+                        {{ $t("accepted") }}
+                        {{ $t("match in") }}
+                        <DateTranslation
+                            format="DD MMMM YYYY, hh:mm A"
+                            :start="invitation.date"
+                        />
                     </p>
-                    <p v-if="invitation.state == 'declined'" class="text-[10px] text-center text-stone-300/70">
-                        {{ $t('declined') }}
-                        {{ $t('match in') }}
-                        <DateTranslation format="DD MMMM YYYY, hh:mm A" :start="invitation.date" />
+                    <p
+                        v-if="invitation.state == 'declined'"
+                        class="text-center text-[10px] text-stone-300/70"
+                    >
+                        {{ $t("declined") }}
+                        {{ $t("match in") }}
+                        <DateTranslation
+                            format="DD MMMM YYYY, hh:mm A"
+                            :start="invitation.date"
+                        />
                     </p>
-                    <p v-if="invitation.state == 'canceled'" class="text-[10px] text-center text-stone-300/70">
-                        {{ $t('canceled') }}
-                        {{ $t('match in') }}
-                        <DateTranslation format="DD MMMM YYYY, hh:mm A" :start="invitation.date" />
+                    <p
+                        v-if="invitation.state == 'cancelled'"
+                        class="text-center text-[10px] text-stone-300/70"
+                    >
+                        {{ $t("canceled") }}
+                        {{ $t("match in") }}
+                        <DateTranslation
+                            format="DD MMMM YYYY, hh:mm A"
+                            :start="invitation.date"
+                        />
                     </p>
                 </div>
-                <p class="text-[10px] text-center text-stone-300/70" v-if="invitation.state && !isHiring">
-                    {{ $t('match in') }}
-                    <DateTranslation format="DD MMMM YYYY, hh:mm A" :start="invitation.date" />
+                <p
+                    class="text-center text-[10px] text-stone-300/70"
+                    v-if="invitation.state && !isHiring"
+                >
+                    {{ $t("match in") }}
+                    <DateTranslation
+                        format="DD MMMM YYYY, hh:mm A"
+                        :start="invitation.date"
+                    />
                 </p>
                 <!-- invitation date -->
-                <p v-else-if="!isHiring && !invitation.state" class="text-[10px] text-center text-stone-300/70">{{ $t('Wants to invite you for a match in') }}
-                    <DateTranslation format="DD MMMM YYYY, hh:mm A" :start="invitation.date" />
+                <p
+                    v-else-if="!isHiring && !invitation.state"
+                    class="text-center text-[10px] text-stone-300/70"
+                >
+                    {{ $t("Wants to invite you for a match in") }}
+                    <DateTranslation
+                        format="DD MMMM YYYY, hh:mm A"
+                        :start="invitation.date"
+                    />
                 </p>
             </div>
             <!-- invite user location -->
 
-            <a :href="`https://www.google.com/maps/dir/Current+Location/${position.lat},${position.lng}`" target="_blank" class="w-full overflow-hidden rounded-lg ">
-                <GoogleMap :api-key="apiKey" style="width: 100%; height: 150px" :center="position" :zoom="15">
+            <a
+                :href="`https://www.google.com/maps/dir/Current+Location/${position.lat},${position.lng}`"
+                target="_blank"
+                class="w-full overflow-hidden rounded-lg"
+            >
+                <GoogleMap
+                    :api-key="apiKey"
+                    style="width: 100%; height: 150px"
+                    :center="position"
+                    :zoom="15"
+                >
                     <Marker :options="markerOptions" />
-                    <CustomMarker :options="{ position: position, anchorPoint: 'TOP_RIGHT' }">
-                        <div class="text-center rounded-md bg-white/90 ">
-                            <div class="p-2 text-xs font-bold ">{{ invitation.stadium.name }}</div>
+                    <CustomMarker
+                        :options="{
+                            position: position,
+                            anchorPoint: 'TOP_RIGHT',
+                        }"
+                    >
+                        <div class="rounded-md bg-white/90 text-center">
+                            <div class="p-2 text-xs font-bold">
+                                {{ invitation.stadium.name }}
+                            </div>
                         </div>
                     </CustomMarker>
                 </GoogleMap>
             </a>
 
-
             <!-- respond to invitation state buttons -->
             <div class="self-stretch text-sm font-bold">
-                <div v-if="invitation.state == null && !isHiring && dayjs(props.invitation?.date).diff(dayjs(), 'hour') > 0" class="flex justify-center gap-6">
-                    <button @click="decline" class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
+                <div
+                    v-if="
+                        invitation.state == null &&
+                        !isHiring &&
+                        dayjs(props.invitation?.date).diff(dayjs(), 'hour') > 0
+                    "
+                    class="flex justify-center gap-6"
+                >
+                    <button
+                        @click="decline"
+                        class="flex items-center justify-center rounded-full bg-stone-100 px-2 py-2 shadow-sm enabled:hover:bg-opacity-90 enabled:active:scale-95"
+                    >
                         <XMarkIcon class="w-6 text-red-600" />
                     </button>
-                    <button @click="accept" class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
+                    <button
+                        @click="accept"
+                        class="flex items-center justify-center rounded-full bg-stone-100 px-2 py-2 shadow-sm enabled:hover:bg-opacity-90 enabled:active:scale-95"
+                    >
                         <CheckIcon class="w-6 text-green-600" />
                     </button>
                 </div>
-                <div v-if="invitation.state == 'declined'" class="flex justify-center">
-                    <button :disabled="true" class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-200 enabled:hover:bg-opacity-90 enabled:active:scale-95">
+                <!-- cancel invitation -->
+                <div>
+                    <button
+                        @click="cancel"
+                        v-if="
+                            invitation.state == null &&
+                            isHiring &&
+                            dayjs(props.invitation?.date).diff(
+                                dayjs(),
+                                'hour'
+                            ) > 0
+                        "
+                        class="flex w-full items-center justify-center rounded-full bg-stone-100 px-4 py-2 shadow-sm enabled:hover:bg-opacity-90 enabled:active:scale-95"
+                    >
+                        {{ $t("cancel") }}
+                    </button>
+                </div>
+                <div
+                    v-if="invitation.state == 'declined'"
+                    class="flex justify-center"
+                >
+                    <button
+                        :disabled="true"
+                        class="flex items-center justify-center rounded-full bg-stone-200 px-2 py-2 shadow-sm enabled:hover:bg-opacity-90 enabled:active:scale-95"
+                    >
                         <XMarkIcon class="w-6 text-red-600" />
                     </button>
                 </div>
 
-                <Link :href="route('home')" v-if="invitation.state == 'canceled' && !shouldRate" class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
-                    {{ $t('canceled') }}
+                <Link
+                    :href="route('home')"
+                    v-if="invitation.state == 'cancelled' && !shouldRate"
+                    class="flex w-full items-center justify-center rounded-full bg-stone-100 px-4 py-2 shadow-sm enabled:hover:bg-opacity-90 enabled:active:scale-95"
+                >
+                    {{ $t("canceled") }}
                 </Link>
-                <Link :href="route('chats.index')" v-if="invitation.state == 'accepted' && !shouldRate" class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
-                {{ $t('chat') }}
+                <Link
+                    :href="route('chats.index')"
+                    v-if="invitation.state == 'accepted' && !shouldRate"
+                    class="flex w-full items-center justify-center rounded-full bg-stone-100 px-4 py-2 shadow-sm enabled:hover:bg-opacity-90 enabled:active:scale-95"
+                >
+                    {{ $t("chat") }}
                 </Link>
 
-                <Link :href="route('player.review.show', invitation.reviews[0].id)" v-if="invitation.state == 'accepted' && shouldRate" class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
-                {{ $t('rate') }}
+                <Link
+                    :href="
+                        route('player.review.show', invitation.reviews[0].id)
+                    "
+                    v-if="invitation.state == 'accepted' && shouldRate"
+                    class="flex w-full items-center justify-center rounded-full bg-stone-100 px-4 py-2 shadow-sm enabled:hover:bg-opacity-90 enabled:active:scale-95"
+                >
+                    {{ $t("rate") }}
                 </Link>
             </div>
-
-
         </div>
     </div>
 </template>
