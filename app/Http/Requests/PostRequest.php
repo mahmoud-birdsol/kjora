@@ -28,7 +28,7 @@ class PostRequest extends FormRequest
 
             'cover' => [
                 'required',
-                'max:2048',
+                'max:84000',
             ],
         ];
     }

@@ -67,7 +67,9 @@ class Social extends Resource
 
             Images::make(__('Icon'), 'icon')
                 ->showOnPreview()
-                ->rules('required'),
+                ->rules('required')
+                ->singleMediaRules('max:84000')
+            ,
 
             Boolean::make(__('Active'), 'is_active')
                 ->showOnPreview()

@@ -66,7 +66,9 @@ class Message extends Resource
             Textarea::make('Body')
                 ->rules('required'),
 
-            Images::make('Attachments')->nullable(),
+            Images::make('Attachments')
+                ->singleMediaRules('max:84000')
+                ->nullable(),
 
         ];
     }

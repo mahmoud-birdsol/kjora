@@ -75,6 +75,7 @@ class Country extends Resource
                 ->showOnPreview()
                 ->croppingConfigs(['aspectRatio' => 1 / 1])
                 ->mustCrop()
+                ->singleMediaRules('max:84000')
                 ->rules('required'),
 
             Boolean::make(__('Active'), 'is_active')
