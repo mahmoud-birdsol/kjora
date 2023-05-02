@@ -28,7 +28,7 @@ class CreateNewUser implements CreatesNewUsers
         Validator::make($input, [
             'first_name' => ['required', 'string', 'min:3', 'max:18'],
             'last_name' => ['required', 'string', 'min:3', 'max:18'],
-            'username' => ['required', 'string', 'max:255', 'unique:users'],
+            'username' => ['required', 'string', 'min:3', 'max:255', 'unique:users', 'alpha_num','regex:/^\S*$/u'],
             'country_id' => ['required', 'integer', 'exists:countries,id'],
             'club_id' => ['required', 'integer', 'exists:clubs,id'],
             'date_of_birth' => ['required', 'date', 'before:-18 years'],
