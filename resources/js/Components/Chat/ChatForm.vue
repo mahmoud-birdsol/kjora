@@ -89,7 +89,7 @@
             <button class="relative" @click="openUploadModal = true">
                 <PhotoIcon class="w-6 h-6 text-neutral-400" />
                 <span class="absolute bottom-0 rounded-full bg-white -right-[1px]">
-                    <UploadChatFile :show="openUploadModal" @close="openUploadModal = false" :should-upload="true"
+                    <UploadChatFile :show="openUploadModal" @close="openUploadModal = false" 
                         @upload="addFiles" />
                     <ArrowUpCircleIcon class="w-2 h-2 text-neutral-400 " />
                 </span>
@@ -133,10 +133,11 @@ const props = defineProps({
 });
 const showEmojiPicker = ref(false)
 const chat = useChat();
-const hasAttachement = ref(false);
 const loading = ref(false);
 const openUploadModal = ref(false);
 const filesData = ref(null)
+
+
 const form = useForm({
     parent_id: null,
     body: '',
@@ -161,10 +162,9 @@ const submit = () => {
     }).then((response) => {
         chat.pushNewMessage(response.data.data);
     }).catch(error => {
-        console.error(error.response)
+        console.error(error)
     }).finally(() => {
         loading.value = false;
-        filePreview.value = null;
         form.reset();
         filesData.value = []
     });
@@ -174,40 +174,7 @@ const submit = () => {
 // TODO: view should determine the number of rows with a max number
 // TODO: of rows before activating scroll.
 
-const attachmentsInput = ref(null)
-const filePreview = ref(null);
 
-function clickFileInput() {
-    attachmentsInput.value.click()
-}
-
-/* -------------------------------------------------------------------------- */
-let fileType = ref(null)
-let fileName = ref(null)
-
-function handleFile(file) {
-    if (!file) return;
-    fileType.value = file.type
-    fileName.value = file.name
-
-    const reader = new FileReader();
-
-    reader.onload = (e) => {
-        filePreview.value = e.target.result;
-        hasAttachement.value = true
-    };
-
-
-    reader.readAsDataURL(file);
-}
-
-// on photoInput change method
-const handleAttachments = (e) => {
-    const file = attachmentsInput.value.files[0];
-    form.attachments = attachmentsInput.value.files[0]
-
-    handleFile(file)
-}
 function addFiles(files, filesUrls) {
     if (form.attachments) {
         form.attachments = [...form.attachments, ...files]
