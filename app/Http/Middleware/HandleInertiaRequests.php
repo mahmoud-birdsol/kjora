@@ -63,7 +63,7 @@ class HandleInertiaRequests extends Middleware
                 'ar' => nova_get_setting('greetings_text_ar'),
                 'en' => nova_get_setting('greetings_text_en'),
             ],
-            'distanceInvitationLimit' => nova_get_setting('distance_invitation_limit') ?? 250
+            'distanceInvitationLimit' => nova_get_setting('distance_invitation_limit') ?? 100
         ]);
     }
 }
