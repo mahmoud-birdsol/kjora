@@ -11,8 +11,7 @@ const props = defineProps({
     <img v-if="fileType.startsWith('image')" class="rounded-lg w-full h-32 object-cover object-center "
         :src="filePreview" />
     <div v-else-if="fileType.startsWith('video')" class="rounded-lg overflow-hidden">
-        <video class="h-full">
-            <source :src="filePreview" :type="fileType">
+        <video :src="filePreview"  class="h-full">
         </video>
     </div>
 

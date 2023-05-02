@@ -27,7 +27,6 @@ provide('conversation', props.conversation);
                 <ChatHeader :conversation="conversation" :player="player" />
             </template>
             <template #main>
-                <div class="flex justify-center text-xs ">{{ dayjs().format('DD MMMM YYYY') }}</div>
                 <ChatMessagesContainer :conversation="conversation" :player="player" />
             </template>
             <template #footer>

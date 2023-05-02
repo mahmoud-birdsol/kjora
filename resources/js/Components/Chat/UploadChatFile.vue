@@ -87,19 +87,32 @@ const updatePhotoPreview = () => {
         return { file: file, id: _.uniqueId("f") };
     });
     newFiles.forEach(({ file, id }, i) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            filesData.value.push({
-                file: file,
-                url: e.target.result,
-                name: file.name,
-                type: file.type,
-                id: id,
-            });
-            showPreview.value = true;
-        };
-        reader.readAsDataURL(file);
+        const url =URL.createObjectURL(file);
+
+        filesData.value.push({
+            file: file,
+            url: url,
+            name: file.name,
+            type: file.type,
+            id: id,
+        });
+        showPreview.value = true;
+
+
+        // const reader = new FileReader();
+        // reader.onload = (e) => {
+        //     filesData.value.push({
+        //         file: file,
+        //         url: e.target.result,
+        //         name: file.name,
+        //         type: file.type,
+        //         id: id,
+        //     });
+        //     showPreview.value = true;
+        // };
+        // reader.readAsDataURL(file);
     });
+
 };
 
 const removePhoto = (i) => {
@@ -195,20 +208,20 @@ function changeFiles(file, url, id) {
                         >
                             <div
                                 v-if="
-                                    file.url.startsWith('data:image') ||
-                                    file.url.startsWith('data:video')
+                                    file.url.startsWith('data:image') ||file.type.startsWith('image')||
+                                    file.url.startsWith('data:video') || file.type.startsWith('video')
                                 "
                                 class="relative"
                             >
                                 <img
-                                    v-if="file.url.startsWith('data:image')"
+                                    v-if="file.url.startsWith('data:image')||file.type.startsWith('image')"
                                     :src="file.url"
                                     alt=""
                                     class="object-contain w-full h-full rounded-lg aspect-square"
                                     @click.stop="showLightBox(file.url)"
                                 />
                                 <video
-                                    v-if="file.url.startsWith('data:video')"
+                                    v-if="file.url.startsWith('data:video')||file.type.startsWith('video')"
                                     :src="file.url"
                                     alt=""
                                     class="object-cover w-full h-full rounded-lg aspect-square"

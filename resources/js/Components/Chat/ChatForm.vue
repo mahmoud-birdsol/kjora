@@ -89,7 +89,7 @@
             <button class="relative" @click="openUploadModal = true">
                 <PhotoIcon class="w-6 h-6 text-neutral-400" />
                 <span class="absolute bottom-0 rounded-full bg-white -right-[1px]">
-                    <UploadChatFile :show="openUploadModal" @close="openUploadModal = false" 
+                    <UploadChatFile :show="openUploadModal" @close="openUploadModal = false"
                         @upload="addFiles" />
                     <ArrowUpCircleIcon class="w-2 h-2 text-neutral-400 " />
                 </span>
@@ -179,6 +179,7 @@ function addFiles(files, filesUrls) {
     if (form.attachments) {
         form.attachments = [...form.attachments, ...files]
         filesData.value = [...filesData.value, ...filesUrls]
+
     } else {
         form.attachments = files
         filesData.value = filesUrls
@@ -195,4 +196,3 @@ function onSelectEmoji(emoji) {
 }
 
 </script>
-
