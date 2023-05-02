@@ -67,7 +67,7 @@ onUnmounted(() => {
             <div class="flex justify-center gap-1 text-xs font-bold">
                 <DateTranslation :start="date" format="DD MMMM YYYY" />
             </div>
-            <template v-for="message in [...messagesGroup]" :key="message.id">
+            <template v-for="message in [...messagesGroup].reverse()" :key="message.id">
                 <ChatMessage :message="message" :player="player" />
             </template>
         </template>
