@@ -23,7 +23,7 @@ const form = useForm({
 });
 
 function addStadium() {
-
+    console.log(form.data())
     form.post(route('stadiums.store'))
     showPlacesInput.value = false
     showAddStadiumModal.value = false
@@ -31,7 +31,7 @@ function addStadium() {
 }
 
 function setPlace(e) {
-    console.log(e.place_id);
+    console.log(e.address_components);
     form.google_place_id = e.place_id;
     form.street_address = e.address_components[1].long_name;
     form.country = e.address_components[5].long_name;
