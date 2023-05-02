@@ -18,7 +18,8 @@
                 <PostMedia :postMedia="post.media" :user="user"></PostMedia>
             </template>
             <template #userImage>
-                <Avatar :id="user.id" :username="user.name" :image-url="user.avatar_url" :size="'md'" :border="true" border-color="primary" />
+                <Avatar :id="user.id" :username="user.name" :image-url="user.avatar_url" :size="'md'" :border="true"
+                    border-color="primary" />
             </template>
             <template #userInfo>
                 <div class="flex justify-between w-full">
@@ -47,9 +48,18 @@
             <template #postCaption>
                 <PostCaptionFrom ref="postCaptionComp" :post="post"></PostCaptionFrom>
             </template>
-
             <template #commentsCount>
-                <div class="border-b border-stone-300 flex justify-between items-center p-4 pt-5">
+                <div class="grid place-items-center min-h-[200px] font-bold ">
+                    <div>
+                        Pleaes
+                        <Link :href="route('register')" class="text-blue-700">sign Up</Link> to kjora view more photos and
+                        videos
+                    </div>
+                </div>
+            </template>
+
+            <!-- <template #commentsCount>
+                <div class="flex items-center justify-between p-4 pt-5 border-b border-stone-300">
                     <div class="text-sm"> {{ $t('comments ( :count )', {
                         count: numComments
                     }) }}
@@ -64,21 +74,21 @@
                                 {{ post?.likes_count === 1 ? $t('like') : $t('likes') }}
                             </div>
                         </template>
-                        <!-- <LikeButton :isLiked="post?.is_liked" :likeable_id="post.id" :likeable_type="'App\\Models\\Post'">
+                        <LikeButton :isLiked="post?.is_liked" :likeable_id="post.id" :likeable_type="'App\\Models\\Post'">
                                 <template v-slot="{ isLiked }">
                                     <HeartIcon class="w-5 stroke-current stroke-2 text-primary" :class="isLiked ? 'fill-current' : 'fill-transparent'" />
                                 </template>
-                            </LikeButton> -->
+                            </LikeButton>
                     </div>
                 </div>
-            </template>
-            <template #postComments>
+            </template> -->
+            <!-- <template #postComments>
                 <div ref="commentsContainer" @scroll="handleScroll" class="flex flex-col gap-4 w-full max-h-[500px]  hideScrollBar overflow-auto" v-if="postComments">
                     <template v-for="comment in postComments.filter(c => !c.parent_id)" :key="comment.id">
                         <Comment @addedReply="getPostComments" :comment="comment" ref="commentsComps" :parentOffset="commentsContainerOffset" />
                     </template>
                 </div>
-            </template>
+            </template> -->
             <!-- <template #newCommentForm>
                 <PostCommentForm :postId="post.id" :commentsContainer="commentsContainer" @addComment="getPostComments">
                 </PostCommentForm>
