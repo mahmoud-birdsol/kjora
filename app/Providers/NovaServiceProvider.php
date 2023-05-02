@@ -39,6 +39,7 @@ use App\Nova\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Menu\MenuGroup;
@@ -183,6 +184,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             Text::make(__('Greetings Text Ar'), 'greetings_text_ar'),
             Text::make(__('Greetings Text En'), 'greetings_text_en')
                 ->rules('required_with:greetings_text_ar'),
+            Number::make('Distance invitation limit', 'distance_invitation_limit')
         ]);
     }
 

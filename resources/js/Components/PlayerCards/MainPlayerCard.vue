@@ -9,6 +9,7 @@ import ReportModal from "@/Components/ReportModal.vue";
 import Socials from '@/Components/Socials.vue';
 import ToolTip from "@/Components/ToolTip.vue";
 import FavouriteButton from '../FavouriteButton.vue';
+import Modal from "../Modal.vue";
 
 const props = defineProps({
     player: {
@@ -49,7 +50,7 @@ const props = defineProps({
     },
 
 });
-
+const showInvitationDistanceError =ref(false)
 const currentUser = usePage().props.value.auth.user
 const state = props.player.state_name
 const txtColor = state == 'Free' ? 'white' : 'black'
@@ -251,12 +252,20 @@ function showCopied() {
                 <div class="flex items-center gap-4">
                     <div class="flex space-x-2 bg-transparent"
                          v-if="showInvite && player.id !== $page.props.auth.user.id">
-                        <Link :href="route('invitation.create', player.id)"
+                        <Link v-if="distanceBetweenPlayerAndMe < $page.props.distanceInvitationLimit" :href="route('invitation.create', player.id)"
                               class="text-sm scale-[0.85]  ltr:origin-left rtl:origin-right">
                         {{ $t('send-invitation') }}
                         <ChevronDoubleRightIcon class="inline w-4 h-4 rtl:rotate-180 ltr:rotate-0"
                                             :class="`text-${txtColor}`" />
                     </Link>
+                        <button v-else
+                              @click="showInvitationDistanceError = true"
+                              class="text-sm scale-[0.85]  ltr:origin-left rtl:origin-right">
+                            {{ $t('send-invitation') }}
+                            <ChevronDoubleRightIcon class="inline w-4 h-4 rtl:rotate-180 ltr:rotate-0"
+                                                    :class="`text-${txtColor}`" />
+                        </button>
+                        <modal :show="showInvitationDistanceError" :closeable="true" :show-close-icon="true" @close="showInvitationDistanceError = false"><div class="">This player is far away from your destination</div> </modal>
                 </div>
                 <div class="relative">
                     <Socials v-if="showShare"
