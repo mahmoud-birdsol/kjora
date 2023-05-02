@@ -110,7 +110,7 @@ function showCopied() {
          :style="`background-image: url('${backgroundImage}'); background-size: cover; background-position: center;`">
         <div v-show="showFavorite && !isCurrentUser"
              class="flex justify-end">
-            <span class="rounded-lg ltr:rounded-bl-3xl rtl:rounded-br-3xl bg-white p-2">
+            <span class="p-2 bg-white rounded-lg ltr:rounded-bl-3xl rtl:rounded-br-3xl">
                 <FavouriteButton :user="player" />
             </span>
         </div>
@@ -263,7 +263,7 @@ function showCopied() {
                              :shareUrl="`public/player/${player.username}`"
                              position="bottom-0"
                              @showCopied="showCopied" />
-                    <span class="bg-black text-white text-[10px] font-bold rounded absolute ltr:right-0 rtl:left-0 -bottom-3 -my-4 p-1 whitespace-nowrap"
+                    <span class="absolute p-1 -my-4 text-sm font-bold text-white bg-black rounded ltr:right-0 rtl:left-0 -bottom-3 whitespace-nowrap"
                           v-if="copiedMsg">{{
                         $t('copied') }}!</span>
                 </div>
