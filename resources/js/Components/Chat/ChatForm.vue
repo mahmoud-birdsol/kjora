@@ -52,7 +52,7 @@
             enter-active-class="transition-all duration-150 ease-out"
             leave-active-class="transition-all duration-150 ease-in" leave-from-class="opacity-100"
             leave-to-class="opacity-0">
-            <div v-if="filesData"
+            <div v-loading='loading' v-if="filesData"
                 class="grid grid-cols-4 gap-2 ml-auto overflow-hidden overflow-y-auto max-h-32 hideScrollBar place-items-center">
                 <!-- {{ form.attachments }} -->
                 <template v-for="(file, index) in filesData">
@@ -71,7 +71,7 @@
 
         <div class="flex flex-row items-center w-full gap-x-3">
 
-                    <OnClickOutside class="hidden sm:block" @trigger="showEmojiPicker = false">
+              <OnClickOutside class="hidden sm:block" @trigger="showEmojiPicker = false">
                 <div class="relative flex items-center">
                     <button @click="showEmojiPicker = !showEmojiPicker" :data-cancel-blur="true">
                         <FaceSmileIcon class="w-6 text-neutral-400" />
@@ -81,15 +81,15 @@
                     </div>
                 </div>
             </OnClickOutside>
-                        <div class="flex items-center flex-grow bg-stone-100 p-1 rounded-full ">
-                            <textarea v-model="form.body" @keypress.enter.exact.prevent="submit" name="body" id="body" rows="1"
+            <div class="flex items-center flex-grow p-1 rounded-full bg-stone-100 ">
+                 <textarea v-model="form.body" @keypress.enter.exact.prevent="submit" name="body" id="body" rows="1"
                                 :placeholder="$t('Type your Message Here')"
-                                    class="w-full p-2 px-4 border-none rounded-full resize-none max-sm:placeholder:text-xs focus:ring-primary  bg-stone-100 placeholder:text-neutral-400 text-stone-700 hideScrollBar"></textarea>
+                                    class="w-full p-2 px-4 border-none rounded-full resize-none max-sm:placeholder:text-xs focus:ring-primary bg-stone-100 placeholder:text-neutral-400 text-stone-700 hideScrollBar"></textarea>
             </div>
-            <button class="relative" @click="openModual = true">
+            <button class="relative" @click="openUploadModal = true">
                 <PhotoIcon class="w-6 h-6 text-neutral-400" />
                 <span class="absolute bottom-0 rounded-full bg-white -right-[1px]">
-                    <UplaodChatFile :show="openModual" @close="openModual = false" :should-upload="true"
+                    <UploadChatFile :show="openUploadModal" @close="openUploadModal = false" 
                         @upload="addFiles" />
                     <ArrowUpCircleIcon class="w-2 h-2 text-neutral-400 " />
                 </span>
@@ -116,10 +116,10 @@ import {
 import axios from "axios";
 import { useForm, Link } from "@inertiajs/inertia-vue3";
 import Avatar from "../Avatar.vue";
-import UplaodChatFile from './UplaodChatFile.vue';
+import UploadChatFile from './UploadChatFile.vue';
 import EmojiPickerElement from '../EmojiPickerElement.vue';
 import { FaceSmileIcon } from '@heroicons/vue/24/outline';
-import { fromPairs } from 'lodash';
+
 
 const props = defineProps({
     conversation: {
@@ -133,10 +133,11 @@ const props = defineProps({
 });
 const showEmojiPicker = ref(false)
 const chat = useChat();
-const hasAttachement = ref(false);
 const loading = ref(false);
-let openModual = ref(false);
+const openUploadModal = ref(false);
 const filesData = ref(null)
+
+
 const form = useForm({
     parent_id: null,
     body: '',
@@ -161,10 +162,9 @@ const submit = () => {
     }).then((response) => {
         chat.pushNewMessage(response.data.data);
     }).catch(error => {
-        console.error(error.response)
+        console.error(error)
     }).finally(() => {
         loading.value = false;
-        filePreview.value = null;
         form.reset();
         filesData.value = []
     });
@@ -174,40 +174,7 @@ const submit = () => {
 // TODO: view should determine the number of rows with a max number
 // TODO: of rows before activating scroll.
 
-const attachmentsInput = ref(null)
-const filePreview = ref(null);
 
-function clickFileInput() {
-    attachmentsInput.value.click()
-}
-
-/* -------------------------------------------------------------------------- */
-let fileType = ref(null)
-let fileName = ref(null)
-
-function handleFile(file) {
-    if (!file) return;
-    fileType.value = file.type
-    fileName.value = file.name
-
-    const reader = new FileReader();
-
-    reader.onload = (e) => {
-        filePreview.value = e.target.result;
-        hasAttachement.value = true
-    };
-
-
-    reader.readAsDataURL(file);
-}
-
-// on photoInput change method
-const handleAttachments = (e) => {
-    const file = attachmentsInput.value.files[0];
-    form.attachments = attachmentsInput.value.files[0]
-
-    handleFile(file)
-}
 function addFiles(files, filesUrls) {
     if (form.attachments) {
         form.attachments = [...form.attachments, ...files]

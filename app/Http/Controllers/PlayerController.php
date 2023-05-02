@@ -19,7 +19,12 @@ class PlayerController extends Controller
      */
     public function index(Request $request): Response
     {
-        $query = User::query();
+        $query = User::query()->select(DB::raw("*,
+                     (3959 * ACOS(COS(RADIANS({$request->user()->current_latitude}))
+                           * COS(RADIANS(current_latitude))
+                           * COS(RADIANS({$request->user()->current_longitude}) - RADIANS(current_longitude))
+                           + SIN(RADIANS({$request->user()->current_latitude}))
+                           * SIN(RADIANS(current_latitude)))) AS distance"))->orderBy('distance','asc');
 
         $request->whenFilled('position', fn () => $query->where('position_id', $request->input('position')));
         $request->whenFilled('ratingFrom', fn () => $query->where(function ($query) use ($request) {

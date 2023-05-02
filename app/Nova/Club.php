@@ -71,6 +71,7 @@ class Club extends Resource
                 ->conversionOnIndexView('thumb')
                 ->croppingConfigs(['aspectRatio' => 1 / 1])
                 ->mustCrop()
+                ->singleMediaRules('max:84000')
                 ->rules('required'),
 
             Boolean::make(__('Active'), 'is_active')

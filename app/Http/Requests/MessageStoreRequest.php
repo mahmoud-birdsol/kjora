@@ -28,9 +28,9 @@ class MessageStoreRequest extends FormRequest
             'body' => [
                 'required_without:attachments',
             ],
-            'attachments' => [
+            'attachments.*' => [
                 'nullable',
-                'max:4096',
+                'max:84000',
             ],
         ];
     }

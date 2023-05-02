@@ -47,8 +47,8 @@ class InvitationDeclinedNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject($this->invitation->invitedPlayer->name.__('declined your invitation. ❌', [], $notifiable->locale))
-            ->line(__('Your invitation for **', [], $notifiable->locale).$this->invitation->invitedPlayer->name.__('** to play a football match on **', [], $notifiable->locale).$this->invitation->date->toDateTimeString().__('** at **', [], $notifiable->locale).$this->invitation->stadium->name.__('** was declined.', [], $notifiable->locale))
+            ->subject($this->invitation->invitedPlayer->name.' '.__('declined your invitation. ❌', [], $notifiable->locale))
+            ->line(__('Your invitation for **', [], $notifiable->locale).' '.$this->invitation->invitedPlayer->name.' '.__('** to play a football match on **', [], $notifiable->locale).' '.$this->invitation->date->toDateTimeString().' '.__('** at **', [], $notifiable->locale).' '.$this->invitation->stadium->name.' '.__('** was declined.', [], $notifiable->locale))
             ->action(__('View Invitation', [], $notifiable->locale), url(route('invitation.index')))
             ->line(__('Thank you for using our application!', [], $notifiable->locale));
     }

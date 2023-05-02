@@ -73,6 +73,7 @@ class ExpiringAdvertisement extends Lens
             Images::make('Main Image', 'main')
                 ->conversionOnIndexView('thumb')
                 ->required()
+                ->singleMediaRules('max:84000')
                 ->rules('required'),
         ];
     }

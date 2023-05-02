@@ -50,11 +50,11 @@ class IdentityVerificationController extends Controller
             ],
             'identity_front_image' => [
                 'required',
-                'max:4096',
+                'max:84000',
             ],
             'identity_back_image' => [
                 'required',
-                'max:4096',
+                'max:84000',
             ],
             'identity_selfie_image' => [
                 'required',

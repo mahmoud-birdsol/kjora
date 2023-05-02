@@ -32,7 +32,8 @@ class MessageController extends Controller
             'parent_id' => $request->input('parent_id'),
         ]);
 
-        if ($request->hasFile('attachments')) {
+        if ($request->hasFile('attachments'))
+        {
             $message->addMedia($request->file('attachments'))->toMediaCollection('attachments');
         }
 

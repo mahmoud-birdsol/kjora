@@ -29,6 +29,7 @@ use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\UpgradeMembershipController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\VerificationCodeController;
+use App\Http\Controllers\CancelInvitationController;
 use App\Models\Country;
 use App\Models\Invitation;
 use App\Models\MediaLibrary;
@@ -214,6 +215,7 @@ Route::middleware([
                 ]);
             }
 
+
             $data = $request->validate([
                 'stadium_id' => ['required', 'integer', 'exists:stadia,id'],
                 'invited_player_id' => ['required', 'integer', 'exists:users,id'],
@@ -231,6 +233,20 @@ Route::middleware([
             $data['inviting_player_id'] = $request->user()->id;
             $data['date'] = Carbon::parse($data['date'])->setTime($time->hour, $time->minute);
             unset($data['time']);
+
+            // checks if the invited player has an invitation at the same time
+            $invitedPlayer = User::findOrFail($request->input('invited_player_id'));
+
+            if ($invitedPlayer->invitations()->whereBetween('date', [$data['date'], $data['date']->addHours(2)])
+                    ->where('state', 'accepted')->get()->count() > 0) {
+                FlashMessage::make()->success(
+                    message: "You can't invite this player because he has an invitation at the same time"
+                )->closeable()->send();
+
+                return redirect()->back()->withErrors([
+                    'date' => "You can't invite this player because he has an invitation at the same time",
+                ]);
+            }
 
             $invitation = Invitation::create($data);
 
@@ -256,6 +272,12 @@ Route::middleware([
             return redirect()->route('invitation.index');
         })->name('invitation.decline');
 
+        // Cancel invitation
+        Route::patch(
+            'invitations/{invitation}/cancel',
+            CancelInvitationController::class
+        )
+            ->name('invitation.cancel');
         /*
          |--------------------------------------------------------------------------
          | Notifications Routes...

@@ -52,7 +52,7 @@ class Post extends Resource
                 ->sortable()
                 ->rules('nullable'),
 
-            Images::make('gallery'),
+            Images::make('gallery')->singleMediaRules('max:84000'),
         ];
     }
 

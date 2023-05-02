@@ -54,7 +54,7 @@ function submit() {
                             </div>
                             <div class="col-span-1">
                                 <InputLabel color="text-primary"> {{$t('surname')}} </InputLabel>
-                                <TextInput type="text" v-model="form.surName" :placeholder="$t('please')+$t('enter') + $t('surname')"
+                                <TextInput type="text" v-model="form.last_name" :placeholder="$t('please')+$t('enter') + $t('surname')"
                                     auto-complete="family-name" aria-required="true" />
                                 <InputError :message="form.errors.last_name" class="px-4"/>
                             </div>

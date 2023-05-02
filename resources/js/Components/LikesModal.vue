@@ -59,9 +59,9 @@ const currentUser = usePage().props.value.auth.user
                         <Link :href="route('player.profile', user.id)" class="text-xs text-stone-400 ">@{{
                             user.username }} </Link>
                     </div>
-                    <div v-if="currentUser.id !== user.id" class="mis-auto">
-                        <FavouriteButton :user="user" />
-                    </div>
+<!--                    <div v-if="currentUser.id !== user.id" class="mis-auto">-->
+<!--                        <FavouriteButton :user="user" />-->
+<!--                    </div>-->
 
                 </div>
             </template>

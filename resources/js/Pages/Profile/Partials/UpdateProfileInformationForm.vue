@@ -57,7 +57,7 @@ const showUploadAvatarModal = ref(false);
 
         <div class="w-full p-6 bg-white rounded-md lg:col-start-2 ">
             <div class="flex justify-center my-4">
-                <h2 class="text-xl font-bold uppercase text-primary">{{ $t('My Account') }}</h2>
+                <h2 class="text-xl font-bold uppercase text-primary">{{ $t('update Account') }}</h2>
             </div>
 
             <form @submit.prevent="updateProfileInformation">
