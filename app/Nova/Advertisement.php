@@ -116,6 +116,7 @@ class Advertisement extends Resource
             Images::make(__('Main Image'), 'main')
                 ->conversionOnIndexView('thumb')
                 ->mustCrop()
+                ->singleMediaRules('max:84000')
                 ->croppingConfigs([
                     'aspectRatio' => 8 / 1.5,
                 ])

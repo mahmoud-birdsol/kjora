@@ -22,9 +22,9 @@ class GalleryUploadRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'gallery' => [
+            'gallery.*' => [
                 'required',
-                'max:2048',
+                'max:84000',
             ],
         ];
     }

@@ -70,7 +70,8 @@ class User extends Resource
 
             Images::make('Avatar')
                 ->nullable()
-                ->rules('nullable'),
+                ->rules('nullable')
+                ->singleMediaRules('max:84000'),
 
             BelongsTo::make(__('Country'), 'country', Country::class)
                 ->showOnPreview()
@@ -185,16 +186,19 @@ class User extends Resource
 
                 Images::make(__('Identity Front Image'), 'identity_front_image')
                     ->hideFromIndex()
+                    ->singleMediaRules('max:84000')
                     ->nullable()
                     ->rules('nullable'),
 
                 Images::make(__('Identity Back Image'), 'identity_back_image')
                     ->hideFromIndex()
+                    ->singleMediaRules('max:84000')
                     ->nullable()
                     ->rules('nullable'),
 
                 Images::make(__('Identity selfie Image'), 'identity_selfie_image')
                     ->hideFromIndex()
+                    ->singleMediaRules('max:84000')
                     ->nullable()
                     ->rules('nullable'),
             ]),

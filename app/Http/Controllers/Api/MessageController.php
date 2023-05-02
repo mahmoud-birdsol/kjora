@@ -10,6 +10,7 @@ use App\Http\Resources\MessageResource;
 use App\Models\Conversation;
 use App\Models\Message;
 use App\Notifications\NotifyUserOfChatMessageNotification;
+use Dotenv\Validator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -48,6 +49,7 @@ class MessageController extends Controller
         Conversation $conversation,
         CheckIfUserIsPresentAction $checkIfUserIsPresentAction
     ) {
+
         /** @var Message $message */
         $message = $conversation->messages()->create([
             'body' => $request->input('body'),
@@ -56,7 +58,9 @@ class MessageController extends Controller
         ]);
 
         if (! is_null($request->attachments)) {
+
             foreach ($request->attachments as $attachment) {
+
                 $message->addMedia($attachment)->toMediaCollection('attachments');
             }
         }
