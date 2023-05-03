@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Concerns\CanBeLiked;
 use App\Models\Concerns\CanBeReported;
+use App\Models\Contracts\HasMentions;
 use App\Models\Contracts\Likeable;
 use App\Models\Contracts\Reportable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class Comment extends Model implements Reportable, Likeable
+class Comment extends Model implements Reportable, Likeable , HasMentions
 {
     use HasFactory;
     use CanBeReported;
