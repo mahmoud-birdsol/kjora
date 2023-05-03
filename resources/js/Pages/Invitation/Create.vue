@@ -37,6 +37,7 @@ const createInvitation = () => {
 
     form.date = dayjs(form.date).add(1).format('YYYY-MM-DD');
     form.time = (new Date(form.time)).toISOString()
+    console.log(form.time)
     form.post(route('invitation.store'), {
         onStart: () => {
             isDisabled.value = true
