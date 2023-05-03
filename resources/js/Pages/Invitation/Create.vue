@@ -126,9 +126,8 @@ const querySearch = (queryString, cb) => {
                                 <div class="my-6">
                                     <InputLabel>{{ $t('Date') }}</InputLabel>
                                     <div class="px-4">
-                                        <ElDatePicker type="date" :disabled-date="disabledDate"
-                                            style="background-color: black;" v-model="form.date" @change="disabledHours()"
-                                            class="w-full" placeholde="DD/MM/YYYY" />
+                                        <ElDatePicker type="date" :disabled-date="disabledDate" style="background-color: black;" v-model="form.date"
+                                            @change="disabledHours()" class="w-full" placeholde="DD/MM/YYYY" />
                                     </div>
                                     <InputError class="mt-2" :message="form.errors.date" />
                                 </div>
@@ -136,8 +135,7 @@ const querySearch = (queryString, cb) => {
                                 <div class="my-6">
                                     <InputLabel>{{ $t('Time') }}</InputLabel>
                                     <div class="px-4">
-                                        <ElTimePicker placeholder="Pick the time " format="HH:mm" v-model="form.time"
-                                            :disabled-hours="disabledHours" />
+                                        <ElTimePicker placeholder="Pick the time " format="HH:mm" v-model="form.time" :disabled-hours="disabledHours" />
                                     </div>
                                     <InputError class="mt-2" :message="form.errors.time" />
                                 </div>
@@ -145,9 +143,8 @@ const querySearch = (queryString, cb) => {
                                 <div class="my-6">
                                     <InputLabel>{{ $t('Stadium') }}</InputLabel>
                                     <div class="px-4 ">
-                                        <RichSelectInput :options="stadiums" value-name="id" text-name="name"
-                                            :image-name="null" v-model="form.stadium_id" bgColor="black" txtColor="white"
-                                            @selected="changeMapMarker" />
+                                        <RichSelectInput :options="stadiums" value-name="id" text-name="name" :image-name="null" v-model="form.stadium_id"
+                                            bgColor="black" txtColor="white" @selected="changeMapMarker" />
                                     </div>
                                     <InputError class="mt-2" :message="form.errors.stadium_id" />
                                 </div>
@@ -182,8 +179,7 @@ const querySearch = (queryString, cb) => {
                             <h2 class="text-xl font-bold uppercase text-primary">{{ $t('Invitation Sent') }}</h2>
                         </div>
                         <p class="">
-                            {{ $t('Your invitation will be sent and you will receive an email updating you on the status of
-                                                        your request') }}.</p>
+                            {{ $t('Your invitation will be sent and you will receive an email updating you on the status of your request') }}.</p>
 
                         <Link :href="route('home')" class="flex w-full min-w-full">
                         <PrimaryButton class="w-full" @click="showSuccessModal = false">{{ $t('Ok') }}</PrimaryButton>
@@ -282,4 +278,5 @@ const querySearch = (queryString, cb) => {
 
 .el-input__inner {
     color: white;
-}</style>
+}
+</style>
