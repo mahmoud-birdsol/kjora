@@ -161,8 +161,10 @@ const isParentComment = !props.comment.parent_id
 
 
 onMounted(() => {
-    let id =31
-    if(props.comment.id===id) {
+    // let id =31
+    let id =route().params?.commentId
+    console.log(id);
+    if(props.comment.id===+id) {
         commentsComp.value.scrollIntoView({
             behavior:'smooth'
         })
