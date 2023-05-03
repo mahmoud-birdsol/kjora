@@ -33,9 +33,7 @@
             </div>
             <!-- comment or reply body  row 2-->
             <div class="w-full">
-                <p class="w-full text-sm break-all whitespace-pre-wrap text-stone-800">
-                    {{ comment.body }}
-                </p>
+                <p class="w-full text-sm break-all whitespace-pre-wrap text-stone-800" v-html="handleBody"/>
             </div>
             <!-- add reply & like buttons row 3 -->
             <div class="flex items-center justify-start w-full gap-2 mb-2 text-sm font-semibold text-stone-700">
@@ -136,7 +134,7 @@ import { Inertia } from '@inertiajs/inertia';
 import ConfirmationModal from './ConfirmationModal.vue';
 import LikesModal from './LikesModal.vue';
 
-const props = defineProps(['comment', 'parentOffset'])
+const props = defineProps(['comment', 'parentOffset','users'])
 onBeforeMount(() => {
     dayjs.extend(relativeTime)
 })
@@ -180,7 +178,16 @@ const guidesClassesAfter2 = computed(() => {
     return props.comment.parent_id ?
         ' after:absolute after:h-px after:w-8  after:bg-stone-200  after:z-[-1] ltr:after:-left-9 rtl:after:-right-9 after:top-5 ' : '';
 });
-
+const handleBody = computed(()=>{
+    const commentBody = props.comment.body
+    if(!commentBody.includes('@')) return props.comment.body;
+    const allWords = commentBody.split(' ')
+    return allWords.map(word =>{
+        if(!word.startsWith('@')) return word;
+        if(!props.users.some(user => user.username === word.slice(1)  )) return `${word}`
+        else return `<a href="/player/name/${word.slice(1)}" class="text-primary">${word}</a>`
+    }).join(' ')
+})
 function toggleRepliesView() {
     showReplies.value = !showReplies.value
 }

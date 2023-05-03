@@ -17523,3 +17523,11 @@
 .removeEyeIcon::-ms-reveal {
     display: none;
 }
+.blinking {
+    animation:  blinking 1s infinite;
+}
+@keyframes blinking {
+    0% {border-right-color: transparent}
+    50% {border-right-color: black}
+    100% {border-right-color: transparent}
+  }

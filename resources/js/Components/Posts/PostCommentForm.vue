@@ -15,18 +15,11 @@
             </div>
         </div>
     </OnClickOutside>
-    <div class="flex items-center flex-grow">
-        <textarea
-            @keypress.enter.exact.prevent="(e) => addComment()"
-            v-model="newComment"
-            name="newComment"
-            id="newComment"
-            rows="1"
-            :placeholder="$t('Add a comment...')"
-            class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary"
-        ></textarea>
-    </div>
 
+    <MentionTextAreaVue
+        v-model:newComment="newComment"
+        @addComment="addComment"
+    />
     <button
         @click="(e) => addComment()"
         :disabled="isSending"
@@ -44,13 +37,14 @@ import { FaceSmileIcon } from "@heroicons/vue/24/outline";
 import { PaperAirplaneIcon } from "@heroicons/vue/24/solid";
 import EmojiPickerElement from "../../Components/EmojiPickerElement.vue";
 import { usePage } from "@inertiajs/inertia-vue3";
-import { ref, watch } from "vue";
+import { ref } from "vue";
+import axios from "axios";
+import MentionTextAreaVue from "@/Components/MentionTextArea.vue";
 
 const props = defineProps(["postId", "commentsContainer"]);
 const emits = defineEmits(["addComment"]);
 
 const newComment = ref("");
-const showMentionList = ref(false);
 const isSending = ref(false);
 const showEmojiPicker = ref(false);
 const currentUser = usePage().props.value.auth.user;
@@ -87,15 +81,6 @@ function addComment() {
 function onSelectEmoji(emoji) {
     newComment.value += emoji;
 }
-watch(
-    () => newComment.value,
-    (newVal, oldVal) => {
-        if (newVal.match(/@\w+/g)) {
-            showMentionList.value = true;
-            console.log(newVal);
-        }
-    }
-);
 </script>
 
 <style lang="scss" scoped></style>
