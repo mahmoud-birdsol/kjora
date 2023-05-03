@@ -32,7 +32,7 @@ class CreateReviewForInvitationJob implements ShouldQueue
     public function handle()
     {
         $invitations = Invitation::whereDoesntHave('reviews')
-            ->where('date', '>', now()->addHours(2))
+            ->where('date', '<', now()->subHours(2))
             ->where('state', 'accepted')
             ->get()->each(function (Invitation $invitation) {
                 $firstReview = $invitation->reviews()->create([

@@ -235,15 +235,16 @@ Route::middleware([
             ]);
 
             $time = Carbon::parse($data['time']);
-
             $data['inviting_player_id'] = $request->user()->id;
             $data['date'] = Carbon::parse($data['date'])->setTime($time->hour, $time->minute);
+            $date = Carbon::parse($data['date'])->setTime($time->hour, $time->minute);
             unset($data['time']);
 
             // checks if the invited player has an invitation at the same time
             $invitedPlayer = User::findOrFail($request->input('invited_player_id'));
 
-            if ($invitedPlayer->invitations()->whereBetween('date', [$data['date'], $data['date']->addHours(2)])
+
+            if ($invitedPlayer->invitations()->whereBetween('date', [$date, $date->addHours(2)])
                     ->where('state', 'accepted')->get()->count() > 0) {
                 FlashMessage::make()->success(
                     message: "You can't invite this player because he has an invitation at the same time"
@@ -253,9 +254,10 @@ Route::middleware([
                     'date' => "You can't invite this player because he has an invitation at the same time",
                 ]);
             }
+            $data['date']=$data['date']->toString();
+
 
             $invitation = Invitation::create($data);
-
             // Notify the invited user
             $invitation->invitedPlayer->notify(new InvitationCreatedNotification($invitation));
 
