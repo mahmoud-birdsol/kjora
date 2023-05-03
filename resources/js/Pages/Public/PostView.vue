@@ -51,9 +51,9 @@
             <template #commentsCount>
                 <div class="grid place-items-center min-h-[200px] font-bold ">
                     <div>
-                        Pleaes
-                        <Link :href="route('register')" class="text-blue-700">sign Up</Link> to kjora view more photos and
-                        videos
+                        {{ $t("please") }}
+                        <Link :href="route('register')" class="text-blue-700"> {{ $t("sign up") }} </Link>
+                        {{ $t("to kjora to view more photos and videos") }}
                     </div>
                 </div>
             </template>

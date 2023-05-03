@@ -119,7 +119,7 @@ const enLocaleConfig = {
     }
 }
 
-onMounted(() => {
+onBeforeMount(() => {
     dayjs.locale(arLocaleConfig, null, true)
     dayjs.updateLocale('en', enLocaleConfig)
 

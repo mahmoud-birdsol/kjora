@@ -36,7 +36,8 @@ const createInvitation = () => {
     if (isDisabled.value) return
 
     form.date = dayjs(form.date).add(1).format('YYYY-MM-DD');
-
+    form.time = (new Date(form.time)).toISOString()
+    console.log(form.time)
     form.post(route('invitation.store'), {
         onStart: () => {
             isDisabled.value = true
@@ -126,7 +127,8 @@ const querySearch = (queryString, cb) => {
                                 <div class="my-6">
                                     <InputLabel>{{ $t('Date') }}</InputLabel>
                                     <div class="px-4">
-                                        <ElDatePicker type="date" :disabled-date="disabledDate" style="background-color: black;" v-model="form.date" @change="disabledHours()" class="w-full" placeholde="DD/MM/YYYY" />
+                                        <ElDatePicker type="date" :disabled-date="disabledDate" style="background-color: black;" v-model="form.date"
+                                            @change="disabledHours()" class="w-full" placeholde="DD/MM/YYYY" />
                                     </div>
                                     <InputError class="mt-2" :message="form.errors.date" />
                                 </div>
@@ -142,7 +144,8 @@ const querySearch = (queryString, cb) => {
                                 <div class="my-6">
                                     <InputLabel>{{ $t('Stadium') }}</InputLabel>
                                     <div class="px-4 ">
-                                        <RichSelectInput :options="stadiums" value-name="id" text-name="name" :image-name="null" v-model="form.stadium_id" bgColor="black" txtColor="white" @selected="changeMapMarker" />
+                                        <RichSelectInput :options="stadiums" value-name="id" text-name="name" :image-name="null" v-model="form.stadium_id"
+                                            bgColor="black" txtColor="white" @selected="changeMapMarker" />
                                     </div>
                                     <InputError class="mt-2" :message="form.errors.stadium_id" />
                                 </div>
