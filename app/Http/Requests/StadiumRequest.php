@@ -37,17 +37,17 @@ class StadiumRequest extends FormRequest
                 'nullable',
             ],
             'street_address' => [
-                'required',
+                'nullable',
                 'string',
                 'max:254',
             ],
             'country' => [
-                'required',
+                'nullable',
                 'string',
                 'max:255',
             ],
             'city' => [
-                'required',
+                'nullable',
                 'string',
                 'max:255',
             ],
