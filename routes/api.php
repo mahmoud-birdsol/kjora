@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\NewMessagesController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\UserLocationController;
 use App\Http\Resources\CommentResource;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -99,3 +100,12 @@ Route::get('public/post/comments', function (Request $request) {
 
     return CommentResource::collection($model->comments->load('user')->load('replies'));
 })->name('public.post.comments');
+
+Route::get(
+    'users/get-users-names',
+    [
+        UserController::class,
+        'getUsersNames',
+    ]
+)->name('api.user.get.users.name');
+
