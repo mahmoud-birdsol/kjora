@@ -7,6 +7,7 @@ use App\Data\RouteActionData;
 use App\Models\Contracts\HasMentions;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -37,7 +38,7 @@ class MentionNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database', 'broadcast'];
     }
 
     /**
@@ -75,5 +76,15 @@ class MentionNotification extends Notification
             userAvatar: $notifiable->avatar_url,
             userName: $notifiable->name,
         ))->toArray();
+    }
+    /**
+     * Get the broadcastable representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return BroadcastMessage
+     */
+    public function toBroadcast($notifiable)
+    {
+        return new BroadcastMessage($this->toArray($notifiable));
     }
 }
