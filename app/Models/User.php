@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\PositionUpdated;
 use App\Models\Concerns\CanBeReported;
 use App\Models\Contracts\Reportable;
 use App\Models\States\UserPremiumState;
@@ -151,6 +152,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     protected $with = [
         'position',
         //        'club'
+    ];
+
+    protected $dispatchesEvents = [
+        'updated' => PositionUpdated::class
     ];
 
     /**

@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\Events\AdvertisementRetrieved;
+use App\Events\PositionUpdated;
 use App\Events\ReviewRatingCategoryUpdated;
 use App\Listeners\RecordAdvertisementImpression;
 use App\Listeners\SendVerificationCodeNotification;
 use App\Listeners\UpdatePlayerOverallRating;
+use App\Listeners\UpdatePlayerRatingInPosition;
 use App\Listeners\VerifyCookies;
 use App\Listeners\VerifyPrivacyPolicy;
 use App\Listeners\VerifyTermsAndCondition;
@@ -38,7 +40,9 @@ class EventServiceProvider extends ServiceProvider
             UpdatePlayerOverallRating::class
         ],
 
-
+        PositionUpdated::class => [
+            UpdatePlayerRatingInPosition::class
+        ]
     ];
 
     /**

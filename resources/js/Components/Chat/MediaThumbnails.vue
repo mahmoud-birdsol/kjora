@@ -4,8 +4,7 @@
             <img class="object-cover w-full h-full" :src="media?.original_url" alt="">
         </template>
         <template v-else-if="media?.mime_type.startsWith('video')">
-            <video controls class="object-cover w-full h-full">
-                <source :src="media.original_url" :type="media.mime_type">
+            <video :src="media.original_url" class="object-cover w-full h-full">
             </video>
         </template>
     </div>

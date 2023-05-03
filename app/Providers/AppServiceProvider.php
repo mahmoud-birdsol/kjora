@@ -6,7 +6,9 @@ use App\Http\Responses\ProfileInformationUpdatedResponse as ProfileInformationUp
 use App\Http\Responses\RegisterResponse;
 use App\Http\Responses\RegisterSuccessfulResponse;
 use App\Models\Review;
+use App\Models\User;
 use App\Observers\ReviewObserver;
+use App\Observers\UserObserver;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Contracts\ProfileInformationUpdatedResponse;
 use Laravel\Fortify\Contracts\RegisterViewResponse;

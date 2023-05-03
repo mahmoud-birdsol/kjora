@@ -54,7 +54,7 @@ const thumbsOptions = {
     gap: "1rem",
     pagination: false,
     fixedHeight: 150,
-    autoWidth:true,
+    autoWidth: true,
     // cover: true,
     drag: 'free',
     snap: true,
@@ -62,14 +62,14 @@ const thumbsOptions = {
     updateOnMove: true,
     arrows: false,
     perPage: props.media.length > 5 ? 5 : props.media.length,
-    width:'100%',
+    width: '100%',
     breakpoints: {
         640: {
             perPage: 3,
-            width:props.media.length > 5 ? '100%' : '70%',
-		},
-  }
-   
+            width: props.media.length > 5 ? '100%' : '70%',
+        },
+    }
+
     //   focus: 'center',
 };
 onMounted(() => {
@@ -84,11 +84,12 @@ function handleSplideActive(e) {
 }
 </script>
 <style scoped>
-[some-slider] li.is-active  img{
+[some-slider] li.is-active img {
     transform: scale(0.9);
     outline: 1px solid rgb(0, 100, 0)
 }
-.splide{
+
+.splide {
     margin: auto;
 }
 </style>
@@ -102,9 +103,11 @@ function handleSplideActive(e) {
                     <div>
                         <div class="text-primary">{{ user.name }}</div>
                         <Link class="text-xs text-gray-400" :href="route('player.profile', user.id)">@{{ user.username
-                                                }}
+                        }}
                         </Link>
-                        <div class="text-xs text-gray-400"><DateTranslation :start="media[0].created_at" format="DD/MM/YYYY hh:mm a" /></div>
+                        <div class="text-xs text-gray-400">
+                            <DateTranslation :start="media[0].created_at" format="DD/MM/YYYY hh:mm a" />
+                        </div>
                     </div>
                 </div>
                 <div class="flex gap-2">
@@ -131,14 +134,14 @@ function handleSplideActive(e) {
                     </div>
                     <SplideTrack id="splide01-track">
                         <SplideSlide v-for="item in media" :key="item.id" class="w-full my-4 ">
-                            <!-- <img :src="'/images/selfie_example.png'" alt="" /> -->
+
                             <template v-if="item.mime_type.startsWith('image')">
-                                <img class="object-contain h-full mx-auto rounded-lg w-[min(500px , 90%)]" :src="item?.original_url"
-                                    alt="">
+                                <img class="object-contain h-full mx-auto rounded-lg w-[min(500px , 90%)]"
+                                    :src="item?.original_url" alt="">
                             </template>
                             <template v-else-if="item.mime_type.startsWith('video')">
-                                <video controls class="h-full max-w-full  mx-auto rounded-lg w-[min(500px , 90%)]">
-                                    <source :src="item.original_url" :type="item.mime_type">
+                                <video :src="item.original_url" controls
+                                    class="h-full max-w-full  mx-auto rounded-lg w-[min(500px , 90%)]">
                                 </video>
                             </template>
                         </SplideSlide>
@@ -147,23 +150,21 @@ function handleSplideActive(e) {
             </div>
             <div v-show="props.media.length > 1" class="" some-slider>
                 <Splide dir="ltr" :options="thumbsOptions" ref="thumbs" class="[&_ul]:justify-center [&_ul]:items-center">
-                    <SplideSlide v-for="item in media" :key="item.id" class=""
-                        style="border: none !important ;">
-                        <!-- <img :src="'/images/selfie_example.png'" :alt="slide.alt" /> -->
+                    <SplideSlide v-for="item in media" :key="item.id" class="" style="border: none !important ;">
+
                         <template v-if="item.mime_type.startsWith('image')">
                             <img class="object-contain h-full rounded-lg" :src="item?.original_url" alt="">
                         </template>
                         <template v-else-if="item.mime_type.startsWith('video')">
-                            <video class="object-contain h-full rounded-lg">
-                                <source :src="item.original_url" :type="item.mime_type">
+                            <video :src="item.original_url" class="object-contain h-full rounded-lg">
                             </video>
                         </template>
                     </SplideSlide>
                 </Splide>
             </div>
-            <template v-if="showSavePanel">
-                <!-- <DownloadImg v-model:showSavePanel="showSavePanel" /> -->
-            </template>
+            <!-- <template v-if="showSavePanel">
+                <DownloadImg v-model:showSavePanel="showSavePanel" />
+            </template> -->
         </div>
     </Modal>
 </template>
