@@ -131,6 +131,7 @@
                             :users="users"
                             ref="commentsComps"
                             :parentOffset="commentsContainerOffset"
+                            :id="comment.id"
                         />
                     </template>
                 </div>
@@ -176,6 +177,7 @@ const props = defineProps({
 });
 
 const commentsContainer = ref(null);
+const commentsComps = ref(null);
 const postCaptionComp = ref(null);
 const postComments = ref([]);
 const showLikesModal = ref(false);
@@ -196,6 +198,11 @@ const commentsContainerOffset = computed(() => {
 onMounted(() => {
     getPostComments();
     fetchUsername();
+    if(true) {
+        // let section = document.getElementById('27')
+        console.log(commentsComps.value)
+        // section.scrollIntoView()
+    }
 });
 
 function getPostComments() {
@@ -208,7 +215,7 @@ function getPostComments() {
         })
         .then((res) => {
             postComments.value = res.data.data;
-            scrollToCommentsBottom();
+            // scrollToCommentsBottom();
         })
         .catch((err) => console.error(err));
 }

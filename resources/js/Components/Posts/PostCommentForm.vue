@@ -17,8 +17,9 @@
     </OnClickOutside>
 
     <MentionTextAreaVue
-        v-model:newComment="newComment"
-        @addComment="addComment"
+        v-model:newText="newComment"
+        @addText="addComment"
+        :ref="commentInput"
     />
     <button
         @click="(e) => addComment()"
@@ -45,6 +46,7 @@ const props = defineProps(["postId", "commentsContainer"]);
 const emits = defineEmits(["addComment"]);
 
 const newComment = ref("");
+const commentInput = ref();
 const isSending = ref(false);
 const showEmojiPicker = ref(false);
 const currentUser = usePage().props.value.auth.user;

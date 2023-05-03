@@ -1,6 +1,6 @@
 <template>
     <!-- comment  -->
-    <div class="grid grid-cols-[min-content_1fr] w-full justify-start gap-4 " :class="comment.parent_id ? 'bg-white' : ''">
+    <div ref="commentsComp" :data-comment-id="comment.id" class="grid grid-cols-[min-content_1fr] w-full justify-start gap-4 " :class="comment.parent_id ? 'bg-white' : ''" >
         <!-- image col 1 -->
         <div class="min-w-max z-[10] relative  " :class="guidesClassesAfter2">
             <Avatar :id="comment.user.id" :username="comment.user.name" :image-url="comment.user.avatar_url" :size="'md'" :border="true" border-color="primary" />
@@ -81,7 +81,7 @@
             <!-- replies related to this comment row 4 -->
             <div v-show="showReplies" class="mt-2">
                 <template v-for="(reply, index) in comment.replies" :key="reply.id">
-                    <Comment @addedReply="handleAddedReply" :comment="reply" />
+                    <Comment @addedReply="handleAddedReply" :comment="reply" :users="users" />
                 </template>
             </div>
             <!-- new reply form row 5 -->
@@ -97,10 +97,11 @@
                             </div>
                         </div>
                     </OnClickOutside>
-                    <div class="flex items-center flex-grow ">
+                    <!-- <div class="flex items-center flex-grow ">
                         <textarea ref="replyInput" @keypress.enter.exact.prevent="addReply" v-model="newReply" name="newReply" id="newReply" rows="1" placeholder="Add a comment..."
                             class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary "></textarea>
-                    </div>
+                    </div> -->
+                    <MentionTextArea @addText="addReply" v-model:newText="newReply" />
 
                     <button @click="addReply" :disabled="isSending" class="p-1 group ">
 
@@ -121,18 +122,18 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 import Avatar from './Avatar.vue';
-import { computed, onBeforeMount, ref, watch } from 'vue';
+import { computed, onBeforeMount, onMounted, ref, watch } from 'vue';
 import { FaceSmileIcon, TrashIcon } from '@heroicons/vue/24/outline';
 import { PaperAirplaneIcon } from '@heroicons/vue/24/solid';
 import { Link, usePage } from '@inertiajs/inertia-vue3';
 import EmojiPickerElement from './EmojiPickerElement.vue';
 import DateTranslation from './DateTranslation.vue';
-
 import LikeButton from './LikeButton.vue';
 import Modal from './Modal.vue';
 import { Inertia } from '@inertiajs/inertia';
 import ConfirmationModal from './ConfirmationModal.vue';
 import LikesModal from './LikesModal.vue';
+import MentionTextArea from './MentionTextArea.vue';
 
 const props = defineProps(['comment', 'parentOffset','users'])
 onBeforeMount(() => {
@@ -152,14 +153,24 @@ const EmojiPickerClass = ref('');
 const showDeleteCommentModal = ref(false)
 const commentsLikeCount = ref(props.comment.likes_count)
 const showLikesModal = ref(false)
+const commentsComp = ref(null)
 
 const isCurrentUser = currentUser.id === props.comment.user.id
 const isPublic = usePage().url.value.includes('public/posts')
 const isParentComment = !props.comment.parent_id
 
 
+onMounted(() => {
+    let id =31
+    if(props.comment.id===id) {
+        commentsComp.value.scrollIntoView({
+            behavior:'smooth'
+        })
+    }
+})
+
 defineExpose({
-    showReplies
+    showReplies,
 })
 
 watch(() => props.comment.replies.length, (newLength, oldLength) => {
@@ -231,7 +242,7 @@ function deleteComment() {
 function handleReplyClicked(e) {
     showReplyInput.value = true
     setTimeout(() => {
-        replyInput.value.focus()
+        // replyInput.value.focus()
     }, 0)
 }
 
