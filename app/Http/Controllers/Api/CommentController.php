@@ -8,11 +8,13 @@ use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use App\Models\User;
 use App\Notifications\CommentCreatedNotification;
+use App\Notifications\MentionNotification;
 use App\Notifications\ReplyCreatedNotification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Str;
 use ReflectionClass;
 
 class CommentController extends Controller
@@ -55,6 +57,17 @@ class CommentController extends Controller
             if ($parentComment->user->id != $request->user()->id) {
                 $parentComment->user->notify(new ReplyCreatedNotification($user, $request->user(), $media));
             }
+        }
+        $mentions = [];
+
+        preg_match_all("(\@(?P<names>[a-zA-Z\-\_]+))", $comment->body, $mentions);
+
+        $mentions = collect(collect($mentions)->pop())->flatten()->unique();
+
+        foreach ($mentions as $mention) {
+            User::where('username', Str::replace('_', ' ', $mention))
+                ->first()
+                ->notify(new MentionNotification($comment));
         }
 
         return response()->json([

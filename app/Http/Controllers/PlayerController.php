@@ -107,4 +107,12 @@ class PlayerController extends Controller
             'positions' => $positions,
         ]);
     }
+    /**
+     * Display the player profile page by username.
+     */
+    public function showByUserName(Request $request, $userName)
+    {
+        $user = User::where('username' , $userName)->first();
+        return redirect()->route('player.profile',$user->id);
+    }
 }
