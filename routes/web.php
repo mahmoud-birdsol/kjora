@@ -158,7 +158,7 @@ Route::middleware([
             'show',
         ])->name('player.profile');
 
-        Route::get('player/{userName}', [
+        Route::get('player/name/{userName}', [
             PlayerController::class,
             'showByUserName',
         ])->name('player.profile.by.username');
