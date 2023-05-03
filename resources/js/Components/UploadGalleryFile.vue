@@ -260,8 +260,8 @@ let showCropModal = (file) => {
                                     :src="fileData.url" alt=""
                                     class="object-contain w-full h-full rounded-lg aspect-square">
                                 <video v-if="fileData.url.startsWith('data:video') || fileData.type.startsWith('video')"
-                                    :src="fileData.url" alt="" class="object-cover w-full h-full rounded-lg aspect-square"
-                                    controls />
+                                    :src="fileData.url" alt=""
+                                    class="object-cover w-full h-full rounded-lg aspect-square" />
                                 <button @click.prevent="removeFile(fileData)"
                                     class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
                                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
@@ -269,7 +269,8 @@ let showCropModal = (file) => {
                                     </div>
                                 </button>
                                 <button class="absolute top-0 left-0 bg-white bg-opacity-90 rounded-br-xl"
-                                    @click="showCropModal(fileData)" v-if="fileData.url.startsWith('data:image')">
+                                    @click="showCropModal(fileData)"
+                                    v-if="fileData.url.startsWith('data:image') || fileData.type.startsWith('image')">
                                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
                                         <CropIcon class="w-4" />
                                     </div>
@@ -296,4 +297,5 @@ let showCropModal = (file) => {
                 </PrimaryButton>
             </div>
         </div>
-    </Modal></template>
+    </Modal>
+</template>

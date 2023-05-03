@@ -1,19 +1,18 @@
 <template>
-    <div :class="isCurrentUser ? 'text-white' : 'text-stone-800'" class="rounded-md overflow-hidden w-full h-full">
+    <div :class="isCurrentUser ? 'text-white' : 'text-stone-800'" class="w-full h-full overflow-hidden rounded-md">
         <div @click="$emit('showGallery')" v-if="media?.mime_type.startsWith('image')">
-            <img class="object-contain w-52 max-w-full" :src="media?.original_url" alt="">
+            <img class="object-contain max-w-full w-52" :src="media?.original_url" alt="">
         </div>
         <div @click="$emit('showGallery')" v-else-if="media?.mime_type.startsWith('video')">
-            <video controls class="w-full h-full object-contain  max-w-full">
-                <source :src="media.original_url" :type="media.mime_type">
+            <video :src="media.original_url" controls class="object-contain w-full h-full max-w-full">
             </video>
         </div>
         <div v-else-if="media?.mime_type.endsWith('.document') || media?.mime_type.startsWith('application/msword') || media?.mime_type.startsWith('application/pdf')"
-            class="flex  gap-2 items-center justify-between">
+            class="flex items-center justify-between gap-2">
             <div class="flex gap-1 ">
                 <img v-if="media?.mime_type.endsWith('.document') || media?.mime_type.startsWith('application/msword')"
-                    class="w-7 h-7 object-contain" src="/images/doc.png" />
-                <img v-if="media?.mime_type.startsWith('application/pdf')" class="w-7 h-7 object-contain"
+                    class="object-contain w-7 h-7" src="/images/doc.png" />
+                <img v-if="media?.mime_type.startsWith('application/pdf')" class="object-contain w-7 h-7"
                     src="/images/pdf.png" />
                 <p class="truncate  text-start max-w-[15ch] ">{{ media.file_name }}</p>
             </div>

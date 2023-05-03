@@ -198,7 +198,8 @@ function changeFiles(file, url, id) {
                                     </div>
                                 </button>
                                 <button class="absolute top-0 left-0 bg-white rounded-br-xl bg-opacity-90"
-                                    @click.stop="showCropModal(file)" v-if="file.url.startsWith('data:image')">
+                                    @click.stop="showCropModal(file)"
+                                    v-if="file.url.startsWith('data:image') || file.type.startsWith('image')">
                                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
                                         <CropIcon class="w-4" />
                                     </div>
