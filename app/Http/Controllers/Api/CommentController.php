@@ -65,9 +65,11 @@ class CommentController extends Controller
         $mentions = collect(collect($mentions)->pop())->flatten()->unique();
 
         foreach ($mentions as $mention) {
-            User::where('username', Str::replace('_', ' ', $mention))
-                ->first()
-                ->notify(new MentionNotification($comment));
+            $user = User::where('username', Str::replace('_', ' ', $mention))
+                ->first();
+            if($user){
+                $user->notify(new MentionNotification($comment));
+            }
         }
 
         return response()->json([
