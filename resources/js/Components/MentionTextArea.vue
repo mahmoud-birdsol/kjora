@@ -52,16 +52,20 @@ const searchChars = ref("");
 const options = ref(null);
 const currentOption = ref(0);
 const suggestion = computed(() => {
-    return users.value.filter((username) =>
+    let allSuggestion = users.value.filter((username) =>
         username.username.includes(searchChars.value)
     );
+    let allMentions = props.newText.match(/@\w+/g);
+    return allSuggestion.filter((suggestion)=> !allMentions.includes(`@${suggestion.username}`))
 });
 const CommentInDiv = computed(() => {
     if (!props.newText.match(/@\w+/g)) return props.newText;
     let allComment = props.newText.split(" ");
     let comment = []
     comment = allComment.map((word) => {
-        if (users.value.some(user=> user.username === word.slice(1))) return `<span class="text-primary">@${word.slice(1)}</span>`;
+        if (checkIfUserExist(word)){
+            return `<span class="text-primary">@${word.slice(1)}</span>`;
+        } 
         else return word
     });
     return comment.join(' ');
@@ -71,7 +75,6 @@ function addToDiv(user) {
     let all = props.newText.split(" ");
     all.splice(-1, 1);
     emits('update:newText',`${all.join(" ")} @${user.username} `)
-    users.value = users.value.filter(usr=>usr.id !== user.id)
     showMentionList.value = false;
 }
 function syncScroll(e) {
@@ -81,24 +84,27 @@ function syncScroll(e) {
 function goUp(e){
     if(!showMentionList.value) return ;
     e.preventDefault();
-    console.log(currentOption.value)
-    if(currentOption.value < 0 ) currentOption.value = suggestion.value.length-1
+    console.log(currentOption.value , options.value.length)
+    if(currentOption.value <= 0 ) currentOption.value = options.value.length-1
     else currentOption.value -=1
+    console.log(currentOption.value , suggestion.value.length)
     
 }
 function goDown(e){
     if(!showMentionList.value) return ;
     e.preventDefault();
-    console.log(currentOption.value)
-    if(currentOption.value >= suggestion.value.length ) currentOption.value = 0
+    if(currentOption.value >= suggestion.value.length-1 ) currentOption.value = 0
     else currentOption.value +=1
 
     
 }
 function sendOrSelect(e){
-    if(!showMentionList.value) emits('addText')
-    addToDiv(users.value[currentOption.value])
+    if(!showMentionList.value) return emits('addText')
+    addToDiv(suggestion.value[currentOption.value])
 
+}
+function checkIfUserExist(words){
+    return users.value.some((usr)=> usr.username === words.slice(1))
 }
 async function fetchUsername() {
     await axios
