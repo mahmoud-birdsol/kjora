@@ -1,5 +1,5 @@
 {
-  "file":"File",
+  "files":"Files",
   "upload :filesData from :maximumUploadNumberOfFiles":"upload :filesData from :maximumUploadNumberOfFiles",
   "accepted": "Accepted",
   "pending": "Pending",

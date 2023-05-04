@@ -4,7 +4,7 @@
             <template v-for="(post, index) in posts " :key="post.id">
                 <FadeInTransition>
                     <Link :href="isPublic ? route('public.posts', post.id) : route('posts.show', post.id)" class="relative w-full h-full overflow-hidden rounded-lg aspect-square group">
-                        <div class="absolute top-0 right-0 px-1 py[0.5px] m-1 text-xs text-white rounded-full font-thin bg-black/50" v-if=" post.media.length > 1">{{`${post.media.length} ${$t('file')}` }} </div>
+                        <div class="absolute top-0 ltr:right-0 rtl:left-0 px-1 py[0.5px] m-1 text-xs text-white rounded-full font-thin bg-black/50" v-if=" post.media.length > 1">{{`${post.media.length} ${$t('files')}` }} </div>
                     <template v-if="post?.cover_photo?.mime_type.startsWith('image')">
                         <img :src="post?.cover_photo?.original_url" alt="" class="object-cover w-full h-full ">
                     </template>

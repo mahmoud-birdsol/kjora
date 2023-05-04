@@ -1,5 +1,5 @@
 {
-    "file":"ملف",
+    "files":"ملفات",
     "upload :filesData from :maximumUploadNumberOfFiles":"تم تحميل :filesData من  :maximumUploadNumberOfFiles",
     "accepted": "تم الموافقة",
     "pending": "انتظار",
