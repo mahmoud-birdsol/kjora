@@ -11,6 +11,7 @@ use App\Models\Conversation;
 use App\Models\Message;
 use App\Notifications\NotifyUserOfChatMessageNotification;
 use Dotenv\Validator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -65,13 +66,20 @@ class MessageController extends Controller
             }
         }
 
-        $user = $conversation->users()->whereNot('conversation_user.user_id', $request->user()->id)->first();
-
-        if ($checkIfUserIsPresentAction($user, $conversation)) {
-            event(new MessageSentEvent($user, $message));
-        } else {
-            $user->notify(new NotifyUserOfChatMessageNotification($user, $request->user(), $conversation));
+        $user = $conversation->users()->whereNot('conversation_user.user_id', $request->user()->id)
+            ->where('conversation_user.is_deleted', '!=', true)->first();
+        $checkIsDeleted = Conversation::where('id',$conversation->id)->whereHas('users', function (Builder $query)  use($user) {
+            $query->whereNot('conversation_user.user_id', $user->id)
+                ->where('conversation_user.is_deleted', '!=', true);
+        })->first();
+        if($checkIsDeleted){
+            if ($checkIfUserIsPresentAction($user, $conversation)) {
+                event(new MessageSentEvent($user, $message));
+            } else {
+                $user->notify(new NotifyUserOfChatMessageNotification($user, $request->user(), $conversation));
+            }
         }
+
 
         return MessageResource::make($message);
     }
