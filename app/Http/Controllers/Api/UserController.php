@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function getUsersNames(Request $request)
     {
-        $query = User::query();
+        $query = User::query()->where('id','!=' , $request->user()->id);
         return UserNameResource::collection($query->get());
 
     }

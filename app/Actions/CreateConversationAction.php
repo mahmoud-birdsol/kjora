@@ -13,9 +13,9 @@ class CreateConversationAction
     public function __invoke(Invitation $invitation): void
     {
         $conversation = Conversation::whereHas('users', function ($query) use ($invitation) {
-            $query->where('user_id', $invitation->invitingPlayer->id);
+            $query->where('user_id', $invitation->invitingPlayer->id)->where('is_deleted',false);
         })->whereHas('users', function ($query) use ($invitation) {
-            $query->where('user_id', $invitation->invitedPlayer->id);
+            $query->where('user_id', $invitation->invitedPlayer->id)->where('is_deleted',false);
         })->first();
 
         if (is_null($conversation)) {
