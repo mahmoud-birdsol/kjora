@@ -11,6 +11,9 @@
 
                     <template v-if="post?.cover_photo?.mime_type.startsWith('video')">
                         <video :src="post?.cover_photo?.original_url" :type="post?.cover_photo?.mime_type" class="object-cover object-left w-full h-full max-w-full mx-auto rounded-lg" />
+                        <div class="absolute inset-0 flex items-center justify-center gap-2 text-xs text-gray-100   ">
+                            <PlayIcon class="h-10  filter-[drop-shadow(1px_1px_1px_rgb(0_0_0/.4)]" />
+                        </div>
                     </template>
 
                     <div class="absolute flex items-center gap-2 text-xs text-gray-100 bottom-2 ltr:right-2 rtl:left-2 ">
@@ -49,7 +52,7 @@ import FadeInTransition from './FadeInTransition.vue';
 import { Link, usePage } from '@inertiajs/inertia-vue3';
 import { Inertia } from '@inertiajs/inertia';
 import FixedActionBtn from '@/Components/FixedActionBtn.vue';
-import { EyeIcon, XMarkIcon } from '@heroicons/vue/24/solid';
+import { EyeIcon,PlayIcon, XMarkIcon } from '@heroicons/vue/24/solid';
 import ConfirmationModal from './ConfirmationModal.vue';
 
 const props = defineProps({
