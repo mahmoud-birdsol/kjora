@@ -50,14 +50,14 @@ function removeConversation() {
                     user.username }} </span>
                 <div class="flex gap-1 sm:hidden " v-if="!user.online">
                     <p class="text-xs text-gray-300">
-                        <DateTranslation :end="conversation.latest_message.created_at" type="period" />
+                        <DateTranslation v-if="conversation" :end="conversation.latest_message.created_at" type="period" />
                     </p>
                 </div>
             </div>
             <div class="flex gap-2 -mt-2 mis-auto">
                 <div class="max-sm:hidden " v-if="!user.online">
                     <p class="text-xs text-gray-300 max-sm:scale-75">
-                        <DateTranslation :end="conversation.latest_message.created_at" type="period" />
+                        <DateTranslation v-if="conversation" :end="conversation.latest_message.created_at" type="period" />
                     </p>
                 </div>
                 <p class="flex items-center text-xs text-white rtl:flex-row-reverse" v-else>
