@@ -9,7 +9,9 @@ const props = defineProps({
     open: Boolean,
     aspectRatio: {
         default: null
-    }
+    },
+    presetMode:Object,
+    addOption:Object
 })
 
 const emit = defineEmits(['crop', 'update:open'])
@@ -67,7 +69,7 @@ function ready() {
         <SlideDownTransition>
             <div v-if="open" class="flex flex-col gap-4 p-6 bg-white border-t min-w-7xl">
                 <div v-loading="isLoading">
-                    <VuePictureCropper :boxStyle="boxStyle" :img="imageObj?.url" :options="options" @ready="ready" :key="num" />
+                    <VuePictureCropper :boxStyle="boxStyle" :img="imageObj?.url" :options="{...options,...addOption}" @ready="ready" :key="num" :presetMode="presetMode" />
                 </div>
                 <div class="flex justify-center w-full gap-4 ">
                     <button @click="getResult" class="self-center">
