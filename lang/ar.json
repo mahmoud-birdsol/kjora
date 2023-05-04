@@ -1,4 +1,5 @@
 {
+    "has been upload :filesData from 5":"لقد تم تحميل :filesData من 5",
     "accepted": "تم الموافقة",
     "pending": "انتظار",
     "canceled": "ألغيت",
@@ -13,7 +14,7 @@
     "facebook": "الارسال عبر فيس بوك",
     "please": "الرجاء ",
     "share": "مشاركة",
-    "video, images, PDFs and docs are allowed with max size(10 MB) are allowed": "يُسمح بالفيديو والصور وملفات PDF والمستندات بأقصى حجم (10 ميغابايت)",
+    "video, images, PDFs and docs are allowed with max size(84 MB) are allowed": "يُسمح بالفيديو والصور وملفات PDF والمستندات بأقصى حجم (10 ميغابايت)",
     "Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS ? If you didn't receive the SMS, we will gladly send you another": "قبل المتابعة ، هل يمكنك التحقق من رقم هاتفك عن طريق إدخال الرمز المكون من 4 أرقام الذي تم إرساله إليك في رسالة نصية قصيرة؟ إذا لم تتلق الرسالة القصيرة ، فسنرسل لك رسالة أخرى بكل سرور",
     "Lorem ipsum dolor sit amet": " حقيقة مثبتة أن المحتوى المقروء لصفحة سيلهي القارئ",
     "to": "الى ",
@@ -160,7 +161,7 @@
     "reset": "مسح الجميع",
     "All Rights Reserved": "كل الحقوق محفوظة",
     "Copyright": "حقوق النشر",
-    "video, images, PDFs and docs are allowed with max size (10 MB) are allowed": "يُسمح بالفيديو والصور وملفات PDF والمستندات بأقصى حجم (10 ميغابايت)",
+    "video, images, PDFs and docs are allowed with max size (84 MB) are allowed": "يُسمح بالفيديو والصور وملفات PDF والمستندات بأقصى حجم (84 ميغابايت)",
     "report": "الابلاغ",
     "ok": "حسنا",
     "Click on the following link to open the camera": "اضغط على الرابط التالي لفتح الكاميرا",

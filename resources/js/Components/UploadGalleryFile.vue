@@ -1,5 +1,5 @@
 <script setup>
-import { useForm } from '@inertiajs/inertia-vue3';
+import { useForm , usePage } from '@inertiajs/inertia-vue3';
 import Modal from '@/Components/Modal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { XMarkIcon, PlusCircleIcon } from '@heroicons/vue/24/outline';
@@ -9,6 +9,7 @@ import FadeInTransition from './FadeInTransition.vue';
 import InputLabel from '@/Components/InputLabel.vue'
 import CropIcon from '@/Components/Icons/CropIcon.vue';
 import Crop from '@/Components/Crop.vue';
+import { trans } from "laravel-vue-i18n";
 
 const props = defineProps({
     modelValue: {
@@ -69,6 +70,7 @@ const cropFile = ref([])
 const openCropModal = ref(false)
 const num = ref(0)
 const showAsError = ref(false);
+const maximumUploadNumberOfFiles = ref(usePage().props.value.maximumUploadNumberOfFiles);
 let postId = null
 
 
@@ -83,9 +85,10 @@ const updateFilesPreview = () => {
         return
     }
     ;
-    const newFiles = Array.from(fileInput.value.files).map(file => { return { file: file, id: _.uniqueId("f") } })
+    let newFiles = Array.from(fileInput.value.files).map(file => { return { file: file, id: _.uniqueId("f") } })
 
-    newFiles.forEach(({ file, id }, i) => {
+    newFiles = checkAvailableSize(newFiles)
+    newFiles?.forEach(({ file, id }, i) => {
         const url = URL.createObjectURL(file);
 
         filesData.value.push({
@@ -111,7 +114,15 @@ const updateFilesPreview = () => {
         // reader.readAsDataURL(file);
     })
 };
-
+function checkAvailableSize(newFiles) {
+    let totalFilesNum = newFiles.length + filesData.value.length
+    if(totalFilesNum>maximumUploadNumberOfFiles.value){
+        let availableSize = maximumUploadNumberOfFiles.value - filesData.value.length
+        if(availableSize <= 0) return;
+        if(availableSize) return newFiles = newFiles.slice(0, availableSize)
+    };
+    return newFiles
+}
 const removeFile = ({ file, url, id }) => {
     let fileDataIndex = filesData.value.findIndex((f) => f.id === id)
     filesData.value.splice(fileDataIndex, 1)
@@ -288,7 +299,8 @@ let showCropModal = (file) => {
             <div>
                 <Crop :img="cropFile" @crop="changeFiles" v-model:open="openCropModal"
                     @update:open="() => openCropModal = false" />
-                <div class="mb-2 text-sm text-center justify-self-end sha "
+                <div class="mb-2 text-sm text-red-700">{{ $t('has been upload :filesData from 5', {filesData: filesData.length}) }}</div>
+                <div class="mb-2 text-sm justify-self-end" 
                     :class="showAsError ? 'text-red-500' : 'text-primary'">
                     {{ $t('only videos and images with max size (3MB) are allowed') }}
                 </div>

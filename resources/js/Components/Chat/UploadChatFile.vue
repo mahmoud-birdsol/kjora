@@ -1,5 +1,5 @@
 <script setup>
-import { useForm } from "@inertiajs/inertia-vue3";
+import { useForm, usePage } from "@inertiajs/inertia-vue3";
 import Modal from "@/Components/Modal.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { XMarkIcon, PlusCircleIcon } from "@heroicons/vue/24/outline";
@@ -9,6 +9,7 @@ import CropIcon from "@/Components/Icons/CropIcon.vue";
 import FadeInTransition from "@/Components/FadeInTransition.vue";
 import Crop from "@/Components/Crop.vue";
 import VueEasyLightbox, { useEasyLightbox } from "vue-easy-lightbox";
+import { trans } from "laravel-vue-i18n";
 const props = defineProps({
     modelValue: {
         required: false,
@@ -65,6 +66,11 @@ const isDisabled = ref(false);
 const num = ref(0);
 const visibleRef = ref(false);
 const imgsRef = ref(null);
+const cropFile = ref([]);
+const openModal = ref(false);
+const maximumUploadNumberOfFiles = ref(
+    usePage().props.value.maximumUploadNumberOfFiles
+);
 
 const showLightBox = (url) => {
     imgsRef.value = url;
@@ -83,10 +89,11 @@ const updatePhotoPreview = () => {
     if (!photoInput.value.files.length) {
         return;
     }
-    const newFiles = Array.from(photoInput.value.files).map((file) => {
+    let newFiles = Array.from(photoInput.value.files).map((file) => {
         return { file: file, id: _.uniqueId("f") };
     });
-    newFiles.forEach(({ file, id }, i) => {
+    newFiles = checkAvailableSize(newFiles);
+    newFiles?.forEach(({ file, id }, i) => {
         const url = URL.createObjectURL(file);
 
         filesData.value.push({
@@ -97,7 +104,6 @@ const updatePhotoPreview = () => {
             id: id,
         });
         showPreview.value = true;
-
 
         // const reader = new FileReader();
         // reader.onload = (e) => {
@@ -112,8 +118,18 @@ const updatePhotoPreview = () => {
         // };
         // reader.readAsDataURL(file);
     });
-
 };
+
+function checkAvailableSize(newFiles) {
+    let totalFilesNum = newFiles.length + filesData.value.length;
+    if (totalFilesNum > maximumUploadNumberOfFiles.value) {
+        let availableSize =
+            maximumUploadNumberOfFiles.value - filesData.value.length;
+        if (availableSize <= 0) return;
+        if (availableSize) return (newFiles = newFiles.slice(0, availableSize));
+    }
+    return newFiles;
+}
 
 const removePhoto = (i) => {
     if ((cropFile.value.id, filesData.value[i].id)) {
@@ -142,8 +158,6 @@ function reset(e) {
     num.value += 1;
     emit("close");
 }
-let cropFile = ref([]);
-let openModal = ref(false);
 
 let showCropModal = (file) => {
     cropFile.value = file;
@@ -158,7 +172,14 @@ function changeFiles(file, url, id) {
 </script>
 
 <template>
-    <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="reset" :key="num">
+    <Modal
+        :show="show"
+        :max-width="maxWidth"
+        :closeable="closeable"
+        :position="position"
+        @close="reset"
+        :key="num"
+    >
         <div class="flex min-h-[500px] flex-col justify-between p-6 pt-0">
             <div class="flex justify-center">
                 <h2 class="text-xl font-bold uppercase text-primary">
@@ -169,83 +190,179 @@ function changeFiles(file, url, id) {
             <div class="flex flex-col items-center h-full gap-2 py-8">
                 <!-- input -->
                 <div class="w-full max-w-[300px] sm:px-20">
-                    <input ref="photoInput" type="file" multiple accept="image/*,video/*,.pdf,.doc,.docx" class="hidden"
-                        @change="updatePhotoPreview" />
+                    <input
+                        ref="photoInput"
+                        type="file"
+                        multiple
+                        accept="image/*,video/*,.pdf,.doc,.docx"
+                        class="hidden"
+                        @change="updatePhotoPreview"
+                    />
                     <div class="flex items-center justify-center mb-6">
-                        <button type="button" :disabled="isDisabled"
+                        <button
+                            type="button"
+                            :disabled="isDisabled"
                             class="inline-flex items-center p-4 text-white bg-black border border-transparent rounded-full shadow-sm enabled: enabled:hover:bg-black enabled:focus:outline-none enabled:focus:ring-2 enabled:focus:ring-black enabled:focus:ring-offset-2 disabled:bg-stone-500"
-                            @click.prevent="selectNewPhoto">
+                            @click.prevent="selectNewPhoto"
+                        >
                             <PlusCircleIcon class="w-5 h-5" />
                         </button>
                     </div>
                 </div>
                 <!-- preview -->
-                <div v-show="showPreview" class="relative overflow-auto hideScrollBar max-h-80" v-loading="isLoading">
+                <div
+                    v-show="showPreview"
+                    class="relative overflow-auto hideScrollBar max-h-80"
+                    v-loading="isLoading"
+                >
                     <div class="relative grid grid-cols-3 gap-2">
-                        <template v-for="(file, index) in filesData" :key="index">
-                            <div v-if="file.url.startsWith('data:image') || file.type.startsWith('image') ||
-                                file.url.startsWith('data:video') || file.type.startsWith('video')
-                                " class="relative">
-                                <img v-if="file.url.startsWith('data:image') || file.type.startsWith('image')"
-                                    :src="file.url" alt="" class="object-contain w-full h-full rounded-lg aspect-square"
-                                    @click.stop="showLightBox(file.url)" />
-                                <video v-if="file.url.startsWith('data:video') || file.type.startsWith('video')"
-                                    :src="file.url" alt="" class="object-cover w-full h-full rounded-lg aspect-square" />
-                                <button @click.prevent.stop="removePhoto(index)"
-                                    class="absolute top-0 right-0 bg-white rounded-bl-xl bg-opacity-90">
-                                    <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
-                                        <XMarkIcon class="w-5 h-5 text-stone-800" />
+                        <template
+                            v-for="(file, index) in filesData"
+                            :key="index"
+                        >
+                            <div
+                                v-if="
+                                    file.url.startsWith('data:image') ||
+                                    file.type.startsWith('image') ||
+                                    file.url.startsWith('data:video') ||
+                                    file.type.startsWith('video')
+                                "
+                                class="relative"
+                            >
+                                <img
+                                    v-if="
+                                        file.url.startsWith('data:image') ||
+                                        file.type.startsWith('image')
+                                    "
+                                    :src="file.url"
+                                    alt=""
+                                    class="object-contain w-full h-full rounded-lg aspect-square"
+                                    @click.stop="showLightBox(file.url)"
+                                />
+                                <video
+                                    v-if="
+                                        file.url.startsWith('data:video') ||
+                                        file.type.startsWith('video')
+                                    "
+                                    :src="file.url"
+                                    alt=""
+                                    class="object-cover w-full h-full rounded-lg aspect-square"
+                                />
+                                <button
+                                    @click.prevent.stop="removePhoto(index)"
+                                    class="absolute top-0 right-0 bg-white rounded-bl-xl bg-opacity-90"
+                                >
+                                    <div
+                                        class="flex flex-col items-start justify-center h-full p-1 opacity-100"
+                                    >
+                                        <XMarkIcon
+                                            class="w-5 h-5 text-stone-800"
+                                        />
                                     </div>
                                 </button>
-                                <button class="absolute top-0 left-0 bg-white rounded-br-xl bg-opacity-90"
+                                <button
+                                    class="absolute top-0 left-0 bg-white rounded-br-xl bg-opacity-90"
                                     @click.stop="showCropModal(file)"
-                                    v-if="file.url.startsWith('data:image') || file.type.startsWith('image')">
-                                    <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
+                                    v-if="
+                                        file.url.startsWith('data:image') ||
+                                        file.type.startsWith('image')
+                                    "
+                                >
+                                    <div
+                                        class="flex flex-col items-start justify-center h-full p-1 opacity-100"
+                                    >
                                         <CropIcon class="w-4" />
                                     </div>
                                 </button>
                             </div>
-                            <div v-else-if="file.url.startsWith('data:application/pdf') || file.type.startsWith('application/pdf')
-                                " class="relative flex flex-col gap-4">
-                                <img class="mx-auto h-36" src="/images/pdf.png" />
-                                <p class="text-xs text-center text-gray-400 truncate">
+                            <div
+                                v-else-if="
+                                    file.url.startsWith(
+                                        'data:application/pdf'
+                                    ) || file.type.startsWith('application/pdf')
+                                "
+                                class="relative flex flex-col gap-4"
+                            >
+                                <img
+                                    class="mx-auto h-36"
+                                    src="/images/pdf.png"
+                                />
+                                <p
+                                    class="text-xs text-center text-gray-400 truncate"
+                                >
                                     {{ file.name }}
                                 </p>
-                                <button @click.prevent="removePhoto(index)"
-                                    class="absolute top-0 right-0 bg-white rounded-bl-xl bg-opacity-90">
-                                    <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
-                                        <XMarkIcon class="w-5 h-5 text-stone-800" />
+                                <button
+                                    @click.prevent="removePhoto(index)"
+                                    class="absolute top-0 right-0 bg-white rounded-bl-xl bg-opacity-90"
+                                >
+                                    <div
+                                        class="flex flex-col items-start justify-center h-full p-1 opacity-100"
+                                    >
+                                        <XMarkIcon
+                                            class="w-5 h-5 text-stone-800"
+                                        />
                                     </div>
                                 </button>
                             </div>
-                            <div v-else-if="file.type.endsWith('.document') ||
-                                file.type.startsWith('application/msword')
-                                " class="relative flex flex-col gap-4">
-                                <img class="mx-auto h-36" src="/images/doc.png" />
-                                <p class="text-xs text-center text-gray-400 truncate">
+                            <div
+                                v-else-if="
+                                    file.type.endsWith('.document') ||
+                                    file.type.startsWith('application/msword')
+                                "
+                                class="relative flex flex-col gap-4"
+                            >
+                                <img
+                                    class="mx-auto h-36"
+                                    src="/images/doc.png"
+                                />
+                                <p
+                                    class="text-xs text-center text-gray-400 truncate"
+                                >
                                     {{ file.name }}
                                 </p>
-                                <button @click.prevent="removePhoto(index)"
-                                    class="absolute top-0 right-0 bg-white rounded-bl-xl bg-opacity-90">
-                                    <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
-                                        <XMarkIcon class="w-5 h-5 text-stone-800" />
+                                <button
+                                    @click.prevent="removePhoto(index)"
+                                    class="absolute top-0 right-0 bg-white rounded-bl-xl bg-opacity-90"
+                                >
+                                    <div
+                                        class="flex flex-col items-start justify-center h-full p-1 opacity-100"
+                                    >
+                                        <XMarkIcon
+                                            class="w-5 h-5 text-stone-800"
+                                        />
                                     </div>
                                 </button>
                             </div>
                         </template>
 
                         <FadeInTransition>
-                            <div v-if="isLoading"
-                                class="absolute inset-0 z-20 grid w-full h-full p-4 place-content-center bg-stone-400/50">
-                            </div>
+                            <div
+                                v-if="isLoading"
+                                class="absolute inset-0 z-20 grid w-full h-full p-4 place-content-center bg-stone-400/50"
+                            ></div>
                         </FadeInTransition>
                     </div>
                 </div>
             </div>
             <div>
-                <Crop :img="cropFile" @crop="changeFiles" v-model:open="openModal"
-                    @update:open="() => (openModal = false)" />
-                <div class="mb-2 text-sm text-center justify-self-end text-primary">
+                <Crop
+                    :img="cropFile"
+                    @crop="changeFiles"
+                    v-model:open="openModal"
+                    @update:open="() => (openModal = false)"
+                />
+                <div class="mb-2 text-sm text-red-700">
+                    {{
+                        $t("has been upload :filesData from 5", {
+                            filesData: filesData.length,
+                        })
+                    }}
+                </div>
+
+                <div
+                    class="mb-2 text-sm justify-self-end text-primary"
+                >
                     {{
                         $t(
                             "video, images, PDFs and docs are allowed with max size(84 MB) are allowed"
@@ -255,11 +372,14 @@ function changeFiles(file, url, id) {
                 <PrimaryButton @click.prevent="upload" :disabled="isDisabled">
                     {{ $t("upload") }}
                 </PrimaryButton>
-                <!-- <InputError class="mt-2" :message="form.errors.image" /> -->
             </div>
         </div>
         <Teleport to="body">
-            <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" @hide="hideLightBox"></vue-easy-lightbox>
+            <vue-easy-lightbox
+                :visible="visibleRef"
+                :imgs="imgsRef"
+                @hide="hideLightBox"
+            ></vue-easy-lightbox>
         </Teleport>
     </Modal>
 </template>
