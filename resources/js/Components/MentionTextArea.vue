@@ -53,7 +53,7 @@ const options = ref(null);
 const currentOption = ref(0);
 const suggestion = computed(() => {
     let allSuggestion = users.value.filter((username) =>
-        username.username.includes(searchChars.value)
+        username.username.toLowerCase().includes(searchChars.value.toLowerCase())
     );
     let allMentions = props.newText.match(/@\w+/g);
     return allSuggestion.filter((suggestion)=> !allMentions.includes(`@${suggestion.username}`))
