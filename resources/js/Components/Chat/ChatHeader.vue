@@ -11,6 +11,7 @@ import {
 } from '@heroicons/vue/24/outline'
 import TextInput from "../TextInput.vue";
 import { Link } from "@inertiajs/inertia-vue3";
+import DateTranslation from "../DateTranslation.vue";
 const props = defineProps({
     conversation: {
         required: true,
@@ -64,6 +65,10 @@ watch(() => chat.search, () => {
                     <Link class="text-xs leading-none text-neutral-500" :href="route('player.profile', player.id)">
                     @{{ player.username }}
                     </Link>
+                    <div class="text-xs mt-1">
+                        <DateTranslation :end="player.last_seen_at" type="period" />
+                    </div>
+
                 </div>
             </div>
             <div class="flex items-center gap-4 p-4">
