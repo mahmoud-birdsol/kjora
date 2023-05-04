@@ -64,7 +64,7 @@ const CommentInDiv = computed(() => {
     let comment = []
     comment = allComment.map((word) => {
         if (checkIfUserExist(word)){
-            return `<span class="text-primary">@${word.slice(1)}</span>`;
+            return `<span class="text-primary" dir="ltr">@${word.slice(1)}</span>`;
         } 
         else return word
     });

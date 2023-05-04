@@ -198,7 +198,7 @@ const handleBody = computed(()=>{
     return allWords.map(word =>{
         if(!word.startsWith('@')) return word;
         if(!props.users.some(user => user.username === word.slice(1)  )) return `${word}`
-        else return `<a href="/player/name/${word.slice(1)}" class="text-primary">${word}</a>`
+        else return `<a href="/player/name/${word.slice(1)}" class="text-primary" dir="ltr">${word}</a>`
     }).join(' ')
 })
 function toggleRepliesView() {
