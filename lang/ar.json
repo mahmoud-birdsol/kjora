@@ -1,5 +1,5 @@
 {
-    "has been upload :filesData from :maximumUploadNumberOfFiles":"لقد تم تحميل :filesData من  :maximumUploadNumberOfFiles",
+    "upload :filesData from :maximumUploadNumberOfFiles":"تم تحميل :filesData من  :maximumUploadNumberOfFiles",
     "accepted": "تم الموافقة",
     "pending": "انتظار",
     "canceled": "ألغيت",

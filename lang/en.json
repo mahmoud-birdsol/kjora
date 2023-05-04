@@ -1,5 +1,5 @@
 {
-  "has been upload :filesData from :maximumUploadNumberOfFiles":"has been upload :filesData from :maximumUploadNumberOfFiles",
+  "upload :filesData from :maximumUploadNumberOfFiles":"upload :filesData from :maximumUploadNumberOfFiles",
   "accepted": "Accepted",
   "pending": "Pending",
   "canceled": "Canceled",

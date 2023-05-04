@@ -354,7 +354,7 @@ function changeFiles(file, url, id) {
                 />
                 <div class="mb-2 text-sm text-red-700">
                     {{
-                        $t("has been upload :filesData from :maximumUploadNumberOfFiles", {
+                        $t("uploaded :filesData from :maximumUploadNumberOfFiles", {
                             filesData: filesData.length,
                             maximumUploadNumberOfFiles: maximumUploadNumberOfFiles,
                         })
