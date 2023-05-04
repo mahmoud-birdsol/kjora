@@ -83,7 +83,6 @@ const props = defineProps([
 }
 
 .el-picker__popper {
-    background-color: black !important;
     color: green !important;
 }
 

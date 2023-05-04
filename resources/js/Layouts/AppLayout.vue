@@ -113,7 +113,6 @@ const errorCallback = (error) => {
 }
 
 .el-picker__popper {
-    background-color: black !important;
     color: green !important;
 }
 

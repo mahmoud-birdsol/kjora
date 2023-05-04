@@ -136,7 +136,7 @@ const querySearch = (queryString, cb) => {
                                 <div class="my-6">
                                     <InputLabel>{{ $t('Time') }}</InputLabel>
                                     <div class="px-4">
-                                        <ElTimePicker placeholder="Pick the time " format="HH:mm" v-model="form.time" :disabled-hours="disabledHours" />
+                                        <ElTimePicker placeholder="Pick the time " format="HH:mm" v-model="form.time" :disabled-hours="disabledHours" popper-class="bg-white" />
                                     </div>
                                     <InputError class="mt-2" :message="form.errors.time" />
                                 </div>
@@ -220,12 +220,10 @@ const querySearch = (queryString, cb) => {
 }
 
 .el-picker__popper {
-    background-color: black !important;
     color: green !important;
 }
 
 .el-picker-panel {
-    background-color: black !important;
     color: green !important;
     font-weight: bold !important;
 }
