@@ -299,7 +299,7 @@ let showCropModal = (file) => {
             <div>
                 <Crop :img="cropFile" @crop="changeFiles" v-model:open="openCropModal"
                     @update:open="() => openCropModal = false" />
-                <div class="mb-2 text-sm text-red-700">{{ $t('has been upload :filesData from 5', {filesData: filesData.length}) }}</div>
+                <div class="mb-2 text-sm text-red-700">{{ $t('has been upload :filesData from :maximumUploadNumberOfFiles', {filesData: filesData.length , maximumUploadNumberOfFiles:maximumUploadNumberOfFiles}) }}</div>
                 <div class="mb-2 text-sm justify-self-end" 
                     :class="showAsError ? 'text-red-500' : 'text-primary'">
                     {{ $t('only videos and images with max size (3MB) are allowed') }}
