@@ -360,7 +360,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
      */
     public function conversations(): BelongsToMany
     {
-        return $this->belongsToMany(Conversation::class);
+        return $this->belongsToMany(Conversation::class)->withPivot(['is_deleted','user_id']);
     }
 
     /**
@@ -517,12 +517,16 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     {
         return Attribute::make(
             get: function () {
-                $conversation = $this->messages()->latest()->first()?->conversation;
+                $conversation = $this->messages()->with('conversation')->whereHas('conversation.users', function($q){
+                    $q->where('is_deleted',false)->whereNot('user_id',$this->id);
+                })->latest()->first()?->conversation;
 
                 if (is_null($conversation)) {
-                    $conversation = $this->conversations()->first();
+                    $conversation = $this->conversations()->whereHas('users', function (Builder $query)  {
+                        $query->whereNot('conversation_user.user_id', request()->user()->id)
+                            ->where('conversation_user.is_deleted', '!=', true);
+                    })->first();
                 }
-
                 return $conversation;
             },
         );

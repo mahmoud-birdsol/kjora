@@ -59,7 +59,7 @@ class ChatController extends Controller
             })->get();
 
         return Inertia::render('Chat/Show', [
-            'conversation' => $conversation,
+            'conversation' => $conversation->load('users'),
             'player' => $conversation->users()->whereNot('conversation_user.user_id', request()->user()->id)->first(),
             'conversations' => $conversations,
             'last_online_at' => request()->user()->messages()?->orderBy('created_at', 'DESC')?->first()?->created_at,

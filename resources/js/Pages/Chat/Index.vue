@@ -14,19 +14,27 @@ const acceptChatRegulations = () => {
         preserveState: true,
         preserveScroll: true,
         onSuccess: () => {
-            Inertia.get(route('chats.show', user.latest_conversation.id),{}, {
-                preserveState:false
+            if(user.latest_conversation)
+            {
+                Inertia.get(route('chats.show', user.latest_conversation.id),{}, {
+                    preserveState:false
 
-            })
+                })
+            }
+
         }
     });
 }
 
 onMounted(() => {
     if (user.accepted_chat_regulations_at != null) {
-        Inertia.get(route('chats.show', user.latest_conversation.id),{}, {
-            preserveState:false
-        })
+        if(user.latest_conversation)
+        {
+            Inertia.get(route('chats.show', user.latest_conversation.id),{}, {
+                preserveState:false
+            })
+        }
+
     }
 })
 
@@ -65,6 +73,16 @@ provide('conversation', null);
 
                 </div>
             </template>
+            <template #main v-else>
+                <div class="flex flex-col gap-4 p-8">
+                    <h2 class="text-2xl font-bold capitalize">{{$t('Welcome to chat!')}}</h2>
+
+                    <p class="text-sm font-bold">{{$t("Sorry you haveot any conversation yet")}} .
+                    </p>
+
+                </div>
+            </template>
+
             <template #footer v-if="user.accepted_chat_regulations_at == null">
                 <div class="grid p-10 bg-white place-items-center rounded-2xl">
                     <button class="py-2 text-white bg-black px-28 rounded-3xl" v-if="user.latest_conversation" @click="acceptChatRegulations">{{$t('ok')}}</button>

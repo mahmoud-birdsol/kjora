@@ -30,7 +30,7 @@ class Conversation extends Model implements Reportable
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withPivot(['is_deleted','user_id']);
     }
 
     /**

@@ -52,7 +52,7 @@ class MentionNotification extends Notification
         return (new MailMessage)
             ->subject("You were mentioned in text by {$this->hasMentions->user->name}")
             ->line($this->hasMentions->body)
-            ->action('View', $this->hasMentions->url())
+            ->action('View', $this->hasMentions->url($this->hasMentions->id))
             ->line('Thank you for using our application!');
     }
 
@@ -70,7 +70,7 @@ class MentionNotification extends Notification
             title: __('Like Notification', [], $notifiable->locale),
             subtitle: $this->hasMentions->user->username.__(' mentioned you in comment ', [], $notifiable->locale),
             actionData: new RouteActionData(
-                route: $this->hasMentions->url(),
+                route: $this->hasMentions->url($this->hasMentions->id),
                 text: __('View ', [], $notifiable->locale),
             ),
             userAvatar: $notifiable->avatar_url,

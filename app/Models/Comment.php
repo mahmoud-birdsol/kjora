@@ -75,9 +75,9 @@ class Comment extends Model implements Reportable, Likeable , HasMentions
         return $this->user;
     }
 
-    public function url(): string
+    public function url($commentId = null): string
     {
-        return url(route('posts.show', $this->commentable));
+        return url(route('posts.show', ['post'=>$this->commentable->id ,'commentId'=> $commentId] ));
     }
 
     public function reportedUser()
