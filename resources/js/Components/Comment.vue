@@ -1,6 +1,6 @@
 <template>
     <!-- comment  -->
-    <div ref="commentsComp" :data-comment-id="comment.id" class="grid grid-cols-[min-content_1fr] w-full justify-start gap-4 " :class="comment.parent_id ? 'bg-white' : ''" >
+    <div ref="commentsComp" :data-comment-id="comment.id" class="grid grid-cols-[min-content_1fr] w-full justify-start gap-4  px-6 pt-2" :class="comment.parent_id ? 'bg-white' : ''" >
         <!-- image col 1 -->
         <div class="min-w-max z-[10] relative  " :class="guidesClassesAfter2">
             <Avatar :id="comment.user.id" :username="comment.user.name" :image-url="comment.user.avatar_url" :size="'md'" :border="true" border-color="primary" />
@@ -161,13 +161,13 @@ const isParentComment = !props.comment.parent_id
 
 
 onMounted(() => {
-    // let id =31
     let id =route().params?.commentId
-    console.log(id);
     if(props.comment.id===+id) {
         commentsComp.value.scrollIntoView({
-            behavior:'smooth'
+            behavior:'smooth',
+            block:'center'
         })
+        commentsComp.value.classList.add('first-appear')
     }
 })
 

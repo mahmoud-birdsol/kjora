@@ -8,7 +8,9 @@
             <span v-html="CommentInDiv" />
         </div>
         <textarea
-            @keypress.enter.exact.prevent="(e) =>$emit('addText')"
+            @keypress.enter.exact.prevent="sendOrSelect"
+            @keydown.up.exact="goUp"
+            @keydown.down.exact="goDown"
             @scroll="syncScroll"
             :value="newText"
             @input = "$emit('update:newText',$event.target.value)"
@@ -17,13 +19,15 @@
         >
         </textarea>
         <ul
-            class="absolute flex flex-col text-center bg-white border divide-y rounded bottom-full rectangle w-full"
+            class="absolute flex flex-col text-center bg-white border divide-y rounded bottom-full w-full max-h-[10vh] overflow-auto hideScrollBar"
             v-if="showMentionList && suggestion.length"
         >
             <li
-                v-for="user in suggestion"
+                v-for="(user, i) in suggestion"
                 class="p-1 text-sm transition-colors duration-300 cursor-pointer text-primary hover:bg-stone-300"
+                :class="currentOption=== i && 'bg-primary text-white'"
                 @click="addToDiv(user)"
+                ref="options"
             >
                 {{ user.username }}
             </li>
@@ -32,7 +36,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import axios from "axios";
 const props = defineProps({
     newText:String,
@@ -45,6 +49,8 @@ const showMentionList = ref(false);
 const customTextArea = ref();
 const users = ref([]);
 const searchChars = ref("");
+const options = ref(null);
+const currentOption = ref(0);
 const suggestion = computed(() => {
     return users.value.filter((username) =>
         username.username.includes(searchChars.value)
@@ -64,14 +70,36 @@ const CommentInDiv = computed(() => {
 function addToDiv(user) {
     let all = props.newText.split(" ");
     all.splice(-1, 1);
-    emits('update:newText',`${all.join(" ")}@${user.username} `)
+    emits('update:newText',`${all.join(" ")} @${user.username} `)
+    users.value = users.value.filter(usr=>usr.id !== user.id)
     showMentionList.value = false;
 }
 function syncScroll(e) {
     if (!customTextArea) return;
     customTextArea.value.scrollTop = e.target.scrollTop;
 }
+function goUp(e){
+    if(!showMentionList.value) return ;
+    e.preventDefault();
+    console.log(currentOption.value)
+    if(currentOption.value < 0 ) currentOption.value = suggestion.value.length-1
+    else currentOption.value -=1
+    
+}
+function goDown(e){
+    if(!showMentionList.value) return ;
+    e.preventDefault();
+    console.log(currentOption.value)
+    if(currentOption.value >= suggestion.value.length ) currentOption.value = 0
+    else currentOption.value +=1
 
+    
+}
+function sendOrSelect(e){
+    if(!showMentionList.value) emits('addText')
+    addToDiv(users.value[currentOption.value])
+
+}
 async function fetchUsername() {
     await axios
         .get(route("api.user.get.users.name"))
@@ -82,7 +110,6 @@ watch(
     (newVal, oldVal) => {
         let lastWord = newVal.split(" ").slice(-1).join();
         if (lastWord.match(/@\w+/g)) {
-            fetchUsername();
             searchChars.value = lastWord.substring(1);
             showMentionList.value = true;
         }else{
@@ -90,5 +117,9 @@ watch(
         }
     }
 );
+watch(currentOption,()=>{
+    options.value[currentOption.value].scrollIntoView()
+})
+onMounted(()=>fetchUsername())
 </script>
 

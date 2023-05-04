@@ -198,11 +198,6 @@ const commentsContainerOffset = computed(() => {
 onMounted(() => {
     getPostComments();
     fetchUsername();
-    if(true) {
-        // let section = document.getElementById('27')
-        console.log(commentsComps.value)
-        // section.scrollIntoView()
-    }
 });
 
 function getPostComments() {
@@ -215,7 +210,7 @@ function getPostComments() {
         })
         .then((res) => {
             postComments.value = res.data.data;
-            // scrollToCommentsBottom();
+            if(!route().params?.commentId) scrollToCommentsBottom();
         })
         .catch((err) => console.error(err));
 }

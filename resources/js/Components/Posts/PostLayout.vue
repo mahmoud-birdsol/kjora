@@ -37,7 +37,7 @@
                 <!-- header -->
                 <slot name="commentsCount"></slot>
                 <!-- comments -->
-                <div class="self-stretch h-full p-3 px-6 ">
+                <div class="self-stretch h-full py-3">
                     <slot name="postComments"></slot>
                 </div>
                 <!-- new comment form -->
