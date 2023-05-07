@@ -132,7 +132,7 @@ function calcShouldRate() {
                         <span class="flex items-center gap-1">
                             <template v-for="i in 5">
                                 <StarIconFilled
-                                    class="h-5 w-5"
+                                    class="w-5 h-5"
                                     v-if="player.rating >= i"
                                     :class="
                                         state == 'Free'
@@ -141,7 +141,7 @@ function calcShouldRate() {
                                     "
                                 />
                                 <StarIconOutline
-                                    class="h-5 w-5"
+                                    class="w-5 h-5"
                                     :class="
                                         state == 'Free'
                                             ? 'text-gold'
@@ -153,7 +153,7 @@ function calcShouldRate() {
                         </span>
 
                         <span
-                            class="text-md ml-2 font-bold"
+                            class="ml-2 font-bold text-md"
                             :class="
                                 state == 'Free' ? 'text-gold' : 'text-primary'
                             "
@@ -165,7 +165,7 @@ function calcShouldRate() {
             <!-- name and userName -->
             <div class="flex flex-col items-center">
                 <div
-                    class="flex items-center gap-1 capitalize text-white"
+                    class="flex items-center gap-1 text-white capitalize"
                     v-if="!invitation.state && !isHiring"
                 >
                     <span>
@@ -182,12 +182,14 @@ function calcShouldRate() {
                         />
                     </span>
                 </div>
+                <!-- hiring  -->
                 <div
                     v-if="isHiring"
-                    class="flex items-center gap-1 capitalize text-white"
+                    class="flex items-center gap-1 text-white capitalize"
                 >
                     <p
-                        v-if="invitation.state == null"
+                        v-if="invitation.state === null &&
+                        dayjs(props.invitation?.date).diff(dayjs(), 'hour') > 0"
                         class="text-center text-[10px] text-stone-300/70"
                     >
                         {{ $t("pending") }}
@@ -198,7 +200,7 @@ function calcShouldRate() {
                         />
                     </p>
                     <p
-                        v-if="invitation.state == 'accepted'"
+                        v-if="invitation.state === 'accepted'"
                         class="text-center text-[10px] text-stone-300/70"
                     >
                         {{ $t("accepted") }}
@@ -209,7 +211,7 @@ function calcShouldRate() {
                         />
                     </p>
                     <p
-                        v-if="invitation.state == 'declined'"
+                        v-if="invitation.state === 'declined'"
                         class="text-center text-[10px] text-stone-300/70"
                     >
                         {{ $t("declined") }}
@@ -220,7 +222,8 @@ function calcShouldRate() {
                         />
                     </p>
                     <p
-                        v-if="invitation.state == 'cancelled'"
+                        v-if="invitation.state === 'cancelled'|| (invitation.state === null &&
+                        dayjs(props.invitation?.date).diff(dayjs(), 'hour') <= 0)"
                         class="text-center text-[10px] text-stone-300/70"
                     >
                         {{ $t("canceled") }}
@@ -231,27 +234,55 @@ function calcShouldRate() {
                         />
                     </p>
                 </div>
-                <p
-                    class="text-center text-[10px] text-stone-300/70"
-                    v-if="invitation.state && !isHiring"
-                >
-                    {{ $t("match in") }}
-                    <DateTranslation
-                        format="DD MMMM YYYY, hh:mm A"
-                        :start="invitation.date"
-                    />
-                </p>
-                <!-- invitation date -->
-                <p
-                    v-else-if="!isHiring && !invitation.state"
-                    class="text-center text-[10px] text-stone-300/70"
-                >
-                    {{ $t("Wants to invite you for a match in") }}
-                    <DateTranslation
-                        format="DD MMMM YYYY, hh:mm A"
-                        :start="invitation.date"
-                    />
-                </p>
+                <!-- not hiring -->
+                <template v-if="!isHiring">
+                    <p
+                        class="text-center text-[10px] text-stone-300/70"
+                        v-if="invitation.state==='accepted'"
+                    >
+                        {{ $t("match in") }}
+                        <DateTranslation
+                            format="DD MMMM YYYY, hh:mm A"
+                            :start="invitation.date"
+                        />
+                    </p>
+                    <p
+                        v-if="invitation.state === 'declined'"
+                        class="text-center text-[10px] text-stone-300/70"
+                    >
+                        {{ $t("declined") }}
+                        {{ $t("match in") }}
+                        <DateTranslation
+                            format="DD MMMM YYYY, hh:mm A"
+                            :start="invitation.date"
+                        />
+                    </p>
+
+                    <p
+                        v-if="(invitation.state === 'cancelled') || (invitation.state === null &&
+                        dayjs(props.invitation?.date).diff(dayjs(), 'hour') <= 0)"
+                        class="text-center text-[10px] text-stone-300/70"
+                    >
+                        {{ $t("canceled") }}
+                        {{ $t("match in") }}
+                        <DateTranslation
+                            format="DD MMMM YYYY, hh:mm A"
+                            :start="invitation.date"
+                        />
+                    </p>
+                    <!-- invitation date -->
+                    <p
+                        v-if="invitation.state === null &&
+                        dayjs(props.invitation?.date).diff(dayjs(), 'hour') > 0"
+                        class="text-center text-[10px] text-stone-300/70"
+                    >
+                        {{ $t("Wants to invite you for a match in") }}
+                        <DateTranslation
+                            format="DD MMMM YYYY, hh:mm A"
+                            :start="invitation.date"
+                        />
+                    </p>
+                </template>
             </div>
             <!-- invite user location -->
 
@@ -273,7 +304,7 @@ function calcShouldRate() {
                             anchorPoint: 'TOP_RIGHT',
                         }"
                     >
-                        <div class="rounded-md bg-white/90 text-center">
+                        <div class="text-center rounded-md bg-white/90">
                             <div class="p-2 text-xs font-bold">
                                 {{ invitation.stadium.name }}
                             </div>
@@ -294,13 +325,13 @@ function calcShouldRate() {
                 >
                     <button
                         @click="decline"
-                        class="flex items-center justify-center rounded-full bg-stone-100 px-2 py-2 shadow-sm enabled:hover:bg-opacity-90 enabled:active:scale-95"
+                        class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95"
                     >
                         <XMarkIcon class="w-6 text-red-600" />
                     </button>
                     <button
                         @click="accept"
-                        class="flex items-center justify-center rounded-full bg-stone-100 px-2 py-2 shadow-sm enabled:hover:bg-opacity-90 enabled:active:scale-95"
+                        class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95"
                     >
                         <CheckIcon class="w-6 text-green-600" />
                     </button>
@@ -310,25 +341,25 @@ function calcShouldRate() {
                     <button
                         @click="cancel"
                         v-if="
-                            invitation.state == null &&
+                            invitation.state === null &&
                             isHiring &&
                             dayjs(props.invitation?.date).diff(
                                 dayjs(),
                                 'hour'
                             ) > 0
                         "
-                        class="flex w-full items-center justify-center rounded-full bg-stone-100 px-4 py-2 shadow-sm enabled:hover:bg-opacity-90 enabled:active:scale-95"
+                        class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95"
                     >
                         {{ $t("cancel") }}
                     </button>
                 </div>
                 <div
-                    v-if="invitation.state == 'declined'"
+                    v-if="invitation.state === 'declined'"
                     class="flex justify-center"
                 >
                     <button
                         :disabled="true"
-                        class="flex items-center justify-center rounded-full bg-stone-200 px-2 py-2 shadow-sm enabled:hover:bg-opacity-90 enabled:active:scale-95"
+                        class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-200 enabled:hover:bg-opacity-90 enabled:active:scale-95"
                     >
                         <XMarkIcon class="w-6 text-red-600" />
                     </button>
@@ -336,15 +367,16 @@ function calcShouldRate() {
 
                 <Link
                     :href="route('home')"
-                    v-if="invitation.state == 'cancelled' && !shouldRate"
-                    class="flex w-full items-center justify-center rounded-full bg-stone-100 px-4 py-2 shadow-sm enabled:hover:bg-opacity-90 enabled:active:scale-95"
+                    v-if="(invitation.state === 'cancelled' && !shouldRate) || (invitation.state == null &&
+                        dayjs(props.invitation?.date).diff(dayjs(), 'hour') <= 0)  "
+                    class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95"
                 >
                     {{ $t("canceled") }}
                 </Link>
                 <Link
                     :href="route('chats.index')"
-                    v-if="invitation.state == 'accepted' && !shouldRate"
-                    class="flex w-full items-center justify-center rounded-full bg-stone-100 px-4 py-2 shadow-sm enabled:hover:bg-opacity-90 enabled:active:scale-95"
+                    v-if="invitation.state === 'accepted' && !shouldRate"
+                    class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95"
                 >
                     {{ $t("chat") }}
                 </Link>
@@ -353,8 +385,8 @@ function calcShouldRate() {
                     :href="
                         route('player.review.show', invitation.reviews[0].id)
                     "
-                    v-if="invitation.state == 'accepted' && shouldRate"
-                    class="flex w-full items-center justify-center rounded-full bg-stone-100 px-4 py-2 shadow-sm enabled:hover:bg-opacity-90 enabled:active:scale-95"
+                    v-if="invitation.state === 'accepted' && shouldRate"
+                    class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95"
                 >
                     {{ $t("rate") }}
                 </Link>
