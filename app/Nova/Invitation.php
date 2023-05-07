@@ -83,7 +83,7 @@ class Invitation extends Resource
             Select::make(__('State'), 'state')->options([
                 'accepted' => 'Accepted',
                 'declined' => 'Declined',
-                'canceled' => 'Canceled',
+                'cancelled' => 'Cancelled',
             ])->displayUsingLabels()
                 ->filterable()
                 ->sortable()
