@@ -21,7 +21,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(new PruneStaleAttachments)->daily();
 
         $schedule->job(new CreateReviewForInvitationJob())->everyMinute();
-        $schedule->job(new CancelStaleInvitations())->everyMinute();
+//        $schedule->job(new CancelStaleInvitations())->everyMinute();
 
         $schedule->job(MarkPendingInvitationsAsCancelledJob::dispatch())->everyTenMinutes();
 //        $schedule->call(CreateReviewForInvitationJob::dispatch())->everyMinute();
