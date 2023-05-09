@@ -1,6 +1,6 @@
 {
-    "files":"ملفات",
-    "upload :filesData from :maximumUploadNumberOfFiles":"تم تحميل :filesData من  :maximumUploadNumberOfFiles",
+    "files": "ملفات",
+    "upload :filesData from :maximumUploadNumberOfFiles": "تم تحميل :filesData من  :maximumUploadNumberOfFiles",
     "accepted": "تم الموافقة",
     "pending": "انتظار",
     "canceled": "ألغيت",
@@ -162,13 +162,13 @@
     "reset": "مسح الجميع",
     "All Rights Reserved": "كل الحقوق محفوظة",
     "Copyright": "حقوق النشر",
-    "video, images, PDFs and docs are allowed with max size (84 MB) are allowed": "يُسمح بالفيديو والصور وملفات PDF والمستندات بأقصى حجم (84 ميغابايت)",
+    "video, images, PDFs and docs are allowed with max size (84MB) are allowed": "يُسمح بالفيديو والصور وملفات PDF والمستندات بأقصى حجم (84 ميغابايت)",
     "report": "الابلاغ",
     "ok": "حسنا",
     "Click on the following link to open the camera": "اضغط على الرابط التالي لفتح الكاميرا",
     "open camera": "افتح الكاميرا",
     "please write caption": "الرجاء كتابة تعليق",
-    "only videos and images with max size (3MB) are allowed": "يسمح فقط بمقاطع الفيديو والصور ذات الحجم الأقصى (3 ميجا بايت)",
+    "only videos and images with max size (84MB) are allowed": "يسمح فقط بمقاطع الفيديو والصور ذات الحجم الأقصى (84 ميجا بايت)",
     "upload": "تحميل",
     "Welcome to": "مرحبا بك",
     "Don't have an account": "ليس لديك حساب",
@@ -374,5 +374,6 @@
     "Sorry you cannot approve cancelled invitation": "عذرا لا يمكنك الموافقة على الدعوة الملغاة",
     "update Account": "تحديث الحساب",
     "invitation can not be sent": "لا يمكن إرسال الدعوة",
-    "to kjora to view more photos and videos": "فى kjora لترى صور وفيديوهات أخرى"
+    "to kjora to view more photos and videos": "فى kjora لترى صور وفيديوهات أخرى",
+    "This player is far away from your destination": "هذا اللاعب بعيد عنك"
 }
