@@ -169,7 +169,7 @@ const locale = usePage().props.value.locale;
                 {{ $t('By signing up, you agree to the') }} <a target="_blank" :href="route('terms.and.condition.index')" class="font-bold text-blue-500 hover:text-blue-700">{{ $t('Terms of Service') }}</a> {{ $t('and') }}
                 <a target="_blank" :href="route('privacy.policy.index')" class="font-bold text-blue-500 hover:text-blue-700">{{ $t('Privacy Policy') }}</a>
                 {{ $t('including') }}
-                <Link target="_blank" :href="route('cookies.policy.index')" class="font-bold text-blue-500 hover:text-blue-700">{{ $t('cookie use') }}</Link>
+                <a target="_blank" :href="route('cookies.policy.index')" class="font-bold text-blue-500 hover:text-blue-700">{{ $t('cookie use') }}</a>
             </p>
         </div>
 
