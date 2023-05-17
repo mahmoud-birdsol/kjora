@@ -1,16 +1,15 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/inertia-vue3';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
+import DateTranslation from "@/Components/DateTranslation.vue";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import AppLayout from '../Layouts/AppLayout.vue';
+import { useForm , usePage} from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
-import dayjs from 'dayjs';
+import AppLayout from '../Layouts/AppLayout.vue';
 import GuestLayout from "../Layouts/GuestLayout.vue";
-import DateTranslation from "@/Components/DateTranslation.vue"
 
 const props = defineProps({
     policy: Object,
 });
+const is_login = usePage().props?.value.auth?.user
 const isDisabled = ref(true)
 const form = useForm({
     privacyPolicy: props.policy?.id ?? null
@@ -21,7 +20,8 @@ function submit() {
 </script>
 
 <template>
-    <GuestLayout title="Privacy policy">
+    <component :is="is_login ? AppLayout : GuestLayout" :title="$t('Privacy policy')">
+
         <template #header>
             {{ $t('Security') }}
         </template>
@@ -39,10 +39,13 @@ function submit() {
                         <DateTranslation format="DD MMMM YYYY" :start="policy.created_at" />
                     </div>
                 </div>
-                <div class="" v-if="$page.props.user && policy && (policy.version !== $page.props.auth.user.accepted_privacy_policy_version)">
+                <div class=""
+                    v-if="$page.props.user && policy && (policy.version !== $page.props.auth.user.accepted_privacy_policy_version)">
                     <div class="flex flex-col justify-center gap-2">
                         <label for="policy" class="text-sm font-medium text-primary">{{ $t('I agree') }}</label>
-                        <input type="radio" :value="policy.id" id="policy" v-model="form.privacyPolicy" :checked="false" @change="(e) => { e.target.checked ? isDisabled = false : isDisabled = true; }" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
+                        <input type="radio" :value="policy.id" id="policy" v-model="form.privacyPolicy" :checked="false"
+                            @change="(e) => { e.target.checked ? isDisabled = false : isDisabled = true; }"
+                            class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
                     </div>
                     <div class="mt-2">
                         <PrimaryButton :disabled="isDisabled" @click="submit">
@@ -53,5 +56,5 @@ function submit() {
 
             </div>
         </div>
-    </GuestLayout>
-</template>
+
+    </component></template>

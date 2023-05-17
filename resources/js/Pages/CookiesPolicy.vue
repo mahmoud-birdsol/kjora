@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/inertia-vue3';
+import { Head, useForm ,usePage} from '@inertiajs/inertia-vue3';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AppLayout from '../Layouts/AppLayout.vue';
@@ -12,6 +12,7 @@ const props = defineProps({
     cookies: Object,
 });
 const isDisabled = ref(true)
+const is_login = usePage().props?.value.auth?.user
 const form = useForm({
     cookiePolicy: props.cookies?.id ?? null
 })
@@ -22,7 +23,7 @@ function submit() {
 
 <template>
     <Head title="Cookie use" />
-    <GuestLayout title="Cookie use">
+    <component :is="is_login ? AppLayout : GuestLayout" :title="$t('cookie use')">
         <template #header>
             {{ $t('Security') }}
         </template>
@@ -33,11 +34,11 @@ function submit() {
                 </div>
                 <div v-if="cookies" class="relative flex-grow p-4 border-2 rounded-lg border-stone-400">
                     <div class="w-full max-h-[400px] overflow-auto hideScrollBar " v-html="cookies.content" />
-
+    
                     <div class="absolute z-20 p-2 text-xs font-bold uppercase bg-white -top-4 left-4 text-primary ">
                         {{ $t('updated') }}
                         <DateTranslation format="DD MMMM YYYY" :start="cookies.created_at" />
-
+    
                     </div>
                 </div>
                 <div class="" v-if="$page.props.user && cookies && (cookies.version !== $page.props.auth.user.accepted_cookie_policy_version)">
@@ -51,8 +52,9 @@ function submit() {
                         </PrimaryButton>
                     </div>
                 </div>
-
+    
             </div>
         </div>
-    </GuestLayout>
+    
+    </component>
 </template>

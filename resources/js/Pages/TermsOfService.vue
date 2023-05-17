@@ -1,16 +1,15 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/inertia-vue3';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
+import DateTranslation from "@/Components/DateTranslation.vue";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import AppLayout from '../Layouts/AppLayout.vue';
+import { useForm, usePage } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
-import dayjs from 'dayjs';
+import AppLayout from '../Layouts/AppLayout.vue';
 import GuestLayout from "../Layouts/GuestLayout.vue";
-import DateTranslation from "@/Components/DateTranslation.vue"
 
 const props = defineProps({
     terms: Object,
 });
+const is_login = usePage().props?.value.auth?.user
 const isDisabled = ref(true)
 const form = useForm({
     termsAndConditions: props.terms?.id ?? null
@@ -18,14 +17,16 @@ const form = useForm({
 function submit() {
     form.patch(route('terms.and.condition.store', form.termsAndConditions))
 }
+
+
 </script>
 
 <template>
-    <GuestLayout :title="$t('Terms of Service')">
+    <component :is="is_login ? AppLayout : GuestLayout" :title="$t('Terms of Service')">
         <template #header>
             {{ $t('Security') }}
         </template>
-        <div class="grid w-full lg:grid-cols-2 ">
+        <div class="grid w-full lg:grid-cols-2">
             <div class="col-start-2 bg-white rounded-2xl p-6 w-full min-h-[500px] flex flex-col gap-4">
                 <div class="flex justify-center my-4">
 
@@ -39,10 +40,13 @@ function submit() {
                         <DateTranslation format="DD MMMM YYYY" :start="terms.created_at" />
                     </div>
                 </div>
-                <div class="" v-if="$page.props.auth.user && terms && (terms.version !== $page.props.auth.user.accepted_terms_and_conditions_version)">
+                <div class=""
+                    v-if="$page.props.auth.user && terms && (terms.version !== $page.props.auth.user.accepted_terms_and_conditions_version)">
                     <div class="flex flex-col justify-center gap-2">
                         <label for="terms" class="text-sm font-medium text-primary">{{ $t('I agree') }}</label>
-                        <input type="radio" :value="terms.id" id="terms" v-model="form.termsAndConditions" :checked="false" @change="(e) => { e.target.checked ? isDisabled = false : isDisabled = true; }" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
+                        <input type="radio" :value="terms.id" id="terms" v-model="form.termsAndConditions" :checked="false"
+                            @change="(e) => { e.target.checked ? isDisabled = false : isDisabled = true; }"
+                            class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
                     </div>
                     <div class="mt-2">
                         <PrimaryButton :disabled="isDisabled" @click="submit">
@@ -53,5 +57,6 @@ function submit() {
 
             </div>
         </div>
-    </GuestLayout>
+
+    </component>
 </template>
