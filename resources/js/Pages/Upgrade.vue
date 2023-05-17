@@ -113,14 +113,14 @@ onMounted(() => {
                             </RadioGroupOption>
                         </RadioGroup>
 
-                        <PrimaryButton class="my-3" @click="send" :disabled="!form.payment_plan | state!=='Premium'" >{{$t('upgrade')}}</PrimaryButton>
+                        <PrimaryButton class="my-3" @click="send" :disabled="!form.payment_plan | state=='Premium'" >{{$t('upgrade')}}</PrimaryButton>
                     </template>
                 </CardContent>
             </Card>
             <Card>
-                <CardContent :title="$t('subscription')" class="justify-start">
+                <CardContent :title="$t('subscribe')" class="justify-start">
                     <template #header>
-                        <h1 class="text-7xl">subscription</h1>
+                        <h1 class="text-7xl">{{$t('subscription')}}</h1>
                     </template>
                     <template #body>
                         <FadeInTransition
