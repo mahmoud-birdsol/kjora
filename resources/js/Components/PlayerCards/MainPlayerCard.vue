@@ -124,7 +124,7 @@ function showCopied() {
                         <Link :href="route('profile.edit')" v-if="isCurrentUser && !isPublic"
                             class="absolute bottom-0 p-1 bg-white rounded-full ltr:right-0 rtl:left-0 hover:text-primary">
                         <PencilIcon class="w-3 [&+div]:hover:block " />
-                        <ToolTip :value="$t('edit-your-profile')" right="right-0" />
+                        <ToolTip :value="$t('edit-your-profile')" right="right-0"  />
                         </Link>
                         <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true"
                             :borderColor="state == 'Free' ? 'primary' : 'blackDark'" />
@@ -169,10 +169,10 @@ function showCopied() {
 
                     <p class="text-xs text-center whitespace-nowrap" :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">
                         {{ $t('favorite-club') }}</p>
-                    <div class="flex justify-center item-center [&+div]:hover:block rounded-full overflow-hidden w-fit p-1 bg-white mx-auto">
+                    <div class="flex justify-center item-center [&+div]:hover:block rounded-full overflow-hidden w-fit p-1 mx-auto">
                         <img :src="player.club?.logo_thumb" class="w-5 h-5 " />
                     </div>
-                    <ToolTip :value="player.club?.name" />
+                    <ToolTip :value="player.club?.name" top="top-0"/>
                 </div>
                 <div>
 

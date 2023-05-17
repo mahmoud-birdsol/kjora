@@ -1,5 +1,5 @@
 {
-  "Sorry you haven't any conversation yet":"Sorry you haven't any conversation yet",
+  "Sorry you haven't any conversation yet": "Sorry you haven't any conversation yet",
   "files": "Files",
   "upload :filesData from :maximumUploadNumberOfFiles": "Uploaded :filesData from :maximumUploadNumberOfFiles",
   "accepted": "Accepted",
@@ -371,7 +371,7 @@
   "cancel": "Cancel",
   "Invitation Cancelled Successfully": "Invitation Cancelled Successfully",
   "Sorry you cannot approve cancelled invitation": "Sorry you cannot approve cancelled invitation",
-  "update Account": "Update Account",
+  "update Account": "Upgrate Account",
   "invitation can not be sent": "invitation can not be sent",
   "to kjora to view more photos and videos": "to kjora to view more photos and videos",
   "you-can-not-upload-more-than": "you can not upload more than"

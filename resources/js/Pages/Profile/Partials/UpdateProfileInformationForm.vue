@@ -57,7 +57,7 @@ const showUploadAvatarModal = ref(false);
 
         <div class="w-full p-6 bg-white rounded-md lg:col-start-2 ">
             <div class="flex justify-center my-4">
-                <h2 class="text-xl font-bold uppercase text-primary">{{ $t('update Account') }}</h2>
+                <h2 class="text-xl font-bold uppercase text-primary">{{ $t('account') }}</h2>
             </div>
 
             <form @submit.prevent="updateProfileInformation">
@@ -163,5 +163,5 @@ const showUploadAvatarModal = ref(false);
         </div>
     </div>
 
-    <SuccessMessageModal :show="showSuccessMessage" position="right" title="Account" message="Congratulations your account has been successfully updated." @close="showSuccessMessage = false"/>
+    <SuccessMessageModal :show="showSuccessMessage" position="right" :title="$t('account')" message="Congratulations your account has been successfully updated." @close="showSuccessMessage = false"/>
 </template>
