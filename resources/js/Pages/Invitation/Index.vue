@@ -18,24 +18,10 @@ const props = defineProps({
 const fromDate = ref(null)
 const toDate = ref(null)
 
-function groupInvitationsByDate(invitations) {
-    return invitations.reduce((groups, invitation) => {
-        const date = dayjs(invitation.date).format('DD MMMM YYYY');
-        if (groups[date]) {
-            groups[date].push(invitation);
-        } else {
-            groups[date] = [invitation];
-        }
-        return groups;
-    }, {});
-}
-
-const invitationsGroups = computed(() => groupInvitationsByDate(props.invitations.data))
-
 
 function showFromToDates(date1, date2) {
-    fromDate.value = dayjs(date1).format('DD MMMM YYYY')
-    toDate.value = dayjs(date2).format('DD MMMM YYYY')
+    fromDate.value = dayjs(date1).format('DD MMMM YYYY hh:mm')
+    toDate.value = dayjs(date2).format('DD MMMM YYYY hh:mm')
 }
 </script>
 
@@ -64,14 +50,12 @@ function showFromToDates(date1, date2) {
                         <DateTranslation :start="toDate" format="DD MMMM YYYY" />
                     </div>
                     <div v-if="invitations.data.length" class="grid grid-cols-1 gap-4">
-                        <template v-for="( invitationsGroup, date) in invitationsGroups" :key="date">
+                        <template v-for="( invitation ) in invitations.data" :key="invitation.id">
                             <div class="text-xs font-bold flex gap-1">
                                 <CalendarIcon class="w-4" />
-                                <DateTranslation :start="date" format="DD MMMM YYYY" />
+                                <DateTranslation :start="invitation.date" format="DD MMMM YYYY hh:mm" />
                             </div>
-                            <template v-for="(invitation, index) in invitationsGroup" :key="invitation.id">
-                                <InvitationCard :invitation="invitation" />
-                            </template>
+                            <InvitationCard :invitation="invitation" />
                         </template>
                     </div>
 
