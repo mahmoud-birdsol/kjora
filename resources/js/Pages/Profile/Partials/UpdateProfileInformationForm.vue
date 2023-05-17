@@ -113,11 +113,11 @@ const showUploadAvatarModal = ref(false);
                 </div>
 
                 <div class="mt-4 sm:flex sm:justify-between">
-                    <div class="w-full mt-4 sm:w-1/3 sm:mt-0">
+                    <div class="mt-4 sm:mt-0">
                         <div>
                             <InputLabel color="primary" :value="$t('gender')"/>
 
-                            <div class="mie-4">
+                            <div class="mis-4">
                                 <div class="flex items-center gap-x-2">
                                     <input type="radio" checked :id="user.gender" :value="user.gender" disabled v-model="form.gender" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4"/>
                                     <label :for="user.gender" class="text-sm font-medium text-black">{{ $t(user.gender)
@@ -126,10 +126,10 @@ const showUploadAvatarModal = ref(false);
                             </div>
                         </div>
                     </div>
-                    <div class="w-full mt-4 sm:w-1/3 sm:mt-0">
+                    <div class="mt-4 sm:mt-0">
                         <InputLabel color="primary" :value="$t('position')"/>
 
-                        <div class="mie-4">
+                        <div class="mis-4">
                             <div class="flex items-center gap-x-2" v-for="position in positions">
                                 <input type="radio" :id="position.name[locale]" :value="position.id" v-model="form.position_id" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4"/>
                                 <label :for="position.name[locale]" class="text-sm font-medium text-black">{{ position.name[locale]
@@ -137,10 +137,10 @@ const showUploadAvatarModal = ref(false);
                             </div>
                         </div>
                     </div>
-                    <div class="w-full mt-4 sm:w-1/3 sm:mt-0">
+                    <div class="mt-4 sm:mt-0">
                         <InputLabel color="primary" :value="$t('Preferred Foot')"/>
 
-                        <div class="mie-4">
+                        <div class="mis-4">
                             <div class="flex items-center gap-x-2">
                                 <input type="radio" id="left" value="left" v-model="form.preferred_foot" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4"/>
                                 <label for="left" class="text-sm font-medium text-black">{{ $t('left') }}</label>
