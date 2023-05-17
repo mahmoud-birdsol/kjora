@@ -44,13 +44,15 @@ const distances = [5, 10, 20, 30, 40, 50];
            @close="showFiltersModal = false"
            :closeable="false">
         <div class="grid bg-black">
-            <button class="p-1 justify-self-end"
-                    @click="showFiltersModal = false">
-                <XMarkIcon class="w-4 h-4 text-white" />
-            </button>
-            <div class="p-6">
+            <div class="flex justify-between px-6 pt-4">
+                <p class=" text-sm text-white">{{ $t('filter') }} </p>
+                <button class=""
+                        @click="showFiltersModal = false">
+                    <XMarkIcon class="w-4 h-4 text-white" />
+                </button>
+            </div>
+            <div class="px-6">
                 <div class="flex flex-col justify-end">
-                    <p class=" text-sm text-white inset-4">{{ $t('filter') }} </p>
                     <button class="text-primary self-end"
                             @click="reset">
                         <!-- <XMarkIcon class="inline w-4 h-4 mr-4" /> -->
