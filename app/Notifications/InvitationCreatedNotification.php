@@ -5,6 +5,7 @@ namespace App\Notifications;
 use App\Data\NotificationData;
 use App\Data\RouteActionData;
 use App\Models\Invitation;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
@@ -46,9 +47,11 @@ class InvitationCreatedNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
+        $invitationDate = Carbon::createFromFormat('Y-m-d H:i:s', $this->invitation->date);
+        $invitationDate->setTimezone(str_replace('UTC', '', $notifiable->country->time_zone));
         return (new MailMessage)
             ->subject(__('You have been invited to a football match', [], $notifiable->locale))
-            ->line(__('You have been invited by **', [], $notifiable->locale).$this->invitation->invitingPlayer->name.__('** to play a football match on **', [], $notifiable->locale).$this->invitation->date->toDateTimeString().__('** at **', [], $notifiable->locale).$this->invitation->stadium->name.'**.')
+            ->line(__('You have been invited by **', [], $notifiable->locale).$this->invitation->invitingPlayer->name.__('** to play a football match on **', [], $notifiable->locale).$invitationDate->toDateTimeString().__('** at **', [], $notifiable->locale).$this->invitation->stadium->name.'**.')
             ->action(__('Respond Now', [], $notifiable->locale), url(route('invitation.index', [], $notifiable->locale)))
             ->line(__('Thank you for using our application!', [], $notifiable->locale));
     }

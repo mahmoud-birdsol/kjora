@@ -34,6 +34,7 @@ class CountrySeeder extends Seeder
                 'name' => $data['name'],
                 'code' => $data['alpha2Code'],
                 'calling_code' => $data['callingCodes'][0],
+                'time_zone' => $data['timezones'][0],
             ]);
 
             if (array_key_exists('flags', $data)) {

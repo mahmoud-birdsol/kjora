@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Invitation;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -45,22 +46,25 @@ class GameScheduledNotification extends Notification
      */
     public function toMail($notifiable)
     {
+        $invitationDate = Carbon::createFromFormat('Y-m-d H:i:s', $this->invitation->date);
+        $invitationDate->setTimezone(str_replace('UTC', '', $notifiable->country->time_zone));
+
         $event = Event::create()
-            ->name(__('Football match! ', [], $notifiable->locale).$this->invitation->date->toFormattedDateString())
-            ->description(__('Football match! ', [], $notifiable->locale).$this->invitation->date->toFormattedDateString().__(' at ', [], $notifiable->locale).$this->invitation->stadium->formattedAddress())
+            ->name(__('Football match! ', [], $notifiable->locale).$invitationDate->toFormattedDateString())
+            ->description(__('Football match! ', [], $notifiable->locale).$invitationDate->toFormattedDateString().__(' at ', [], $notifiable->locale).$this->invitation->stadium->formattedAddress())
             ->uniqueIdentifier('KJORA-'.$this->invitation->id)
             ->createdAt($this->invitation->created_at)
-            ->startsAt($this->invitation->date)
-            ->endsAt($this->invitation->date->addHours(2));
+            ->startsAt($invitationDate)
+            ->endsAt($invitationDate->addHours(2));
 
         $calendar = Calendar::create()
             ->productIdentifier('kjora.com')
-            ->event(function (Event $event) {
-                $event->name('Football match! '.$this->invitation->date->toFormattedDateString())
+            ->event(function (Event $event) use($invitationDate) {
+                $event->name('Football match! '.$invitationDate->toFormattedDateString())
                     ->attendee($this->invitation->invitingPlayer->email)
-                    ->startsAt($this->invitation->date)
-                    ->endsAt($this->invitation->date->addHours(2))
-                    ->address($this->invitation->date->toFormattedDateString());
+                    ->startsAt($invitationDate)
+                    ->endsAt($invitationDate->addHours(2))
+                    ->address($invitationDate->toFormattedDateString());
             });
 
         $calendar->appendProperty(TextProperty::create('METHOD', 'REQUEST'));
