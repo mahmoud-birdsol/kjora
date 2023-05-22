@@ -83,9 +83,9 @@ onMounted(() => {
                         <h1 class="text-7xl">{{$t('upgrade account')}}</h1>
                     </template>
                     <template #body>
-                        <ul class="flex flex-col items-center gap-3 text-xs text-gray-800">
+                        <ul class="flex flex-col items-start gap-3 text-xs text-gray-800">
 
-                            <li class="grid grid-cols-[minmax(300px,_1fr)_10px] gap-5" v-for="content in upgradeContent">
+                            <li class="grid grid-cols-[minmax(300px,_1fr)_10px] w-full gap-5" v-for="content in upgradeContent">
                                 <span v-if="locale == 'en'">{{content.attributes.content_en}}</span>
                                 <span v-if="locale == 'ar'">{{content.attributes.content_ar}}</span>
                                 <CheckIcon class="w-5 text-primary" />

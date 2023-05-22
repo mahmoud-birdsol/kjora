@@ -6,6 +6,7 @@ use App\Events\PositionUpdated;
 use App\Models\Concerns\CanBeReported;
 use App\Models\Contracts\Reportable;
 use App\Models\States\UserPremiumState;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -540,6 +541,17 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         return $this->reviewerReviews()->whereNull('reviewed_at')->count() > 0;
     }
 
+    public function hasApprovedInvitationsWithDifferentStadiumAndSameTime($date , $stadium): bool
+    {
+        return $this->invitations()->whereBetween('date', [Carbon::parse($date), Carbon::parse($date->addHours(2))])
+                ->where('state', 'accepted')->where('stadium_id','!=',$stadium)->get()->count() > 0;
+    }
+
+    public function hasApprovedHiresWithDifferentStadiumAndSameTime($date , $stadium): bool
+    {
+        return $this->hires()->whereBetween('date', [Carbon::parse($date), Carbon::parse($date->addHours(2))])
+                ->where('state', 'accepted')->where('stadium_id','!=',$stadium)->get()->count() > 0 ;
+    }
     public function reportedUser(): static
     {
         return $this;

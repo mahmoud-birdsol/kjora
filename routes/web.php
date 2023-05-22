@@ -254,6 +254,20 @@ Route::middleware([
                     'date' => "You can't invite this player because he has an invitation at the same time",
                 ]);
             }
+            $date = Carbon::parse($data['date'])->setTime($time->hour, $time->minute);
+
+            //check if user invite player and user have invitation
+            if (($request->user()->hasApprovedInvitationsWithDifferentStadiumAndSameTime(Carbon::parse($data['date'])->setTime($time->hour, $time->minute) ,$request->input('stadium_id')))
+                || ($request->user()->hasApprovedHiresWithDifferentStadiumAndSameTime(Carbon::parse($data['date'])->setTime($time->hour, $time->minute) ,$request->input('stadium_id')))) {
+                FlashMessage::make()->success(
+                    message: "This time You have invitations with another stadium you should invite with the same stadium or another date"
+                )->closeable()->send();
+
+                return redirect()->back()->withErrors([
+                    'date' => "This time You have invitations with another stadium you should invite with the same stadium or another date",
+                ]);
+            }
+
             $data['date']=$data['date']->toString();
 
 
