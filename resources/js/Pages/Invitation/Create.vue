@@ -37,7 +37,6 @@ const createInvitation = () => {
 
     form.date = dayjs(form.date).add(1).format('YYYY-MM-DD');
     form.time = (new Date(form.time)).toISOString()
-    console.log(form.time)
     form.post(route('invitation.store'), {
         onStart: () => {
             isDisabled.value = true
@@ -136,7 +135,8 @@ const querySearch = (queryString, cb) => {
                                 <div class="my-6">
                                     <InputLabel>{{ $t('Time') }}</InputLabel>
                                     <div class="px-4">
-                                        <ElTimePicker placeholder="Pick the time " format="HH:mm" v-model="form.time" :disabled-hours="disabledHours" popper-class="bg-white" />
+                                        <ElTimePicker placeholder="Pick the time " format="HH:mm" v-model="form.time" :disabled-hours="disabledHours"
+                                            popper-class="bg-white" />
                                     </div>
                                     <InputError class="mt-2" :message="form.errors.time" />
                                 </div>

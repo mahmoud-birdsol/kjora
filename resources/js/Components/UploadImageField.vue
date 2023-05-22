@@ -7,6 +7,7 @@ import { ref, onMounted, watch } from "vue";
 import InputError from "@/Components/InputError.vue";
 import CropIcon from "@/Components/Icons/CropIcon.vue";
 import Crop from "@/Components/Crop.vue";
+import Title from "./Title.vue";
 const props = defineProps({
     modelValue: {
         required: false,
@@ -148,15 +149,13 @@ let showCropModal = (url) => {
         name: fileData.value.name,
         url,
     };
-    // console.log(document.querySelector('#img').clientWidth)
-    // console.log(document.querySelector('#img').clientHeight)
+    
 
     openCropModal.value = true;
     cropLoading.value = false;
 };
 function close() {
     fileData.value = null;
-    // previewImageUrl.value = ''
     num.value += 1;
     emit("close");
 }
@@ -172,11 +171,7 @@ function close() {
         :key="num"
     >
         <div class="flex flex-col min-h-[500px] justify-between p-6 pt-0">
-            <div class="flex justify-center">
-                <h2 class="text-xl font-bold uppercase text-primary">
-                    {{ $t("upload") }}
-                </h2>
-            </div>
+            <Title>{{ $t('upload') }}</Title>
             <div
                 class="flex items-center justify-center py-8 sm:px-20"
                 v-loading="form.processing"

@@ -4,6 +4,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { PlusCircleIcon, XMarkIcon } from '@heroicons/vue/24/outline';
 import { ref, onMounted } from 'vue';
+import Title from './Title.vue';
 
 const emit = defineEmits(['close', 'update:modelValue']);
 
@@ -63,37 +64,23 @@ const updatePhotoPreview = () => {
 </script>
 
 <template>
-    <Modal
-        :show="show"
-        :max-width="maxWidth"
-        :closeable="closeable"
-        @close="close"
-    >
+    <Modal :show="show" :max-width="maxWidth" :closeable="closeable" @close="close">
         <div class="flex flex-col min-h-[500px] justify-between p-6">
-            <div class="flex justify-center">
-                <h2 class="text-xl text-primary font-bold uppercase">{{$t('upload')}}</h2>
-            </div>
-            <div class="flex justify-center items-center">
-                <input
-                    ref="photoInput"
-                    type="file"
-                    class="hidden"
-                    @change="updatePhotoPreview"
-                >
+            <Title>{{ $t('upload') }}</Title>
+            <div class="flex items-center justify-center">
+                <input ref="photoInput" type="file" class="hidden" @change="updatePhotoPreview">
                 <button type="button"
-                        class="inline-flex items-center rounded-full border border-transparent bg-black p-4 text-white shadow-sm hover:bg-black focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
-                        v-show="! photoPreview"
-                        @click.prevent="selectNewPhoto"
-                >
-                    <PlusCircleIcon class="h-5 w-5"/>
+                    class="inline-flex items-center p-4 text-white bg-black border border-transparent rounded-full shadow-sm hover:bg-black focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+                    v-show="!photoPreview" @click.prevent="selectNewPhoto">
+                    <PlusCircleIcon class="w-5 h-5" />
                 </button>
 
-                <div v-show="photoPreview" class="mt-2" >
-                    <div class="relative rounded px-20 py-8">
+                <div v-show="photoPreview" class="mt-2">
+                    <div class="relative px-20 py-8 rounded">
                         <img :src="photoPreview" alt="" class="w-full h-auto rounded-lg">
-                        <div class="absolute inset-0 bg-white opacity-30 h-full w-full">
-                            <div class="flex flex-col justify-center items-center">
-                                <XMarkIcon class="h-8 w-8 text-white"/>
+                        <div class="absolute inset-0 w-full h-full bg-white opacity-30">
+                            <div class="flex flex-col items-center justify-center">
+                                <XMarkIcon class="w-8 h-8 text-white" />
                             </div>
                         </div>
                     </div>
@@ -101,7 +88,7 @@ const updatePhotoPreview = () => {
             </div>
             <div>
                 <PrimaryButton @click="close">
-                    {{$t('upload')}}
+                    {{ $t('upload') }}
                 </PrimaryButton>
             </div>
         </div>

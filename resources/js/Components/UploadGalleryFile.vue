@@ -10,6 +10,7 @@ import InputLabel from '@/Components/InputLabel.vue'
 import CropIcon from '@/Components/Icons/CropIcon.vue';
 import Crop from '@/Components/Crop.vue';
 import { trans } from "laravel-vue-i18n";
+import Title from './Title.vue';
 
 const props = defineProps({
     modelValue: {
@@ -234,9 +235,7 @@ let showCropModal = (file) => {
 <template>
     <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="reset" :key="num">
         <div class=" flex flex-col min-h-[500px] justify-between p-6 pt-0">
-            <div class="flex justify-center ">
-                <h2 class="text-xl font-bold uppercase text-primary">{{ $t('upload') }}</h2>
-            </div>
+            <Title>{{ $t('upload') }}</Title>
             <div>
                 <InputLabel :value="'Caption'" class="text-primary" />
                 <div class="flex items-center flex-grow ">

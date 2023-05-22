@@ -1,10 +1,13 @@
 <script setup>
-defineEmits(["clicked"]);
+import { usePage } from '@inertiajs/inertia-vue3';
+
+const state = usePage().props.value.auth.user.state_name
+
 </script>
 <template>
-    <!-- @click="$emit('clicked')" -->
     <div class="fixed bottom-0 z-50 pb-20 pointer-events-none sm:pb-24 BeaconFabButtonFrame">
-        <button class="flex items-center justify-center w-16 h-16 text-center bg-black rounded-full shadow-xl pointer-events-auto">
+        <button class="flex items-center justify-center w-16 h-16 text-center rounded-full shadow-xl pointer-events-auto" :class="state === 'Free' ? 'bg-black enabled:hover:bg-stone-800 active:bg-gray-900  focus:border-gray-900  disabled:bg-stone-500' :
+            'bg-golden enabled:hover:bg-golden/50 focus:border-golden/90 focus:ring-golden disabled:bg-golden/30'">
             <slot />
         </button>
     </div>
