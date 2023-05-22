@@ -53,8 +53,8 @@ class NotifyUserOfRatingSubmittedNotification extends Notification
         return (new MailMessage)
             ->subject(__('Rating Submitted', [], $notifiable->locale))
             ->line(__('Dear ', [], $notifiable->locale).$this->player->name)
-            ->line(__('Player ').$this->reviewer->name.__(' has submitted a review for you', [], $notifiable->locale))
-            ->action(__('Click here to review ', [], $notifiable->locale), url(route('player.review.show', [
+            ->line(__('Player ').$this->reviewer->name.__(' has submitted a rate for you', [], $notifiable->locale))
+            ->action(__('Click here to rate ', [], $notifiable->locale), url(route('player.review.show', [
                 'review' => Review::where('reviewer_id', $this->player->id)->where('player_id', $this->reviewer->id)->first(),
                 'reviewing_player' => $this->player->id,
             ])))
