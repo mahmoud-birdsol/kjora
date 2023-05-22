@@ -45,7 +45,13 @@ const isCurrentUser = props.player.id === currentUser.id;
 const isHiring = props.invitation.inviting_player.id === currentUser.id;
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const state = props.player.state_name;
-const txtColor = state == "Free" ? "white" : "black";
+dayjs(props.invitation?.date).diff(dayjs(), 'hour') <= 0
+const pending = props.invitation.state === null && dayjs(props.invitation?.date).diff(dayjs(), 'hour') > 0
+const is_accepted = props.invitation.state === 'accepted'
+const is_decline = props.invitation.state === 'declined'
+const is_cancelled = props.invitation.state === 'cancelled' || (dayjs(props.invitation?.date).diff(dayjs(), 'hour') <= 0 && props.invitation.state === null)
+const is_cancel = props.invitation.state === null && isHiring
+const txtColor = props.invitation.state == "Free" ? "white" : "black";
 
 const accept = () => {
     const form = useForm({});
@@ -56,6 +62,7 @@ const accept = () => {
         // }
     });
 };
+
 
 const decline = () => {
     const form = useForm({});
@@ -71,7 +78,7 @@ const cancel = () => {
     const form = useForm({});
     form.patch(route("invitation.cancel", props.invitation.id), {
         preserveState: false,
-        onFinish: () => {},
+        onFinish: () => { },
     });
 };
 
@@ -98,76 +105,45 @@ function calcShouldRate() {
 </script>
 
 <template>
-    <div
-        class="rounded-xl"
-        :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`"
-    >
+    <div class="rounded-xl"
+        :style="`background: url('${backgroundImage}'); background-size: cover; background-position: center;`">
         <div class="flex flex-col items-center justify-center gap-3 p-4">
             <div class="flex flex-col items-center">
                 <!-- image -->
-                <Avatar
-                    :id="player.id"
-                    :image-url="player.avatar_url"
-                    :size="'lg'"
-                    :username="player.name"
-                    :border="true"
-                />
+                <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name"
+                    :border="true" />
                 <div class="flex flex-col items-center text-sm text-white">
-                    <Link
-                        class="hover:underline rtl:before:text-transparent rtl:before:content-['a']"
-                        :href="route('player.profile', player.id)"
-                        >@{{ player.username }}</Link
-                    >
+                    <Link class="hover:underline rtl:before:text-transparent rtl:before:content-['a']"
+                        :href="route('player.profile', player.id)">@{{ player.username }}</Link>
                 </div>
                 <!-- rating -->
                 <p class="flex items-center justify-center space-x-2 text-sm">
-                    <span
-                        class="flex scale-[0.7] items-center gap-x-1"
-                        :class="
-                            txtColor == 'black'
-                                ? 'text-primary'
-                                : 'text-[#FF9900]'
-                        "
-                    >
+                    <span class="flex scale-[0.7] items-center gap-x-1" :class="txtColor == 'black'
+                            ? 'text-primary'
+                            : 'text-[#FF9900]'
+                        ">
                         <span class="flex items-center gap-1">
                             <template v-for="i in 5">
-                                <StarIconFilled
-                                    class="w-5 h-5"
-                                    v-if="player.rating >= i"
-                                    :class="
-                                        state == 'Free'
-                                            ? 'text-gold'
-                                            : 'text-primary'
-                                    "
-                                />
-                                <StarIconOutline
-                                    class="w-5 h-5"
-                                    :class="
-                                        state == 'Free'
-                                            ? 'text-gold'
-                                            : 'text-primary'
-                                    "
-                                    v-else
-                                />
+                                <StarIconFilled class="w-5 h-5" v-if="player.rating >= i" :class="props.invitation.state == 'Free'
+                                        ? 'text-gold'
+                                        : 'text-primary'
+                                    " />
+                                <StarIconOutline class="w-5 h-5" :class="props.invitation.state == 'Free'
+                                        ? 'text-gold'
+                                        : 'text-primary'
+                                    " v-else />
                             </template>
                         </span>
 
-                        <span
-                            class="ml-2 font-bold text-md"
-                            :class="
-                                state == 'Free' ? 'text-gold' : 'text-primary'
-                            "
-                            >{{ player.rating }}</span
-                        >
+                        <span class="ml-2 font-bold text-md" :class="props.invitation.state == 'Free' ? 'text-gold' : 'text-primary'
+                            ">{{ player.rating }}</span>
                     </span>
                 </p>
             </div>
             <!-- name and userName -->
             <div class="flex flex-col items-center">
-                <div
-                    class="flex items-center gap-1 text-white capitalize"
-                    v-if="!invitation.state && !isHiring"
-                >
+                <!-- when receive invitation -->
+                <div class="flex items-center gap-1 text-white capitalize" v-if="pending && !isHiring">
                     <span>
                         {{
                             $t("hi :receiver , :sender", {
@@ -177,133 +153,49 @@ function calcShouldRate() {
                         }}
                     </span>
                     <span>
-                        <HandRaisedIcon
-                            class="w-4 rotate-[15deg] text-yellow-300"
-                        />
+                        <HandRaisedIcon class="w-4 rotate-[15deg] text-yellow-300" />
                     </span>
                 </div>
                 <!-- hiring  -->
-                <div
-                    v-if="isHiring"
-                    class="flex items-center gap-1 text-white capitalize"
-                >
-                    <p
-                        v-if="invitation.state === null &&
-                        dayjs(props.invitation?.date).diff(dayjs(), 'hour') > 0"
-                        class="text-center text-[10px] text-stone-300/70"
-                    >
-                        {{ $t("pending") }}
+                <div v-if="isHiring" class="flex items-center gap-1 text-white capitalize">
+                    <p class="text-center text-[10px] text-stone-300/70">
+                        <span v-if="pending">
+                            {{ $t("pending") }}
+                        </span>
+                        <span v-if="is_accepted">
+                            {{ $t("accepted") }}
+                        </span>
+                        <span v-if="is_decline">
+                            {{ $t("declined") }}
+                        </span>
+                        <span v-if="is_cancelled">
+                            {{ $t("canceled") }}
+                        </span>
                         {{ $t("match in") }}
-                        <DateTranslation
-                            format="DD MMMM YYYY, hh:mm A"
-                            :start="invitation.date"
-                        />
-                    </p>
-                    <p
-                        v-if="invitation.state === 'accepted'"
-                        class="text-center text-[10px] text-stone-300/70"
-                    >
-                        {{ $t("accepted") }}
-                        {{ $t("match in") }}
-                        <DateTranslation
-                            format="DD MMMM YYYY, hh:mm A"
-                            :start="invitation.date"
-                        />
-                    </p>
-                    <p
-                        v-if="invitation.state === 'declined'"
-                        class="text-center text-[10px] text-stone-300/70"
-                    >
-                        {{ $t("declined") }}
-                        {{ $t("match in") }}
-                        <DateTranslation
-                            format="DD MMMM YYYY, hh:mm A"
-                            :start="invitation.date"
-                        />
-                    </p>
-                    <p
-                        v-if="invitation.state === 'cancelled'|| (invitation.state === null &&
-                        dayjs(props.invitation?.date).diff(dayjs(), 'hour') <= 0)"
-                        class="text-center text-[10px] text-stone-300/70"
-                    >
-                        {{ $t("canceled") }}
-                        {{ $t("match in") }}
-                        <DateTranslation
-                            format="DD MMMM YYYY, hh:mm A"
-                            :start="invitation.date"
-                        />
+                        <DateTranslation format="DD MMMM YYYY, hh:mm A" :start="invitation.date" />
                     </p>
                 </div>
                 <!-- not hiring -->
                 <template v-if="!isHiring">
-                    <p
-                        class="text-center text-[10px] text-stone-300/70"
-                        v-if="invitation.state==='accepted'"
-                    >
+                    <p class="text-center text-[10px] text-stone-300/70">
+                        <span v-if="invitation.state === 'declined'">{{ $t("declined") }}</span>
+                        <span v-if="is_cancelled"> {{ $t("canceled") }}</span>
+                        <span v-if="pending"> {{ $t("Wants to invite you for") }}</span>
                         {{ $t("match in") }}
-                        <DateTranslation
-                            format="DD MMMM YYYY, hh:mm A"
-                            :start="invitation.date"
-                        />
-                    </p>
-                    <p
-                        v-if="invitation.state === 'declined'"
-                        class="text-center text-[10px] text-stone-300/70"
-                    >
-                        {{ $t("declined") }}
-                        {{ $t("match in") }}
-                        <DateTranslation
-                            format="DD MMMM YYYY, hh:mm A"
-                            :start="invitation.date"
-                        />
-                    </p>
-
-                    <p
-                        v-if="(invitation.state === 'cancelled') || (invitation.state === null &&
-                        dayjs(props.invitation?.date).diff(dayjs(), 'hour') <= 0)"
-                        class="text-center text-[10px] text-stone-300/70"
-                    >
-                        {{ $t("canceled") }}
-                        {{ $t("match in") }}
-                        <DateTranslation
-                            format="DD MMMM YYYY, hh:mm A"
-                            :start="invitation.date"
-                        />
-                    </p>
-                    <!-- invitation date -->
-                    <p
-                        v-if="invitation.state === null &&
-                        dayjs(props.invitation?.date).diff(dayjs(), 'hour') > 0"
-                        class="text-center text-[10px] text-stone-300/70"
-                    >
-                        {{ $t("Wants to invite you for a match in") }}
-                        <DateTranslation
-                            format="DD MMMM YYYY, hh:mm A"
-                            :start="invitation.date"
-                        />
+                        <DateTranslation format="DD MMMM YYYY, hh:mm A" :start="invitation.date" />
                     </p>
                 </template>
             </div>
             <!-- invite user location -->
 
-            <a
-                :href="`https://www.google.com/maps/dir/Current+Location/${position.lat},${position.lng}`"
-                target="_blank"
-                class="w-full overflow-hidden rounded-lg"
-            >
-                <GoogleMap
-                    :api-key="apiKey"
-                    style="width: 100%; height: 150px"
-                    :center="position"
-                    :zoom="15"
-                >
+            <a :href="`https://www.google.com/maps/dir/Current+Location/${position.lat},${position.lng}`" target="_blank"
+                class="w-full overflow-hidden rounded-lg">
+                <GoogleMap :api-key="apiKey" style="width: 100%; height: 150px" :center="position" :zoom="15">
                     <Marker :options="markerOptions" />
-                    <CustomMarker
-                        :options="{
-                            position: position,
-                            anchorPoint: 'TOP_RIGHT',
-                        }"
-                    >
+                    <CustomMarker :options="{
+                        position: position,
+                        anchorPoint: 'TOP_RIGHT',
+                    }">
                         <div class="text-center rounded-md bg-white/90">
                             <div class="p-2 text-xs font-bold">
                                 {{ invitation.stadium.name }}
@@ -315,80 +207,53 @@ function calcShouldRate() {
 
             <!-- respond to invitation state buttons -->
             <div class="self-stretch text-sm font-bold">
-                <div
-                    v-if="
-                        invitation.state == null &&
-                        !isHiring &&
-                        dayjs(props.invitation?.date).diff(dayjs(), 'hour') > 0
-                    "
-                    class="flex justify-center gap-6"
-                >
-                    <button
-                        @click="decline"
-                        class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95"
-                    >
+                <!-- pending and not hiring -->
+                <div v-if="pending &&
+                    !isHiring
+
+                    " class="flex justify-center gap-6">
+                    <button @click="decline"
+                        class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                         <XMarkIcon class="w-6 text-red-600" />
                     </button>
-                    <button
-                        @click="accept"
-                        class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95"
-                    >
+                    <button @click="accept"
+                        class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                         <CheckIcon class="w-6 text-green-600" />
                     </button>
                 </div>
+                <!-- pending and hiring -->
                 <!-- cancel invitation -->
                 <div>
-                    <button
-                        @click="cancel"
-                        v-if="
-                            invitation.state === null &&
-                            isHiring &&
-                            dayjs(props.invitation?.date).diff(
-                                dayjs(),
-                                'hour'
-                            ) > 0
+                    <button @click="cancel" v-if="
+                        isHiring &&
+                        pending
                         "
-                        class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95"
-                    >
+                        class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                         {{ $t("cancel") }}
                     </button>
                 </div>
-                <div
-                    v-if="invitation.state === 'declined'"
-                    class="flex justify-center"
-                >
-                    <button
-                        :disabled="true"
-                        class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-200 enabled:hover:bg-opacity-90 enabled:active:scale-95"
-                    >
+                <!-- declined -->
+                <div v-if="is_decline" class="flex justify-center">
+                    <button :disabled="true"
+                        class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-200 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                         <XMarkIcon class="w-6 text-red-600" />
                     </button>
                 </div>
-
-                <Link
-                    :href="route('home')"
-                    v-if="(invitation.state === 'cancelled' && !shouldRate) || (invitation.state == null &&
-                        dayjs(props.invitation?.date).diff(dayjs(), 'hour') <= 0)  "
-                    class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95"
-                >
-                    {{ $t("canceled") }}
+                <!-- canceled -->
+                <!-- <Link :href="route('home')" v-if="is_cancelled"
+                    class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
+                {{ $t("canceled") }}
+                </Link> -->
+                <!-- accepted -->
+                <Link :href="route('chats.index')" v-if="is_accepted && !shouldRate"
+                    class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
+                {{ $t("chat") }}
                 </Link>
-                <Link
-                    :href="route('chats.index')"
-                    v-if="invitation.state === 'accepted' && !shouldRate"
-                    class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95"
-                >
-                    {{ $t("chat") }}
-                </Link>
-
-                <Link
-                    :href="
-                        route('player.review.show', invitation.reviews[0].id)
-                    "
-                    v-if="invitation.state === 'accepted' && shouldRate"
-                    class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95"
-                >
-                    {{ $t("rate") }}
+                <!-- Rate -->
+                <Link :href="route('player.review.show', invitation.reviews[0].id)
+                    " v-if="is_accepted && shouldRate"
+                    class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
+                {{ $t("rate") }}
                 </Link>
             </div>
         </div>

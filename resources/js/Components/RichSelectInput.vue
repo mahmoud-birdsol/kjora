@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, onUpdated, ref } from 'vue';
-import { CheckIcon, ChevronDownIcon } from '@heroicons/vue/24/solid';
+import { CheckIcon , PlayIcon} from '@heroicons/vue/24/solid';
 // import { ElInfiniteScroll } from 'element-plus'
 
 const props = defineProps({
@@ -162,7 +162,7 @@ const loadMore = () => {
                     <span class="block truncate mis-3">{{ selected[textName] }}</span>
                 </span>
                 <span class="absolute inset-y-0 flex items-center pr-2 pointer-events-none mie-3 ltr:right-0 rtl:left-0">
-                    <ChevronDownIcon class="w-5 h-5 text-gray-400" />
+                    <PlayIcon class="w-3 text-gray-400 rotate-90" />
                 </span>
             </button>
 
