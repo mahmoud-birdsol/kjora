@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             PositionSeeder::class,
             CountrySeeder::class,
             ClubSeeder::class,
+            TimeZoneSeeder::class
         ]);
 
         for ($i = 1; $i <= 5; $i++) {

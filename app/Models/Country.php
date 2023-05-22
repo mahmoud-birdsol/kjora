@@ -29,6 +29,7 @@ class Country extends Model implements Suspendable, HasMedia
         'name',
         'code',
         'calling_code',
+        'time_zone'
     ];
 
     /**
