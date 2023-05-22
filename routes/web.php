@@ -385,6 +385,13 @@ Route::middleware([
         ]
     )->name('chats.show');
 
+    Route::get(
+        'chats/{user}/invited-chat',
+        [
+            ChatController::class,
+            'showByUserID',
+        ]
+    )->name('chats.by.user.show');
     Route::delete(
         'chats/{conversation}/delete',
         [

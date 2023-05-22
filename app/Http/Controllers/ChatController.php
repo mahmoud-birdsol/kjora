@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Conversation;
+use App\Models\User;
 use App\Services\FlashMessage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -84,5 +85,22 @@ class ChatController extends Controller
         )->closeable()->send();
 
         return redirect()->route('chats.index');
+    }
+
+    public function showByUserID(Request $request , User $user)
+    {
+        $conversations = Conversation::query()->whereHas('users', function (Builder $query) use($request)  {
+            $query->where('conversation_user.user_id', $request->user()->id);
+        })->whereHas('users', function (Builder $query) use($user)  {
+            $query->where('conversation_user.user_id', $user->id)
+                ->where('conversation_user.is_deleted', '!=', true);
+        })->first();
+        if (!$conversations){
+            FlashMessage::make()->success(
+                message: __('Sorry you havenot conversation with this person')
+            )->closeable()->send();
+            return redirect()->route('chats.index');
+        }
+        return redirect()->route('chats.show',$conversations->id);
     }
 }
