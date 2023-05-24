@@ -48,6 +48,11 @@ class PlayerReviewController extends Controller
     public function store(Request $request, Review $review, RecalculatePlayerRating $recalculatePlayerRating): RedirectResponse
     {
         if ($review->ratingCategories()->count() > 0) {
+
+            FlashMessage::make()->success(
+                message: __('You already Submitted a review for this player')
+            )->closeable()->send();
+
             return redirect()->route('player.profile', $review->player->id);
         }
         $review->update([
