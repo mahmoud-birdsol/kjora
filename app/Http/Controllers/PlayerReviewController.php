@@ -22,7 +22,7 @@ class PlayerReviewController extends Controller
      */
     public function show(Request $request, Review $review)
     {
-        if (! is_null($review->reviewed_at)) {
+        if (!is_null($review->reviewed_at)) {
             return redirect()->route('player.profile', $review->player->id);
         }
 
@@ -47,10 +47,10 @@ class PlayerReviewController extends Controller
 
     public function store(Request $request, Review $review, RecalculatePlayerRating $recalculatePlayerRating): RedirectResponse
     {
-        if (! is_null($review->reviewed_at)) {
+        if (!is_null($review->reviewed_at)) {
 
             FlashMessage::make()->success(
-                message: __('You already Submitted a review for this player')
+                message: __('You already Submitted a Rate for this player')
             )->closeable()->send();
 
             return redirect()->route('player.profile', $review->player->id);
@@ -60,9 +60,9 @@ class PlayerReviewController extends Controller
             'reviewed_at' => now(),
         ]);
 
-        if (! $review->refresh()->is_attended) {
+        if (!$review->refresh()->is_attended) {
             FlashMessage::make()->success(
-                message: __('Review Submitted Successfully')
+                message: __('Rate Submitted Successfully')
             )->closeable()->send();
 
             return redirect()->route('home');
@@ -84,7 +84,7 @@ class PlayerReviewController extends Controller
         })->count();
 
         FlashMessage::make()->success(
-            message: __('Review Submitted Successfully')
+            message: __('Rate Submitted Successfully')
         )->closeable()->send();
 
         if ($ratingCategoryCount > 0) {
