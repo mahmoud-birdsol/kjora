@@ -128,8 +128,8 @@ const querySearch = (queryString, cb) => {
                                     <div class="px-4">
                                         <ElDatePicker type="date" :disabled-date="disabledDate" style="background-color: black;" v-model="form.date"
                                             @change="disabledHours()" class="w-full" placeholde="DD/MM/YYYY" />
+                                        <InputError class="mt-4 " :message="form.errors.date" />
                                     </div>
-                                    <InputError class="mt-2" :message="form.errors.date" />
                                 </div>
 
                                 <div class="my-6">
@@ -137,8 +137,8 @@ const querySearch = (queryString, cb) => {
                                     <div class="px-4">
                                         <ElTimePicker placeholder="Pick the time " format="HH:mm" v-model="form.time" :disabled-hours="disabledHours"
                                             popper-class="bg-white" />
+                                        <InputError class="mt-4" :message="form.errors.time" />
                                     </div>
-                                    <InputError class="mt-2" :message="form.errors.time" />
                                 </div>
 
                                 <div class="my-6">
@@ -146,8 +146,8 @@ const querySearch = (queryString, cb) => {
                                     <div class="px-4 ">
                                         <RichSelectInput :options="stadiums" value-name="id" text-name="name" :image-name="null" v-model="form.stadium_id"
                                             bgColor="black" txtColor="white" @selected="changeMapMarker" />
+                                        <InputError class="mt-4" :message="form.errors.stadium_id" />
                                     </div>
-                                    <InputError class="mt-2" :message="form.errors.stadium_id" />
                                 </div>
 
                                 <div class="my-6 mt-4">
