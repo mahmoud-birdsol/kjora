@@ -9,6 +9,7 @@ import ArrowRight from "../Icons/ArrowRight.vue";
 import Modal from "../Modal.vue";
 import Avatar from '@/Components/Avatar.vue';
 import DateTranslation from "@/Components/DateTranslation.vue";
+import dayjs from 'dayjs'
 
 const props = defineProps({
     show: {
@@ -80,7 +81,7 @@ onMounted(() => {
 });
 function handleSplideActive(e) {
     currentMediaUrl.value = props.media[e.index].original_url
-    currentMediaName.value = props.media[e.index].file_name
+    currentMediaName.value = `Kjora-${dayjs().format('YYYY-MM-DD-HH-mm-ss')}`
 }
 </script>
 <style scoped>
@@ -94,8 +95,7 @@ function handleSplideActive(e) {
 }
 </style>
 <template>
-    <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="$emit('close')"
-        :show-close-icon="false">
+    <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="$emit('close')" :show-close-icon="false">
         <div class="max-w-full py-5 bg-white px-7">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
@@ -118,16 +118,14 @@ function handleSplideActive(e) {
                 </div>
             </div>
             <div class="my-4">
-                <Splide dir="ltr" @splide:moved="handleSplideActive" aria-labelledby="thumbnail-example-heading"
-                    :options="mainOptions" ref="main" :has-track="false">
+                <Splide dir="ltr" @splide:moved="handleSplideActive" aria-labelledby="thumbnail-example-heading" :options="mainOptions" ref="main"
+                    :has-track="false">
                     <div v-show="props.media.length > 1" class="splide__arrows">
-                        <button class="splide__arrow splide__arrow--prev"
-                            style="background-color: black !important; opacity: 1" aria-label="Next slide"
+                        <button class="splide__arrow splide__arrow--prev" style="background-color: black !important; opacity: 1" aria-label="Next slide"
                             aria-controls="splide01-track">
                             <ArrowRight />
                         </button>
-                        <button class="splide__arrow splide__arrow--next"
-                            style="background-color: black !important; opacity: 1" aria-label="Previous slide"
+                        <button class="splide__arrow splide__arrow--next" style="background-color: black !important; opacity: 1" aria-label="Previous slide"
                             aria-controls="splide01-track">
                             <ArrowRight />
                         </button>
@@ -136,12 +134,10 @@ function handleSplideActive(e) {
                         <SplideSlide v-for="item in media" :key="item.id" class="w-full my-4 ">
 
                             <template v-if="item.mime_type.startsWith('image')">
-                                <img class="object-contain h-full mx-auto rounded-lg w-[min(500px , 90%)]"
-                                    :src="item?.original_url" alt="">
+                                <img class="object-contain h-full mx-auto rounded-lg w-[min(500px , 90%)]" :src="item?.original_url" alt="">
                             </template>
                             <template v-else-if="item.mime_type.startsWith('video')">
-                                <video :src="item.original_url" controls
-                                    class="h-full max-w-full  mx-auto rounded-lg w-[min(500px , 90%)]">
+                                <video :src="item.original_url" controls class="h-full max-w-full  mx-auto rounded-lg w-[min(500px , 90%)]">
                                 </video>
                             </template>
                         </SplideSlide>
@@ -163,8 +159,8 @@ function handleSplideActive(e) {
                 </Splide>
             </div>
             <!-- <template v-if="showSavePanel">
-                <DownloadImg v-model:showSavePanel="showSavePanel" />
-            </template> -->
+                    <DownloadImg v-model:showSavePanel="showSavePanel" />
+                </template> -->
         </div>
     </Modal>
 </template>

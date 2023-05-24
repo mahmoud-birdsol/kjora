@@ -66,23 +66,27 @@ const locale = usePage().props.value.locale;
                 <Avatar :image-url="avatarPreview" size="lg" :id="0" :enableLightBox="false" />
             </button>
 
-            <UploadImageField :should-upload="false" :show="showUploadAvatarModal" v-model="form.photo" :currentImageUrl="avatarPreview" @close="showUploadAvatarModal = false" @selected="setAvatarPreview" />
+            <UploadImageField :should-upload="false" :show="showUploadAvatarModal" v-model="form.photo" :currentImageUrl="avatarPreview"
+                @close="showUploadAvatarModal = false" @selected="setAvatarPreview" />
         </div>
 
         <div class="grid grid-cols-1 gap-4 mt-12 tracking-tight sm:grid-cols-2 ">
             <div>
                 <InputLabel color="primary" for="first_name" :value="$t('first-name')" />
-                <TextInput type="text" v-model="form.first_name" :placeholder="$t('please enter your first name')" auto-complete="given-name" name="sur-name" aria-required="true" autofocus />
+                <TextInput type="text" v-model="form.first_name" :placeholder="$t('please enter your first name')" auto-complete="given-name" name="sur-name"
+                    aria-required="true" autofocus />
                 <InputError class="mt-2" :message="form.errors.first_name" />
             </div>
             <div>
                 <InputLabel color="primary" for="last_name" :value="$t('surname')" />
-                <TextInput type="text" v-model="form.last_name" :placeholder="$t('please enter your last name')" auto-complete="sur-name" name="sur-name" aria-required="true" />
+                <TextInput type="text" v-model="form.last_name" :placeholder="$t('please enter your last name')" auto-complete="sur-name" name="sur-name"
+                    aria-required="true" />
                 <InputError class="mt-2" :message="form.errors.last_name" />
             </div>
             <div>
                 <InputLabel color="primary" for="email" :value="$t('email')" />
-                <TextInput type="text" v-model="form.email" :placeholder="$t('please enter your email address')" auto-complete="email" name="email" aria-required="true" />
+                <TextInput type="text" v-model="form.email" :placeholder="$t('please enter your email address')" auto-complete="email" name="email"
+                    aria-required="true" />
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
             <div>
@@ -113,7 +117,8 @@ const locale = usePage().props.value.locale;
             <div class="sm:col-span-2">
                 <div>
                     <InputLabel color="primary" id='username' for="username" :value="$t('username')" />
-                    <TextInput type="text" v-model="form.username" placeholder="username" autocomplete="username" name="username" aria-labelledby="username" aria-required="true" />
+                    <TextInput type="text" v-model="form.username" placeholder="username" autocomplete="username" name="username" aria-labelledby="username"
+                        aria-required="true" />
                     <InputError class="mt-2" :message="form.errors.username" />
                 </div>
             </div>
@@ -126,12 +131,14 @@ const locale = usePage().props.value.locale;
 
                     <div class="mis-5">
                         <div class="flex items-center gap-x-2">
-                            <input type="radio" id="male" value="male" v-model="form.gender" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
+                            <input type="radio" id="male" value="male" v-model="form.gender"
+                                class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
                             <label for="male" class="text-sm font-medium text-black">{{ $t('male') }}</label>
                         </div>
 
                         <div class="flex items-center gap-x-2">
-                            <input type="radio" id="female" value="female" v-model="form.gender" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
+                            <input type="radio" id="female" value="female" v-model="form.gender"
+                                class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
                             <label for="female" class="text-sm font-medium text-black">{{ $t('female') }}</label>
                         </div>
                     </div>
@@ -142,7 +149,8 @@ const locale = usePage().props.value.locale;
 
                 <div class="mis-5">
                     <div class="flex items-center gap-x-2" v-for="position in positions">
-                        <input type="radio" :id="position?.name[locale]" :value="position.id" v-model="form.position_id" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
+                        <input type="radio" :id="position?.name[locale]" :value="position.id" v-model="form.position_id"
+                            class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
                         <label :for="position?.name[locale]" class="text-sm font-medium text-black">{{ position?.name[locale] }}</label>
                     </div>
                 </div>
@@ -152,12 +160,14 @@ const locale = usePage().props.value.locale;
 
                 <div class="mis-5">
                     <div class="flex items-center gap-x-2">
-                        <input type="radio" id="left" value="left" v-model="form.preferred_foot" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
+                        <input type="radio" id="left" value="left" v-model="form.preferred_foot"
+                            class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
                         <label for="left" class="text-sm font-medium text-black">{{ $t('left') }}</label>
                     </div>
 
                     <div class="flex items-center gap-x-2">
-                        <input type="radio" id="right" value="right" v-model="form.preferred_foot" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
+                        <input type="radio" id="right" value="right" v-model="form.preferred_foot"
+                            class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
                         <label for="right" class="text-sm font-medium text-black">{{ $t('right') }}</label>
                     </div>
                 </div>
@@ -166,10 +176,11 @@ const locale = usePage().props.value.locale;
 
         <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
             <p class="text-xs font-light text-black">
-                {{ $t('By signing up, you agree to the') }} <a target="_blank" :href="route('terms.and.condition.index')" class="font-bold text-blue-500 hover:text-blue-700">{{ $t('Terms of Service') }}</a> {{ $t('and') }}
+                {{ $t('By signing up, you agree to the') }} <a target="_blank" :href="route('terms.and.condition.index')"
+                    class="font-bold text-blue-500 hover:text-blue-700">{{ $t('Terms of Service') }}</a> {{ $t('and') }}
                 <a target="_blank" :href="route('privacy.policy.index')" class="font-bold text-blue-500 hover:text-blue-700">{{ $t('Privacy Policy') }}</a>
                 {{ $t('including') }}
-                <a target="_blank" :href="route('cookies.policy.index')" class="font-bold text-blue-500 hover:text-blue-700">{{ $t('cookie use') }}</a>
+                <a target="_blank" :href="route('cookies.policy.index')" class="font-bold text-blue-500 hover:text-blue-700">{{ $t('cookies') }}</a>
             </p>
         </div>
 
