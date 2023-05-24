@@ -70,7 +70,7 @@ const imgsRef = ref(null)
 const showLightBox = () => {
 
     if (props.enableLightBox) {
-        imgsRef.value = props.imageUrl
+        imgsRef.value = props.imageUrl ?? `https://ui-avatars.com/api/?name=${props.username}&color=094609FF&background=E2E2E2`
         visibleRef.value = true
     }
 }
@@ -83,17 +83,23 @@ function hideLightBox() {
 
 <template>
     <template v-if="isPlayerProfile" class="text-red-600 bg-white">
-        <span @click="showLightBox" v-if="imageUrl" class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer" :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'" />
-        <span v-else class="block bg-center bg-no-repeat bg-cover rounded-full" :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
+        <span @click="showLightBox" v-if="imageUrl" class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer"
+            :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'" />
+        <span v-else @click="showLightBox" class="block bg-center bg-no-repeat bg-cover rounded-full" :class="[sizeClasses, borderClasses, borderColorClass]"
+            :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
     </template>
 
     <template v-else>
-        <Link v-if="!isCurrentUser && imageUrl && id" :href="route('player.profile', id)" class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer " :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'">
+        <Link v-if="!isCurrentUser && imageUrl && id" :href="route('player.profile', id)" class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer "
+            :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'">
         </Link>
-        <Link v-else-if="!isCurrentUser && !imageUrl && id" :href="route('player.profile', id)" class="block bg-center bg-no-repeat bg-cover rounded-full" :class="[sizeClasses, borderClasses, borderColorClass]"
+        <Link v-else-if="!isCurrentUser && !imageUrl && id" :href="route('player.profile', id)" class="block bg-center bg-no-repeat bg-cover rounded-full"
+            :class="[sizeClasses, borderClasses, borderColorClass]"
             :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
-        <span @click="showLightBox" v-else-if="imageUrl" class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer" :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'" />
-        <span v-else class="block bg-center bg-no-repeat bg-cover rounded-full" :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
+        <span @click="showLightBox" v-else-if="imageUrl" class="block bg-center bg-no-repeat bg-cover rounded-full cursor-pointer"
+            :class="[sizeClasses, borderClasses, borderColorClass]" :style="'background-image: url(' + imageUrl + ');'" />
+        <span v-else class="block bg-center bg-no-repeat bg-cover rounded-full" :class="[sizeClasses, borderClasses, borderColorClass]"
+            :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
     </template>
     <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" @hide="hideLightBox" data-lightBox="avatar" :zoomDisabled="true" :minZoom="1" :moveDisabled="true">
     </vue-easy-lightbox>
@@ -107,6 +113,7 @@ function hideLightBox() {
     aspect-ratio: 1/1;
     border: 3px solid black;
     max-width: 250px;
+    min-width: 150px;
 }
 
 [data-lightBox="avatar"] .vel-img-wrapper img {

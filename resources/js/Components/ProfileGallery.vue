@@ -3,14 +3,17 @@
         <div class="grid grid-cols-2 gap-4 overflow-auto max-h-[500px] sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 hideScrollBar ">
             <template v-for="(post, index) in posts " :key="post.id">
                 <FadeInTransition>
-                    <Link :href="isPublic ? route('public.posts', post.id) : route('posts.show', post.id)" class="relative w-full h-full overflow-hidden rounded-lg aspect-square group">
-                        <div class="absolute top-0 ltr:right-0 rtl:left-0 px-1 py[0.5px] m-1 text-xs text-white rounded-full font-thin bg-black/50" v-if=" post.media.length > 1">{{`${post.media.length} ${$t('files')}` }} </div>
+                    <Link :href="isPublic ? route('public.posts', post.id) : route('posts.show', post.id)"
+                        class="relative w-full h-full overflow-hidden rounded-lg aspect-square group">
+                    <div class="absolute top-0 ltr:right-0 rtl:left-0 px-1 scale-90 py[0.5px] m-1 text-xs text-white rounded-full font-thin bg-black/40"
+                        v-if="post.media.length > 1">{{ `${post.media.length} ${$t('files')}` }} </div>
                     <template v-if="post?.cover_photo?.mime_type.startsWith('image')">
                         <img :src="post?.cover_photo?.original_url" alt="" class="object-cover w-full h-full ">
                     </template>
 
                     <template v-if="post?.cover_photo?.mime_type.startsWith('video')">
-                        <video :src="post?.cover_photo?.original_url" :type="post?.cover_photo?.mime_type" class="object-cover object-left w-full h-full max-w-full mx-auto rounded-lg" />
+                        <video :src="post?.cover_photo?.original_url" :type="post?.cover_photo?.mime_type"
+                            class="object-cover object-left w-full h-full max-w-full mx-auto rounded-lg" />
                         <div class="absolute inset-0 flex items-center justify-center gap-2 text-xs text-gray-100 ">
                             <PlayIcon class="h-10  filter-[drop-shadow(1px_1px_1px_rgb(0_0_0/.4)]" />
                         </div>
@@ -37,7 +40,7 @@
             <span>{{ $t('Are you sure you want delete this post ? ') }}</span>
         </template>
     </ConfirmationModal>
-    <FixedActionBtn v-if="currentUser?.id === user?.id && !isPublic"  @click="showUploadFileModal = true">
+    <FixedActionBtn v-if="currentUser?.id === user?.id && !isPublic" @click="showUploadFileModal = true">
         <PlusCircleIcon class="w-5 text-white" />
     </FixedActionBtn>
     <UploadGalleryFile :show="showUploadFileModal" @close="showUploadFileModal = false" @reload="$emit('reload')" :should-upload="true" />
@@ -52,7 +55,7 @@ import FadeInTransition from './FadeInTransition.vue';
 import { Link, usePage } from '@inertiajs/inertia-vue3';
 import { Inertia } from '@inertiajs/inertia';
 import FixedActionBtn from '@/Components/FixedActionBtn.vue';
-import { EyeIcon,PlayIcon, XMarkIcon } from '@heroicons/vue/24/solid';
+import { EyeIcon, PlayIcon, XMarkIcon } from '@heroicons/vue/24/solid';
 import ConfirmationModal from './ConfirmationModal.vue';
 
 const props = defineProps({
