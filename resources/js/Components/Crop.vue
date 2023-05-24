@@ -10,8 +10,8 @@ const props = defineProps({
     aspectRatio: {
         default: null
     },
-    presetMode:Object,
-    addOption:Object
+    presetMode: Object,
+    addOption: Object
 })
 
 const emit = defineEmits(['crop', 'update:open'])
@@ -21,16 +21,15 @@ const result = reactive({
 })
 const num = ref(Math.floor(Math.random() * 100))
 const options = {
-    viewMode: 1,
+    viewMode: 3,
     dragMode: 'crop',
     responsive: true,
     aspectRatio: props.aspectRatio,
     background: false,
-    highlight: false
+    highlight: false,
 }
 let boxStyle = {
-    width: '100%',
-    height: '100%',
+    height: '300px',
     backgroundColor: '#FFF',
     margin: 'auto',
 }
@@ -69,17 +68,18 @@ function ready() {
         <SlideDownTransition>
             <div v-if="open" class="flex flex-col gap-4 p-6 bg-white border-t min-w-7xl">
                 <div v-loading="isLoading">
-                    <VuePictureCropper :boxStyle="boxStyle" :img="imageObj?.url" :options="{...options,...addOption}" @ready="ready" :key="num" :presetMode="presetMode" />
+                    <VuePictureCropper :boxStyle="boxStyle" :img="imageObj?.url" :options="{ ...options, ...addOption }"
+                        @ready="ready" :key="num" :presetMode="presetMode" />
                 </div>
                 <div class="flex justify-center w-full gap-4 ">
                     <button @click="getResult" class="self-center">
                         <CheckIcon class="w-8 p-1 text-green-600 rounded-full bg-stone-100" />
                     </button>
-                    <button  @click="$emit('update:open')">
+                    <button @click="$emit('update:open')">
                         <XMarkIcon class="w-8 p-1 text-red-600 rounded-full bg-stone-100" />
                     </button>
                 </div>
-        
+
             </div>
         </SlideDownTransition>
     </div>
