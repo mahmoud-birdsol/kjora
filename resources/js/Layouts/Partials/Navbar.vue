@@ -78,8 +78,7 @@ function markAllNotificationsAsRead() {
                                 {{ $t('home') }}
                             </span>
                         </NavLink>
-                        <NavLink :href="route('chats.index')"
-                            :active="route().current('chats.index') || route().current('chats.show')" class="">
+                        <NavLink :href="route('chats.index')" :active="route().current('chats.index') || route().current('chats.show')" class="">
                             <ChatIcon class="w-4 h-4 text-primary" />
                             <span>
                                 {{ $t('chat') }}
@@ -91,8 +90,7 @@ function markAllNotificationsAsRead() {
                                 {{ $t('favorites') }}
                             </span>
                         </NavLink>
-                        <NavLink :href="route('invitation.index')"
-                            :active="route().current('invitation.index') || route().current('hire.index')">
+                        <NavLink :href="route('invitation.index')" :active="route().current('invitation.index') || route().current('hire.index')">
                             <FootBallIcon class="w-4 h-4 fill-primary" />
 
                             <span>
@@ -115,12 +113,11 @@ function markAllNotificationsAsRead() {
                     </button>
                     <div class="flex items-center justify-between gap-2">
                         <!-- upgrade button  -->
-                        <button
-                            class="rounded-full   bg-[#CFC27A] font-medium px-2 py-1 flex items-center gap-1 justify-evenly">
+                        <button class="rounded-full   bg-[#CFC27A] font-medium px-2 py-1 flex items-center gap-1 justify-evenly">
                             <span class="bg-black rounded-full">
                                 <StarIcon class="w-4 h-4 fill-[#CFC27A]" />
                             </span>
-                            <Link class="uppercase max-xs:text-xs" :href="route('upgrade')">{{ $t('upgrade') }}</Link>
+                            <Link class="uppercase max-xs:text-xs" :href="route('upgrade')">{{ $t('subscribe') }}</Link>
                         </button>
                         <!-- user city  -->
                         <div class="flex items-center gap-1 rtl:flex-row-reverse ">
@@ -131,9 +128,8 @@ function markAllNotificationsAsRead() {
                         <div class="relative ">
                             <Link :href="route('profile.show')"
                                 class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
-                            <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url"
-                                :username="$page.props.auth.user.name" :border="true" border-color="primary" size="sm"
-                                :enable-light-box="false" />
+                            <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url" :username="$page.props.auth.user.name"
+                                :border="true" border-color="primary" size="sm" :enable-light-box="false" />
                             </Link>
                         </div>
 
@@ -159,8 +155,7 @@ function markAllNotificationsAsRead() {
                                     </div>
 
                                     <div v-if="$page.props.notifications.length">
-                                        <ul role="list"
-                                            class="divide-y divide-gray-200 max-h-[calc(100dvh-200px)] overflow-y-auto">
+                                        <ul role="list" class="divide-y divide-gray-200 max-h-[calc(100dvh-200px)] overflow-y-auto">
                                             <template v-for="notification in $page.props.notifications">
                                                 <NotificationComponent :notification="notification" />
                                             </template>
@@ -174,8 +169,7 @@ function markAllNotificationsAsRead() {
                                     </div>
 
                                     <div class="block px-4 py-2 text-xs text-center ">
-                                        <Link :href="route('notification.index')"
-                                            class="text-primary hover:text-primaryDark">
+                                        <Link :href="route('notification.index')" class="text-primary hover:text-primaryDark">
                                         {{ $t('view-all') }}
                                         </Link>
                                     </div>
@@ -191,11 +185,9 @@ function markAllNotificationsAsRead() {
         <!-- Responsive Navigation Menu -->
         <!-- Responsive Navigation Menu -->
         <div class="fixed top-0 bottom-0 left-0 right-0 z-40 bg-black bg-opacity-50"
-            :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }"
-            @click="showingNavigationDropdown = false"></div>
+            :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }" @click="showingNavigationDropdown = false"></div>
         <SlideInTransition>
-            <div class="pt-2 pb-3 space-y-1 fixed top-0  bg-black h-full w-[max(20em,50%)] z-50"
-                v-if="showingNavigationDropdown">
+            <div class="pt-2 pb-3 space-y-1 fixed top-0  bg-black h-full w-[max(20em,50%)] z-50" v-if="showingNavigationDropdown">
                 <div class="flex">
                     <XMarkIcon class="w-5 m-3 text-white mis-auto" @click="showingNavigationDropdown = false" />
                 </div>
@@ -205,13 +197,11 @@ function markAllNotificationsAsRead() {
                     <HomeIcon class="w-4 h-4 text-primary" />
                     <span>{{ $t('home') }}</span>
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('chats.index')"
-                    :active="route().current('chats.index') || route().current('chats.show')">
+                <ResponsiveNavLink :href="route('chats.index')" :active="route().current('chats.index') || route().current('chats.show')">
                     <ChatIcon class="w-4 h-4 text-primary" />
                     <span>{{ $t('chat') }}</span>
                 </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('invitation.index')"
-                    :active="route().current('invitation.index') || route().current('hire.index')">
+                <ResponsiveNavLink :href="route('invitation.index')" :active="route().current('invitation.index') || route().current('hire.index')">
                     <FootBallIcon class="w-4 fill-primary aspect-square" />
                     <span>{{ $t('invitations') }}</span>
                 </ResponsiveNavLink>
