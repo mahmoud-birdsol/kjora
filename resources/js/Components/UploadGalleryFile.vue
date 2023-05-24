@@ -239,7 +239,8 @@ let showCropModal = (file) => {
             <div>
                 <InputLabel :value="'Caption'" class="text-primary" />
                 <div class="flex items-center flex-grow ">
-                    <textarea v-model="caption" name="caption" id="caption" rows="1" :placeholder="$t('please write caption')"
+                    <textarea v-model="caption" name="caption" id="caption" rows="1"
+                        :placeholder="$t('please write caption')"
                         class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 text-stone-700 ring-1 focus:ring-primary ring-stone-400 "></textarea>
                 </div>
             </div>
@@ -248,7 +249,8 @@ let showCropModal = (file) => {
 
                 <!-- input -->
                 <div class="max-w-[300px] sm:px-20 w-full">
-                    <input ref="fileInput" type="file" multiple accept="video/*,image/*" class="hidden" @change="updateFilesPreview">
+                    <input ref="fileInput" type="file" multiple accept="video/*,image/*" class="hidden"
+                        @change="updateFilesPreview">
                     <div class="flex items-center justify-center mb-6">
                         <button type="button" :disabled="isDisabled"
                             class="inline-flex items-center p-4 text-white bg-black border border-transparent rounded-full shadow-sm enabled: enabled:hover:bg-black enabled:focus:outline-none enabled:focus:ring-2 enabled:focus:ring-black enabled:focus:ring-offset-2 disabled:bg-stone-500"
@@ -262,17 +264,22 @@ let showCropModal = (file) => {
                     <div class="relative grid grid-cols-3 gap-2">
                         <template v-for="(fileData, index) in filesData" :key="index">
                             <div v-if="fileData.url.startsWith('data:image') || fileData.type.startsWith('image') ||
-                                fileData.url.startsWith('data:video') || fileData.type.startsWith('video')" class="relative">
-                                <img v-if="fileData.url.startsWith('data:image') || fileData.type.startsWith('image')" :src="fileData.url" alt=""
+                                fileData.url.startsWith('data:video') || fileData.type.startsWith('video')"
+                                class="relative">
+                                <img v-if="fileData.url.startsWith('data:image') || fileData.type.startsWith('image')"
+                                    :src="fileData.url" alt=""
                                     class="object-contain w-full h-full rounded-lg aspect-square">
-                                <video v-if="fileData.url.startsWith('data:video') || fileData.type.startsWith('video')" :src="fileData.url" alt=""
+                                <video v-if="fileData.url.startsWith('data:video') || fileData.type.startsWith('video')"
+                                    :src="fileData.url" alt=""
                                     class="object-cover w-full h-full rounded-lg aspect-square" />
-                                <button @click.prevent="removeFile(fileData)" class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                                <button @click.prevent="removeFile(fileData)"
+                                    class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
                                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
                                         <XMarkIcon class="w-5 h-5 text-stone-800" />
                                     </div>
                                 </button>
-                                <button class="absolute top-0 left-0 bg-white bg-opacity-90 rounded-br-xl" @click="showCropModal(fileData)"
+                                <button class="absolute top-0 left-0 bg-white bg-opacity-90 rounded-br-xl"
+                                    @click="showCropModal(fileData)"
                                     v-if="fileData.url.startsWith('data:image') || fileData.type.startsWith('image')">
                                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
                                         <CropIcon class="w-4" />
@@ -281,18 +288,20 @@ let showCropModal = (file) => {
                             </div>
                         </template>
                         <FadeInTransition>
-                            <div v-if="isLoading" class="absolute inset-0 z-20 grid w-full h-full p-4 bg-stone-400/50 place-content-center ">
+                            <div v-if="isLoading"
+                                class="absolute inset-0 z-20 grid w-full h-full p-4 bg-stone-400/50 place-content-center ">
                             </div>
                         </FadeInTransition>
                     </div>
                 </div>
             </div>
             <div>
-                <Crop :img="cropFile" @crop="changeFiles" v-model:open="openCropModal" @update:open="() => openCropModal = false" />
-                <div class="mb-2 text-sm text-red-700">{{ $t('upload :filesData from :maximumUploadNumberOfFiles', {
-                    filesData: filesData.length,
-                    maximumUploadNumberOfFiles: maximumUploadNumberOfFiles
-                }) }}</div>
+                <Crop :img="cropFile" @crop="changeFiles" v-model:open="openCropModal"
+                    @update:open="() => openCropModal = false" />
+                <div v-if="filesData.length >= maximumUploadNumberOfFiles" class="mb-2 text-sm text-center text-red-500">
+                    {{ $t('the maximum allowed file is :maximumUploadNumberOfFiles', {
+                        maximumUploadNumberOfFiles: maximumUploadNumberOfFiles
+                    }) }}</div>
                 <div v-if="showAsError" class="mb-2 text-sm text-center text-red-500 justify-self-end">
                     {{ $t('only videos and images with max size (84MB) are allowed') }}
                 </div>
