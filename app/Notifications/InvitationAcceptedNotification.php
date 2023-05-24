@@ -58,7 +58,8 @@ class InvitationAcceptedNotification extends Notification implements ShouldQueue
 
         return (new MailMessage)
             ->subject($this->invitation->invitedPlayer->name.' '.__('accepted your invitation. ✅', [], $notifiable->locale))
-            ->line(__('Your invitation for **', [], $notifiable->locale).$this->invitation->invitedPlayer->name.' '.__('** to play a football match on **', [], $notifiable->locale).$invitationDate->toDateTimeString().' '.__('** at **', [], $notifiable->locale).' '.$this->invitation->stadium->name.' '.__('** was accepted.', [], $notifiable->locale))
+            ->greeting(__('Hello ') . $this->invitation->invitedPlayer->username)
+            ->line(__('Your invitation for ', [], $notifiable->locale).$this->invitation->invitedPlayer->name.' '.__(' to play a football match on ', [], $notifiable->locale).$invitationDate->toDateTimeString().' '.__(' at ', [], $notifiable->locale).' '.$this->invitation->stadium->name.' '.__(' was accepted.', [], $notifiable->locale))
             ->action(__('Chat Now', [], $notifiable->locale), url(route('chats.show', $conversation)))
             ->line(__('Thank you for using our application!', [], $notifiable->locale));
     }

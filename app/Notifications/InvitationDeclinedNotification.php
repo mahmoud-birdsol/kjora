@@ -51,7 +51,8 @@ class InvitationDeclinedNotification extends Notification implements ShouldQueue
         $invitationDate->setTimezone(str_replace('UTC', '', $notifiable->country->time_zone));
         return (new MailMessage)
             ->subject($this->invitation->invitedPlayer->name.' '.__('declined your invitation. ❌', [], $notifiable->locale))
-            ->line(__('Your invitation for **', [], $notifiable->locale).' '.$this->invitation->invitedPlayer->name.' '.__('** to play a football match on **', [], $notifiable->locale).' '.$invitationDate->toDateTimeString().' '.__('** at **', [], $notifiable->locale).' '.$this->invitation->stadium->name.' '.__('** was declined.', [], $notifiable->locale))
+            ->greeting(__('Hello ') . $this->invitation->invitedPlayer->username)
+            ->line(__('Your invitation for ', [], $notifiable->locale).' '.$this->invitation->invitedPlayer->username.' '.__(' to play a football match on ', [], $notifiable->locale).' '.$invitationDate->toDateTimeString().' '.__(' at ', [], $notifiable->locale).' '.$this->invitation->stadium->name.' '.__(' was declined.', [], $notifiable->locale))
             ->action(__('View Invitation', [], $notifiable->locale), url(route('invitation.index')))
             ->line(__('Thank you for using our application!', [], $notifiable->locale));
     }
