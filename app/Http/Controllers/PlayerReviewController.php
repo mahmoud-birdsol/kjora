@@ -47,6 +47,9 @@ class PlayerReviewController extends Controller
 
     public function store(Request $request, Review $review, RecalculatePlayerRating $recalculatePlayerRating): RedirectResponse
     {
+        if ($review->ratingCategories()->count() > 0) {
+            return redirect()->route('player.profile', $review->player->id);
+        }
         $review->update([
             'is_attended' => $request->input('attended'),
             'reviewed_at' => now(),
