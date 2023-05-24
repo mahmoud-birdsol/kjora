@@ -22,7 +22,7 @@ class PlayerReviewController extends Controller
      */
     public function show(Request $request, Review $review)
     {
-        if ($review->ratingCategories()->count() > 0) {
+        if (! is_null($review->reviewed_at)) {
             return redirect()->route('player.profile', $review->player->id);
         }
 
@@ -47,7 +47,7 @@ class PlayerReviewController extends Controller
 
     public function store(Request $request, Review $review, RecalculatePlayerRating $recalculatePlayerRating): RedirectResponse
     {
-        if ($review->ratingCategories()->count() > 0) {
+        if (! is_null($review->reviewed_at)) {
 
             FlashMessage::make()->success(
                 message: __('You already Submitted a review for this player')

@@ -264,8 +264,8 @@
     "club": "النادى",
     "All positions": "جميع المراكز",
     "You have been invited to a football match": "لقد تمت دعوتك إلى مباراة كرة قدم  ⚽️",
-    "You have been invited by **": "لقد تلقيت دعوة من **",
-    "** at **": "** في **",
+    "You have been invited by ": "لقد تلقيت دعوة من ",
+    " at ": " في ",
     "Respond Now": "أجيب الأن",
     "Thank you for using our application!": "شكرا لك على استخدام تطبيقنا!",
     "Comment Notification": "إعلام بالتعليق",
@@ -275,8 +275,8 @@
     " has uploaded their identification documents.": " قام بتحميل وثائق الهوية الخاصة بهم.",
     " has uploaded their identification documents and are waiting for review.": " قام بتحميل وثائق الهوية الخاصة بهم وينتظر المراجعة.",
     "Review": "مراجعة",
-    "Your invitation for **": "دعوتك ل **",
-    "** to play a football match on **": "** للعب مباراة كرة قدم **",
+    "Your invitation for ": "دعوتك ل ",
+    " to play a football match on ": " للعب مباراة كرة قدم ",
     "declined your invitation. ❌": " رفض دعوتك. ❌",
     "Join ": " ينضم",
     "Welcome to ": "مرحبا بك في ",
@@ -378,6 +378,5 @@
     "invitation can not be sent": "لا يمكن إرسال الدعوة",
     "to kjora to view more photos and videos": "فى kjora لترى صور وفيديوهات أخرى",
     "This player is far away from your destination": "هذا اللاعب بعيد عنك",
-    "subscribe": "اشتراك",
     "Your report has submitted.": "لقد قدم تقريرك."
 }

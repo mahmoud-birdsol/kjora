@@ -498,14 +498,14 @@ Route::prefix('policy')
         /*cookies*/
 
         Route::get(
-            'cookies-policy',
+            'cookie-use',
             [
                 CookiesPolicyController::class,
                 'index',
             ]
         )->name('cookies.policy.index');
 
-        Route::patch('cookies-policy/{cookiePolicy}', [
+        Route::patch('cookie-use/{cookiePolicy}', [
             CookiesPolicyController::class,
             'store',
         ])->name('cookies.policy.store');
