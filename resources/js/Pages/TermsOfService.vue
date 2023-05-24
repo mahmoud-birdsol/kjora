@@ -26,7 +26,7 @@ function submit() {
         <template #header>
             {{ $t('Security') }}
         </template>
-        <div class="grid w-full lg:grid-cols-2">
+        <div class="grid w-full px-8 lg:grid-cols-2">
             <div class="col-start-2 bg-white rounded-2xl p-6 w-full min-h-[500px] flex flex-col gap-4">
                 <div class="flex justify-center my-4">
 
@@ -40,8 +40,7 @@ function submit() {
                         <DateTranslation format="DD MMMM YYYY" :start="terms.created_at" />
                     </div>
                 </div>
-                <div class=""
-                    v-if="$page.props.auth.user && terms && (terms.version !== $page.props.auth.user.accepted_terms_and_conditions_version)">
+                <div class="" v-if="$page.props.auth.user && terms && (terms.version !== $page.props.auth.user.accepted_terms_and_conditions_version)">
                     <div class="flex flex-col justify-center gap-2">
                         <label for="terms" class="text-sm font-medium text-primary">{{ $t('I agree') }}</label>
                         <input type="radio" :value="terms.id" id="terms" v-model="form.termsAndConditions" :checked="false"

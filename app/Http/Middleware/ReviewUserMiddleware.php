@@ -20,7 +20,7 @@ class ReviewUserMiddleware
         $review = $request->user()?->reviewerReviews()?->whereNull('reviewed_at')?->first();
         if ($request->user()?->hasPendingReviews()) {
             FlashMessage::make()->warning(
-                message: __('You have a pending player to review')
+                message: __('You have a pending player to rate')
             )->action(route('player.review.show', [
                 'review' => $review->id,
                 'reviewing_user' => Auth::id(),
