@@ -1,7 +1,7 @@
 <script setup>
 import DateTranslation from "@/Components/DateTranslation.vue";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { useForm , usePage} from '@inertiajs/inertia-vue3';
+import { useForm, usePage } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 import AppLayout from '../Layouts/AppLayout.vue';
 import GuestLayout from "../Layouts/GuestLayout.vue";
@@ -25,7 +25,7 @@ function submit() {
         <template #header>
             {{ $t('Security') }}
         </template>
-        <div class="grid w-full lg:grid-cols-2">
+        <div class="grid w-full px-8 lg:grid-cols-2">
             <div class="col-start-2 bg-white rounded-2xl p-6 w-full min-h-[500px] flex flex-col gap-4">
                 <div class="flex justify-center my-4">
 
@@ -39,8 +39,7 @@ function submit() {
                         <DateTranslation format="DD MMMM YYYY" :start="policy.created_at" />
                     </div>
                 </div>
-                <div class=""
-                    v-if="$page.props.user && policy && (policy.version !== $page.props.auth.user.accepted_privacy_policy_version)">
+                <div class="" v-if="$page.props.user && policy && (policy.version !== $page.props.auth.user.accepted_privacy_policy_version)">
                     <div class="flex flex-col justify-center gap-2">
                         <label for="policy" class="text-sm font-medium text-primary">{{ $t('I agree') }}</label>
                         <input type="radio" :value="policy.id" id="policy" v-model="form.privacyPolicy" :checked="false"
@@ -57,4 +56,5 @@ function submit() {
             </div>
         </div>
 
-    </component></template>
+    </component>
+</template>
