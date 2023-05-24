@@ -378,6 +378,6 @@
   "to kjora to view more photos and videos": "فى kjora لترى صور وفيديوهات أخرى",
   "This player is far away from your destination": "هذا اللاعب بعيد عنك",
   "subscribe": "اشتراك",
-    "Your report has submitted.": "لقد قدم تقريرك."
-
+  "Your report has submitted.": "لقد قدم تقريرك.",
+  "the maximum allowed file is :maximumUploadNumberOfFiles": "اقصى عدد مسموح بيه من الملفات هو :maximumUploadNumberOfFiles"
 }
