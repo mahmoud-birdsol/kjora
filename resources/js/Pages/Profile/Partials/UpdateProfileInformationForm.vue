@@ -65,9 +65,10 @@ const showUploadAvatarModal = ref(false);
             <form @submit.prevent="updateProfileInformation">
                 <div class="flex items-center justify-center sm:justify-end sm:-mt-12">
                     <button class="relative mt-2" @click.prevent="showUploadAvatarModal = true">
-                        <Avatar :image-url="user.avatar_url" :username="user.name" :border="true" :borderColor="state == 'Free' ? 'primary' : 'blackDark'"
+                        <Avatar :image-url="user.avatar_url" :username="user.name" :border="true" :borderColor="state !== 'Premium' ? 'primary' : 'golden'"
                             size="xlg" :id="user.id" :enableLightBox="false" />
-                        <div class="absolute bottom-0 p-1 text-white rounded-full bg-primary hover:bg-white ltr:right-0 rtl:left-0 hover:text-primary">
+                        <div class="absolute bottom-0 p-1 rounded-full ltr:right-0 rtl:left-0 "
+                            :class="state !== 'Premium' ? 'text-white bg-primary hover:bg-white hover:text-primary' : 'text-white bg-golden hover:bg-white hover:text-golden'">
                             <PencilIcon class="w-3 [&+div]:hover:block " />
                         </div>
                     </button>

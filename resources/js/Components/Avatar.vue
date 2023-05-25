@@ -56,6 +56,7 @@ const borderColorClass = computed(() => {
         'primary': 'border-primary',
         'black': 'border-stone-800',
         'blackDark': 'border-black',
+        'golden': 'border-golden',
     }[props.borderColor];
 });
 
@@ -101,7 +102,7 @@ function hideLightBox() {
         <span v-else class="block bg-center bg-no-repeat bg-cover rounded-full" :class="[sizeClasses, borderClasses, borderColorClass]"
             :style="'background-image: url(\'https://ui-avatars.com/api/?name=' + username + '&color=094609FF&background=E2E2E2\');'" />
     </template>
-    <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" @hide="hideLightBox" :data-lightBox="currentUser?.state_name !== 'Free' ? 'avatar' : 'avatar-golden'"
+    <vue-easy-lightbox :visible="visibleRef" :imgs="imgsRef" @hide="hideLightBox" :data-lightBox="currentUser?.state_name !== 'Premium' ? 'avatar' : 'avatar-golden'"
         :zoomDisabled="true" :minZoom="1" :moveDisabled="true">
     </vue-easy-lightbox>
 </template>
