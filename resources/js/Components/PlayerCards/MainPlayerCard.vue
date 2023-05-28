@@ -124,7 +124,7 @@ function showCopied() {
                         <Link :href="route('profile.edit')" v-if="isCurrentUser && !isPublic"
                             class="absolute bottom-0 p-1 bg-white rounded-full ltr:right-0 rtl:left-0 hover:text-primary">
                         <PencilIcon class="w-3 [&+div]:hover:block " />
-                        <ToolTip :value="$t('edit-your-profile')" right="right-0"  />
+                        <ToolTip :value="$t('edit-your-profile')" right="right-0" />
                         </Link>
                         <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true"
                             :borderColor="state == 'Free' ? 'primary' : 'blackDark'" />
@@ -172,7 +172,7 @@ function showCopied() {
                     <div class="flex justify-center item-center [&+div]:hover:block rounded-full overflow-hidden w-fit p-1 mx-auto">
                         <img :src="player.club?.logo_thumb" class="w-5 h-5 " />
                     </div>
-                    <ToolTip :value="player.club?.name" top="top-0"/>
+                    <ToolTip :value="player.club?.name" top="top-0" />
                 </div>
                 <div>
 
@@ -225,6 +225,7 @@ function showCopied() {
                             {{ $t('send-invitation') }}
                             <ChevronDoubleRightIcon class="inline w-4 h-4 rtl:rotate-180 ltr:rotate-0" :class="`text-${txtColor}`" />
                         </button>
+                        <!-- can not send an invitation modal -->
                         <Modal :show="showInvitationDistanceError" :closeable="true" :show-close-icon="true" max-width="md"
                             @close="showInvitationDistanceError = false">
                             <div class="flex min-h-[300px] flex-col text-center justify-between p-6 pt-0">

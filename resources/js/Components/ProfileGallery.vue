@@ -15,7 +15,7 @@
                     </template>
                     <!-- video cover -->
                     <template v-if="post?.cover_photo?.mime_type.startsWith('video')">
-                        <video :src="post?.cover_photo?.original_url" :controls="false" playsinline preload="auto"
+                        <video :src="post?.cover_photo?.original_url" :controls="false" :poster="post?.cover_thumb_photo"
                             class="object-cover object-left w-full h-full max-w-full mx-auto rounded-lg" />
                         <div class="absolute inset-0 flex items-center justify-center gap-2 text-xs text-gray-100 ">
                             <PlayIcon class="h-10  filter-[drop-shadow(1px_1px_1px_rgb(0_0_0/.4)]" />

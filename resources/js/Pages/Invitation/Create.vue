@@ -1,17 +1,17 @@
 <script setup>
-import { computed, ref } from 'vue';
-import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { ElAutocomplete, ElDatePicker, ElTimePicker } from 'element-plus';
-import dayjs from 'dayjs';
-import AppLayout from '@/Layouts/AppLayout.vue';
-import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
+import InputLabel from '@/Components/InputLabel.vue';
 import Modal from '@/Components/Modal.vue';
 import MainPlayerCard from "@/Components/PlayerCards/MainPlayerCard.vue";
-import AddStadiumModal from '../../Components/AddStadiumModal.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 import RichSelectInput from '@/Components/RichSelectInput.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import AppLayout from '@/Layouts/AppLayout.vue';
+import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
+import dayjs from 'dayjs';
+import { ElDatePicker, ElTimePicker } from 'element-plus';
+import { computed, ref } from 'vue';
+import AddStadiumModal from '../../Components/AddStadiumModal.vue';
 
 const props = defineProps({
     invited: Object,
@@ -26,6 +26,7 @@ const form = useForm({
 });
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const showSuccessModal = ref(false);
+const showInvitationError = ref(false);
 const showMap = ref(true)
 const date = new Date();
 const isDisabled = ref(false)
@@ -40,7 +41,6 @@ const createInvitation = () => {
     form.post(route('invitation.store'), {
         onStart: () => {
             isDisabled.value = true
-            console.log('creating');
         },
         onSuccess: () => {
             showSuccessModal.value = true;
@@ -48,6 +48,9 @@ const createInvitation = () => {
         },
         onError: () => {
             isDisabled.value = false
+            if (form.errors?.invitation_error) {
+                showInvitationError.value = true
+            }
         },
         preserveScroll: true,
     });
@@ -96,13 +99,6 @@ function changeMapMarker(e) {
     let std = props.stadiums.find(s => s.id === form.stadium_id)
     currentStadium.value = std
 
-}
-const querySearch = (queryString, cb) => {
-    const results = queryString
-        ? props.stadiums.filter((stadium) => stadium.name.includes(queryString))
-        : props.stadiums
-    // call callback function to return suggestions
-    cb(results)
 }
 
 </script>
@@ -172,23 +168,38 @@ const querySearch = (queryString, cb) => {
             </div>
         </div>
         <AddStadiumModal />
-        <div class="px-4">
-            <Modal :show="showSuccessModal" max-width="md" @close="showSuccessModal = false">
-                <div class="bg-white rounded-xl p-6 md:min-h-[300px]">
-                    <div class="flex flex-col justify-between items-center h-56 md:min-h-[300px]">
-                        <div class="flex justify-center">
-                            <h2 class="text-xl font-bold uppercase text-primary">{{ $t('Invitation Sent') }}</h2>
-                        </div>
-                        <p class="">
-                            {{ $t('Your invitation will be sent and you will receive an email updating you on the status of your request') }}.</p>
 
-                        <Link :href="route('home')" class="flex w-full min-w-full">
-                        <PrimaryButton class="w-full" @click="showSuccessModal = false">{{ $t('Ok') }}</PrimaryButton>
-                        </Link>
+        <Modal :show="showSuccessModal" max-width="md" @close="showSuccessModal = false">
+            <div class="bg-white rounded-xl p-6 md:min-h-[300px]">
+                <div class="flex flex-col justify-between items-center h-56 md:min-h-[300px]">
+                    <div class="flex justify-center">
+                        <h2 class="text-xl font-bold uppercase text-primary">{{ $t('Invitation Sent') }}</h2>
                     </div>
+                    <p class="">
+                        {{ $t('Your invitation will be sent and you will receive an email updating you on the status of your request') }}.</p>
+
+                    <Link :href="route('home')" class="flex w-full min-w-full">
+                    <PrimaryButton class="w-full" @click="showSuccessModal = false">{{ $t('Ok') }}</PrimaryButton>
+                    </Link>
                 </div>
-            </Modal>
-        </div>
+            </div>
+        </Modal>
+        <!-- can not send an invitation modal -->
+        <Modal :show="showInvitationError" :closeable="true" :show-close-icon="true" max-width="md" @close="showInvitationError = false">
+            <div class="flex min-h-[300px] flex-col text-center justify-between p-6 pt-0">
+                <div class="flex justify-center">
+                    <h2 class="text-xl font-bold uppercase text-primary">
+                        {{ $t("invitation can not be sent") }}
+                    </h2>
+                </div>
+                <div class="max-sm:text-sm">
+                    {{ form.errors.invitation_error }}
+                </div>
+                <PrimaryButton @click="showInvitationError = false">
+                    {{ $t("ok") }}
+                </PrimaryButton>
+            </div>
+        </Modal>
     </AppLayout>
 </template>
 
