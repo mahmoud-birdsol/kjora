@@ -59,9 +59,9 @@ class Position extends Resource
                     ->showOnPreview()
                     ->rules('required', 'max:254'),
 
-                Textarea::make(__('Description'), 'Description')
+                Textarea::make(__('Description'), 'description')
                     ->showOnPreview()
-                    ->rules('required', 'max:254'),
+                    ->nullable()
             ]),
 
             BelongsToMany::make(__('Rating Categories'), 'ratingCategories', RatingCategory::class),
