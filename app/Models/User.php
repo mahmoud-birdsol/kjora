@@ -545,18 +545,24 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function hasApprovedInvitationsWithDifferentStadiumAndSameTime(CarbonImmutable $date, $stadium): bool
     {
         return $this->invitations()
-                ->where('date','<', $date)
-                ->whereRaw('DATE_ADD(`date`, INTERVAL 2 HOUR) > ?', [$date])
+                ->where('date', $date)
                 ->where('state', 'accepted')
                 ->where('stadium_id', '!=', $stadium)
                 ->get()->count() > 0;
     }
-
+    public function hasApprovedHiresWithDifferentStadiumAndSameTime(CarbonImmutable $date, $stadium): bool
+    {
+        return $this->hires()
+                ->where('date', $date)
+                ->where('state', 'accepted')
+                ->where('stadium_id', '!=', $stadium)
+                ->get()->count() > 0;
+    }
     public function hasApprovedHiresForSamePlayer(CarbonImmutable $date, User $player): bool
     {
         return $this->hires()
-                ->where('date','<', $date)
                 ->whereRaw('DATE_ADD(`date`, INTERVAL 2 HOUR) > ?', [$date])
+                ->whereRaw('DATE_SUB(`date`, INTERVAL 2 HOUR) < ?', [$date])
                 ->where('state', 'accepted')
                 ->where('invited_player_id', $player->id)->count() > 0;
     }
@@ -564,21 +570,13 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function hasApprovedInvitationsForSamePlayer(CarbonImmutable $date, User $player): bool
     {
         return $this->invitations()
-                ->where('date','<', $date)
                 ->whereRaw('DATE_ADD(`date`, INTERVAL 2 HOUR) > ?', [$date])
+                ->whereRaw('DATE_SUB(`date`, INTERVAL 2 HOUR) < ?', [$date])
                 ->where('state', 'accepted')
-                ->where('invited_player_id', $player->id)->count() > 0;
+                ->where('inviting_player_id', $player->id)->count() > 0;
     }
 
-    public function hasApprovedHiresWithDifferentStadiumAndSameTime(CarbonImmutable $date, $stadium): bool
-    {
-        return $this->hires()
-                ->where('date','<', $date)
-                ->whereRaw('DATE_ADD(`date`, INTERVAL 2 HOUR) > ?', [$date])
-                ->where('state', 'accepted')
-                ->where('stadium_id', '!=', $stadium)
-                ->get()->count() > 0;
-    }
+
 
     public function reportedUser(): static
     {
