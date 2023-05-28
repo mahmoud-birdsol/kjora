@@ -335,7 +335,7 @@ Route::middleware([
     )->name('chats.show');
 
     Route::get(
-        'chats/{user}/invited-chat',
+        'chats/{user}/invited-chat/{invitation}',
         [
             ChatController::class,
             'showByUserID',
