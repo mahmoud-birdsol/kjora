@@ -5,14 +5,17 @@
                 <FadeInTransition>
                     <Link :href="isPublic ? route('public.posts', post.id) : route('posts.show', post.id)"
                         class="relative w-full h-full overflow-hidden rounded-lg aspect-square group">
+
+                    <!-- number of files in this post -->
                     <div class="absolute top-0 ltr:right-0 rtl:left-0 px-1 scale-90 py[0.5px] m-1 text-xs text-white rounded-full font-thin bg-black/40"
                         v-if="post.media.length > 1">{{ `${post.media.length} ${$t('files')}` }} </div>
+                    <!-- image cover -->
                     <template v-if="post?.cover_photo?.mime_type.startsWith('image')">
                         <img :src="post?.cover_photo?.original_url" alt="" class="object-cover w-full h-full ">
                     </template>
-
+                    <!-- video cover -->
                     <template v-if="post?.cover_photo?.mime_type.startsWith('video')">
-                        <video :src="post?.cover_photo?.original_url" :type="post?.cover_photo?.mime_type"
+                        <video :src="post?.cover_photo?.original_url" :controls="false" playsinline preload="auto"
                             class="object-cover object-left w-full h-full max-w-full mx-auto rounded-lg" />
                         <div class="absolute inset-0 flex items-center justify-center gap-2 text-xs text-gray-100 ">
                             <PlayIcon class="h-10  filter-[drop-shadow(1px_1px_1px_rgb(0_0_0/.4)]" />
