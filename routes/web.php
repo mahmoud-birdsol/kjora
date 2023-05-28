@@ -43,6 +43,7 @@ use App\Nova\Templates\UpgradePageTemplate;
 use App\Rules\UserHasPendingReview;
 use App\Services\FlashMessage;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -210,73 +211,7 @@ Route::middleware([
             ]);
         })->name('invitation.create');
 
-        Route::post('invitations', function (Request $request) {
-            if ($request->user()->hasPendingReviews()) {
-                FlashMessage::make()->success(
-                    message: "You can't invite another player because you have a pending review"
-                )->closeable()->send();
-
-                return redirect()->back()->withErrors([
-                    'review' => "You can't invite another player because you have a pending review",
-                ]);
-            }
-
-
-            $data = $request->validate([
-                'stadium_id' => ['required', 'integer', 'exists:stadia,id'],
-                'invited_player_id' => ['required', 'integer', 'exists:users,id'],
-                'date' => [
-                    'required',
-                    'after_or_equal:today',
-                ],
-                'time' => ['required'],
-
-                new UserHasPendingReview($request->user()),
-            ]);
-
-            $time = Carbon::parse($data['time']);
-            $data['inviting_player_id'] = $request->user()->id;
-            $data['date'] = Carbon::parse($data['date'])->setTime($time->hour, $time->minute);
-            $date = Carbon::parse($data['date'])->setTime($time->hour, $time->minute);
-            unset($data['time']);
-
-            // checks if the invited player has an invitation at the same time
-            $invitedPlayer = User::findOrFail($request->input('invited_player_id'));
-
-
-            if ($invitedPlayer->invitations()->whereBetween('date', [$date, $date->addHours(2)])
-                    ->where('state', 'accepted')->get()->count() > 0) {
-                FlashMessage::make()->success(
-                    message: "You can't invite this player because he has an invitation at the same time"
-                )->closeable()->send();
-
-                return redirect()->back()->withErrors([
-                    'date' => "You can't invite this player because he has an invitation at the same time",
-                ]);
-            }
-            $date = Carbon::parse($data['date'])->setTime($time->hour, $time->minute);
-
-            //check if user invite player and user have invitation
-            if (($request->user()->hasApprovedInvitationsWithDifferentStadiumAndSameTime(Carbon::parse($data['date'])->setTime($time->hour, $time->minute) ,$request->input('stadium_id')))
-                || ($request->user()->hasApprovedHiresWithDifferentStadiumAndSameTime(Carbon::parse($data['date'])->setTime($time->hour, $time->minute) ,$request->input('stadium_id')))) {
-                FlashMessage::make()->success(
-                    message: "This time You have invitations with another stadium you should invite with the same stadium or another date"
-                )->closeable()->send();
-
-                return redirect()->back()->withErrors([
-                    'date' => "This time You have invitations with another stadium you should invite with the same stadium or another date",
-                ]);
-            }
-
-            $data['date']=$data['date']->toString();
-
-
-            $invitation = Invitation::create($data);
-            // Notify the invited user
-            $invitation->invitedPlayer->notify(new InvitationCreatedNotification($invitation));
-
-            return redirect()->route('home');
-        })->name('invitation.store');
+        Route::post('invitations', [InvitationController::class, 'store'])->name('invitation.store');
 
         // Accept invitation
         Route::patch(
@@ -400,7 +335,7 @@ Route::middleware([
     )->name('chats.show');
 
     Route::get(
-        'chats/{user}/invited-chat',
+        'chats/{user}/invited-chat/{invitation}',
         [
             ChatController::class,
             'showByUserID',

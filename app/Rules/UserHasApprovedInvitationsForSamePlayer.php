@@ -2,21 +2,18 @@
 
 namespace App\Rules;
 
-use App\Models\User;
 use Illuminate\Contracts\Validation\Rule;
 
-class UserHasPendingReview implements Rule
+class UserHasApprovedInvitationsForSamePlayer implements Rule
 {
-    private User $user;
-
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct()
     {
-        $this->user = $user;
+        //
     }
 
     /**
@@ -28,7 +25,7 @@ class UserHasPendingReview implements Rule
      */
     public function passes($attribute, $value)
     {
-        return ! $this->user->hasPendingReviews();
+        //
     }
 
     /**
@@ -38,6 +35,6 @@ class UserHasPendingReview implements Rule
      */
     public function message()
     {
-        return __('You Have pending ratings');
+        return 'The validation error message.';
     }
 }
