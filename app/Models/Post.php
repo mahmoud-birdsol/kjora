@@ -64,7 +64,7 @@ class Post extends Model implements HasMedia, Likeable, Reportable
             ->width(368)
             ->height(232)
             ->extractVideoFrameAtSecond(20)
-            ->performOnCollections('videos');
+            ->performOnCollections('gallery');
     }
 
     /**
