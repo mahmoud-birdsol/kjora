@@ -40,7 +40,10 @@ class AcceptInvitationController extends Controller
         return redirect()->route('invitation.index');
     }
     private function changeStateOfSameDateInvitationsToCancelled( $invitations , $invitation){
-        $querys = $invitations->where('state',null)->whereBetween('date', [Carbon::parse($invitation->date), Carbon::parse($invitation->date->addHours(2))]);
+        $querys = $invitations
+            ->where('state',null)
+            ->whereRaw('DATE_ADD(`date`, INTERVAL 2 HOUR) > ?', [Carbon::parse($invitation->date)])
+            ->whereRaw('DATE_SUB(`date`, INTERVAL 2 HOUR) < ?', [Carbon::parse($invitation->date)]);
 
         foreach ($querys as $query){
             $query->state =  "cancelled";
