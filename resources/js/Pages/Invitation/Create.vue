@@ -1,17 +1,17 @@
 <script setup>
-import { computed, ref, watch } from 'vue';
-import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { ElAutocomplete, ElDatePicker, ElTimePicker } from 'element-plus';
-import dayjs from 'dayjs';
-import AppLayout from '@/Layouts/AppLayout.vue';
-import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
+import InputLabel from '@/Components/InputLabel.vue';
 import Modal from '@/Components/Modal.vue';
 import MainPlayerCard from "@/Components/PlayerCards/MainPlayerCard.vue";
-import AddStadiumModal from '../../Components/AddStadiumModal.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 import RichSelectInput from '@/Components/RichSelectInput.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import AppLayout from '@/Layouts/AppLayout.vue';
+import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
+import dayjs from 'dayjs';
+import { ElDatePicker, ElTimePicker } from 'element-plus';
+import { computed, ref } from 'vue';
+import AddStadiumModal from '../../Components/AddStadiumModal.vue';
 
 const props = defineProps({
     invited: Object,
@@ -100,19 +100,6 @@ function changeMapMarker(e) {
     currentStadium.value = std
 
 }
-const querySearch = (queryString, cb) => {
-    const results = queryString
-        ? props.stadiums.filter((stadium) => stadium.name.includes(queryString))
-        : props.stadiums
-    // call callback function to return suggestions
-    cb(results)
-};
-
-// watch(() => form.errors?.invitation_error, (error) => {
-//     if (error) {
-//         showInvitationError.value = true
-//     }
-// });
 
 </script>
 
