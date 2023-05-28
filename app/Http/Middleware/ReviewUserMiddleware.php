@@ -24,7 +24,7 @@ class ReviewUserMiddleware
             )->action(route('player.review.show', [
                 'review' => $review->id,
                 'reviewing_user' => Auth::id(),
-            ]), __('Review'))->closeable()->send();
+            ]), __('Rate'))->closeable()->send();
         }
 
         return $next($request);

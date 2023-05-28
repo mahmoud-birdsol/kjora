@@ -7,6 +7,7 @@ use App\Models\Concerns\CanBeReported;
 use App\Models\Contracts\Reportable;
 use App\Models\States\UserPremiumState;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -189,7 +190,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function name(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->first_name.' '.$this->last_name
+            get: fn() => $this->first_name . ' ' . $this->last_name
         );
     }
 
@@ -199,7 +200,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function rating(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => number_format($value, 2)
+            get: fn($value) => number_format($value, 2)
         );
     }
 
@@ -209,7 +210,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function avatarUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMedia('avatar')?->getFullUrl()
+            get: fn() => $this->getFirstMedia('avatar')?->getFullUrl()
         );
     }
 
@@ -219,7 +220,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function avatarThumbUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMedia('avatar')?->getFullUrl('thumb')
+            get: fn() => $this->getFirstMedia('avatar')?->getFullUrl('thumb')
         );
     }
 
@@ -229,7 +230,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function identityFrontImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMedia('identity_front_image')?->getFullUrl()
+            get: fn() => $this->getFirstMedia('identity_front_image')?->getFullUrl()
         );
     }
 
@@ -239,7 +240,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function identityBackImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMedia('identity_back_image')?->getFullUrl()
+            get: fn() => $this->getFirstMedia('identity_back_image')?->getFullUrl()
         );
     }
 
@@ -249,7 +250,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function identitySelfieImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMedia('identity_selfie_image')?->getFullUrl()
+            get: fn() => $this->getFirstMedia('identity_selfie_image')?->getFullUrl()
         );
     }
 
@@ -259,7 +260,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function age(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->date_of_birth?->age,
+            get: fn($value) => $this->date_of_birth?->age,
         );
     }
 
@@ -269,7 +270,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function hasVerifiedIdentity(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->hasVerifiedPersonalIdentity()
+            get: fn($value) => $this->hasVerifiedPersonalIdentity()
         );
     }
 
@@ -279,7 +280,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function isFavorite(): Attribute
     {
         return Attribute::make(
-            get: fn () => Auth::check() && Auth::user() instanceof User
+            get: fn() => Auth::check() && Auth::user() instanceof User
                 ? Auth::user()->favorites->contains($this)
                 : false,
         );
@@ -291,7 +292,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function identityStatus(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->hasVerifiedPersonalIdentity() ? 'Verified' : ($this->hasUploadedVerificationDocuments() ? 'Pending' : 'Please verify')
+            get: fn() => $this->hasVerifiedPersonalIdentity() ? 'Verified' : ($this->hasUploadedVerificationDocuments() ? 'Pending' : 'Please verify')
         );
     }
 
@@ -361,7 +362,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
      */
     public function conversations(): BelongsToMany
     {
-        return $this->belongsToMany(Conversation::class)->withPivot(['is_deleted','user_id']);
+        return $this->belongsToMany(Conversation::class)->withPivot(['is_deleted', 'user_id']);
     }
 
     /**
@@ -395,7 +396,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
      */
     public function hasVerifiedPhone(): bool
     {
-        return ! is_null($this->phone_verified_at);
+        return !is_null($this->phone_verified_at);
     }
 
     /**
@@ -403,7 +404,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
      */
     public function hasVerifiedPersonalIdentity(): bool
     {
-        return ! is_null($this->identity_verified_at);
+        return !is_null($this->identity_verified_at);
     }
 
     /**
@@ -412,9 +413,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function hasUploadedVerificationDocuments(): bool
     {
         return
-            ! is_null($this->identity_type) &&
-            ! is_null($this->getFirstMedia('identity_front_image')?->exists()) &&
-            ! is_null($this->getFirstMedia('identity_back_image')?->exists());
+            !is_null($this->identity_type) &&
+            !is_null($this->getFirstMedia('identity_front_image')?->exists()) &&
+            !is_null($this->getFirstMedia('identity_back_image')?->exists());
     }
 
     /**
@@ -473,13 +474,13 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
      */
     public function receivesBroadcastNotificationsOn(): string
     {
-        return 'users.'.$this->id;
+        return 'users.' . $this->id;
     }
 
     public function stateName(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->state?->name()
+            get: fn($value) => $this->state?->name()
         );
     }
 
@@ -489,7 +490,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function played(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->playerReviews()->whereHas('invitation', function (Builder $query) {
+            get: fn() => $this->playerReviews()->whereHas('invitation', function (Builder $query) {
                 $query->where('state', 'accepted');
             })->whereNotNull('reviewed_at')->where('is_attended', true)->count()
         );
@@ -501,7 +502,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     public function missed(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->playerReviews()->whereHas('invitation', function (Builder $query) {
+            get: fn() => $this->playerReviews()->whereHas('invitation', function (Builder $query) {
                 $query->where('state', 'accepted');
             })->whereNotNull('reviewed_at')->where('is_attended', false)->count()
         );
@@ -518,12 +519,12 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
     {
         return Attribute::make(
             get: function () {
-                $conversation = $this->messages()->with('conversation')->whereHas('conversation.users', function($q){
-                    $q->where('is_deleted',false)->whereNot('user_id',$this->id);
+                $conversation = $this->messages()->with('conversation')->whereHas('conversation.users', function ($q) {
+                    $q->where('is_deleted', false)->whereNot('user_id', $this->id);
                 })->latest()->first()?->conversation;
 
                 if (is_null($conversation)) {
-                    $conversation = $this->conversations()->whereHas('users', function (Builder $query)  {
+                    $conversation = $this->conversations()->whereHas('users', function (Builder $query) {
                         $query->whereNot('conversation_user.user_id', request()->user()->id)
                             ->where('conversation_user.is_deleted', '!=', true);
                     })->first();
@@ -541,17 +542,44 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         return $this->reviewerReviews()->whereNull('reviewed_at')->count() > 0;
     }
 
-    public function hasApprovedInvitationsWithDifferentStadiumAndSameTime($date , $stadium): bool
+    public function hasApprovedInvitationsWithDifferentStadiumAndSameTime(CarbonImmutable $date, $stadium): bool
     {
-        return $this->invitations()->whereBetween('date', [Carbon::parse($date), Carbon::parse($date->addHours(2))])
-                ->where('state', 'accepted')->where('stadium_id','!=',$stadium)->get()->count() > 0;
+        return $this->invitations()
+                ->where('date','<', $date)
+                ->whereRaw('DATE_ADD(`date`, INTERVAL 2 HOUR) > ?', [$date])
+                ->where('state', 'accepted')
+                ->where('stadium_id', '!=', $stadium)
+                ->get()->count() > 0;
     }
 
-    public function hasApprovedHiresWithDifferentStadiumAndSameTime($date , $stadium): bool
+    public function hasApprovedHiresForSamePlayer(CarbonImmutable $date, User $player): bool
     {
-        return $this->hires()->whereBetween('date', [Carbon::parse($date), Carbon::parse($date->addHours(2))])
-                ->where('state', 'accepted')->where('stadium_id','!=',$stadium)->get()->count() > 0 ;
+        return $this->hires()
+                ->where('date','<', $date)
+                ->whereRaw('DATE_ADD(`date`, INTERVAL 2 HOUR) > ?', [$date])
+                ->where('state', 'accepted')
+                ->where('invited_player_id', $player->id)->count() > 0;
     }
+
+    public function hasApprovedInvitationsForSamePlayer(CarbonImmutable $date, User $player): bool
+    {
+        return $this->invitations()
+                ->where('date','<', $date)
+                ->whereRaw('DATE_ADD(`date`, INTERVAL 2 HOUR) > ?', [$date])
+                ->where('state', 'accepted')
+                ->where('invited_player_id', $player->id)->count() > 0;
+    }
+
+    public function hasApprovedHiresWithDifferentStadiumAndSameTime(CarbonImmutable $date, $stadium): bool
+    {
+        return $this->hires()
+                ->where('date','<', $date)
+                ->whereRaw('DATE_ADD(`date`, INTERVAL 2 HOUR) > ?', [$date])
+                ->where('state', 'accepted')
+                ->where('stadium_id', '!=', $stadium)
+                ->get()->count() > 0;
+    }
+
     public function reportedUser(): static
     {
         return $this;
