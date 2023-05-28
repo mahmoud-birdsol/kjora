@@ -90,7 +90,7 @@ class InvitationController extends Controller
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'date' => "You already invited this player at the same match",
+                'invitation_error' => "You already invited this player at the same match",
             ]);
         }
 
@@ -105,7 +105,7 @@ class InvitationController extends Controller
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'date' => "You already has been invited by this player at the same match",
+                'invitation_error' => "You already has been invited by this player at the same match",
             ]);
         }
 
@@ -123,7 +123,7 @@ class InvitationController extends Controller
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'date' => "You can't invite this player because you have been invited to a match in this time",
+                'invitation_error' => "You can't invite this player because you have been invited to a match in this time",
             ]);
         }
         // check if player because he has an hires at the same time
@@ -138,7 +138,7 @@ class InvitationController extends Controller
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'date' => "You can't invite this player because you have a match in this time",
+                'invitation_error' => "You can't invite this player because you have a match in this time",
             ]);
         }
         $date = Carbon::parse($data['date'])->setTime($time->hour, $time->minute);
@@ -154,7 +154,7 @@ class InvitationController extends Controller
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'date' => "You can't invite this player because he has a match at the same time",
+                'invitation_error' => "You can't invite this player because he has a match at the same time",
             ]);
         }
         // check if player because he has an hires at the same time
@@ -169,7 +169,7 @@ class InvitationController extends Controller
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'date' => "You can't invite this player because he has a match at the same time",
+                'invitation_error' => "You can't invite this player because he has a match at the same time",
             ]);
         }
         //check if user has Approved Invitations With Different Stadium And Same Time
@@ -185,7 +185,7 @@ class InvitationController extends Controller
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'date' => "This time You have invitations with another stadium you should invite with the same stadium or another date",
+                'invitation_error' => "This time You have invitations with another stadium you should invite with the same stadium or another date",
             ]);
 
         }
@@ -201,7 +201,7 @@ class InvitationController extends Controller
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'date' => "This time You have invitations with another stadium you should invite with the same stadium or another date",
+                'invitation_error' => "This time You have invitations with another stadium you should invite with the same stadium or another date",
             ]);
         }
         //check if invited Player has Approved  Invitations With Different Stadium And Same Time
@@ -217,7 +217,7 @@ class InvitationController extends Controller
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'date' => "This time You have invitations with another stadium you should invite with the same stadium or another date",
+                'invitation_error' => "This time You have invitations with another stadium you should invite with the same stadium or another date",
             ]);
 
         }
@@ -234,7 +234,7 @@ class InvitationController extends Controller
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'date' => "This time You have invitations with another stadium you should invite with the same stadium or another date",
+                'invitation_error' => "This time You have invitations with another stadium you should invite with the same stadium or another date",
             ]);
         }
         $data['date'] = $data['date']->toString();
