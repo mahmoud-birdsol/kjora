@@ -61,8 +61,10 @@ class Post extends Model implements HasMedia, Likeable, Reportable
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')
-            ->width(130)
-            ->height(130);
+            ->width(368)
+            ->height(232)
+            ->extractVideoFrameAtSecond(20)
+            ->performOnCollections('gallery');
     }
 
     /**
