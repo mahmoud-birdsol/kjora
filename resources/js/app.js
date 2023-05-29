@@ -4,7 +4,7 @@ import "@splidejs/splide/css";
 import "@splidejs/vue-splide/css/core";
 import "@splidejs/vue-splide/css";
 import VueApexCharts from "vue3-apexcharts";
-import { createSSRApp, h } from 'vue'
+import { createApp, h } from 'vue'
 import { createInertiaApp } from "@inertiajs/inertia-vue3";
 import { InertiaProgress } from "@inertiajs/progress";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
@@ -33,7 +33,7 @@ createInertiaApp({
             import.meta.glob("./Pages/**/*.vue")
         ),
     setup({ el, app, props, plugin }) {
-        return createSSRApp({ render: () => h(app, props) })
+        return createApp({ render: () => h(app, props) })
             .use(plugin)
             .use(i18nVue, {
                 resolve: (lang) => import(`../../lang/${lang}.json`)
