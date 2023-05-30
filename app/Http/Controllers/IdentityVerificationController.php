@@ -96,7 +96,7 @@ class IdentityVerificationController extends Controller
         NotifyAdminsOfVerificationRequest::dispatch($request->user());
 
         FlashMessage::make()->success(
-            message: __('Your identity verification has been successfully sent. Please wait for approval')
+            message: __('Your identity verification has been successfully sent. Please wait for approval.')
         )->closeable()->send();
 
         return redirect()->route('home');
