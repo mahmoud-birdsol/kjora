@@ -241,6 +241,7 @@ function showCopied() {
                             <ChevronDoubleRightIcon class="inline w-4 h-4 rtl:rotate-180 ltr:rotate-0"
                                 :class="`text-${txtColor}`" />
                         </button>
+                        <!-- can not send an invitation modal -->
                         <Modal :show="showInvitationDistanceError" :closeable="true" :show-close-icon="true" max-width="md"
                             @close="showInvitationDistanceError = false">
                             <div class="flex min-h-[300px] flex-col text-center justify-between p-6 pt-0">

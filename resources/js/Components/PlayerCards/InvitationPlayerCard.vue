@@ -219,7 +219,10 @@ const markerOptions = { position: position };
                     </button>
                 </div>
                 <!-- accepted -->
-                <Link :href="route('chats.by.user.show',isHiring ? invitation.invited_player_id :  invitation.inviting_player_id )" v-if="isAccepted && !isShouldRate"
+                <Link :href="route('chats.by.user.show',{
+                    'user': isHiring ? invitation.invited_player_id :  invitation.inviting_player_id ,
+                    'invitation' : invitation.id
+                } )" v-if="isAccepted && !isShouldRate"
                     class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                 {{ $t("chat") }}
                 </Link>
