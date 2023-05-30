@@ -22,7 +22,7 @@ class ResendVerificationCodeController extends Controller
         ($createVerificationCode)($request->user());
 
         FlashMessage::make()->success(
-            message: __('Verification code sent.')
+            message: __('Verification code sent')
         )->closeable()->send();
 
         return back();

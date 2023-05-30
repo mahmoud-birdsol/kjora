@@ -82,21 +82,21 @@ class IdentityVerificationController extends Controller
             $user = $request->user();
             $user
                 ->addMediaFromBase64($request->input('identity_selfie_image'))
-                ->setFileName($user->id.'_selfie_image.jpg')
+                ->setFileName($user->id . '_selfie_image.jpg')
                 ->withCustomProperties(['mime-type' => 'image/jpeg'])
                 ->toMediaCollection('identity_selfie_image');
         }
 
         if ($request->user()->hasUploadedVerificationDocuments()) {
             FlashMessage::make()->success(
-                message: __('Thank you for uploading your verification documents we will verify the information provided and get back to you shortly.')
+                message: __('Thank you for uploading your verification documents we will verify the information provided and get back to you shortly')
             )->closeable()->send();
         }
 
         NotifyAdminsOfVerificationRequest::dispatch($request->user());
 
         FlashMessage::make()->success(
-            message: __('Your identity verification has been successfully sent. Please wait for approval.')
+            message: __('Your identity verification has been successfully sent. Please wait for approval')
         )->closeable()->send();
 
         return redirect()->route('home');

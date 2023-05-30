@@ -17,7 +17,7 @@ class UpgradeMembershipController extends Controller
         $request->user()->state->transitionTo(Premium::class);
 
         FlashMessage::make()->success(
-            message: 'Your Subscription has been upgraded to Premium'
+            message: __('Your Subscription has been upgraded to Premium')
         )->closeable()->send();
 
         return redirect()->route('home');

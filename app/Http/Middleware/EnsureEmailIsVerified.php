@@ -16,9 +16,9 @@ class EnsureEmailIsVerified
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! $request->user()->hasVerifiedEmail()) {
+        if (!$request->user()->hasVerifiedEmail()) {
             FlashMessage::make()->warning(
-                message: __('Please verify your email through the link sent to your email.')
+                message: __('Please verify your email through the link sent to your email')
             )->action(route('verification.notice'), __('Request another email'))->closeable()->send();
         }
 

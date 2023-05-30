@@ -21,7 +21,7 @@ class ContactController extends Controller
         });
 
         FlashMessage::make()->success(
-            message: 'Your contact request has reached us and we will review it shortly.'
+            message: __('Your contact request has reached us and we will review it shortly')
         )->closeable()->send();
 
         return redirect()->back();

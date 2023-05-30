@@ -25,7 +25,7 @@ class ReportController extends Controller
         NotifyAdminsOfReportSubmission::dispatch($report);
         NotifyReportedUserOfReportSubmission::dispatch($report);
         FlashMessage::make()->success(
-            message: __('Your report has been submitted and will be reviewed by our admins shortly.')
+            message: __('Your report has been submitted and will be reviewed by our admins shortly')
         )->closeable()->send();
 
         return redirect()->back();
