@@ -48,7 +48,7 @@ class ReportSubmittedNotification extends Notification implements ShouldQueue
         return (new MailMessage)
             ->subject(__('New report submitted ⚠️', [], $notifiable->locale))
             ->line($this->report->user->name.__(' has submitted a report.', [], $notifiable->locale))
-            ->action(__('Review', [], $notifiable->locale), 'nova/resources/reports/'.$this->report->id)
+            ->action(__('Review', [], $notifiable->locale), '/nova/resources/reports/'.$this->report->id)
             ->line(__('Thank you for using our application!', [], $notifiable->locale));
     }
 
