@@ -28,7 +28,7 @@ onMounted(() => {
             <!-- Info Message -->
             <div v-if="message.type === 'info'" class="flex w-full px-6 py-4 bg-sky-500">
                 <div class="flex items-center justify-between w-full mt-3 space-x-4">
-                    <p class="mr-12 font-bold text-sky-50">{{ message.body }}</p>
+                    <p class="mr-16 font-bold text-sky-50">{{ message.body }}</p>
                     <Link v-if="message.action" :href="message.action.url">
                     <SecondaryButton size="sm">{{
                         $t(message.action.text)
@@ -45,9 +45,9 @@ onMounted(() => {
             <!-- Warning Message -->
             <div v-if="message.type === 'warning'" class="flex w-full px-6 py-4 bg-yellow-300">
                 <div class="flex flex-col items-center justify-between w-full mt-3 space-x-4 gap-y-2 md:flex-row">
-                    <p class="mr-12 font-bold text-gray-700">{{ $t(message.body) }}</p>
+                    <p class="mr-16 font-bold text-gray-700">{{ $t(message.body) }}</p>
                     <Link v-if="message.action" :href="message.action.url" class="px-[67px]">
-                    <SecondaryButton size="sm" class="!text-[9px]">{{
+                    <SecondaryButton size="sm" class="max-sm:!text-[9px]">{{
                         $t(message.action.text)
                     }}</SecondaryButton>
                     </Link>
@@ -62,9 +62,9 @@ onMounted(() => {
             <!-- Danger Message -->
             <div v-if="message.type === 'danger'" class="flex w-full px-6 py-4 bg-rose-500">
                 <div class="flex items-center justify-between w-full mt-3 space-x-4">
-                    <p class="mr-12 font-bold text-rose-50">{{ $t(message.body) }}</p>
+                    <p class="mr-16 font-bold text-rose-50">{{ $t(message.body) }}</p>
                     <Link v-if="message.action" :href="message.action.url">
-                    <SecondaryButton class="!text-[9px]" size="sm">{{
+                    <SecondaryButton class="max-sm:!text-[9px]" size="sm">{{
                         $t(message.action.text)
                     }}</SecondaryButton>
                     </Link>
@@ -79,9 +79,9 @@ onMounted(() => {
             <!-- Success Message -->
             <div v-if="message.type === 'success'" class="flex w-full px-6 py-4 bg-emerald-500">
                 <div class="flex items-center justify-between w-full mt-3 space-x-4">
-                    <p class="mr-12 font-bold text-emerald-50">{{ message.body }}</p>
+                    <p class="mr-16 font-bold text-emerald-50">{{ message.body }}</p>
                     <Link v-if="message.action" :href="message.action.url">
-                    <SecondaryButton class="!text-[9px]" size="sm">{{
+                    <SecondaryButton class="max-sm:!text-[9px]" size="sm">{{
                         $t(message.action.text)
                     }}</SecondaryButton>
                     </Link>
