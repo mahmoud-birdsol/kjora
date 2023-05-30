@@ -31,7 +31,7 @@ onMounted(() => {
                     <p class="mr-12 font-bold text-sky-50">{{ message.body }}</p>
                     <Link v-if="message.action" :href="message.action.url">
                     <SecondaryButton size="sm">{{
-                        message.action.text
+                        $t(message.action.text)
                     }}</SecondaryButton>
                     </Link>
 
@@ -48,7 +48,7 @@ onMounted(() => {
                     <p class="mr-12 font-bold text-gray-700">{{ $t(message.body) }}</p>
                     <Link v-if="message.action" :href="message.action.url" class="px-[67px]">
                     <SecondaryButton size="sm" class="!text-[9px]">{{
-                        message.action.text
+                        $t(message.action.text)
                     }}</SecondaryButton>
                     </Link>
 
@@ -65,7 +65,7 @@ onMounted(() => {
                     <p class="mr-12 font-bold text-rose-50">{{ $t(message.body) }}</p>
                     <Link v-if="message.action" :href="message.action.url">
                     <SecondaryButton class="!text-[9px]" size="sm">{{
-                        message.action.text
+                        $t(message.action.text)
                     }}</SecondaryButton>
                     </Link>
 
@@ -79,7 +79,7 @@ onMounted(() => {
             <!-- Success Message -->
             <div v-if="message.type === 'success'" class="flex w-full px-6 py-4 bg-emerald-500">
                 <div class="flex items-center justify-between w-full mt-3 space-x-4">
-                    <p class="mr-12 font-bold text-emerald-50">{{ $t(message.body) }}</p>
+                    <p class="mr-12 font-bold text-emerald-50">{{ message.body }}</p>
                     <Link v-if="message.action" :href="message.action.url">
                     <SecondaryButton class="!text-[9px]" size="sm">{{
                         $t(message.action.text)
