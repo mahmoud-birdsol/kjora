@@ -212,7 +212,7 @@ function showCopied() {
                 </div>
             </div>
 
-            <div class="flex items-center justify-between gap-1 mt-2 sm:text-xs" :class="`text-${txtColor}`">
+            <div class="flex items-center justify-between gap-1 my-2 sm:text-xs" :class="`text-${txtColor}`">
                 <div class="flex items-center gap-1">
 
                     <a :href="`https://www.google.com/maps/dir/Current+Location/${player.current_latitude},${player.current_longitude}`"
@@ -269,8 +269,9 @@ function showCopied() {
                     </div>
                 </div>
             </div>
-            <div v-if="distanceBetweenPlayerAndMe === NaN" class="pis-4 sm:text-xs" :class="`text-${txtColor}`">
-                <div v-if="!isCurrentUser && showDistance" class="text-xs scale-[0.85] ltr:origin-left rtl:origin-right">
+            <div class="pis-4 sm:text-xs" :class="`text-${txtColor}`">
+                <div v-if="!isCurrentUser && showDistance && distanceBetweenPlayerAndMe !== NaN"
+                    class="text-xs scale-[0.85] ltr:origin-left rtl:origin-right">
                     <span>{{ distanceBetweenPlayerAndMe }}</span><span>{{ $t('Km') }}</span>
                 </div>
                 <div v-else class="h-[16px]"></div>
