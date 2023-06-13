@@ -51,7 +51,10 @@ const isAccepted = props.invitation.state === 'accepted'
 const isDecline = props.invitation.state === 'declined'
 const isCancelled = props.invitation.state === 'cancelled' || (dayjs(props.invitation?.date).diff(dayjs(), 'hour') <= 0 && props.invitation.state === null)
 const isCanCancel = isPending && isHiring
-const isShouldRate = computed(() => props.invitation?.reviews && props.invitation?.reviews[0]?.reviewed_at ? false : true)
+const isShouldRate = computed(() => {
+    if (Boolean(props.invitation?.reviews.length))
+        return Boolean(props.invitation?.reviews[0]?.reviewed_at) ? false : true
+})
 
 const accept = () => {
     const form = useForm({});
