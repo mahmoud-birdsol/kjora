@@ -124,7 +124,7 @@ function showCopied() {
                     :class="{ 'space-x-2': size == 'sm', 'space-x-8': size == 'lg' }">
                     <div class="relative">
                         <Link :href="route('profile.edit')" v-if="isCurrentUser && !isPublic"
-                            class="absolute bottom-0 p-1 bg-white rounded-full ltr:right-0 rtl:left-0 hover:text-primary">
+                            class="absolute bottom-0 p-1 bg-white rounded-full hover:text-primary">
                         <PencilIcon class="w-3 [&+div]:hover:block " />
                         <ToolTip :value="$t('edit-your-profile')" right="right-0" />
                         </Link>

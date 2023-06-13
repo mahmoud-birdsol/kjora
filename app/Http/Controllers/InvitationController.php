@@ -59,15 +59,15 @@ class InvitationController extends Controller
      */
     public function store(InvitationRequest $request): RedirectResponse
     {
-        //        if ($request->user()->hasPendingReviews()) {
-        //            FlashMessage::make()->success(
-        //                message: "You can't invite another player because you have a pending rating"
-        //            )->closeable()->send();
-        //
-        //            return redirect()->back()->withErrors([
-        //                'review' => "You can't invite another player because you have a pending rating",
-        //            ]);
-        //        }
+        if ($request->user()->hasPendingReviews()) {
+            //    FlashMessage::make()->success(
+            //        message: "You can't invite another player because you have a pending rating"
+            //    )->closeable()->send();
+
+            return redirect()->back()->withErrors([
+                'review' => "You can't invite another player because you have a pending rating",
+            ]);
+        }
         $data = $request->validated();
 
         $time = Carbon::parse($data['time']);
