@@ -51,7 +51,7 @@ const isAccepted = props.invitation.state === 'accepted'
 const isDecline = props.invitation.state === 'declined'
 const isCancelled = props.invitation.state === 'cancelled' || (dayjs(props.invitation?.date).diff(dayjs(), 'hour') <= 0 && props.invitation.state === null)
 const isCanCancel = isPending && isHiring
-const isShouldRate = computed(() => props.invitation?.reviews?.length ? true : false)
+const isShouldRate = computed(() => props.invitation?.reviews && props.invitation?.reviews[0]?.reviewed_at ? false : true)
 
 const accept = () => {
     const form = useForm({});
@@ -227,7 +227,6 @@ const markerOptions = { position: position };
                 {{ $t("chat") }}
                 </Link>
                 <!-- Rate -->
-                {{ props.invitation?.reviews }}
                 <Link :href="route('player.review.show', invitation.reviews[0].id)
                 " v-if="isAccepted && isShouldRate"
                     class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
