@@ -1,14 +1,13 @@
 <script setup>
-import { computed, ref } from 'vue';
-import { Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { ElRate } from 'element-plus';
 import Avatar from '@/Components/Avatar.vue';
-import { HeartIcon, PencilIcon, StarIcon as StarIconFilled, ChevronDoubleRightIcon } from '@heroicons/vue/20/solid'
-import { FlagIcon, HeartIcon as HeartIconOutline, MapPinIcon, StarIcon as StarIconOutline } from '@heroicons/vue/24/outline';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ReportModal from "@/Components/ReportModal.vue";
 import Socials from '@/Components/Socials.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ToolTip from "@/Components/ToolTip.vue";
+import { ChevronDoubleRightIcon, PencilIcon, StarIcon as StarIconFilled } from '@heroicons/vue/20/solid';
+import { FlagIcon, MapPinIcon, StarIcon as StarIconOutline } from '@heroicons/vue/24/outline';
+import { Link, usePage } from '@inertiajs/inertia-vue3';
+import { computed, ref } from 'vue';
 import FavouriteButton from '../FavouriteButton.vue';
 import Modal from "../Modal.vue";
 
@@ -219,7 +218,7 @@ function showCopied() {
                         target="_blank" class="w-full overflow-hidden rounded-lg ">
                         <p class="flex gap-1 items-center text-sm scale-[0.85] ltr:origin-left rtl:origin-right"
                             v-if="showLocation">
-                            <MapPinIcon class="inline w-4 h-4" />
+                            <MapPinIcon class="inline w-4" />
                             {{ player.current_city }}
                         </p>
                     </a>
