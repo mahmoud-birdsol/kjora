@@ -4,7 +4,7 @@ import "@splidejs/splide/css";
 import "@splidejs/vue-splide/css/core";
 import "@splidejs/vue-splide/css";
 import VueApexCharts from "vue3-apexcharts";
-import { createApp, h } from 'vue'
+import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/inertia-vue3";
 import { InertiaProgress } from "@inertiajs/progress";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
@@ -12,7 +12,7 @@ import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 import { createPinia } from "pinia";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import {i18nVue} from "laravel-vue-i18n";
+import { i18nVue } from "laravel-vue-i18n";
 import VueGoogleMaps from "@fawmi/vue-google-maps";
 
 import EmojiPicker from "vue3-emoji-picker";
@@ -36,7 +36,7 @@ createInertiaApp({
         return createApp({ render: () => h(app, props) })
             .use(plugin)
             .use(i18nVue, {
-                resolve: (lang) => import(`../../lang/${lang}.json`)
+                resolve: (lang) => import(`../../lang/${lang}.json`),
             })
             .use(ZiggyVue, Ziggy)
             .use(pinia)
@@ -55,4 +55,4 @@ createInertiaApp({
     },
 });
 
-InertiaProgress.init({ color: "#4B5563" });
+InertiaProgress.init({ color: "rgb(0, 100, 0)", showSpinner: true });
