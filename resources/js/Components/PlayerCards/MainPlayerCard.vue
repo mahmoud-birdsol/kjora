@@ -108,13 +108,12 @@ function showCopied() {
 <template>
     <!-- favorite icon -->
     <div class="rounded-xl" :style="`background-image: url('${backgroundImage}'); background-size: cover; background-position: center;`">
-        <div v-show="showFavorite && !isCurrentUser" class="flex justify-end">
+        <div :class="{ 'invisible': !(showFavorite && !isCurrentUser) }" class="flex justify-end">
             <span class="p-2 bg-white rounded-lg ltr:rounded-bl-3xl rtl:rounded-br-3xl">
                 <FavouriteButton :user="player" />
             </span>
         </div>
-        <div v-if="!showFavorite" class="h-[34px]"></div>
-        <div v-if="showFavorite && isCurrentUser" class="h-[34px]"></div>
+        <!-- <div v-else class="h-[34px]"></div> -->
 
 
         <div class="px-4 py-1">
