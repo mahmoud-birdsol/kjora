@@ -184,7 +184,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             Text::make(__('Greetings Text Ar'), 'greetings_text_ar'),
             Text::make(__('Greetings Text En'), 'greetings_text_en')
                 ->rules('required_with:greetings_text_ar'),
-            Number::make('Distance invitation limit', 'distance_invitation_limit'),
+            Number::make('Distance invitation limit', 'distance_invitation_limit')->help('KM'),
             Number::make('Maximum upload number of files', 'maximum_upload_number_of_files')
         ]);
     }

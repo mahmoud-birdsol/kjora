@@ -116,7 +116,7 @@ function changeMapMarker(e) {
                 <div class="grid grid-cols-1 gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                     <div class="col-span-1">
                         <div class="p-6 bg-black rounded-xl">
-                            <MainPlayerCard :player="invited" :show-report="false" :show-invite="false" />
+                            <MainPlayerCard :player="invited" :show-report="false" :show-invite="false" :show-favorite="false" :show-share="false" />
 
                             <form @submit.prevent="">
                                 <div class="my-6">
@@ -176,7 +176,11 @@ function changeMapMarker(e) {
                         <h2 class="text-xl font-bold uppercase text-primary">{{ $t('Invitation Sent') }}</h2>
                     </div>
                     <p class="">
-                        {{ $t('Your invitation will be sent and you will receive an email updating you on the status of your request') }}.</p>
+                        {{
+                            $t(
+                                'Your invitation will be sent and you will receive an email updating you on the status of your request'
+                            )
+                        }}.</p>
 
                     <Link :href="route('home')" class="flex w-full min-w-full">
                     <PrimaryButton class="w-full" @click="showSuccessModal = false">{{ $t('Ok') }}</PrimaryButton>

@@ -1,14 +1,13 @@
 <script setup>
-import { computed, ref } from 'vue';
-import { Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import { ElRate } from 'element-plus';
 import Avatar from '@/Components/Avatar.vue';
-import { HeartIcon, PencilIcon, StarIcon as StarIconFilled, ChevronDoubleRightIcon } from '@heroicons/vue/20/solid'
-import { FlagIcon, HeartIcon as HeartIconOutline, MapPinIcon, StarIcon as StarIconOutline } from '@heroicons/vue/24/outline';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ReportModal from "@/Components/ReportModal.vue";
 import Socials from '@/Components/Socials.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ToolTip from "@/Components/ToolTip.vue";
+import { ChevronDoubleRightIcon, PencilIcon, StarIcon as StarIconFilled } from '@heroicons/vue/20/solid';
+import { FlagIcon, MapPinIcon, StarIcon as StarIconOutline } from '@heroicons/vue/24/outline';
+import { Link, usePage } from '@inertiajs/inertia-vue3';
+import { computed, ref } from 'vue';
 import FavouriteButton from '../FavouriteButton.vue';
 import Modal from "../Modal.vue";
 
@@ -119,10 +118,10 @@ function showCopied() {
 
         <div class="px-4 py-1">
             <div class="flex items-start justify-between">
-                <div class="flex items-center justify-start gap-2 mb-2" :class="{ 'space-x-2': size == 'sm', 'space-x-8': size == 'lg' }">
+                <div class="flex items-center flex-1 gap-2 mb-2" :class="{ 'space-x-2': size == 'sm', 'space-x-8': size == 'lg' }">
                     <div class="relative">
                         <Link :href="route('profile.edit')" v-if="isCurrentUser && !isPublic"
-                            class="absolute bottom-0 p-1 bg-white rounded-full ltr:right-0 rtl:left-0 hover:text-primary">
+                            class="absolute bottom-0 p-1 bg-white rounded-full hover:text-primary">
                         <PencilIcon class="w-3 [&+div]:hover:block " />
                         <ToolTip :value="$t('edit-your-profile')" right="right-0" />
                         </Link>
@@ -130,13 +129,18 @@ function showCopied() {
                             :borderColor="state == 'Free' ? 'primary' : 'blackDark'" />
                     </div>
 
-                    <div :class="state == 'Free' ? 'text-white' : 'text-primary'">
-                        <Link :href="route('player.profile', player.id)">
-                        <h2 class="text-sm font-bold capitalize">
-                            {{ player.first_name }} {{ player.last_name }}
-                        </h2>
-                        </Link>
-
+                    <div :class="state == 'Free' ? 'text-white' : 'text-primary'" class="flex-1">
+                        <div class="flex justify-between">
+                            <Link :href="route('player.profile', player.id)">
+                            <h2 class="text-sm font-bold capitalize">
+                                {{ player.first_name }} {{ player.last_name }}
+                            </h2>
+                            </Link>
+                            <div class="flex flex-col items-center gap-1">
+                                <p :class="state == 'Free' ? 'text-white' : 'text-primary'" class="text-sm font-bold ">
+                                    {{ player.preferred_foot === 'right' ? 'R' : 'L' }}</p>
+                            </div>
+                        </div>
                         <Link class="text-xs opacity-50" :href="route('player.profile', player.id)">@{{
                             player.username
                         }}
@@ -157,10 +161,7 @@ function showCopied() {
                     </div>
                 </div>
 
-                <div class="flex flex-col items-center gap-1">
-                    <p :class="state == 'Free' ? 'text-white' : 'text-primary'" class="text-sm font-bold ">
-                        {{ player.preferred_foot === 'right' ? 'R' : 'L' }}</p>
-                </div>
+
             </div>
 
             <div class="grid gap-1 border-b sm:gap-4"
@@ -201,13 +202,13 @@ function showCopied() {
                 </div>
             </div>
 
-            <div class="flex items-center justify-between gap-1 mt-2 sm:text-xs" :class="`text-${txtColor}`">
+            <div class="flex items-center justify-between gap-1 my-2 sm:text-xs" :class="`text-${txtColor}`">
                 <div class="flex items-center gap-1">
 
                     <a :href="`https://www.google.com/maps/dir/Current+Location/${player.current_latitude},${player.current_longitude}`" target="_blank"
                         class="w-full overflow-hidden rounded-lg ">
                         <p class="flex gap-1 items-center text-sm scale-[0.85] ltr:origin-left rtl:origin-right" v-if="showLocation">
-                            <MapPinIcon class="inline w-4 h-4" />
+                            <MapPinIcon class="inline w-4" />
                             {{ player.current_city }}
                         </p>
                     </a>
@@ -252,7 +253,7 @@ function showCopied() {
                 </div>
             </div>
             <div class="pis-4 sm:text-xs" :class="`text-${txtColor}`">
-                <div v-if="!isCurrentUser && showDistance" class="text-xs scale-[0.85] ltr:origin-left rtl:origin-right">
+                <div v-if="!isCurrentUser && showDistance && distanceBetweenPlayerAndMe !== NaN" class="text-xs scale-[0.85] ltr:origin-left rtl:origin-right">
                     <span>{{ distanceBetweenPlayerAndMe }}</span><span>{{ $t('Km') }}</span>
                 </div>
                 <div v-else class="h-[16px]"></div>

@@ -30,6 +30,13 @@ const showingNavigationDropdown = ref(false);
 const logout = () => {
     Inertia.post(route('logout'));
 };
+const links = [
+    { id: 1, label: 'home', routeName: 'home', current: 'home', icon: HomeIcon },
+    { id: 2, label: 'chat', routeName: 'chats.index', current: 'chat.*', icon: ChatIcon },
+    { id: 3, label: 'favorites', routeName: 'favorites.index', current: 'favorites.*', icon: HeartIcon },
+    { id: 4, label: 'invitations', routeName: 'invitation.index', current: 'invitation.*', icon: FootBallIcon },
+    { id: 5, label: 'more', routeName: 'more', current: 'more', icon: EllipsisHorizontalCircleIcon },
+]
 let state = usePage().props.value.user.state_name
 let notificationsLength = ref(usePage().props.value.notifications.length)
 let notifications = ref(usePage().props.value.notifications)
@@ -72,37 +79,14 @@ function markAllNotificationsAsRead() {
                 <div class="hidden md:flex">
                     <!-- Navigation Links -->
                     <div class="items-center hidden gap-2 lg:gap-8 sm:-my-px md:flex">
-                        <NavLink :href="route('home')" :active="route().current('home')" class="">
-                            <HomeIcon class="w-4 h-4 text-primary" />
-                            <span class="">
-                                {{ $t('home') }}
-                            </span>
-                        </NavLink>
-                        <NavLink :href="route('chats.index')" :active="route().current('chats.index') || route().current('chats.show')" class="">
-                            <ChatIcon class="w-4 h-4 text-primary" />
-                            <span>
-                                {{ $t('chat') }}
-                            </span>
-                        </NavLink>
-                        <NavLink :href="route('favorites.index')" :active="route().current('favorites.index')">
-                            <HeartIcon class="w-4 h-4 text-primary" />
-                            <span>
-                                {{ $t('favorites') }}
-                            </span>
-                        </NavLink>
-                        <NavLink :href="route('invitation.index')" :active="route().current('invitation.index') || route().current('hire.index')">
-                            <FootBallIcon class="w-4 h-4 fill-primary" />
-
-                            <span>
-                                {{ $t('invitations') }}
-                            </span>
-                        </NavLink>
-                        <NavLink :href="route('more')" :active="route().current('more')">
-                            <EllipsisHorizontalCircleIcon class="w-4 h-4 text-primary" />
-                            <span>
-                                {{ $t('more') }}
-                            </span>
-                        </NavLink>
+                        <template v-for="link in links">
+                            <NavLink :href="route(link.routeName)" :active="route().current(link.current)" class="">
+                                <component :is="link.icon" class="w-4 h-4 text-primary" />
+                                <span class="">
+                                    {{ $t(link.label) }}
+                                </span>
+                            </NavLink>
+                        </template>
                     </div>
                 </div>
                 <div class="flex items-center md:gap-x-3 max-md:justify-between max-md:w-full ">
@@ -184,7 +168,7 @@ function markAllNotificationsAsRead() {
 
         <!-- Responsive Navigation Menu -->
         <!-- Responsive Navigation Menu -->
-        <div class="fixed top-0 bottom-0 left-0 right-0 z-40 bg-black bg-opacity-50"
+        <div class="fixed top-0 bottom-0 left-0 right-0 z-40 bg-black bg-opacity-50 md:hidden"
             :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }" @click="showingNavigationDropdown = false"></div>
         <SlideInTransition>
             <div class="pt-2 pb-3 space-y-1 fixed top-0  bg-black h-full w-[max(20em,50%)] z-50" v-if="showingNavigationDropdown">
@@ -193,27 +177,12 @@ function markAllNotificationsAsRead() {
                 </div>
 
                 <!-- Responsive Settings Options -->
-                <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
-                    <HomeIcon class="w-4 h-4 text-primary" />
-                    <span>{{ $t('home') }}</span>
-                </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('chats.index')" :active="route().current('chats.index') || route().current('chats.show')">
-                    <ChatIcon class="w-4 h-4 text-primary" />
-                    <span>{{ $t('chat') }}</span>
-                </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('invitation.index')" :active="route().current('invitation.index') || route().current('hire.index')">
-                    <FootBallIcon class="w-4 fill-primary aspect-square" />
-                    <span>{{ $t('invitations') }}</span>
-                </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('favorites.index')" :active="route().current('favorites.index')">
-                    <HeartIcon class="w-4 h-4 text-primary" />
-                    <span>{{ $t('favorites') }}</span>
-                </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('more')" :active="route().current('more')">
-                    <EllipsisHorizontalCircleIcon class="w-4 h-4 text-primary" />
-                    <span>{{ $t('more') }}</span>
-                </ResponsiveNavLink>
-
+                <template v-for="link in links">
+                    <ResponsiveNavLink :href="route(link.routeName)" :active="route().current(link.current)">
+                        <component :is="link.icon" class="w-4 h-4 text-primary" />
+                        <span>{{ $t(link.label) }}</span>
+                    </ResponsiveNavLink>
+                </template>
             </div>
         </SlideInTransition>
     </nav>

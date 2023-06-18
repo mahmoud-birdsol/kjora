@@ -34,9 +34,9 @@ class PasswordController extends Controller
             'new_password' => ['required', Password::defaults()],
         ]);
         //Match The Old Password
-        if (! Hash::check($request->current_password, auth()->user()->password)) {
+        if (!Hash::check($request->current_password, auth()->user()->password)) {
             FlashMessage::make()->error(
-                message: 'Old Password Doesnt match!.'
+                message: _('Old Password Doesnt match!')
             )->closeable()->send();
 
             return redirect()->back();
@@ -46,7 +46,7 @@ class PasswordController extends Controller
             // Current password and new password same
 
             FlashMessage::make()->error(
-                message: __('New Password cannot be same as your current password.')
+                message: __('New Password cannot be same as your current password')
             )->closeable()->send();
 
             return redirect()->back();

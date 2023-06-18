@@ -16,7 +16,7 @@ class EnsurePhoneIsVerified
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! $request->user()->hasVerifiedPhone()) {
+        if (!$request->user()->hasVerifiedPhone()) {
             FlashMessage::make()->warning(
                 message: __('Please verify your phone number.')
             )->action(route('phone.verify'), __('Verify phone number'))->closeable()->send();

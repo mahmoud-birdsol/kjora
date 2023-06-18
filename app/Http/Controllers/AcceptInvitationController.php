@@ -21,7 +21,7 @@ class AcceptInvitationController extends Controller
         Invitation $invitation,
         CreateConversationAction $createConversationAction
     ): RedirectResponse {
-        if($invitation->state != 'cancelled') {
+        if ($invitation->state != 'cancelled') {
             $invitation->forceFill(['state' => 'accepted'])->save();
 
             $createConversationAction($invitation);
@@ -29,23 +29,23 @@ class AcceptInvitationController extends Controller
             $invitation->invitingPlayer->notify(new InvitationAcceptedNotification($invitation));
             $invitation->invitedPlayer->notify(new GameScheduledNotification($invitation));
 
-            $this->changeStateOfSameDateInvitationsToCancelled($request->user()->invitations , $invitation);
-            $this->changeStateOfSameDateInvitationsToCancelled($request->user()->hires , $invitation);
-
-        }else{
+            $this->changeStateOfSameDateInvitationsToCancelled($request->user()->invitations(), $invitation);
+            $this->changeStateOfSameDateInvitationsToCancelled($request->user()->hires(), $invitation);
+        } else {
             FlashMessage::make()->error(
                 message: __('Sorry you cannot approve cancelled invitation')
             )->closeable()->send();
         }
         return redirect()->route('invitation.index');
     }
-    private function changeStateOfSameDateInvitationsToCancelled( $invitations , $invitation){
+    private function changeStateOfSameDateInvitationsToCancelled($invitations, $invitation)
+    {
         $querys = $invitations
-            ->where('state',null)
+            ->where('state', null)
             ->whereRaw('DATE_ADD(`date`, INTERVAL 2 HOUR) > ?', [Carbon::parse($invitation->date)])
             ->whereRaw('DATE_SUB(`date`, INTERVAL 2 HOUR) < ?', [Carbon::parse($invitation->date)]);
 
-        foreach ($querys as $query){
+        foreach ($querys as $query) {
             $query->state =  "cancelled";
             $query->save();
         }

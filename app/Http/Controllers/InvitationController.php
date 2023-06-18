@@ -29,7 +29,7 @@ class InvitationController extends Controller
             }])
             ->with('stadium');
 
-        $request->whenFilled('search', fn() => $query->where(function ($query) use ($request) {
+        $request->whenFilled('search', fn () => $query->where(function ($query) use ($request) {
             $query->whereHas('invitingPlayer', function ($q) use ($request) {
                 $q->where('first_name', 'LIKE', '%' . $request->input('search') . '%')
                     ->orWhere('last_name', 'LIKE', '%' . $request->input('search') . '%')
@@ -39,11 +39,11 @@ class InvitationController extends Controller
 
         $request->whenFilled(
             'dateFrom',
-            fn() => $query->where('date', '>=', \Carbon\Carbon::parse($request->input('dateFrom'))->toDatetimeString())
+            fn () => $query->where('date', '>=', \Carbon\Carbon::parse($request->input('dateFrom'))->toDatetimeString())
         );
         $request->whenFilled(
             'dateTo',
-            fn() => $query->where('date', '<=', \Carbon\Carbon::parse($request->input('dateTo'))->toDatetimeString())
+            fn () => $query->where('date', '<=', \Carbon\Carbon::parse($request->input('dateTo'))->toDatetimeString())
         );
 
         return Inertia::render('Invitation/Index', [
@@ -59,15 +59,16 @@ class InvitationController extends Controller
      */
     public function store(InvitationRequest $request): RedirectResponse
     {
-//        if ($request->user()->hasPendingReviews()) {
-//            FlashMessage::make()->success(
-//                message: "You can't invite another player because you have a pending rating"
-//            )->closeable()->send();
-//
-//            return redirect()->back()->withErrors([
-//                'review' => "You can't invite another player because you have a pending rating",
-//            ]);
-//        }
+        //check if the inviting player has pending review ,so he can't invite
+        if ($request->user()->hasPendingReviews()) {
+            //    FlashMessage::make()->success(
+            //        message: "You can't invite another player because you have a pending rating"
+            //    )->closeable()->send();
+
+            return redirect()->back()->withErrors([
+                'review' => "You can't invite another player because you have a pending rating",
+            ]);
+        }
         $data = $request->validated();
 
         $time = Carbon::parse($data['time']);
@@ -82,161 +83,208 @@ class InvitationController extends Controller
         //check if user invite player and user have invitation
         if ($request->user()->hasApprovedHiresForSamePlayer(
             CarbonImmutable::parse($data['date'])
-                ->setTime($time->hour, $time->minute)
-            , $invitedPlayer)
-        ) {
+                ->setTime($time->hour, $time->minute),
+            $invitedPlayer
+        )) {
             FlashMessage::make()->success(
-                message: "You already invited this player at the same match"
+                message: __("You already invited this player at the same match")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => "You already invited this player at the same match",
+                'invitation_error' => __("You already invited this player at the same match"),
             ]);
         }
 
         //check if user invite player and user have invitation
         if ($request->user()->hasApprovedInvitationsForSamePlayer(
             CarbonImmutable::parse($data['date'])
-                ->setTime($time->hour, $time->minute)
-            , $invitedPlayer)
+                ->setTime($time->hour, $time->minute),
+            $invitedPlayer
+        )) {
+            FlashMessage::make()->success(
+                message: __("You already invited this player at the same match")
+            )->closeable()->send();
+
+            return redirect()->back()->withErrors([
+                'invitation_error' => __("You already invited this player at the same match"),
+            ]);
+        }
+
+
+        $date = Carbon::parse($data['date'])->setTime($time->hour, $time->minute);
+        // check if player because he has an invitation at the same time
+        if (
+            $request->user()->invitations()
+            ->where('date', '!=', $date)
+            ->whereRaw('DATE_ADD(`date`, INTERVAL 2 HOUR) > ?', [$date])
+            ->whereRaw('DATE_SUB(`date`, INTERVAL 2 HOUR) < ?', [$date])
+            ->where('state', 'accepted')
+            ->get()->count() > 0
         ) {
             FlashMessage::make()->success(
-                message: "You already has been invited by this player at the same match"
+                message: __("You cant invite this player because you have been invited to a match in this time")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => "You already has been invited by this player at the same match",
-            ]);
-        }
-
-
-        $date = Carbon::parse($data['date'])->setTime($time->hour, $time->minute);
-        // check if player because he has an invitation at the same time
-        if ($request->user()->invitations()
-                ->where('date','!=',$date)
-                ->whereRaw('DATE_ADD(`date`, INTERVAL 2 HOUR) > ?', [$date])
-                ->whereRaw('DATE_SUB(`date`, INTERVAL 2 HOUR) < ?', [$date])
-                ->where('state', 'accepted')
-                ->get()->count() > 0) {
-            FlashMessage::make()->success(
-                message: "You can't invite this player because you have been invited to a match in this time"
-            )->closeable()->send();
-
-            return redirect()->back()->withErrors([
-                'invitation_error' => "You can't invite this player because you have been invited to a match in this time",
+                'invitation_error' =>  __("You cant invite this player because you have been invited to a match in this time"),
             ]);
         }
         // check if player because he has an hires at the same time
-        if ($request->user()->hires()
-                ->where('date','!=',$date)
-                ->whereRaw('DATE_ADD(`date`, INTERVAL 2 HOUR) > ?', [$date])
-                ->whereRaw('DATE_SUB(`date`, INTERVAL 2 HOUR) < ?', [$date])
-                ->where('state', 'accepted')
-                ->get()->count() > 0) {
+        if (
+            $request->user()->hires()
+            ->where('date', '!=', $date)
+            ->whereRaw('DATE_ADD(`date`, INTERVAL 2 HOUR) > ?', [$date])
+            ->whereRaw('DATE_SUB(`date`, INTERVAL 2 HOUR) < ?', [$date])
+            ->where('state', 'accepted')
+            ->get()->count() > 0
+        ) {
             FlashMessage::make()->success(
-                message: "You can't invite this player because you have a match in this time"
+                message: __("You cant invite this player because you have been invited to a match in this time")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => "You can't invite this player because you have a match in this time",
+                'invitation_error' =>  __("You cant invite this player because you have been invited to a match in this time"),
             ]);
         }
         $date = Carbon::parse($data['date'])->setTime($time->hour, $time->minute);
         // check if player because he has an invitation at the same time
-        if ($invitedPlayer->invitations()
-                ->where('date','!=',$date)
-                ->whereRaw('DATE_ADD(`date`, INTERVAL 2 HOUR) > ?', [$date])
-                ->whereRaw('DATE_SUB(`date`, INTERVAL 2 HOUR) < ?', [$date])
-                ->where('state', 'accepted')
-                ->get()->count() > 0) {
+        if (
+            $invitedPlayer->invitations()
+            ->where('date', '!=', $date)
+            ->whereRaw('DATE_ADD(`date`, INTERVAL 2 HOUR) > ?', [$date])
+            ->whereRaw('DATE_SUB(`date`, INTERVAL 2 HOUR) < ?', [$date])
+            ->where('state', 'accepted')
+            ->get()->count() > 0
+        ) {
             FlashMessage::make()->success(
-                message: "You can't invite this player because he has a match at the same time"
+                message: __("You cant invite this player because he has been invited to a match in this time")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => "You can't invite this player because he has a match at the same time",
+                'invitation_error' =>  __("You cant invite this player because you he has invited to a match in this time"),
             ]);
         }
         // check if player because he has an hires at the same time
-        if ($invitedPlayer->hires()
-                ->where('date','!=',$date)
-                ->whereRaw('DATE_ADD(`date`, INTERVAL 2 HOUR) > ?', [$date])
-                ->whereRaw('DATE_SUB(`date`, INTERVAL 2 HOUR) < ?', [$date])
-                ->where('state', 'accepted')
-                ->get()->count() > 0) {
+        if (
+            $invitedPlayer->hires()
+            ->where('date', '!=', $date)
+            ->whereRaw('DATE_ADD(`date`, INTERVAL 2 HOUR) > ?', [$date])
+            ->whereRaw('DATE_SUB(`date`, INTERVAL 2 HOUR) < ?', [$date])
+            ->where('state', 'accepted')
+            ->get()->count() > 0
+        ) {
             FlashMessage::make()->success(
-                message: "You can't invite this player because he has a match at the same time"
+                message: __("You cant invite this player because he has a match at the same time")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => "You can't invite this player because he has a match at the same time",
+                'invitation_error' => __("You cant invite this player because he has a match at the same time"),
             ]);
         }
         //check if user has Approved Invitations With Different Stadium And Same Time
         if (
             $request->user()
-                ->hasApprovedInvitationsWithDifferentStadiumAndSameTime(
-                    CarbonImmutable::parse($data['date'])->setTime($time->hour, $time->minute),
-                    $request->input('stadium_id')
-                )
+            ->hasApprovedInvitationsWithDifferentStadiumAndSameTime(
+                CarbonImmutable::parse($data['date'])->setTime($time->hour, $time->minute),
+                $request->input('stadium_id')
+            )
         ) {
             FlashMessage::make()->success(
-                message: "This time You have invitations with another stadium you should invite with the same stadium or another date"
+                message: __("You have sent an invitation in the same time to in another staduim please choose another time or same the stadium ")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => "This time You have invitations with another stadium you should invite with the same stadium or another date",
+                'invitation_error' => __("You have sent an invitation in the same time to in another staduim please choose another time or same the stadium "),
             ]);
-
         }
         //check if user has Approved hires Invitations With Different Stadium And Same Time
         if (
             $request->user()
-                ->hasApprovedHiresWithDifferentStadiumAndSameTime(
-                    CarbonImmutable::parse($data['date'])->setTime($time->hour, $time->minute), $request->input('stadium_id')
-                )
+            ->hasApprovedHiresWithDifferentStadiumAndSameTime(
+                CarbonImmutable::parse($data['date'])->setTime($time->hour, $time->minute),
+                $request->input('stadium_id')
+            )
         ) {
             FlashMessage::make()->success(
-                message: "This time You have invitations with another stadium you should invite with the same stadium or another date"
+                message: __("You have sent an invitation in the same time to in another staduim please choose another time or same the stadium ")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => "This time You have invitations with another stadium you should invite with the same stadium or another date",
+                'invitation_error' => __("You have sent an invitation in the same time to in another staduim please choose another time or same the stadium "),
             ]);
         }
         //check if invited Player has Approved  Invitations With Different Stadium And Same Time
         if (
             $invitedPlayer
-                ->hasApprovedInvitationsWithDifferentStadiumAndSameTime(
-                    CarbonImmutable::parse($data['date'])->setTime($time->hour, $time->minute),
-                    $request->input('stadium_id')
-                )
+            ->hasApprovedInvitationsWithDifferentStadiumAndSameTime(
+                CarbonImmutable::parse($data['date'])->setTime($time->hour, $time->minute),
+                $request->input('stadium_id')
+            )
         ) {
             FlashMessage::make()->success(
-                message: "This time You have invitations with another stadium you should invite with the same stadium or another date"
+                message: __("You have sent an invitation in the same time to in another staduim please choose another time or same the stadium ")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => "This time You have invitations with another stadium you should invite with the same stadium or another date",
+                'invitation_error' => __("You have sent an invitation in the same time to in another staduim please choose another time or same the stadium "),
             ]);
-
         }
         //check if invited Player has Approved hires Invitations With Different Stadium And Same Time
 
         if (
             $invitedPlayer
-                ->hasApprovedHiresWithDifferentStadiumAndSameTime(
-                    CarbonImmutable::parse($data['date'])->setTime($time->hour, $time->minute), $request->input('stadium_id')
-                )
+            ->hasApprovedHiresWithDifferentStadiumAndSameTime(
+                CarbonImmutable::parse($data['date'])->setTime($time->hour, $time->minute),
+                $request->input('stadium_id')
+            )
         ) {
             FlashMessage::make()->success(
-                message: "This time You have invitations with another stadium you should invite with the same stadium or another date"
+                message: __("You have sent an invitation in the same time to in another staduim please choose another time or same the stadium ")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => "This time You have invitations with another stadium you should invite with the same stadium or another date",
+                'invitation_error' => __("You have sent an invitation in the same time to in another staduim please choose another time or same the stadium "),
             ]);
         }
+
+
+        //peter 13/6/20223
+        //check if invited Player has Approved hires Invitations With same Stadium And Same Time
+
+        if (
+            $invitedPlayer
+            ->hasApprovedInvitationsWithSameStadiumAndSameTime(
+                CarbonImmutable::parse($data['date'])->setTime($time->hour, $time->minute),
+                $request->input('stadium_id')
+            )
+        ) {
+            FlashMessage::make()->success(
+                message: __("This player already has match at this time")
+            )->closeable()->send();
+
+            return redirect()->back()->withErrors([
+                'invitation_error' => __("This player already has match at this time"),
+            ]);
+        }
+        //check if invited Player has Approved hires Invitations With same Stadium And Same Time
+
+        if (
+            $invitedPlayer
+            ->hasApprovedHiresWithSameStadiumAndSameTime(
+                CarbonImmutable::parse($data['date'])->setTime($time->hour, $time->minute),
+                $request->input('stadium_id')
+            )
+        ) {
+            FlashMessage::make()->success(
+                message: __("This player already has match at this time")
+            )->closeable()->send();
+
+            return redirect()->back()->withErrors([
+                'invitation_error' => __("This player already has match at this time"),
+            ]);
+        }
+
+
         $data['date'] = $data['date']->toString();
 
 
