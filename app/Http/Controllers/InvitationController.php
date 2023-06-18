@@ -87,11 +87,11 @@ class InvitationController extends Controller
             $invitedPlayer
         )) {
             FlashMessage::make()->success(
-                message: __("You already invited this player at the same match")
+                message: __("You already invited this player at these time")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => __("You already invited this player at the same match"),
+                'invitation_error' => __("You already invited this player at these time"),
             ]);
         }
 
@@ -102,11 +102,11 @@ class InvitationController extends Controller
             $invitedPlayer
         )) {
             FlashMessage::make()->success(
-                message: __("You already invited this player at the same match")
+                message: __("You already invited this player at these time")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => __("You already invited this player at the same match"),
+                'invitation_error' => __("You already invited this player at these time"),
             ]);
         }
 
