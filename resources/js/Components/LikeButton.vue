@@ -21,6 +21,11 @@ const props = defineProps({
         required: true,
         type: Boolean,
         default: false,
+    },
+    canLiked:{
+        required: true,
+        type: Boolean,
+        default: true,
     }
 })
 
@@ -33,7 +38,7 @@ const form = useForm({
     likeable_type: props.likeable_type
 })
 function toggleLike() {
-    if (isPending.value) return
+    if (isPending.value || !canLiked.value) return
 
     if (!isLiked.value) {
 

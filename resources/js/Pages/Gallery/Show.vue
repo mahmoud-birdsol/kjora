@@ -18,7 +18,7 @@
                                 {{ user.name }}
                             </h3>
                             <div v-if="currentUser?.state_name === 'Premium'" class="shrink-0">
-                                <div class="bg-golden w-4 aspect-square   rounded-full">
+                                <div class="w-4 rounded-full bg-golden aspect-square">
                                     <StarIcon class=" fill-white stroke-none" />
                                 </div>
                             </div>
@@ -61,7 +61,7 @@
                             <span class="text-sm">{{ post?.likes_count }}</span>
                             <LikesModal :show="showLikesModal" :users="post.likes?.map((like) => like.user)" @close="showLikesModal = false" />
                         </button>
-                        <LikeButton :isLiked="post?.is_liked" :likeable_id="post.id" :likeable_type="'App\\Models\\Post'">
+                        <LikeButton :canLiked="isCurrentUser" :isLiked="post?.is_liked" :likeable_id="post.id" :likeable_type="'App\\Models\\Post'">
                             <template v-slot="{ isLiked }">
                                 <HeartIcon class="w-4 stroke-current stroke-2 text-primary" :class="
                                     isLiked
