@@ -72,7 +72,7 @@ class PlayerController extends Controller
             });
 
         return Inertia::render('Home', [
-            'players' => $query->paginate(9),
+            'players' => $query->paginate(9)->withQueryString(),
             'positions' => Position::all(),
             'countries' => Country::active()->orderBy('name')->get(),
             'advertisements' => $advertisements,
