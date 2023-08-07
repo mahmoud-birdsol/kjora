@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm, Link, usePage } from '@inertiajs/inertia-vue3';
+import { Head, useForm, Link, usePage } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -21,7 +21,7 @@ const props = defineProps({
 
 // const data = props.playerRating.map(r => r.value)
 
-const labels = props.ratingCategories.map(r => r.name[usePage().props.value.locale])
+const labels = props.ratingCategories.map(r => r.name[usePage().props.locale])
 const showMsg = ref(false)
 const state = props.review.player.state_name
 const rateColor = state === 'Free' ? ['#006400', '#006400', '#006400'] : ['#99A9BF', '#F7BA2A', '#FF9900']
@@ -30,7 +30,7 @@ const ratingCategory = props.ratingCategories.map(cat => {
     return { id: cat.id, value: 0 }
 })
 
-const locale = usePage().props.value.locale;
+const locale = usePage().props.locale;
 const ratingForm = useForm(
     {
         ratingCategory,
@@ -49,9 +49,6 @@ function submitRatingForm() {
     ratingForm.post(route('player.review.store', props.review.id), {
         preserveState: false,
         preserveScroll: true,
-        onSuccess: () => {
-            console.log('success')
-        }
     })
 }
 

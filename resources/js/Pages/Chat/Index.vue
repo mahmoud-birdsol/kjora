@@ -1,23 +1,22 @@
 <script setup>
-import {onMounted, provide} from 'vue';
+import { onMounted, provide } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import ChatLayout from '@/Layouts/ChatLayout.vue';
-import {Inertia} from "@inertiajs/inertia";
-import {usePage} from "@inertiajs/inertia-vue3";
+
+import { router, usePage } from "@inertiajs/vue3";
 
 const props = defineProps(['conversations', 'last_online_at']);
 
-const user = usePage().props.value.auth.user;
+const user = usePage().props.auth.user;
 
 const acceptChatRegulations = () => {
-    Inertia.get(route('accept-chat-regulations'), {}, {
+    router.get(route('accept-chat-regulations'), {}, {
         preserveState: true,
         preserveScroll: true,
         onSuccess: () => {
-            if(user.latest_conversation)
-            {
-                Inertia.get(route('chats.show', user.latest_conversation.id),{}, {
-                    preserveState:false
+            if (user.latest_conversation) {
+                router.get(route('chats.show', user.latest_conversation.id), {}, {
+                    preserveState: false
 
                 })
             }
@@ -28,10 +27,9 @@ const acceptChatRegulations = () => {
 
 onMounted(() => {
     if (user.accepted_chat_regulations_at != null) {
-        if(user.latest_conversation)
-        {
-            Inertia.get(route('chats.show', user.latest_conversation.id),{}, {
-                preserveState:false
+        if (user.latest_conversation) {
+            router.get(route('chats.show', user.latest_conversation.id), {}, {
+                preserveState: false
             })
         }
 
@@ -43,31 +41,31 @@ provide('conversation', null);
 <template>
     <AppLayout title="Chat">
         <template #header>
-            {{$t('chat')}}
+            {{ $t('chat') }}
         </template>
 
         <ChatLayout :conversations="conversations">
             <template #main v-if="user.accepted_chat_regulations_at == null">
                 <div class="flex flex-col gap-4 p-8">
-                    <h2 class="text-2xl font-bold capitalize">{{$t('Welcome to chat!')}}</h2>
+                    <h2 class="text-2xl font-bold capitalize">{{ $t('Welcome to chat!') }}</h2>
 
-                    <p class="text-sm font-bold">{{$t("Beofre you proceed, please read thse ground rules. Don't worry, we'll only show this message one - but please do take a few seconds to familiarize yourself with these rules. This will help us ensure a safe and friendly environment in the chat")}} .
+                    <p class="text-sm font-bold">{{ $t("Beofre you proceed, please read thse ground rules. Don't worry, we'll only show this message one - but please do take a few seconds to familiarize yourself with these rules.This will help us ensure a safe and friendly environment in the chat") }} .
                     </p>
                     <ul class="text-sm [&>li_p]:before:content-['•'] [&>li_p]:before:pie-6 font-bold">
                         <li>
-                            <p>{{$t('be nice and thoughtful your word can both help and hurt')}}</p>
+                            <p>{{ $t('be nice and thoughtful your word can both help and hurt') }}</p>
                         </li>
                         <li>
-                            <p>{{$t("don't use offensive or vulgar words")}} </p>
+                            <p>{{ $t("don't use offensive or vulgar words") }} </p>
                         </li>
                         <li>
-                            <p>{{$t("don't post any personal details")}} </p>
+                            <p>{{ $t("don't post any personal details") }} </p>
                         </li>
                         <li>
-                            <p>{{$t("don't post any advertising or promotional material")}}</p>
+                            <p>{{ $t("don't post any advertising or promotional material") }}</p>
                         </li>
                         <li>
-                            <p>{{$t("don't create Threads that encourage spamming")}} </p>
+                            <p>{{ $t("don't create Threads that encourage spamming") }} </p>
                         </li>
                     </ul>
 
@@ -85,8 +83,9 @@ provide('conversation', null);
 
             <template #footer v-if="user.accepted_chat_regulations_at == null">
                 <div class="grid p-10 bg-white place-items-center rounded-2xl">
-                    <button class="py-2 text-white bg-black px-28 rounded-3xl" v-if="user.latest_conversation" @click="acceptChatRegulations">{{$t('ok')}}</button>
-                    <button class="py-2 text-white bg-black px-28 rounded-3xl" v-if="!user.latest_conversation">{{$t('ok')}}</button>
+                    <button class="py-2 text-white bg-black px-28 rounded-3xl" v-if="user.latest_conversation" @click="acceptChatRegulations">{{ $t('ok')
+                    }}</button>
+                    <button class="py-2 text-white bg-black px-28 rounded-3xl" v-if="!user.latest_conversation">{{ $t('ok') }}</button>
                 </div>
             </template>
         </ChatLayout>

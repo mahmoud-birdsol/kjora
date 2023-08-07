@@ -1,12 +1,12 @@
 <script setup>
-import { Head } from '@inertiajs/inertia-vue3';
+import { Head } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import HelloUserHeader from '@/Components/HelloUserHeader.vue';
 import PerformanceTab from '@/Components/PerformanceTab.vue';
 import ProfileGallery from '@/Components/ProfileGallery.vue';
 import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
 import { computed, ref } from 'vue';
-import { Inertia } from '@inertiajs/inertia'
+import { router } from '@inertiajs/vue3'
 import FadeInTransition from '@/Components/FadeInTransition.vue';
 
 
@@ -35,7 +35,7 @@ const tabs = computed(() => {
 })
 
 function reloadMedia() {
-    Inertia.reload({ only: ['posts'] })
+    router.reload({ only: ['posts'] })
 }
 </script>
 

@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm, usePage } from '@inertiajs/inertia-vue3';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
 import SystemMessage from '@/Components/SystemMessage.vue';
 import CopyrightClaim from '@/Components/CopyrightClaim.vue';
 import Navbar from '@/Layouts/Partials/Navbar.vue';
@@ -11,7 +11,7 @@ import GuestNavbar from './Partials/GuestNavbar.vue';
 
 
 // onMounted(() => {
-//     loadLanguageAsync(usePage().props.value.locale)
+//     loadLanguageAsync(usePage().props.locale)
 // })
 
 defineProps({
@@ -30,7 +30,8 @@ defineProps({
 
         <Head :title="title" />
 
-        <div class="relative min-h-screen bg-gradient-to-b from-black to-primaryDark before:absolute before:inset-0 before:bg-no-repeat before:mix-blend-overlay isolate before:-z-10">
+        <div
+            class="relative min-h-screen bg-gradient-to-b from-black to-primaryDark before:absolute before:inset-0 before:bg-no-repeat before:mix-blend-overlay isolate before:-z-10">
             <div class="flex flex-col justify-between min-h-screen pt-6 space-y-4 sm:pt-0 ltr:font-sans rtl:font-tahoma">
                 <GuestNavbar />
 

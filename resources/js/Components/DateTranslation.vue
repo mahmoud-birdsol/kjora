@@ -1,5 +1,5 @@
 <script setup>
-import { usePage } from '@inertiajs/inertia-vue3';
+import { usePage } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
 import updateLocale from 'dayjs/plugin/updateLocale'
 import relativeTime from 'dayjs/plugin/relativeTime.js';
@@ -21,7 +21,7 @@ onBeforeMount(() => {
     dayjs.extend(relativeTime)
 });
 
-const currentLocale = usePage().props.value.locale
+const currentLocale = usePage().props.locale
 const months = 'يناير_فبراير_مارس_أبريل_مايو_يونيو_يوليو_أغسطس_سبتمبر_أكتوبر_نوفمبر_ديسمبر'.split('_')
 const symbolMap = {
     1: '١',

@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { usePage } from '@inertiajs/inertia-vue3';
+import { usePage } from '@inertiajs/vue3';
 import Facebook from "@/Components/Icons/Facebook.vue";
 import Twitter from "@/Components/Icons/Twitter.vue";
 import Linkedin from "@/Components/Icons/Linkedin.vue";
@@ -18,7 +18,7 @@ const props = defineProps({
 const emits = defineEmits(['showCopied'])
 const showSocials = ref(false)
 const show = ref(false)
-const url = usePage().props.value.ziggy.url + '/' + props.shareUrl
+const url = usePage().props.ziggy.url + '/' + props.shareUrl
 
 function copy() {
     navigator.clipboard.writeText(url).then(() => {
@@ -27,15 +27,14 @@ function copy() {
     })
 }
 
-console.log(url);
+
 </script>
 <template>
     <onClickOutside @trigger="showSocials = false">
 
         <Transition enter-from-class="scale-0" enter-to-class="scale-100" enter-active-class="transition-all duration-300" leave-to-class="scale-0" leave-active-class="transition-all duration-300">
             <div v-if="showSocials" class="bg-black rounded-lg p-3 flex flex-col gap-3 absolute ltr:-right-1 rtl:-left-1 z-30 text-xs text-white border border-neutral-500" :class="position">
-                <a :data-href="'https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=' + url" :href="'https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=' + url" target="_blank" class="relative flex items-center gap-2 [&>div]:hover:block"
-                    @click="showSocials = false">
+                <a :data-href="'https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=' + url" :href="'https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=' + url" target="_blank" class="relative flex items-center gap-2 [&>div]:hover:block" @click="showSocials = false">
                     <Facebook class="h-4 w-4" />
                     <span class="whitespace-nowrap">{{ $t('share to facebook') }}</span>
                 </a>

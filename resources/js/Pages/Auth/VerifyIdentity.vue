@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm, usePage } from '@inertiajs/inertia-vue3';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import RichSelectInput from '@/Components/RichSelectInput.vue';
@@ -26,21 +26,21 @@ onBeforeMount(() => {
 onMounted(() => {
 
     if (
-        usePage().props.value.auth.user.identity_front_image_url != null
+        usePage().props.auth.user.identity_front_image_url != null
     ) {
-        identityFrontImagePreview.value = usePage().props.value.auth.user.identity_front_image_url;
+        identityFrontImagePreview.value = usePage().props.auth.user.identity_front_image_url;
     }
 
     if (
-        usePage().props.value.auth.user.identity_back_image_url != null
+        usePage().props.auth.user.identity_back_image_url != null
     ) {
-        identityBackImagePreview.value = usePage().props.value.auth.user.identity_back_image_url;
+        identityBackImagePreview.value = usePage().props.auth.user.identity_back_image_url;
     }
 
     if (
-        usePage().props.value.auth.user.identity_selfie_image_url != null
+        usePage().props.auth.user.identity_selfie_image_url != null
     ) {
-        identitySelfieImagePreview.value = usePage().props.value.auth.user.identity_selfie_image_url;
+        identitySelfieImagePreview.value = usePage().props.auth.user.identity_selfie_image_url;
     }
 });
 
@@ -57,13 +57,13 @@ const identityFrontImagePreview = ref(null);
 const identitySelfieImagePreview = ref(null);
 
 const form = useForm({
-    identity_issue_country: usePage().props.value.auth.user.identity_issue_country ?? 'Kuwait',
-    identity_type: usePage().props.value.auth.user.identity_type,
-    identity_front_image: usePage().props.value.auth.user.identity_front_image_url,
-    identity_back_image: usePage().props.value.auth.user.identity_back_image_url,
-    identity_selfie_image: usePage().props.value.auth.user.identity_selfie_image_url,
+    identity_issue_country: usePage().props.auth.user.identity_issue_country ?? 'Kuwait',
+    identity_type: usePage().props.auth.user.identity_type,
+    identity_front_image: usePage().props.auth.user.identity_front_image_url,
+    identity_back_image: usePage().props.auth.user.identity_back_image_url,
+    identity_selfie_image: usePage().props.auth.user.identity_selfie_image_url,
 });
-let identity_status = usePage().props.value.auth.user.identity_status
+let identity_status = usePage().props.auth.user.identity_status
 const setIdentityFrontImagePreview = (photo) => {
     identityFrontImagePreview.value = photo;
 };
@@ -128,7 +128,7 @@ const save = () => {
                                     </h3>
                                     <p class="text-xs text-gray-500">{{ $t('only the following documents listed below will be accepted, all other documents will be rejected') }}.</p>
                                 </div>
-                            <div class="mt-4">
+                                <div class="mt-4">
                                     <InputLabel color="primary" for="country" :value="$t('country of issue')" />
                                     <RichSelectInput :options="countries" value-name="name" text-name="name" image-name="flag" v-model="form.identity_issue_country" />
                                     <InputError class="mt-2" :message="form.errors.identity_issue_country" />

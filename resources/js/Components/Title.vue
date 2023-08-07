@@ -6,9 +6,9 @@
     </div>
 </template>
 <script setup>
-import { usePage } from '@inertiajs/inertia-vue3';
+import { usePage } from '@inertiajs/vue3';
 
-const state = usePage().props.value?.auth?.user?.state_name
+const state = usePage().props?.auth?.user?.state_name
 </script>
 
 

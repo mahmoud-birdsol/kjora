@@ -7,7 +7,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import RichSelectInput from '@/Components/RichSelectInput.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
 import { ElDatePicker, ElTimePicker } from 'element-plus';
 import { computed, ref } from 'vue';
@@ -31,7 +31,7 @@ const showMap = ref(true)
 const date = new Date();
 const isDisabled = ref(false)
 const currentStadium = ref(null);
-const currentUser = usePage().props.value.auth.user
+const currentUser = usePage().props.auth.user
 
 const createInvitation = () => {
     if (isDisabled.value) return

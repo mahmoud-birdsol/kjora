@@ -1,7 +1,6 @@
 <script setup>
 import { computed, onBeforeMount, onMounted, onUpdated, ref, watch } from 'vue';
-import { Inertia, } from '@inertiajs/inertia';
-import { Link, usePage } from '@inertiajs/inertia-vue3';
+import { router, Link, usePage } from '@inertiajs/vue3';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
@@ -23,12 +22,12 @@ import { XMarkIcon } from '@heroicons/vue/20/solid';
 import axios from 'axios';
 import SlideInTransition from '@/Components/SlideInTransition.vue';
 
-const locale = usePage().props.value.locale
-const currentUser = usePage().props.value.auth.user
+const locale = usePage().props.locale
+const currentUser = usePage().props.auth.user
 const showingNavigationDropdown = ref(false);
 
 const logout = () => {
-    Inertia.post(route('logout'));
+    router.post(route('logout'));
 };
 const links = [
     { id: 1, label: 'home', routeName: 'home', current: 'home', icon: HomeIcon },
@@ -37,13 +36,13 @@ const links = [
     { id: 4, label: 'invitations', routeName: 'invitation.index', current: 'invitation.*', icon: FootBallIcon },
     { id: 5, label: 'more', routeName: 'more', current: 'more', icon: EllipsisHorizontalCircleIcon },
 ]
-let state = usePage().props.value.user.state_name
-let notificationsLength = ref(usePage().props.value.notifications.length)
-let notifications = ref(usePage().props.value.notifications)
+let state = usePage().props.user.state_name
+let notificationsLength = ref(usePage().props.notifications.length)
+let notifications = ref(usePage().props.notifications)
 const showNotificationIndicator = ref(false)
 
 watch(() => notificationsLength.value, (newValue) => {
-    console.log(newValue);
+
     newValue > 0 ? showNotificationIndicator.value = true : showNotificationIndicator.value = false;
 
 })
@@ -90,9 +89,7 @@ function markAllNotificationsAsRead() {
                     </div>
                 </div>
                 <div class="flex items-center md:gap-x-3 max-md:justify-between max-md:w-full ">
-                    <button
-                        class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md md:hidden hover:text-gray-500 hover:bg-gray-100 focus:outline-none hover:bg-transparent focus:text-gray-500"
-                        @click="showingNavigationDropdown = !showingNavigationDropdown">
+                    <button class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md md:hidden hover:text-gray-500 hover:bg-gray-100 focus:outline-none hover:bg-transparent focus:text-gray-500" @click="showingNavigationDropdown = !showingNavigationDropdown">
                         <Bars3Icon class="w-6 h-6" />
                     </button>
                     <div class="flex items-center justify-between gap-2">
@@ -110,10 +107,8 @@ function markAllNotificationsAsRead() {
                         </div>
                         <!-- Settings Dropdown -->
                         <div class="relative ">
-                            <Link :href="route('profile.show')"
-                                class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
-                            <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url" :username="$page.props.auth.user.name"
-                                :border="true" border-color="primary" size="sm" :enable-light-box="false" />
+                            <Link :href="route('profile.show')" class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
+                            <Avatar :id="$page.props.auth.user.id" :image-url="$page.props.auth.user.avatar_url" :username="$page.props.auth.user.name" :border="true" border-color="primary" size="sm" :enable-light-box="false" />
                             </Link>
                         </div>
 
@@ -124,8 +119,7 @@ function markAllNotificationsAsRead() {
                                     <button class="text-white " @click="markAllNotificationsAsRead">
                                         <div class="relative">
                                             <BellIcon class="w-6 h-6 text-white"></BellIcon>
-                                            <div v-show="showNotificationIndicator"
-                                                class="absolute top-0 grid w-2 h-2 p-1 text-xs rounded-full bg-primary -right-0 place-items-center">
+                                            <div v-show="showNotificationIndicator" class="absolute top-0 grid w-2 h-2 p-1 text-xs rounded-full bg-primary -right-0 place-items-center">
                                                 <!-- <span class="text-xs origin-center ">{{ $page.props.notifications.length }}</span> -->
                                             </div>
                                         </div>
@@ -168,8 +162,7 @@ function markAllNotificationsAsRead() {
 
         <!-- Responsive Navigation Menu -->
         <!-- Responsive Navigation Menu -->
-        <div class="fixed top-0 bottom-0 left-0 right-0 z-40 bg-black bg-opacity-50 md:hidden"
-            :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }" @click="showingNavigationDropdown = false"></div>
+        <div class="fixed top-0 bottom-0 left-0 right-0 z-40 bg-black bg-opacity-50 md:hidden" :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }" @click="showingNavigationDropdown = false"></div>
         <SlideInTransition>
             <div class="pt-2 pb-3 space-y-1 fixed top-0  bg-black h-full w-[max(20em,50%)] z-50" v-if="showingNavigationDropdown">
                 <div class="flex">

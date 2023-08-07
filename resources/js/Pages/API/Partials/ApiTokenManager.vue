@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { useForm } from '@inertiajs/inertia-vue3';
+import { useForm } from '@inertiajs/vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
 import ActionSection from '@/Components/ActionSection.vue';
 import Checkbox from '@/Components/Checkbox.vue';
@@ -88,13 +88,7 @@ const deleteApiToken = () => {
                 <!-- Token Name -->
                 <div class="col-span-6 sm:col-span-4">
                     <InputLabel for="name" value="Name" />
-                    <TextInput
-                        id="name"
-                        v-model="createApiTokenForm.name"
-                        type="text"
-                        class="mt-1 block w-full"
-                        autofocus
-                    />
+                    <TextInput id="name" v-model="createApiTokenForm.name" type="text" class="mt-1 block w-full" autofocus />
                     <InputError :message="createApiTokenForm.errors.name" class="mt-2" />
                 </div>
 
@@ -151,11 +145,8 @@ const deleteApiToken = () => {
                                         Last used {{ token.last_used_ago }}
                                     </div>
 
-                                    <button
-                                        v-if="availablePermissions.length > 0"
-                                        class="cursor-pointer ml-6 text-sm text-gray-400 underline"
-                                        @click="manageApiTokenPermissions(token)"
-                                    >
+                                    <button v-if="availablePermissions.length > 0" class="cursor-pointer ml-6 text-sm text-gray-400 underline"
+                                        @click="manageApiTokenPermissions(token)">
                                         Permissions
                                     </button>
 
@@ -215,12 +206,8 @@ const deleteApiToken = () => {
                     Cancel
                 </SecondaryButton>
 
-                <PrimaryButton
-                    class="ml-3"
-                    :class="{ 'opacity-25': updateApiTokenForm.processing }"
-                    :disabled="updateApiTokenForm.processing"
-                    @click="updateApiToken"
-                >
+                <PrimaryButton class="ml-3" :class="{ 'opacity-25': updateApiTokenForm.processing }" :disabled="updateApiTokenForm.processing"
+                    @click="updateApiToken">
                     Save
                 </PrimaryButton>
             </template>
@@ -241,12 +228,8 @@ const deleteApiToken = () => {
                     Cancel
                 </SecondaryButton>
 
-                <DangerButton
-                    class="ml-3"
-                    :class="{ 'opacity-25': deleteApiTokenForm.processing }"
-                    :disabled="deleteApiTokenForm.processing"
-                    @click="deleteApiToken"
-                >
+                <DangerButton class="ml-3" :class="{ 'opacity-25': deleteApiTokenForm.processing }" :disabled="deleteApiTokenForm.processing"
+                    @click="deleteApiToken">
                     Delete
                 </DangerButton>
             </template>

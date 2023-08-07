@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { useForm } from '@inertiajs/inertia-vue3';
+import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -22,7 +22,7 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
-    canLiked:{
+    canLiked: {
         required: true,
         type: Boolean,
         default: true,

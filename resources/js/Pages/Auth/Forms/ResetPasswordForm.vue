@@ -1,5 +1,5 @@
 <script setup>
-import { useForm } from '@inertiajs/inertia-vue3';
+import { useForm } from '@inertiajs/vue3';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -28,15 +28,15 @@ const submit = () => {
 <template>
     <form @submit.prevent="submit" class="w-full">
         <div class="mt-4">
-            <InputLabel color="primary" for="password" value="Password"/>
-            <PasswordInput v-model="form.password"/>
-            <InputError class="mt-2" :message="form.errors.password"/>
+            <InputLabel color="primary" for="password" value="Password" />
+            <PasswordInput v-model="form.password" />
+            <InputError class="mt-2" :message="form.errors.password" />
         </div>
 
         <div class="mt-4">
-            <InputLabel color="primary" for="password_confirmation" value="Confirm Password"/>
-            <PasswordInput v-model="form.password_confirmation"/>
-            <InputError class="mt-2" :message="form.errors.password_confirmation"/>
+            <InputLabel color="primary" for="password_confirmation" value="Confirm Password" />
+            <PasswordInput v-model="form.password_confirmation" />
+            <InputError class="mt-2" :message="form.errors.password_confirmation" />
         </div>
 
         <div class="flex items-center justify-end mt-4">

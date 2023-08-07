@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm, usePage } from '@inertiajs/inertia-vue3';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
@@ -12,7 +12,7 @@ const props = defineProps({
     cookies: Object,
 });
 const isDisabled = ref(true)
-const is_login = usePage().props?.value.auth?.user
+const is_login = usePage().props?.auth?.user
 const form = useForm({
     cookiePolicy: props.cookies?.id ?? null
 })
@@ -44,9 +44,7 @@ function submit() {
                 <div class="" v-if="$page.props.user && cookies && (cookies.version !== $page.props.auth.user.accepted_cookie_policy_version)">
                     <div class="flex flex-col justify-center gap-2 mt-4">
                         <label for="cookies" class="text-sm font-medium text-primary">{{ $t('I agree') }}</label>
-                        <input type="radio" :value="cookies.id" id="cookies" v-model="form.cookiePolicy" :checked="false"
-                            @change="(e) => { e.target.checked ? isDisabled = false : isDisabled = true; }"
-                            class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
+                        <input type="radio" :value="cookies.id" id="cookies" v-model="form.cookiePolicy" :checked="false" @change="(e) => { e.target.checked ? isDisabled = false : isDisabled = true; }" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
                     </div>
                     <div class="mt-2">
                         <PrimaryButton :disabled="isDisabled" @click="submit">

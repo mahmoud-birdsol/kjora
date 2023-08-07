@@ -6,7 +6,7 @@ import Socials from '@/Components/Socials.vue';
 import ToolTip from "@/Components/ToolTip.vue";
 import { ChevronDoubleRightIcon, PencilIcon, StarIcon as StarIconFilled } from '@heroicons/vue/20/solid';
 import { FlagIcon, MapPinIcon, StarIcon as StarIconOutline } from '@heroicons/vue/24/outline';
-import { Link, usePage } from '@inertiajs/inertia-vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import FavouriteButton from '../FavouriteButton.vue';
 import Modal from "../Modal.vue";
@@ -51,7 +51,7 @@ const props = defineProps({
 
 });
 const showInvitationDistanceError = ref(false)
-const currentUser = usePage().props.value.auth.user
+const currentUser = usePage().props.auth.user
 const state = props.player.state_name
 const txtColor = state == 'Free' ? 'white' : 'black'
 const colors = ref(['#99A9BF', state == "Free" ? '#FF9900' : 'rgb(0, 100, 0)', state == "Free" ? '#FF9900' : 'rgb(0, 100, 0)'])
@@ -71,9 +71,9 @@ const backgroundImage = computed(() => {
 });
 
 const isCurrentUser = props.player.id === currentUser?.id
-const isPublic = usePage().url.value.includes('public/player')
+const isPublic = usePage().url.includes('public/player')
 
-const locale = usePage().props.value.locale;
+const locale = usePage().props.locale;
 
 function calculateDistance(lat1Str, lng1Str, lat2Str, lng2Str) {
     let lat1 = parseFloat(lat1Str);
@@ -120,13 +120,11 @@ function showCopied() {
             <div class="flex items-start justify-between">
                 <div class="flex items-center flex-1 gap-2 mb-2" :class="{ 'space-x-2': size == 'sm', 'space-x-8': size == 'lg' }">
                     <div class="relative">
-                        <Link :href="route('profile.edit')" v-if="isCurrentUser && !isPublic"
-                            class="absolute bottom-0 p-1 bg-white rounded-full hover:text-primary">
+                        <Link :href="route('profile.edit')" v-if="isCurrentUser && !isPublic" class="absolute bottom-0 p-1 bg-white rounded-full hover:text-primary">
                         <PencilIcon class="w-3 [&+div]:hover:block " />
                         <ToolTip :value="$t('edit-your-profile')" right="right-0" />
                         </Link>
-                        <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true"
-                            :borderColor="state == 'Free' ? 'primary' : 'blackDark'" />
+                        <Avatar :id="player.id" :image-url="player.avatar_url" :size="'lg'" :username="player.name" :border="true" :borderColor="state == 'Free' ? 'primary' : 'blackDark'" />
                     </div>
 
                     <div :class="state == 'Free' ? 'text-white' : 'text-primary'" class="flex-1">
@@ -146,8 +144,7 @@ function showCopied() {
                         }}
                         </Link>
                         <p class="flex items-center space-x-2 text-sm ">
-                            <span class="scale-[0.7] ltr:origin-left rtl:origin-right  flex items-center gap-x-1"
-                                :class="txtColor == 'black' ? 'text-primary' : 'text-[#FF9900]'">
+                            <span class="scale-[0.7] ltr:origin-left rtl:origin-right  flex items-center gap-x-1" :class="txtColor == 'black' ? 'text-primary' : 'text-[#FF9900]'">
                                 <span class="flex items-center gap-1">
                                     <template v-for="i in 5">
                                         <StarIconFilled class="w-5 h-5" v-if="player.rating >= i" :class="state == 'Free' ? 'text-gold' : 'text-primary'" />
@@ -164,8 +161,7 @@ function showCopied() {
 
             </div>
 
-            <div class="grid gap-1 border-b sm:gap-4"
-                :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' }, `border-${txtColor}`, `text-${txtColor}`">
+            <div class="grid gap-1 border-b sm:gap-4" :class="{ 'grid-cols-4 pb-2 ': size == 'sm', 'grid-cols-5 pb-4 mt-4': size == 'lg' }, `border-${txtColor}`, `text-${txtColor}`">
                 <div v-if="size == 'lg'" class="relative">
 
                     <p class="text-xs text-center whitespace-nowrap" :class="state == 'Free' ? 'text-white text-light opacity-50' : 'text-primary'">
@@ -205,8 +201,7 @@ function showCopied() {
             <div class="flex items-center justify-between gap-1 my-2 sm:text-xs" :class="`text-${txtColor}`">
                 <div class="flex items-center gap-1">
 
-                    <a :href="`https://www.google.com/maps/dir/Current+Location/${player.current_latitude},${player.current_longitude}`" target="_blank"
-                        class="w-full overflow-hidden rounded-lg ">
+                    <a :href="`https://www.google.com/maps/dir/Current+Location/${player.current_latitude},${player.current_longitude}`" target="_blank" class="w-full overflow-hidden rounded-lg ">
                         <p class="flex gap-1 items-center text-sm scale-[0.85] ltr:origin-left rtl:origin-right" v-if="showLocation">
                             <MapPinIcon class="inline w-4" />
                             {{ player.current_city }}
@@ -217,8 +212,7 @@ function showCopied() {
                 </div>
                 <div class="flex items-center gap-4">
                     <div class="flex space-x-2 bg-transparent" v-if="showInvite && player.id !== $page.props.auth.user.id">
-                        <Link v-if="distanceBetweenPlayerAndMe < $page.props?.distanceInvitationLimit" :href="route('invitation.create', player.id)"
-                            class="text-sm scale-[0.85]  ltr:origin-left rtl:origin-right">
+                        <Link v-if="distanceBetweenPlayerAndMe < $page.props?.distanceInvitationLimit" :href="route('invitation.create', player.id)" class="text-sm scale-[0.85]  ltr:origin-left rtl:origin-right">
                         {{ $t('send-invitation') }}
                         <ChevronDoubleRightIcon class="inline w-4 h-4 rtl:rotate-180 ltr:rotate-0" :class="`text-${txtColor}`" />
                         </Link>
@@ -227,8 +221,7 @@ function showCopied() {
                             <ChevronDoubleRightIcon class="inline w-4 h-4 rtl:rotate-180 ltr:rotate-0" :class="`text-${txtColor}`" />
                         </button>
                         <!-- can not send an invitation modal -->
-                        <Modal :show="showInvitationDistanceError" :closeable="true" :show-close-icon="true" max-width="md"
-                            @close="showInvitationDistanceError = false">
+                        <Modal :show="showInvitationDistanceError" :closeable="true" :show-close-icon="true" max-width="md" @close="showInvitationDistanceError = false">
                             <div class="flex min-h-[300px] flex-col text-center justify-between p-6 pt-0">
                                 <div class="flex justify-center">
                                     <h2 class="text-xl font-bold uppercase text-primary">
@@ -246,9 +239,8 @@ function showCopied() {
                     </div>
                     <div class="relative">
                         <Socials v-if="showShare" :shareUrl="`public/player/${player.username}`" position="bottom-0" @showCopied="showCopied" />
-                        <span class="bg-black text-white text-[10px] font-bold rounded absolute ltr:right-0 rtl:left-0 -bottom-3 -my-4 p-1 whitespace-nowrap"
-                            v-if="copiedMsg">{{
-                                $t('copied') }}!</span>
+                        <span class="bg-black text-white text-[10px] font-bold rounded absolute ltr:right-0 rtl:left-0 -bottom-3 -my-4 p-1 whitespace-nowrap" v-if="copiedMsg">{{
+                            $t('copied') }}!</span>
                     </div>
                 </div>
             </div>

@@ -1,13 +1,13 @@
 <script setup>
 import { computed, inject, ref } from 'vue';
-import { Link } from '@inertiajs/inertia-vue3';
+import { Link } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import Avatar from "@/Components/Avatar.vue";
 import ConfirmationModal from "@/Components/ConfirmationModal.vue";
 import { CheckCircleIcon, TrashIcon } from '@heroicons/vue/24/outline'
 import DateTranslation from '../DateTranslation.vue';
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/vue3';
 import Modal from '../Modal.vue';
 import FadeInTransition from '@/Components/FadeInTransition.vue'
 
@@ -27,7 +27,7 @@ const active = computed(() => {
 });
 
 function removeConversation() {
-    Inertia.delete(route('chats.delete', props.conversation.id), {
+    router.delete(route('chats.delete', props.conversation.id), {
         preserveScroll: true,
         preserveState: false
     })
@@ -39,7 +39,8 @@ function removeConversation() {
 
 <template>
     <Link :href="route('chats.show', conversation.id)" :class="active ? 'border-2 border-primary rounded-2xl' : ''">
-    <div @click="showNewMessagesPopup = false" style="background-image: url('/images/chatbg.png');" class=" bg-cover relative rounded-2xl p-6 flex flex-col gap-8 items-start bg-[center_center]" :class="active ? 'border-2 border-white' : ''">
+    <div @click="showNewMessagesPopup = false" style="background-image: url('/images/chatbg.png');"
+        class=" bg-cover relative rounded-2xl p-6 flex flex-col gap-8 items-start bg-[center_center]" :class="active ? 'border-2 border-white' : ''">
         <div class="flex flex-row items-center w-full gap-4" v-for="user in conversation.users">
             <div>
                 <Avatar :id="user.id" :image-url="user.avatar_url" size="lg" :username="user.name" :border="true" />

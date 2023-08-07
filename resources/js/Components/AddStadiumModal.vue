@@ -4,7 +4,7 @@ import Modal from '@/Components/Modal.vue';
 import { ref } from 'vue'
 import InputLabel from '@/Components/InputLabel.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
-import { useForm } from '@inertiajs/inertia-vue3';
+import { useForm } from '@inertiajs/vue3';
 import FixedActionBtn from '@/Components/FixedActionBtn.vue';
 
 

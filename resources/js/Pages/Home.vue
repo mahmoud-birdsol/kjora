@@ -1,8 +1,8 @@
 <script setup>
 import { ref, watch } from 'vue';
-import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
-import { Inertia } from "@inertiajs/inertia";
+import { router } from "@inertiajs/vue3";
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Pagination from '@/Components/Pagination.vue';
 import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
@@ -91,7 +91,7 @@ const filterByPosition = (position) => {
     filter();
 };
 
-const locale = usePage().props.value.locale;
+const locale = usePage().props.locale;
 </script>
 <template>
     <Head title="Home" />
@@ -135,8 +135,10 @@ const locale = usePage().props.value.locale;
                     </template>
                 </div>
                 <RadioGroup v-model="currentTabId" class="flex items-center justify-end w-full mb-2 rounded-sm">
-                    <RadioGroupOption v-slot="{ checked }" :value="1" class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white cursor-pointer hover:bg-stone-200 active:scale-95 " :class="currentTabId == 1 ? 'bg-primary bg-opacity-80' : ''">{{ $t('grid') }}</RadioGroupOption>
-                    <RadioGroupOption v-slot="{ checked }" :value="2" class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white cursor-pointer hover:bg-stone-200 active:scale-95 " :class="currentTabId == 2 ? ' bg-primary bg-opacity-80' : ''">{{ $t('map') }}</RadioGroupOption>
+                    <RadioGroupOption v-slot="{ checked }" :value="1" class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white cursor-pointer hover:bg-stone-200 active:scale-95 " :class="currentTabId == 1 ? 'bg-primary bg-opacity-80' : ''">{{ $t('grid')
+                    }}</RadioGroupOption>
+                    <RadioGroupOption v-slot="{ checked }" :value="2" class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white cursor-pointer hover:bg-stone-200 active:scale-95 " :class="currentTabId == 2 ? ' bg-primary bg-opacity-80' : ''">{{ $t('map')
+                    }}</RadioGroupOption>
                 </RadioGroup>
                 <!-- Current list...-->
                 <template v-if="players.data.length">

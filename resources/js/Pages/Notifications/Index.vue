@@ -1,6 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { Head } from '@inertiajs/inertia-vue3';
+import { Head } from '@inertiajs/vue3';
 import NotificationComponent from '@/Components/NotificationComponent.vue';
 import Pagination from '@/Components/Pagination.vue';
 
@@ -10,7 +10,7 @@ defineProps({
 </script>
 
 <template>
-    <Head title="Notifications"/>
+    <Head title="Notifications" />
 
     <AppLayout>
         <template #header>Notifications</template>
@@ -19,7 +19,7 @@ defineProps({
             <div v-if="notifications.data.length">
                 <ul role="list" class="divide-y divide-gray-200">
                     <template v-for="notification in notifications.data">
-                        <NotificationComponent :notification="notification"/>
+                        <NotificationComponent :notification="notification" />
                     </template>
                 </ul>
             </div>
@@ -34,7 +34,7 @@ defineProps({
         </div>
 
         <div class="flex justify-start">
-            <Pagination :links="notifications.links"/>
+            <Pagination :links="notifications.links" />
         </div>
     </AppLayout>
 </template>

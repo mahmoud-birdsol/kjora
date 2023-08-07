@@ -8,7 +8,7 @@ import {
 import InputLabel from "@/Components/InputLabel.vue";
 import Card from "@/Components/Card.vue";
 import CardContent from "@/Components/CardContent.vue";
-import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { CheckIcon, StarIcon } from '@heroicons/vue/24/outline';
 import { CheckCircleIcon } from "@heroicons/vue/20/solid"
 import PrimaryButton from '@/Components/PrimaryButton.vue'
@@ -39,8 +39,8 @@ function send() {
     )
 }
 const date = new Date();
-const locale = usePage().props.value.locale
-const state = ref(usePage().props.value.user.state_name)
+const locale = usePage().props.locale
+const state = ref(usePage().props.user.state_name)
 let day = date.getDate();
 let month = date.getMonth();
 let year = date.getFullYear();
