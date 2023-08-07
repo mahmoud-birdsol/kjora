@@ -4,8 +4,8 @@ import DateTranslation from '@/Components/DateTranslation.vue';
 import PerformanceTab from '@/Components/PerformanceTab.vue';
 import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
 import ProfileGallery from '@/Components/ProfileGallery.vue';
-import { Inertia } from '@inertiajs/inertia';
-import { usePage } from '@inertiajs/inertia-vue3';
+import { router } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3';
 import { computed, onMounted, ref } from 'vue';
 import FadeInTransition from '@/Components/FadeInTransition.vue';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
@@ -17,7 +17,7 @@ const props = defineProps({
     playerRating: Array,
 
 });
-onMounted(() => { console.log(props.posts); })
+
 const currentTabId = ref(2)
 
 const tabs = computed(() => {
@@ -30,10 +30,10 @@ const tabs = computed(() => {
 })
 
 function reloadMedia() {
-    Inertia.reload({ only: ['posts'] })
+    router.reload({ only: ['posts'] })
 }
 
-const url = usePage().props.value.ziggy.url + '/public/player/' + props.player.id
+const url = usePage().props.ziggy.url + '/public/player/' + props.player.id
 
 
 </script>
@@ -59,14 +59,11 @@ const url = usePage().props.value.ziggy.url + '/public/player/' + props.player.i
 
         <div class="py-12">
             <div class="flex flex-col max-w-5xl mx-auto gap-y-6 sm:px-6 lg:px-8">
-                <MainPlayerCard :player="player" size="lg" :show-report="false" :showFavorite="false" :showInvite="false" :showLocation="false"
-                    :showDistance="false" :showShare="false" />
+                <MainPlayerCard :player="player" size="lg" :show-report="false" :showFavorite="false" :showInvite="false" :showLocation="false" :showDistance="false" :showShare="false" />
                 <div class="flex justify-center p-2 bg-white rounded-full gap-x-3 ">
                     <template v-for="(tab, index) in tabs" :key="index">
-                        <button @click="currentTabId = tab.id" :data-tab="tab.name"
-                            class="text-sm font-semibold uppercase transition-colors duration-150 ease-in hover:text-stone-600 "
-                            :class="tab.id === currentTabId ? 'text-stone-800' : 'text-stone-400'">{{
-                                $t(tab.name) }} </button>
+                        <button @click="currentTabId = tab.id" :data-tab="tab.name" class="text-sm font-semibold uppercase transition-colors duration-150 ease-in hover:text-stone-600 " :class="tab.id === currentTabId ? 'text-stone-800' : 'text-stone-400'">{{
+                            $t(tab.name) }} </button>
                     </template>
 
                 </div>

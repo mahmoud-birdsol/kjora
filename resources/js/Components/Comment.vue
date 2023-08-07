@@ -1,6 +1,7 @@
 <template>
     <!-- comment  -->
-    <div ref="commentsComp" :data-comment-id="comment.id" class="grid grid-cols-[min-content_1fr] w-full justify-start gap-4  px-6 pt-2" :class="comment.parent_id ? 'bg-white' : ''" >
+    <div ref="commentsComp" :data-comment-id="comment.id" class="grid grid-cols-[min-content_1fr] w-full justify-start gap-4  px-6 pt-2"
+        :class="comment.parent_id ? 'bg-white' : ''">
         <!-- image col 1 -->
         <div class="min-w-max z-[10] relative  " :class="guidesClassesAfter2">
             <Avatar :id="comment.user.id" :username="comment.user.name" :image-url="comment.user.avatar_url" :size="'md'" :border="true" border-color="primary" />
@@ -33,12 +34,13 @@
             </div>
             <!-- comment or reply body  row 2-->
             <div class="w-full">
-                <p class="w-full text-sm break-all whitespace-pre-wrap text-stone-800" v-html="handleBody"/>
+                <p class="w-full text-sm break-all whitespace-pre-wrap text-stone-800" v-html="handleBody" />
             </div>
             <!-- add reply & like buttons row 3 -->
             <div class="flex items-center justify-start w-full gap-2 mb-2 text-sm font-semibold text-stone-700">
                 <template v-if="!isPublic">
-                    <button v-if="isCurrentUser" @click="showDeleteCommentModal = true" class="p-1 transition-all duration-150 pis-0 enabled:hover:underline hover:underline-offset-4">
+                    <button v-if="isCurrentUser" @click="showDeleteCommentModal = true"
+                        class="p-1 transition-all duration-150 pis-0 enabled:hover:underline hover:underline-offset-4">
                         <TrashIcon class="w-4" />
                         <!-- confirm delete media modal -->
                         <ConfirmationModal :show="showDeleteCommentModal" @close="showDeleteCommentModal = false" @delete="deleteComment">
@@ -57,7 +59,8 @@
                             <span class="text-sm">{{ commentsLikeCount }}</span>
                             <LikesModal :show="showLikesModal" :users="comment.likes?.map(like => like.user)" @close="showLikesModal = false" />
                         </button>
-                        <LikeButton :isLiked="comment?.is_liked" :likeable_id="comment.id" :likeable_type="'App\\Models\\Comment'" @like="commentsLikeCount++" @disLike="commentsLikeCount--">
+                        <LikeButton :isLiked="comment?.is_liked" :likeable_id="comment.id" :likeable_type="'App\\Models\\Comment'" @like="commentsLikeCount++"
+                            @disLike="commentsLikeCount--">
                             <template v-slot="{ isLiked }">
                                 <div class="transition-all duration-150" :class="isLiked ? 'text-primary' : ''">
                                     {{ commentsLikeCount <= 1 ? $t('like') : $t('likes') }} </div>
@@ -110,7 +113,8 @@
                 </div>
             </OnClickOutside>
             <!-- view replies button row 6 -->
-            <button v-show="hasReplies" @click="toggleRepliesView" class="flex justify-start w-full gap-2 text-sm transition-all duration-300 text-stone-500 enabled:hover:underline hover:underline-offset-4 ">
+            <button v-show="hasReplies" @click="toggleRepliesView"
+                class="flex justify-start w-full gap-2 text-sm transition-all duration-300 text-stone-500 enabled:hover:underline hover:underline-offset-4 ">
                 {{ showReplies ? $t('hide') : $t('view') }} {{ comment.replies?.length }} {{ $t('replies') }}
             </button>
 
@@ -125,23 +129,23 @@ import Avatar from './Avatar.vue';
 import { computed, onBeforeMount, onMounted, ref, watch } from 'vue';
 import { FaceSmileIcon, TrashIcon } from '@heroicons/vue/24/outline';
 import { PaperAirplaneIcon } from '@heroicons/vue/24/solid';
-import { Link, usePage } from '@inertiajs/inertia-vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import EmojiPickerElement from './EmojiPickerElement.vue';
 import DateTranslation from './DateTranslation.vue';
 import LikeButton from './LikeButton.vue';
 import Modal from './Modal.vue';
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/vue3';
 import ConfirmationModal from './ConfirmationModal.vue';
 import LikesModal from './LikesModal.vue';
 import MentionTextArea from './MentionTextArea.vue';
 
-const props = defineProps(['comment', 'parentOffset','users'])
+const props = defineProps(['comment', 'parentOffset', 'users'])
 onBeforeMount(() => {
     dayjs.extend(relativeTime)
 })
 const emit = defineEmits(['addedReply'])
 
-const currentUser = usePage().props.value.auth.user
+const currentUser = usePage().props.auth.user
 const replyInput = ref(null)
 const showReplies = ref(false)
 const hasReplies = computed(() => props.comment.replies && props.comment.replies.length > 0);
@@ -156,16 +160,16 @@ const showLikesModal = ref(false)
 const commentsComp = ref(null)
 
 const isCurrentUser = currentUser.id === props.comment.user.id
-const isPublic = usePage().url.value.includes('public/posts')
+const isPublic = usePage().url.includes('public/posts')
 const isParentComment = !props.comment.parent_id
 
 
 onMounted(() => {
-    let id =route().params?.commentId
-    if(props.comment.id===+id) {
+    let id = route().params?.commentId
+    if (props.comment.id === +id) {
         commentsComp.value.scrollIntoView({
-            behavior:'smooth',
-            block:'center'
+            behavior: 'smooth',
+            block: 'center'
         })
         commentsComp.value.classList.add('first-appear')
     }
@@ -191,13 +195,13 @@ const guidesClassesAfter2 = computed(() => {
     return props.comment.parent_id ?
         ' after:absolute after:h-px after:w-8  after:bg-stone-200  after:z-[-1] ltr:after:-left-9 rtl:after:-right-9 after:top-5 ' : '';
 });
-const handleBody = computed(()=>{
+const handleBody = computed(() => {
     const commentBody = props.comment.body
-    if(!commentBody.includes('@')) return props.comment.body;
+    if (!commentBody.includes('@')) return props.comment.body;
     const allWords = commentBody.split(' ')
-    return allWords.map(word =>{
-        if(!word.startsWith('@')) return word;
-        if(!props.users.some(user => user.username === word.slice(1)  )) return `${word}`
+    return allWords.map(word => {
+        if (!word.startsWith('@')) return word;
+        if (!props.users.some(user => user.username === word.slice(1))) return `${word}`
         else return `<a href="/player/name/${word.slice(1)}" class="text-primary" dir="ltr">${word}</a>`
     }).join(' ')
 })
@@ -235,7 +239,7 @@ function sendReply() {
 
 function deleteComment() {
     showDeleteCommentModal.value = false
-    Inertia.delete(route('comments.destroy', props.comment), {
+    router.delete(route('comments.destroy', props.comment), {
         preserveScroll: true,
         preserveState: false
     })

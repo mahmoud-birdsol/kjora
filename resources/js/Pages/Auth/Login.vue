@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -48,7 +48,8 @@ const submit = () => {
                 <div class="grid grid-cols-1 gap-4">
                     <div>
                         <InputLabel for="email" :value="$t('sign in')" />
-                        <TextInput type="text" v-model="form.email" :placeholder="$t('Please enter username or email address')" autoComplete="email" name="email" id="email" aria-required="true" />
+                        <TextInput type="text" v-model="form.email" :placeholder="$t('Please enter username or email address')" autoComplete="email" name="email"
+                            id="email" aria-required="true" />
                         <InputError class="mt-2" :message="form.errors.email" />
                     </div>
                     <div>

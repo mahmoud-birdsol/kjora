@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue';
-import { Head } from '@inertiajs/inertia-vue3';
+import { Head } from '@inertiajs/vue3';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import GuestTwoColumnLayout from '@/Layouts/Partials/GuestTwoColumnLayout.vue';
 import Card from '@/Components/Card.vue';
@@ -18,7 +18,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 </script>
 
 <template>
-    <Head title="Email Verification"/>
+    <Head title="Email Verification" />
 
     <GuestLayout>
         <GuestTwoColumnLayout>
@@ -27,26 +27,21 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
                     <template #body>
                         <div class="flex justify-center items-center">
                             <p class="text-xs text-gary-900">
-                                {{$t('We have sent you an email, please click on the provided link to verify your email address')}}.
+                                {{ $t('We have sent you an email, please click on the provided link to verify your email address') }}.
                             </p>
                         </div>
                     </template>
 
                     <template #footer>
                         <div class="flex justify-center items-center w-full mt-12 self-end">
-                            <VerifyEmailForm/>
+                            <VerifyEmailForm />
                         </div>
                     </template>
                 </CardContent>
             </Card>
         </GuestTwoColumnLayout>
 
-        <SuccessMessageModal
-            :show="verificationLinkSent && showSuccessModal"
-            @close="showSuccessModal = false"
-            position="right"
-            :title="$t('Email Verification')"
-            :message="$t('A new verification link has been sent to the email address you provided in your profile settings')+'.'"
-        />
+        <SuccessMessageModal :show="verificationLinkSent && showSuccessModal" @close="showSuccessModal = false" position="right" :title="$t('Email Verification')"
+            :message="$t('A new verification link has been sent to the email address you provided in your profile settings') + '.'" />
     </GuestLayout>
 </template>

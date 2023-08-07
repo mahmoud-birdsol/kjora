@@ -20,7 +20,7 @@
 import { FaceSmileIcon } from "@heroicons/vue/24/outline";
 import { PaperAirplaneIcon } from "@heroicons/vue/24/solid";
 import EmojiPickerElement from "@/Components/EmojiPickerElement.vue";
-import { usePage } from "@inertiajs/inertia-vue3";
+import { usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 import axios from "axios";
 import MentionTextAreaVue from "@/Components/MentionTextArea.vue";
@@ -32,7 +32,7 @@ const newComment = ref("");
 const commentInput = ref();
 const isSending = ref(false);
 const showEmojiPicker = ref(false);
-const currentUser = usePage().props.value.auth.user;
+const currentUser = usePage().props.auth.user;
 // store new comments in database
 function sendComment() {
     axios

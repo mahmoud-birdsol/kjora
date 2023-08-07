@@ -1,14 +1,14 @@
 <script setup>
 import GuestNavbar from '@/Layouts/Partials/GuestNavbar.vue';
-import { usePage } from '@inertiajs/inertia-vue3';
+import { usePage } from '@inertiajs/vue3';
 import CopyrightClaim from '@/Components/CopyrightClaim.vue';
 import SystemMessage from '@/Components/SystemMessage.vue';
 import { loadLanguageAsync } from 'laravel-vue-i18n';
 import { onMounted } from 'vue';
-const socials = usePage().props.value.socials;
+const socials = usePage().props.socials;
 
 onMounted(() => {
-    loadLanguageAsync(usePage().props.value.locale)
+    loadLanguageAsync(usePage().props.locale)
 })
 
 </script>

@@ -89,7 +89,7 @@
 
 <script setup>
 import { onMounted, onBeforeMount, ref, computed } from 'vue';
-import { usePage, Link, Head } from '@inertiajs/inertia-vue3';
+import { usePage, Link, Head } from '@inertiajs/vue3';
 import { HeartIcon } from '@heroicons/vue/24/solid';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Avatar from '@/Components/Avatar.vue';
@@ -121,9 +121,9 @@ const props = defineProps({
 const commentsContainer = ref(null);
 const postCaptionComp = ref(null);
 const postComments = ref([])
-const currentUser = usePage().props.value.auth.user
+const currentUser = usePage().props.auth.user
 const isCurrentUser = currentUser?.id === props?.user?.id
-const isPublic = usePage().url.value.includes('public/posts')
+const isPublic = usePage().url.includes('public/posts')
 const showLikesModal = ref(false)
 
 const numComments = computed(() => postComments.value ? postComments.value.filter(c => !c.parent_id)?.length : 0)
@@ -131,7 +131,7 @@ const commentsContainerOffset = computed(() => {
     return commentsContainer.value?.getBoundingClientRect().top + window.scrollY
 })
 
-const url = usePage().props.value.ziggy.url + '/public/posts/' + props.post.id
+const url = usePage().props.ziggy.url + '/public/posts/' + props.post.id
 
 onMounted(() => {
     getPostComments()

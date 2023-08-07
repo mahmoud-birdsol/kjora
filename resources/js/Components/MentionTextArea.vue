@@ -1,18 +1,14 @@
 <template>
     <div class="relative flex items-center flex-grow">
 
-        <div ref="customTextArea"
-            class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar break-all whitespace-pre-wrap placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary min-h-[2.5rem] overflow-auto max-h-[3.75rem]">
+        <div ref="customTextArea" class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar break-all whitespace-pre-wrap placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary min-h-[2.5rem] overflow-auto max-h-[3.75rem]">
             <span v-html="CommentInDiv" />
         </div>
-        <textarea @keypress.enter.exact.prevent="sendOrSelect" @keydown.up.exact="goUp" @keydown.down.exact="goDown" @scroll="syncScroll" :value="newText"
-            @input="$emit('update:newText', $event.target.value)" placeholder="Please write text ..."
+        <textarea @keypress.enter.exact.prevent="sendOrSelect" @keydown.up.exact="goUp" @keydown.down.exact="goDown" @scroll="syncScroll" :value="newText" @input="$emit('update:newText', $event.target.value)" placeholder="Please write text ..."
             class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar break-all whitespace-pre-wrap placeholder:text-neutral-400 bg-transparent focus:ring-1 focus:ring-primary absolute text-transparent caret-black inset-y-0 max-h-[3.75rem] min-h-[2.5rem]">
             </textarea>
-        <ul class="absolute flex flex-col text-center bg-white border divide-y rounded bottom-full w-full max-h-[10vh] overflow-auto hideScrollBar"
-            v-if="showMentionList && suggestion.length">
-            <li v-for="(user, i) in suggestion" class="p-1 text-sm transition-colors duration-300 cursor-pointer text-primary hover:bg-stone-300"
-                :class="currentOption === i && 'bg-primary text-white'" @click="addToDiv(user)" ref="options">
+        <ul class="absolute flex flex-col text-center bg-white border divide-y rounded bottom-full w-full max-h-[10vh] overflow-auto hideScrollBar" v-if="showMentionList && suggestion.length">
+            <li v-for="(user, i) in suggestion" class="p-1 text-sm transition-colors duration-300 cursor-pointer text-primary hover:bg-stone-300" :class="currentOption === i && 'bg-primary text-white'" @click="addToDiv(user)" ref="options">
                 {{ user.username }}
             </li>
         </ul>
@@ -68,10 +64,10 @@ function syncScroll(e) {
 function goUp(e) {
     if (!showMentionList.value) return;
     e.preventDefault();
-    console.log(currentOption.value, options.value.length)
+
     if (currentOption.value <= 0) currentOption.value = options.value.length - 1
     else currentOption.value -= 1
-    console.log(currentOption.value, suggestion.value.length)
+
 
 }
 function goDown(e) {

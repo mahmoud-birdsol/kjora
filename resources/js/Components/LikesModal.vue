@@ -1,5 +1,5 @@
 <script setup>
-import { Link, usePage } from '@inertiajs/inertia-vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import Avatar from './Avatar.vue';
 import FavouriteButton from './FavouriteButton.vue';
 import Modal from './Modal.vue';
@@ -30,7 +30,7 @@ const close = () => {
 };
 
 
-const currentUser = usePage().props.value.auth.user
+const currentUser = usePage().props.auth.user
 
 </script>
 
@@ -59,9 +59,9 @@ const currentUser = usePage().props.value.auth.user
                         <Link :href="route('player.profile', user.id)" class="text-xs text-stone-400 ">@{{
                             user.username }} </Link>
                     </div>
-<!--                    <div v-if="currentUser.id !== user.id" class="mis-auto">-->
-<!--                        <FavouriteButton :user="user" />-->
-<!--                    </div>-->
+                    <!--                    <div v-if="currentUser.id !== user.id" class="mis-auto">-->
+                    <!--                        <FavouriteButton :user="user" />-->
+                    <!--                    </div>-->
 
                 </div>
             </template>

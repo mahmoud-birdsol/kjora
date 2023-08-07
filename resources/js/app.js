@@ -1,24 +1,22 @@
-import "./bootstrap";
-import "../css/app.css";
-import "@splidejs/splide/css";
-import "@splidejs/vue-splide/css/core";
-import "@splidejs/vue-splide/css";
-import VueApexCharts from "vue3-apexcharts";
-import { createApp, h } from "vue";
-import { createInertiaApp } from "@inertiajs/inertia-vue3";
-import { InertiaProgress } from "@inertiajs/progress";
-import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
-import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
-import { createPinia } from "pinia";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { i18nVue } from "laravel-vue-i18n";
 import VueGoogleMaps from "@fawmi/vue-google-maps";
-
-import EmojiPicker from "vue3-emoji-picker";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { createInertiaApp } from "@inertiajs/vue3";
+import "@splidejs/splide/css";
+import "@splidejs/vue-splide/css";
+import "@splidejs/vue-splide/css/core";
 import { OnClickOutside } from "@vueuse/components";
-// import "vue3-emoji-picker/css";
+import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
+import { i18nVue } from "laravel-vue-i18n";
+import { createPinia } from "pinia";
+import { createApp, h } from "vue";
+import VueApexCharts from "vue3-apexcharts";
+import EmojiPicker from "vue3-emoji-picker";
 import "../../node_modules/vue3-emoji-picker/dist/style.css";
+import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
+import "../css/app.css";
+import "./bootstrap";
+
 library.add();
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
@@ -32,8 +30,8 @@ createInertiaApp({
             `./Pages/${name}.vue`,
             import.meta.glob("./Pages/**/*.vue")
         ),
-    setup({ el, app, props, plugin }) {
-        return createApp({ render: () => h(app, props) })
+    setup({ el, App, props, plugin }) {
+        return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(i18nVue, {
                 resolve: (lang) => import(`../../lang/${lang}.json`),
@@ -53,6 +51,8 @@ createInertiaApp({
             .component("font-awesome-icon", FontAwesomeIcon)
             .mount(el);
     },
+    progress: {
+        color: "rgb(0, 100, 0)",
+        showSpinner: true,
+    },
 });
-
-InertiaProgress.init({ color: "rgb(0, 100, 0)", showSpinner: true });

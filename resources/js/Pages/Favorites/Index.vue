@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue';
-import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
-import { Inertia } from "@inertiajs/inertia";
+import { router } from "@inertiajs/vue3";
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import Modal from '@/Components/Modal.vue';

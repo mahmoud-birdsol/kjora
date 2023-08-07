@@ -1,5 +1,5 @@
 <script setup>
-import {Head, useForm} from '@inertiajs/inertia-vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import GuestTwoColumnLayout from '@/Layouts/Partials/GuestTwoColumnLayout.vue';
 import Card from "@/Components/Card.vue";
@@ -8,8 +8,8 @@ import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import {CameraIcon, PlusCircleIcon} from "@heroicons/vue/24/outline";
-import {ref} from 'vue'
+import { CameraIcon, PlusCircleIcon } from "@heroicons/vue/24/outline";
+import { ref } from 'vue'
 
 const form = useForm({
     first_name: null,
@@ -34,7 +34,7 @@ function submit() {
 
 </script>
 <template>
-    <Head title="Contact"/>
+    <Head title="Contact" />
     <GuestLayout>
         <GuestTwoColumnLayout>
             <Card>
@@ -47,31 +47,30 @@ function submit() {
 
                         <form class="grid grid-cols-2 gap-4" @submit.prevent="submit" v-loading="form.processing">
                             <div class="col-span-1">
-                                <InputLabel color="text-primary"> {{$t('first-name')}}</InputLabel>
-                                <TextInput type="text" v-model="form.first_name" :placeholder="$t('please')+$t('enter') + $t('first-name')"
-                                           auto-complete="given-name" aria-required="true"/>
-                                <InputError :message="form.errors.first_name" class="px-4"/>
+                                <InputLabel color="text-primary"> {{ $t('first-name') }}</InputLabel>
+                                <TextInput type="text" v-model="form.first_name" :placeholder="$t('please') + $t('enter') + $t('first-name')"
+                                    auto-complete="given-name" aria-required="true" />
+                                <InputError :message="form.errors.first_name" class="px-4" />
                             </div>
                             <div class="col-span-1">
-                                <InputLabel color="text-primary"> {{$t('surname')}} </InputLabel>
-                                <TextInput type="text" v-model="form.last_name" :placeholder="$t('please')+$t('enter') + $t('surname')"
-                                    auto-complete="family-name" aria-required="true" />
-                                <InputError :message="form.errors.last_name" class="px-4"/>
+                                <InputLabel color="text-primary"> {{ $t('surname') }} </InputLabel>
+                                <TextInput type="text" v-model="form.last_name" :placeholder="$t('please') + $t('enter') + $t('surname')" auto-complete="family-name"
+                                    aria-required="true" />
+                                <InputError :message="form.errors.last_name" class="px-4" />
                             </div>
                             <div class="col-span-2">
-                                <InputLabel color="text-primary"> {{$t('email')}}</InputLabel>
-                                <TextInput type="text" v-model="form.email" :placeholder="$t('please')+$t('enter') + $t('Email Address')"
-                                           auto-complete="email"
-                                           aria-required="true"/>
-                                <InputError :message="form.errors.email" class="px-4"/>
+                                <InputLabel color="text-primary"> {{ $t('email') }}</InputLabel>
+                                <TextInput type="text" v-model="form.email" :placeholder="$t('please') + $t('enter') + $t('Email Address')" auto-complete="email"
+                                    aria-required="true" />
+                                <InputError :message="form.errors.email" class="px-4" />
                             </div>
                             <div class="col-span-2">
-                                <InputLabel color="text-primary"> {{$t('subject')}} </InputLabel>
-                                <TextInput type="text" v-model="form.subject" :placeholder="$t('please')+$t('enter') + $t('subject')" />
-                                <InputError :message="form.errors.subject" class="px-4"/>
+                                <InputLabel color="text-primary"> {{ $t('subject') }} </InputLabel>
+                                <TextInput type="text" v-model="form.subject" :placeholder="$t('please') + $t('enter') + $t('subject')" />
+                                <InputError :message="form.errors.subject" class="px-4" />
                             </div>
                             <div class="relative col-span-2">
-                                <InputLabel color="text-primary"> {{$t('message')}}</InputLabel>
+                                <InputLabel color="text-primary"> {{ $t('message') }}</InputLabel>
                                 <textarea :placeholder="$t('please write a message or briefly what happen')" class="
                                     block
                                     w-full
@@ -86,8 +85,8 @@ function submit() {
                                     " v-model="form.message"></textarea>
 
                             </div>
-                            <InputError :message="form.errors.subject"/>
-                            <PrimaryButton class="col-span-2">{{$t('submit')}}</PrimaryButton>
+                            <InputError :message="form.errors.subject" />
+                            <PrimaryButton class="col-span-2">{{ $t('submit') }}</PrimaryButton>
                         </form>
                     </template>
                 </CardContent>

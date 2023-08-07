@@ -1,7 +1,7 @@
 <script setup>
 import DateTranslation from "@/Components/DateTranslation.vue";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { useForm, usePage } from '@inertiajs/inertia-vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import GuestLayout from "@/Layouts/GuestLayout.vue";
@@ -9,7 +9,7 @@ import GuestLayout from "@/Layouts/GuestLayout.vue";
 const props = defineProps({
     policy: Object,
 });
-const is_login = usePage().props?.value.auth?.user
+const is_login = usePage().props?.auth?.user
 const isDisabled = ref(true)
 const form = useForm({
     privacyPolicy: props.policy?.id ?? null
@@ -42,9 +42,7 @@ function submit() {
                 <div class="" v-if="$page.props.user && policy && (policy.version !== $page.props.auth.user.accepted_privacy_policy_version)">
                     <div class="flex flex-col justify-center gap-2">
                         <label for="policy" class="text-sm font-medium text-primary">{{ $t('I agree') }}</label>
-                        <input type="radio" :value="policy.id" id="policy" v-model="form.privacyPolicy" :checked="false"
-                            @change="(e) => { e.target.checked ? isDisabled = false : isDisabled = true; }"
-                            class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
+                        <input type="radio" :value="policy.id" id="policy" v-model="form.privacyPolicy" :checked="false" @change="(e) => { e.target.checked ? isDisabled = false : isDisabled = true; }" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
                     </div>
                     <div class="mt-2">
                         <PrimaryButton :disabled="isDisabled" @click="submit">

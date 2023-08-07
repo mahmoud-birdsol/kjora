@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref, onBeforeMount, onMounted } from "vue";
-import { Link, useForm, usePage } from "@inertiajs/inertia-vue3";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { ElRate } from "element-plus";
 import Avatar from "@/Components/Avatar.vue";
 import dayjs from "dayjs";
@@ -41,7 +41,7 @@ const backgroundImage = computed(() => {
 });
 
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-const currentUser = usePage().props.value.auth.user;
+const currentUser = usePage().props.auth.user;
 const state = props.player.state_name;
 const txtColor = props.invitation.state == "Free" ? "white" : "black";
 //invitation states
@@ -107,22 +107,22 @@ const markerOptions = { position: position };
                     <span class="flex scale-[0.7] items-center gap-x-1" :class="txtColor == 'black'
                         ? 'text-primary'
                         : 'text-[#FF9900]'
-                    ">
+                        ">
                         <span class="flex items-center gap-1">
                             <template v-for="i in 5">
                                 <StarIconFilled class="w-5 h-5" v-if="player.rating >= i" :class="props.invitation.state == 'Free'
                                     ? 'text-gold'
                                     : 'text-primary'
-                                " />
+                                    " />
                                 <StarIconOutline class="w-5 h-5" :class="props.invitation.state == 'Free'
                                     ? 'text-gold'
                                     : 'text-primary'
-                                " v-else />
+                                    " v-else />
                             </template>
                         </span>
 
                         <span class="ml-2 font-bold text-md" :class="props.invitation.state == 'Free' ? 'text-gold' : 'text-primary'
-                        ">{{ player.rating }}</span>
+                            ">{{ player.rating }}</span>
                     </span>
                 </p>
             </div>
@@ -196,7 +196,7 @@ const markerOptions = { position: position };
                 <div v-if="isPending &&
                     !isHiring
 
-                " class="flex justify-center gap-6">
+                    " class="flex justify-center gap-6">
                     <button @click="decline"
                         class="flex items-center justify-center px-2 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                         <XMarkIcon class="w-6 text-red-600" />
@@ -231,7 +231,7 @@ const markerOptions = { position: position };
                 </Link>
                 <!-- Rate -->
                 <Link :href="route('player.review.show', invitation.reviews[0].id)
-                " v-if="isAccepted && isShouldRate"
+                    " v-if="isAccepted && isShouldRate"
                     class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
                 {{ $t("rate") }}
                 </Link>

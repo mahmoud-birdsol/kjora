@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { usePage } from '@inertiajs/inertia-vue3';
+import { usePage } from '@inertiajs/vue3';
 import Facebook from "@/Components/Icons/Facebook.vue";
 import Twitter from "@/Components/Icons/Twitter.vue";
 import Linkedin from "@/Components/Icons/Linkedin.vue";
@@ -18,7 +18,7 @@ const props = defineProps({
 const emits = defineEmits(['showCopied'])
 const showSocials = ref(false)
 const show = ref(false)
-const url = usePage().props.value.ziggy.url + '/' + props.shareUrl
+const url = usePage().props.ziggy.url + '/' + props.shareUrl
 
 function copy() {
     navigator.clipboard.writeText(url).then(() => {
@@ -27,7 +27,7 @@ function copy() {
     })
 }
 
-console.log(url);
+
 </script>
 <template>
     <onClickOutside @trigger="showSocials = false">

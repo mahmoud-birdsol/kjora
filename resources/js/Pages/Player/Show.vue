@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/inertia-vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import HelloUserHeader from '@/Components/HelloUserHeader.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
@@ -7,7 +7,7 @@ import PerformanceTab from '@/Components/PerformanceTab.vue';
 import ProfileGallery from '@/Components/ProfileGallery.vue';
 import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
 import { computed, ref } from 'vue';
-import { Inertia } from '@inertiajs/inertia'
+import { router } from '@inertiajs/vue3'
 import FadeInTransition from '@/Components/FadeInTransition.vue';
 import Modal from '@/Components/Modal.vue';
 import { ElSlider } from 'element-plus';
@@ -32,7 +32,7 @@ const tabs = computed(() => {
 })
 
 function reloadMedia() {
-    Inertia.reload({ only: ['posts'] })
+    router.reload({ only: ['posts'] })
 }
 
 

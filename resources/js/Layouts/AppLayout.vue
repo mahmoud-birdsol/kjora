@@ -1,5 +1,5 @@
 <script setup>
-import { Head, usePage } from '@inertiajs/inertia-vue3';
+import { Head, usePage } from '@inertiajs/vue3';
 import SystemMessage from '@/Components/SystemMessage.vue';
 import CopyrightClaim from '@/Components/CopyrightClaim.vue';
 import Navbar from '@/Layouts/Partials/Navbar.vue';
@@ -8,10 +8,10 @@ import { onMounted, provide } from 'vue';
 import { loadLanguageAsync } from 'laravel-vue-i18n';
 
 onMounted(() => {
-    loadLanguageAsync(usePage().props.value.locale)
+    loadLanguageAsync(usePage().props.locale)
 });
 
-const greetings = usePage().props.value.greetings;
+const greetings = usePage().props.greetings;
 provide('greetings', greetings)
 
 defineProps({
@@ -28,7 +28,6 @@ defineProps({
 onMounted(() => {
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { enableHighAccuracy: true });
     // navigator.permissions.query({ name: "geolocation" }).then((result) => {
-    //     console.log(result);
     // });
 })
 const successCallback = (position) => {
@@ -41,7 +40,7 @@ const successCallback = (position) => {
 };
 
 const errorCallback = (error) => {
-    console.log(error);
+    console.error(error);
 };
 
 </script>

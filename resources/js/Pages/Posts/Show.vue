@@ -93,7 +93,7 @@
 
 <script setup>
 import { onMounted, onBeforeMount, ref, computed, provide } from "vue";
-import { usePage, Link } from "@inertiajs/inertia-vue3";
+import { usePage, Link } from "@inertiajs/vue3";
 import { HeartIcon } from "@heroicons/vue/24/solid";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import Avatar from "@/Components/Avatar.vue";
@@ -125,7 +125,7 @@ const commentsComps = ref(null);
 const postCaptionComp = ref(null);
 const postComments = ref([]);
 const showLikesModal = ref(false);
-const currentUser = usePage().props.value.auth.user;
+const currentUser = usePage().props.auth.user;
 const isCurrentUser = currentUser.id === props.user.id;
 const users = ref([])
 const numComments = computed(() =>

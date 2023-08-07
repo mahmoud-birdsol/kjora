@@ -7,7 +7,7 @@ import { faCamera, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 import Crop from './Crop.vue';
-import { usePage } from '@inertiajs/inertia-vue3';
+import { usePage } from '@inertiajs/vue3';
 import CropIcon from '@/Components/Icons/CropIcon.vue';
 import Title from './Title.vue';
 const props = defineProps({
@@ -52,7 +52,7 @@ const resolution = {
     width: 450,
     height: 337.5,
 }
-const currentUser = usePage().props.value.auth.user
+const currentUser = usePage().props.auth.user
 const photoUrl = ref(null)
 const context = computed(() => canvas.value?.getContext('2d'))
 const close = () => {

@@ -1,5 +1,5 @@
 <script setup>
-import { useForm } from '@inertiajs/inertia-vue3';
+import { useForm } from '@inertiajs/vue3';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -18,8 +18,7 @@ const submit = () => {
     <form @submit.prevent="submit" class="w-full mt-6">
         <div>
             <InputLabel color="primary" for="email" value="Email Address" />
-            <TextInput id="email" v-model="form.email" type="email" class="mt-1 block w-full"
-                placeholder="Please enter your email address." required autofocus />
+            <TextInput id="email" v-model="form.email" type="email" class="mt-1 block w-full" placeholder="Please enter your email address." required autofocus />
             <InputError class="mt-2" :message="form.errors.email" />
         </div>
 
