@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import { TrashIcon, EyeIcon } from '@heroicons/vue/24/outline';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { useForm, Link } from '@inertiajs/inertia-vue3';
+import { useForm, Link } from '@inertiajs/vue3';
 import DateTranslation from './DateTranslation.vue';
 dayjs.extend(relativeTime);
 
@@ -50,7 +50,8 @@ const deleteNotification = () => {
         <div class="flex justify-between space-x-3">
             <div class="">
                 <Link :href="notification.data.actionData.route" class="block focus:outline-none">
-                <p class="text-sm truncate" :class="{ 'font-medium text-gray-700': notification.read_at == null, 'text-gray-500': notification.read_at != null }">{{ notification.data.title }}</p>
+                <p class="text-sm truncate" :class="{ 'font-medium text-gray-700': notification.read_at == null, 'text-gray-500': notification.read_at != null }">{{
+                    notification.data.title }}</p>
                 </Link>
             </div>
             <div>

@@ -1,5 +1,5 @@
 <script setup>
-import { Link, useForm, usePage } from '@inertiajs/inertia-vue3';
+import { Link, useForm, usePage } from '@inertiajs/vue3';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -52,11 +52,9 @@ const submit = () => {
     });
 };
 
-onMounted(() => {
-    console.log(props.positions)
-});
 
-const locale = usePage().props.value.locale;
+
+const locale = usePage().props.locale;
 </script>
 
 <template>

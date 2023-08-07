@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { useForm, usePage } from '@inertiajs/inertia-vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -19,7 +19,7 @@ const props = defineProps({
     positions: Array,
 });
 
-const locale = usePage().props.value.locale;
+const locale = usePage().props.locale;
 
 const form = useForm({
     _method: 'PUT',

@@ -83,7 +83,7 @@ onMounted(() => {
             } else {
                 selected.value = response.data.data[0];
             }
-        }).catch(error => console.log(error));
+        }).catch(error => console.error(error));
     }
 });
 
@@ -121,7 +121,7 @@ const search = () => {
         }).then(response => {
             filteredOptions.value = response.data.data;
             nextPageUrl.value = response.data.links.next;
-        }).catch(error => console.log(error.response));
+        }).catch(error => console.error(error.response));
     }
 
 };
@@ -146,7 +146,7 @@ const loadMore = () => {
         filteredOptions.value = filteredOptions.value.concat(response.data.data);
         loading.value = false;
         nextPageUrl.value = response.data.links.next;
-    }).catch(error => console.log(error.response));
+    }).catch(error => console.error(error.response));
 };
 
 </script>

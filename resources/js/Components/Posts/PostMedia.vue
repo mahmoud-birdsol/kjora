@@ -3,12 +3,10 @@
         <Splide @splide:moved="(e) => { currentMediaIndex = e.index + 1 }" dir="ltr" class="" :options="options">
             <template v-for="media in postMedia" :key="media.id">
                 <SplideSlide class="">
-                    <div
-                        class="flex justify-center overflow-hidden group h-full">
-                        <img v-if="media.mime_type.startsWith('image') || media.mime_type.startsWith('webp')"
-                            :src="media.original_url" alt="" class="object-contain h-full rounded-2xl">
-                        <video v-if="media.mime_type.startsWith('video')" controls :src="media.original_url" alt=""
-                            class="object-contain h-full rounded-2xl " />
+                    <div class="flex justify-center overflow-hidden group h-full">
+                        <img v-if="media.mime_type.startsWith('image') || media.mime_type.startsWith('webp')" :src="media.original_url" alt=""
+                            class="object-contain h-full rounded-2xl">
+                        <video v-if="media.mime_type.startsWith('video')" controls :src="media.original_url" alt="" class="object-contain h-full rounded-2xl " />
                         <!-- delete single media -->
                         <!-- <button v-if="currentUser.id === user.id"
                                         @click.prevent.stop="showDeleteMediaModal = true"
@@ -57,10 +55,10 @@ const options = {
     rewind: false,
     pagination: true,
     // drag: "free",
-    fixedHeight:300,
+    fixedHeight: 300,
     type: 'slide',
     focus: "center",
-    cover:true,
+    cover: true,
     perPage: 1,
     perMove: 1,
     snap: true,
@@ -71,7 +69,7 @@ const options = {
 //     axios.delete(route('api.gallery.destroy', id)).then((res) => console.log(res))
 
 //     showDeleteMediaModal.value = false
-//     Inertia.reload({
+//     router.reload({
 //         only: ['post'],
 //     });
 // }
@@ -81,7 +79,7 @@ const options = {
 </script>
 
 <style >
-.splide__pagination__page.is-active{
+.splide__pagination__page.is-active {
     background-color: rgb(0, 100, 0) !important;
 }
 </style>

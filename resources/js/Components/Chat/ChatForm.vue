@@ -2,17 +2,12 @@
 <template>
     <div class="grid p-6 bg-white gap-y-4 rounded-2xl">
         <!--The gray section to display attachment or a message I am replying to. -->
-        <Transition enter-from-class="opacity-0" enter-to-class="opacity-100"
-            enter-active-class="transition-all duration-150 ease-out"
-            leave-active-class="transition-all duration-150 ease-in" leave-from-class="opacity-100"
-            leave-to-class="opacity-0">
-            <div v-if="chat.repliedMessage"
-                class="relative flex flex-row items-center justify-between w-full px-2 py-2 text-sm bg-gray-100 group rounded-xl">
+        <Transition enter-from-class="opacity-0" enter-to-class="opacity-100" enter-active-class="transition-all duration-150 ease-out"
+            leave-active-class="transition-all duration-150 ease-in" leave-from-class="opacity-100" leave-to-class="opacity-0">
+            <div v-if="chat.repliedMessage" class="relative flex flex-row items-center justify-between w-full px-2 py-2 text-sm bg-gray-100 group rounded-xl">
                 <div v-if="chat.repliedMessage" class="flex items-center justify-start space-x-4">
-                    <Avatar :id="chat.repliedMessage.message_sender.id"
-                        :image-url="chat.repliedMessage.message_sender.avatar_url"
-                        :username="chat.repliedMessage.message_sender.name" :border="true" border-color="primary"
-                        size="sm" />
+                    <Avatar :id="chat.repliedMessage.message_sender.id" :image-url="chat.repliedMessage.message_sender.avatar_url"
+                        :username="chat.repliedMessage.message_sender.name" :border="true" border-color="primary" size="sm" />
                     <div class="font-bold capitalize text-primary pis-3">
                         <div>
                             {{
@@ -22,9 +17,8 @@
                             }}
                         </div>
 
-                        <Link class="text-xs font-normal text-gray-600 "
-                            :href="route('player.profile', chat.repliedMessage.message_sender.id)">@{{
-                                chat.repliedMessage.message_sender.username }}</Link>
+                        <Link class="text-xs font-normal text-gray-600 " :href="route('player.profile', chat.repliedMessage.message_sender.id)">@{{
+                            chat.repliedMessage.message_sender.username }}</Link>
 
                     </div>
                     <div class="max-w-[70ch] truncate">{{ chat.repliedMessage.body }}</div>
@@ -33,15 +27,13 @@
                 <div>
                     <div class="text-black max-w-[15rem]">
                         <div v-if="chat.repliedMessage.attachments.length">
-                            <MediaPreview :fileType="chat.repliedMessage.attachments[0].mime_type"
-                                :filePreview="chat.repliedMessage.attachments[0].original_url"
+                            <MediaPreview :fileType="chat.repliedMessage.attachments[0].mime_type" :filePreview="chat.repliedMessage.attachments[0].original_url"
                                 :fileName="chat.repliedMessage.attachments[0].file_name" />
                         </div>
 
                     </div>
                 </div>
-                <button @click.prevent="chat.setMessageToReplyTo(null)"
-                    class="absolute top-0 left-0 hidden bg-white group-hover:block bg-opacity-90 rounded-br-xl">
+                <button @click.prevent="chat.setMessageToReplyTo(null)" class="absolute top-0 left-0 hidden bg-white group-hover:block bg-opacity-90 rounded-br-xl">
                     <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
                         <XMarkIcon class="w-5 h-5 text-stone-800" />
                     </div>
@@ -49,19 +41,15 @@
             </div>
         </Transition>
 
-        <transition enter-from-class="opacity-0" enter-to-class="opacity-100"
-            enter-active-class="transition-all duration-150 ease-out"
-            leave-active-class="transition-all duration-150 ease-in" leave-from-class="opacity-100"
-            leave-to-class="opacity-0">
+        <transition enter-from-class="opacity-0" enter-to-class="opacity-100" enter-active-class="transition-all duration-150 ease-out"
+            leave-active-class="transition-all duration-150 ease-in" leave-from-class="opacity-100" leave-to-class="opacity-0">
             <div v-loading='loading'>
-                <div v-if="filesData"
-                    class="grid grid-cols-4 gap-2 ml-auto overflow-hidden overflow-y-auto max-h-32 hideScrollBar place-items-center">
+                <div v-if="filesData" class="grid grid-cols-4 gap-2 ml-auto overflow-hidden overflow-y-auto max-h-32 hideScrollBar place-items-center">
                     <!-- {{ form.attachments }} -->
                     <template v-for="(file, index) in filesData">
                         <div class="relative w-full">
                             <MediaPreview :fileType="file.type" :filePreview="file.url" :fileName="file.name" />
-                            <button @click.prevent="removePhoto(index)"
-                                class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
+                            <button @click.prevent="removePhoto(index)" class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl">
                                 <div class="flex flex-col items-start justify-center h-full p-1 opacity-100">
                                     <XMarkIcon class="w-5 h-5 text-stone-800" />
                                 </div>
@@ -85,8 +73,7 @@
                 </div>
             </OnClickOutside>
             <div class="flex items-center flex-grow p-1 rounded-full bg-stone-100 ">
-                <textarea v-model="form.body" @keypress.enter.exact.prevent="submit" name="body" id="body" rows="1"
-                    :placeholder="$t('Type your Message Here')"
+                <textarea v-model="form.body" @keypress.enter.exact.prevent="submit" name="body" id="body" rows="1" :placeholder="$t('Type your Message Here')"
                     class="w-full p-2 px-4 border-none rounded-full resize-none max-sm:placeholder:text-xs focus:ring-primary bg-stone-100 placeholder:text-neutral-400 text-stone-700 hideScrollBar"></textarea>
             </div>
             <button class="relative" @click="openUploadModal = true">
@@ -116,7 +103,7 @@ import {
     XMarkIcon
 } from '@heroicons/vue/24/solid'
 import axios from "axios";
-import { useForm, Link } from "@inertiajs/inertia-vue3";
+import { useForm, Link } from "@inertiajs/vue3";
 import Avatar from "../Avatar.vue";
 import UploadChatFile from './UploadChatFile.vue';
 import EmojiPickerElement from '../EmojiPickerElement.vue';

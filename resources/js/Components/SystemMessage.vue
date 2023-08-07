@@ -1,11 +1,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { usePage, Link } from "@inertiajs/inertia-vue3";
+import { usePage, Link } from "@inertiajs/vue3";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import FadeInTransition from "@/Components/FadeInTransition.vue";
 import { XMarkIcon } from "@heroicons/vue/24/solid";
 
-const message = usePage().props.value.flash?.message;
+const message = usePage().props.flash?.message;
 const showSystemMessage = ref(true);
 const height = ref(null);
 onMounted(() => {
@@ -23,8 +23,7 @@ onMounted(() => {
 <template>
     <div class="m-0" :style="`height: ${height}px;`" v-if="message && showSystemMessage"></div>
     <FadeInTransition>
-        <div v-if="message && showSystemMessage" class="fixed bottom-0 z-40 flex justify-between w-full max-md:text-xs"
-            id="SysMessage">
+        <div v-if="message && showSystemMessage" class="fixed bottom-0 z-40 flex justify-between w-full max-md:text-xs" id="SysMessage">
             <!-- Info Message -->
             <div v-if="message.type === 'info'" class="flex w-full px-6 py-4 bg-sky-500">
                 <div class="flex items-center justify-between w-full mt-3 space-x-4">
@@ -35,8 +34,7 @@ onMounted(() => {
                     }}</SecondaryButton>
                     </Link>
 
-                    <button @click="showSystemMessage = false" v-if="message.closeable && !message.action"
-                        class="absolute top-1 rtl:-left-2 ltr:-right-0">
+                    <button @click="showSystemMessage = false" v-if="message.closeable && !message.action" class="absolute top-1 rtl:-left-2 ltr:-right-0">
                         <XMarkIcon class="w-6 h-6 text-white" />
                     </button>
                 </div>
@@ -52,8 +50,7 @@ onMounted(() => {
                     }}</SecondaryButton>
                     </Link>
 
-                    <button @click="showSystemMessage = false" v-if="message.closeable && !message.action"
-                        class="absolute top-1 rtl:-left-2 ltr:-right-2">
+                    <button @click="showSystemMessage = false" v-if="message.closeable && !message.action" class="absolute top-1 rtl:-left-2 ltr:-right-2">
                         <XMarkIcon class="w-6 h-6 text-stone-600" />
                     </button>
                 </div>
@@ -69,8 +66,7 @@ onMounted(() => {
                     }}</SecondaryButton>
                     </Link>
 
-                    <button @click="showSystemMessage = false" v-if="message.closeable && !message.action"
-                        class="absolute top-1 rtl:-left-2 ltr:-right-0">
+                    <button @click="showSystemMessage = false" v-if="message.closeable && !message.action" class="absolute top-1 rtl:-left-2 ltr:-right-0">
                         <XMarkIcon class="w-6 h-6 text-white" />
                     </button>
                 </div>
@@ -86,8 +82,7 @@ onMounted(() => {
                     }}</SecondaryButton>
                     </Link>
 
-                    <button @click="showSystemMessage = false" v-if="message.closeable && !message.action"
-                        class="absolute top-1 rtl:-left-2 ltr:-right-0">
+                    <button @click="showSystemMessage = false" v-if="message.closeable && !message.action" class="absolute top-1 rtl:-left-2 ltr:-right-0">
                         <XMarkIcon class="w-6 h-6 text-white" />
                     </button>
                 </div>

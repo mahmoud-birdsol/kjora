@@ -51,9 +51,9 @@
 </template>
 
 <script setup>
-import { usePage } from '@inertiajs/inertia-vue3';
+import { usePage } from '@inertiajs/vue3';
 
-const isPublic = usePage().url.value.includes('public/posts')
+const isPublic = usePage().url.includes('public/posts')
 </script>
 
 <style lang="scss" scoped></style>

@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import GuestTwoColumnLayout from '@/Layouts/Partials/GuestTwoColumnLayout.vue';
@@ -49,7 +49,6 @@ const showSuccessModal = ref(true);
             </Card>
         </GuestTwoColumnLayout>
 
-        <SuccessMessageModal :show="status && showSuccessModal" @close="showSuccessModal = false" position="right"
-            title="Forgot Password" :message="status" />
+        <SuccessMessageModal :show="status && showSuccessModal" @close="showSuccessModal = false" position="right" title="Forgot Password" :message="status" />
     </GuestLayout>
 </template>

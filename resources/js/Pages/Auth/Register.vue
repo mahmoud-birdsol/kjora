@@ -1,5 +1,5 @@
 <script setup>
-import {Head} from '@inertiajs/inertia-vue3';
+import { Head } from '@inertiajs/vue3';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import GuestTwoColumnLayout from '@/Layouts/Partials/GuestTwoColumnLayout.vue';
 import RegisterForm from '@/Pages/Auth/Forms/RegisterForm.vue';
@@ -15,14 +15,14 @@ const props = defineProps([
 </script>
 
 <template>
-    <Head title="Register"/>
+    <Head title="Register" />
 
     <GuestLayout>
         <GuestTwoColumnLayout>
             <Card>
                 <CardContent :title="$t('create an account')">
                     <template #body>
-                        <RegisterForm :countries="countries" :positions="positions" :default-club="defaultClub" :default-country-id="defaultCountryId"/>
+                        <RegisterForm :countries="countries" :positions="positions" :default-club="defaultClub" :default-country-id="defaultCountryId" />
                     </template>
                 </CardContent>
             </Card>
@@ -31,7 +31,6 @@ const props = defineProps([
 </template>
 
 <style>
-
 .el-input__inner {
     height: 42px !important;
     color: black;
@@ -92,7 +91,11 @@ const props = defineProps([
     font-weight: bold !important;
 }
 
-.el-picker-panel__body-wrapper, .el-date-picker__header-label, .el-picker-panel__icon-btn, .el-picker-panel__content, .el-date-table > tbody > tr > th {
+.el-picker-panel__body-wrapper,
+.el-date-picker__header-label,
+.el-picker-panel__icon-btn,
+.el-picker-panel__content,
+.el-date-table>tbody>tr>th {
     color: green !important;
     font-weight: bold !important;
 }
@@ -117,5 +120,4 @@ const props = defineProps([
 
 .el-date-picker__next-btn {
     color: green !important;
-}
-</style>
+}</style>

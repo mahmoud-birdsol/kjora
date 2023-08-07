@@ -1,5 +1,5 @@
 <script setup>
-import { useForm } from "@inertiajs/inertia-vue3";
+import { useForm } from "@inertiajs/vue3";
 import Modal from '@/Components/Modal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { ElRate } from 'element-plus';
@@ -9,7 +9,7 @@ import {
     MapPinIcon,
 } from '@heroicons/vue/24/outline';
 import MainPlayerCard from "./PlayerCards/MainPlayerCard.vue";
-import { Inertia } from "@inertiajs/inertia";
+import { router } from "@inertiajs/vue3";
 import DateTranslation from '@/Components/DateTranslation.vue';
 import { CheckIcon, XMarkIcon } from "@heroicons/vue/24/solid";
 import InvitationPlayerCard from "./PlayerCards/InvitationPlayerCard.vue";
@@ -58,7 +58,8 @@ const decline = () => {
                         <strong>
                             <DateTranslation format="DD MMMM YYYY, h:m A" :start="invitation.date" />
                         </strong><span> {{ $t('at') }} </span>
-                        <strong>{{ invitation.stadium.address }}, {{ invitation.stadium.city }}, {{ invitation.stadium.country }},({{ invitation.stadium.name }})</strong>
+                        <strong>{{ invitation.stadium.address }}, {{ invitation.stadium.city }}, {{ invitation.stadium.country }},({{ invitation.stadium.name
+                        }})</strong>
                     </p>
                 </div>
                 <div class="mt-4">

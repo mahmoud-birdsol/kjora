@@ -1,7 +1,7 @@
 <script setup>
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/vue-splide";
 import { onMounted, ref } from "vue";
-import { Link } from "@inertiajs/inertia-vue3";
+import { Link } from "@inertiajs/vue3";
 import "@splidejs/vue-splide/css";
 import { XMarkIcon, ArrowDownTrayIcon } from "@heroicons/vue/24/outline";
 // import DownloadImg from "./DownloadImg.vue";

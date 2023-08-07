@@ -5,10 +5,6 @@
         "build": "vite build"
     },
     "devDependencies": {
-        "@inertiajs/inertia": "^0.11.0",
-        "@inertiajs/inertia-vue3": "^0.6.0",
-        "@inertiajs/progress": "^0.2.7",
-        "@inertiajs/server": "^0.1.0",
         "@tailwindcss/forms": "^0.5.2",
         "@tailwindcss/typography": "^0.5.2",
         "@vitejs/plugin-vue": "^4.2.3",
@@ -34,6 +30,7 @@
         "@fortawesome/vue-fontawesome": "^3.0.3",
         "@headlessui/vue": "^1.7.11",
         "@heroicons/vue": "^2.0.13",
+        "@inertiajs/vue3": "^1.0.9",
         "@splidejs/vue-splide": "^0.6.12",
         "@vueuse/components": "^9.13.0",
         "@vueuse/core": "^9.13.0",

@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import InputError from '@/Components/InputError.vue';
@@ -21,7 +21,6 @@ const form = useForm({
 });
 
 const submit = () => {
-    console.log(form.code)
     form.post(route('phone.verify.store'), {
         onFinish: () => {
             form.reset()
@@ -66,8 +65,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
                         <div class="flex flex-col gap-4 px-6">
                             <div class="flex justify-center gap-6 " dir="ltr">
                                 <template v-for="(input, index) in inputs" :key="index">
-                                    <input @input="handleInput(index, $event);" @keydown="changeFocus(index, $event)" maxlength="1" type="text" ref="codeInputs"
-                                        class="p-4 text-lg font-bold text-center text-white bg-black rounded-md focus:border-primary focus:ring-0 w-14 max-sm:w-12 aspect-square">
+                                    <input @input="handleInput(index, $event);" @keydown="changeFocus(index, $event)" maxlength="1" type="text" ref="codeInputs" class="p-4 text-lg font-bold text-center text-white bg-black rounded-md focus:border-primary focus:ring-0 w-14 max-sm:w-12 aspect-square">
                                 </template>
                             </div>
 

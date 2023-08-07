@@ -9,20 +9,20 @@
 
 <script>
 import Icon from './Icon.vue'
-import { Link } from '@inertiajs/inertia-vue3';
-import {Inertia} from "@inertiajs/inertia";
+import { Link } from '@inertiajs/vue3';
+import { router } from "@inertiajs/vue3";
 
 export default {
     components: {
         Icon,
         Link
     },
-    methods:{
+    methods: {
         setLocale() {
-            Inertia.post(route('language', [this.selectable_locale]) , {}, {
-                preserveState:false,
-                preserveScroll:false,
-                onSuccess : () => {
+            router.post(route('language', [this.selectable_locale]), {}, {
+                preserveState: false,
+                preserveScroll: false,
+                onSuccess: () => {
                     window.location.reload()
                 }
             })
@@ -33,7 +33,7 @@ export default {
     },
     computed: {
         selectable_locale() {
-            if(this.$page.props.locale == 'ar') {
+            if (this.$page.props.locale == 'ar') {
                 return 'en';
             }
             return 'ar';
