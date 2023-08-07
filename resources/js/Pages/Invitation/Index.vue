@@ -10,7 +10,7 @@ import { CalendarIcon } from "@heroicons/vue/20/solid";
 import dayjs from 'dayjs';
 import { computed, ref } from 'vue';
 import { paginationEmits } from 'element-plus';
-import InvitationHireTaps from '../../Components/InvitationHireTaps.vue';
+import InvitationHireTaps from '@/Components/InvitationHireTaps.vue';
 const props = defineProps({
     invitations: Object,
 });

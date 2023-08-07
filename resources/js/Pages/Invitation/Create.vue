@@ -11,7 +11,7 @@ import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
 import dayjs from 'dayjs';
 import { ElDatePicker, ElTimePicker } from 'element-plus';
 import { computed, ref } from 'vue';
-import AddStadiumModal from '../../Components/AddStadiumModal.vue';
+import AddStadiumModal from '@/Components/AddStadiumModal.vue';
 
 const props = defineProps({
     invited: Object,

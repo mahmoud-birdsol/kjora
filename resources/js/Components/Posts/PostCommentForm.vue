@@ -1,42 +1,25 @@
 <template>
     <OnClickOutside @trigger="showEmojiPicker = false">
         <div class="relative flex items-center">
-            <button
-                @click="showEmojiPicker = !showEmojiPicker"
-                :data-cancel-blur="true"
-            >
+            <button @click="showEmojiPicker = !showEmojiPicker" :data-cancel-blur="true">
                 <FaceSmileIcon class="w-6 text-neutral-400" />
             </button>
-            <div
-                class="absolute z-20 bottom-full ltr:left-full rtl:right-full"
-                v-show="showEmojiPicker"
-            >
+            <div class="absolute z-20 bottom-full ltr:left-full rtl:right-full" v-show="showEmojiPicker">
                 <EmojiPickerElement @selected-emoji="onSelectEmoji" />
             </div>
         </div>
     </OnClickOutside>
 
-    <MentionTextAreaVue
-        v-model:newText="newComment"
-        @addText="addComment"
-        :ref="commentInput"
-    />
-    <button
-        @click="(e) => addComment()"
-        :disabled="isSending"
-        class="p-1 group"
-    >
-        <PaperAirplaneIcon
-            class="w-5 group-hover:text-neutral-700 rtl:rotate-180"
-            :class="isSending ? 'text-neutral-200' : 'text-neutral-400'"
-        />
+    <MentionTextAreaVue v-model:newText="newComment" @addText="addComment" :ref="commentInput" />
+    <button @click="(e) => addComment()" :disabled="isSending" class="p-1 group">
+        <PaperAirplaneIcon class="w-5 group-hover:text-neutral-700 rtl:rotate-180" :class="isSending ? 'text-neutral-200' : 'text-neutral-400'" />
     </button>
 </template>
 
 <script setup>
 import { FaceSmileIcon } from "@heroicons/vue/24/outline";
 import { PaperAirplaneIcon } from "@heroicons/vue/24/solid";
-import EmojiPickerElement from "../../Components/EmojiPickerElement.vue";
+import EmojiPickerElement from "@/Components/EmojiPickerElement.vue";
 import { usePage } from "@inertiajs/inertia-vue3";
 import { ref } from "vue";
 import axios from "axios";

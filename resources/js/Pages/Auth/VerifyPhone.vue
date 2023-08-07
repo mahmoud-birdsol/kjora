@@ -1,12 +1,13 @@
 <script setup>
-import {computed, ref} from 'vue';
-import {Head, Link, useForm} from '@inertiajs/inertia-vue3';
+import { computed, ref } from 'vue';
+import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import InputError from '@/Components/InputError.vue';
-import GuestTwoColumnLayout from "../../Layouts/Partials/GuestTwoColumnLayout.vue";
+import GuestTwoColumnLayout from '@/Layouts/Partials/GuestTwoColumnLayout.vue';
 import Card from '@/Components/Card.vue';
-import CardContent from "../../Components/CardContent.vue";
+import CardContent from '@/Components/CardContent.vue';
+
 
 const props = defineProps({
     user: null
@@ -21,7 +22,7 @@ const form = useForm({
 
 const submit = () => {
     console.log(form.code)
-    form.post(route('phone.verify.store'),{
+    form.post(route('phone.verify.store'), {
         onFinish: () => {
             form.reset()
         }
@@ -50,7 +51,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 </script>
 
 <template>
-    <Head :title="$t('Phone Verification')"/>
+    <Head :title="$t('Phone Verification')" />
 
     <GuestLayout>
         <GuestTwoColumnLayout>
@@ -58,23 +59,22 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
                 <CardContent :title="$t('Verify Phone Number')">
                     <template #body>
                         <div class="py-10 text-sm text-center text-gray-500">
-                            {{$t("Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS ? If you didn't receive the SMS, we will gladly send you another")}}
+                            {{
+                                $t("before-continuing-could-you-verify-your-phone-number-by-entering-the-4-digit-code-sent-to-you-in-an-sms-if-you-did-not-receive-the-sms-we-will-gladly-send-you-another")
+                            }}
                         </div>
                         <div class="flex flex-col gap-4 px-6">
                             <div class="flex justify-center gap-6 " dir="ltr">
                                 <template v-for="(input, index) in inputs" :key="index">
-                                    <input @input="handleInput(index, $event);" @keydown="changeFocus(index, $event)"
-                                           maxlength="1"
-                                           type="text" ref="codeInputs"
-                                           class="p-4 text-lg font-bold text-center text-white bg-black rounded-md focus:border-primary focus:ring-0 w-14 max-sm:w-12 aspect-square">
+                                    <input @input="handleInput(index, $event);" @keydown="changeFocus(index, $event)" maxlength="1" type="text" ref="codeInputs"
+                                        class="p-4 text-lg font-bold text-center text-white bg-black rounded-md focus:border-primary focus:ring-0 w-14 max-sm:w-12 aspect-square">
                                 </template>
                             </div>
 
-                            <InputError :message="form.errors.code"/>
+                            <InputError :message="form.errors.code" />
                             <div class="flex justify-center gap-2 max-md:flex-col">
-                                <Link :href="route('verification.phone.send')"
-                                      class="text-sm text-gray-600 underline hover:text-gray-900">
-                                    {{ $t('Resend Code') }}
+                                <Link :href="route('verification.phone.send')" class="text-sm text-gray-600 underline hover:text-gray-900">
+                                {{ $t('Resend Code') }}
                                 </Link>
 
                                 <!-- <Link :href="route('profile.edit')" class="text-sm text-gray-600 underline hover:text-gray-900">

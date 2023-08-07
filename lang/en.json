@@ -19,7 +19,6 @@
   "please": "Please ",
   "share": "Share",
   "video, images, PDFs and docs are allowed with max size(84MB) are allowed": "video, images, PDFs and docs are allowed with max size (84MB) are allowed",
-  "Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS ? If you didn't receive the SMS, we will gladly send you another": "Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS ? If you didn't receive the SMS, we will gladly send you another",
   "Lorem ipsum dolor sit amet": "Lorem ipsum dolor sit amet",
   "to": "To",
   "Waiting for documents": "Waiting for documents",
@@ -85,7 +84,6 @@
   "Edit Profile": "Edit Profile",
   "edit-your-profile": "edit your profile",
   "Resend Code": "Resend Code",
-  "Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS? If you didn't receive the SMS, we will gladly send you another": "Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS? If you didn't receive the SMS, we will gladly send you another",
   "Verify Phone Number": "Verify Phone Number",
   "Phone Verification": "Phone Verification",
   "A new verification link has been sent to the email address you provided in your profile settings": "A new verification link has been sent to the email address you provided in your profile settings",
@@ -394,5 +392,6 @@
   "Please approve our privacy policy": "Please approve our privacy policy",
   "You cant invite this player because he has been invited to a match in this time": "You can't invite this player because he has been invited to a match in this time",
   "This player already has match at this time": "This player already has match at this time",
-  "You already invited this player at these time": "You already invited this player at these time"
+  "You already invited this player at these time": "You already invited this player at these time",
+  "before-continuing-could-you-verify-your-phone-number-by-entering-the-4-digit-code-sent-to-you-in-an-sms-if-you-did-not-receive-the-sms-we-will-gladly-send-you-another": "Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS ? If you didn't receive the SMS, we will gladly send you another"
 }

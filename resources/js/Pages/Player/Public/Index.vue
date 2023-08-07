@@ -7,8 +7,8 @@ import ProfileGallery from '@/Components/ProfileGallery.vue';
 import { Inertia } from '@inertiajs/inertia';
 import { usePage } from '@inertiajs/inertia-vue3';
 import { computed, onMounted, ref } from 'vue';
-import FadeInTransition from '../../../Components/FadeInTransition.vue';
-import PublicLayout from '../../../Layouts/PublicLayout.vue';
+import FadeInTransition from '@/Components/FadeInTransition.vue';
+import PublicLayout from '@/Layouts/PublicLayout.vue';
 
 
 const props = defineProps({

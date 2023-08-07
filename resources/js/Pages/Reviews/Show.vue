@@ -3,12 +3,12 @@ import { Head, useForm, Link, usePage } from '@inertiajs/inertia-vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import Modal from '../../Components/Modal.vue';
+import Modal from '@/Components/Modal.vue';
 import { ElRate, ElSlider } from 'element-plus';
 import InputLabel from '@/Components/InputLabel.vue';
 import { computed, ref } from 'vue';
-import RatingChart from '../../Components/RatingChart.vue';
-import Avatar from '../../Components/Avatar.vue';
+import RatingChart from '@/Components/RatingChart.vue';
+import Avatar from '@/Components/Avatar.vue';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
 import { StarIcon as StarIconFilled } from '@heroicons/vue/20/solid'
 import { StarIcon as StarIconOutline } from '@heroicons/vue/24/outline';
@@ -72,7 +72,8 @@ function setRates() {
             <div class="flex flex-col items-center justify-between gap-2 mb-4 text-black">
                 <div class="flex flex-col gap-3">
                     <div class="relative mx-auto min-w-max">
-                        <Avatar :id="review.player.id" :username="review.player.name" :image-url="review.player.avatar_url" :size="'xlg'" :border="true" border-color="primary" />
+                        <Avatar :id="review.player.id" :username="review.player.name" :image-url="review.player.avatar_url" :size="'xlg'" :border="true"
+                            border-color="primary" />
                         <Link :href="route('player.profile', review.player.id)" class="absolute inset-0 ">
                         </Link>
                     </div>
@@ -110,11 +111,12 @@ function setRates() {
 
             <div class="flex flex-col mt-6 overflow-hidden gap-y-8">
                 <div class="flex flex-col justify-between h-full max-sm:mb-10 md:justify-self-end">
-                        <RatingChart :data="graphData" :labels="labels" theme="rgb(0,100,0)" overlay='rgba(0,100,0,0.2)' />
+                    <RatingChart :data="graphData" :labels="labels" theme="rgb(0,100,0)" overlay='rgba(0,100,0,0.2)' />
                 </div>
                 <form class="flex flex-col gap-4 px-5">
                     <div class="flex items-center gap-x-2">
-                        <input type="checkbox" id="male" value="male" v-model="ratingForm.attended" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
+                        <input type="checkbox" id="male" value="male" v-model="ratingForm.attended"
+                            class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
                         <label for="male" class="text-sm font-medium text-black">{{ $t('Attended') }}</label>
                     </div>
                     <template v-if="ratingForm.attended">
@@ -126,7 +128,8 @@ function setRates() {
                                         c.id === item.id)[0].value }}</span>
                                 </div>
                                 <div class="px-6 py-1 mx-4 border border-white rounded-full bg-stone-300">
-                                    <el-slider v-model="ratingForm.ratingCategory.filter(c => c.id === item.id)[0].value" @change="setRates" :step="0.1" :min="0" :max="5" input-size="small" height="1" />
+                                    <el-slider v-model="ratingForm.ratingCategory.filter(c => c.id === item.id)[0].value" @change="setRates" :step="0.1" :min="0"
+                                        :max="5" input-size="small" height="1" />
                                 </div>
                             </div>
                         </template>

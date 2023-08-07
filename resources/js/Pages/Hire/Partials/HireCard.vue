@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { CalendarIcon, MapPinIcon } from "@heroicons/vue/20/solid";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import RespondToInvitationModal from "@/Components/RespondToInvitationModal.vue";
-import InvitationPlayerCard from '../../../Components/PlayerCards/InvitationPlayerCard.vue';
+import InvitationPlayerCard from '@/Components/PlayerCards/InvitationPlayerCard.vue';
 
 const props = defineProps({
     invitation: {
@@ -18,7 +18,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="p-2 md:p-8 bg-gray-100 rounded-2xl">
+    <div class="p-2 bg-gray-100 md:p-8 rounded-2xl">
         <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             <div>
                 <div class="max-w-sm">

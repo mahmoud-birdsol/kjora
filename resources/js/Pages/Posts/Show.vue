@@ -30,7 +30,7 @@
                         postCaptionComp
                             ? (postCaptionComp.isEditingCaption = true)
                             : null
-                    ">
+                        ">
                     </PostOptionMenu>
                 </div>
             </template>
@@ -63,11 +63,10 @@
                         </button>
                         <LikeButton :canLiked="isCurrentUser" :isLiked="post?.is_liked" :likeable_id="post.id" :likeable_type="'App\\Models\\Post'">
                             <template v-slot="{ isLiked }">
-                                <HeartIcon class="w-4 stroke-current stroke-2 text-primary" :class="
-                                    isLiked
-                                        ? 'fill-current'
-                                        : 'fill-transparent'
-                                " />
+                                <HeartIcon class="w-4 stroke-current stroke-2 text-primary" :class="isLiked
+                                    ? 'fill-current'
+                                    : 'fill-transparent'
+                                    " />
                             </template>
                         </LikeButton>
                     </div>
@@ -96,20 +95,20 @@
 import { onMounted, onBeforeMount, ref, computed, provide } from "vue";
 import { usePage, Link } from "@inertiajs/inertia-vue3";
 import { HeartIcon } from "@heroicons/vue/24/solid";
-import AppLayout from "../../Layouts/AppLayout.vue";
-import Avatar from "../../Components/Avatar.vue";
-import Comment from "../../Components/Comment.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
+import Avatar from "@/Components/Avatar.vue";
+import Comment from "@/Components/Comment.vue";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime.js";
 import LikeButton from "@/Components/LikeButton.vue";
-import DateTranslation from "../../Components/DateTranslation.vue";
+import DateTranslation from "@/Components/DateTranslation.vue";
 
-import PostMedia from "../../Components/Posts/PostMedia.vue";
-import PostLayout from "../../Components/Posts/PostLayout.vue";
-import PostOptionMenu from "../../Components/Posts/PostOptionMenu.vue";
-import PostCaptionFrom from "../../Components/Posts/PostCaptionForm.vue";
-import PostCommentForm from "../../Components/Posts/PostCommentForm.vue";
-import LikesModal from "../../Components/LikesModal.vue";
+import PostMedia from "@/Components/Posts/PostMedia.vue";
+import PostLayout from "@/Components/Posts/PostLayout.vue";
+import PostOptionMenu from "@/Components/Posts/PostOptionMenu.vue";
+import PostCaptionFrom from "@/Components/Posts/PostCaptionForm.vue";
+import PostCommentForm from "@/Components/Posts/PostCommentForm.vue";
+import LikesModal from "@/Components/LikesModal.vue";
 import { StarIcon } from "@heroicons/vue/24/outline";
 
 onBeforeMount(() => {

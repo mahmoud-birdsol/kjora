@@ -2,10 +2,10 @@
 import { Head, useForm, usePage } from '@inertiajs/inertia-vue3';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import AppLayout from '../Layouts/AppLayout.vue';
+import AppLayout from '@/Layouts/AppLayout.vue';
 import { ref } from 'vue';
 import dayjs from 'dayjs';
-import GuestLayout from "../Layouts/GuestLayout.vue";
+import GuestLayout from "@/Layouts/GuestLayout.vue";
 import DateTranslation from "@/Components/DateTranslation.vue"
 
 const props = defineProps({

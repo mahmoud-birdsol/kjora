@@ -7,7 +7,7 @@ import ProfileGallery from '@/Components/ProfileGallery.vue';
 import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
 import { computed, ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia'
-import FadeInTransition from '../../Components/FadeInTransition.vue';
+import FadeInTransition from '@/Components/FadeInTransition.vue';
 
 
 const props = defineProps({
@@ -52,8 +52,10 @@ function reloadMedia() {
                 <MainPlayerCard :player="user" size="lg" :show-report="false" :showFavorite="false" />
                 <div class="flex justify-center p-2 bg-white rounded-full gap-x-3 ">
                     <template v-for="(tab, index) in tabs" :key="index">
-                        <button @click="currentTabId = tab.id" :data-tab="tab.name" class="text-sm font-semibold uppercase transition-colors duration-150 ease-in hover:text-stone-600 " :class="tab.id === currentTabId ? 'text-stone-800' : 'text-stone-400'">{{
-                            $t(tab.name) }} </button>
+                        <button @click="currentTabId = tab.id" :data-tab="tab.name"
+                            class="text-sm font-semibold uppercase transition-colors duration-150 ease-in hover:text-stone-600 "
+                            :class="tab.id === currentTabId ? 'text-stone-800' : 'text-stone-400'">{{
+                                $t(tab.name) }} </button>
                     </template>
 
                 </div>

@@ -8,8 +8,8 @@ import DateTranslation from '@/Components/DateTranslation.vue';
 import { CalendarIcon } from "@heroicons/vue/20/solid";
 import dayjs from 'dayjs';
 import { computed, ref } from 'vue';
-import Pagination from '../../Components/Pagination.vue';
-import InvitationHireTaps from '../../Components/InvitationHireTaps.vue';
+import Pagination from '@/Components/Pagination.vue';
+import InvitationHireTaps from '@/Components/InvitationHireTaps.vue';
 const props = defineProps({
     invitations: Object,
 });

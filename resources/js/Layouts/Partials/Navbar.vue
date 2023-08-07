@@ -21,7 +21,7 @@ import {
 import Avatar from "@/Components/Avatar.vue";
 import { XMarkIcon } from '@heroicons/vue/20/solid';
 import axios from 'axios';
-import SlideInTransition from '../../Components/SlideInTransition.vue';
+import SlideInTransition from '@/Components/SlideInTransition.vue';
 
 const locale = usePage().props.value.locale
 const currentUser = usePage().props.value.auth.user

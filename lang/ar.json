@@ -17,7 +17,6 @@
   "please": "الرجاء ",
   "share": "مشاركة",
   "video, images, PDFs and docs are allowed with max size(84 MB) are allowed": "يُسمح بالفيديو والصور وملفات PDF والمستندات بأقصى حجم (10 ميغابايت)",
-  "Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS ? If you didn't receive the SMS, we will gladly send you another": "قبل المتابعة ، هل يمكنك التحقق من رقم هاتفك عن طريق إدخال الرمز المكون من 4 أرقام الذي تم إرساله إليك في رسالة نصية قصيرة؟ إذا لم تتلق الرسالة القصيرة ، فسنرسل لك رسالة أخرى بكل سرور",
   "Lorem ipsum dolor sit amet": " حقيقة مثبتة أن المحتوى المقروء لصفحة سيلهي القارئ",
   "to": "الى ",
   "Waiting for documents": "في انتظار المستندات",
@@ -86,7 +85,6 @@
   "A new verification code has been sent to the phone number you provided in your profile settings": "تم إرسال رمز تحقق جديد إلى رقم الهاتف الذي قدمته في إعدادات ملفك الشخصي",
   "Edit Profile": "تحديث الملف الشخصي",
   "Resend Code": "أعد إرسال الرمز",
-  "Before continuing, could you verify your phone number by entering the 4 digit code sent to you in an SMS? If you didn't receive the SMS, we will gladly send you another": "قبل المتابعة ، هل يمكنك التحقق من رقم هاتفك عن طريق إدخال الرمز المكون من 4 أرقام الذي تم إرساله إليك في رسالة نصية قصيرة؟ إذا لم تتلق الرسالة القصيرة ، فسنرسل لك رسالة أخرى بكل سرور",
   "Verify Phone Number": "تحقق من رقم الهاتف",
   "Phone Verification": "التحقق من الهاتف",
   "A new verification link has been sent to the email address you provided in your profile settings": "تم إرسال رابط تحقق جديد إلى عنوان البريد الإلكتروني الذي قدمته في إعدادات ملفك الشخصي",
@@ -397,5 +395,6 @@
   "Please approve our cookies": "يرجى الموافقة على ملفات الارتباط خاصتنا",
   "You cant invite this player because he has been invited to a match in this time": "لا يمكنك دعوة ذلك الاعب لانه لديه مباراة فى ذلك الوقت",
   "This player already has match at this time": "ذلك اللاعب لديه مباراة فى ذلك الوقت",
-  "You already invited this player at these time": "لقد دعوة ذلك اللاعب لمبارارة فى نفس ذلك الوقت"
+  "You already invited this player at these time": "لقد دعوة ذلك اللاعب لمبارارة فى نفس ذلك الوقت",
+  "before-continuing-could-you-verify-your-phone-number-by-entering-the-4-digit-code-sent-to-you-in-an-sms-if-you-did-not-receive-the-sms-we-will-gladly-send-you-another": "قبل المتابعة ، هل يمكنك التحقق من رقم هاتفك عن طريق إدخال الرمز المكون من 4 أرقام الذي تم إرساله إليك في رسالة نصية قصيرة؟ إذا لم تتلق الرسالة القصيرة ، فسنرسل لك رسالة أخرى بكل سرور"
 }

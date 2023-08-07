@@ -3,8 +3,8 @@ import DateTranslation from "@/Components/DateTranslation.vue";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { useForm, usePage } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
-import AppLayout from '../Layouts/AppLayout.vue';
-import GuestLayout from "../Layouts/GuestLayout.vue";
+import AppLayout from '@/Layouts/AppLayout.vue';
+import GuestLayout from "@/Layouts/GuestLayout.vue";
 
 const props = defineProps({
     policy: Object,

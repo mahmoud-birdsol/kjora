@@ -10,7 +10,7 @@ import RichSelectInput from '@/Components/RichSelectInput.vue';
 import SuccessMessageModal from '@/Components/SuccessMessageModal.vue';
 import UploadImageField from '@/Components/UploadImageField.vue';
 import Avatar from '@/Components/Avatar.vue';
-import Title from '../../../Components/Title.vue';
+import Title from '@/Components/Title.vue';
 import { PencilIcon } from '@heroicons/vue/24/solid';
 
 const props = defineProps({
