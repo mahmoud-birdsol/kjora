@@ -1,5 +1,5 @@
 {
-  "Sorry you haven't any conversation yet": "Sorry you haven't any conversation yet",
+  "sorry-you-havent-any-conversation-yet": "Sorry you haven't any conversation yet",
   "files": "Files",
   "upload :filesData from :maximumUploadNumberOfFiles": "Uploaded :filesData from :maximumUploadNumberOfFiles",
   "accepted": "Accepted",
@@ -113,7 +113,7 @@
   "update email": "Update Email",
   "please enter phone number associated with your account to receive a verification code": "please enter phone number associated with your account to receive a verification code",
   "try another way": "try another way",
-  "The password must be at least 8 characters and at least one uppercase, one lowercase letter , one symbol and one number": "The password must be at least 8 characters and at least one uppercase, one lowercase letter , one symbol and one number",
+  "the-password-must-be-at-least-8-characters-and-at-least-one-uppercase-one-lowercase-letter-one-symbol-and-one-number": "The password must be at least 8 characters and at least one uppercase, one lowercase letter , one symbol and one number",
   "new password": "new password",
   "current password": "current password",
   "enter your new password": "enter your new password",
@@ -148,7 +148,6 @@
   "government issue id": "Government issue id",
   "passport": "Passport",
   "country of issue": "country of issue",
-  "only the following documents listed below will be accepted, all other documents will be rejected": "only the following documents listed below will be accepted, all other documents will be rejected",
   "use a valid government-issued document": "use a valid government-issued document",
   "verify identity": "Verify Identity",
   "name": "Name ",

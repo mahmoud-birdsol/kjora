@@ -126,7 +126,7 @@ const save = () => {
                                 <div>
                                     <h3 class="mb-4 text-lg font-bold text-gray-900">{{ $t('use a valid government-issued document') }}
                                     </h3>
-                                    <p class="text-xs text-gray-500">{{ $t('only the following documents listed below will be accepted, all other documents will be rejected') }}.</p>
+                                    <p class="text-xs text-gray-500">{{ $t('only-the-following-documents-listed-below-will-be-accepted-all-other-documents-will-be-rejected') }}</p>
                                 </div>
                             <div class="mt-4">
                                     <InputLabel color="primary" for="country" :value="$t('country of issue')" />

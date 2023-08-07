@@ -77,7 +77,7 @@ provide('conversation', null);
                 <div class="flex flex-col gap-4 p-8">
                     <h2 class="text-2xl font-bold capitalize">{{$t('Welcome to chat!')}}</h2>
 
-                    <p class="text-sm font-bold">{{$t("Sorry you haven't any conversation yet")}} .
+                    <p class="text-sm font-bold">{{$t('sorry-you-havent-any-conversation-yet')}}
                     </p>
 
                 </div>
