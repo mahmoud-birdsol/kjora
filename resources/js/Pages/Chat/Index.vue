@@ -51,7 +51,7 @@ provide('conversation', null);
                 <div class="flex flex-col gap-4 p-8">
                     <h2 class="text-2xl font-bold capitalize">{{$t('Welcome to chat!')}}</h2>
 
-                    <p class="text-sm font-bold">{{$t("Beofre you proceed, please read thse ground rules. Don't worry, we'll only show this message one - but please do take a few seconds to familiarize yourself with these rules. This will help us ensure a safe and friendly environment in the chat")}} .
+                    <p class="text-sm font-bold">{{$t("before-you-proceed-please-read-these-ground-rules-don-t-worry-we-ll-only-show-this-message-one-but-please-do-take-a-few-seconds-to-familiarize-yourself-with-these-rules-this-will-help-us-ensure-a-safe-and-friendly-environment-in-the-chat")}} .
                     </p>
                     <ul class="text-sm [&>li_p]:before:content-['•'] [&>li_p]:before:pie-6 font-bold">
                         <li>
