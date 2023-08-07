@@ -21,7 +21,7 @@ class PostController extends Controller
         $data = Post::where('id', $post->id)->with(['likes.user:id,username,first_name,last_name'])->first();
         ($postViewAction)($post);
 
-        return Inertia::render('Gallery/Show', [
+        return Inertia::render('Posts/Show', [
             'post' => $data,
             'user' => $post->user,
         ]);

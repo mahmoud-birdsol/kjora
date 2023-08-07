@@ -83,15 +83,15 @@ Route::middleware([
     'verified.email',
     // 'player.review'
 ])->group(function () {
-//    Route::get('/verification/identity', [
-//        IdentityVerificationController::class,
-//        'create',
-//    ])->name('identity.verification.create');
-//
-//    Route::post('/verification/identity', [
-//        IdentityVerificationController::class,
-//        'store',
-//    ])->name('identity.verification.store');
+    //    Route::get('/verification/identity', [
+    //        IdentityVerificationController::class,
+    //        'create',
+    //    ])->name('identity.verification.create');
+    //
+    //    Route::post('/verification/identity', [
+    //        IdentityVerificationController::class,
+    //        'store',
+    //    ])->name('identity.verification.store');
 
     Route::get('/change-password', [PasswordController::class, 'edit'])->name('password.edit');
     Route::patch('/change-password', [PasswordController::class, 'update'])->name('password.change');
@@ -460,7 +460,7 @@ Route::patch('posts/{post}', [PostController::class, 'update'])->name('posts.upd
 Route::get('gallery/{mediaLibrary}', function (MediaLibrary $mediaLibrary) {
     $user = $mediaLibrary->owner();
 
-    return Inertia::render('Gallery/Show', [
+    return Inertia::render('Posts/Show', [
         'media' => $mediaLibrary,
         'user' => $user,
     ]);
@@ -530,7 +530,7 @@ Route::get('public/posts/{post}', function (Post $post) {
             'url' => \route('public.posts', $post->id),
             'title' => $post->caption,
             'image' => $post->cover_thumb_photo,
-            'description' => $post->user->name.' post',
+            'description' => $post->user->name . ' post',
         ],
     ]);
 })->name('public.posts');
@@ -561,7 +561,7 @@ Route::get('public/player/{player:username}', function (User $player) {
             'url' => \route('public.player', $player->id),
             'title' => $player->name,
             'image' => $player->avatar_thumb_url,
-            'description' => $player->name.' profile',
+            'description' => $player->name . ' profile',
         ],
     ]);
 })->name('public.player');
