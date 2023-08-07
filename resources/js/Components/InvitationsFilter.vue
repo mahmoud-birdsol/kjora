@@ -63,12 +63,12 @@ const reset = () => {
                 </div>
                 <form @submit.prevent="filter" @keydown.enter.exact="filter" class="rtl:text-start">
                     <div class="my-6">
-                        <InputLabel>{{ $t('date from') }}: </InputLabel>
+                        <InputLabel>{{ $t('date-from') }}: </InputLabel>
                         <ElDatePicker v-model="form.dateFrom" class="w-full" type="datetime" :placeholder="$t('date')" format="YYYY/MM/DD hh:mm:ss"
                             value-format="YYYY/MM/DD HH:mm:ss" />
                     </div>
                     <div class="my-6">
-                        <InputLabel>{{ $t('date to') }}:</InputLabel>
+                        <InputLabel>{{ $t('date-to') }}:</InputLabel>
                         <ElDatePicker v-model="form.dateTo" class="w-full" type="datetime" :placeholder="$t('date')" format="YYYY/MM/DD hh:mm:ss"
                             value-format="YYYY/MM/DD HH:mm:ss" />
                     </div>
@@ -77,7 +77,7 @@ const reset = () => {
                         <div>
                             <input type="search" name="search" id="search" v-model="form.search"
                                 class="block w-full text-center text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
-                                :placeholder="$t('search by name or username')" />
+                                :placeholder="$t('search-by-name-or-username')" />
                         </div>
                     </div>
                     <div class="my-6 mt-4">

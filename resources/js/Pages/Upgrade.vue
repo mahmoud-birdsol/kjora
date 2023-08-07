@@ -183,11 +183,11 @@ onMounted(() => {
                                 </div>
                                 <div class="relative z-10 p-8 font-bold">
                                     <div class="mt-5 mb-16">
-                                        <h2 class="text-white uppercase">{{ $t('free plan') }}</h2>
+                                        <h2 class="text-white uppercase">{{ $t('free-plan') }}</h2>
                                     </div>
                                 </div>
                                 <div class="flex justify-center py-6">
-                                    <div class="text-white uppercase opacity-50">{{ $t('minimal features') }}</div>
+                                    <div class="text-white uppercase opacity-50">{{ $t('minimal-features') }}</div>
 
                                 </div>
                             </div>

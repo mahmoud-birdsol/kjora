@@ -34,7 +34,7 @@ function submit() {
                 <CardContent :title="$t('update email')">
                     <template #body>
                         <div class="text-sm text-gray-500 text-center py-10">
-                            {{ $t('please enter phone number associated with your account to receive a verification code') }}
+                            {{ $t('please-enter-phone-number-associated-with-your-account-to-receive-a-verification-code') }}
                         </div>
                         <div class="flex flex-col gap-4 px-6">
                             <div>

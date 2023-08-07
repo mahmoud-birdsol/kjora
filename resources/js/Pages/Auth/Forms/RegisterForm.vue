@@ -71,25 +71,25 @@ const locale = usePage().props.locale;
         <div class="grid grid-cols-1 gap-4 mt-12 tracking-tight sm:grid-cols-2 ">
             <div>
                 <InputLabel color="primary" for="first_name" :value="$t('first-name')" />
-                <TextInput type="text" v-model="form.first_name" :placeholder="$t('please enter your first name')" auto-complete="given-name" name="sur-name"
+                <TextInput type="text" v-model="form.first_name" :placeholder="$t('please-enter-your-first-name')" auto-complete="given-name" name="sur-name"
                     aria-required="true" autofocus />
                 <InputError class="mt-2" :message="form.errors.first_name" />
             </div>
             <div>
                 <InputLabel color="primary" for="last_name" :value="$t('surname')" />
-                <TextInput type="text" v-model="form.last_name" :placeholder="$t('please enter your last name')" auto-complete="sur-name" name="sur-name"
+                <TextInput type="text" v-model="form.last_name" :placeholder="$t('please-enter-your-last-name')" auto-complete="sur-name" name="sur-name"
                     aria-required="true" />
                 <InputError class="mt-2" :message="form.errors.last_name" />
             </div>
             <div>
                 <InputLabel color="primary" for="email" :value="$t('email')" />
-                <TextInput type="text" v-model="form.email" :placeholder="$t('please enter your email address')" auto-complete="email" name="email"
+                <TextInput type="text" v-model="form.email" :placeholder="$t('please-enter-your-email-address')" auto-complete="email" name="email"
                     aria-required="true" />
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
             <div>
                 <InputLabel color="primary" for="password" :value="$t('password')" />
-                <PasswordInput v-model="form.password" :placeholder="$t('please enter a password')" />
+                <PasswordInput v-model="form.password" :placeholder="$t('please-enter-a-password')" />
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
             <div>
@@ -103,7 +103,7 @@ const locale = usePage().props.locale;
                 <InputError class="mt-2" :message="form.errors.club_id" />
             </div>
             <div>
-                <InputLabel color="primary" for="date_of_birth" :value="$t('Date of birth')" />
+                <InputLabel color="primary" for="date_of_birth" :value="$t('date-of-birth')" />
                 <ElDatePicker class="w-full" v-model="form.date_of_birth" type="date" placeholder="Pick a day" format="YYYY / MM / DD" value-format="YYYY-MM-DD" />
                 <InputError class="mt-6" :message="form.errors.date_of_birth" />
             </div>
@@ -154,7 +154,7 @@ const locale = usePage().props.locale;
                 </div>
             </div>
             <div class="mt-4 sm:mt-0">
-                <InputLabel color="primary" :value="$t('Preferred Foot')" />
+                <InputLabel color="primary" :value="$t('preferred-foot')" />
 
                 <div class="mis-5">
                     <div class="flex items-center gap-x-2">
@@ -174,9 +174,9 @@ const locale = usePage().props.locale;
 
         <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
             <p class="text-xs font-light text-black">
-                {{ $t('By signing up, you agree to the') }} <a target="_blank" :href="route('terms.and.condition.index')"
-                    class="font-bold text-blue-500 hover:text-blue-700">{{ $t('Terms of Service') }}</a> {{ $t('and') }}
-                <a target="_blank" :href="route('privacy.policy.index')" class="font-bold text-blue-500 hover:text-blue-700">{{ $t('Privacy Policy') }}</a>
+                {{ $t('by-signing-up-you-agree-to-the') }} <a target="_blank" :href="route('terms.and.condition.index')"
+                    class="font-bold text-blue-500 hover:text-blue-700">{{ $t('terms-of-service') }}</a> {{ $t('and') }}
+                <a target="_blank" :href="route('privacy.policy.index')" class="font-bold text-blue-500 hover:text-blue-700">{{ $t('privacy-policy') }}</a>
                 {{ $t('including') }}
                 <a target="_blank" :href="route('cookies.policy.index')" class="font-bold text-blue-500 hover:text-blue-700">{{ $t('cookies') }}</a>
             </p>

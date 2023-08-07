@@ -1,18 +1,17 @@
 <script setup>
-import { ref, watch } from 'vue';
-import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
-import dayjs from 'dayjs';
-import { router } from "@inertiajs/vue3";
-import AppLayout from '@/Layouts/AppLayout.vue';
+import FiltersModel from '@/Components/FiltersModel.vue';
+import HelloUserHeader from '@/Components/HelloUserHeader.vue';
+import PlayersMap from '@/Components/Maps/PlayersMap.vue';
 import Pagination from '@/Components/Pagination.vue';
 import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
-import HelloUserHeader from '@/Components/HelloUserHeader.vue';
-import { Splide, SplideSlide } from "@splidejs/vue-splide";
-import PlayersMap from '@/Components/Maps/PlayersMap.vue'; import FiltersModel from '@/Components/FiltersModel.vue';
+import AppLayout from '@/Layouts/AppLayout.vue';
 import {
-    RadioGroup,
-    RadioGroupOption,
-} from '@headlessui/vue'
+RadioGroup,
+RadioGroupOption,
+} from '@headlessui/vue';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { Splide, SplideSlide } from "@splidejs/vue-splide";
+import { ref, watch } from 'vue';
 
 const props = defineProps({
     players: Object,

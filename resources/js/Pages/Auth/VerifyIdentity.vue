@@ -165,7 +165,7 @@ const save = () => {
                         <div class="flex flex-col justify-between h-full gap-2">
                             <div class="min-h-[200px]">
                                 <div>
-                                    <h3 class="mb-8 font-bold text-black uppercase">{{ $t('Take Selfie Photo') }}</h3>
+                                    <h3 class="mb-8 font-bold text-black uppercase">{{ $t('take-selfie-photo') }}</h3>
                                 </div>
                                 <div>
                                     <div class="flex gap-4 max-md:flex-col ">

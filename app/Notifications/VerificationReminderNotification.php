@@ -47,7 +47,7 @@ class VerificationReminderNotification extends Notification
         return [
             'type' => 'warning',
             'title' => __('Identity verification.', [], $notifiable->locale),
-            'subtitle' => __('Please upload your identity verification documents for review.', [], $notifiable->locale),
+            'subtitle' => __('please-upload-your-identity-verification-documents-for-review', [], $notifiable->locale),
             'action' => route('profile.show'),
         ];
     }

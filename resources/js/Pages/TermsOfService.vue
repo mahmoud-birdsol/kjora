@@ -22,7 +22,7 @@ function submit() {
 </script>
 
 <template>
-    <component :is="is_login ? AppLayout : GuestLayout" :title="$t('Terms of Service')">
+    <component :is="is_login ? AppLayout : GuestLayout" :title="$t('terms-of-service')">
         <template #header>
             {{ $t('Security') }}
         </template>
@@ -30,7 +30,7 @@ function submit() {
             <div class="col-start-2 bg-white rounded-2xl p-6 w-full min-h-[500px] flex flex-col gap-4">
                 <div class="flex justify-center my-4">
 
-                    <h2 class="text-2xl font-bold uppercase text-primary">{{ $t('Terms of Service') }}</h2>
+                    <h2 class="text-2xl font-bold uppercase text-primary">{{ $t('terms-of-service') }}</h2>
                 </div>
                 <div v-if="terms" class="relative flex-grow p-4 border-2 rounded-lg border-stone-400">
                     <div class="w-full max-h-[400px] overflow-auto hideScrollBar " v-html="terms.content" />
@@ -42,14 +42,14 @@ function submit() {
                 </div>
                 <div class="" v-if="$page.props.auth.user && terms && (terms.version !== $page.props.auth.user.accepted_terms_and_conditions_version)">
                     <div class="flex flex-col justify-center gap-2">
-                        <label for="terms" class="text-sm font-medium text-primary">{{ $t('I agree') }}</label>
+                        <label for="terms" class="text-sm font-medium text-primary">{{ $t('i-agree') }}</label>
                         <input type="radio" :value="terms.id" id="terms" v-model="form.termsAndConditions" :checked="false"
                             @change="(e) => { e.target.checked ? isDisabled = false : isDisabled = true; }"
                             class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
                     </div>
                     <div class="mt-2">
                         <PrimaryButton :disabled="isDisabled" @click="submit">
-                            {{ $t('UPDATE') }}
+                            {{ $t('update') }}
                         </PrimaryButton>
                     </div>
                 </div>

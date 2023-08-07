@@ -43,12 +43,12 @@ function submit() {
                 </div>
                 <div class="" v-if="$page.props.user && cookies && (cookies.version !== $page.props.auth.user.accepted_cookie_policy_version)">
                     <div class="flex flex-col justify-center gap-2 mt-4">
-                        <label for="cookies" class="text-sm font-medium text-primary">{{ $t('I agree') }}</label>
+                        <label for="cookies" class="text-sm font-medium text-primary">{{ $t('i-agree') }}</label>
                         <input type="radio" :value="cookies.id" id="cookies" v-model="form.cookiePolicy" :checked="false" @change="(e) => { e.target.checked ? isDisabled = false : isDisabled = true; }" class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary" />
                     </div>
                     <div class="mt-2">
                         <PrimaryButton :disabled="isDisabled" @click="submit">
-                            {{ $t('UPDATE') }}
+                            {{ $t('update') }}
                         </PrimaryButton>
                     </div>
                 </div>

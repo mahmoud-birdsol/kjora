@@ -107,7 +107,7 @@ const showUploadAvatarModal = ref(false);
                         <InputError class="mt-2" :message="form.errors.club_id" />
                     </div>
                     <div>
-                        <InputLabel color="primary" for="date_of_birth" :value="$t('Date of birth')" :disabled="true" />
+                        <InputLabel color="primary" for="date_of_birth" :value="$t('date-of-birth')" :disabled="true" />
                         <ElDatePicker v-model="form.date_of_birth" class="w-full" placeholde="DD/MM/YYYY" :disabled="true" />
                         <InputError class="mt-2" :message="form.errors.date_of_birth" />
                     </div>
@@ -152,7 +152,7 @@ const showUploadAvatarModal = ref(false);
                         </div>
                     </div>
                     <div class="mt-4 sm:mt-0">
-                        <InputLabel color="primary" :value="$t('Preferred Foot')" />
+                        <InputLabel color="primary" :value="$t('preferred-foot')" />
 
                         <div class="mis-4">
                             <div class="flex items-center gap-x-2">

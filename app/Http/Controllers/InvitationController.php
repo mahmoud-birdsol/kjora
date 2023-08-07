@@ -87,11 +87,11 @@ class InvitationController extends Controller
             $invitedPlayer
         )) {
             FlashMessage::make()->success(
-                message: __("You already invited this player at these time")
+                message: __("you-already-invited-this-player-at-these-time")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => __("You already invited this player at these time"),
+                'invitation_error' => __("you-already-invited-this-player-at-these-time"),
             ]);
         }
 
@@ -102,11 +102,11 @@ class InvitationController extends Controller
             $invitedPlayer
         )) {
             FlashMessage::make()->success(
-                message: __("You already invited this player at these time")
+                message: __("you-already-invited-this-player-at-these-time")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => __("You already invited this player at these time"),
+                'invitation_error' => __("you-already-invited-this-player-at-these-time"),
             ]);
         }
 
@@ -122,11 +122,11 @@ class InvitationController extends Controller
             ->get()->count() > 0
         ) {
             FlashMessage::make()->success(
-                message: __("You cant invite this player because you have been invited to a match in this time")
+                message: __("you-cant-invite-this-player-because-you-have-been-invited-to-a-match-in-this-time")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' =>  __("You cant invite this player because you have been invited to a match in this time"),
+                'invitation_error' =>  __("you-cant-invite-this-player-because-you-have-been-invited-to-a-match-in-this-time"),
             ]);
         }
         // check if player because he has an hires at the same time
@@ -139,11 +139,11 @@ class InvitationController extends Controller
             ->get()->count() > 0
         ) {
             FlashMessage::make()->success(
-                message: __("You cant invite this player because you have been invited to a match in this time")
+                message: __("you-cant-invite-this-player-because-you-have-been-invited-to-a-match-in-this-time")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' =>  __("You cant invite this player because you have been invited to a match in this time"),
+                'invitation_error' =>  __("you-cant-invite-this-player-because-you-have-been-invited-to-a-match-in-this-time"),
             ]);
         }
         $date = Carbon::parse($data['date'])->setTime($time->hour, $time->minute);
@@ -157,7 +157,7 @@ class InvitationController extends Controller
             ->get()->count() > 0
         ) {
             FlashMessage::make()->success(
-                message: __("You cant invite this player because he has been invited to a match in this time")
+                message: __("you-cant-invite-this-player-because-he-has-been-invited-to-a-match-in-this-time")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
@@ -174,11 +174,11 @@ class InvitationController extends Controller
             ->get()->count() > 0
         ) {
             FlashMessage::make()->success(
-                message: __("You cant invite this player because he has a match at the same time")
+                message: __("you-cant-invite-this-player-because-he-has-a-match-at-the-same-time")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => __("You cant invite this player because he has a match at the same time"),
+                'invitation_error' => __("you-cant-invite-this-player-because-he-has-a-match-at-the-same-time"),
             ]);
         }
         //check if user has Approved Invitations With Different Stadium And Same Time
@@ -190,11 +190,11 @@ class InvitationController extends Controller
             )
         ) {
             FlashMessage::make()->success(
-                message: __("You have sent an invitation in the same time to in another staduim please choose another time or same the stadium ")
+                message: __("you-have-sent-an-invitation-in-the-same-time-to-in-another-staduim-please-choose-another-time-or-same-the-stadium")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => __("You have sent an invitation in the same time to in another staduim please choose another time or same the stadium "),
+                'invitation_error' => __("you-have-sent-an-invitation-in-the-same-time-to-in-another-staduim-please-choose-another-time-or-same-the-stadium"),
             ]);
         }
         //check if user has Approved hires Invitations With Different Stadium And Same Time
@@ -206,11 +206,11 @@ class InvitationController extends Controller
             )
         ) {
             FlashMessage::make()->success(
-                message: __("You have sent an invitation in the same time to in another staduim please choose another time or same the stadium ")
+                message: __("you-have-sent-an-invitation-in-the-same-time-to-in-another-staduim-please-choose-another-time-or-same-the-stadium")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => __("You have sent an invitation in the same time to in another staduim please choose another time or same the stadium "),
+                'invitation_error' => __("you-have-sent-an-invitation-in-the-same-time-to-in-another-staduim-please-choose-another-time-or-same-the-stadium"),
             ]);
         }
         //check if invited Player has Approved  Invitations With Different Stadium And Same Time
@@ -222,11 +222,11 @@ class InvitationController extends Controller
             )
         ) {
             FlashMessage::make()->success(
-                message: __("You have sent an invitation in the same time to in another staduim please choose another time or same the stadium ")
+                message: __("you-have-sent-an-invitation-in-the-same-time-to-in-another-staduim-please-choose-another-time-or-same-the-stadium")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => __("You have sent an invitation in the same time to in another staduim please choose another time or same the stadium "),
+                'invitation_error' => __("you-have-sent-an-invitation-in-the-same-time-to-in-another-staduim-please-choose-another-time-or-same-the-stadium"),
             ]);
         }
         //check if invited Player has Approved hires Invitations With Different Stadium And Same Time
@@ -239,11 +239,11 @@ class InvitationController extends Controller
             )
         ) {
             FlashMessage::make()->success(
-                message: __("You have sent an invitation in the same time to in another staduim please choose another time or same the stadium ")
+                message: __("you-have-sent-an-invitation-in-the-same-time-to-in-another-staduim-please-choose-another-time-or-same-the-stadium")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => __("You have sent an invitation in the same time to in another staduim please choose another time or same the stadium "),
+                'invitation_error' => __("you-have-sent-an-invitation-in-the-same-time-to-in-another-staduim-please-choose-another-time-or-same-the-stadium"),
             ]);
         }
 
@@ -259,11 +259,11 @@ class InvitationController extends Controller
             )
         ) {
             FlashMessage::make()->success(
-                message: __("This player already has match at this time")
+                message: __("this-player-already-has-match-at-this-time")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => __("This player already has match at this time"),
+                'invitation_error' => __("this-player-already-has-match-at-this-time"),
             ]);
         }
         //check if invited Player has Approved hires Invitations With same Stadium And Same Time
@@ -276,11 +276,11 @@ class InvitationController extends Controller
             )
         ) {
             FlashMessage::make()->success(
-                message: __("This player already has match at this time")
+                message: __("this-player-already-has-match-at-this-time")
             )->closeable()->send();
 
             return redirect()->back()->withErrors([
-                'invitation_error' => __("This player already has match at this time"),
+                'invitation_error' => __("this-player-already-has-match-at-this-time"),
             ]);
         }
 

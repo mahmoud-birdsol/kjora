@@ -157,7 +157,7 @@ const markerOptions = { position: position };
                         <span v-if="isCancelled">
                             {{ $t("canceled") }}
                         </span>
-                        {{ $t("match in") }}
+                        {{ $t("match-in") }}
                         <DateTranslation format="DD MMMM YYYY, hh:mm A" :start="invitation.date" />
                     </p>
                 </div>
@@ -166,8 +166,8 @@ const markerOptions = { position: position };
                     <p class="text-center text-[10px] text-stone-300/70">
                         <span v-if="invitation.state === 'declined'">{{ $t("declined") }}</span>
                         <span v-if="isCancelled"> {{ $t("canceled") }}</span>
-                        <span v-if="isPending"> {{ $t("Wants to invite you for") }}</span>
-                        {{ $t("match in") }}
+                        <span v-if="isPending"> {{ $t("wants-to-invite-you-for") }}</span>
+                        {{ $t("match-in") }}
                         <DateTranslation format="DD MMMM YYYY, hh:mm A" :start="invitation.date" />
                     </p>
                 </template>

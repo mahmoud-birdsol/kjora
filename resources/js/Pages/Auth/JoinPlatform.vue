@@ -30,28 +30,28 @@ const submit = () => {
     <Head title="Accept Invitation" />
 
     <GuestLayout>
-        <div class="w-full sm:flex sm:justify-between sm:space-x-4 px-4 sm:px-8">
+        <div class="w-full px-4 sm:flex sm:justify-between sm:space-x-4 sm:px-8">
             <div class="w-full sm:flex sm:justify-end sm:w-1/2">
                 <div>
-                    <h2 class="text-white text-2xl font-light uppercase">Welcome to</h2>
-                    <h1 class="text-white text-6xl font-black uppercase">KJORA</h1>
+                    <h2 class="text-2xl font-light text-white uppercase">Welcome to</h2>
+                    <h1 class="text-6xl font-black text-white uppercase">KJORA</h1>
                 </div>
             </div>
-            <div class="bg-white rounded-md p-6 w-full sm:w-1/2">
+            <div class="w-full p-6 bg-white rounded-md sm:w-1/2">
                 <div class="flex justify-center my-4">
-                    <h2 class="text-xl text-primary font-bold uppercase">Create an account</h2>
+                    <h2 class="text-xl font-bold uppercase text-primary">Create an account</h2>
                 </div>
 
                 <form @submit.prevent="submit">
                     <div>
                         <InputLabel color="primary" for="name" value="Name" />
-                        <TextInput id="name" v-model="form.name" type="text" class="mt-1 block w-full" required autofocus autocomplete="name" />
+                        <TextInput id="name" v-model="form.name" type="text" class="block w-full mt-1" required autofocus autocomplete="name" />
                         <InputError class="mt-2" :message="form.errors.name" />
                     </div>
 
                     <div class="mt-4">
                         <InputLabel color="primary" for="email" value="Email" />
-                        <TextInput id="email" v-model="form.email" type="email" class="mt-1 block w-full" disabled="true" />
+                        <TextInput id="email" v-model="form.email" type="email" class="block w-full mt-1" disabled="true" />
                         <InputError class="mt-2" :message="form.errors.email" />
                     </div>
 
@@ -68,10 +68,10 @@ const submit = () => {
                     </div>
 
                     <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="mt-4">
-                        <p class="text-xs text-black font-light">
-                            By signing up, you agree to the <a target="_blank" :href="route('terms.and.condition.index')"
-                                class="text-sky-500 hover:text-sky-700">Terms of Service</a> and <a target="_blank" :href="route('privacy.policy.index')"
-                                class="text-sky-500 hover:text-sky-700">Privacy Policy</a> including
+                        <p class="text-xs font-light text-black">
+                            {{$('by-signing-up-you-agree-to-the')}} <a target="_blank" :href="route('terms.and.condition.index')"
+                                class="text-sky-500 hover:text-sky-700">terms-of-service</a> and <a target="_blank" :href="route('privacy.policy.index')"
+                                class="text-sky-500 hover:text-sky-700">privacy-policy</a> including
                             <Link class="text-sky-500 hover:text-sky-700" :href="route('cookies.policy.index')">Cookie use</Link>
                         </p>
                     </div>

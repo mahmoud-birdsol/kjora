@@ -31,7 +31,7 @@ class VerificationCodeController extends Controller
         $request->user()->verifyPhone();
 
         FlashMessage::make()->success(
-            message: __('Thank you for verifying your phone')
+            message: __('thank-you-for-verifying-your-phone')
         )->closeable()->send();
 
         return redirect()->route('home');

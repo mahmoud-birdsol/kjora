@@ -72,7 +72,7 @@ const distances = [5, 10, 20, 30, 40, 50];
                         <div class="p-1">
                             <input type="search" name="search" id="search" v-model="form.search"
                                 class="block w-full px-4 text-center text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
-                                :placeholder="$t('search by name or username')" />
+                                :placeholder="$t('search-by-name-or-username')" />
                         </div>
                     </div>
                     <div class="px-4 my-6">

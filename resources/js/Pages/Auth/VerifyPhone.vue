@@ -50,12 +50,12 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 </script>
 
 <template>
-    <Head :title="$t('Phone Verification')" />
+    <Head :title="$t('phone-verification')" />
 
     <GuestLayout>
         <GuestTwoColumnLayout>
             <Card>
-                <CardContent :title="$t('Verify Phone Number')">
+                <CardContent :title="$t('verify-phone-number')">
                     <template #body>
                         <div class="py-10 text-sm text-center text-gray-500">
                             {{
@@ -72,11 +72,11 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
                             <InputError :message="form.errors.code" />
                             <div class="flex justify-center gap-2 max-md:flex-col">
                                 <Link :href="route('verification.phone.send')" class="text-sm text-gray-600 underline hover:text-gray-900">
-                                {{ $t('Resend Code') }}
+                                {{ $t('resend-code') }}
                                 </Link>
 
                                 <!-- <Link :href="route('profile.edit')" class="text-sm text-gray-600 underline hover:text-gray-900">
-                                    {{ $t('Edit Profile') }}
+                                    {{ $t('edit-profile') }}
                                 </Link>
 
                                 <Link :href="route('logout')"
@@ -95,7 +95,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 
                             <div v-if="verificationLinkSent" class="mt-4 text-sm font-medium text-green-600">
                                 {{
-                                    $t('A new verification code has been sent to the phone number you provided in your profile settings')
+                                    $t('a-new-verification-code-has-been-sent-to-the-phone-number-you-provided-in-your-profile-settings')
                                 }}.
                             </div>
                         </div>
