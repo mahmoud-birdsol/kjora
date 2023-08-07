@@ -46,8 +46,10 @@ function submit() {
                             <div>
                                 <InputLabel :value="$t('new password')" color="primary" />
                                 <PasswordInput v-model="form.new_password" :placeholder="$t('enter your new password')" />
-                                <div class="m-2 text-xs text-gray-400">
-                                    {{ $t('The password must be at least 8 characters and at least one uppercase, one lowercase letter , one symbol and one number') }}
+
+                                <div class="text-gray-400 text-xs m-2">
+                                    {{$t('the-password-must-be-at-least-8-characters-and-at-least-one-uppercase-one-lowercase-letter-one-symbol-and-one-number')}}
+
                                 </div>
                                 <InputError class="mt-2" :message="form.errors.new_password" />
                             </div>
