@@ -182,13 +182,13 @@ const save = () => {
                                             </button>
                                         </div>
                                         <div class="w-3/4">
-                                            <CorrectText>{{ $t('Take a selfie of your self with a natural expression') }}.
+                                            <CorrectText>{{ $t('take-a-selfie-of-your-self-with-a-natural-expression') }}.
                                             </CorrectText>
                                             <CorrectText>{{
-                                                $t('Make sure your whole face is visible, centered and your eyes are open') }}.
+                                                $t('make-sure-your-whole-face-is-visible-centered-and-your-eyes-are-open') }}.
                                             </CorrectText>
                                             <InCorrectText>
-                                                {{ $t('Do not copy your ID or use screenshots of your ID') }}.
+                                                {{ $t('do-not-copy-your-id-or-use-screenshots-of-your-id') }}.
                                             </InCorrectText>
                                             <InCorrectText>
                                                 {{ $t('Do not hide or alter pars of your face (No hats/beauty images / filters / headgear)') }}.
@@ -199,7 +199,7 @@ const save = () => {
                                 </div>
                                 <div>
                                     <p class="mt-2 text-sm font-bold text-black">
-                                        {{ $t('File size must be between 10KB and 5120KB in jpg/jpeg/png format') }}.
+                                        {{ $t('file-size-must-be-between-10kb-and-5120kb-in-jpg-jpeg-png-format') }}.
                                     </p>
                                 </div>
                             </div>

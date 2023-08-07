@@ -16,7 +16,7 @@ class ProfileInformationUpdatedResponse implements ProfileInformationUpdatedResp
     public function toResponse($request)
     {
         FlashMessage::make()->success(
-            message: __('Congratulations your account has been successfully updated.')
+            message: __('congratulations-your-account-has-been-successfully-updated')
         )->closeable()->send();
 
         return redirect()->route('home');

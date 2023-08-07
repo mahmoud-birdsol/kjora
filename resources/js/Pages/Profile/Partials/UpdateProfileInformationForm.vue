@@ -179,6 +179,6 @@ const showUploadAvatarModal = ref(false);
         </div>
     </div>
 
-    <SuccessMessageModal :show="showSuccessMessage" position="right" :title="$t('account')" message="Congratulations your account has been successfully updated."
+    <SuccessMessageModal :show="showSuccessMessage" position="right" :title="$t('account')" :message="$t('congratulations-your-account-has-been-successfully-updated')"
         @close="showSuccessMessage = false" />
 </template>
