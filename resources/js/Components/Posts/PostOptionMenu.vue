@@ -30,7 +30,7 @@
                                                @close="showDeletePostModal = false"
                                                @delete="removePost">
                                 <template #body>
-                                    <span>{{ $t('Are you sure you want delete this post ? ') }}</span>
+                                    <span>{{ $t('are-you-sure-you-want-delete-this-post') }}</span>
                                 </template>
                             </ConfirmationModal>
                         </button>

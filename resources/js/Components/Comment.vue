@@ -43,7 +43,7 @@
                         <!-- confirm delete media modal -->
                         <ConfirmationModal :show="showDeleteCommentModal" @close="showDeleteCommentModal = false" @delete="deleteComment">
                             <template #body>
-                                <span>{{ $t('Are you sure you want delete this comment ? ') }}</span>
+                                <span>{{ $t('are-you-sure-you-want-delete-this-comment') }}</span>
                             </template>
                         </ConfirmationModal>
                     </button>
@@ -98,7 +98,7 @@
                         </div>
                     </OnClickOutside>
                     <!-- <div class="flex items-center flex-grow ">
-                        <textarea ref="replyInput" @keypress.enter.exact.prevent="addReply" v-model="newReply" name="newReply" id="newReply" rows="1" placeholder="Add a comment..."
+                        <textarea ref="replyInput" @keypress.enter.exact.prevent="addReply" v-model="newReply" name="newReply" id="newReply" rows="1" placeholder="add-a-comment"
                             class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary "></textarea>
                     </div> -->
                     <MentionTextArea @addText="addReply" v-model:newText="newReply" />

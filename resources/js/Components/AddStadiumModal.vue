@@ -55,7 +55,7 @@ function closeModal() {
     <Modal :show="showAddStadiumModal" max-width="sm" @close="closeModal" :closeable="true" :show-close-icon="false">
         <div class="p-6 bg-black">
             <div class="flex items-center justify-between">
-                <p class="text-lg text-white">{{ $t('Add new Stadium') }} </p>
+                <p class="text-lg text-white">{{ $t('add-new-stadium') }} </p>
 
                 <button @click="showAddStadiumModal = false">
                     <XMarkIcon class="w-4 h-4 text-white" />
@@ -64,14 +64,14 @@ function closeModal() {
 
             <form @submit.prevent="addStadium">
                 <div class="my-6">
-                    <InputLabel>{{ $t('Stadium Name') }}</InputLabel>
+                    <InputLabel>{{ $t('Stadium-name') }}</InputLabel>
                     <input type="text" name="search" id="search" v-model="form.name"
                         class="block w-full px-4 text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
-                        :placeholder="$t('Stadium Name') + '...'" />
+                        :placeholder="$t('Stadium-name') + '...'" />
                 </div>
                 <div class="my-6">
-                    <InputLabel>{{ $t('Choose stadium place') }}</InputLabel>
-                    <GMapAutocomplete :placeholder="$t('Choose from map')" @place_changed="setPlace"
+                    <InputLabel>{{ $t('choose-stadium-place') }}</InputLabel>
+                    <GMapAutocomplete :placeholder="$t('Choose-from-map')" @place_changed="setPlace"
                         class="block w-full p-2 px-4 text-white bg-black border border-white rounded-full focus:border focus:border-primary focus:ring-primary sm:text-sm placeholder:center">
                     </GMapAutocomplete>
                 </div>
