@@ -1,15 +1,5 @@
 <template>
-    <Head title="Home">
-        <meta property="og:url" :content="url" />
-        <!-- <meta property="og:type" content="website" /> -->
-        <meta property="og:title" content="Kjora" />
-        <meta property="og:description" :content="`this is profile of ${user.name} on kjora website `" />
-        <meta property="og:image" :content="user.avatar_url" />
-
-    </Head>
-
-    <PublicLayout title="Gallery">
-
+    <PublicLayout title="Posts">
         <template #header>
             <p>{{ $t('post') }}</p>
         </template>
@@ -18,8 +8,7 @@
                 <PostMedia :postMedia="post.media" :user="user"></PostMedia>
             </template>
             <template #userImage>
-                <Avatar :id="user.id" :username="user.name" :image-url="user.avatar_url" :size="'md'" :border="true"
-                    border-color="primary" />
+                <Avatar :id="user.id" :username="user.name" :image-url="user.avatar_url" :size="'md'" :border="true" border-color="primary" />
             </template>
             <template #userInfo>
                 <div class="flex justify-between w-full">
@@ -102,21 +91,21 @@
 import { onMounted, onBeforeMount, ref, computed } from 'vue';
 import { usePage, Link, Head } from '@inertiajs/inertia-vue3';
 import { HeartIcon } from '@heroicons/vue/24/solid';
-import AppLayout from '../../Layouts/AppLayout.vue';
-import Avatar from '../../Components/Avatar.vue';
-import Comment from '../../Components/Comment.vue';
+import AppLayout from '../../../Layouts/AppLayout.vue';
+import Avatar from '../../../Components/Avatar.vue';
+import Comment from '../../../Components/Comment.vue';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime.js';
 import LikeButton from '@/Components/LikeButton.vue';
-import DateTranslation from '../../Components/DateTranslation.vue';
+import DateTranslation from '../../../Components/DateTranslation.vue';
 
-import PostMedia from '../../Components/Posts/PostMedia.vue';
-import PostLayout from '../../Components/Posts/PostLayout.vue';
-import PostOptionMenu from '../../Components/Posts/PostOptionMenu.vue';
-import PostCaptionFrom from '../../Components/Posts/PostCaptionForm.vue';
-import PostCommentForm from '../../Components/Posts/PostCommentForm.vue';
-import PublicLayout from '../../Layouts/PublicLayout.vue';
-import LikesModal from '../../Components/LikesModal.vue';
+import PostMedia from '../../../Components/Posts/PostMedia.vue';
+import PostLayout from '../../../Components/Posts/PostLayout.vue';
+import PostOptionMenu from '../../../Components/Posts/PostOptionMenu.vue';
+import PostCaptionFrom from '../../../Components/Posts/PostCaptionForm.vue';
+import PostCommentForm from '../../../Components/Posts/PostCommentForm.vue';
+import PublicLayout from '../../../Layouts/PublicLayout.vue';
+import LikesModal from '../../../Components/LikesModal.vue';
 
 
 onBeforeMount(() => {
