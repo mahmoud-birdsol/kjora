@@ -173,7 +173,7 @@ function deleteMessage() {
                                     </li>
                                     <ConfirmationModal :show="showDeleteMessage" @close="showDeleteMessage = false" @delete="deleteMessage">
                                         <template #body>
-                                            <span>{{ $t('Are you sure you want delete this message ? ') }}</span>
+                                            <span>{{ $t('are-you-sure-you-want-delete-this-message') }}</span>
                                         </template>
                                     </ConfirmationModal>
                                 </button>

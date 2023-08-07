@@ -178,7 +178,7 @@ function changeMapMarker(e) {
                     <p class="">
                         {{
                             $t(
-                                'Your invitation will be sent and you will receive an email updating you on the status of your request'
+                                'your-invitation-will-be-sent-and-you-will-receive-an-email-updating-you-on-the-status-of-your-request'
                             )
                         }}.</p>
 

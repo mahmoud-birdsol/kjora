@@ -132,7 +132,7 @@ const markerOptions = { position: position };
                 <div class="flex items-center gap-1 text-white capitalize" v-if="isPending && !isHiring">
                     <span>
                         {{
-                            $t("hi :receiver , :sender", {
+                            $t("hi-receiver-sender", {
                                 sender: invitation.inviting_player.name,
                                 receiver: invitation.invited_player.first_name,
                             })

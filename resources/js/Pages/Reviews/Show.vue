@@ -147,8 +147,8 @@ function setRates() {
                         <h2 class="text-xl font-bold uppercase text-primary">{{ $t('rate') }}</h2>
                     </div>
                     <div class="text-center">
-                        <p class="">{{ $t('thank you for sharing your experience with us') }}.</p>
-                        <p class="">{{ $t('we appreciate you taking the time to share your rating') }}.</p>
+                        <p class="">{{ $t('thank-you-for-sharing-your-experience-with-us') }}.</p>
+                        <p class="">{{ $t('we-appreciate-you-taking-the-time-to-share-your-rating') }}.</p>
                     </div>
 
                     <Link :href="route('home')" class="flex w-full min-w-full">

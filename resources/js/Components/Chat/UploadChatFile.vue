@@ -266,7 +266,7 @@ function changeFiles(file, url, id) {
                 <div class="mb-2 text-sm justify-self-end text-primary">
                     {{
                         $t(
-                            "video, images, PDFs and docs are allowed with max size(84 MB) are allowed"
+                            "video-images-pdfs-and-docs-are-allowed-with-max-size-84-mb-are-allowed"
                         )
                     }}
                 </div>

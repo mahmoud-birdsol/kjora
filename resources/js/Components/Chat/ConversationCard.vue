@@ -79,7 +79,7 @@ function removeConversation() {
 
             <ConfirmationModal :show="showDeleteConvModal" @close="showDeleteConvModal = false" @delete="removeConversation">
                 <template #body>
-                    <span>{{ $t('Are you sure you want delete this Conversation ? ') }}</span>
+                    <span>{{ $t('are-you-sure-you-want-delete-this-conversation') }}</span>
                 </template>
             </ConfirmationModal>
         </div>
