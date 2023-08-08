@@ -26,11 +26,13 @@ onMounted(() => {
       props.message.new = false;
    }, 10000);
 });
+
 const currentUser = usePage().props.auth.user;
 const showOptions = ref(false);
 const showMediaGallery = ref(false);
 const showSingleMediaGallery = ref(false);
 const showDeleteMessage = ref(false);
+
 const imagesVideosOnly = props.message.attachments.filter(
    (a) => a.mime_type.startsWith("image") || a.mime_type.startsWith("video")
 );
@@ -131,12 +133,6 @@ function deleteMessage() {
                      :is-current-user="isCurrentUser"
                      class="cursor-pointer"
                   />
-                  <ChatGallery
-                     :show="showSingleMediaGallery"
-                     @close="showSingleMediaGallery = false"
-                     :media="message.attachments"
-                     :user="message.message_sender"
-                  />
                </template>
                <!-- message.attachments && message.attachments.length > 1 -->
                <template v-if="message.attachments.length > 1">
@@ -145,59 +141,29 @@ function deleteMessage() {
                      v-if="imagesVideosOnly.length"
                      class="grid max-w-[200px] grid-cols-2 gap-2 place-items-center"
                      :class="imagesVideosOnly.length > 2 ? 'grid-rows-2' : ''"
+                     @click="showMediaGallery = true"
                   >
-                     <MediaThumbnails :media="imagesVideosOnly[0]" />
-                     <MediaThumbnails
-                        v-if="imagesVideosOnly.length > 2"
-                        :media="imagesVideosOnly[1]"
-                     />
-                     <div
-                        v-if="imagesVideosOnly.length == 2"
-                        class="relative w-full aspect-square"
-                        @click="showMediaGallery = true"
+                     <template
+                        v-for="(item, index) in imagesVideosOnly"
+                        :key="item.id"
                      >
-                        <MediaThumbnails :media="imagesVideosOnly[1]" />
-                        <div
-                           class="absolute inset-0 grid font-bold text-white rounded-md cursor-pointer max-sm:text-xs bg-stone-700/70 place-items-center"
-                        >
-                           {{
-                              `${
-                                 $page.props.locale == "en"
-                                    ? "show all"
-                                    : "عرض الجميع"
-                              }`
-                           }}
-                        </div>
-                     </div>
-                     <MediaThumbnails
-                        v-if="imagesVideosOnly[2]"
-                        :media="imagesVideosOnly[2]"
-                     />
-                     <div
-                        v-if="imagesVideosOnly.length >= 3"
-                        class="relative w-full aspect-square"
-                        @click="showMediaGallery = true"
-                     >
-                        <MediaThumbnails :media="imagesVideosOnly[4]" />
-                        <div
-                           class="absolute inset-0 grid font-bold text-white rounded-md cursor-pointer bg-stone-700/70 place-items-center max-sm:text-xs"
-                        >
-                           {{
-                              imagesVideosOnly.length > 3
-                                 ? `+ ${imagesVideosOnly.length - 3} ${
-                                      $page.props.locale == "en"
-                                         ? "more..."
-                                         : "المزيد ..."
-                                   }`
-                                 : `${
-                                      $page.props.locale == "en"
-                                         ? "show all"
-                                         : "عرض الجميع"
-                                   }`
-                           }}
-                        </div>
-                     </div>
+                        <MediaThumbnails :media="item">
+                           <div
+                              v-if="index === 3"
+                              class="absolute inset-0 grid text-xs font-bold text-center text-white rounded-md cursor-pointer max-sm:text-xs bg-stone-700/70 place-items-center"
+                           >
+                              {{
+                                 `${
+                                    $page.props.locale == "en"
+                                       ? "show all"
+                                       : "عرض الجميع"
+                                 }`
+                              }}
+                           </div>
+                        </MediaThumbnails>
+                     </template>
                   </div>
+
                   <!-- docs and PDFs   -->
                   <div
                      v-if="otherMedia.length"
@@ -213,13 +179,15 @@ function deleteMessage() {
                         />
                      </template>
                   </div>
-                  <ChatGallery
-                     :show="showMediaGallery"
-                     @close="showMediaGallery = false"
-                     :media="imagesVideosOnly"
-                     :user="message.message_sender"
-                  />
                </template>
+
+               <ChatGallery
+                  v-if="imagesVideosOnly?.length"
+                  :show="showMediaGallery"
+                  @close="showMediaGallery = false"
+                  :media="imagesVideosOnly"
+                  :user="message.message_sender"
+               />
                <!-- text message -->
 
                <div class="break-all whitespace-pre-wrap">
