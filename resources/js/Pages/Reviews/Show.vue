@@ -102,7 +102,7 @@ function submitRatingForm() {
                 <form class="flex flex-col gap-4 px-5">
                     <div class="flex items-center gap-x-2">
                         <Checkbox  id="male" value="male" v-model="ratingForm.attended" rounded/>
-                        <label for="male" class="text-sm font-medium text-black">{{ $t('Attended') }}</label>
+                        <label for="male" class="text-sm font-medium text-black">{{ $t('attended') }}</label>
                     </div>
                     <template v-if="ratingForm.attended">
                         <template v-for="item in  ratingCategories" :key="item.id">
