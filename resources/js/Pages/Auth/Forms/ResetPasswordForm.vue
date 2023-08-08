@@ -4,7 +4,7 @@ import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
-import PasswordInput from "@/Components/PasswordInput.vue";
+import PasswordInput from "@/Components/Forms/PasswordInput.vue";
 
 const props = defineProps({
     email: String,

@@ -8,7 +8,7 @@ import PhoneInput from "@/Components/PhoneInput.vue";
 import InputError from "@/Components/Forms/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { ref } from "vue";
-import PasswordInput from "@/Components/PasswordInput.vue";
+import PasswordInput from "@/Components/Forms/PasswordInput.vue";
 const props = defineProps(["countries"]);
 let loading = ref(false);
 const form = useForm({

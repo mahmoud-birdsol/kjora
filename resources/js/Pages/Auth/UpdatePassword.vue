@@ -1,13 +1,12 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
-import { Head, Link, useForm, usePage } from "@inertiajs/vue3";
 import Card from "@/Components/Card.vue";
 import CardContent from "@/Components/CardContent.vue";
-import InputLabel from "@/Components/Forms/InputLabel.vue";
-import TextInput from "@/Components/Forms/TextInput.vue";
 import InputError from "@/Components/Forms/InputError.vue";
+import InputLabel from "@/Components/Forms/InputLabel.vue";
+import PasswordInput from "@/Components/Forms/PasswordInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import PasswordInput from "@/Components/PasswordInput.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
+import { useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
 let loading = ref(false);
 const form = useForm({
@@ -70,7 +69,7 @@ function submit() {
                                     :placeholder="$t('enter your new password')"
                                 />
 
-                                <div class="text-gray-400 text-xs m-2">
+                                <div class="m-2 text-xs text-gray-400">
                                     {{
                                         $t(
                                             "the-password-must-be-at-least-8-characters-and-at-least-one-uppercase-one-lowercase-letter-one-symbol-and-one-number"
