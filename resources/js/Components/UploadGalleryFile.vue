@@ -1,7 +1,7 @@
 <script setup>
 import Crop from '@/Components/Crop.vue';
 import CropIcon from '@/Components/Icons/CropIcon.vue';
-import InputLabel from '@/Components/InputLabel.vue';
+import InputLabel from '@/Components/Forms/InputLabel.vue';
 import Modal from '@/Components/Modal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { PlusCircleIcon, XMarkIcon } from '@heroicons/vue/24/outline';

@@ -3,7 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import Card from '@/Components/Card.vue';
 import CardContent from '@/Components/CardContent.vue';
-import InputLabel from '@/Components/InputLabel.vue';
+import InputLabel from '@/Components/Forms/InputLabel.vue';
 import PhoneInput from '@/Components/PhoneInput.vue';
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';

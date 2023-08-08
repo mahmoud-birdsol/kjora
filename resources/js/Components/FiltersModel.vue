@@ -1,6 +1,6 @@
 <script setup>
 import FixedActionBtn from '@/Components/FixedActionBtn.vue';
-import InputLabel from '@/Components/InputLabel.vue';
+import InputLabel from '@/Components/Forms/InputLabel.vue';
 import Modal from '@/Components/Modal.vue';
 import RichSelectInput from '@/Components/RichSelectInput.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';

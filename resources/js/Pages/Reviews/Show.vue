@@ -1,6 +1,6 @@
 <script setup>
 import Avatar from '@/Components/Avatar.vue';
-import InputLabel from '@/Components/InputLabel.vue';
+import InputLabel from '@/Components/Forms/InputLabel.vue';
 import Modal from '@/Components/Modal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import RatingChart from '@/Components/RatingChart.vue';
@@ -10,6 +10,8 @@ import { StarIcon as StarIconOutline, XMarkIcon } from '@heroicons/vue/24/outlin
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { ElSlider } from 'element-plus';
 import { computed, ref } from 'vue';
+import Checkbox from '@/Components/Forms/Checkbox.vue';
+
 const props = defineProps({
     review: null,
     ratingCategories: Array,
@@ -99,9 +101,8 @@ function submitRatingForm() {
                 </div>
                 <form class="flex flex-col gap-4 px-5">
                     <div class="flex items-center gap-x-2">
-                        <input type="checkbox" id="male" value="male" v-model="ratingForm.attended"
-                            class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary ltr:max-sm:ml-4 rtl:max-sm:mr-4" />
-                        <label for="male" class="text-sm font-medium text-black">{{ $t('Attended') }}</label>
+                        <Checkbox  id="male" value="male" v-model="ratingForm.attended" rounded/>
+                        <InputLabel for="male" color="black">{{ $t('attended') }}</InputLabel>
                     </div>
                     <template v-if="ratingForm.attended">
                         <template v-for="item in  ratingCategories" :key="item.id">
