@@ -3,7 +3,7 @@ import { Link, useForm, usePage } from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
+import TextInput from "@/Components/Forms/TextInput.vue";
 import PasswordInput from "@/Components/PasswordInput.vue";
 import RichSelectInput from "@/Components/RichSelectInput.vue";
 import PhoneInput from "@/Components/PhoneInput.vue";
