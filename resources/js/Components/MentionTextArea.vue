@@ -1,7 +1,7 @@
 <template>
    <div class="relative flex items-center flex-grow">
       <div
-         ref="customTextArea"
+         ref="customTextAreaRef"
          class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar break-all whitespace-pre-wrap placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary min-h-[2.5rem] overflow-auto max-h-[3.75rem]"
       >
          <span v-html="CommentInDiv" />
@@ -45,7 +45,7 @@ const props = defineProps({
 const emits = defineEmits(["addText", "update:newText"]);
 
 const showMentionList = ref(false);
-const customTextArea = ref();
+const customTextAreaRef = ref();
 const users = ref([]);
 const searchChars = ref("");
 const options = ref(null);
@@ -79,8 +79,8 @@ function addToDiv(user) {
    showMentionList.value = false;
 }
 function syncScroll(e) {
-   if (!customTextArea) return;
-   customTextArea.value.scrollTop = e.target.scrollTop;
+   if (!customTextAreaRef) return;
+   customTextAreaRef.value.scrollTop = e.target.scrollTop;
 }
 function goUp(e) {
    if (!showMentionList.value) return;
