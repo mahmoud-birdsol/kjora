@@ -1,7 +1,11 @@
-const defaultTheme = require("tailwindcss/defaultTheme");
+import defaultTheme from "tailwindcss/defaultTheme";
+import forms from "@tailwindcss/forms";
+import typography from "@tailwindcss/typography";
+import logical from "tailwindcss-logical";
+import { userState } from "./resources/js/Plugins/user-state-tw";
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
     content: [
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
         "./vendor/laravel/jetstream/**/*.blade.php",
@@ -29,10 +33,5 @@ module.exports = {
             ...defaultTheme.screens,
         },
     },
-
-    plugins: [
-        require("@tailwindcss/forms"),
-        require("@tailwindcss/typography"),
-        require("tailwindcss-logical"),
-    ],
+    plugins: [forms, typography, logical, userState],
 };
