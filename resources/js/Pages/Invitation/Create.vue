@@ -1,17 +1,17 @@
 <script setup>
-import AddStadiumModal from '@/Components/AddStadiumModal.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/Forms/InputLabel.vue';
-import Modal from '@/Components/Modal.vue';
+import AddStadiumModal from "@/Components/AddStadiumModal.vue";
+import InputError from "@/Components/Forms/InputError.vue";
+import InputLabel from "@/Components/Forms/InputLabel.vue";
+import Modal from "@/Components/Modal.vue";
 import MainPlayerCard from "@/Components/PlayerCards/MainPlayerCard.vue";
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import RichSelectInput from '@/Components/RichSelectInput.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import AppLayout from '@/Layouts/AppLayout.vue';
-import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
-import dayjs from 'dayjs';
-import { ElDatePicker, ElTimePicker } from 'element-plus';
-import { computed, ref } from 'vue';
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import RichSelectInput from "@/Components/RichSelectInput.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
+import { Head, Link, useForm, usePage } from "@inertiajs/vue3";
+import dayjs from "dayjs";
+import { ElDatePicker, ElTimePicker } from "element-plus";
+import { computed, ref } from "vue";
 
 const props = defineProps({
     invited: Object,
@@ -34,15 +34,14 @@ const currentUser = usePage().props.auth.user;
 const createInvitation = () => {
     if (isDisabled.value) return;
 
-    form.date = dayjs(form.date).add(1).format('YYYY-MM-DD');
-    form.time = (new Date(form.time)).toISOString();
-    form.post(route('invitation.store'), {
+    form.date = dayjs(form.date).add(1).format("YYYY-MM-DD");
+    form.time = new Date(form.time).toISOString();
+    form.post(route("invitation.store"), {
         onStart: () => {
             isDisabled.value = true;
         },
         onSuccess: () => {
             showSuccessModal.value = true;
-
         },
         onError: () => {
             isDisabled.value = false;
@@ -61,10 +60,13 @@ const makeRange = (start, end) => {
     return result;
 };
 const disabledDate = (time) => {
-    return dayjs(time).isBefore(dayjs().subtract(1, 'day'));
+    return dayjs(time).isBefore(dayjs().subtract(1, "day"));
 };
 const disabledHours = () => {
-    if (dayjs(form.date).format('dddd, DD MMMM YYYY') === dayjs(date).format('dddd, DD MMMM YYYY')) {
+    if (
+        dayjs(form.date).format("dddd, DD MMMM YYYY") ===
+        dayjs(date).format("dddd, DD MMMM YYYY")
+    ) {
         let hour = date.getHours();
         return makeRange(0, hour + 1);
     }
@@ -92,13 +94,10 @@ let MarkerPosition = computed(() => {
     };
 });
 
-
 function changeMapMarker(_e) {
-    let std = props.stadiums.find(s => s.id === form.stadium_id);
+    let std = props.stadiums.find((s) => s.id === form.stadium_id);
     currentStadium.value = std;
-
 }
-
 </script>
 
 <template>
@@ -106,61 +105,117 @@ function changeMapMarker(_e) {
 
     <AppLayout :title="$t('send-invitation')">
         <template #header>
-            <p class="text-4xl font-black md:text-7xl">{{ $t('send-invitation') }}</p>
+            <p class="text-4xl font-black md:text-7xl">
+                {{ $t("send-invitation") }}
+            </p>
         </template>
 
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                <div
+                    class="grid grid-cols-1 gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                >
                     <div class="col-span-1">
                         <div class="p-6 bg-black rounded-xl">
-                            <MainPlayerCard :player="invited" :show-report="false" :show-invite="false"
-                                :show-favorite="false" :show-share="false" />
+                            <MainPlayerCard
+                                :player="invited"
+                                :show-report="false"
+                                :show-invite="false"
+                                :show-favorite="false"
+                                :show-share="false"
+                            />
 
                             <form @submit.prevent="">
                                 <div class="my-6">
-                                    <InputLabel>{{ $t('Date') }}</InputLabel>
+                                    <InputLabel>{{ $t("Date") }}</InputLabel>
                                     <div class="px-4">
-                                        <ElDatePicker type="date" :disabled-date="disabledDate"
-                                            style="background-color: black;" v-model="form.date" @change="disabledHours()"
-                                            class="w-full" placeholde="DD/MM/YYYY" />
-                                        <InputError class="mt-4 " :message="form.errors.date" />
+                                        <ElDatePicker
+                                            type="date"
+                                            :disabled-date="disabledDate"
+                                            style="background-color: black"
+                                            v-model="form.date"
+                                            @change="disabledHours()"
+                                            class="w-full"
+                                            placeholde="DD/MM/YYYY"
+                                        />
+                                        <InputError
+                                            class="mt-4"
+                                            :message="form.errors.date"
+                                        />
                                     </div>
                                 </div>
 
                                 <div class="my-6">
-                                    <InputLabel>{{ $t('Time') }}</InputLabel>
+                                    <InputLabel>{{ $t("Time") }}</InputLabel>
                                     <div class="px-4">
-                                        <ElTimePicker placeholder="Pick the time " format="HH:mm" v-model="form.time"
-                                            :disabled-hours="disabledHours" popper-class="bg-white" />
-                                        <InputError class="mt-4" :message="form.errors.time" />
+                                        <ElTimePicker
+                                            placeholder="Pick the time "
+                                            format="HH:mm"
+                                            v-model="form.time"
+                                            :disabled-hours="disabledHours"
+                                            popper-class="bg-white"
+                                        />
+                                        <InputError
+                                            class="mt-4"
+                                            :message="form.errors.time"
+                                        />
                                     </div>
                                 </div>
 
                                 <div class="my-6">
-                                    <InputLabel>{{ $t('Stadium') }}</InputLabel>
-                                    <div class="px-4 ">
-                                        <RichSelectInput :options="stadiums" value-name="id" text-name="name"
-                                            :image-name="null" v-model="form.stadium_id" bgColor="black" txtColor="white"
-                                            @selected="changeMapMarker" />
-                                        <InputError class="mt-4" :message="form.errors.stadium_id" />
+                                    <InputLabel>{{ $t("Stadium") }}</InputLabel>
+                                    <div class="px-4">
+                                        <RichSelectInput
+                                            :options="stadiums"
+                                            value-name="id"
+                                            text-name="name"
+                                            :image-name="null"
+                                            v-model="form.stadium_id"
+                                            bgColor="black"
+                                            txtColor="white"
+                                            @selected="changeMapMarker"
+                                        />
+                                        <InputError
+                                            class="mt-4"
+                                            :message="form.errors.stadium_id"
+                                        />
                                     </div>
                                 </div>
 
                                 <div class="my-6 mt-4">
-                                    <InputError class="my-2" :message="form.errors.review" />
+                                    <InputError
+                                        class="my-2"
+                                        :message="form.errors.review"
+                                    />
 
-                                    <SecondaryButton @click="createInvitation">{{ $t('Send') }}</SecondaryButton>
+                                    <SecondaryButton
+                                        @click="createInvitation"
+                                        >{{ $t("Send") }}</SecondaryButton
+                                    >
                                 </div>
                             </form>
                         </div>
                     </div>
                     <!-- staduim map -->
-                    <div class="overflow-hidden text-white lg:col-span-2 md:col-span-1 rounded-xl">
-                        <GMapMap :center="centerPosition" :zoom="15" style="width: 100%; height:100%; min-height: 500px; ">
-                            <GMapMarker v-if="currentStadium" :position="MarkerPosition" :clickable="true">
+                    <div
+                        class="overflow-hidden text-white lg:col-span-2 md:col-span-1 rounded-xl"
+                    >
+                        <GMapMap
+                            :center="centerPosition"
+                            :zoom="15"
+                            style="width: 100%; height: 100%; min-height: 500px"
+                        >
+                            <GMapMarker
+                                v-if="currentStadium"
+                                :position="MarkerPosition"
+                                :clickable="true"
+                            >
                                 <GMapInfoWindow :opened="true">
-                                    <div class="text-xs font-bold text-stone-800">{{ currentStadium.name }}</div>
+                                    <div
+                                        class="text-xs font-bold text-stone-800"
+                                    >
+                                        {{ currentStadium.name }}
+                                    </div>
                                 </GMapInfoWindow>
                             </GMapMarker>
                         </GMapMap>
@@ -170,29 +225,49 @@ function changeMapMarker(_e) {
         </div>
         <AddStadiumModal />
 
-        <Modal :show="showSuccessModal" max-width="md" @close="showSuccessModal = false">
+        <Modal
+            :show="showSuccessModal"
+            max-width="md"
+            @close="showSuccessModal = false"
+        >
             <div class="bg-white rounded-xl p-6 md:min-h-[300px]">
-                <div class="flex flex-col justify-between items-center h-56 md:min-h-[300px]">
+                <div
+                    class="flex flex-col justify-between items-center h-56 md:min-h-[300px]"
+                >
                     <div class="flex justify-center">
-                        <h2 class="text-xl font-bold uppercase text-primary">{{ $t('Invitation Sent') }}</h2>
+                        <h2 class="text-xl font-bold uppercase text-primary">
+                            {{ $t("Invitation Sent") }}
+                        </h2>
                     </div>
                     <p class="">
                         {{
                             $t(
-                                'your-invitation-will-be-sent-and-you-will-receive-an-email-updating-you-on-the-status-of-your-request'
+                                "your-invitation-will-be-sent-and-you-will-receive-an-email-updating-you-on-the-status-of-your-request"
                             )
-                        }}.</p>
+                        }}.
+                    </p>
 
                     <Link :href="route('home')" class="flex w-full min-w-full">
-                    <PrimaryButton class="w-full" @click="showSuccessModal = false">{{ $t('Ok') }}</PrimaryButton>
+                        <PrimaryButton
+                            class="w-full"
+                            @click="showSuccessModal = false"
+                            >{{ $t("Ok") }}</PrimaryButton
+                        >
                     </Link>
                 </div>
             </div>
         </Modal>
         <!-- can not send an invitation modal -->
-        <Modal :show="showInvitationError" :closeable="true" :show-close-icon="true" max-width="md"
-            @close="showInvitationError = false">
-            <div class="flex min-h-[300px] flex-col text-center justify-between p-6 pt-0">
+        <Modal
+            :show="showInvitationError"
+            :closeable="true"
+            :show-close-icon="true"
+            max-width="md"
+            @close="showInvitationError = false"
+        >
+            <div
+                class="flex min-h-[300px] flex-col text-center justify-between p-6 pt-0"
+            >
                 <div class="flex justify-center">
                     <h2 class="text-xl font-bold uppercase text-primary">
                         {{ $t("invitation can not be sent") }}
@@ -208,7 +283,6 @@ function changeMapMarker(_e) {
         </Modal>
     </AppLayout>
 </template>
-
 
 <style>
 .el-input__inner {
@@ -249,20 +323,20 @@ function changeMapMarker(_e) {
 .el-date-picker__header-label,
 .el-picker-panel__icon-btn,
 .el-picker-panel__content,
-.el-date-table>tbody>tr>th {
+.el-date-table > tbody > tr > th {
     color: green !important;
     font-weight: bold !important;
 }
 
-.disabled>.el-date-table-cell {
+.disabled > .el-date-table-cell {
     background-color: black !important;
 }
 
-.disabled>.el-date-table-cell>.el-date-table-cell__text {
+.disabled > .el-date-table-cell > .el-date-table-cell__text {
     color: gray !important;
 }
 
-.prev-month>.el-date-table-cell>.el-date-table-cell__text {
+.prev-month > .el-date-table-cell > .el-date-table-cell__text {
     color: darkgray !important;
 }
 
