@@ -173,7 +173,7 @@ async function fetchUsername() {
                      />
                   </button>
                   <LikeButton
-                     :canLiked="isCurrentUser"
+                     :canLike="!isCurrentUser"
                      :isLiked="post?.is_liked"
                      :likeable_id="post.id"
                      :likeable_type="'App\\Models\\Post'"

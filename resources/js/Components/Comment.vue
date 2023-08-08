@@ -263,9 +263,7 @@ function toggleEmojiPicker(e) {
                   @click="handleReplyClicked"
                   class="p-1 transition-all duration-150 pis-0"
                >
-                  {{
-                     comment.replies.length > 0 ? comment.replies.length : ""
-                  }}
+                  {{ comment.replies.length > 0 ? comment.replies.length : "" }}
                   {{ $t("reply") }}
                </button>
 
@@ -283,6 +281,7 @@ function toggleEmojiPicker(e) {
                      />
                   </button>
                   <LikeButton
+                     :can-like="!isCurrentUser"
                      :isLiked="comment?.is_liked"
                      :likeable_id="comment.id"
                      :likeable_type="'App\\Models\\Comment'"
