@@ -1,31 +1,24 @@
 <script setup>
-import { Head, useForm, Link, usePage } from '@inertiajs/vue3';
-import AppLayout from '@/Layouts/AppLayout.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import Modal from '@/Components/Modal.vue';
-import { ElRate, ElSlider } from 'element-plus';
-import InputLabel from '@/Components/InputLabel.vue';
-import { computed, ref } from 'vue';
-import RatingChart from '@/Components/RatingChart.vue';
 import Avatar from '@/Components/Avatar.vue';
-import { XMarkIcon } from '@heroicons/vue/24/outline';
-import { StarIcon as StarIconFilled } from '@heroicons/vue/20/solid'
-import { StarIcon as StarIconOutline } from '@heroicons/vue/24/outline';
+import InputLabel from '@/Components/InputLabel.vue';
+import Modal from '@/Components/Modal.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import RatingChart from '@/Components/RatingChart.vue';
+import AppLayout from '@/Layouts/AppLayout.vue';
+import { StarIcon as StarIconFilled } from '@heroicons/vue/20/solid';
+import { StarIcon as StarIconOutline, XMarkIcon } from '@heroicons/vue/24/outline';
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
+import { ElSlider } from 'element-plus';
+import { computed, ref } from 'vue';
 const props = defineProps({
     review: null,
     ratingCategories: Array,
     playerRating: Array
 });
 
-
-// const data = props.playerRating.map(r => r.value)
-
 const labels = props.ratingCategories.map(r => r.name[usePage().props.locale])
 const showMsg = ref(false)
 const state = props.review.player.state_name
-const rateColor = state === 'Free' ? ['#006400', '#006400', '#006400'] : ['#99A9BF', '#F7BA2A', '#FF9900']
-const rating = ref(props.review.player.rating)
 const ratingCategory = props.ratingCategories.map(cat => {
     return { id: cat.id, value: 0 }
 })
@@ -39,8 +32,6 @@ const ratingForm = useForm(
 )
 
 const graphData = computed(() => {
-
-    // return ratingForm.ratingCategory.map(cat,i=>(cat.value+props.playerRating.find(r=> r.name=== cat.name ).value)/2)
     return ratingForm.ratingCategory.map(cat => cat.value)
 })
 
@@ -50,10 +41,6 @@ function submitRatingForm() {
         preserveState: false,
         preserveScroll: true,
     })
-}
-
-function setRates() {
-
 }
 
 </script>
@@ -125,7 +112,7 @@ function setRates() {
                                         c.id === item.id)[0].value }}</span>
                                 </div>
                                 <div class="px-6 py-1 mx-4 border border-white rounded-full bg-stone-300">
-                                    <el-slider v-model="ratingForm.ratingCategory.filter(c => c.id === item.id)[0].value" @change="setRates" :step="0.1" :min="0"
+                                    <el-slider v-model="ratingForm.ratingCategory.filter(c => c.id === item.id)[0].value" :step="0.1" :min="0"
                                         :max="5" input-size="small" height="1" />
                                 </div>
                             </div>
@@ -170,5 +157,3 @@ function setRates() {
     background-color: gray;
 }
 </style>
-
-<style></style>

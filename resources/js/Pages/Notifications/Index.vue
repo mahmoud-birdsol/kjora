@@ -1,8 +1,8 @@
 <script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
-import { Head } from '@inertiajs/vue3';
 import NotificationComponent from '@/Components/NotificationComponent.vue';
 import Pagination from '@/Components/Pagination.vue';
+import AppLayout from '@/Layouts/AppLayout.vue';
+import { Head } from '@inertiajs/vue3';
 
 defineProps({
     notifications: Object
@@ -25,8 +25,8 @@ defineProps({
             </div>
 
             <div v-else>
-                <div class="bg-white rounded p-6 mt-4">
-                    <div class="block px-4 py-2 text-xs text-gray-500 text-center">
+                <div class="p-6 mt-4 bg-white rounded">
+                    <div class="block px-4 py-2 text-xs text-center text-gray-500">
                         You don't have any notifications yet.
                     </div>
                 </div>

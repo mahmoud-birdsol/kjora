@@ -1,8 +1,6 @@
 <script setup>
-import { ref } from 'vue'
-import Icon from './Icon.vue'
-import { Link, usePage } from '@inertiajs/vue3';
-import { router } from "@inertiajs/vue3";
+import { router, usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 const value = ref('')
 
@@ -35,12 +33,9 @@ function setLocale() {
 }
 </script>
 <template>
-    <!-- <div class="ml-4 rtl:mr-4"> -->
     <el-select v-model="selectedLocale" class="" placeholder="Select" @change="setLocale">
         <el-option v-for="item in languages" :key="item.value" :label="item.label" :value="item.value" :loading="true" />
     </el-select>
-
-    <!-- </div> -->
 </template>
 <style>
 .el-input {

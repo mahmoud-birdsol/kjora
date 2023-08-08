@@ -1,8 +1,7 @@
 <script setup>
-import { onMounted, provide } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import ChatLayout from '@/Layouts/ChatLayout.vue';
-
+import { onMounted, provide } from 'vue';
 import { router, usePage } from "@inertiajs/vue3";
 
 const props = defineProps(['conversations', 'last_online_at']);
@@ -40,7 +39,7 @@ provide('conversation', null);
 </script>
 <template>
     <AppLayout title="Chat">
-        <template #header>
+      <template #header>
             {{ $t('chat') }}
         </template>
 

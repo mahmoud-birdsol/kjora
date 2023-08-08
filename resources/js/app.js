@@ -43,7 +43,6 @@ createInertiaApp({
                 load: {
                     key: apiKey,
                     libraries: "places",
-                    // language: 'de',
                 },
             })
             .component("EmojiPicker", EmojiPicker)

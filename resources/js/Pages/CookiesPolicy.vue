@@ -1,12 +1,10 @@
 <script setup>
-import { Head, useForm, usePage } from '@inertiajs/vue3';
-import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
+import DateTranslation from "@/Components/DateTranslation.vue";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { ref } from 'vue';
-import dayjs from 'dayjs';
 import GuestLayout from "@/Layouts/GuestLayout.vue";
-import DateTranslation from "@/Components/DateTranslation.vue"
+import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 const props = defineProps({
     cookies: Object,

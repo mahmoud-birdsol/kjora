@@ -1,3 +1,85 @@
+
+<script setup>
+import Avatar from "@/Components/Avatar.vue";
+import Comment from "@/Components/Comment.vue";
+import DateTranslation from "@/Components/DateTranslation.vue";
+import LikeButton from "@/Components/LikeButton.vue";
+import LikesModal from "@/Components/LikesModal.vue";
+import PostCaptionFrom from "@/Components/Posts/PostCaptionForm.vue";
+import PostCommentForm from "@/Components/Posts/PostCommentForm.vue";
+import PostLayout from "@/Components/Posts/PostLayout.vue";
+import PostMedia from "@/Components/Posts/PostMedia.vue";
+import PostOptionMenu from "@/Components/Posts/PostOptionMenu.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
+import { StarIcon } from "@heroicons/vue/24/outline";
+import { HeartIcon } from "@heroicons/vue/24/solid";
+import { Link, usePage } from "@inertiajs/vue3";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime.js";
+import { computed, onBeforeMount, onMounted, ref } from "vue";
+
+onBeforeMount(() => {
+    dayjs.extend(relativeTime);
+});
+
+const props = defineProps({
+    user: null,
+    post: null,
+});
+
+const commentsContainer = ref(null);
+const commentsComps = ref(null);
+const postCaptionComp = ref(null);
+const postComments = ref([]);
+const showLikesModal = ref(false);
+const currentUser = usePage().props.auth.user;
+const isCurrentUser = currentUser.id === props.user.id;
+const users = ref([]);
+const numComments = computed(() =>
+    postComments.value
+        ? postComments.value.filter((c) => !c.parent_id)?.length
+        : 0
+);
+const commentsContainerOffset = computed(() => {
+    return (
+        commentsContainer.value?.getBoundingClientRect().top + window.scrollY
+    );
+});
+
+onMounted(() => {
+    getPostComments();
+    fetchUsername();
+});
+
+function getPostComments() {
+    axios
+        .get(route("api.gallery.comments"), {
+            params: {
+                commentable_id: props.post.id,
+                commentable_type: "App\\Models\\Post",
+            },
+        })
+        .then((res) => {
+            postComments.value = res.data.data;
+            if (!route().params?.commentId) scrollToCommentsBottom();
+        })
+        .catch((err) => console.error(err));
+}
+// helper function to scroll comments container to bottom
+function scrollToCommentsBottom() {
+    setTimeout(() => {
+        commentsContainer.value.scrollTo({
+            top: commentsContainer.value.scrollHeight,
+            left: 0,
+            behavior: "smooth",
+        });
+    }, 100);
+}
+async function fetchUsername() {
+    users.value = await axios.get(route("api.user.get.users.name")).then((res) => res.data.data);
+}
+
+</script>
 <template>
     <AppLayout title="gallery" :showBall="false">
         <template #header>
@@ -8,7 +90,8 @@
                 <PostMedia :postMedia="post.media" :user="user"></PostMedia>
             </template>
             <template #userImage>
-                <Avatar :id="user.id" :username="user.name" :image-url="user.avatar_url" :size="'md'" :border="true" border-color="primary" />
+                <Avatar :id="user.id" :username="user.name" :image-url="user.avatar_url" :size="'md'" :border="true"
+                    border-color="primary" />
             </template>
             <template #userInfo>
                 <div class="flex justify-between w-full">
@@ -59,9 +142,11 @@
                     <div class="flex items-center gap-1">
                         <button v-if="post?.likes_count > 0" @click="showLikesModal = true">
                             <span class="text-sm">{{ post?.likes_count }}</span>
-                            <LikesModal :show="showLikesModal" :users="post.likes?.map((like) => like.user)" @close="showLikesModal = false" />
+                            <LikesModal :show="showLikesModal" :users="post.likes?.map((like) => like.user)"
+                                @close="showLikesModal = false" />
                         </button>
-                        <LikeButton :canLiked="isCurrentUser" :isLiked="post?.is_liked" :likeable_id="post.id" :likeable_type="'App\\Models\\Post'">
+                        <LikeButton :canLiked="isCurrentUser" :isLiked="post?.is_liked" :likeable_id="post.id"
+                            :likeable_type="'App\\Models\\Post'">
                             <template v-slot="{ isLiked }">
                                 <HeartIcon class="w-4 stroke-current stroke-2 text-primary" :class="isLiked
                                     ? 'fill-current'
@@ -73,13 +158,13 @@
                 </div>
             </template>
             <template #postComments>
-                <div ref="commentsContainer" @scroll="handleScroll" class="flex flex-col gap-4 w-full max-h-[500px] hideScrollBar overflow-auto"
-                    v-if="postComments">
+                <div ref="commentsContainer" @scroll="handleScroll"
+                    class="flex flex-col gap-4 w-full max-h-[500px] hideScrollBar overflow-auto" v-if="postComments">
                     <template v-for="comment in postComments.filter(
                         (c) => !c.parent_id
                     )" :key="comment.id">
-                        <Comment @addedReply="getPostComments" :comment="comment" :users="users" ref="commentsComps" :parentOffset="commentsContainerOffset"
-                            :id="comment.id" />
+                        <Comment @addedReply="getPostComments" :comment="comment" :users="users" ref="commentsComps"
+                            :parentOffset="commentsContainerOffset" :id="comment.id" />
                     </template>
                 </div>
             </template>
@@ -88,90 +173,4 @@
                 </PostCommentForm>
             </template>
         </PostLayout>
-    </AppLayout>
-</template>
-
-<script setup>
-import { onMounted, onBeforeMount, ref, computed, provide } from "vue";
-import { usePage, Link } from "@inertiajs/vue3";
-import { HeartIcon } from "@heroicons/vue/24/solid";
-import AppLayout from "@/Layouts/AppLayout.vue";
-import Avatar from "@/Components/Avatar.vue";
-import Comment from "@/Components/Comment.vue";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime.js";
-import LikeButton from "@/Components/LikeButton.vue";
-import DateTranslation from "@/Components/DateTranslation.vue";
-
-import PostMedia from "@/Components/Posts/PostMedia.vue";
-import PostLayout from "@/Components/Posts/PostLayout.vue";
-import PostOptionMenu from "@/Components/Posts/PostOptionMenu.vue";
-import PostCaptionFrom from "@/Components/Posts/PostCaptionForm.vue";
-import PostCommentForm from "@/Components/Posts/PostCommentForm.vue";
-import LikesModal from "@/Components/LikesModal.vue";
-import { StarIcon } from "@heroicons/vue/24/outline";
-
-onBeforeMount(() => {
-    dayjs.extend(relativeTime);
-});
-
-const props = defineProps({
-    user: null,
-    post: null,
-});
-
-const commentsContainer = ref(null);
-const commentsComps = ref(null);
-const postCaptionComp = ref(null);
-const postComments = ref([]);
-const showLikesModal = ref(false);
-const currentUser = usePage().props.auth.user;
-const isCurrentUser = currentUser.id === props.user.id;
-const users = ref([])
-const numComments = computed(() =>
-    postComments.value
-        ? postComments.value.filter((c) => !c.parent_id)?.length
-        : 0
-);
-const commentsContainerOffset = computed(() => {
-    return (
-        commentsContainer.value?.getBoundingClientRect().top + window.scrollY
-    );
-});
-
-onMounted(() => {
-    getPostComments();
-    fetchUsername();
-});
-
-function getPostComments() {
-    axios
-        .get(route("api.gallery.comments"), {
-            params: {
-                commentable_id: props.post.id,
-                commentable_type: "App\\Models\\Post",
-            },
-        })
-        .then((res) => {
-            postComments.value = res.data.data;
-            if (!route().params?.commentId) scrollToCommentsBottom();
-        })
-        .catch((err) => console.error(err));
-}
-// helper function to scroll comments container to bottom
-function scrollToCommentsBottom() {
-    setTimeout(() => {
-        commentsContainer.value.scrollTo({
-            top: commentsContainer.value.scrollHeight,
-            left: 0,
-            behavior: "smooth",
-        });
-    }, 100);
-}
-async function fetchUsername() {
-    users.value = await axios.get(route("api.user.get.users.name")).then((res) => res.data.data);
-}
-
-</script>
-
-<style lang="scss" scoped></style>
+    </AppLayout></template>

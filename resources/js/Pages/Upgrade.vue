@@ -1,19 +1,17 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
-import GuestTwoColumnLayout from "@/Layouts/Partials/GuestTwoColumnLayout.vue";
-import {
-    RadioGroup,
-    RadioGroupOption,
-} from '@headlessui/vue'
-import InputLabel from "@/Components/InputLabel.vue";
 import Card from "@/Components/Card.vue";
 import CardContent from "@/Components/CardContent.vue";
-import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
-import { CheckIcon, StarIcon } from '@heroicons/vue/24/outline';
-import { CheckCircleIcon } from "@heroicons/vue/20/solid"
-import PrimaryButton from '@/Components/PrimaryButton.vue'
 import FadeInTransition from "@/Components/FadeInTransition.vue";
-import { computed, ref, onMounted } from 'vue'
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import AppLayout from "@/Layouts/AppLayout.vue";
+import {
+RadioGroup,
+RadioGroupOption,
+} from '@headlessui/vue';
+import { CheckIcon, StarIcon } from '@heroicons/vue/24/outline';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { computed, onMounted, ref } from 'vue';
 
 
 const props = defineProps([
@@ -85,10 +83,10 @@ onMounted(() => {
                     <template #body>
                         <ul class="flex flex-col items-start gap-3 text-xs text-gray-800">
 
-                            <li class="flex  w-full gap-5 items-center" v-for="content in upgradeContent">
+                            <li class="flex items-center w-full gap-5" v-for="content in upgradeContent">
                                 <span v-if="locale == 'en'">{{ content.attributes.content_en }}</span>
                                 <span v-if="locale == 'ar'">{{ content.attributes.content_ar }}</span>
-                                <div class="shrink-0 grow mie-auto flex justify-end">
+                                <div class="flex justify-end shrink-0 grow mie-auto">
                                     <CheckIcon class="w-5  text-primary stroke-current stroke-[3]" />
                                 </div>
                             </li>

@@ -1,12 +1,3 @@
-<template>
-    <div class="ml-4 rtl:mr-4 text-white">
-        <button @click="setLocale">
-            <span class="font-semibold" v-if="selectable_locale == 'ar'">ع</span>
-            <span class="" v-if="selectable_locale == 'en'">EN</span>
-        </button>
-    </div>
-</template>
-
 <script>
 import Icon from './Icon.vue'
 import { Link } from '@inertiajs/vue3';
@@ -41,3 +32,13 @@ export default {
     },
 }
 </script>
+<template>
+    <div class="ml-4 text-white rtl:mr-4">
+        <button @click="setLocale">
+            <span class="font-semibold" v-if="selectable_locale == 'ar'">ع</span>
+            <span class="" v-if="selectable_locale == 'en'">EN</span>
+        </button>
+    </div>
+</template>
+
+

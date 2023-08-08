@@ -1,15 +1,15 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
-import AppLayout from '@/Layouts/AppLayout.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import InvitationsFilter from '@/Components/InvitationsFilter.vue';
-import HireCard from './Partials/HireCard.vue';
 import DateTranslation from '@/Components/DateTranslation.vue';
-import { CalendarIcon } from "@heroicons/vue/20/solid";
-import dayjs from 'dayjs';
-import { computed, ref } from 'vue';
-import Pagination from '@/Components/Pagination.vue';
 import InvitationHireTaps from '@/Components/InvitationHireTaps.vue';
+import InvitationsFilter from '@/Components/InvitationsFilter.vue';
+import Pagination from '@/Components/Pagination.vue';
+import AppLayout from '@/Layouts/AppLayout.vue';
+import { CalendarIcon } from "@heroicons/vue/20/solid";
+import { Head } from '@inertiajs/vue3';
+import dayjs from 'dayjs';
+import { ref } from 'vue';
+import HireCard from './Partials/HireCard.vue';
+
 const props = defineProps({
     invitations: Object,
 });
@@ -29,7 +29,7 @@ function showFromToDates(date1, date2) {
     <Head title="Invitations" />
     <AppLayout title="Invitations">
         <template #header>
-            <p class="text-4xl font-black  md:text-7xl">{{ $t('invitations') }}</p>
+            <p class="text-4xl font-black md:text-7xl">{{ $t('invitations') }}</p>
         </template>
         <div class="py-12">
             <div class="">
@@ -49,7 +49,7 @@ function showFromToDates(date1, date2) {
                     </div>
                     <div v-if="invitations.data.length" class="grid grid-cols-1 gap-4">
                         <template v-for="( invitation) in invitations.data" :key="invitation.id">
-                            <div class="text-xs font-bold flex gap-1">
+                            <div class="flex gap-1 text-xs font-bold">
                                 <CalendarIcon class="w-4" />
                                 <DateTranslation :start="invitation.date" format="DD MMMM YYYY hh:mm" />
                             </div>
@@ -61,7 +61,7 @@ function showFromToDates(date1, date2) {
                         <p class="text-sm font-bold text-black">{{ $t(`Sorry, we couldn't find any results`) }} </p>
                     </div>
 
-                    <div class="mt-4 flex justify-center">
+                    <div class="flex justify-center mt-4">
                         <Pagination :links="invitations.links"></Pagination>
                     </div>
                 </div>

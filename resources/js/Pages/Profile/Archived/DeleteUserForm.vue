@@ -1,12 +1,12 @@
 <script setup>
-import { ref } from 'vue';
-import { useForm } from '@inertiajs/vue3';
 import ActionSection from '@/Components/ActionSection.vue';
 import DangerButton from '@/Components/DangerButton.vue';
 import DialogModal from '@/Components/DialogModal.vue';
 import InputError from '@/Components/InputError.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import { useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 const confirmingUserDeletion = ref(false);
 const passwordInput = ref(null);
@@ -70,7 +70,7 @@ const closeModal = () => {
                     enter your password to confirm you would like to permanently delete your account.
 
                     <div class="mt-4">
-                        <TextInput ref="passwordInput" v-model="form.password" type="password" class="mt-1 block w-3/4" placeholder="Password"
+                        <TextInput ref="passwordInput" v-model="form.password" type="password" class="block w-3/4 mt-1" placeholder="Password"
                             @keyup.enter="deleteUser" />
 
                         <InputError :message="form.errors.password" class="mt-2" />

@@ -1,4 +1,5 @@
 <script setup>
+import AddStadiumModal from '@/Components/AddStadiumModal.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import Modal from '@/Components/Modal.vue';
@@ -11,7 +12,6 @@ import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
 import { ElDatePicker, ElTimePicker } from 'element-plus';
 import { computed, ref } from 'vue';
-import AddStadiumModal from '@/Components/AddStadiumModal.vue';
 
 const props = defineProps({
     invited: Object,
@@ -24,80 +24,78 @@ const form = useForm({
     stadium_id: null,
     invited_player_id: props.invited.id,
 });
-const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const showSuccessModal = ref(false);
 const showInvitationError = ref(false);
-const showMap = ref(true)
 const date = new Date();
-const isDisabled = ref(false)
+const isDisabled = ref(false);
 const currentStadium = ref(null);
-const currentUser = usePage().props.auth.user
+const currentUser = usePage().props.auth.user;
 
 const createInvitation = () => {
-    if (isDisabled.value) return
+    if (isDisabled.value) return;
 
     form.date = dayjs(form.date).add(1).format('YYYY-MM-DD');
-    form.time = (new Date(form.time)).toISOString()
+    form.time = (new Date(form.time)).toISOString();
     form.post(route('invitation.store'), {
         onStart: () => {
-            isDisabled.value = true
+            isDisabled.value = true;
         },
         onSuccess: () => {
             showSuccessModal.value = true;
 
         },
         onError: () => {
-            isDisabled.value = false
+            isDisabled.value = false;
             if (form.errors?.invitation_error) {
-                showInvitationError.value = true
+                showInvitationError.value = true;
             }
         },
         preserveScroll: true,
     });
 };
 const makeRange = (start, end) => {
-    const result = []
+    const result = [];
     for (let i = start; i <= end; i++) {
-        result.push(i)
+        result.push(i);
     }
-    return result
-}
+    return result;
+};
 const disabledDate = (time) => {
     return dayjs(time).isBefore(dayjs().subtract(1, 'day'));
-}
+};
 const disabledHours = () => {
     if (dayjs(form.date).format('dddd, DD MMMM YYYY') === dayjs(date).format('dddd, DD MMMM YYYY')) {
         let hour = date.getHours();
-        return makeRange(0, hour + 1)
+        return makeRange(0, hour + 1);
     }
-}
+};
 
 let centerPosition = computed(() => {
-    let lat
-    let lng
+    let lat;
+    let lng;
     if (currentStadium.value) {
-        lat = parseFloat(currentStadium.value?.latitude)
-        lng = parseFloat(currentStadium.value?.longitude)
+        lat = parseFloat(currentStadium.value?.latitude);
+        lng = parseFloat(currentStadium.value?.longitude);
     } else {
-        lat = parseFloat(currentUser.current_latitude)
-        lng = parseFloat(currentUser.current_longitude)
+        lat = parseFloat(currentUser.current_latitude);
+        lng = parseFloat(currentUser.current_longitude);
     }
     return {
         lat,
         lng,
-    }
-})
+    };
+});
 let MarkerPosition = computed(() => {
     return {
         lat: parseFloat(currentStadium.value?.latitude),
         lng: parseFloat(currentStadium.value?.longitude),
-    }
-})
+    };
+});
 
 
-function changeMapMarker(e) {
-    let std = props.stadiums.find(s => s.id === form.stadium_id)
-    currentStadium.value = std
+function changeMapMarker(_e) {
+    let std = props.stadiums.find(s => s.id === form.stadium_id);
+    currentStadium.value = std;
 
 }
 
@@ -116,14 +114,16 @@ function changeMapMarker(e) {
                 <div class="grid grid-cols-1 gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                     <div class="col-span-1">
                         <div class="p-6 bg-black rounded-xl">
-                            <MainPlayerCard :player="invited" :show-report="false" :show-invite="false" :show-favorite="false" :show-share="false" />
+                            <MainPlayerCard :player="invited" :show-report="false" :show-invite="false"
+                                :show-favorite="false" :show-share="false" />
 
                             <form @submit.prevent="">
                                 <div class="my-6">
                                     <InputLabel>{{ $t('Date') }}</InputLabel>
                                     <div class="px-4">
-                                        <ElDatePicker type="date" :disabled-date="disabledDate" style="background-color: black;" v-model="form.date"
-                                            @change="disabledHours()" class="w-full" placeholde="DD/MM/YYYY" />
+                                        <ElDatePicker type="date" :disabled-date="disabledDate"
+                                            style="background-color: black;" v-model="form.date" @change="disabledHours()"
+                                            class="w-full" placeholde="DD/MM/YYYY" />
                                         <InputError class="mt-4 " :message="form.errors.date" />
                                     </div>
                                 </div>
@@ -131,8 +131,8 @@ function changeMapMarker(e) {
                                 <div class="my-6">
                                     <InputLabel>{{ $t('Time') }}</InputLabel>
                                     <div class="px-4">
-                                        <ElTimePicker placeholder="Pick the time " format="HH:mm" v-model="form.time" :disabled-hours="disabledHours"
-                                            popper-class="bg-white" />
+                                        <ElTimePicker placeholder="Pick the time " format="HH:mm" v-model="form.time"
+                                            :disabled-hours="disabledHours" popper-class="bg-white" />
                                         <InputError class="mt-4" :message="form.errors.time" />
                                     </div>
                                 </div>
@@ -140,8 +140,9 @@ function changeMapMarker(e) {
                                 <div class="my-6">
                                     <InputLabel>{{ $t('Stadium') }}</InputLabel>
                                     <div class="px-4 ">
-                                        <RichSelectInput :options="stadiums" value-name="id" text-name="name" :image-name="null" v-model="form.stadium_id"
-                                            bgColor="black" txtColor="white" @selected="changeMapMarker" />
+                                        <RichSelectInput :options="stadiums" value-name="id" text-name="name"
+                                            :image-name="null" v-model="form.stadium_id" bgColor="black" txtColor="white"
+                                            @selected="changeMapMarker" />
                                         <InputError class="mt-4" :message="form.errors.stadium_id" />
                                     </div>
                                 </div>
@@ -189,7 +190,8 @@ function changeMapMarker(e) {
             </div>
         </Modal>
         <!-- can not send an invitation modal -->
-        <Modal :show="showInvitationError" :closeable="true" :show-close-icon="true" max-width="md" @close="showInvitationError = false">
+        <Modal :show="showInvitationError" :closeable="true" :show-close-icon="true" max-width="md"
+            @close="showInvitationError = false">
             <div class="flex min-h-[300px] flex-col text-center justify-between p-6 pt-0">
                 <div class="flex justify-center">
                     <h2 class="text-xl font-bold uppercase text-primary">
@@ -251,10 +253,6 @@ function changeMapMarker(e) {
     color: green !important;
     font-weight: bold !important;
 }
-
-/*.el-picker-panel__body{*/
-/*    color: green !important;*/
-/*}*/
 
 .disabled>.el-date-table-cell {
     background-color: black !important;

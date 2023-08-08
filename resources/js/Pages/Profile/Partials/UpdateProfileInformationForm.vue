@@ -1,17 +1,17 @@
 <script setup>
-import { ref } from 'vue';
-import { useForm, usePage } from '@inertiajs/vue3';
+import Avatar from '@/Components/Avatar.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { ElDatePicker } from 'element-plus';
 import RichSelectInput from '@/Components/RichSelectInput.vue';
 import SuccessMessageModal from '@/Components/SuccessMessageModal.vue';
-import UploadImageField from '@/Components/UploadImageField.vue';
-import Avatar from '@/Components/Avatar.vue';
+import TextInput from '@/Components/TextInput.vue';
 import Title from '@/Components/Title.vue';
+import UploadImageField from '@/Components/UploadImageField.vue';
 import { PencilIcon } from '@heroicons/vue/24/solid';
+import { useForm, usePage } from '@inertiajs/vue3';
+import { ElDatePicker } from 'element-plus';
+import { ref } from 'vue';
 
 const props = defineProps({
     user: Object,
