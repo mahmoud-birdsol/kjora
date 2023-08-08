@@ -1,15 +1,14 @@
 <script setup>
-import { useForm, usePage } from "@inertiajs/vue3";
+import Crop from "@/Components/Crop.vue";
+import FadeInTransition from "@/Components/FadeInTransition.vue";
+import CropIcon from "@/Components/Icons/CropIcon.vue";
 import Modal from "@/Components/Modal.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { XMarkIcon, PlusCircleIcon } from "@heroicons/vue/24/outline";
-import { ref, onMounted, watch } from "vue";
-import InputError from "@/Components/InputError.vue";
-import CropIcon from "@/Components/Icons/CropIcon.vue";
-import FadeInTransition from "@/Components/FadeInTransition.vue";
-import Crop from "@/Components/Crop.vue";
-import VueEasyLightbox, { useEasyLightbox } from "vue-easy-lightbox";
-import { trans } from "laravel-vue-i18n";
+import { PlusCircleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { usePage } from "@inertiajs/vue3";
+import { ref } from "vue";
+import VueEasyLightbox from "vue-easy-lightbox";
+
 const props = defineProps({
     modelValue: {
         required: false,
@@ -185,9 +184,7 @@ function changeFiles(file, url, id) {
                 <div class="w-full max-w-[300px] sm:px-20">
                     <input ref="photoInput" type="file" multiple accept="image/*,video/*,.pdf,.doc,.docx" class="hidden" @change="updatePhotoPreview" />
                     <div class="flex items-center justify-center mb-6">
-                        <button type="button" :disabled="isDisabled"
-                            class="inline-flex items-center p-4 text-white bg-black border border-transparent rounded-full shadow-sm enabled: enabled:hover:bg-black enabled:focus:outline-none enabled:focus:ring-2 enabled:focus:ring-black enabled:focus:ring-offset-2 disabled:bg-stone-500"
-                            @click.prevent="selectNewPhoto">
+                        <button type="button" :disabled="isDisabled" class="inline-flex items-center p-4 text-white bg-black border border-transparent rounded-full shadow-sm enabled: enabled:hover:bg-black enabled:focus:outline-none enabled:focus:ring-2 enabled:focus:ring-black enabled:focus:ring-offset-2 disabled:bg-stone-500" @click.prevent="selectNewPhoto">
                             <PlusCircleIcon class="w-5 h-5" />
                         </button>
                     </div>
@@ -203,8 +200,7 @@ function changeFiles(file, url, id) {
                                 " class="relative">
                                 <img v-if="file.url.startsWith('data:image') ||
                                     file.type.startsWith('image')
-                                    " :src="file.url" alt="" class="object-contain w-full h-full rounded-lg aspect-square"
-                                    @click.stop="showLightBox(file.url)" />
+                                    " :src="file.url" alt="" class="object-contain w-full h-full rounded-lg aspect-square" @click.stop="showLightBox(file.url)" />
                                 <video v-if="file.url.startsWith('data:video') ||
                                     file.type.startsWith('video')
                                     " :src="file.url" alt="" class="object-cover w-full h-full rounded-lg aspect-square" />

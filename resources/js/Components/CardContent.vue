@@ -4,7 +4,7 @@ import { usePage } from '@inertiajs/vue3';
 const props = defineProps({
     title: String,
 })
-const state = usePage().props?.auth?.user?.state_name
+const state = usePage().props?.auth?.user?.state_name;
 </script>
 
 <template>

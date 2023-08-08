@@ -1,15 +1,13 @@
 <script setup>
-import { useForm, usePage } from '@inertiajs/vue3';
+import Crop from '@/Components/Crop.vue';
+import CropIcon from '@/Components/Icons/CropIcon.vue';
+import InputLabel from '@/Components/InputLabel.vue';
 import Modal from '@/Components/Modal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { XMarkIcon, PlusCircleIcon } from '@heroicons/vue/24/outline';
-import { ref, onMounted, watch } from 'vue';
-import InputError from '@/Components/InputError.vue';
+import { PlusCircleIcon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
 import FadeInTransition from './FadeInTransition.vue';
-import InputLabel from '@/Components/InputLabel.vue'
-import CropIcon from '@/Components/Icons/CropIcon.vue';
-import Crop from '@/Components/Crop.vue';
-import { trans } from "laravel-vue-i18n";
 import Title from './Title.vue';
 
 const props = defineProps({

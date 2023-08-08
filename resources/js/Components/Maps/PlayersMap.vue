@@ -1,10 +1,9 @@
 
 <script setup>
-import { CustomMarker, GoogleMap, InfoWindow, Marker, MarkerCluster } from "vue3-google-map";
-import Avatar from '@/Components/Avatar.vue'
-import MainPlayerCard from "../PlayerCards/MainPlayerCard.vue";
+import Avatar from '@/Components/Avatar.vue';
 import { ref } from "vue";
-import { onClickOutside } from "@vueuse/core";
+import { CustomMarker, GoogleMap, InfoWindow } from "vue3-google-map";
+import MainPlayerCard from "../PlayerCards/MainPlayerCard.vue";
 const props = defineProps(['players'])
 
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;

@@ -1,9 +1,9 @@
 <script setup>
 import { usePage } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
-import updateLocale from 'dayjs/plugin/updateLocale'
 import relativeTime from 'dayjs/plugin/relativeTime.js';
-import { onBeforeMount, onMounted } from 'vue';
+import updateLocale from 'dayjs/plugin/updateLocale';
+import { onBeforeMount } from 'vue';
 
 
 defineProps({

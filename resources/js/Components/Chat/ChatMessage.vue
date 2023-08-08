@@ -1,22 +1,20 @@
 <script setup>
-import { computed, ref } from '@vue/reactivity';
-import ReplyIcon from '../Icons/ReplyIcon.vue';
-import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid'
-import { TrashIcon, ArrowDownCircleIcon } from '@heroicons/vue/24/outline'
-import { usePage } from '@inertiajs/vue3';
-import { onMounted } from 'vue';
-import dayjs from 'dayjs';
-import MediaPreview from '@/Components/MediaPreview.vue';
-import { useChat } from "../../stores/chat";
-import ChatGallery from './MediaGallery.vue';
-import SingleMediaPreview from './SingleMediaPreview.vue';
-import MediaThumbnails from './MediaThumbnails.vue';
 import Avatar from '@/Components/Avatar.vue';
 import DateTranslation from '@/Components/DateTranslation.vue';
-
-import axios from 'axios';
+import MediaPreview from '@/Components/MediaPreview.vue';
+import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid';
+import { TrashIcon } from '@heroicons/vue/24/outline';
+import { usePage } from '@inertiajs/vue3';
+import { computed, ref } from '@vue/reactivity';
+import { onMounted } from 'vue';
+import { useChat } from "../../stores/chat";
 import ConfirmationModal from '../ConfirmationModal.vue';
 import FadeInTransition from '../FadeInTransition.vue';
+import ReplyIcon from '../Icons/ReplyIcon.vue';
+import ChatGallery from './MediaGallery.vue';
+import MediaThumbnails from './MediaThumbnails.vue';
+import SingleMediaPreview from './SingleMediaPreview.vue';
+
 const chat = useChat();
 const props = defineProps({
     message: Object,
@@ -86,21 +84,17 @@ function deleteMessage() {
                             <h4 v-else>{{ currentUser.name }}</h4>
                         </div>
                         <span class="">{{ message.parent?.body }}</span>
-                        <MediaPreview v-if="message.parent.attachments[0]" :fileType="message.parent.attachments[0].mime_type"
-                            :filePreview="message.parent.attachments[0].original_url" :fileName="message.parent.attachments[0].name" />
+                        <MediaPreview v-if="message.parent.attachments[0]" :fileType="message.parent.attachments[0].mime_type" :filePreview="message.parent.attachments[0].original_url" :fileName="message.parent.attachments[0].name" />
                     </div>
                     <!-- media message -->
                     <template v-if="message.attachments && message.attachments.length === 1">
-                        <SingleMediaPreview @showGallery="showSingleMediaGallery = true" :media="message.attachments[0]" :is-current-user="isCurrentUser"
-                            class="cursor-pointer" />
-                        <ChatGallery :show="showSingleMediaGallery" @close="showSingleMediaGallery = false" :media="message.attachments"
-                            :user="message.message_sender" />
+                        <SingleMediaPreview @showGallery="showSingleMediaGallery = true" :media="message.attachments[0]" :is-current-user="isCurrentUser" class="cursor-pointer" />
+                        <ChatGallery :show="showSingleMediaGallery" @close="showSingleMediaGallery = false" :media="message.attachments" :user="message.message_sender" />
                     </template>
                     <!-- message.attachments && message.attachments.length > 1 -->
                     <template v-if="message.attachments.length > 1">
                         <!-- images and videos -->
-                        <div v-if="imagesVideosOnly.length" class="grid max-w-[200px] grid-cols-2 gap-2 place-items-center"
-                            :class="imagesVideosOnly.length > 2 ? 'grid-rows-2' : ''">
+                        <div v-if="imagesVideosOnly.length" class="grid max-w-[200px] grid-cols-2 gap-2 place-items-center" :class="imagesVideosOnly.length > 2 ? 'grid-rows-2' : ''">
                             <MediaThumbnails :media="imagesVideosOnly[0]" />
                             <MediaThumbnails v-if="imagesVideosOnly.length > 2" :media="imagesVideosOnly[1]" />
                             <div v-if="imagesVideosOnly.length == 2" class="relative w-full aspect-square" @click="showMediaGallery = true">
@@ -161,10 +155,8 @@ function deleteMessage() {
                     <EllipsisVerticalIcon class="w-6 text-neutral-500" />
                 </button>
                 <OnClickOutside @trigger="showOptions = false">
-                    <Transition enterFromClass="opacity-0" enterToClass="opacity-100" leaveFromClass="opacity-100" leaveToClass="opacity-0"
-                        leave-active-class="transition-all duration-150 ease-in" enterActiveClass="transition-all duration-150 ease-out">
-                        <div v-show="showOptions"
-                            class="absolute z-20 px-6 py-2 text-xs text-white bg-black border -top-1 rounded-xl border-neutral-500 pie-10 z-2 rtl:left-7 ltr:right-7">
+                    <Transition enterFromClass="opacity-0" enterToClass="opacity-100" leaveFromClass="opacity-100" leaveToClass="opacity-0" leave-active-class="transition-all duration-150 ease-in" enterActiveClass="transition-all duration-150 ease-out">
+                        <div v-show="showOptions" class="absolute z-20 px-6 py-2 text-xs text-white bg-black border -top-1 rounded-xl border-neutral-500 pie-10 z-2 rtl:left-7 ltr:right-7">
                             <ul class="flex flex-col justify-center gap-y-2">
                                 <button class="hover:text-gray-400 " @click="showDeleteMessage = true">
                                     <li class="flex items-center justify-center gap-x-2 rtl:flex-row-reverse">

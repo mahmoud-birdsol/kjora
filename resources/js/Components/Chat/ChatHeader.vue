@@ -1,17 +1,18 @@
 <script setup>
-import { ref, watch } from "vue";
-import FadeInTransition from '@/Components/FadeInTransition.vue';
 import Avatar from '@/Components/Avatar.vue';
+import FadeInTransition from '@/Components/FadeInTransition.vue';
 import ReportModal from "@/Components/ReportModal.vue";
 import { useChat } from "@/stores/chat";
 import {
     FlagIcon,
     MagnifyingGlassIcon,
     XMarkIcon,
-} from '@heroicons/vue/24/outline'
-import TextInput from "../TextInput.vue";
+} from '@heroicons/vue/24/outline';
 import { Link } from "@inertiajs/vue3";
+import { ref, watch } from "vue";
 import DateTranslation from "../DateTranslation.vue";
+import TextInput from "../TextInput.vue";
+
 const props = defineProps({
     conversation: {
         required: true,
@@ -65,7 +66,7 @@ watch(() => chat.search, () => {
                     <Link class="text-xs leading-none text-neutral-500" :href="route('player.profile', player.id)">
                     @{{ player.username }}
                     </Link>
-                    <div class="text-xs mt-1">
+                    <div class="mt-1 text-xs">
                         <DateTranslation :end="player.last_seen_at" type="period" />
                     </div>
 

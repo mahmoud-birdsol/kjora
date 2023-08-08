@@ -1,3 +1,43 @@
+<script setup>
+import { PlusCircleIcon, } from '@heroicons/vue/24/outline';
+import UploadGalleryFile from './UploadGalleryFile.vue';
+import { onMounted, ref } from 'vue';
+import FadeInTransition from './FadeInTransition.vue';
+
+import { Link, usePage } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
+import FixedActionBtn from '@/Components/FixedActionBtn.vue';
+import { EyeIcon, PlayIcon, XMarkIcon } from '@heroicons/vue/24/solid';
+import ConfirmationModal from './ConfirmationModal.vue';
+
+const props = defineProps({
+    user: {
+        required: true,
+    },
+    posts: null,
+    media: null,
+    shouldPreview: null
+})
+defineEmits(['reload'])
+const isPublic = usePage().url.includes('public/player')
+
+const showUploadFileModal = ref(false)
+const currentUser = usePage().props.auth.user
+const showDeletePostModal = ref(false)
+const postIdToDelete = ref(null)
+
+function removePost(id) {
+
+    let index = props.posts.findIndex(item => item.id == id)
+    props.posts.splice(index, 1)
+    showDeletePostModal.value = false
+    router.delete(route('posts.destroy', id), {
+        preserveState: true,
+        preserveScroll: true,
+    })
+}
+
+</script>
 <template>
     <div v-if="posts?.length" class="">
         <div class="grid grid-cols-2 gap-4 overflow-auto max-h-[500px] sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 hideScrollBar ">
@@ -39,45 +79,6 @@
     <UploadGalleryFile :show="showUploadFileModal" @close="showUploadFileModal = false" @reload="$emit('reload')" :should-upload="true" />
 </template>
 
-<script setup>
-import { PlusCircleIcon, } from '@heroicons/vue/24/outline';
-import UploadGalleryFile from './UploadGalleryFile.vue';
-import { onMounted, ref } from 'vue';
-import FadeInTransition from './FadeInTransition.vue';
 
-import { Link, usePage } from '@inertiajs/vue3';
-import { router } from '@inertiajs/vue3';
-import FixedActionBtn from '@/Components/FixedActionBtn.vue';
-import { EyeIcon, PlayIcon, XMarkIcon } from '@heroicons/vue/24/solid';
-import ConfirmationModal from './ConfirmationModal.vue';
-
-const props = defineProps({
-    user: {
-        required: true,
-    },
-    posts: null,
-    media: null,
-    shouldPreview: null
-})
-defineEmits(['reload'])
-const isPublic = usePage().url.includes('public/player')
-
-const showUploadFileModal = ref(false)
-const currentUser = usePage().props.auth.user
-const showDeletePostModal = ref(false)
-const postIdToDelete = ref(null)
-
-function removePost(id) {
-
-    let index = props.posts.findIndex(item => item.id == id)
-    props.posts.splice(index, 1)
-    showDeletePostModal.value = false
-    router.delete(route('posts.destroy', id), {
-        preserveState: true,
-        preserveScroll: true,
-    })
-}
-
-</script>
 
 <style lang="scss" scoped></style>

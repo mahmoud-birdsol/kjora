@@ -1,9 +1,8 @@
 <script setup>
-import { computed } from 'vue';
-import { TrashIcon, EyeIcon } from '@heroicons/vue/24/outline';
+import { Link, useForm } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { useForm, Link } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import DateTranslation from './DateTranslation.vue';
 dayjs.extend(relativeTime);
 
@@ -63,13 +62,5 @@ const deleteNotification = () => {
         <div class="mt-1">
             <p class="text-xs text-gray-500 line-clamp-2">{{ notification.data.subtitle }}</p>
         </div>
-        <!-- <div class="flex justify-end space-x-2">
-                    <a href="javascript:;" @click="markAsRead">
-                        <EyeIcon class="w-4 h-4 text-gray-500"/>
-                    </a>
-                    <a href="javascript:;" @click="deleteNotification">
-                        <TrashIcon class="w-4 h-4 text-gray-500"/>
-                    </a>
-                </div> -->
     </li>
 </template>

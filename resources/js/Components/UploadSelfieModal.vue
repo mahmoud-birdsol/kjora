@@ -10,6 +10,7 @@ import Crop from './Crop.vue';
 import { usePage } from '@inertiajs/vue3';
 import CropIcon from '@/Components/Icons/CropIcon.vue';
 import Title from './Title.vue';
+
 const props = defineProps({
     show: {
         type: Boolean,

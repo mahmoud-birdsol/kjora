@@ -1,10 +1,8 @@
 <script setup>
-import VuePictureCropper, { cropper } from 'vue-picture-cropper'
-import { CheckIcon } from '@heroicons/vue/24/outline';
-import { ref, reactive, computed } from 'vue'
-import { XMarkIcon } from '@heroicons/vue/24/outline';
-import SlideDownTransition from '@/Components/SlideDownTransition.vue'
-import PrimaryButton from '@/Components/PrimaryButton.vue'
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SlideDownTransition from '@/Components/SlideDownTransition.vue';
+import { computed, reactive, ref } from 'vue';
+import VuePictureCropper, { cropper } from 'vue-picture-cropper';
 
 const props = defineProps({
     img: Object,
@@ -70,8 +68,7 @@ function ready() {
         <SlideDownTransition>
             <div v-if="open" class="flex flex-col gap-4 p-6 bg-white border-t min-w-7xl">
                 <div v-loading="isLoading">
-                    <VuePictureCropper :boxStyle="boxStyle" :img="imageObj?.url" :options="{ ...options, ...addOption }" @ready="ready" :key="num"
-                        :presetMode="presetMode" />
+                    <VuePictureCropper :boxStyle="boxStyle" :img="imageObj?.url" :options="{ ...options, ...addOption }" @ready="ready" :key="num" :presetMode="presetMode" />
                 </div>
                 <div class="flex justify-center max-w-xs gap-4 mx-auto ">
                     <PrimaryButton @click="$emit('update:open')">

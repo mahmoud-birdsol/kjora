@@ -1,15 +1,12 @@
 <script setup>
-import { onMounted } from 'vue';
-import { ArrowDownCircleIcon, DocumentArrowUpIcon } from '@heroicons/vue/24/outline'
 const props = defineProps({
     fileType: String,
     filePreview: String,
     fileName: String
-})
+});
 </script>
 <template>
-    <img v-if="fileType.startsWith('image')" class="object-cover object-center w-full h-32 rounded-lg "
-        :src="filePreview" />
+    <img v-if="fileType.startsWith('image')" class="object-cover object-center w-full h-32 rounded-lg " :src="filePreview" />
     <div v-else-if="fileType.startsWith('video')" class="object-cover overflow-hidden rounded-lg aspect-video">
         <video :src="filePreview" class="w-full h-full">
         </video>

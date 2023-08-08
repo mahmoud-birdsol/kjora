@@ -1,3 +1,45 @@
+<script setup>
+
+import ReportModal from '@/Components/ReportModal.vue';
+import Socials from '@/Components/Socials.vue';
+import { EllipsisHorizontalIcon, FlagIcon, PencilIcon, TrashIcon } from '@heroicons/vue/24/outline';
+import { router } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import ConfirmationModal from '../ConfirmationModal.vue';
+import FadeInTransition from '../FadeInTransition.vue';
+
+const props = defineProps(['isCurrentUser', 'postId'])
+const emits = defineEmits(['editingCaption'])
+
+const showDeletePostModal = ref(false);
+const showOptions = ref(false);
+const copiedMsg = ref(false)
+
+function openRemoveMediaModal() {
+    showOptions.value = false
+    showDeletePostModal.value = true
+}
+// edit media caption
+function editCaption() {
+    showOptions.value = false
+    emits('editingCaption')
+}
+
+function removePost() {
+
+    showDeletePostModal.value = false
+    router.delete(route('posts.destroy', props.postId), {
+    })
+
+}
+function showCopied() {
+    copiedMsg.value = true
+    showOptions.value = false
+    setTimeout(() => {
+        copiedMsg.value = false
+    }, 2000)
+}
+</script>
 <template>
     <div class="relative">
         <button class="p-1" @click="showOptions = !showOptions">
@@ -6,8 +48,7 @@
         <OnClickOutside @trigger="showOptions = false">
             <FadeInTransition>
                 <!-- media option menu -->
-                <div v-show="showOptions"
-                    class="absolute top-0 z-20 px-3 py-2 text-xs text-white bg-black border ltr:right-8 rtl:left-8 rounded-xl border-neutral-500 z-2 ">
+                <div v-show="showOptions" class="absolute top-0 z-20 px-3 py-2 text-xs text-white bg-black border ltr:right-8 rtl:left-8 rounded-xl border-neutral-500 z-2 ">
                     <ul class="flex flex-col justify-center gap-y-2">
                         <button class="hover:text-gray-400 group" v-if="isCurrentUser" @click="editCaption">
                             <li class="flex items-center gap-x-2">
@@ -61,47 +102,6 @@
     </div>
 </template>
 
-<script setup>
 
-import { EllipsisHorizontalIcon, TrashIcon, PencilIcon, FlagIcon } from '@heroicons/vue/24/outline';
-import FadeInTransition from '../FadeInTransition.vue';
-import Modal from '../Modal.vue';
-import ReportModal from '@/Components/ReportModal.vue';
-import Socials from '@/Components/Socials.vue';
-import { ref } from 'vue';
-import { router } from '@inertiajs/vue3';
-import ConfirmationModal from '../ConfirmationModal.vue';
-
-const props = defineProps(['isCurrentUser', 'postId'])
-const emits = defineEmits(['editingCaption'])
-const showDeletePostModal = ref(false);
-const showOptions = ref(false);
-const copiedMsg = ref(false)
-
-function openRemoveMediaModal() {
-    showOptions.value = false
-    showDeletePostModal.value = true
-}
-// edit media caption
-function editCaption() {
-    showOptions.value = false
-    emits('editingCaption')
-}
-
-function removePost() {
-
-    showDeletePostModal.value = false
-    router.delete(route('posts.destroy', props.postId), {
-    })
-
-}
-function showCopied() {
-    copiedMsg.value = true
-    showOptions.value = false
-    setTimeout(() => {
-        copiedMsg.value = false
-    }, 2000)
-}
-</script>
 
 <style scoped></style>

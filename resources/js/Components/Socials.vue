@@ -1,11 +1,9 @@
 <script setup>
-import { ref } from 'vue'
-import { usePage } from '@inertiajs/vue3';
 import Facebook from "@/Components/Icons/Facebook.vue";
 import Twitter from "@/Components/Icons/Twitter.vue";
-import Linkedin from "@/Components/Icons/Linkedin.vue";
-import { ShareIcon, LinkIcon, PlayCircleIcon } from '@heroicons/vue/24/outline'
-import ToolTip from "@/Components/ToolTip.vue";
+import { LinkIcon, ShareIcon } from '@heroicons/vue/24/outline';
+import { usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
 const props = defineProps({
     shareUrl: {
         required: true,
@@ -25,7 +23,7 @@ function copy() {
         showSocials.value = false
         emits('showCopied')
     })
-}
+};
 
 
 </script>
@@ -34,8 +32,7 @@ function copy() {
 
         <Transition enter-from-class="scale-0" enter-to-class="scale-100" enter-active-class="transition-all duration-300" leave-to-class="scale-0" leave-active-class="transition-all duration-300">
             <div v-if="showSocials" class="absolute z-30 flex flex-col gap-3 p-3 text-xs text-white bg-black border rounded-lg ltr:-right-1 rtl:-left-1 border-neutral-500" :class="position">
-                <a :data-href="'https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=' + url" :href="'https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=' + url" target="_blank" class="relative flex items-center gap-2 [&>div]:hover:block"
-                    @click="showSocials = false">
+                <a :data-href="'https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=' + url" :href="'https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&sdk=joey&u=' + url" target="_blank" class="relative flex items-center gap-2 [&>div]:hover:block" @click="showSocials = false">
                     <Facebook class="w-4 h-4" />
                     <span class="whitespace-nowrap">{{ $t('share-to-facebook') }}</span>
                 </a>

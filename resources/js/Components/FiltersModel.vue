@@ -1,18 +1,20 @@
 <script setup>
-import { ref } from 'vue';
-import { useForm, usePage } from '@inertiajs/vue3';
-import {
-    XMarkIcon,
-    AdjustmentsHorizontalIcon,
-} from '@heroicons/vue/24/outline';
-import RichSelectInput from '@/Components/RichSelectInput.vue';
-import Modal from '@/Components/Modal.vue';
-import { ElSlider } from 'element-plus';
-import InputLabel from '@/Components/InputLabel.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
 import FixedActionBtn from '@/Components/FixedActionBtn.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import Modal from '@/Components/Modal.vue';
+import RichSelectInput from '@/Components/RichSelectInput.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import {
+AdjustmentsHorizontalIcon,
+XMarkIcon,
+} from '@heroicons/vue/24/outline';
+import { usePage } from '@inertiajs/vue3';
+import { ElSlider } from 'element-plus';
+import { ref } from 'vue';
+
 let age = ref([18, 70])
 let rating = ref([0, 5])
+
 const props = defineProps({
     positions: Array,
     form: Object,
