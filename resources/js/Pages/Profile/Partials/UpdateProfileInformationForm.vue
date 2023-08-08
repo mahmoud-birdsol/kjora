@@ -5,7 +5,7 @@ import InputLabel from "@/Components/Forms/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import RichSelectInput from "@/Components/RichSelectInput.vue";
 import SuccessMessageModal from "@/Components/SuccessMessageModal.vue";
-import TextInput from "@/Components/TextInput.vue";
+import TextInput from "@/Components/Forms/TextInput.vue";
 import Title from "@/Components/Title.vue";
 import UploadImageField from "@/Components/UploadImageField.vue";
 import { PencilIcon } from "@heroicons/vue/24/solid";
