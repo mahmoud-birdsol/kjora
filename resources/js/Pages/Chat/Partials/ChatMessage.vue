@@ -128,7 +128,7 @@ function deleteMessage() {
                   v-if="message.attachments && message.attachments.length === 1"
                >
                   <SingleMediaPreview
-                     @showGallery="showSingleMediaGallery = true"
+                     @showGallery="showMediaGallery = true"
                      :media="message.attachments[0]"
                      :is-current-user="isCurrentUser"
                      class="cursor-pointer"
@@ -139,12 +139,12 @@ function deleteMessage() {
                   <!-- images and videos -->
                   <div
                      v-if="imagesVideosOnly.length"
-                     class="grid max-w-[200px] grid-cols-2 gap-2 place-items-center"
+                     class="grid max-w-[200px] grid-cols-2 gap-2 place-items-center cursor-pointer"
                      :class="imagesVideosOnly.length > 2 ? 'grid-rows-2' : ''"
                      @click="showMediaGallery = true"
                   >
                      <template
-                        v-for="(item, index) in imagesVideosOnly"
+                        v-for="(item, index) in imagesVideosOnly.slice(0, 4)"
                         :key="item.id"
                      >
                         <MediaThumbnails :media="item">
