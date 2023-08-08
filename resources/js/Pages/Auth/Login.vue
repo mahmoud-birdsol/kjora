@@ -5,7 +5,7 @@ import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
 import PasswordInput from '@/Components/PasswordInput.vue';
-import Checkbox from '@/Components/Checkbox.vue';
+import Checkbox from '@/Components/Forms/Checkbox.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 defineProps({

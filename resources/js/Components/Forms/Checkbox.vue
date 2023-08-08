@@ -12,6 +12,10 @@ const props = defineProps({
         type: String,
         default: null,
     },
+    rounded:{
+        type: Boolean,
+        default: false,
+    }
 });
 
 const proxyChecked = computed({
@@ -31,6 +35,7 @@ const proxyChecked = computed({
         v-model="proxyChecked"
         type="checkbox"
         :value="value"
-        class="rounded-full border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mx-1"
-    >
+        :class="['mx-1 border-gray-300  shadow-sm focus:border-indigo-300 focus:ring focus:ring-primary focus:ring-opacity-50',
+        rounded ? '' : 'rounded-full'
+        ]">
 </template>
