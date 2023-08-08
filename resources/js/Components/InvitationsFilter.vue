@@ -1,15 +1,16 @@
 <script setup>
-import {
-    XMarkIcon,
-    AdjustmentsHorizontalIcon,
-} from '@heroicons/vue/24/outline';
-import Modal from '@/Components/Modal.vue';
-import { ref } from 'vue'
-import { ElDatePicker } from 'element-plus';
-import InputLabel from '@/Components/InputLabel.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
 import FixedActionBtn from '@/Components/FixedActionBtn.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import Modal from '@/Components/Modal.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import {
+    AdjustmentsHorizontalIcon,
+    XMarkIcon,
+} from '@heroicons/vue/24/outline';
+import { useForm } from '@inertiajs/vue3';
+import { ElDatePicker } from 'element-plus';
+import { ref } from 'vue';
+
 const props = defineProps({
     url: String,
 })
@@ -40,7 +41,7 @@ const reset = () => {
         form.dateTo = null,
         form.search = ''
     filter();
-}
+};
 </script>
 <template>
     <FixedActionBtn @click="showFiltersModal = !showFiltersModal">
@@ -64,20 +65,16 @@ const reset = () => {
                 <form @submit.prevent="filter" @keydown.enter.exact="filter" class="rtl:text-start">
                     <div class="my-6">
                         <InputLabel>{{ $t('date-from') }}: </InputLabel>
-                        <ElDatePicker v-model="form.dateFrom" class="w-full" type="datetime" :placeholder="$t('date')" format="YYYY/MM/DD hh:mm:ss"
-                            value-format="YYYY/MM/DD HH:mm:ss" />
+                        <ElDatePicker v-model="form.dateFrom" class="w-full" type="datetime" :placeholder="$t('date')" format="YYYY/MM/DD hh:mm:ss" value-format="YYYY/MM/DD HH:mm:ss" />
                     </div>
                     <div class="my-6">
                         <InputLabel>{{ $t('date-to') }}:</InputLabel>
-                        <ElDatePicker v-model="form.dateTo" class="w-full" type="datetime" :placeholder="$t('date')" format="YYYY/MM/DD hh:mm:ss"
-                            value-format="YYYY/MM/DD HH:mm:ss" />
+                        <ElDatePicker v-model="form.dateTo" class="w-full" type="datetime" :placeholder="$t('date')" format="YYYY/MM/DD hh:mm:ss" value-format="YYYY/MM/DD HH:mm:ss" />
                     </div>
                     <div class="my-6">
                         <InputLabel>{{ $t('search') }}</InputLabel>
                         <div>
-                            <input type="search" name="search" id="search" v-model="form.search"
-                                class="block w-full text-center text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
-                                :placeholder="$t('search-by-name-or-username')" />
+                            <input type="search" name="search" id="search" v-model="form.search" class="block w-full text-center text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center" :placeholder="$t('search-by-name-or-username')" />
                         </div>
                     </div>
                     <div class="my-6 mt-4">
@@ -86,4 +83,5 @@ const reset = () => {
                 </form>
             </div>
         </div>
-</Modal></template>
+    </Modal>
+</template>

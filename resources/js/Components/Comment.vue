@@ -1,141 +1,15 @@
-<template>
-    <!-- comment  -->
-    <div ref="commentsComp" :data-comment-id="comment.id" class="grid grid-cols-[min-content_1fr] w-full justify-start gap-4  px-6 pt-2"
-        :class="comment.parent_id ? 'bg-white' : ''">
-        <!-- image col 1 -->
-        <div class="min-w-max z-[10] relative  " :class="guidesClassesAfter2">
-            <Avatar :id="comment.user.id" :username="comment.user.name" :image-url="comment.user.avatar_url" :size="'md'" :border="true" border-color="primary" />
-        </div>
-        <!-- comment information col 2 -->
-        <div class="relative flex flex-col max-w-full gap-1 " :class="[guidesClassesBefore, guidesClassesAfter]">
-            <!-- user information & comment time row 1-->
-            <div class="flex flex-col justify-between w-full xs:flex-row">
-                <!-- user information -->
-                <div class="flex flex-row gap-1 md:flex-col ">
-                    <div class="flex flex-row gap-2">
-                        <h3 class="m-0 text-sm font-bold leading-none capitalize sm:text-lg text-stone-800 ">{{
-                            comment.user.name
-                        }} </h3>
-                        <span v-if="false">star icon</span>
-                    </div>
-                    <Link class="text-xs text-stone-400 " :href="route('player.profile', comment.user.id)">@{{
-                        comment.user.username
-                    }}
-                    </Link>
-                </div>
-                <!-- date and time -->
-                <div class="flex flex-row gap-2 text-[8px] ltr:origin-right rtl:origin-left text-neutral-400/90">
-                    <span>
-                        <DateTranslation type="range" :start="comment.created_at" />
-                    </span>
-                    <span>|</span>
-                    <DateTranslation format='hh:mm A' :start="comment.created_at" />
-                </div>
-            </div>
-            <!-- comment or reply body  row 2-->
-            <div class="w-full">
-                <p class="w-full text-sm break-all whitespace-pre-wrap text-stone-800" v-html="handleBody" />
-            </div>
-            <!-- add reply & like buttons row 3 -->
-            <div class="flex items-center justify-start w-full gap-2 mb-2 text-sm font-semibold text-stone-700">
-                <template v-if="!isPublic">
-                    <button v-if="isCurrentUser" @click="showDeleteCommentModal = true"
-                        class="p-1 transition-all duration-150 pis-0 enabled:hover:underline hover:underline-offset-4">
-                        <TrashIcon class="w-4" />
-                        <!-- confirm delete media modal -->
-                        <ConfirmationModal :show="showDeleteCommentModal" @close="showDeleteCommentModal = false" @delete="deleteComment">
-                            <template #body>
-                                <span>{{ $t('are-you-sure-you-want-delete-this-comment') }}</span>
-                            </template>
-                        </ConfirmationModal>
-                    </button>
-                    <button @click="handleReplyClicked" class="p-1 transition-all duration-150 pis-0">
-                        {{ comment.replies.length > 0 ? comment.replies.length : '' }} {{ $t('reply') }}
-                    </button>
-
-                    <div class="flex items-center">
-                        <!-- <span class="text-sm">{{ commentsLikeCount }}</span> -->
-                        <button v-show="commentsLikeCount > 0" @click="showLikesModal = true">
-                            <span class="text-sm">{{ commentsLikeCount }}</span>
-                            <LikesModal :show="showLikesModal" :users="comment.likes?.map(like => like.user)" @close="showLikesModal = false" />
-                        </button>
-                        <LikeButton :isLiked="comment?.is_liked" :likeable_id="comment.id" :likeable_type="'App\\Models\\Comment'" @like="commentsLikeCount++"
-                            @disLike="commentsLikeCount--">
-                            <template v-slot="{ isLiked }">
-                                <div class="transition-all duration-150" :class="isLiked ? 'text-primary' : ''">
-                                    {{ commentsLikeCount <= 1 ? $t('like') : $t('likes') }} </div>
-                            </template>
-                        </LikeButton>
-
-                    </div>
-                </template>
-                <template v-else>
-                    <template v-if="commentsLikeCount > 0">
-                        <button @click="showLikesModal = true">
-                            <span class="text-sm">{{ commentsLikeCount }}</span>
-                            <LikesModal :show="showLikesModal" :users="comment.likes?.map(like => like.user)" @close="showLikesModal = false" />
-                        </button>
-                        <div class="transition-all duration-150 ">
-                            {{ commentsLikeCount <= 1 ? $t('like') : $t('likes') }} </div>
-                    </template>
-                </template>
-            </div>
-
-            <!-- replies related to this comment row 4 -->
-            <div v-show="showReplies" class="mt-2">
-                <template v-for="(reply, index) in comment.replies" :key="reply.id">
-                    <Comment @addedReply="handleAddedReply" :comment="reply" :users="users" />
-                </template>
-            </div>
-            <!-- new reply form row 5 -->
-            <OnClickOutside @trigger="handleBlur">
-                <div v-show="showReplyInput" class="flex flex-row items-center self-end w-full p-3 gap-x-3 ">
-                    <OnClickOutside @trigger="showEmojiPicker = false">
-                        <div class="relative flex items-center">
-                            <button @click="toggleEmojiPicker" :data-cancel-blur="true">
-                                <FaceSmileIcon class="w-6 text-neutral-400" />
-                            </button>
-                            <div class="absolute z-[1000] ltr:left-full rtl:right-full" :class="EmojiPickerClass" v-show="showEmojiPicker">
-                                <EmojiPickerElement @selected-emoji="onSelectEmoji" />
-                            </div>
-                        </div>
-                    </OnClickOutside>
-                    <!-- <div class="flex items-center flex-grow ">
-                        <textarea ref="replyInput" @keypress.enter.exact.prevent="addReply" v-model="newReply" name="newReply" id="newReply" rows="1" placeholder="add-a-comment"
-                            class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary "></textarea>
-                    </div> -->
-                    <MentionTextArea @addText="addReply" v-model:newText="newReply" />
-
-                    <button @click="addReply" :disabled="isSending" class="p-1 group ">
-
-                        <PaperAirplaneIcon class="w-5 group-hover:text-neutral-700 rtl:rotate-180" :class="isSending ? 'text-neutral-200' : 'text-neutral-400'" />
-                    </button>
-                </div>
-            </OnClickOutside>
-            <!-- view replies button row 6 -->
-            <button v-show="hasReplies" @click="toggleRepliesView"
-                class="flex justify-start w-full gap-2 text-sm transition-all duration-300 text-stone-500 enabled:hover:underline hover:underline-offset-4 ">
-                {{ showReplies ? $t('hide') : $t('view') }} {{ comment.replies?.length }} {{ $t('replies') }}
-            </button>
-
-        </div>
-    </div>
-</template>
-
 <script setup>
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime.js';
-import Avatar from './Avatar.vue';
-import { computed, onBeforeMount, onMounted, ref, watch } from 'vue';
 import { FaceSmileIcon, TrashIcon } from '@heroicons/vue/24/outline';
 import { PaperAirplaneIcon } from '@heroicons/vue/24/solid';
-import { Link, usePage } from '@inertiajs/vue3';
-import EmojiPickerElement from './EmojiPickerElement.vue';
-import DateTranslation from './DateTranslation.vue';
-import LikeButton from './LikeButton.vue';
-import Modal from './Modal.vue';
-import { router } from '@inertiajs/vue3';
+import { Link, router, usePage } from '@inertiajs/vue3';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime.js';
+import { computed, onBeforeMount, onMounted, ref, watch } from 'vue';
+import Avatar from './Avatar.vue';
 import ConfirmationModal from './ConfirmationModal.vue';
+import DateTranslation from './DateTranslation.vue';
+import EmojiPickerElement from './EmojiPickerElement.vue';
+import LikeButton from './LikeButton.vue';
 import LikesModal from './LikesModal.vue';
 import MentionTextArea from './MentionTextArea.vue';
 
@@ -282,5 +156,127 @@ function toggleEmojiPicker(e) {
 }
 
 </script>
+
+<template>
+    <!-- comment  -->
+    <div ref="commentsComp" :data-comment-id="comment.id" class="grid grid-cols-[min-content_1fr] w-full justify-start gap-4  px-6 pt-2" :class="comment.parent_id ? 'bg-white' : ''">
+        <!-- image col 1 -->
+        <div class="min-w-max z-[10] relative  " :class="guidesClassesAfter2">
+            <Avatar :id="comment.user.id" :username="comment.user.name" :image-url="comment.user.avatar_url" :size="'md'" :border="true" border-color="primary" />
+        </div>
+        <!-- comment information col 2 -->
+        <div class="relative flex flex-col max-w-full gap-1 " :class="[guidesClassesBefore, guidesClassesAfter]">
+            <!-- user information & comment time row 1-->
+            <div class="flex flex-col justify-between w-full xs:flex-row">
+                <!-- user information -->
+                <div class="flex flex-row gap-1 md:flex-col ">
+                    <div class="flex flex-row gap-2">
+                        <h3 class="m-0 text-sm font-bold leading-none capitalize sm:text-lg text-stone-800 ">{{
+                            comment.user.name
+                        }} </h3>
+                        <span v-if="false">star icon</span>
+                    </div>
+                    <Link class="text-xs text-stone-400 " :href="route('player.profile', comment.user.id)">@{{
+                        comment.user.username
+                    }}
+                    </Link>
+                </div>
+                <!-- date and time -->
+                <div class="flex flex-row gap-2 text-[8px] ltr:origin-right rtl:origin-left text-neutral-400/90">
+                    <span>
+                        <DateTranslation type="range" :start="comment.created_at" />
+                    </span>
+                    <span>|</span>
+                    <DateTranslation format='hh:mm A' :start="comment.created_at" />
+                </div>
+            </div>
+            <!-- comment or reply body  row 2-->
+            <div class="w-full">
+                <p class="w-full text-sm break-all whitespace-pre-wrap text-stone-800" v-html="handleBody" />
+            </div>
+            <!-- add reply & like buttons row 3 -->
+            <div class="flex items-center justify-start w-full gap-2 mb-2 text-sm font-semibold text-stone-700">
+                <template v-if="!isPublic">
+                    <button v-if="isCurrentUser" @click="showDeleteCommentModal = true" class="p-1 transition-all duration-150 pis-0 enabled:hover:underline hover:underline-offset-4">
+                        <TrashIcon class="w-4" />
+                        <!-- confirm delete media modal -->
+                        <ConfirmationModal :show="showDeleteCommentModal" @close="showDeleteCommentModal = false" @delete="deleteComment">
+                            <template #body>
+                                <span>{{ $t('are-you-sure-you-want-delete-this-comment') }}</span>
+                            </template>
+                        </ConfirmationModal>
+                    </button>
+                    <button @click="handleReplyClicked" class="p-1 transition-all duration-150 pis-0">
+                        {{ comment.replies.length > 0 ? comment.replies.length : '' }} {{ $t('reply') }}
+                    </button>
+
+                    <div class="flex items-center">
+                        <!-- <span class="text-sm">{{ commentsLikeCount }}</span> -->
+                        <button v-show="commentsLikeCount > 0" @click="showLikesModal = true">
+                            <span class="text-sm">{{ commentsLikeCount }}</span>
+                            <LikesModal :show="showLikesModal" :users="comment.likes?.map(like => like.user)" @close="showLikesModal = false" />
+                        </button>
+                        <LikeButton :isLiked="comment?.is_liked" :likeable_id="comment.id" :likeable_type="'App\\Models\\Comment'" @like="commentsLikeCount++" @disLike="commentsLikeCount--">
+                            <template v-slot="{ isLiked }">
+                                <div class="transition-all duration-150" :class="isLiked ? 'text-primary' : ''">
+                                    {{ commentsLikeCount <= 1 ? $t('like') : $t('likes') }} </div>
+                            </template>
+                        </LikeButton>
+
+                    </div>
+                </template>
+                <template v-else>
+                    <template v-if="commentsLikeCount > 0">
+                        <button @click="showLikesModal = true">
+                            <span class="text-sm">{{ commentsLikeCount }}</span>
+                            <LikesModal :show="showLikesModal" :users="comment.likes?.map(like => like.user)" @close="showLikesModal = false" />
+                        </button>
+                        <div class="transition-all duration-150 ">
+                            {{ commentsLikeCount <= 1 ? $t('like') : $t('likes') }} </div>
+                    </template>
+                </template>
+            </div>
+
+            <!-- replies related to this comment row 4 -->
+            <div v-show="showReplies" class="mt-2">
+                <template v-for="(reply, index) in comment.replies" :key="reply.id">
+                    <Comment @addedReply="handleAddedReply" :comment="reply" :users="users" />
+                </template>
+            </div>
+            <!-- new reply form row 5 -->
+            <OnClickOutside @trigger="handleBlur">
+                <div v-show="showReplyInput" class="flex flex-row items-center self-end w-full p-3 gap-x-3 ">
+                    <OnClickOutside @trigger="showEmojiPicker = false">
+                        <div class="relative flex items-center">
+                            <button @click="toggleEmojiPicker" :data-cancel-blur="true">
+                                <FaceSmileIcon class="w-6 text-neutral-400" />
+                            </button>
+                            <div class="absolute z-[1000] ltr:left-full rtl:right-full" :class="EmojiPickerClass" v-show="showEmojiPicker">
+                                <EmojiPickerElement @selected-emoji="onSelectEmoji" />
+                            </div>
+                        </div>
+                    </OnClickOutside>
+                    <!-- <div class="flex items-center flex-grow ">
+                        <textarea ref="replyInput" @keypress.enter.exact.prevent="addReply" v-model="newReply" name="newReply" id="newReply" rows="1" placeholder="add-a-comment"
+                            class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary "></textarea>
+                    </div> -->
+                    <MentionTextArea @addText="addReply" v-model:newText="newReply" />
+
+                    <button @click="addReply" :disabled="isSending" class="p-1 group ">
+
+                        <PaperAirplaneIcon class="w-5 group-hover:text-neutral-700 rtl:rotate-180" :class="isSending ? 'text-neutral-200' : 'text-neutral-400'" />
+                    </button>
+                </div>
+            </OnClickOutside>
+            <!-- view replies button row 6 -->
+            <button v-show="hasReplies" @click="toggleRepliesView" class="flex justify-start w-full gap-2 text-sm transition-all duration-300 text-stone-500 enabled:hover:underline hover:underline-offset-4 ">
+                {{ showReplies ? $t('hide') : $t('view') }} {{ comment.replies?.length }} {{ $t('replies') }}
+            </button>
+
+        </div>
+    </div>
+</template>
+
+
 
 <style scoped></style>

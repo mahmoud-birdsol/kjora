@@ -1,11 +1,12 @@
 <script setup>
 import Modal from '@/Components/Modal.vue';
-import { ref, onMounted } from 'vue';
-import { useForm, usePage } from "@inertiajs/vue3";
 import {
-    RadioGroup,
-    RadioGroupOption,
-} from '@headlessui/vue'
+RadioGroup,
+RadioGroupOption,
+} from '@headlessui/vue';
+import { useForm, usePage } from "@inertiajs/vue3";
+import { ref } from 'vue';
+
 const props = defineProps({
     reportableType: {
         required: true,
@@ -33,7 +34,7 @@ const submit = () => {
             show.value = false;
         }
     });
-}
+};
 </script>
 
 <template>

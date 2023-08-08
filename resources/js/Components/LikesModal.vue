@@ -1,7 +1,6 @@
 <script setup>
 import { Link, usePage } from '@inertiajs/vue3';
 import Avatar from './Avatar.vue';
-import FavouriteButton from './FavouriteButton.vue';
 import Modal from './Modal.vue';
 
 const emit = defineEmits(['close', 'delete']);
@@ -30,7 +29,7 @@ const close = () => {
 };
 
 
-const currentUser = usePage().props.auth.user
+const currentUser = usePage().props.auth.user;
 
 </script>
 

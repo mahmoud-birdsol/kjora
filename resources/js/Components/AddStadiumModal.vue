@@ -1,11 +1,11 @@
 <script setup>
-import { PlusCircleIcon, XMarkIcon, } from '@heroicons/vue/24/outline';
-import Modal from '@/Components/Modal.vue';
-import { ref } from 'vue'
-import InputLabel from '@/Components/InputLabel.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import { useForm } from '@inertiajs/vue3';
 import FixedActionBtn from '@/Components/FixedActionBtn.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import Modal from '@/Components/Modal.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import { PlusCircleIcon, XMarkIcon, } from '@heroicons/vue/24/outline';
+import { useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 
 
@@ -65,14 +65,11 @@ function closeModal() {
             <form @submit.prevent="addStadium">
                 <div class="my-6">
                     <InputLabel>{{ $t('Stadium-name') }}</InputLabel>
-                    <input type="text" name="search" id="search" v-model="form.name"
-                        class="block w-full px-4 text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
-                        :placeholder="$t('Stadium-name') + '...'" />
+                    <input type="text" name="search" id="search" v-model="form.name" class="block w-full px-4 text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center" :placeholder="$t('Stadium-name') + '...'" />
                 </div>
                 <div class="my-6">
                     <InputLabel>{{ $t('choose-stadium-place') }}</InputLabel>
-                    <GMapAutocomplete :placeholder="$t('Choose-from-map')" @place_changed="setPlace"
-                        class="block w-full p-2 px-4 text-white bg-black border border-white rounded-full focus:border focus:border-primary focus:ring-primary sm:text-sm placeholder:center">
+                    <GMapAutocomplete :placeholder="$t('Choose-from-map')" @place_changed="setPlace" class="block w-full p-2 px-4 text-white bg-black border border-white rounded-full focus:border focus:border-primary focus:ring-primary sm:text-sm placeholder:center">
                     </GMapAutocomplete>
                 </div>
                 <div class="my-6 mt-4">

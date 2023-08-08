@@ -1,19 +1,19 @@
 
 <script setup>
-import { ref } from 'vue';
-import { useChat } from "@/stores/chat";
 import MediaPreview from "@/Components/MediaPreview.vue";
+import { useChat } from "@/stores/chat";
+import { FaceSmileIcon } from '@heroicons/vue/24/outline';
 import {
     ArrowUpCircleIcon,
     PaperAirplaneIcon,
     PhotoIcon,
     XMarkIcon
-} from '@heroicons/vue/24/solid'
-import { useForm, Link } from "@inertiajs/vue3";
+} from '@heroicons/vue/24/solid';
+import { Link, useForm } from "@inertiajs/vue3";
+import { ref } from 'vue';
 import Avatar from "../Avatar.vue";
-import UploadChatFile from './UploadChatFile.vue';
 import EmojiPickerElement from '../EmojiPickerElement.vue';
-import { FaceSmileIcon } from '@heroicons/vue/24/outline';
+import UploadChatFile from './UploadChatFile.vue';
 
 
 const props = defineProps({

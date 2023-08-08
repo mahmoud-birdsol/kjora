@@ -1,3 +1,8 @@
+<script setup>
+import { usePage } from '@inertiajs/vue3';
+
+const isPublic = usePage().url.includes('public/posts')
+</script>
 <template>
     <div class="px-4 py-4 sm:p-8 rounded-3xl">
         <div class="grid h-full gap-3 border max-w-[500px] mx-auto rounded-2xl border-stone-400  bg-white ">
@@ -50,10 +55,6 @@
     </div>
 </template>
 
-<script setup>
-import { usePage } from '@inertiajs/vue3';
 
-const isPublic = usePage().url.includes('public/posts')
-</script>
 
 <style lang="scss" scoped></style>

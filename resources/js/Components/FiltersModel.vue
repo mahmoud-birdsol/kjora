@@ -1,18 +1,20 @@
 <script setup>
-import { ref } from 'vue';
-import { useForm, usePage } from '@inertiajs/vue3';
-import {
-    XMarkIcon,
-    AdjustmentsHorizontalIcon,
-} from '@heroicons/vue/24/outline';
-import RichSelectInput from '@/Components/RichSelectInput.vue';
-import Modal from '@/Components/Modal.vue';
-import { ElSlider } from 'element-plus';
-import InputLabel from '@/Components/InputLabel.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
 import FixedActionBtn from '@/Components/FixedActionBtn.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import Modal from '@/Components/Modal.vue';
+import RichSelectInput from '@/Components/RichSelectInput.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import {
+AdjustmentsHorizontalIcon,
+XMarkIcon,
+} from '@heroicons/vue/24/outline';
+import { usePage } from '@inertiajs/vue3';
+import { ElSlider } from 'element-plus';
+import { ref } from 'vue';
+
 let age = ref([18, 70])
 let rating = ref([0, 5])
+
 const props = defineProps({
     positions: Array,
     form: Object,
@@ -42,14 +44,14 @@ const distances = [5, 10, 20, 30, 40, 50];
     <Modal :show="showFiltersModal" max-width="sm" @close="showFiltersModal = false" :closeable="false">
         <div class="grid bg-black">
             <div class="flex justify-between px-6 pt-4">
-                <p class=" text-sm text-white">{{ $t('filter') }} </p>
+                <p class="text-sm text-white ">{{ $t('filter') }} </p>
                 <button class="" @click="showFiltersModal = false">
                     <XMarkIcon class="w-4 h-4 text-white" />
                 </button>
             </div>
             <div class="px-6">
                 <div class="flex flex-col justify-end">
-                    <button class="text-primary self-end" @click="reset">
+                    <button class="self-end text-primary" @click="reset">
                         <!-- <XMarkIcon class="inline w-4 h-4 mr-4" /> -->
                         {{ $t('reset') }}
                     </button>

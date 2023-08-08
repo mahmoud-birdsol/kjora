@@ -1,3 +1,8 @@
+<script setup>
+
+defineProps(['media', 'isCurrentUser'])
+
+</script>
 <template>
     <div :class="isCurrentUser ? 'text-white' : 'text-stone-800'" class="w-full overflow-hidden rounded-md aspect-square">
         <template v-if="media?.mime_type.startsWith('image')">
@@ -10,10 +15,6 @@
     </div>
 </template>
 
-<script setup>
 
-defineProps(['media', 'isCurrentUser'])
-
-</script>
 
 <style lang="scss" scoped></style>

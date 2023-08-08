@@ -124,11 +124,9 @@ function hideLightBox() {
     object-fit: cover;
 }
 
-/* @media (max-width:640px) { */
+
 :is([data-lightBox="avatar"], [data-lightBox="avatar-golden"]) .vel-toolbar .toolbar-btn__zoomin,
 :is([data-lightBox="avatar"], [data-lightBox="avatar-golden"]) .vel-toolbar .toolbar-btn__zoomout {
     display: none;
 }
-
-/* } */
 </style>

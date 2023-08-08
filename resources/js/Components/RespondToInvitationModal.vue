@@ -1,18 +1,9 @@
 <script setup>
-import { useForm } from "@inertiajs/vue3";
-import Modal from '@/Components/Modal.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { ElRate } from 'element-plus';
-import dayjs from 'dayjs';
-import Avatar from '@/Components/Avatar.vue';
-import {
-    MapPinIcon,
-} from '@heroicons/vue/24/outline';
-import MainPlayerCard from "./PlayerCards/MainPlayerCard.vue";
-import { router } from "@inertiajs/vue3";
 import DateTranslation from '@/Components/DateTranslation.vue';
-import { CheckIcon, XMarkIcon } from "@heroicons/vue/24/solid";
+import Modal from '@/Components/Modal.vue';
+import { useForm } from "@inertiajs/vue3";
 import InvitationPlayerCard from "./PlayerCards/InvitationPlayerCard.vue";
+
 const props = defineProps({
     invitation: {
         required: true,
@@ -26,25 +17,7 @@ const props = defineProps({
 
 const emit = defineEmits(['close']);
 
-const accept = () => {
-    const form = useForm({});
-    form.patch(route('invitation.accept', props.invitation.id), {
-        preserveState: false,
-        onFinish: () => {
-            emit('close');
-        }
-    });
-};
 
-const decline = () => {
-    const form = useForm({});
-    form.patch(route('invitation.decline', props.invitation.id), {
-        preserveState: false,
-        onFinish: () => {
-            emit('close');
-        }
-    });
-};
 </script>
 
 <template>
@@ -52,7 +25,7 @@ const decline = () => {
         <div class="rounded-xl bg-white min-h-[300px]">
             <div class="flex flex-col items-center justify-between px-6 pb-6">
                 <div class="w-full">
-                    <h2 class="text-center text-xl font-bold uppercase text-primary">{{ $t('invitation') }}</h2>
+                    <h2 class="text-xl font-bold text-center uppercase text-primary">{{ $t('invitation') }}</h2>
                     <p class="mt-6 text-sm font-light text-gray-700">
                         {{ $t('you-have-received-an-invitation-from- :name ,-to-play-a-game-on', { name: invitation.inviting_player.name }) }}
                         <strong>

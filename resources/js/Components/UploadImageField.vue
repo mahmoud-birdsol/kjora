@@ -1,13 +1,13 @@
 <script setup>
-import { useForm } from "@inertiajs/vue3";
+import Crop from "@/Components/Crop.vue";
+import InputError from "@/Components/InputError.vue";
 import Modal from "@/Components/Modal.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { XMarkIcon, PlusCircleIcon } from "@heroicons/vue/24/outline";
-import { ref, onMounted, watch } from "vue";
-import InputError from "@/Components/InputError.vue";
-import CropIcon from "@/Components/Icons/CropIcon.vue";
-import Crop from "@/Components/Crop.vue";
+import { PlusCircleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { useForm } from "@inertiajs/vue3";
+import { onMounted, ref, watch } from "vue";
 import Title from "./Title.vue";
+
 const props = defineProps({
     modelValue: {
         required: false,

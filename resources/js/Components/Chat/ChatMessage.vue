@@ -1,20 +1,19 @@
 <script setup>
-import { computed, ref } from '@vue/reactivity';
-import ReplyIcon from '../Icons/ReplyIcon.vue';
-import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid'
-import { TrashIcon, ArrowDownCircleIcon } from '@heroicons/vue/24/outline'
-import { usePage } from '@inertiajs/vue3';
-import { onMounted } from 'vue';
-import dayjs from 'dayjs';
-import MediaPreview from '@/Components/MediaPreview.vue';
-import { useChat } from "../../stores/chat";
-import ChatGallery from './MediaGallery.vue';
-import SingleMediaPreview from './SingleMediaPreview.vue';
-import MediaThumbnails from './MediaThumbnails.vue';
 import Avatar from '@/Components/Avatar.vue';
 import DateTranslation from '@/Components/DateTranslation.vue';
+import MediaPreview from '@/Components/MediaPreview.vue';
+import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid';
+import { TrashIcon } from '@heroicons/vue/24/outline';
+import { usePage } from '@inertiajs/vue3';
+import { computed, ref } from '@vue/reactivity';
+import { onMounted } from 'vue';
+import { useChat } from "../../stores/chat";
 import ConfirmationModal from '../ConfirmationModal.vue';
 import FadeInTransition from '../FadeInTransition.vue';
+import ReplyIcon from '../Icons/ReplyIcon.vue';
+import ChatGallery from './MediaGallery.vue';
+import MediaThumbnails from './MediaThumbnails.vue';
+import SingleMediaPreview from './SingleMediaPreview.vue';
 
 const chat = useChat();
 const props = defineProps({
