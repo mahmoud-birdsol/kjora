@@ -1,7 +1,7 @@
 <script setup>
 import AddStadiumModal from '@/Components/AddStadiumModal.vue';
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
+import InputLabel from '@/Components/Forms/InputLabel.vue';
 import Modal from '@/Components/Modal.vue';
 import MainPlayerCard from "@/Components/PlayerCards/MainPlayerCard.vue";
 import PrimaryButton from '@/Components/PrimaryButton.vue';

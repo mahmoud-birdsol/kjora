@@ -2,7 +2,7 @@
 import Card from "@/Components/Card.vue";
 import CardContent from "@/Components/CardContent.vue";
 import FadeInTransition from "@/Components/FadeInTransition.vue";
-import InputLabel from "@/Components/InputLabel.vue";
+import InputLabel from "@/Components/Forms/InputLabel.vue";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AppLayout from "@/Layouts/AppLayout.vue";
 import {

@@ -1,6 +1,6 @@
 <script setup>
 import FixedActionBtn from '@/Components/FixedActionBtn.vue';
-import InputLabel from '@/Components/InputLabel.vue';
+import InputLabel from '@/Components/Forms/InputLabel.vue';
 import Modal from '@/Components/Modal.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { PlusCircleIcon, XMarkIcon, } from '@heroicons/vue/24/outline';

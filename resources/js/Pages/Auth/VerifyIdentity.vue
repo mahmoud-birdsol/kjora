@@ -4,7 +4,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import RichSelectInput from '@/Components/RichSelectInput.vue';
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
+import InputLabel from '@/Components/Forms/InputLabel.vue';
 import Card from '@/Components/Card.vue';
 import CardContent from '@/Components/CardContent.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';

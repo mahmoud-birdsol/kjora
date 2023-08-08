@@ -1,6 +1,6 @@
 <script setup>
 import Avatar from '@/Components/Avatar.vue';
-import InputLabel from '@/Components/InputLabel.vue';
+import InputLabel from '@/Components/Forms/InputLabel.vue';
 import Modal from '@/Components/Modal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import RatingChart from '@/Components/RatingChart.vue';
@@ -102,7 +102,7 @@ function submitRatingForm() {
                 <form class="flex flex-col gap-4 px-5">
                     <div class="flex items-center gap-x-2">
                         <Checkbox  id="male" value="male" v-model="ratingForm.attended" rounded/>
-                        <label for="male" class="text-sm font-medium text-black">{{ $t('attended') }}</label>
+                        <InputLabel for="male" color="black">{{ $t('attended') }}</InputLabel>
                     </div>
                     <template v-if="ratingForm.attended">
                         <template v-for="item in  ratingCategories" :key="item.id">
