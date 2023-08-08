@@ -1,49 +1,46 @@
 <script setup>
-import { XMarkIcon, Bars3Icon } from '@heroicons/vue/24/solid';
-import { ref, onBeforeUnmount } from 'vue';
-import SlideInTransition from '@/Components/SlideInTransition.vue';
-import FadeInTransition from '@/Components/FadeInTransition.vue';
-import ConversationsList from "@/Components/Chat/ConversationsList.vue";
+import ConversationsList from "@/Pages/Chat/Partials/ConversationsList.vue";
 import dayjs from "dayjs";
+import { onBeforeUnmount, ref } from "vue";
 
 const props = defineProps({
-    conversations: {
-        required: true,
-        type: Array,
-    }
+   conversations: {
+      required: true,
+      type: Array,
+   },
 });
 
 const showSideBar = ref(false);
 
 props.conversations.forEach((conversation) => {
-    Echo.join('chat.' + conversation.id)
-        .here(function (users) {
-            users.forEach(user => {
-                updateConversationUserStatus(user, true);
-            });
-        })
-        .joining(function (user) {
+   Echo.join("chat." + conversation.id)
+      .here(function (users) {
+         users.forEach((user) => {
             updateConversationUserStatus(user, true);
-        })
-        .leaving(function (user) {
-            updateConversationUserStatus(user, false);
-            user.last_seen_at = dayjs();
-        });
+         });
+      })
+      .joining(function (user) {
+         updateConversationUserStatus(user, true);
+      })
+      .leaving(function (user) {
+         updateConversationUserStatus(user, false);
+         user.last_seen_at = dayjs();
+      });
 
-    Echo.join('presence-chat.' + conversation.id)
-        .here(function (users) {
-            users.forEach(user => {
-                updateConversationUserStatus(user, true);
-            });
-        })
-        .joining(function (user) {
+   Echo.join("presence-chat." + conversation.id)
+      .here(function (users) {
+         users.forEach((user) => {
             updateConversationUserStatus(user, true);
-        })
-        .leaving(function (user) {
-            updateConversationUserStatus(user, false);
-            user.last_seen_at = dayjs();
-        });
-})
+         });
+      })
+      .joining(function (user) {
+         updateConversationUserStatus(user, true);
+      })
+      .leaving(function (user) {
+         updateConversationUserStatus(user, false);
+         user.last_seen_at = dayjs();
+      });
+});
 
 /**
  * Update a conversation user online status.
@@ -52,34 +49,36 @@ props.conversations.forEach((conversation) => {
  * @param status
  */
 const updateConversationUserStatus = (user, status) => {
-    props.conversations.forEach(conversation => {
-        conversation.users.forEach(conversationUser => {
-            if (conversationUser.id === user.id) {
-                conversationUser.online = status;
-            }
-        });
-    });
+   props.conversations.forEach((conversation) => {
+      conversation.users.forEach((conversationUser) => {
+         if (conversationUser.id === user.id) {
+            conversationUser.online = status;
+         }
+      });
+   });
 };
 
 onBeforeUnmount(() => {
-    props.conversations.forEach((conversation) => {
-        Echo.leave('chat.' + conversation.id)
+   props.conversations.forEach((conversation) => {
+      Echo.leave("chat." + conversation.id);
 
-        axios.post(route('api.user.left'));
-    });
+      axios.post(route("api.user.left"));
+   });
 });
 </script>
 
 <template>
-    <div class="py-12">
-        <div
-            class="relative grid h-full w-full max-w-full overflow-hidden min-h-[500px] rounded-2xl bg-white text-neutral-500 lg:grid-cols-[1.2fr_2fr]">
-            <div
-                class="flex-col w-full h-full gap-3 px-6 py-3 max-lg:border-b max-lg:border-b-stone-400 lg:flex ltr:lg:border-r ltr:lg:border-r-stone-400 rtl:lg:border-l rtl:lg:border-l-stone-400">
-                <div class="">
-                    <ConversationsList :conversations="conversations" />
-                </div>
-                <!-- <div class="flex h-full ltr:justify-end rtl:justify-start lg:hidden">
+   <div class="py-12">
+      <div
+         class="relative grid h-full w-full max-w-full overflow-hidden min-h-[500px] rounded-2xl bg-white text-neutral-500 lg:grid-cols-[1.2fr_2fr]"
+      >
+         <div
+            class="flex-col w-full h-full gap-3 px-6 py-3 max-lg:border-b max-lg:border-b-stone-400 lg:flex ltr:lg:border-r ltr:lg:border-r-stone-400 rtl:lg:border-l rtl:lg:border-l-stone-400"
+         >
+            <div class="">
+               <ConversationsList :conversations="conversations" />
+            </div>
+            <!-- <div class="flex h-full ltr:justify-end rtl:justify-start lg:hidden">
                         <button @click="showSideBar = true" class="p-1 text-black hover:text-primary">
                             <Bars3Icon class="w-6" />
                         </button>
@@ -100,24 +99,28 @@ onBeforeUnmount(() => {
                             </div>
                         </SlideInTransition>
                     </div> -->
+         </div>
+
+         <!-- Chat layout body... -->
+         <div class="grid h-full grid-flow-row">
+            <div
+               v-if="$slots.header"
+               class="flex self-start border-b border-b-stone-400 min-h-[1rem]"
+            >
+               <slot name="header"></slot>
             </div>
-
-            <!-- Chat layout body... -->
-            <div class="grid h-full grid-flow-row">
-                <div v-if="$slots.header" class="flex self-start border-b border-b-stone-400 min-h-[1rem]">
-                    <slot name="header"></slot>
-                </div>
-                <div v-if="$slots.main" class="self-stretch p-4 contain">
-                    <slot name="main"></slot>
-                </div>
-                <div v-if="$slots.footer" class="self-end py-2 border-t h-min border-t-stone-400">
-                    <div class="border-t-stone-400 border-t p-1">
-                        <slot name="footer"></slot>
-
-                    </div>
-                </div>
+            <div v-if="$slots.main" class="self-stretch p-4 contain">
+               <slot name="main"></slot>
             </div>
-        </div>
-
-    </div>
+            <div
+               v-if="$slots.footer"
+               class="self-end py-2 border-t h-min border-t-stone-400"
+            >
+               <div class="p-1 border-t border-t-stone-400">
+                  <slot name="footer"></slot>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
 </template>

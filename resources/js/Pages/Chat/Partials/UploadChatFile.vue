@@ -104,18 +104,6 @@ const updatePhotoPreview = () => {
         });
         showPreview.value = true;
 
-        // const reader = new FileReader();
-        // reader.onload = (e) => {
-        //     filesData.value.push({
-        //         file: file,
-        //         url: e.target.result,
-        //         name: file.name,
-        //         type: file.type,
-        //         id: id,
-        //     });
-        //     showPreview.value = true;
-        // };
-        // reader.readAsDataURL(file);
     });
 };
 

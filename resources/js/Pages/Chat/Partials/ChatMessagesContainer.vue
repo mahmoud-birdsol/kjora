@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, onUnmounted, ref, computed } from "vue";
-import ChatMessage from "@/Components/Chat/ChatMessage.vue";
-import ChatNotice from "@/Components/Chat/ChatNotice.vue";
+import ChatMessage from "./ChatMessage.vue";
+import ChatNotice from "./ChatNotice.vue";
 import { useChat } from "@/stores/chat";
 import { usePage } from "@inertiajs/vue3";
 import dayjs from "dayjs";

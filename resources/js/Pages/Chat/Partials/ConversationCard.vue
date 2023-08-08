@@ -1,15 +1,11 @@
 <script setup>
-import { computed, inject, ref } from 'vue';
-import { Link } from '@inertiajs/vue3';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import Avatar from "@/Components/Avatar.vue";
 import ConfirmationModal from "@/Components/ConfirmationModal.vue";
-import { CheckCircleIcon, TrashIcon } from '@heroicons/vue/24/outline'
-import DateTranslation from '../DateTranslation.vue';
-import { router } from '@inertiajs/vue3';
-import Modal from '../Modal.vue';
-import FadeInTransition from '@/Components/FadeInTransition.vue'
+import FadeInTransition from '@/Components/FadeInTransition.vue';
+import { CheckCircleIcon, TrashIcon } from '@heroicons/vue/24/outline';
+import { Link, router } from '@inertiajs/vue3';
+import { computed, inject, ref } from 'vue';
+import DateTranslation from '@/Components/DateTranslation.vue';
 
 
 

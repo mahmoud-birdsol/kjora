@@ -10,7 +10,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import { Link } from "@inertiajs/vue3";
 import { ref, watch } from "vue";
-import DateTranslation from "../DateTranslation.vue";
+import DateTranslation from "@/Components/DateTranslation.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 
 const props = defineProps({
