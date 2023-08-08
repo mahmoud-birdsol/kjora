@@ -46,12 +46,11 @@ const errorCallback = (error) => {
 </script>
 
 <template>
-    <div :dir="$page.props.locale == 'ar' ? 'rtl' : 'ltr'">
+    <div :dir="$page.props.locale == 'ar' ? 'rtl' : 'ltr'" :data-user-state="$page.props?.auth?.user?.state_name">
 
         <Head :title="title" />
 
-        <div class="relative min-h-screen bg-gradient-to-b from-black to-primaryDark isolate before:-z-10"
-            :class="showBall ? ` before:bg-[url('.././images/ballkjoura.png')] before:hidden sm:before:block before:absolute before:inset-0 before:bg-[center_-243px] before:bg-no-repeat before:mix-blend-overlay` : ''">
+        <div class="relative min-h-screen bg-gradient-to-b from-black to-primaryDark isolate before:-z-10" :class="showBall ? ` before:bg-[url('.././images/ballkjoura.png')] before:hidden sm:before:block before:absolute before:inset-0 before:bg-[center_-243px] before:bg-no-repeat before:mix-blend-overlay` : ''">
             <div class="flex flex-col justify-between min-h-screen pt-6 space-y-4 sm:pt-0 ltr:font-sans rtl:font-tahoma">
                 <Navbar />
 
