@@ -1,6 +1,4 @@
 <script setup>
-import { ref } from 'vue';
-import { useForm } from '@inertiajs/vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
 import ActionSection from '@/Components/ActionSection.vue';
 import DialogModal from '@/Components/DialogModal.vue';
@@ -8,6 +6,8 @@ import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import { useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 defineProps({
     sessions: Array,
@@ -84,7 +84,7 @@ const closeModal = () => {
                             <div class="text-xs text-gray-500">
                                 {{ session.ip_address }},
 
-                                <span v-if="session.is_current_device" class="text-green-500 font-semibold">This device</span>
+                                <span v-if="session.is_current_device" class="font-semibold text-green-500">This device</span>
                                 <span v-else>Last active {{ session.last_active }}</span>
                             </div>
                         </div>
@@ -112,7 +112,7 @@ const closeModal = () => {
                     Please enter your password to confirm you would like to log out of your other browser sessions across all of your devices.
 
                     <div class="mt-4">
-                        <TextInput ref="passwordInput" v-model="form.password" type="password" class="mt-1 block w-3/4" placeholder="Password"
+                        <TextInput ref="passwordInput" v-model="form.password" type="password" class="block w-3/4 mt-1" placeholder="Password"
                             @keyup.enter="logoutOtherBrowserSessions" />
 
                         <InputError :message="form.errors.password" class="mt-2" />

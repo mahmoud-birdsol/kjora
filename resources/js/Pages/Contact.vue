@@ -1,15 +1,14 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import GuestTwoColumnLayout from '@/Layouts/Partials/GuestTwoColumnLayout.vue';
 import Card from "@/Components/Card.vue";
 import CardContent from "@/Components/CardContent.vue";
-import InputLabel from "@/Components/InputLabel.vue";
-import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { CameraIcon, PlusCircleIcon } from "@heroicons/vue/24/outline";
-import { ref } from 'vue'
+import TextInput from "@/Components/TextInput.vue";
+import GuestLayout from '@/Layouts/GuestLayout.vue';
+import GuestTwoColumnLayout from '@/Layouts/Partials/GuestTwoColumnLayout.vue';
+import { Head, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 const form = useForm({
     first_name: null,

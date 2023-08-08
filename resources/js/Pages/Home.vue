@@ -67,9 +67,7 @@ const reset = () => {
 }
 const options = {
     arrows: false,
-    // rewind: true,
     pagination: true,
-    // drag: "free",
     gap: '1rem',
     type: props.advertisements.length > 1 ? "loop" : 'slide',
     focus: "center",

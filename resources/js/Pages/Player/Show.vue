@@ -1,17 +1,12 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3';
-import AppLayout from '@/Layouts/AppLayout.vue';
-import HelloUserHeader from '@/Components/HelloUserHeader.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import PerformanceTab from '@/Components/PerformanceTab.vue';
-import ProfileGallery from '@/Components/ProfileGallery.vue';
-import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
-import { computed, ref } from 'vue';
-import { router } from '@inertiajs/vue3'
 import FadeInTransition from '@/Components/FadeInTransition.vue';
-import Modal from '@/Components/Modal.vue';
-import { ElSlider } from 'element-plus';
-import InputLabel from '@/Components/InputLabel.vue';
+import HelloUserHeader from '@/Components/HelloUserHeader.vue';
+import PerformanceTab from '@/Components/PerformanceTab.vue';
+import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
+import ProfileGallery from '@/Components/ProfileGallery.vue';
+import AppLayout from '@/Layouts/AppLayout.vue';
+import { Head, router } from '@inertiajs/vue3';
+import { computed, ref } from 'vue';
 
 const props = defineProps({
     player: null,
@@ -40,8 +35,6 @@ function reloadMedia() {
 
 <template>
     <Head title="Home">
-        <!--        <meta property="og:url" :content="" />-->
-        <!-- <meta property="og:type" content="website" /> -->
         <meta property="og:title" content="Kjora App" />
         <meta property="og:description" :content="`this is profile of ${player.name} on kjora website `" />
         <meta property="og:image" :content="player.avatar_url ?? 'images/logo.png'" />
