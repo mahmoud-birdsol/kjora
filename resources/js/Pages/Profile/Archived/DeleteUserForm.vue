@@ -2,7 +2,7 @@
 import ActionSection from "@/Components/ActionSection.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import DialogModal from "@/Components/DialogModal.vue";
-import InputError from "@/Components/InputError.vue";
+import InputError from "@/Components/Forms/InputError.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 import { useForm } from "@inertiajs/vue3";

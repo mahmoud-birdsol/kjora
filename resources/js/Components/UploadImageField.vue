@@ -1,6 +1,6 @@
 <script setup>
 import Crop from "@/Components/Crop.vue";
-import InputError from "@/Components/InputError.vue";
+import InputError from "@/Components/Forms/InputError.vue";
 import Modal from "@/Components/Modal.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { PlusCircleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
@@ -150,7 +150,6 @@ let showCropModal = (url) => {
         url,
     };
 
-
     openCropModal.value = true;
     cropLoading.value = false;
 };
@@ -162,25 +161,56 @@ function close() {
 </script>
 
 <template>
-    <Modal :show="show" :max-width="maxWidth" :closeable="closeable" :position="position" @close="close" :key="num">
+    <Modal
+        :show="show"
+        :max-width="maxWidth"
+        :closeable="closeable"
+        :position="position"
+        @close="close"
+        :key="num"
+    >
         <div class="flex flex-col min-h-[500px] justify-between p-6 pt-0">
-            <Title>{{ $t('upload') }}</Title>
-            <div class="flex items-center justify-center py-8 sm:px-20" v-loading="form.processing">
+            <Title>{{ $t("upload") }}</Title>
+            <div
+                class="flex items-center justify-center py-8 sm:px-20"
+                v-loading="form.processing"
+            >
                 <div class="max-w-[300px] w-full">
-                    <input ref="photoInput" type="file" class="hidden" @input="updatePhotoPreview" />
+                    <input
+                        ref="photoInput"
+                        type="file"
+                        class="hidden"
+                        @input="updatePhotoPreview"
+                    />
 
                     <div class="flex items-center justify-center mb-6">
-                        <button type="button"
+                        <button
+                            type="button"
                             class="inline-flex items-center p-4 text-white bg-black border border-transparent rounded-full shadow-sm hover:bg-black focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
-                            @click.prevent="selectNewPhoto">
+                            @click.prevent="selectNewPhoto"
+                        >
                             <PlusCircleIcon class="w-5 h-5" />
                         </button>
                     </div>
 
-                    <button v-show="showPreview && !openCropModal" @click.prevent="removePhoto" class="relative w-full rounded" v-loading="cropLoading">
-                        <img :src="previewImageUrl" alt="" class="w-full h-auto rounded-lg" id="img" />
-                        <div class="absolute inset-0 w-full h-full bg-transparent hover:bg-white hover:bg-opacity-50">
-                            <div class="flex flex-col items-center justify-center h-full opacity-0 hover:opacity-100">
+                    <button
+                        v-show="showPreview && !openCropModal"
+                        @click.prevent="removePhoto"
+                        class="relative w-full rounded"
+                        v-loading="cropLoading"
+                    >
+                        <img
+                            :src="previewImageUrl"
+                            alt=""
+                            class="w-full h-auto rounded-lg"
+                            id="img"
+                        />
+                        <div
+                            class="absolute inset-0 w-full h-full bg-transparent hover:bg-white hover:bg-opacity-50"
+                        >
+                            <div
+                                class="flex flex-col items-center justify-center h-full opacity-0 hover:opacity-100"
+                            >
                                 <XMarkIcon class="w-8 h-8 text-white" />
                             </div>
                         </div>
@@ -188,17 +218,27 @@ function close() {
                 </div>
             </div>
             <div>
-                <Crop :img="cropFile" @crop="changeFiles" v-model:open="openCropModal" @update:open="() => (openCropModal = false)" :presetMode="{
-                    mode: 'round',
-                    width: 250,
-                    height: 250,
-                }" :addOption="{
-    viewMode: 1,
-    dragMode: 'move',
-    aspectRatio: 1,
-    cropBoxResizable: false,
-}" />
-                <PrimaryButton @click.prevent="upload" :disabled="form.processing">
+                <Crop
+                    :img="cropFile"
+                    @crop="changeFiles"
+                    v-model:open="openCropModal"
+                    @update:open="() => (openCropModal = false)"
+                    :presetMode="{
+                        mode: 'round',
+                        width: 250,
+                        height: 250,
+                    }"
+                    :addOption="{
+                        viewMode: 1,
+                        dragMode: 'move',
+                        aspectRatio: 1,
+                        cropBoxResizable: false,
+                    }"
+                />
+                <PrimaryButton
+                    @click.prevent="upload"
+                    :disabled="form.processing"
+                >
                     {{ $t("upload") }}
                 </PrimaryButton>
                 <InputError class="mt-2" :message="form.errors.image" />

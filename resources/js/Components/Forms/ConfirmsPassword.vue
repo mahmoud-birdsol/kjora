@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive, nextTick } from "vue";
 import DialogModal from "./DialogModal.vue";
-import InputError from "./InputError.vue";
+import InputError from "@/Components/Forms/InputError.vue";
 import PrimaryButton from "./PrimaryButton.vue";
 import SecondaryButton from "./SecondaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
@@ -91,7 +91,7 @@ const closeModal = () => {
                         ref="passwordInput"
                         v-model="form.password"
                         type="password"
-                        class="mt-1 block w-3/4"
+                        class="block w-3/4 mt-1"
                         placeholder="Password"
                         @keyup.enter="confirmPassword"
                     />
