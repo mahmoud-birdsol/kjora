@@ -158,7 +158,7 @@ function onSelectEmoji(emoji) {
             </div>
             <button
                @click.prevent="chat.setMessageToReplyTo(null)"
-               class="absolute top-0 left-0 hidden bg-white group-hover:block bg-opacity-90 rounded-br-xl"
+               class="absolute top-0 left-0 bg-white bg-opacity-90 rounded-br-xl"
             >
                <div
                   class="flex flex-col items-start justify-center h-full p-1 opacity-100"
