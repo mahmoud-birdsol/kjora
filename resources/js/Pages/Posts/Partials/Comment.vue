@@ -5,20 +5,24 @@ import { Link, router, usePage } from "@inertiajs/vue3";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime.js";
 import { computed, onBeforeMount, onMounted, ref, watch } from "vue";
-import Avatar from "./Avatar.vue";
-import ConfirmationModal from "./ConfirmationModal.vue";
-import DateTranslation from "./DateTranslation.vue";
-import EmojiPickerElement from "./EmojiPickerElement.vue";
-import LikeButton from "./LikeButton.vue";
-import LikesModal from "./LikesModal.vue";
-import MentionTextArea from "./MentionTextArea.vue";
+import Avatar from "@/Components/Avatar.vue";
+import ConfirmationModal from "@/Components/ConfirmationModal.vue";
+import DateTranslation from "@/Components/DateTranslation.vue";
+import EmojiPickerElement from "@/Components/EmojiPickerElement.vue";
+import LikeButton from "@/Components/LikeButton.vue";
+import LikesModal from "@/Components/LikesModal.vue";
+import MentionTextArea from "@/Components/MentionTextArea.vue";
+import { useCommentStore, usePostStore } from "@/stores";
+import { useAxios } from "@vueuse/integrations";
 
-const props = defineProps(["comment", "parentOffset", "users"]);
+const props = defineProps(["comment"]);
 onBeforeMount(() => {
    dayjs.extend(relativeTime);
 });
 const emit = defineEmits(["addedReply"]);
 
+const commentStore = useCommentStore();
+const postStore = usePostStore();
 const currentUser = usePage().props.auth.user;
 const replyInput = ref(null);
 const showReplies = ref(false);
@@ -86,7 +90,11 @@ const handleBody = computed(() => {
    return allWords
       .map((word) => {
          if (!word.startsWith("@")) return word;
-         if (!props.users.some((user) => user.username === word.slice(1)))
+         if (
+            !postStore.usersCanBeMentioned.some(
+               (user) => user.username === word.slice(1)
+            )
+         )
             return `${word}`;
          else
             return `<a href="/player/name/${word.slice(
@@ -102,15 +110,35 @@ function toggleRepliesView() {
 function addReply() {
    if (!newReply.value || newReply.value.trim() === "") return;
    isSending.value = true;
-   sendReply();
-   showReplyInput.value = false;
+   // sendReply();
+   commentStore.storeComment(
+      {
+         commentable_id: props.comment.commentable_id,
+         commentable_type: props.comment.commentable_type,
+         body: newReply.value,
+         user_id: currentUser.id,
+         //infinte depth
+         parent_id: props.comment.id,
+      },
+      {
+         onSuccess: () => {
+            postStore.getComments();
+            newReply.value = "";
+            showReplyInput.value = false;
+         },
+         onFinish: () => {
+            isSending.value = false;
+         },
+      }
+   );
+
    emit("addedReply");
 }
 
 // function getParentId() {
 //     return isParentComment ? props.comment.id : props.comment.parent_id
 // }
-
+//done
 function sendReply() {
    axios
       .post(route("api.gallery.comments.store"), {
@@ -127,9 +155,14 @@ function sendReply() {
       })
       .catch((err) => console.error(err));
 }
-
+//done
 function deleteComment() {
    showDeleteCommentModal.value = false;
+   commentStore.deleteComment(props.comment, {
+      onSuccess: () => {
+         postStore.getComments();
+      },
+   });
    router.delete(route("comments.destroy", props.comment), {
       preserveScroll: true,
       preserveState: false,
@@ -155,15 +188,17 @@ function onSelectEmoji(emoji) {
 
 // hide the input field when blur if it is empty
 function handleBlur(e) {
-   if ((showReplyInput.value = true)) {
-      !newReply.value || newReply.value === ""
-         ? (showReplyInput.value = false)
-         : null;
-   }
+   showReplyInput.value = false;
+   // if ((showReplyInput.value = true)) {
+
+   //    !newReply.value || newReply.value === ""
+   //       ? (showReplyInput.value = false)
+   //       : null;
+   // }
 }
 
 function toggleEmojiPicker(e) {
-   let parentOffset = props.parentOffset;
+   let parentOffset = postStore.commentsContainerOffset;
    let emojiButtonOffset =
       e.target.getBoundingClientRect().top + window.scrollY;
    let emojiPickerHeight = 320;

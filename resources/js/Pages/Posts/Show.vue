@@ -1,6 +1,6 @@
 <script setup>
 import Avatar from "@/Components/Avatar.vue";
-import Comment from "@/Components/Comment.vue";
+import Comment from "@/Pages/Posts/Partials/Comment.vue";
 import DateTranslation from "@/Components/DateTranslation.vue";
 import LikeButton from "@/Components/LikeButton.vue";
 import LikesModal from "@/Components/LikesModal.vue";
@@ -16,67 +16,34 @@ import { Link, usePage } from "@inertiajs/vue3";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime.js";
 import { computed, onBeforeMount, onMounted, ref } from "vue";
+import { usePostStore } from "@/stores/post";
 
 onBeforeMount(() => {
    dayjs.extend(relativeTime);
 });
 
 const props = defineProps({
+   //to remove replace with postUser in store
    user: null,
-   post: null,
+   post: Object,
 });
-
+const postStore = usePostStore();
 const commentsContainer = ref(null);
-const commentsComps = ref(null);
+//to remove
 const postCaptionComp = ref(null);
-const postComments = ref([]);
+//add to the store
 const showLikesModal = ref(false);
-const currentUser = usePage().props.auth.user;
-const isCurrentUser = currentUser.id === props.user.id;
-const users = ref([]);
-const numComments = computed(() =>
-   postComments.value
-      ? postComments.value.filter((c) => !c.parent_id)?.length
-      : 0
-);
-const commentsContainerOffset = computed(() => {
-   return commentsContainer.value?.getBoundingClientRect().top + window.scrollY;
-});
+
+const isCurrentUser = postStore.isPostUserTheCurrentUser.value;
 
 onMounted(() => {
-   getPostComments();
-   fetchUsername();
+   postStore.initialize({
+      post: props.post,
+      commentsContainer: commentsContainer.value,
+   });
 });
 
-function getPostComments() {
-   axios
-      .get(route("api.gallery.comments"), {
-         params: {
-            commentable_id: props.post.id,
-            commentable_type: "App\\Models\\Post",
-         },
-      })
-      .then((res) => {
-         postComments.value = res.data.data;
-         if (!route().params?.commentId) scrollToCommentsBottom();
-      })
-      .catch((err) => console.error(err));
-}
-// helper function to scroll comments container to bottom
-function scrollToCommentsBottom() {
-   setTimeout(() => {
-      commentsContainer.value.scrollTo({
-         top: commentsContainer.value.scrollHeight,
-         left: 0,
-         behavior: "smooth",
-      });
-   }, 100);
-}
-async function fetchUsername() {
-   users.value = await axios
-      .get(route("api.user.get.users.name"))
-      .then((res) => res.data.data);
-}
+//done
 </script>
 <template>
    <AppLayout title="gallery" :showBall="false">
@@ -104,8 +71,9 @@ async function fetchUsername() {
                      <h3 class="m-0 text-lg font-bold leading-none capitalize">
                         {{ user.name }}
                      </h3>
+                     // todo:replace with user store
                      <div
-                        v-if="currentUser?.state_name === 'Premium'"
+                        v-if="$page.props?.auth?.user?.state_name === 'Premium'"
                         class="shrink-0"
                      >
                         <div class="w-4 rounded-full bg-golden aspect-square">
@@ -156,7 +124,7 @@ async function fetchUsername() {
                <div class="text-sm">
                   {{
                      $t("comments ( :count )", {
-                        count: numComments,
+                        count: postStore.parentCommentsCount,
                      })
                   }}
                </div>
@@ -195,20 +163,13 @@ async function fetchUsername() {
                ref="commentsContainer"
                @scroll="handleScroll"
                class="flex flex-col gap-4 w-full max-h-[500px] hideScrollBar overflow-auto"
-               v-if="postComments"
+               v-if="postStore.comments"
             >
                <template
-                  v-for="comment in postComments.filter((c) => !c.parent_id)"
+                  v-for="comment in postStore.parentComments"
                   :key="comment.id"
                >
-                  <Comment
-                     @addedReply="getPostComments"
-                     :comment="comment"
-                     :users="users"
-                     ref="commentsComps"
-                     :parentOffset="commentsContainerOffset"
-                     :id="comment.id"
-                  />
+                  <Comment @addedReply="getPostComments" :comment="comment" />
                </template>
             </div>
          </template>
