@@ -56,7 +56,6 @@ const thumbsOptions = {
    pagination: false,
    fixedHeight: 150,
    autoWidth: true,
-   // cover: true,
    drag: "free",
    snap: true,
    isNavigation: true,
@@ -70,8 +69,6 @@ const thumbsOptions = {
          width: props.media.length > 5 ? "100%" : "70%",
       },
    },
-
-   //   focus: 'center',
 };
 onMounted(() => {
    const thumbsSplide = thumbs.value?.splide;
@@ -207,7 +204,7 @@ function handleSplideActive(e) {
                   v-for="item in media"
                   :key="item.id"
                   class=""
-                  style="border: none !important "
+                  style="border: none !important"
                >
                   <template v-if="item.mime_type.startsWith('image')">
                      <img
@@ -225,9 +222,6 @@ function handleSplideActive(e) {
                </SplideSlide>
             </Splide>
          </div>
-         <!-- <template v-if="showSavePanel">
-                    <DownloadImg v-model:showSavePanel="showSavePanel" />
-                </template> -->
       </div>
    </Modal>
 </template>
