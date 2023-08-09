@@ -30,7 +30,6 @@ onMounted(() => {
 const currentUser = usePage().props.auth.user;
 const showOptions = ref(false);
 const showMediaGallery = ref(false);
-const showSingleMediaGallery = ref(false);
 const showDeleteMessage = ref(false);
 
 const imagesVideosOnly = props.message.attachments.filter(
@@ -66,8 +65,7 @@ const newMessageClasses = computed(() => {
       ? 'border-t-2    border-green-400 relative before:content-["New"] before:absolute before:-top-3 before:bg-white before:right-3 before:text-sm before:text-green-700 before:px-1 '
       : "";
 });
-function handleReply(e) {
-   // emits('reply', props.message)
+function handleReply(_e) {
    chat.setMessageToReplyTo(props.message);
    showOptions.value ? (showOptions.value = false) : null;
 }
@@ -306,4 +304,3 @@ function deleteMessage() {
       </div>
    </FadeInTransition>
 </template>
-<style scoped></style>
