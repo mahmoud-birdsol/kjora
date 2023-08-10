@@ -1,40 +1,34 @@
 <script setup>
 import Avatar from "@/Components/Avatar.vue";
-import Comment from "@/Pages/Posts/Partials/Comment.vue";
 import DateTranslation from "@/Components/DateTranslation.vue";
 import LikeButton from "@/Components/LikeButton.vue";
 import LikesModal from "@/Components/LikesModal.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
+import Comment from "@/Pages/Posts/Partials/Comment.vue";
 import PostCaptionFrom from "@/Pages/Posts/Partials/PostCaptionForm.vue";
 import PostCommentForm from "@/Pages/Posts/Partials/PostCommentForm.vue";
 import PostLayout from "@/Pages/Posts/Partials/PostLayout.vue";
 import PostMedia from "@/Pages/Posts/Partials/PostMedia.vue";
 import PostOptionMenu from "@/Pages/Posts/Partials/PostOptionMenu.vue";
-import AppLayout from "@/Layouts/AppLayout.vue";
+import { usePostStore } from "@/stores/post";
 import { StarIcon } from "@heroicons/vue/24/outline";
 import { HeartIcon } from "@heroicons/vue/24/solid";
-import { Link, usePage } from "@inertiajs/vue3";
+import { Link } from "@inertiajs/vue3";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime.js";
-import { computed, onBeforeMount, onMounted, ref } from "vue";
-import { usePostStore } from "@/stores/post";
+import { onBeforeMount, onMounted, ref, watch } from "vue";
 
 onBeforeMount(() => {
    dayjs.extend(relativeTime);
 });
 
 const props = defineProps({
-   //to remove replace with postUser in store
-   user: null,
    post: Object,
 });
 const postStore = usePostStore();
 const commentsContainer = ref(null);
-//to remove
-const postCaptionComp = ref(null);
 //add to the store
 const showLikesModal = ref(false);
-
-const isCurrentUser = postStore.isPostUserTheCurrentUser.value;
 
 onMounted(() => {
    postStore.initialize({
@@ -43,7 +37,13 @@ onMounted(() => {
    });
 });
 
-//done
+watch(
+   () => props.post,
+   (newPost) => {
+      postStore.updatePostObject(newPost);
+      console.log(newPost);
+   }
+);
 </script>
 <template>
    <AppLayout title="gallery" :showBall="false">
@@ -52,13 +52,13 @@ onMounted(() => {
       </template>
       <PostLayout>
          <template #media>
-            <PostMedia :postMedia="post.media" :user="user"></PostMedia>
+            <PostMedia />
          </template>
          <template #userImage>
             <Avatar
-               :id="user.id"
-               :username="user.name"
-               :image-url="user.avatar_url"
+               :id="post.user.id"
+               :username="post.user.name"
+               :image-url="post.avatar_url"
                :size="'md'"
                :border="true"
                border-color="primary"
@@ -69,9 +69,9 @@ onMounted(() => {
                <div class="flex flex-col">
                   <div class="flex flex-row gap-2">
                      <h3 class="m-0 text-lg font-bold leading-none capitalize">
-                        {{ user.name }}
+                        {{ post.user.name }}
                      </h3>
-                     // todo:replace with user store
+
                      <div
                         v-if="$page.props?.auth?.user?.state_name === 'Premium'"
                         class="shrink-0"
@@ -82,21 +82,12 @@ onMounted(() => {
                      </div>
                   </div>
                   <Link
-                     :href="route('player.profile', user.id)"
+                     :href="route('player.profile', post.user.id)"
                      class="text-xs text-stone-400"
-                     >@{{ user.username }}
+                     >@{{ post.user.username }}
                   </Link>
                </div>
-               <PostOptionMenu
-                  :isCurrentUser="isCurrentUser"
-                  :postId="post.id"
-                  @editingCaption="
-                     postCaptionComp
-                        ? (postCaptionComp.isEditingCaption = true)
-                        : null
-                  "
-               >
-               </PostOptionMenu>
+               <PostOptionMenu />
             </div>
          </template>
          <template #postDate&Time>
@@ -111,10 +102,7 @@ onMounted(() => {
             </div>
          </template>
          <template #postCaption>
-            <PostCaptionFrom
-               ref="postCaptionComp"
-               :post="post"
-            ></PostCaptionFrom>
+            <PostCaptionFrom :post="post" />
          </template>
 
          <template #commentsCount>
@@ -141,10 +129,10 @@ onMounted(() => {
                      />
                   </button>
                   <LikeButton
-                     :canLike="!isCurrentUser"
+                     :canLike="!postStore.isPostUserTheCurrentUser"
                      :isLiked="post?.is_liked"
                      :likeable_id="post.id"
-                     :likeable_type="'App\\Models\\Post'"
+                     :likeable_type="postStore.POST_MODEL_TYPE"
                   >
                      <template v-slot="{ isLiked }">
                         <HeartIcon
@@ -161,25 +149,19 @@ onMounted(() => {
          <template #postComments>
             <div
                ref="commentsContainer"
-               @scroll="handleScroll"
-               class="flex flex-col gap-4 w-full max-h-[500px] hideScrollBar overflow-auto"
-               v-if="postStore.comments"
+               class="flex flex-col gap-4 w-full max-h-[500px] px-6 hideScrollBar overflow-auto"
+               v-if="postStore.parentCommentsCount"
             >
                <template
                   v-for="comment in postStore.parentComments"
                   :key="comment.id"
                >
-                  <Comment @addedReply="getPostComments" :comment="comment" />
+                  <Comment :comment="comment" />
                </template>
             </div>
          </template>
          <template #newCommentForm>
-            <PostCommentForm
-               :postId="post.id"
-               :commentsContainer="commentsContainer"
-               @addComment="getPostComments"
-            >
-            </PostCommentForm>
+            <PostCommentForm />
          </template>
       </PostLayout>
    </AppLayout>

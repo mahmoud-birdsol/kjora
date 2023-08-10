@@ -18,11 +18,10 @@ class PostController extends Controller
     */
    public function show(Post $post, PostViewAction $postViewAction)
    {
-      $data = Post::where('id', $post->id)->with(['likes.user:id,username,first_name,last_name', 'user'])->first();
+      $data = Post::where('id', $post->id)->with(['likes.user:id,username,first_name,last_name', 'user', 'comments.user', 'comments.replies', 'comments.likes.user:id,username,first_name,last_name'])->first();
       ($postViewAction)($post);
       return Inertia::render('Posts/Show', [
          'post' => $data,
-         'user' => $post->user,
       ]);
    }
 

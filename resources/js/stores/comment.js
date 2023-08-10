@@ -15,25 +15,31 @@ export const useCommentStore = defineStore("Comment", () => {
    /* -------------------------------------------------------------------------- */
    /*                                 actions                                    */
    /* -------------------------------------------------------------------------- */
+
+   /* -- general comments actions that can be used with any model has comments - */
+
    /** @description get comments for any model
     * @param {{  commentable_id: number,
                commentable_type: string,}} data
                    @param {{onSuccess: function,onError: function,onFinish: function}} options
     */
+
    // TODO refactor this to use useAxios composable
    const getComments = async (data, options) => {
+      let comments;
       try {
          let response = await axios.get(route("api.gallery.comments"), {
             params: data,
          });
          options?.onSuccess?.();
-         return response.data.data;
+         comments = response.data.data;
       } catch (err) {
          options?.onError?.();
          console.log(err);
       } finally {
          options?.onFinish?.();
       }
+      return comments;
    };
    /** @description store comment in database
     * @param {{
@@ -60,6 +66,18 @@ export const useCommentStore = defineStore("Comment", () => {
             options?.onFinish?.();
          });
    };
+   /** @description delete comments
+     @param {object} comment
+     @param {{onSuccess: function,onError: function,onFinish: function}} options
+    */
+   const deleteComment = (comment, options) => {
+      router.delete(route("comments.destroy", comment), {
+         preserveScroll: true,
+         preserveState: false,
+         ...options,
+      });
+   };
+
    const addReply = () => {
       storeComment(
          {
@@ -80,17 +98,8 @@ export const useCommentStore = defineStore("Comment", () => {
          }
       );
    };
-   /** @description delete comments
-     @param {object} comment
-     @param {{onSuccess: function,onError: function,onFinish: function}} options
-    */
-   const deleteComment = (comment, options) => {
-      router.delete(route("comments.destroy", comment), {
-         preserveScroll: true,
-         preserveState: false,
-         ...options,
-      });
-   };
+
+   const scrollCommentIntoView = (params) => {};
    return {
       /* ------------------------------ exposed state ----------------------------- */
       /* ----------------------------- exposed getters ---------------------------- */
@@ -99,6 +108,7 @@ export const useCommentStore = defineStore("Comment", () => {
       getComments,
       addReply,
       deleteComment,
+      scrollCommentIntoView,
    };
 });
 

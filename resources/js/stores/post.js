@@ -1,7 +1,7 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { useUserStore } from "./user";
-import { useForm } from "@inertiajs/vue3";
+import { router, useForm } from "@inertiajs/vue3";
 import { useCommentStore } from "./comment";
 
 export const usePostStore = defineStore("post", () => {
@@ -29,18 +29,19 @@ export const usePostStore = defineStore("post", () => {
    /*                                 getters                                    */
    /* -------------------------------------------------------------------------- */
    const parentComments = computed(() =>
-      comments.value.filter((c) => !c.parent_id)
+      post.value?.comments?.filter?.((c) => !c.parent_id)
    );
    const parentCommentsCount = computed(
       () => parentComments.value?.length ?? 0
    );
+   const PostMediaCount = computed(() => post.value?.media?.length ?? 0);
    const commentsContainerOffset = computed(() => {
       return (
          commentsContainer.value?.getBoundingClientRect().top + window.scrollY
       );
    });
    const isPostUserTheCurrentUser = computed(() =>
-      userStore.isCurrentUser(postUser)
+      userStore.isCurrentUser(postUser.value)
    );
    /* -------------------------------------------------------------------------- */
    /*                                 actions                                    */
@@ -51,25 +52,25 @@ export const usePostStore = defineStore("post", () => {
    }) => {
       post.value = postParam;
       postUser.value = postParam.user;
+      captionForm.caption = postParam.caption;
       commentsContainer.value = commentsContainerParam;
-      getComments();
       usersCanBeMentioned.value = userStore.getUsers();
    };
-
-   const getComments = () => {
-      commentStore.getComments(
-         {
-            commentable_id: postUser.value.id,
-            commentable_type: POST_MODEL_TYPE,
+   const updatePostObject = (newPost) => {
+      post.value = newPost;
+   };
+   const getComments = async () => {
+      router.reload({
+         only: ["post"],
+         onSuccess: () => {
+            if (!route().params?.commentId) {
+               scrollCommentsContainerToBottom();
+               console.log("success loading comments");
+            }
          },
-         {
-            onSuccess: () => {
-               if (!route().params?.commentId) {
-                  scrollCommentsContainerToBottom();
-               }
-            },
-         }
-      );
+         preserveState: true,
+         preserveScroll: true,
+      });
    };
    const addComment = (params) => {
       if (
@@ -85,7 +86,7 @@ export const usePostStore = defineStore("post", () => {
             commentable_id: post.value.id,
             commentable_type: "App\\Models\\Post",
             body: newComment.value,
-            user_id: userStore.currentUser.value.id,
+            user_id: userStore.currentUser.id,
             parent_id: null,
          },
          {
@@ -99,9 +100,12 @@ export const usePostStore = defineStore("post", () => {
          }
       );
    };
-   const addReply = (params) => {};
-   const handleAddedReply = (params) => {};
-   const scrollCommentIntoView = (params) => {};
+   /**
+    * @description delete the post
+    */
+   function deletePost() {
+      router.delete(route("posts.destroy", post.value), {});
+   }
    /** @description  helper function to scroll comments container to bottom */
    const scrollCommentsContainerToBottom = (params) => {
       setTimeout(() => {
@@ -115,7 +119,7 @@ export const usePostStore = defineStore("post", () => {
 
    /* -------------------------- post caption actions -------------------------- */
    const submitEditCaption = () => {
-      captionForm.patch(route("posts.update", props.post), {
+      captionForm.patch(route("posts.update", post.value), {
          preserveScroll: true,
          preserveState: true,
       });
@@ -128,25 +132,32 @@ export const usePostStore = defineStore("post", () => {
    };
 
    return {
+      //constants
+      POST_MODEL_TYPE,
       //state
       post,
       postUser,
       comments,
       usersCanBeMentioned,
+      newComment,
+      captionForm,
+      isEditingCaption,
+      isAddingComment,
       //getters
       parentComments,
       parentCommentsCount,
       commentsContainerOffset,
       isPostUserTheCurrentUser,
+      PostMediaCount,
       //actions
       initialize,
+      updatePostObject,
       addComment,
       getComments,
-      sendComment,
-      addReply,
-      handleAddedReply,
-      scrollCommentIntoView,
       scrollCommentsContainerToBottom,
+      cancelEditCaption,
+      submitEditCaption,
+      deletePost,
    };
 });
 

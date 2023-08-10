@@ -37,6 +37,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from "vue";
 import axios from "axios";
+import { usePostStore } from "@/stores";
 
 const props = defineProps({
    newText: String,
@@ -44,15 +45,17 @@ const props = defineProps({
 });
 const emits = defineEmits(["addText", "update:newText"]);
 
+const postStore = usePostStore();
 const showMentionList = ref(false);
 const customTextAreaRef = ref();
 const users = ref([]);
+
 const searchChars = ref("");
 const options = ref(null);
 const currentOption = ref(0);
 
 const suggestion = computed(() => {
-   let allSuggestion = users.value.filter((user) =>
+   let allSuggestion = postStore.usersCanBeMentioned.filter((user) =>
       user.username.toLowerCase().includes(searchChars.value.toLowerCase())
    );
    let allMentions = props.newText.match(/@\w+/g);
@@ -101,13 +104,11 @@ function sendOrSelect(e) {
    addToDiv(suggestion.value[currentOption.value]);
 }
 function checkIfUserExist(words) {
-   return users.value.some((usr) => usr.username === words.slice(1));
+   return postStore.usersCanBeMentioned.some(
+      (usr) => usr.username === words.slice(1)
+   );
 }
-async function fetchUsername() {
-   await axios.get(route("api.user.get.users.name")).then((res) => {
-      users.value = res.data.data;
-   });
-}
+
 watch(
    () => props.newText,
    (newVal, oldVal) => {
@@ -123,5 +124,4 @@ watch(
 watch(currentOption, () => {
    options.value[currentOption.value].scrollIntoView();
 });
-onMounted(() => fetchUsername());
 </script>

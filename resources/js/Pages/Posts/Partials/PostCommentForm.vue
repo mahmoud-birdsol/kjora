@@ -1,52 +1,17 @@
 <script setup>
+import EmojiPickerElement from "@/Components/EmojiPickerElement.vue";
+import MentionTextArea from "@/Components/MentionTextArea.vue";
+import { usePostStore } from "@/stores";
 import { FaceSmileIcon } from "@heroicons/vue/24/outline";
 import { PaperAirplaneIcon } from "@heroicons/vue/24/solid";
-import EmojiPickerElement from "@/Components/EmojiPickerElement.vue";
-import { usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
-import axios from "axios";
-import MentionTextArea from "@/Components/MentionTextArea.vue";
 
-const props = defineProps(["postId", "commentsContainer"]);
-const emits = defineEmits(["addComment"]);
-
-const newComment = ref("");
+const postStore = usePostStore();
 const commentInput = ref();
-const isAddingComment = ref(false);
 const showEmojiPicker = ref(false);
-const currentUser = usePage().props.auth.user;
-// store new comments in database
-function sendComment() {
-   axios
-      .post(route("api.gallery.comments.store"), {
-         commentable_id: props.postId,
-         commentable_type: "App\\Models\\Post",
-         body: newComment.value,
-         user_id: currentUser.id,
-         parent_id: null,
-      })
-      .then((res) => {
-         emits("addComment");
-      })
-      .catch((err) => console.error(err))
-      .finally(() => {
-         isAddingComment.value = false;
-         newComment.value = "";
-      });
-}
-
-// add new comment
-function addComment() {
-   if (isAddingComment.value) {
-      return;
-   }
-   if (!newComment.value || newComment.value.trim() === "") return;
-   isAddingComment.value = true;
-   sendComment();
-}
 
 function onSelectEmoji(emoji) {
-   newComment.value += emoji;
+   postStore.newComment += emoji;
 }
 </script>
 <template>
@@ -68,18 +33,20 @@ function onSelectEmoji(emoji) {
    </OnClickOutside>
 
    <MentionTextArea
-      v-model:newText="newComment"
-      @addText="addComment"
+      v-model:newText="postStore.newComment"
+      @addText="postStore.addComment"
       :ref="commentInput"
    />
    <button
-      @click="(e) => addComment()"
-      :disabled="isAddingComment"
+      @click="(e) => postStore.addComment()"
+      :disabled="postStore.isAddingComment"
       class="p-1 group"
    >
       <PaperAirplaneIcon
          class="w-5 group-hover:text-neutral-700 rtl:rotate-180"
-         :class="isAddingComment ? 'text-neutral-200' : 'text-neutral-400'"
+         :class="
+            postStore.isAddingComment ? 'text-neutral-200' : 'text-neutral-400'
+         "
       />
    </button>
 </template>

@@ -1,10 +1,4 @@
 <script setup>
-import { FaceSmileIcon, TrashIcon } from "@heroicons/vue/24/outline";
-import { PaperAirplaneIcon } from "@heroicons/vue/24/solid";
-import { Link, router, usePage } from "@inertiajs/vue3";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime.js";
-import { computed, onBeforeMount, onMounted, ref, watch } from "vue";
 import Avatar from "@/Components/Avatar.vue";
 import ConfirmationModal from "@/Components/ConfirmationModal.vue";
 import DateTranslation from "@/Components/DateTranslation.vue";
@@ -13,13 +7,17 @@ import LikeButton from "@/Components/LikeButton.vue";
 import LikesModal from "@/Components/LikesModal.vue";
 import MentionTextArea from "@/Components/MentionTextArea.vue";
 import { useCommentStore, usePostStore } from "@/stores";
-import { useAxios } from "@vueuse/integrations";
+import { FaceSmileIcon, TrashIcon } from "@heroicons/vue/24/outline";
+import { PaperAirplaneIcon } from "@heroicons/vue/24/solid";
+import { Link, usePage } from "@inertiajs/vue3";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime.js";
+import { computed, onBeforeMount, onMounted, ref, watch } from "vue";
 
 const props = defineProps(["comment"]);
 onBeforeMount(() => {
    dayjs.extend(relativeTime);
 });
-const emit = defineEmits(["addedReply"]);
 
 const commentStore = useCommentStore();
 const postStore = usePostStore();
@@ -131,31 +129,8 @@ function addReply() {
          },
       }
    );
-
-   emit("addedReply");
 }
 
-// function getParentId() {
-//     return isParentComment ? props.comment.id : props.comment.parent_id
-// }
-//done
-function sendReply() {
-   axios
-      .post(route("api.gallery.comments.store"), {
-         commentable_id: props.comment.commentable_id,
-         commentable_type: props.comment.commentable_type,
-         body: newReply.value,
-         user_id: currentUser.id,
-         //infinte depth
-         parent_id: props.comment.id,
-      })
-      .then((res) => {
-         newReply.value = "";
-         isSending.value = false;
-      })
-      .catch((err) => console.error(err));
-}
-//done
 function deleteComment() {
    showDeleteCommentModal.value = false;
    commentStore.deleteComment(props.comment, {
@@ -163,22 +138,13 @@ function deleteComment() {
          postStore.getComments();
       },
    });
-   router.delete(route("comments.destroy", props.comment), {
-      preserveScroll: true,
-      preserveState: false,
-   });
 }
 
 function handleReplyClicked(e) {
    showReplyInput.value = true;
    setTimeout(() => {
-      // replyInput.value.focus()
+      replyInput.value.focus();
    }, 0);
-}
-
-function handleAddedReply() {
-   emit("addedReply");
-   // showReplies.value = true
 }
 
 function onSelectEmoji(emoji) {
@@ -215,7 +181,7 @@ function toggleEmojiPicker(e) {
    <div
       ref="commentsComp"
       :data-comment-id="comment.id"
-      class="grid grid-cols-[min-content_1fr] w-full justify-start gap-4 px-6 pt-2"
+      class="grid grid-cols-[min-content_1fr] w-full justify-start gap-4 pt-2"
       :class="comment.parent_id ? 'bg-white' : ''"
    >
       <!-- image col 1 -->
@@ -356,11 +322,7 @@ function toggleEmojiPicker(e) {
          <!-- replies related to this comment row 4 -->
          <div v-show="showReplies" class="mt-2">
             <template v-for="(reply, index) in comment.replies" :key="reply.id">
-               <Comment
-                  @addedReply="handleAddedReply"
-                  :comment="reply"
-                  :users="users"
-               />
+               <Comment :comment="reply" />
             </template>
          </div>
          <!-- new reply form row 5 -->
