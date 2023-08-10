@@ -3,8 +3,11 @@ import { Splide, SplideSlide, SplideTrack } from "@splidejs/vue-splide";
 import { onMounted, ref } from "vue";
 import { Link } from "@inertiajs/vue3";
 import "@splidejs/vue-splide/css";
-import { XMarkIcon, ArrowDownTrayIcon } from "@heroicons/vue/24/outline";
-import ArrowRight from "@/Components/Icons/ArrowRight.vue";
+import {
+   XMarkIcon,
+   ArrowDownTrayIcon,
+   ChevronRightIcon,
+} from "@heroicons/vue/24/outline";
 import Modal from "@/Components/Modal.vue";
 import Avatar from "@/Components/Avatar.vue";
 import DateTranslation from "@/Components/DateTranslation.vue";
@@ -158,7 +161,7 @@ function handleSplideActive(e) {
                      aria-label="Next slide"
                      aria-controls="splide01-track"
                   >
-                     <ArrowRight />
+                     <ChevronRightIcon class="w-4 text-white" />
                   </button>
                   <button
                      class="splide__arrow splide__arrow--next"
@@ -166,7 +169,7 @@ function handleSplideActive(e) {
                      aria-label="Previous slide"
                      aria-controls="splide01-track"
                   >
-                     <ArrowRight />
+                     <ChevronRightIcon class="w-4 text-white" />
                   </button>
                </div>
                <SplideTrack id="splide01-track">
