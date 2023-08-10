@@ -120,13 +120,13 @@ function addReply() {
       },
       {
          onSuccess: () => {
-            postStore.getComments();
             newReply.value = "";
             showReplyInput.value = false;
          },
          onFinish: () => {
             isSending.value = false;
          },
+         only: ["post"],
       }
    );
 }
@@ -134,9 +134,7 @@ function addReply() {
 function deleteComment() {
    showDeleteCommentModal.value = false;
    commentStore.deleteComment(props.comment, {
-      onSuccess: () => {
-         postStore.getComments();
-      },
+      only: ["post"],
    });
 }
 

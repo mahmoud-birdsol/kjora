@@ -49,31 +49,25 @@ export const useCommentStore = defineStore("Comment", () => {
             user_id: number,
             parent_id?: number,
     * }} comment
-            @param {{onSuccess: function,onError: function,onFinish: function}} options
+            @param {import("@inertiajs/core/types/types").VisitOptions} options
     */
    // TODO refactor this to use useAxios composable
    const storeComment = (comment, options = {}) => {
-      axios
-         .post(route("api.gallery.comments.store"), comment)
-         .then((res) => {
-            options?.onSuccess?.();
-         })
-         .catch((err) => {
-            console.error(err);
-            options?.onError?.();
-         })
-         .finally(() => {
-            options?.onFinish?.();
-         });
+      console.log("storing comment");
+      router.post(route("comments.store"), comment, {
+         preserveScroll: true,
+         preserveState: true,
+         ...options,
+      });
    };
    /** @description delete comments
      @param {object} comment
-     @param {{onSuccess: function,onError: function,onFinish: function}} options
+     @param {import("@inertiajs/core/types/types").VisitOptions} options
     */
    const deleteComment = (comment, options) => {
       router.delete(route("comments.destroy", comment), {
          preserveScroll: true,
-         preserveState: false,
+         preserveState: true,
          ...options,
       });
    };

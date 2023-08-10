@@ -150,7 +150,7 @@ watch(
             <div
                ref="commentsContainer"
                class="flex flex-col gap-4 w-full max-h-[500px] px-6 hideScrollBar overflow-auto"
-               v-if="postStore.parentCommentsCount"
+               v-show="postStore.parentCommentsCount"
             >
                <template
                   v-for="comment in postStore.parentComments"

@@ -55,23 +55,12 @@ export const usePostStore = defineStore("post", () => {
       captionForm.caption = postParam.caption;
       commentsContainer.value = commentsContainerParam;
       usersCanBeMentioned.value = userStore.getUsers();
+      scrollCommentsContainerToBottom();
    };
    const updatePostObject = (newPost) => {
       post.value = newPost;
    };
-   const getComments = async () => {
-      router.reload({
-         only: ["post"],
-         onSuccess: () => {
-            if (!route().params?.commentId) {
-               scrollCommentsContainerToBottom();
-               console.log("success loading comments");
-            }
-         },
-         preserveState: true,
-         preserveScroll: true,
-      });
-   };
+
    const addComment = (params) => {
       if (
          isAddingComment.value ||
@@ -84,19 +73,22 @@ export const usePostStore = defineStore("post", () => {
       commentStore.storeComment(
          {
             commentable_id: post.value.id,
-            commentable_type: "App\\Models\\Post",
+            commentable_type: POST_MODEL_TYPE,
             body: newComment.value,
             user_id: userStore.currentUser.id,
             parent_id: null,
          },
          {
             onSuccess: () => {
-               getComments();
+               newComment.value = "";
+               if (!route().params?.commentId) {
+                  scrollCommentsContainerToBottom();
+               }
             },
             onFinish: () => {
                isAddingComment.value = false;
-               newComment.value = "";
             },
+            only: ["post"],
          }
       );
    };
@@ -107,7 +99,7 @@ export const usePostStore = defineStore("post", () => {
       router.delete(route("posts.destroy", post.value), {});
    }
    /** @description  helper function to scroll comments container to bottom */
-   const scrollCommentsContainerToBottom = (params) => {
+   const scrollCommentsContainerToBottom = () => {
       setTimeout(() => {
          commentsContainer.value.scrollTo({
             top: commentsContainer.value.scrollHeight,
@@ -153,7 +145,6 @@ export const usePostStore = defineStore("post", () => {
       initialize,
       updatePostObject,
       addComment,
-      getComments,
       scrollCommentsContainerToBottom,
       cancelEditCaption,
       submitEditCaption,
