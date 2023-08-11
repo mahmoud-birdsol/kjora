@@ -398,7 +398,7 @@ Route::middleware([
     */
    Route::delete('comments/{comment}', DeleteCommentController::class)->name('comments.destroy');
 
-   Route::post('/comment/store', function (CommentStoreRequest $request) {
+   Route::post('/comments/store', function (CommentStoreRequest $request) {
       $comment = Comment::create($request->validated());
 
       $modelType = (new ReflectionClass($request->input('commentable_type')))->newInstance();

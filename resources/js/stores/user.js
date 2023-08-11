@@ -1,12 +1,13 @@
 import { usePage } from "@inertiajs/vue3";
 import { defineStore, acceptHMRUpdate } from "pinia";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 
 export const useUserStore = defineStore("User", () => {
    /* -------------------------------------------------------------------------- */
    /*                                  state                                     */
    /* -------------------------------------------------------------------------- */
-
+   /** @type {import("vue").Ref<{username:string,id:number}[]>} */
+   const users = ref([]);
    /* -------------------------------------------------------------------------- */
    /*                                 getters                                    */
    /* -------------------------------------------------------------------------- */
@@ -21,16 +22,19 @@ export const useUserStore = defineStore("User", () => {
     * @description get all users except the current user ,as {username,id}
     * @returns {{username:string,id:number}[]}
     */
-   const getUsers = async () => {
-      try {
-         const response = await axios.get(route("api.user.get.users.name"));
-         return response.data.data;
-      } catch (error) {
-         console.error(error);
-      }
+   const getUsers = () => {
+      axios
+         .get(route("api.user.get.users.name"))
+         .then((response) => {
+            users.value = response.data.data;
+         })
+         .catch((error) => {
+            console.error(error);
+         });
    };
    return {
       /* ------------------------------ exposed state ----------------------------- */
+      users,
       /* ----------------------------- exposed getters ---------------------------- */
       currentUser,
       /* ----------------------------- exposed actions ---------------------------- */

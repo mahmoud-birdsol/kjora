@@ -1,8 +1,8 @@
-import { defineStore, acceptHMRUpdate } from "pinia";
-import { ref, computed, watch } from "vue";
-import { useUserStore } from "./user";
 import { router, useForm } from "@inertiajs/vue3";
+import { acceptHMRUpdate, defineStore } from "pinia";
+import { computed, ref } from "vue";
 import { useCommentStore } from "./comment";
+import { useUserStore } from "./user";
 
 export const usePostStore = defineStore("post", () => {
    const POST_MODEL_TYPE = "App\\Models\\Post";
@@ -14,8 +14,8 @@ export const usePostStore = defineStore("post", () => {
    const post = ref({});
    const postUser = ref({});
    const comments = ref([]);
+   /** @type {import("vue").Ref<HTMLDivElement>} */
    const commentsContainer = ref(null);
-   const usersCanBeMentioned = ref([]);
    const isEditingCaption = ref(false);
    const isAddingComment = ref(false);
    const newComment = ref("");
@@ -28,6 +28,7 @@ export const usePostStore = defineStore("post", () => {
    /* -------------------------------------------------------------------------- */
    /*                                 getters                                    */
    /* -------------------------------------------------------------------------- */
+   const usersCanBeMentioned = computed(() => userStore.users);
    const parentComments = computed(() =>
       post.value?.comments?.filter?.((c) => !c.parent_id)
    );
@@ -54,7 +55,7 @@ export const usePostStore = defineStore("post", () => {
       postUser.value = postParam.user;
       captionForm.caption = postParam.caption;
       commentsContainer.value = commentsContainerParam;
-      usersCanBeMentioned.value = userStore.getUsers();
+      userStore.getUsers();
       scrollCommentsContainerToBottom();
    };
    const updatePostObject = (newPost) => {
@@ -130,12 +131,13 @@ export const usePostStore = defineStore("post", () => {
       post,
       postUser,
       comments,
-      usersCanBeMentioned,
       newComment,
       captionForm,
       isEditingCaption,
       isAddingComment,
+      commentsContainer,
       //getters
+      usersCanBeMentioned,
       parentComments,
       parentCommentsCount,
       commentsContainerOffset,

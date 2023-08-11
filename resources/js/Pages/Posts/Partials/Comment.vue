@@ -35,6 +35,7 @@ const EmojiPickerClass = ref("");
 const showDeleteCommentModal = ref(false);
 const commentsLikeCount = ref(props.comment.likes_count);
 const showLikesModal = ref(false);
+/** @type{import('vue').Ref<HTMLElement>} */
 const commentsComp = ref(null);
 
 const isCurrentUser = currentUser.id === props.comment.user.id;
@@ -44,6 +45,10 @@ const isParentComment = !props.comment.parent_id;
 onMounted(() => {
    let id = route().params?.commentId;
    if (props.comment.id === +id) {
+      postStore.commentsContainer.scrollIntoView({
+         behavior: "smooth",
+         block: "center",
+      });
       commentsComp.value.scrollIntoView({
          behavior: "smooth",
          block: "center",

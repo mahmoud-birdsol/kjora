@@ -1,12 +1,11 @@
 <script setup>
 import Crop from "@/Components/Crop.vue";
-import CropIcon from "@/Components/Icons/CropIcon.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import Modal from "@/Components/Modal.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { PlusCircleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { usePage } from "@inertiajs/vue3";
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import FadeInTransition from "@/Components/FadeInTransition.vue";
 import Title from "@/Components/Title.vue";
 
@@ -65,12 +64,12 @@ const fileInput = ref(null);
 const isLoading = ref(false);
 const isDisabled = ref(false);
 const caption = ref("");
-const cropFile = ref(null);
+const cropFile = ref([]);
 const openCropModal = ref(false);
 const num = ref(0);
 const showAsError = ref(false);
-const maximumUploadNumberOfFiles = computed(
-   () => usePage().props.maximumUploadNumberOfFiles
+const maximumUploadNumberOfFiles = ref(
+   usePage().props.maximumUploadNumberOfFiles
 );
 let postId = null;
 
@@ -88,7 +87,7 @@ const updateFilesPreview = () => {
       return { file: file, id: _.uniqueId("f") };
    });
 
-   newFiles = truncateFilesToMaxAllowedNUmber(newFiles);
+   newFiles = checkAvailableSize(newFiles);
    newFiles?.forEach(({ file, id }, i) => {
       const url = URL.createObjectURL(file);
 
@@ -102,7 +101,7 @@ const updateFilesPreview = () => {
       showPreview.value = true;
    });
 };
-function truncateFilesToMaxAllowedNUmber(newFiles) {
+function checkAvailableSize(newFiles) {
    let totalFilesNum = newFiles.length + filesData.value.length;
    if (totalFilesNum > maximumUploadNumberOfFiles.value) {
       let availableSize =
@@ -117,7 +116,7 @@ const removeFile = ({ file, url, id }) => {
    filesData.value.splice(fileDataIndex, 1);
    filesData.value.length === 0 ? (showPreview.value = false) : null;
    if (cropFile.value.id === id) {
-      cropFile.value = null;
+      cropFile.value = [];
       openCropModal.value = false;
    }
 };
@@ -204,7 +203,7 @@ function changeFiles(file, url, id) {
    let fileObjIndex = filesData.value.findIndex((f) => f.id === id);
    filesData.value[fileObjIndex].url = url;
    filesData.value[fileObjIndex].file = file;
-   cropFile.value = null;
+   cropFile.value = [];
 }
 let showCropModal = (file) => {
    cropFile.value = file;
@@ -304,8 +303,9 @@ let showCropModal = (file) => {
                               <XMarkIcon class="w-5 h-5 text-stone-800" />
                            </div>
                         </button>
+
                         <button
-                           class="absolute top-0 left-0 bg-white bg-opacity-90 rounded-br-xl"
+                           class="absolute top-0 left-0 p-1 bg-white bg-opacity-90 rounded-br-xl"
                            @click="showCropModal(fileData)"
                            v-if="
                               fileData.url.startsWith('data:image') ||
@@ -315,7 +315,10 @@ let showCropModal = (file) => {
                            <div
                               class="flex flex-col items-start justify-center h-full p-1 opacity-100"
                            >
-                              <CropIcon class="w-4" />
+                              <font-awesome-icon
+                                 icon="crop-simple"
+                                 class="text-xs text-black/70"
+                              />
                            </div>
                         </button>
                      </div>

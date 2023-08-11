@@ -105,7 +105,7 @@ function sendOrSelect(e) {
 }
 function checkIfUserExist(words) {
    return postStore.usersCanBeMentioned.some(
-      (usr) => usr.username === words.slice(1)
+      (user) => user.username === words.slice(1)
    );
 }
 

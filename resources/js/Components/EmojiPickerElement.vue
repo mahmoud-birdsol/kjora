@@ -1,5 +1,5 @@
 <template>
-   <EmojiPicker @select="onSelectEmoji" />
+   <!-- <EmojiPicker @select="onSelectEmoji" /> -->
 </template>
 
 <script setup>

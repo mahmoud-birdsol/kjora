@@ -23,8 +23,6 @@ export const useCommentStore = defineStore("Comment", () => {
                commentable_type: string,}} data
                    @param {{onSuccess: function,onError: function,onFinish: function}} options
     */
-
-   // TODO refactor this to use useAxios composable
    const getComments = async (data, options) => {
       let comments;
       try {
@@ -51,9 +49,7 @@ export const useCommentStore = defineStore("Comment", () => {
     * }} comment
             @param {import("@inertiajs/core/types/types").VisitOptions} options
     */
-   // TODO refactor this to use useAxios composable
    const storeComment = (comment, options = {}) => {
-      console.log("storing comment");
       router.post(route("comments.store"), comment, {
          preserveScroll: true,
          preserveState: true,

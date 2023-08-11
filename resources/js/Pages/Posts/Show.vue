@@ -41,7 +41,6 @@ watch(
    () => props.post,
    (newPost) => {
       postStore.updatePostObject(newPost);
-      console.log(newPost);
    }
 );
 </script>
