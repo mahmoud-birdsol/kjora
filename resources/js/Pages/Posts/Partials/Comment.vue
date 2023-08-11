@@ -6,7 +6,7 @@ import EmojiPickerElement from "@/Components/EmojiPickerElement.vue";
 import LikeButton from "@/Components/LikeButton.vue";
 import LikesModal from "@/Components/LikesModal.vue";
 import MentionTextArea from "@/Components/MentionTextArea.vue";
-import { useCommentStore, usePostStore } from "@/stores";
+import { useCommentStore, usePostStore, useUserStore } from "@/stores";
 import { FaceSmileIcon, TrashIcon } from "@heroicons/vue/24/outline";
 import { PaperAirplaneIcon } from "@heroicons/vue/24/solid";
 import { Link, usePage } from "@inertiajs/vue3";
@@ -21,6 +21,7 @@ onBeforeMount(() => {
 
 const commentStore = useCommentStore();
 const postStore = usePostStore();
+const userStore = useUserStore();
 const currentUser = usePage().props.auth.user;
 const replyInput = ref(null);
 const showReplies = ref(false);
@@ -93,11 +94,7 @@ const handleBody = computed(() => {
    return allWords
       .map((word) => {
          if (!word.startsWith("@")) return word;
-         if (
-            !postStore.usersCanBeMentioned.some(
-               (user) => user.username === word.slice(1)
-            )
-         )
+         if (!userStore.users.some((user) => user.username === word.slice(1)))
             return `${word}`;
          else
             return `<a href="/player/name/${word.slice(

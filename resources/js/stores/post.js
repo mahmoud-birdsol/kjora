@@ -28,7 +28,9 @@ export const usePostStore = defineStore("post", () => {
    /* -------------------------------------------------------------------------- */
    /*                                 getters                                    */
    /* -------------------------------------------------------------------------- */
-   const usersCanBeMentioned = computed(() => userStore.users);
+   const usersCanBeMentioned = computed(() =>
+      userStore.users.filter((user) => user.id !== userStore.currentUser.id)
+   );
    const parentComments = computed(() =>
       post.value?.comments?.filter?.((c) => !c.parent_id)
    );
