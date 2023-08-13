@@ -7,8 +7,8 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { XMarkIcon } from "@heroicons/vue/24/outline";
 import { usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
-import FadeInTransition from "./FadeInTransition.vue";
-import Title from "./Title.vue";
+import FadeInTransition from "@/Components/FadeInTransition.vue";
+import Title from "@/Components/Title.vue";
 import useGetAllowedUploadFiles from "@/Composables/useGetAllowedUploadFiles.js";
 const props = defineProps({
    modelValue: {
