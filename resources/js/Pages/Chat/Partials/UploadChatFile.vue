@@ -1,14 +1,15 @@
 <script setup>
 import Crop from "@/Components/Crop.vue";
 import FadeInTransition from "@/Components/FadeInTransition.vue";
+import InputUpload from "@/Components/Forms/InputUpload.vue";
 import Modal from "@/Components/Modal.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { XMarkIcon } from "@heroicons/vue/24/outline";
-import { usePage } from "@inertiajs/vue3";
-import { ref } from "vue";
-import VueEasyLightbox from "vue-easy-lightbox";
-import InputUpload from "@/Components/Forms/InputUpload.vue";
 import useGetAllowedUploadFiles from "@/Composables/useGetAllowedUploadFiles.js";
+import { XMarkIcon } from "@heroicons/vue/24/outline";
+import { PlayIcon } from "@heroicons/vue/24/solid";
+import { usePage } from "@inertiajs/vue3";
+import { ref, computed } from "vue";
+import VueEasyLightbox from "vue-easy-lightbox";
 const props = defineProps({
    modelValue: {
       required: false,
@@ -59,7 +60,6 @@ const emit = defineEmits(["close", "update:modelValue", "reload", "upload"]);
 
 const showPreview = ref(false);
 const filesData = ref([]);
-const photoInput = ref(null);
 const isLoading = ref(false);
 const isDisabled = ref(false);
 const num = ref(0);
@@ -67,8 +67,8 @@ const visibleRef = ref(false);
 const imgsRef = ref(null);
 const cropFile = ref([]);
 const openModal = ref(false);
-const maximumUploadNumberOfFiles = ref(
-   usePage().props.maximumUploadNumberOfFiles
+const maximumUploadNumberOfFiles = computed(
+   () => usePage().props.maximumUploadNumberOfFiles
 );
 
 const showLightBox = (url, type) => {
@@ -163,12 +163,19 @@ function changeFiles(file, url, id) {
                <div class="relative grid grid-cols-3 gap-2">
                   <template v-for="(file, index) in filesData" :key="index">
                      <div class="relative">
-                        <template v-if="file.type === 'video'">
+                        <template v-if="file.isVideo">
                            <video
                               :src="file.previewUrl"
                               :alt="file.name"
                               class="object-cover w-full h-full rounded-lg aspect-square"
                            />
+                           <div
+                              class="absolute inset-0 flex items-center justify-center gap-2 text-xs text-gray-100"
+                           >
+                              <PlayIcon
+                                 class="h-10 filter-[drop-shadow(1px_1px_1px_rgb(0_0_0/.4)]"
+                              />
+                           </div>
                         </template>
                         <template v-else>
                            <img
@@ -178,7 +185,7 @@ function changeFiles(file, url, id) {
                               @click.stop="showLightBox(file.url, file.type)"
                            />
                            <p
-                              v-if="file.type === 'pdf' || file.type === 'word'"
+                              v-if="file.isPdf || file.isWord"
                               class="text-xs text-center text-gray-400 truncate"
                            >
                               {{ file.name }}

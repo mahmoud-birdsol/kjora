@@ -1,15 +1,17 @@
 <script setup>
 import Crop from "@/Components/Crop.vue";
+import FadeInTransition from "@/Components/FadeInTransition.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import InputUpload from "@/Components/Forms/InputUpload.vue";
 import Modal from "@/Components/Modal.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { XMarkIcon } from "@heroicons/vue/24/outline";
-import { usePage } from "@inertiajs/vue3";
-import { ref } from "vue";
-import FadeInTransition from "@/Components/FadeInTransition.vue";
 import Title from "@/Components/Title.vue";
 import useGetAllowedUploadFiles from "@/Composables/useGetAllowedUploadFiles.js";
+import { XMarkIcon } from "@heroicons/vue/24/outline";
+import { PlayIcon } from "@heroicons/vue/24/solid";
+import { usePage } from "@inertiajs/vue3";
+import { ref, computed } from "vue";
+
 const props = defineProps({
    modelValue: {
       required: false,
@@ -68,10 +70,11 @@ const cropFile = ref([]);
 const openCropModal = ref(false);
 const countUploadFiles = ref(0);
 const showAsError = ref(false);
-const maximumUploadNumberOfFiles = ref(
-   usePage().props.maximumUploadNumberOfFiles
-);
 let postId = null;
+
+const maximumUploadNumberOfFiles = computed(
+   () => usePage().props.maximumUploadNumberOfFiles
+);
 
 const removeFile = ({ id }) => {
    let fileDataIndex = filesData.value.findIndex((f) => f.id === id);
@@ -112,13 +115,13 @@ const uploadFiles = async () => {
 function sendPostMedia(postId) {
    const promises = filesData.value.slice(1).map((fileData) => {
       const { file } = fileData;
-      if (file.type.startsWith("image") || file.type.startsWith("video")) {
+      if (fileData.isImage || fileData.isVideo) {
          return axios
             .postForm(route("api.gallery.upload", postId), {
                gallery: file,
             })
             .catch((error) => {
-               handleError(error, file);
+               handleError(error, fileData);
             });
       }
    });
@@ -224,12 +227,19 @@ const loadFiles = (newFiles, newFilesData) => {
                <div class="relative grid grid-cols-3 gap-2">
                   <template v-for="(fileData, index) in filesData" :key="index">
                      <div class="relative">
-                        <template v-if="filesData.type === 'video'">
+                        <template v-if="fileData.isVideo">
                            <video
                               :src="fileData.previewUrl"
                               :alt="fileData.name"
                               class="object-cover w-full h-full rounded-lg aspect-square"
                            />
+                           <div
+                              class="absolute inset-0 flex items-center justify-center gap-2 text-xs text-gray-100"
+                           >
+                              <PlayIcon
+                                 class="h-10 filter-[drop-shadow(1px_1px_1px_rgb(0_0_0/.4)]"
+                              />
+                           </div>
                         </template>
                         <template v-else>
                            <img

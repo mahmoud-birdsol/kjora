@@ -2,14 +2,20 @@
 import { useObjectUrl } from "@vueuse/core";
 import { ref, computed } from "vue";
 import { PlusCircleIcon } from "@heroicons/vue/24/outline";
+
 const props = defineProps({
-   type: Boolean,
    multiple: {
+      type: Boolean,
       default: false,
    },
-   isLoading: Boolean,
-   isDisabled: Boolean,
-   multiple: Boolean,
+   isLoading: {
+      type: Boolean,
+      default: false,
+   },
+   isDisabled: {
+      type: Boolean,
+      default: false,
+   },
    accept: [Array, String],
 });
 
@@ -21,16 +27,17 @@ const files = ref([]);
 const acceptTypes = {
    image: "image/*",
    video: "video/*",
-   pdf: ".pdf",
-   word: ".doc,.docx",
+   pdf: "application/pdf",
+   word: ".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+   excel: ".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel",
 };
 
 const inputAcceptedTypes = computed(() => {
-   if (typeof props.accept === "Array") {
+   if (typeof props.accept === "object") {
       return props.accept.map((type) => acceptTypes[type]).join(",");
    }
-   if (typeof props.accept === "String") {
-      props.accept
+   if (typeof props.accept === "string") {
+      return props.accept
          .split(",")
          .map((type) => acceptTypes[type])
          .join(",");
@@ -50,6 +57,7 @@ function handleFileChange(e) {
          id: _.uniqueId("f"),
          url: url.value,
          name: file.name,
+         size: getFileSize(file),
          ...getFileMetaData(file, url.value),
       });
    });
@@ -113,7 +121,7 @@ function getFileMetaData(file, url) {
          break;
    }
    return {
-      fileType,
+      type: fileType,
       isWord,
       isPdf,
       isImage,
