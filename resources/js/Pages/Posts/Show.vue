@@ -25,9 +25,9 @@ onBeforeMount(() => {
 const props = defineProps({
    post: Object,
 });
+
 const postStore = usePostStore();
 const commentsContainer = ref(null);
-//add to the store
 const showLikesModal = ref(false);
 
 onMounted(() => {

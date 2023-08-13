@@ -91,6 +91,7 @@ export const useCommentStore = defineStore("Comment", () => {
 
    const scrollCommentIntoView = (params) => {};
    return {
+      COMMENT_MODEL_TYPE,
       /* ------------------------------ exposed state ----------------------------- */
       /* ----------------------------- exposed getters ---------------------------- */
       /* ----------------------------- exposed actions ---------------------------- */

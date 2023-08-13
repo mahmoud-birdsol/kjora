@@ -22,12 +22,9 @@ onBeforeMount(() => {
 const commentStore = useCommentStore();
 const postStore = usePostStore();
 const userStore = useUserStore();
-const currentUser = usePage().props.auth.user;
-const replyInput = ref(null);
+
+const replyInputRef = ref(null);
 const showReplies = ref(false);
-const hasReplies = computed(
-   () => props.comment.replies && props.comment.replies.length > 0
-);
 const newReply = ref("");
 const showReplyInput = ref(false);
 const isSending = ref(false);
@@ -38,10 +35,6 @@ const commentsLikeCount = ref(props.comment.likes_count);
 const showLikesModal = ref(false);
 /** @type{import('vue').Ref<HTMLElement>} */
 const commentsComp = ref(null);
-
-const isCurrentUser = currentUser.id === props.comment.user.id;
-const isPublic = usePage().url.includes("public/posts");
-const isParentComment = !props.comment.parent_id;
 
 onMounted(() => {
    let id = route().params?.commentId;
@@ -58,17 +51,23 @@ onMounted(() => {
    }
 });
 
-defineExpose({
-   showReplies,
-});
-
 watch(
    () => props.comment.replies.length,
    (newLength, oldLength) => {
-      showReplies.value = true;
+      if (newLength > 0) {
+         showReplies.value = true;
+      }
    }
 );
 
+const hasReplies = computed(() => props.comment?.replies?.length > 0);
+const isCommentUserTheCurrentUser = computed(
+   () => userStore.currentUser.id === props.comment.user.id
+);
+const isParentComment = computed(() => !props.comment.parent_id);
+const isPublic = computed(() => usePage().url.includes("public/posts"));
+
+/* --------------------------------- classes -------------------------------- */
 const guidesClassesBefore = computed(() => {
    return hasReplies.value
       ? "before:absolute  ltr:before:-left-9 rtl:before:-right-9   before:w-px   before:bg-stone-200  before:z-[1] before:top-0 before:bottom-[8px]   "
@@ -87,7 +86,8 @@ const guidesClassesAfter2 = computed(() => {
       : "";
 });
 
-const handleBody = computed(() => {
+/* --------------------------------- actions -------------------------------- */
+const commentBodyWithMentions = computed(() => {
    const commentBody = props.comment.body;
    if (!commentBody.includes("@")) return props.comment.body;
    const allWords = commentBody.split(" ");
@@ -103,21 +103,16 @@ const handleBody = computed(() => {
       })
       .join(" ");
 });
-function toggleRepliesView() {
-   showReplies.value = !showReplies.value;
-}
 
 function addReply() {
    if (!newReply.value || newReply.value.trim() === "") return;
    isSending.value = true;
-   // sendReply();
    commentStore.storeComment(
       {
          commentable_id: props.comment.commentable_id,
          commentable_type: props.comment.commentable_type,
          body: newReply.value,
-         user_id: currentUser.id,
-         //infinte depth
+         user_id: userStore.currentUser.id,
          parent_id: props.comment.id,
       },
       {
@@ -143,7 +138,7 @@ function deleteComment() {
 function handleReplyClicked(e) {
    showReplyInput.value = true;
    setTimeout(() => {
-      replyInput.value.focus();
+      replyInputRef.value.focus();
    }, 0);
 }
 
@@ -154,13 +149,12 @@ function onSelectEmoji(emoji) {
 
 // hide the input field when blur if it is empty
 function handleBlur(e) {
-   showReplyInput.value = false;
-   // if ((showReplyInput.value = true)) {
-
-   //    !newReply.value || newReply.value === ""
-   //       ? (showReplyInput.value = false)
-   //       : null;
-   // }
+   // showReplyInput.value = false;
+   if ((showReplyInput.value = true)) {
+      !newReply.value || newReply.value === ""
+         ? (showReplyInput.value = false)
+         : null;
+   }
 }
 
 function toggleEmojiPicker(e) {
@@ -233,7 +227,7 @@ function toggleEmojiPicker(e) {
          <div class="w-full">
             <p
                class="w-full text-sm break-all whitespace-pre-wrap text-stone-800"
-               v-html="handleBody"
+               v-html="commentBodyWithMentions"
             />
          </div>
          <!-- add reply & like buttons row 3 -->
@@ -242,7 +236,7 @@ function toggleEmojiPicker(e) {
          >
             <template v-if="!isPublic">
                <button
-                  v-if="isCurrentUser"
+                  v-if="isCommentUserTheCurrentUser"
                   @click="showDeleteCommentModal = true"
                   class="p-1 transition-all duration-150 pis-0 enabled:hover:underline hover:underline-offset-4"
                >
@@ -269,7 +263,6 @@ function toggleEmojiPicker(e) {
                </button>
 
                <div class="flex items-center">
-                  <!-- <span class="text-sm">{{ commentsLikeCount }}</span> -->
                   <button
                      v-show="commentsLikeCount > 0"
                      @click="showLikesModal = true"
@@ -282,10 +275,10 @@ function toggleEmojiPicker(e) {
                      />
                   </button>
                   <LikeButton
-                     :can-like="!isCurrentUser"
+                     :can-like="!isCommentUserTheCurrentUser"
                      :isLiked="comment?.is_liked"
                      :likeable_id="comment.id"
-                     :likeable_type="'App\\Models\\Comment'"
+                     :likeable_type="commentStore.COMMENT_MODEL_TYPE"
                      @like="commentsLikeCount++"
                      @disLike="commentsLikeCount--"
                   >
@@ -351,6 +344,7 @@ function toggleEmojiPicker(e) {
                <MentionTextArea
                   @addText="addReply"
                   v-model:newText="newReply"
+                  ref="replyInputRef"
                />
 
                <button
@@ -370,7 +364,7 @@ function toggleEmojiPicker(e) {
          <!-- view replies button row 6 -->
          <button
             v-show="hasReplies"
-            @click="toggleRepliesView"
+            @click="showReplies = !showReplies"
             class="flex justify-start w-full gap-2 text-sm transition-all duration-300 text-stone-500 enabled:hover:underline hover:underline-offset-4"
          >
             {{ showReplies ? $t("hide") : $t("view") }}

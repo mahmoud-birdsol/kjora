@@ -13,6 +13,7 @@
          @scroll="syncScroll"
          :value="newText"
          @input="$emit('update:newText', $event.target.value)"
+         ref="inputRef"
          placeholder="Please write text ..."
          class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar break-all whitespace-pre-wrap placeholder:text-neutral-400 bg-transparent focus:ring-1 focus:ring-primary absolute text-transparent caret-black inset-y-0 max-h-[3.75rem] min-h-[2.5rem]"
       >
@@ -48,7 +49,7 @@ const emits = defineEmits(["addText", "update:newText"]);
 const postStore = usePostStore();
 const showMentionList = ref(false);
 const customTextAreaRef = ref();
-const users = ref([]);
+const inputRef = ref(null);
 
 const searchChars = ref("");
 const options = ref(null);
@@ -123,5 +124,9 @@ watch(
 );
 watch(currentOption, () => {
    options.value[currentOption.value].scrollIntoView();
+});
+
+defineExpose({
+   focus: () => inputRef.value.focus(),
 });
 </script>

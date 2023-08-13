@@ -98,7 +98,7 @@ function showCopied() {
                      </li>
                   </button>
                   <button
-                     v-if="postStore.isPostUserTheCurrentUser"
+                     v-if="!postStore.isPostUserTheCurrentUser"
                      class="hover:text-gray-400 group"
                   >
                      <li>
