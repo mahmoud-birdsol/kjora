@@ -112,7 +112,7 @@ const uploadFiles = async () => {
    }
 };
 
-function sendPostMedia(postId) {
+const sendPostMedia = (postId) => {
    const promises = filesData.value.slice(1).map((fileData) => {
       const { file } = fileData;
       if (fileData.isImage || fileData.isVideo) {
@@ -122,7 +122,6 @@ function sendPostMedia(postId) {
             })
             .catch((error) => {
                handleError(error, fileData);
-
             });
       }
    });
@@ -130,27 +129,28 @@ function sendPostMedia(postId) {
    Promise.all(promises)
       .then(() => {
          handleSuccess();
-      }).catch((_) => {})
+      })
+      .catch((_) => {})
       .finally(() => {
          isLoading.value = false;
          isDisabled.value = false;
       });
-}
+};
 
-function handleError(error, file) {
+const handleError = (error, file) => {
    if (error?.response?.status === 422 || error?.response?.status === 413) {
       showAsError.value = true;
       removeFile(file);
       isLoading.value = false;
       isDisabled.value = false;
    }
-}
+};
 
-function handleSuccess() {
+const handleSuccess = () => {
    reset();
    emit("reload");
-}
-function reset(_e) {
+};
+const reset = (_e) => {
    filesData.value = [];
    isLoading.value = false;
    isDisabled.value = false;
@@ -159,16 +159,15 @@ function reset(_e) {
    caption.value = "";
    countUploadFiles.value += 1;
    emit("close");
-}
+};
 
-function changeFiles(file, url, id) {
+const changeFiles = (file, url, id) => {
    let fileObjIndex = filesData.value.findIndex((f) => f.id === id);
    filesData.value[fileObjIndex].url = url;
    filesData.value[fileObjIndex].previewUrl = url;
    filesData.value[fileObjIndex].file = file;
    cropFile.value = [];
-}
-
+};
 
 let showCropModal = (file) => {
    cropFile.value = file;
