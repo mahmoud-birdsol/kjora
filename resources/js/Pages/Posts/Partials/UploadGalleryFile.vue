@@ -12,6 +12,7 @@ import { PlayIcon } from "@heroicons/vue/24/solid";
 import { usePage } from "@inertiajs/vue3";
 import { ref, computed } from "vue";
 
+
 const props = defineProps({
    modelValue: {
       required: false,
@@ -79,6 +80,56 @@ const maximumUploadNumberOfFiles = computed(
 const removeFile = ({ id }) => {
    let fileDataIndex = filesData.value.findIndex((f) => f.id === id);
    filesData.value.splice(fileDataIndex, 1);
+const num = ref(0);
+const showAsError = ref(false);
+const maximumUploadNumberOfFiles = ref(
+   usePage().props.maximumUploadNumberOfFiles
+);
+let postId = null;
+
+const selectNewFile = () => {
+   fileInput.value.value = null;
+   showAsError.value = false;
+   fileInput.value.click();
+};
+
+const updateFilesPreview = () => {
+   if (!fileInput.value.files.length) {
+      return;
+   }
+   let newFiles = Array.from(fileInput.value.files).map((file) => {
+      return { file: file, id: _.uniqueId("f") };
+   });
+
+   newFiles = checkAvailableSize(newFiles);
+   newFiles?.forEach(({ file, id }, i) => {
+      const url = URL.createObjectURL(file);
+
+      filesData.value.push({
+         file: file,
+         url: url,
+         name: file.name,
+         type: file.type,
+         id: id,
+      });
+      showPreview.value = true;
+   });
+};
+function checkAvailableSize(newFiles) {
+   let totalFilesNum = newFiles.length + filesData.value.length;
+   if (totalFilesNum > maximumUploadNumberOfFiles.value) {
+      let availableSize =
+         maximumUploadNumberOfFiles.value - filesData.value.length;
+      if (availableSize <= 0) return;
+      if (availableSize) return (newFiles = newFiles.slice(0, availableSize));
+   }
+   return newFiles;
+}
+const removeFile = ({ file, url, id }) => {
+   let fileDataIndex = filesData.value.findIndex((f) => f.id === id);
+   filesData.value.splice(fileDataIndex, 1);
+   filesData.value.length === 0 ? (showPreview.value = false) : null;
+>>>>>>> refactoring
    if (cropFile.value.id === id) {
       cropFile.value = [];
       openCropModal.value = false;
@@ -130,7 +181,7 @@ function sendPostMedia(postId) {
       .then(() => {
          handleSuccess();
       })
-      .catch((_) => {})
+      .catch((error) => {})
       .finally(() => {
          isLoading.value = false;
          isDisabled.value = false;
@@ -151,7 +202,8 @@ function handleSuccess() {
    emit("reload");
 }
 
-function reset(_e) {
+
+function reset(e) {
    filesData.value = [];
    isLoading.value = false;
    isDisabled.value = false;
@@ -180,6 +232,7 @@ const loadFiles = (newFiles, newFilesData) => {
    filesData.value = [...filesData.value, ...newFilesData];
    showPreview.value = true;
 };
+
 </script>
 
 <template>
@@ -210,6 +263,7 @@ const loadFiles = (newFiles, newFilesData) => {
          <div class="flex flex-col items-center h-full gap-2 py-8">
             <!-- input -->
             <div class="max-w-[300px] sm:px-20 w-full">
+
                <InputUpload
                   :accept="['image', 'video']"
                   :isDisabled="isDisabled"
@@ -261,6 +315,7 @@ const loadFiles = (newFiles, newFilesData) => {
                         <button
                            class="absolute top-0 left-0 p-1 bg-white bg-opacity-90 rounded-br-xl"
                            @click="showCropModal(fileData)"
+
                            v-if="fileData.type === 'image'"
                         >
                            <div

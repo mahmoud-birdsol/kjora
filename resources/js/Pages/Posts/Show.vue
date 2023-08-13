@@ -1,82 +1,48 @@
 <script setup>
 import Avatar from "@/Components/Avatar.vue";
-import Comment from "@/Components/Comment.vue";
 import DateTranslation from "@/Components/DateTranslation.vue";
 import LikeButton from "@/Components/LikeButton.vue";
 import LikesModal from "@/Components/LikesModal.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
+import Comment from "@/Pages/Posts/Partials/Comment.vue";
 import PostCaptionFrom from "@/Pages/Posts/Partials/PostCaptionForm.vue";
 import PostCommentForm from "@/Pages/Posts/Partials/PostCommentForm.vue";
 import PostLayout from "@/Pages/Posts/Partials/PostLayout.vue";
 import PostMedia from "@/Pages/Posts/Partials/PostMedia.vue";
 import PostOptionMenu from "@/Pages/Posts/Partials/PostOptionMenu.vue";
-import AppLayout from "@/Layouts/AppLayout.vue";
+import { usePostStore } from "@/stores/post";
 import { StarIcon } from "@heroicons/vue/24/outline";
 import { HeartIcon } from "@heroicons/vue/24/solid";
-import { Link, usePage } from "@inertiajs/vue3";
+import { Link } from "@inertiajs/vue3";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime.js";
-import { computed, onBeforeMount, onMounted, ref } from "vue";
+import { onBeforeMount, onMounted, ref, watch } from "vue";
 
 onBeforeMount(() => {
    dayjs.extend(relativeTime);
 });
 
 const props = defineProps({
-   user: null,
-   post: null,
+   post: Object,
 });
 
+const postStore = usePostStore();
 const commentsContainer = ref(null);
-const commentsComps = ref(null);
-const postCaptionComp = ref(null);
-const postComments = ref([]);
 const showLikesModal = ref(false);
-const currentUser = usePage().props.auth.user;
-const isCurrentUser = currentUser.id === props.user.id;
-const users = ref([]);
-const numComments = computed(() =>
-   postComments.value
-      ? postComments.value.filter((c) => !c.parent_id)?.length
-      : 0
-);
-const commentsContainerOffset = computed(() => {
-   return commentsContainer.value?.getBoundingClientRect().top + window.scrollY;
-});
 
 onMounted(() => {
-   getPostComments();
-   fetchUsername();
+   postStore.initialize({
+      post: props.post,
+      commentsContainer: commentsContainer.value,
+   });
 });
 
-function getPostComments() {
-   axios
-      .get(route("api.gallery.comments"), {
-         params: {
-            commentable_id: props.post.id,
-            commentable_type: "App\\Models\\Post",
-         },
-      })
-      .then((res) => {
-         postComments.value = res.data.data;
-         if (!route().params?.commentId) scrollToCommentsBottom();
-      })
-      .catch((err) => console.error(err));
-}
-// helper function to scroll comments container to bottom
-function scrollToCommentsBottom() {
-   setTimeout(() => {
-      commentsContainer.value.scrollTo({
-         top: commentsContainer.value.scrollHeight,
-         left: 0,
-         behavior: "smooth",
-      });
-   }, 100);
-}
-async function fetchUsername() {
-   users.value = await axios
-      .get(route("api.user.get.users.name"))
-      .then((res) => res.data.data);
-}
+watch(
+   () => props.post,
+   (newPost) => {
+      postStore.updatePostObject(newPost);
+   }
+);
 </script>
 <template>
    <AppLayout title="gallery" :showBall="false">
@@ -85,13 +51,13 @@ async function fetchUsername() {
       </template>
       <PostLayout>
          <template #media>
-            <PostMedia :postMedia="post.media" :user="user"></PostMedia>
+            <PostMedia />
          </template>
          <template #userImage>
             <Avatar
-               :id="user.id"
-               :username="user.name"
-               :image-url="user.avatar_url"
+               :id="post.user.id"
+               :username="post.user.name"
+               :image-url="post.avatar_url"
                :size="'md'"
                :border="true"
                border-color="primary"
@@ -102,10 +68,11 @@ async function fetchUsername() {
                <div class="flex flex-col">
                   <div class="flex flex-row gap-2">
                      <h3 class="m-0 text-lg font-bold leading-none capitalize">
-                        {{ user.name }}
+                        {{ post.user.name }}
                      </h3>
+
                      <div
-                        v-if="currentUser?.state_name === 'Premium'"
+                        v-if="$page.props?.auth?.user?.state_name === 'Premium'"
                         class="shrink-0"
                      >
                         <div class="w-4 rounded-full bg-golden aspect-square">
@@ -114,21 +81,12 @@ async function fetchUsername() {
                      </div>
                   </div>
                   <Link
-                     :href="route('player.profile', user.id)"
+                     :href="route('player.profile', post.user.id)"
                      class="text-xs text-stone-400"
-                     >@{{ user.username }}
+                     >@{{ post.user.username }}
                   </Link>
                </div>
-               <PostOptionMenu
-                  :isCurrentUser="isCurrentUser"
-                  :postId="post.id"
-                  @editingCaption="
-                     postCaptionComp
-                        ? (postCaptionComp.isEditingCaption = true)
-                        : null
-                  "
-               >
-               </PostOptionMenu>
+               <PostOptionMenu />
             </div>
          </template>
          <template #postDate&Time>
@@ -143,10 +101,7 @@ async function fetchUsername() {
             </div>
          </template>
          <template #postCaption>
-            <PostCaptionFrom
-               ref="postCaptionComp"
-               :post="post"
-            ></PostCaptionFrom>
+            <PostCaptionFrom :post="post" />
          </template>
 
          <template #commentsCount>
@@ -156,7 +111,7 @@ async function fetchUsername() {
                <div class="text-sm">
                   {{
                      $t("comments ( :count )", {
-                        count: numComments,
+                        count: postStore.parentCommentsCount,
                      })
                   }}
                </div>
@@ -173,10 +128,10 @@ async function fetchUsername() {
                      />
                   </button>
                   <LikeButton
-                     :canLiked="isCurrentUser"
+                     :canLike="!postStore.isPostUserTheCurrentUser"
                      :isLiked="post?.is_liked"
                      :likeable_id="post.id"
-                     :likeable_type="'App\\Models\\Post'"
+                     :likeable_type="postStore.POST_MODEL_TYPE"
                   >
                      <template v-slot="{ isLiked }">
                         <HeartIcon
@@ -193,32 +148,19 @@ async function fetchUsername() {
          <template #postComments>
             <div
                ref="commentsContainer"
-               @scroll="handleScroll"
-               class="flex flex-col gap-4 w-full max-h-[500px] hideScrollBar overflow-auto"
-               v-if="postComments"
+               class="flex flex-col gap-4 w-full max-h-[500px] px-6 hideScrollBar overflow-auto"
+               v-show="postStore.parentCommentsCount"
             >
                <template
-                  v-for="comment in postComments.filter((c) => !c.parent_id)"
+                  v-for="comment in postStore.parentComments"
                   :key="comment.id"
                >
-                  <Comment
-                     @addedReply="getPostComments"
-                     :comment="comment"
-                     :users="users"
-                     ref="commentsComps"
-                     :parentOffset="commentsContainerOffset"
-                     :id="comment.id"
-                  />
+                  <Comment :comment="comment" />
                </template>
             </div>
          </template>
          <template #newCommentForm>
-            <PostCommentForm
-               :postId="post.id"
-               :commentsContainer="commentsContainer"
-               @addComment="getPostComments"
-            >
-            </PostCommentForm>
+            <PostCommentForm />
          </template>
       </PostLayout>
    </AppLayout>

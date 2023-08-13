@@ -1,23 +1,21 @@
 <script setup>
+import ConfirmationModal from "@/Components/ConfirmationModal.vue";
+import FadeInTransition from "@/Components/FadeInTransition.vue";
 import ReportModal from "@/Components/ReportModal.vue";
 import Socials from "@/Components/Socials.vue";
+import { usePostStore } from "@/stores";
 import {
    EllipsisHorizontalIcon,
    FlagIcon,
    PencilIcon,
    TrashIcon,
 } from "@heroicons/vue/24/outline";
-import { router } from "@inertiajs/vue3";
 import { ref } from "vue";
-import ConfirmationModal from "@/Components/ConfirmationModal.vue";
-import FadeInTransition from "@/Components/FadeInTransition.vue";
 
-const props = defineProps(["isCurrentUser", "postId"]);
-const emits = defineEmits(["editingCaption"]);
-
+const postStore = usePostStore();
 const showDeletePostModal = ref(false);
 const showOptions = ref(false);
-const copiedMsg = ref(false);
+const showCopiedNotice = ref(false);
 
 function openRemoveMediaModal() {
    showOptions.value = false;
@@ -26,18 +24,18 @@ function openRemoveMediaModal() {
 // edit media caption
 function editCaption() {
    showOptions.value = false;
-   emits("editingCaption");
+   postStore.isEditingCaption = true;
 }
 
 function removePost() {
    showDeletePostModal.value = false;
-   router.delete(route("posts.destroy", props.postId), {});
+   postStore.deletePost();
 }
 function showCopied() {
-   copiedMsg.value = true;
+   showCopiedNotice.value = true;
    showOptions.value = false;
    setTimeout(() => {
-      copiedMsg.value = false;
+      showCopiedNotice.value = false;
    }, 2000);
 }
 </script>
@@ -56,7 +54,7 @@ function showCopied() {
                <ul class="flex flex-col justify-center gap-y-2">
                   <button
                      class="hover:text-gray-400 group"
-                     v-if="isCurrentUser"
+                     v-if="postStore.isPostUserTheCurrentUser"
                      @click="editCaption"
                   >
                      <li class="flex items-center gap-x-2">
@@ -67,7 +65,7 @@ function showCopied() {
                   <button
                      @click="openRemoveMediaModal"
                      class="hover:text-gray-400"
-                     v-if="isCurrentUser"
+                     v-if="postStore.isPostUserTheCurrentUser"
                   >
                      <li class="flex items-center justify-center gap-x-2">
                         <TrashIcon class="w-4" />
@@ -89,7 +87,7 @@ function showCopied() {
                   <button @click="showShare" class="hover:text-gray-400">
                      <li class="flex items-center justify-center">
                         <Socials
-                           :shareUrl="`public/posts/${postId}`"
+                           :shareUrl="`public/posts/${postStore.post.id}`"
                            position="-top-1"
                            @showCopied="showCopied"
                         >
@@ -99,12 +97,14 @@ function showCopied() {
                         </Socials>
                      </li>
                   </button>
-
-                  <button class="hover:text-gray-400 group">
-                     <li v-if="!isCurrentUser">
+                  <button
+                     v-if="!postStore.isPostUserTheCurrentUser"
+                     class="hover:text-gray-400 group"
+                  >
+                     <li>
                         <ReportModal
-                           :reportable-id="postId"
-                           :reportable-type="'App\\Models\\Post'"
+                           :reportable-id="postStore.post.id"
+                           :reportable-type="postStore.POST_MODEL_TYPE"
                         >
                            <template #trigger>
                               <button class="flex items-center gap-x-2">
@@ -121,7 +121,7 @@ function showCopied() {
       </OnClickOutside>
       <span
          class="absolute bottom-0 p-1 -my-4 text-sm font-bold text-white bg-black rounded ltr:right-0 rtl:left-0 whitespace-nowrap"
-         v-if="copiedMsg"
+         v-if="showCopiedNotice"
          >{{ $t("copied") }}!</span
       >
    </div>
