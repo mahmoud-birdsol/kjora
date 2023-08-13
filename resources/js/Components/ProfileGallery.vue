@@ -1,8 +1,9 @@
 <script setup>
 import { PlusCircleIcon } from "@heroicons/vue/24/outline";
-import UploadGalleryFile from "@/Pages/Posts/Partials/UploadGalleryFile.vue";
+import UploadGalleryFile from "../Pages/Posts/Partials/UploadGalleryFile.vue";
 import { onMounted, ref } from "vue";
 import FadeInTransition from "./FadeInTransition.vue";
+
 import { Link, usePage } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
 import FixedActionBtn from "@/Components/FixedActionBtn.vue";
