@@ -169,7 +169,7 @@ const changeFiles = (file, url, id) => {
    cropFile.value = [];
 };
 
-let showCropModal = (file) => {
+const showCropModal = (file) => {
    cropFile.value = file;
    openCropModal.value = true;
 };
