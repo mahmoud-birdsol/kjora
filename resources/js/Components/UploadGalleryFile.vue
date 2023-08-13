@@ -1,14 +1,15 @@
 <script setup>
 import Crop from "@/Components/Crop.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
+import InputUpload from "@/Components/Forms/InputUpload.vue";
 import Modal from "@/Components/Modal.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { PlusCircleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { XMarkIcon } from "@heroicons/vue/24/outline";
 import { usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 import FadeInTransition from "./FadeInTransition.vue";
 import Title from "./Title.vue";
-
+import useGetAllowedUploadFiles from "@/Composables/useGetAllowedUploadFiles.js";
 const props = defineProps({
    modelValue: {
       required: false,
@@ -60,61 +61,21 @@ const emit = defineEmits(["close", "update:modelValue", "reload"]);
 
 const showPreview = ref(false);
 const filesData = ref([]);
-const fileInput = ref(null);
 const isLoading = ref(false);
 const isDisabled = ref(false);
 const caption = ref("");
 const cropFile = ref([]);
 const openCropModal = ref(false);
-const num = ref(0);
+const countUploadFiles = ref(0);
 const showAsError = ref(false);
 const maximumUploadNumberOfFiles = ref(
    usePage().props.maximumUploadNumberOfFiles
 );
 let postId = null;
 
-const selectNewFile = () => {
-   fileInput.value.value = null;
-   showAsError.value = false;
-   fileInput.value.click();
-};
-
-const updateFilesPreview = () => {
-   if (!fileInput.value.files.length) {
-      return;
-   }
-   let newFiles = Array.from(fileInput.value.files).map((file) => {
-      return { file: file, id: _.uniqueId("f") };
-   });
-
-   newFiles = checkAvailableSize(newFiles);
-   newFiles?.forEach(({ file, id }, i) => {
-      const url = URL.createObjectURL(file);
-
-      filesData.value.push({
-         file: file,
-         url: url,
-         name: file.name,
-         type: file.type,
-         id: id,
-      });
-      showPreview.value = true;
-   });
-};
-function checkAvailableSize(newFiles) {
-   let totalFilesNum = newFiles.length + filesData.value.length;
-   if (totalFilesNum > maximumUploadNumberOfFiles.value) {
-      let availableSize =
-         maximumUploadNumberOfFiles.value - filesData.value.length;
-      if (availableSize <= 0) return;
-      if (availableSize) return (newFiles = newFiles.slice(0, availableSize));
-   }
-   return newFiles;
-}
-const removeFile = ({ file, url, id }) => {
+const removeFile = ({ id }) => {
    let fileDataIndex = filesData.value.findIndex((f) => f.id === id);
    filesData.value.splice(fileDataIndex, 1);
-   filesData.value.length === 0 ? (showPreview.value = false) : null;
    if (cropFile.value.id === id) {
       cropFile.value = [];
       openCropModal.value = false;
@@ -149,8 +110,8 @@ const uploadFiles = async () => {
 };
 
 function sendPostMedia(postId) {
-   const promises = filesData.value.slice(1).map((fileData, i) => {
-      const { file, id } = fileData;
+   const promises = filesData.value.slice(1).map((fileData) => {
+      const { file } = fileData;
       if (file.type.startsWith("image") || file.type.startsWith("video")) {
          return axios
             .postForm(route("api.gallery.upload", postId), {
@@ -158,7 +119,6 @@ function sendPostMedia(postId) {
             })
             .catch((error) => {
                handleError(error, file);
-               // throw (error)
             });
       }
    });
@@ -167,7 +127,7 @@ function sendPostMedia(postId) {
       .then(() => {
          handleSuccess();
       })
-      .catch((error) => {})
+      .catch((_) => {})
       .finally(() => {
          isLoading.value = false;
          isDisabled.value = false;
@@ -175,7 +135,6 @@ function sendPostMedia(postId) {
 }
 
 function handleError(error, file) {
-   console.error(error);
    if (error?.response?.status === 422 || error?.response?.status === 413) {
       showAsError.value = true;
       removeFile(file);
@@ -189,25 +148,34 @@ function handleSuccess() {
    emit("reload");
 }
 
-function reset(e) {
+function reset(_e) {
    filesData.value = [];
    isLoading.value = false;
    isDisabled.value = false;
    showAsError.value = false;
    postId = null;
    caption.value = "";
-   num.value += 1;
+   countUploadFiles.value += 1;
    emit("close");
 }
+
 function changeFiles(file, url, id) {
    let fileObjIndex = filesData.value.findIndex((f) => f.id === id);
    filesData.value[fileObjIndex].url = url;
+   filesData.value[fileObjIndex].previewUrl = url;
    filesData.value[fileObjIndex].file = file;
    cropFile.value = [];
 }
+
 let showCropModal = (file) => {
    cropFile.value = file;
    openCropModal.value = true;
+};
+const loadFiles = (newFiles, newFilesData) => {
+   newFilesData = useGetAllowedUploadFiles(filesData.value, newFilesData);
+   if (newFilesData.length <= 0) return;
+   filesData.value = [...filesData.value, ...newFilesData];
+   showPreview.value = true;
 };
 </script>
 
@@ -218,7 +186,7 @@ let showCropModal = (file) => {
       :closeable="closeable"
       :position="position"
       @close="reset"
-      :key="num"
+      :key="countUploadFiles"
    >
       <div class="flex flex-col min-h-[500px] justify-between p-6 pt-0">
          <Title>{{ $t("upload") }}</Title>
@@ -239,24 +207,13 @@ let showCropModal = (file) => {
          <div class="flex flex-col items-center h-full gap-2 py-8">
             <!-- input -->
             <div class="max-w-[300px] sm:px-20 w-full">
-               <input
-                  ref="fileInput"
-                  type="file"
+               <InputUpload
+                  :accept="['image', 'video']"
+                  :isDisabled="isDisabled"
+                  :isLoading="isLoading"
                   multiple
-                  accept="video/*,image/*"
-                  class="hidden"
-                  @change="updateFilesPreview"
+                  @onFinish="loadFiles"
                />
-               <div class="flex items-center justify-center mb-6">
-                  <button
-                     type="button"
-                     :disabled="isDisabled"
-                     class="inline-flex items-center p-4 text-white bg-black border border-transparent rounded-full shadow-sm enabled: enabled:hover:bg-black enabled:focus:outline-none enabled:focus:ring-2 enabled:focus:ring-black enabled:focus:ring-offset-2 disabled:bg-stone-500"
-                     @click.prevent="selectNewFile"
-                  >
-                     <PlusCircleIcon class="w-5 h-5" />
-                  </button>
-               </div>
             </div>
             <!-- preview -->
             <div
@@ -266,33 +223,20 @@ let showCropModal = (file) => {
             >
                <div class="relative grid grid-cols-3 gap-2">
                   <template v-for="(fileData, index) in filesData" :key="index">
-                     <div
-                        v-if="
-                           fileData.url.startsWith('data:image') ||
-                           fileData.type.startsWith('image') ||
-                           fileData.url.startsWith('data:video') ||
-                           fileData.type.startsWith('video')
-                        "
-                        class="relative"
-                     >
-                        <img
-                           v-if="
-                              fileData.url.startsWith('data:image') ||
-                              fileData.type.startsWith('image')
-                           "
-                           :src="fileData.url"
-                           alt=""
-                           class="object-contain w-full h-full rounded-lg aspect-square"
-                        />
-                        <video
-                           v-if="
-                              fileData.url.startsWith('data:video') ||
-                              fileData.type.startsWith('video')
-                           "
-                           :src="fileData.url"
-                           alt=""
-                           class="object-cover w-full h-full rounded-lg aspect-square"
-                        />
+                     <div class="relative">
+                        <template v-if="filesData.type === 'video'">
+                           <video
+                              :src="fileData.previewUrl"
+                              :alt="fileData.name"
+                              class="object-cover w-full h-full rounded-lg aspect-square"
+                           />
+                        </template>
+                        <template v-else>
+                           <img
+                              :src="fileData.previewUrl"
+                              class="object-contain w-full h-full rounded-lg aspect-square"
+                           />
+                        </template>
                         <button
                            @click.prevent="removeFile(fileData)"
                            class="absolute top-0 right-0 bg-white bg-opacity-90 rounded-bl-xl"
@@ -307,10 +251,7 @@ let showCropModal = (file) => {
                         <button
                            class="absolute top-0 left-0 p-1 bg-white bg-opacity-90 rounded-br-xl"
                            @click="showCropModal(fileData)"
-                           v-if="
-                              fileData.url.startsWith('data:image') ||
-                              fileData.type.startsWith('image')
-                           "
+                           v-if="fileData.type === 'image'"
                         >
                            <div
                               class="flex flex-col items-start justify-center h-full p-1 opacity-100"
