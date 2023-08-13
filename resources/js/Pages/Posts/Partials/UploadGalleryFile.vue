@@ -122,6 +122,7 @@ function sendPostMedia(postId) {
             })
             .catch((error) => {
                handleError(error, fileData);
+
             });
       }
    });
@@ -129,8 +130,7 @@ function sendPostMedia(postId) {
    Promise.all(promises)
       .then(() => {
          handleSuccess();
-      })
-      .catch((_) => {})
+      }).catch((_) => {})
       .finally(() => {
          isLoading.value = false;
          isDisabled.value = false;
@@ -150,7 +150,6 @@ function handleSuccess() {
    reset();
    emit("reload");
 }
-
 function reset(_e) {
    filesData.value = [];
    isLoading.value = false;
@@ -170,10 +169,12 @@ function changeFiles(file, url, id) {
    cropFile.value = [];
 }
 
+
 let showCropModal = (file) => {
    cropFile.value = file;
    openCropModal.value = true;
 };
+
 const loadFiles = (newFiles, newFilesData) => {
    newFilesData = useGetAllowedUploadFiles(filesData.value, newFilesData);
    if (newFilesData.length <= 0) return;

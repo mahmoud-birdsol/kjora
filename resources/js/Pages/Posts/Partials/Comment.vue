@@ -1,30 +1,30 @@
 <script setup>
+import Avatar from "@/Components/Avatar.vue";
+import ConfirmationModal from "@/Components/ConfirmationModal.vue";
+import DateTranslation from "@/Components/DateTranslation.vue";
+import EmojiPickerElement from "@/Components/EmojiPickerElement.vue";
+import LikeButton from "@/Components/LikeButton.vue";
+import LikesModal from "@/Components/LikesModal.vue";
+import MentionTextArea from "@/Components/MentionTextArea.vue";
+import { useCommentStore, usePostStore, useUserStore } from "@/stores";
 import { FaceSmileIcon, TrashIcon } from "@heroicons/vue/24/outline";
 import { PaperAirplaneIcon } from "@heroicons/vue/24/solid";
-import { Link, router, usePage } from "@inertiajs/vue3";
+import { Link, usePage } from "@inertiajs/vue3";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime.js";
 import { computed, onBeforeMount, onMounted, ref, watch } from "vue";
-import Avatar from "./Avatar.vue";
-import ConfirmationModal from "./ConfirmationModal.vue";
-import DateTranslation from "./DateTranslation.vue";
-import EmojiPickerElement from "./EmojiPickerElement.vue";
-import LikeButton from "./LikeButton.vue";
-import LikesModal from "./LikesModal.vue";
-import MentionTextArea from "./MentionTextArea.vue";
 
-const props = defineProps(["comment", "parentOffset", "users"]);
+const props = defineProps(["comment"]);
 onBeforeMount(() => {
    dayjs.extend(relativeTime);
 });
-const emit = defineEmits(["addedReply"]);
 
-const currentUser = usePage().props.auth.user;
-const replyInput = ref(null);
+const commentStore = useCommentStore();
+const postStore = usePostStore();
+const userStore = useUserStore();
+
+const replyInputRef = ref(null);
 const showReplies = ref(false);
-const hasReplies = computed(
-   () => props.comment.replies && props.comment.replies.length > 0
-);
 const newReply = ref("");
 const showReplyInput = ref(false);
 const isSending = ref(false);
@@ -33,15 +33,16 @@ const EmojiPickerClass = ref("");
 const showDeleteCommentModal = ref(false);
 const commentsLikeCount = ref(props.comment.likes_count);
 const showLikesModal = ref(false);
+/** @type{import('vue').Ref<HTMLElement>} */
 const commentsComp = ref(null);
-
-const isCurrentUser = currentUser.id === props.comment.user.id;
-const isPublic = usePage().url.includes("public/posts");
-const isParentComment = !props.comment.parent_id;
 
 onMounted(() => {
    let id = route().params?.commentId;
    if (props.comment.id === +id) {
+      postStore.commentsContainer.scrollIntoView({
+         behavior: "smooth",
+         block: "center",
+      });
       commentsComp.value.scrollIntoView({
          behavior: "smooth",
          block: "center",
@@ -50,17 +51,23 @@ onMounted(() => {
    }
 });
 
-defineExpose({
-   showReplies,
-});
-
 watch(
    () => props.comment.replies.length,
    (newLength, oldLength) => {
-      showReplies.value = true;
+      if (newLength > 0) {
+         showReplies.value = true;
+      }
    }
 );
 
+const hasReplies = computed(() => props.comment?.replies?.length > 0);
+const isCommentUserTheCurrentUser = computed(
+   () => userStore.currentUser.id === props.comment.user.id
+);
+const isParentComment = computed(() => !props.comment.parent_id);
+const isPublic = computed(() => usePage().url.includes("public/posts"));
+
+/* --------------------------------- classes -------------------------------- */
 const guidesClassesBefore = computed(() => {
    return hasReplies.value
       ? "before:absolute  ltr:before:-left-9 rtl:before:-right-9   before:w-px   before:bg-stone-200  before:z-[1] before:top-0 before:bottom-[8px]   "
@@ -79,14 +86,15 @@ const guidesClassesAfter2 = computed(() => {
       : "";
 });
 
-const handleBody = computed(() => {
+/* --------------------------------- actions -------------------------------- */
+const commentBodyWithMentions = computed(() => {
    const commentBody = props.comment.body;
    if (!commentBody.includes("@")) return props.comment.body;
    const allWords = commentBody.split(" ");
    return allWords
       .map((word) => {
          if (!word.startsWith("@")) return word;
-         if (!props.users.some((user) => user.username === word.slice(1)))
+         if (!userStore.users.some((user) => user.username === word.slice(1)))
             return `${word}`;
          else
             return `<a href="/player/name/${word.slice(
@@ -95,57 +103,43 @@ const handleBody = computed(() => {
       })
       .join(" ");
 });
-function toggleRepliesView() {
-   showReplies.value = !showReplies.value;
-}
 
 function addReply() {
    if (!newReply.value || newReply.value.trim() === "") return;
    isSending.value = true;
-   sendReply();
-   showReplyInput.value = false;
-   emit("addedReply");
-}
-
-// function getParentId() {
-//     return isParentComment ? props.comment.id : props.comment.parent_id
-// }
-
-function sendReply() {
-   axios
-      .post(route("api.gallery.comments.store"), {
+   commentStore.storeComment(
+      {
          commentable_id: props.comment.commentable_id,
          commentable_type: props.comment.commentable_type,
          body: newReply.value,
-         user_id: currentUser.id,
-         //infinte depth
+         user_id: userStore.currentUser.id,
          parent_id: props.comment.id,
-      })
-      .then((res) => {
-         newReply.value = "";
-         isSending.value = false;
-      })
-      .catch((err) => console.error(err));
+      },
+      {
+         onSuccess: () => {
+            newReply.value = "";
+            showReplyInput.value = false;
+         },
+         onFinish: () => {
+            isSending.value = false;
+         },
+         only: ["post"],
+      }
+   );
 }
 
 function deleteComment() {
    showDeleteCommentModal.value = false;
-   router.delete(route("comments.destroy", props.comment), {
-      preserveScroll: true,
-      preserveState: false,
+   commentStore.deleteComment(props.comment, {
+      only: ["post"],
    });
 }
 
 function handleReplyClicked(e) {
    showReplyInput.value = true;
    setTimeout(() => {
-      // replyInput.value.focus()
+      replyInputRef.value.focus();
    }, 0);
-}
-
-function handleAddedReply() {
-   emit("addedReply");
-   // showReplies.value = true
 }
 
 function onSelectEmoji(emoji) {
@@ -155,6 +149,7 @@ function onSelectEmoji(emoji) {
 
 // hide the input field when blur if it is empty
 function handleBlur(e) {
+   // showReplyInput.value = false;
    if ((showReplyInput.value = true)) {
       !newReply.value || newReply.value === ""
          ? (showReplyInput.value = false)
@@ -163,7 +158,7 @@ function handleBlur(e) {
 }
 
 function toggleEmojiPicker(e) {
-   let parentOffset = props.parentOffset;
+   let parentOffset = postStore.commentsContainerOffset;
    let emojiButtonOffset =
       e.target.getBoundingClientRect().top + window.scrollY;
    let emojiPickerHeight = 320;
@@ -180,7 +175,7 @@ function toggleEmojiPicker(e) {
    <div
       ref="commentsComp"
       :data-comment-id="comment.id"
-      class="grid grid-cols-[min-content_1fr] w-full justify-start gap-4 px-6 pt-2"
+      class="grid grid-cols-[min-content_1fr] w-full justify-start gap-4 pt-2"
       :class="comment.parent_id ? 'bg-white' : ''"
    >
       <!-- image col 1 -->
@@ -232,7 +227,7 @@ function toggleEmojiPicker(e) {
          <div class="w-full">
             <p
                class="w-full text-sm break-all whitespace-pre-wrap text-stone-800"
-               v-html="handleBody"
+               v-html="commentBodyWithMentions"
             />
          </div>
          <!-- add reply & like buttons row 3 -->
@@ -241,7 +236,7 @@ function toggleEmojiPicker(e) {
          >
             <template v-if="!isPublic">
                <button
-                  v-if="isCurrentUser"
+                  v-if="isCommentUserTheCurrentUser"
                   @click="showDeleteCommentModal = true"
                   class="p-1 transition-all duration-150 pis-0 enabled:hover:underline hover:underline-offset-4"
                >
@@ -263,14 +258,11 @@ function toggleEmojiPicker(e) {
                   @click="handleReplyClicked"
                   class="p-1 transition-all duration-150 pis-0"
                >
-                  {{
-                     comment.replies.length > 0 ? comment.replies.length : ""
-                  }}
+                  {{ comment.replies.length > 0 ? comment.replies.length : "" }}
                   {{ $t("reply") }}
                </button>
 
                <div class="flex items-center">
-                  <!-- <span class="text-sm">{{ commentsLikeCount }}</span> -->
                   <button
                      v-show="commentsLikeCount > 0"
                      @click="showLikesModal = true"
@@ -283,9 +275,10 @@ function toggleEmojiPicker(e) {
                      />
                   </button>
                   <LikeButton
+                     :can-like="!isCommentUserTheCurrentUser"
                      :isLiked="comment?.is_liked"
                      :likeable_id="comment.id"
-                     :likeable_type="'App\\Models\\Comment'"
+                     :likeable_type="commentStore.COMMENT_MODEL_TYPE"
                      @like="commentsLikeCount++"
                      @disLike="commentsLikeCount--"
                   >
@@ -322,11 +315,7 @@ function toggleEmojiPicker(e) {
          <!-- replies related to this comment row 4 -->
          <div v-show="showReplies" class="mt-2">
             <template v-for="(reply, index) in comment.replies" :key="reply.id">
-               <Comment
-                  @addedReply="handleAddedReply"
-                  :comment="reply"
-                  :users="users"
-               />
+               <Comment :comment="reply" />
             </template>
          </div>
          <!-- new reply form row 5 -->
@@ -352,13 +341,10 @@ function toggleEmojiPicker(e) {
                      </div>
                   </div>
                </OnClickOutside>
-               <!-- <div class="flex items-center flex-grow ">
-                        <textarea ref="replyInput" @keypress.enter.exact.prevent="addReply" v-model="newReply" name="newReply" id="newReply" rows="1" placeholder="add-a-comment"
-                            class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary "></textarea>
-                    </div> -->
                <MentionTextArea
                   @addText="addReply"
                   v-model:newText="newReply"
+                  ref="replyInputRef"
                />
 
                <button
@@ -378,7 +364,7 @@ function toggleEmojiPicker(e) {
          <!-- view replies button row 6 -->
          <button
             v-show="hasReplies"
-            @click="toggleRepliesView"
+            @click="showReplies = !showReplies"
             class="flex justify-start w-full gap-2 text-sm transition-all duration-300 text-stone-500 enabled:hover:underline hover:underline-offset-4"
          >
             {{ showReplies ? $t("hide") : $t("view") }}
