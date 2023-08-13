@@ -148,7 +148,7 @@ watch(
          <template #postComments>
             <div
                ref="commentsContainer"
-               class="flex flex-col gap-4 w-full max-h-[500px] px-6 hideScrollBar overflow-auto"
+               class="flex flex-col w-full max-h-[500px] px-6 hideScrollBar overflow-auto"
                v-show="postStore.parentCommentsCount"
             >
                <template

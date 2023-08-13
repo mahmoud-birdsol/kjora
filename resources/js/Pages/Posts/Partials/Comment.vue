@@ -15,6 +15,7 @@ import relativeTime from "dayjs/plugin/relativeTime.js";
 import { computed, onBeforeMount, onMounted, ref, watch } from "vue";
 
 const props = defineProps(["comment"]);
+const emit = defineEmits(["showReplies"]);
 onBeforeMount(() => {
    dayjs.extend(relativeTime);
 });
@@ -23,6 +24,7 @@ const commentStore = useCommentStore();
 const postStore = usePostStore();
 const userStore = useUserStore();
 
+const showHighlightCommentClasses = ref(false);
 const replyInputRef = ref(null);
 const showReplies = ref(false);
 const newReply = ref("");
@@ -39,15 +41,14 @@ const commentsComp = ref(null);
 onMounted(() => {
    let id = route().params?.commentId;
    if (props.comment.id === +id) {
-      postStore.commentsContainer.scrollIntoView({
-         behavior: "smooth",
-         block: "center",
-      });
-      commentsComp.value.scrollIntoView({
-         behavior: "smooth",
-         block: "center",
-      });
-      commentsComp.value.classList.add("first-appear");
+      emit("showReplies");
+      setTimeout(() => {
+         commentsComp.value.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+         });
+         showHighlightCommentClasses.value = true;
+      }, 1500);
    }
 });
 
@@ -168,16 +169,25 @@ function toggleEmojiPicker(e) {
 
    showEmojiPicker.value = !showEmojiPicker.value;
 }
+watch(
+   () => showReplies.value,
+   (newVal) => {
+      if (newVal) emit("showReplies");
+   }
+);
 </script>
 
 <template>
    <!-- comment  -->
    <div
-      ref="commentsComp"
       :data-comment-id="comment.id"
-      class="grid grid-cols-[min-content_1fr] w-full justify-start gap-4 pt-2"
-      :class="comment.parent_id ? 'bg-white' : ''"
+      ref="commentsComp"
+      class="grid grid-cols-[min-content_1fr] w-full justify-start gap-4 py-2 relative"
    >
+      <div
+         class="absolute h-full rounded -inset-3"
+         :class="[{ 'first-appear': showHighlightCommentClasses }]"
+      />
       <!-- image col 1 -->
       <div class="min-w-max z-[10] relative" :class="guidesClassesAfter2">
          <Avatar
@@ -315,7 +325,7 @@ function toggleEmojiPicker(e) {
          <!-- replies related to this comment row 4 -->
          <div v-show="showReplies" class="mt-2">
             <template v-for="(reply, index) in comment.replies" :key="reply.id">
-               <Comment :comment="reply" />
+               <Comment :comment="reply" @showReplies="showReplies = true" />
             </template>
          </div>
          <!-- new reply form row 5 -->

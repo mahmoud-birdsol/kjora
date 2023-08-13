@@ -58,7 +58,7 @@ export const usePostStore = defineStore("post", () => {
       captionForm.caption = postParam.caption;
       commentsContainer.value = commentsContainerParam;
       userStore.getUsers();
-      scrollCommentsContainerToBottom();
+      if (!route()?.params?.commentId) scrollCommentsContainerToBottom();
    };
    const updatePostObject = (newPost) => {
       post.value = newPost;

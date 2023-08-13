@@ -17535,18 +17535,13 @@
    margin: 0 -5px;
 }
 .first-appear {
-   animation: first-appear 10s ease-out 1 alternate;
-   outline-width: 2px;
-   outline-style: solid;
-   outline-offset: 1.5px;
-   border-radius: 5px;
-   outline-color: transparent;
+   animation: first-appear 3s ease-out 3 alternate;
 }
 @keyframes first-appear {
    from {
-      outline-color: green;
+      background-color: rgba(0, 100, 0, 0.1);
    }
    to {
-      outline-color: transparent;
+      background-color: transparent;
    }
 }
