@@ -1,56 +1,41 @@
 <script setup>
 import Avatar from "@/Components/Avatar.vue";
 import DateTranslation from "@/Components/DateTranslation.vue";
-import { Link } from "@inertiajs/vue3";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime.js";
-import { onBeforeMount, onMounted, ref } from "vue";
+import PublicLayout from "@/Layouts/PublicLayout.vue";
 import PostCaptionFrom from "@/Pages/Posts/Partials/PostCaptionForm.vue";
 import PostLayout from "@/Pages/Posts/Partials/PostLayout.vue";
 import PostMedia from "@/Pages/Posts/Partials/PostMedia.vue";
-import PublicLayout from "@/Layouts/PublicLayout.vue";
+import { usePostStore } from "@/stores/post";
+import { Link } from "@inertiajs/vue3";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime.js";
+import { onBeforeMount, onMounted, ref, watch } from "vue";
 
 onBeforeMount(() => {
    dayjs.extend(relativeTime);
 });
 
 const props = defineProps({
-   user: null,
-   post: null,
+   user: Object,
+   post: Object,
 });
 
+const postStore = usePostStore();
 const commentsContainer = ref(null);
 const postCaptionComp = ref(null);
-const postComments = ref([]);
 
 onMounted(() => {
-   getPostComments();
+   postStore.initialize({
+      post: props.post,
+      commentsContainer: commentsContainer.value,
+   });
 });
-
-function getPostComments() {
-   axios
-      .get(route("public.post.comments"), {
-         params: {
-            commentable_id: props.post.id,
-            commentable_type: "App\\Models\\Post",
-         },
-      })
-      .then((res) => {
-         postComments.value = res.data.data;
-         scrollToCommentsBottom();
-      })
-      .catch((err) => console.error(err));
-}
-// helper function to scroll comments container to bottom
-function scrollToCommentsBottom() {
-   setTimeout(() => {
-      commentsContainer.value.scrollTo({
-         top: commentsContainer.value.scrollHeight,
-         left: 0,
-         behavior: "smooth",
-      });
-   }, 100);
-}
+watch(
+   () => props.post,
+   (newPost) => {
+      postStore.updatePostObject(newPost);
+   }
+);
 </script>
 <template>
    <PublicLayout title="Posts">
@@ -59,7 +44,7 @@ function scrollToCommentsBottom() {
       </template>
       <PostLayout>
          <template #media>
-            <PostMedia :postMedia="post.media" :user="user"></PostMedia>
+            <PostMedia />
          </template>
          <template #userImage>
             <Avatar
@@ -106,7 +91,10 @@ function scrollToCommentsBottom() {
             ></PostCaptionFrom>
          </template>
          <template #commentsCount>
-            <div class="grid place-items-center min-h-[200px] font-bold">
+            <div
+               class="grid place-items-center min-h-[200px] font-bold"
+               ref="commentsContainer"
+            >
                <div>
                   {{ $t("please") }}
                   <Link :href="route('register')" class="text-blue-700">
