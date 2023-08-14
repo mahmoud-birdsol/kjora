@@ -69,19 +69,17 @@ const isParentComment = computed(() => !props.comment.parent_id);
 const isPublic = computed(() => usePage().url.includes("public/posts"));
 
 /* --------------------------------- classes -------------------------------- */
-const guidesClassesBefore = computed(() => {
+const replyVerticalGuide = computed(() => {
    return hasReplies.value
       ? "before:absolute  ltr:before:-left-9 rtl:before:-right-9   before:w-px   before:bg-stone-200  before:z-[1] before:top-0 before:bottom-[8px]   "
       : " ";
 });
-const guidesClassesAfter = computed(() => {
+const viewRepliesHorizontalGuide = computed(() => {
    return hasReplies.value
-      ? !showReplies.value
-         ? " after:absolute after:h-px after:w-8  after:bg-stone-200   ltr:after:-left-9 rtl:after:-right-9 after:bottom-[8px] "
-         : " after:absolute after:h-px after:w-8  after:bg-stone-200   ltr:after:-left-9 rtl:after:-right-9 after:bottom-[8px]"
+      ? " after:absolute after:h-px after:w-8  after:bg-stone-200   ltr:after:-left-9 rtl:after:-right-9 after:bottom-[8px] "
       : "";
 });
-const guidesClassesAfter2 = computed(() => {
+const replyHorizontalGuide = computed(() => {
    return props.comment.parent_id
       ? " after:absolute after:h-px after:w-8  after:bg-stone-200  after:z-[-1] ltr:after:-left-9 rtl:after:-right-9 after:top-5 "
       : "";
@@ -189,7 +187,7 @@ watch(
          :class="[{ 'first-appear': showHighlightCommentClasses }]"
       />
       <!-- image col 1 -->
-      <div class="min-w-max z-[10] relative" :class="guidesClassesAfter2">
+      <div class="min-w-max z-[10] relative" :class="replyHorizontalGuide">
          <Avatar
             :id="comment.user.id"
             :username="comment.user.name"
@@ -202,7 +200,7 @@ watch(
       <!-- comment information col 2 -->
       <div
          class="relative flex flex-col max-w-full gap-1"
-         :class="[guidesClassesBefore, guidesClassesAfter]"
+         :class="[replyVerticalGuide, viewRepliesHorizontalGuide]"
       >
          <!-- user information & comment time row 1-->
          <div class="flex flex-col justify-between w-full xs:flex-row">
