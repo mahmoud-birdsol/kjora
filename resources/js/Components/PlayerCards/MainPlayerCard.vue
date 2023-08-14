@@ -18,6 +18,7 @@ import { Link, usePage } from "@inertiajs/vue3";
 import { computed, ref } from "vue";
 import FavouriteButton from "../FavouriteButton.vue";
 import Modal from "../Modal.vue";
+import { useUserStore } from "@/stores/index.js";
 
 const props = defineProps({
    player: {
@@ -60,8 +61,9 @@ const props = defineProps({
       default: true,
    },
 });
+const userStore = useUserStore();
 const showInvitationDistanceError = ref(false);
-const currentUser = usePage().props.auth.user;
+const currentUser = userStore.currentUser;
 const state = props.player.state_name;
 const txtColor = state == "Free" ? "white" : "black";
 const colors = ref([
@@ -84,7 +86,7 @@ const backgroundImage = computed(() => {
    }
 });
 
-const isCurrentUser = props.player.id === currentUser?.id;
+const isCurrentUser = userStore.isCurrentUser(props.player);
 const isPublic = usePage().url.includes("public/player");
 
 const locale = usePage().props.locale;
@@ -355,7 +357,7 @@ function showCopied() {
             <div class="flex items-center gap-4">
                <div
                   class="flex space-x-2 bg-transparent"
-                  v-if="showInvite && player.id !== $page.props.auth.user.id"
+                  v-if="showInvite && player.id !== currentUser.id"
                >
                   <Link
                      v-if="

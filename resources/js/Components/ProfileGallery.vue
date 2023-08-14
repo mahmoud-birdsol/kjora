@@ -1,14 +1,13 @@
 <script setup>
-import { PlusCircleIcon } from "@heroicons/vue/24/outline";
 import UploadGalleryFile from "@/Pages/Posts/Partials/UploadGalleryFile.vue";
-import { onMounted, ref } from "vue";
+import { PlusCircleIcon } from "@heroicons/vue/24/outline";
+import { ref } from "vue";
 import FadeInTransition from "./FadeInTransition.vue";
-
-import { Link, usePage } from "@inertiajs/vue3";
-import { router } from "@inertiajs/vue3";
 import FixedActionBtn from "@/Components/FixedActionBtn.vue";
-import { EyeIcon, PlayIcon, XMarkIcon } from "@heroicons/vue/24/solid";
+import { EyeIcon, PlayIcon } from "@heroicons/vue/24/solid";
+import { Link, router, usePage } from "@inertiajs/vue3";
 import ConfirmationModal from "./ConfirmationModal.vue";
+import { useUserStore } from "@/stores/index.js";
 
 const props = defineProps({
    user: {
@@ -19,10 +18,11 @@ const props = defineProps({
    shouldPreview: null,
 });
 defineEmits(["reload"]);
+
+const userStore = useUserStore();
 const isPublic = usePage().url.includes("public/player");
 
 const showUploadFileModal = ref(false);
-const currentUser = usePage().props.auth.user;
 const showDeletePostModal = ref(false);
 const postIdToDelete = ref(null);
 
@@ -113,7 +113,7 @@ function removePost(id) {
       </template>
    </ConfirmationModal>
    <FixedActionBtn
-      v-if="currentUser?.id === user?.id && !isPublic"
+      v-if="userStore.isCurrentUser(user) && !isPublic"
       @click="showUploadFileModal = true"
    >
       <PlusCircleIcon class="w-5 text-white" />

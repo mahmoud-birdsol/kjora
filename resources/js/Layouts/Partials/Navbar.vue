@@ -22,9 +22,10 @@ import Avatar from "@/Components/Avatar.vue";
 import { XMarkIcon } from "@heroicons/vue/20/solid";
 import axios from "axios";
 import SlideInTransition from "@/Components/SlideInTransition.vue";
+import { useUserStore } from "@/stores";
 
 const locale = usePage().props.locale;
-const currentUser = usePage().props.auth.user;
+const userStore = useUserStore();
 const showingNavigationDropdown = ref(false);
 
 const logout = () => {
@@ -61,7 +62,6 @@ const links = [
       icon: EllipsisHorizontalCircleIcon,
    },
 ];
-let state = usePage().props.user.state_name;
 let notificationsLength = ref(usePage().props.notifications.length);
 let notifications = ref(usePage().props.notifications);
 const showNotificationIndicator = ref(false);
@@ -160,7 +160,7 @@ function markAllNotificationsAsRead() {
                   <div class="flex items-center gap-1 rtl:flex-row-reverse">
                      <MapPinIcon class="w-4 h-4 text-primary" />
                      <span class="text-white max-lg:w-min max-xs:text-xs">{{
-                        currentUser.current_city
+                        userStore.currentUser.current_city
                      }}</span>
                   </div>
                   <!-- Settings Dropdown -->
@@ -170,9 +170,9 @@ function markAllNotificationsAsRead() {
                         class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300"
                      >
                         <Avatar
-                           :id="$page.props.auth.user.id"
-                           :image-url="$page.props.auth.user.avatar_url"
-                           :username="$page.props.auth.user.name"
+                           :id="userStore.currentUser.id"
+                           :image-url="userStore.currentUser.avatar_url"
+                           :username="userStore.currentUser.name"
                            :border="true"
                            border-color="primary"
                            size="sm"

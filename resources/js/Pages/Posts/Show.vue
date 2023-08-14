@@ -17,6 +17,7 @@ import { Link } from "@inertiajs/vue3";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime.js";
 import { onBeforeMount, onMounted, ref, watch } from "vue";
+import { useUserStore } from "@/stores";
 
 onBeforeMount(() => {
    dayjs.extend(relativeTime);
@@ -27,6 +28,7 @@ const props = defineProps({
 });
 
 const postStore = usePostStore();
+const userStore = useUserStore();
 const commentsContainer = ref(null);
 const showLikesModal = ref(false);
 
@@ -72,7 +74,7 @@ watch(
                      </h3>
 
                      <div
-                        v-if="$page.props?.auth?.user?.state_name === 'Premium'"
+                        v-if="userStore?.currentUser?.state_name === 'Premium'"
                         class="shrink-0"
                      >
                         <div class="w-4 rounded-full bg-golden aspect-square">

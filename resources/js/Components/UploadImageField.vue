@@ -1,13 +1,13 @@
 <script setup>
 import Crop from "@/Components/Crop.vue";
 import InputError from "@/Components/Forms/InputError.vue";
+import InputUpload from "@/Components/Forms/InputUpload.vue";
 import Modal from "@/Components/Modal.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { XMarkIcon } from "@heroicons/vue/24/outline";
 import { useForm } from "@inertiajs/vue3";
 import { onMounted, ref, watch } from "vue";
 import Title from "./Title.vue";
-import InputUpload from "@/Components/Forms/InputUpload.vue";
 
 const props = defineProps({
    modelValue: {
@@ -57,10 +57,9 @@ const props = defineProps({
 
 const emit = defineEmits(["close", "update:modelValue", "selected"]);
 
-const files = ref([]);
 const showPreview = ref(false);
 const previewImageUrl = ref(null);
-const photoInput = ref(null);
+const isDisabled = ref(false);
 const fileData = ref(null);
 const isCropLoading = ref(false);
 const form = useForm({
@@ -137,7 +136,7 @@ function close() {
    emit("close");
 }
 
-const loadFiles = (newFiles, newFileData) => {
+const loadFiles = (_newFiles, newFileData) => {
    fileData.value = newFileData.file;
    previewImageUrl.value = newFileData.previewUrl;
    showPreview.value = true;

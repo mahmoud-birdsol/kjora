@@ -6,92 +6,94 @@ import GuestLayout from "@/Layouts/GuestLayout.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
+import { useUserStore } from "@/stores";
+
 const props = defineProps({
-    policy: Object,
+   policy: Object,
 });
-const is_login = usePage().props?.auth?.user;
+const userStore = useUserStore();
+const is_login = userStore.currentUser;
 const isDisabled = ref(true);
 const form = useForm({
-    privacyPolicy: props.policy?.id ?? null,
+   privacyPolicy: props.policy?.id ?? null,
 });
 function submit() {
-    form.patch(route("privacy.policy.store", form.privacyPolicy));
+   form.patch(route("privacy.policy.store", form.privacyPolicy));
 }
 </script>
 
 <template>
-    <component
-        :is="is_login ? AppLayout : GuestLayout"
-        :title="$t('Privacy policy')"
-    >
-        <template #header>
-            {{ $t("Security") }}
-        </template>
-        <div class="grid w-full px-8 lg:grid-cols-2">
-            <div
-                class="col-start-2 bg-white rounded-2xl p-6 w-full min-h-[500px] flex flex-col gap-4"
-            >
-                <div class="flex justify-center my-4">
-                    <h2 class="text-2xl font-bold uppercase text-primary">
-                        {{ $t("privacy-and-policy") }}
-                    </h2>
-                </div>
-                <div
-                    v-if="policy"
-                    class="relative flex-grow p-4 border-2 rounded-lg border-stone-400"
-                >
-                    <div
-                        class="w-full max-h-[400px] overflow-auto hideScrollBar"
-                        v-html="policy.content"
-                    />
-
-                    <div
-                        class="absolute z-20 p-2 text-xs font-bold uppercase bg-white -top-4 left-4 text-primary"
-                    >
-                        {{ $t("updated") }}
-                        <DateTranslation
-                            format="DD MMMM YYYY"
-                            :start="policy.created_at"
-                        />
-                    </div>
-                </div>
-                <div
-                    class=""
-                    v-if="
-                        $page.props.user &&
-                        policy &&
-                        policy.version !==
-                            $page.props.auth.user
-                                .accepted_privacy_policy_version
-                    "
-                >
-                    <div class="flex flex-col justify-center gap-2">
-                        <InputLabel for="policy" color="primary">{{
-                            $t("i-agree")
-                        }}</InputLabel>
-                        <input
-                            type="radio"
-                            :value="policy.id"
-                            id="policy"
-                            v-model="form.privacyPolicy"
-                            :checked="false"
-                            @change="
-                                (e) => {
-                                    e.target.checked
-                                        ? (isDisabled = false)
-                                        : (isDisabled = true);
-                                }
-                            "
-                            class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"
-                        />
-                    </div>
-                    <div class="mt-2">
-                        <PrimaryButton :disabled="isDisabled" @click="submit">
-                            {{ $t("update") }}
-                        </PrimaryButton>
-                    </div>
-                </div>
+   <component
+      :is="is_login ? AppLayout : GuestLayout"
+      :title="$t('Privacy policy')"
+   >
+      <template #header>
+         {{ $t("Security") }}
+      </template>
+      <div class="grid w-full px-8 lg:grid-cols-2">
+         <div
+            class="col-start-2 bg-white rounded-2xl p-6 w-full min-h-[500px] flex flex-col gap-4"
+         >
+            <div class="flex justify-center my-4">
+               <h2 class="text-2xl font-bold uppercase text-primary">
+                  {{ $t("privacy-and-policy") }}
+               </h2>
             </div>
-        </div>
-    </component>
+            <div
+               v-if="policy"
+               class="relative flex-grow p-4 border-2 rounded-lg border-stone-400"
+            >
+               <div
+                  class="w-full max-h-[400px] overflow-auto hideScrollBar"
+                  v-html="policy.content"
+               />
+
+               <div
+                  class="absolute z-20 p-2 text-xs font-bold uppercase bg-white -top-4 left-4 text-primary"
+               >
+                  {{ $t("updated") }}
+                  <DateTranslation
+                     format="DD MMMM YYYY"
+                     :start="policy.created_at"
+                  />
+               </div>
+            </div>
+            <div
+               class=""
+               v-if="
+                  userStore.currentUser &&
+                  policy &&
+                  policy.version !==
+                     userStore.currentUser.accepted_privacy_policy_version
+               "
+            >
+               <div class="flex flex-col justify-center gap-2">
+                  <InputLabel for="policy" color="primary">{{
+                     $t("i-agree")
+                  }}</InputLabel>
+                  <input
+                     type="radio"
+                     :value="policy.id"
+                     id="policy"
+                     v-model="form.privacyPolicy"
+                     :checked="false"
+                     @change="
+                        (e) => {
+                           e.target.checked
+                              ? (isDisabled = false)
+                              : (isDisabled = true);
+                        }
+                     "
+                     class="accent-primary checked:bg-primary focus:bg-primary focus:ring-primary"
+                  />
+               </div>
+               <div class="mt-2">
+                  <PrimaryButton :disabled="isDisabled" @click="submit">
+                     {{ $t("update") }}
+                  </PrimaryButton>
+               </div>
+            </div>
+         </div>
+      </div>
+   </component>
 </template>

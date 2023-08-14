@@ -12,14 +12,14 @@ RadioGroupOption,
 import { CheckIcon, StarIcon } from '@heroicons/vue/24/outline';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
 import { computed, onMounted, ref } from 'vue';
-
+import { useUserStore } from '@/stores'
 
 const props = defineProps([
     'template'
 ]);
 
-
-let form = useForm({
+const userStore = useUserStore()
+const form = useForm({
     payment_plan: null
 })
 let loading = ref(false)
@@ -38,7 +38,7 @@ function send() {
 }
 const date = new Date();
 const locale = usePage().props.locale
-const state = ref(usePage().props.user.state_name)
+const state = computed(()=>userStore.currentUser.state_name)
 let day = date.getDate();
 let month = date.getMonth();
 let year = date.getFullYear();

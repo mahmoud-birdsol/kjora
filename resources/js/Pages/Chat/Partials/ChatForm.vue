@@ -13,6 +13,7 @@ import { ref } from "vue";
 import Avatar from "@/Components/Avatar.vue";
 import EmojiPickerElement from "@/Components/EmojiPickerElement.vue";
 import UploadChatFile from "./UploadChatFile.vue";
+import { useUserStore } from "@/stores";
 
 const props = defineProps({
    conversation: {
@@ -122,8 +123,8 @@ function onSelectEmoji(emoji) {
                   <div>
                      {{
                         chat.repliedMessage.sender_id ===
-                        $page.props.auth.user.id
-                           ? $page.props.auth.user.name
+                        useUserStore.currentUser.id
+                           ? useUserStore.currentUser.name
                            : player.name
                      }}
                   </div>

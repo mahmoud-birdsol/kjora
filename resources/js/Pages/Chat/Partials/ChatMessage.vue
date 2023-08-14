@@ -14,8 +14,10 @@ import ReplyIcon from "@/Components/Icons/ReplyIcon.vue";
 import ChatGallery from "./MediaGallery.vue";
 import MediaThumbnails from "./MediaThumbnails.vue";
 import SingleMediaPreview from "./SingleMediaPreview.vue";
+import { useUserStore } from "@/stores";
 
 const chat = useChat();
+const userStore = useUserStore();
 const props = defineProps({
    message: Object,
    player: null,
@@ -27,7 +29,6 @@ onMounted(() => {
    }, 10000);
 });
 
-const currentUser = usePage().props.auth.user;
 const showOptions = ref(false);
 const showMediaGallery = ref(false);
 const showDeleteMessage = ref(false);
@@ -40,7 +41,7 @@ const otherMedia = props.message.attachments.filter(
 );
 
 const isCurrentUser = computed(() => {
-   return props.message.sender_id === currentUser.id;
+   return props.message.sender_id === userStore.currentUser.id;
 });
 const alignmentClass = computed(() => {
    return isCurrentUser.value ? "self-end  " : "self-start   ";
@@ -111,7 +112,7 @@ function deleteMessage() {
                      <h4 v-if="message.parent?.sender_id === player.id">
                         {{ player.name }}
                      </h4>
-                     <h4 v-else>{{ currentUser.name }}</h4>
+                     <h4 v-else>{{ userStore.currentUser.name }}</h4>
                   </div>
                   <span class="">{{ message.parent?.body }}</span>
                   <MediaPreview

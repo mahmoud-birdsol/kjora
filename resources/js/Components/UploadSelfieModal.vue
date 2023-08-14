@@ -8,6 +8,7 @@ import { usePage } from "@inertiajs/vue3";
 import { computed, onBeforeMount, onMounted, ref } from "vue";
 import Crop from "./Crop.vue";
 import Title from "./Title.vue";
+import { useUserStore } from "@/stores/index.js";
 
 const props = defineProps({
    show: {
@@ -51,7 +52,7 @@ const resolution = {
    width: 450,
    height: 337.5,
 };
-const currentUser = usePage().props.auth.user;
+const currentUser = useUserStore.currentUser;
 const photoUrl = ref(null);
 const context = computed(() => canvas.value?.getContext("2d"));
 const close = () => {
