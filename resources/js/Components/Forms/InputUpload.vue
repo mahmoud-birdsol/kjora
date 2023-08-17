@@ -2,6 +2,7 @@
 import { useObjectUrl } from "@vueuse/core";
 import { ref, computed } from "vue";
 import { PlusCircleIcon } from "@heroicons/vue/24/outline";
+import useGetFileType from "@/Composables/useGetFileType.js";
 
 const props = defineProps({
    multiple: {
@@ -58,7 +59,7 @@ function handleFileChange(e) {
          url: url.value,
          name: file.name,
          size: getFileSize(file),
-         ...getFileMetaData(file, url.value),
+         ...useGetFileType(file.type, url.value),
       });
    });
 
@@ -88,46 +89,6 @@ function reset() {
    fileInput.value.value = null;
 }
 
-function getFileMetaData(file, url) {
-   let type = file.type;
-   let fileType;
-   let isImage = false;
-   let isVideo = false;
-   let isWord = false;
-   let isPdf = false;
-   let previewUrl = url;
-
-   switch (true) {
-      case type.startsWith("image/"):
-         fileType = "image";
-         isImage = true;
-         break;
-      case type.startsWith("video/"):
-         fileType = "video";
-         isVideo = true;
-         break;
-      case type.startsWith("application/pdf"):
-         fileType = "pdf";
-         isWord = true;
-         previewUrl = "/images/pdf.png";
-         break;
-      case type.startsWith("application/msword"):
-         fileType = "word";
-         isWord = true;
-         previewUrl = "/images/doc.png";
-         break;
-      default:
-         break;
-   }
-   return {
-      type: fileType,
-      isWord,
-      isPdf,
-      isImage,
-      isVideo,
-      previewUrl,
-   };
-}
 function getFileSize(file) {
    let number = file.size;
    if (number < 1024) {

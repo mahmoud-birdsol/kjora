@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { computed, ref } from "vue";
+import { useForm } from "@inertiajs/vue3";
 
 export const useChat = defineStore("chat", () => {
    const messages = ref([]);
@@ -14,6 +15,13 @@ export const useChat = defineStore("chat", () => {
    const replyToMessage = ref(null);
    const currentUserId = ref(null);
    const interval = ref(null);
+   const filesData = ref(null);
+   const isSendingMsg = ref(false);
+   const formCreateMessage = useForm({
+      parent_id: null,
+      body: "",
+      attachments: null,
+   });
 
    /**
     * Get store messages.
@@ -266,6 +274,57 @@ export const useChat = defineStore("chat", () => {
          fetchMessages();
       }
    }
+   function addFiles(files, filesUrls) {
+      if (formCreateMessage.attachments) {
+         formCreateMessage.attachments = [
+            ...formCreateMessage.attachments,
+            ...files,
+         ];
+         filesData.value = [...filesData.value, ...filesUrls];
+      } else {
+         formCreateMessage.attachments = files;
+         filesData.value = filesUrls;
+      }
+   }
+   const sendMsg = () => {
+      if (isSendingMsg.value) {
+         return;
+      }
+
+      if (
+         formCreateMessage.body === "" &&
+         !formCreateMessage.attachments.length
+      ) {
+         return;
+      }
+
+      isSendingMsg.value = true;
+      if (repliedMessage.value) {
+         formCreateMessage.parent_id = repliedMessage.value.id;
+      }
+
+      axios
+         .post(
+            route("api.messages.store", conversation.value.id),
+            formCreateMessage.data(),
+            {
+               headers: {
+                  "Content-Type": "multipart/form-data",
+               },
+            }
+         )
+         .then((response) => {
+            pushNewMessage(response.data.data);
+         })
+         .catch((error) => {
+            console.error(error);
+         })
+         .finally(() => {
+            formCreateMessage.reset();
+            filesData.value = [];
+            isSendingMsg.value = false;
+         });
+   };
    return {
       // state
       messages,
@@ -279,6 +338,9 @@ export const useChat = defineStore("chat", () => {
       replyToMessage,
       currentUserId,
       interval,
+      filesData,
+      formCreateMessage,
+      isSendingMsg,
 
       //   getter
       lastPageReached,
@@ -303,5 +365,7 @@ export const useChat = defineStore("chat", () => {
       scrollToMessagesBottom,
       scrollToMessagesTop,
       handleScroll,
+      addFiles,
+      sendMsg,
    };
 });

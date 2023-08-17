@@ -1,5 +1,9 @@
 <script setup>
+import Avatar from "@/Components/Avatar.vue";
+import EmojiPickerElement from "@/Components/EmojiPickerElement.vue";
 import MediaPreview from "@/Components/MediaPreview.vue";
+import useGetFileType from "@/Composables/useGetFileType.js";
+import { useUserStore } from "@/stores";
 import { useChat } from "@/stores/chat";
 import { FaceSmileIcon } from "@heroicons/vue/24/outline";
 import {
@@ -8,12 +12,9 @@ import {
    PhotoIcon,
    XMarkIcon,
 } from "@heroicons/vue/24/solid";
-import { Link, useForm } from "@inertiajs/vue3";
+import { Link } from "@inertiajs/vue3";
 import { ref } from "vue";
-import Avatar from "@/Components/Avatar.vue";
-import EmojiPickerElement from "@/Components/EmojiPickerElement.vue";
 import UploadChatFile from "./UploadChatFile.vue";
-import { useUserStore } from "@/stores";
 
 const props = defineProps({
    conversation: {
@@ -27,69 +28,20 @@ const props = defineProps({
 });
 const showEmojiPicker = ref(false);
 const chat = useChat();
-const loading = ref(false);
 const openUploadModal = ref(false);
-const filesData = ref(null);
-
-const form = useForm({
-   parent_id: null,
-   body: "",
-   attachments: null,
-});
-
-const submit = () => {
-   if (loading.value) {
-      return;
-   }
-
-   if (form.body === "" && !form.attachments.length) {
-      return;
-   }
-
-   loading.value = true;
-   if (chat.repliedMessage) {
-      form.parent_id = chat.repliedMessage.id;
-   }
-
-   axios
-      .post(route("api.messages.store", props.conversation.id), form.data(), {
-         headers: {
-            "Content-Type": "multipart/form-data",
-         },
-      })
-      .then((response) => {
-         chat.pushNewMessage(response.data.data);
-      })
-      .catch((error) => {
-         console.error(error);
-      })
-      .finally(() => {
-         loading.value = false;
-         form.reset();
-         filesData.value = [];
-      });
-};
+const userStore = useUserStore();
 
 // TODO: message body character count based on current screen
 // TODO: view should determine the number of rows with a max number
 // TODO: of rows before activating scroll.
 
-function addFiles(files, filesUrls) {
-   if (form.attachments) {
-      form.attachments = [...form.attachments, ...files];
-      filesData.value = [...filesData.value, ...filesUrls];
-   } else {
-      form.attachments = files;
-      filesData.value = filesUrls;
-   }
-}
 const removePhoto = (i) => {
-   filesData.value.splice(i, 1);
-   form.attachments.splice(i, 1);
+   chat.filesData.splice(i, 1);
+   chat.formCreateMessage.attachments.splice(i, 1);
 };
 
 function onSelectEmoji(emoji) {
-   form.body += emoji;
+   chat.formCreateMessage.body += emoji;
 }
 </script>
 <template>
@@ -123,8 +75,8 @@ function onSelectEmoji(emoji) {
                   <div>
                      {{
                         chat.repliedMessage.sender_id ===
-                        useUserStore.currentUser.id
-                           ? useUserStore.currentUser.name
+                        userStore.currentUser.id
+                           ? userStore.currentUser.name
                            : player.name
                      }}
                   </div>
@@ -148,7 +100,12 @@ function onSelectEmoji(emoji) {
                <div class="text-black max-w-[15rem]">
                   <div v-if="chat.repliedMessage.attachments.length">
                      <MediaPreview
-                        :fileType="chat.repliedMessage.attachments[0].mime_type"
+                        :fileType="
+                           useGetFileType(
+                              chat.repliedMessage.attachments[0].mime_type,
+                              chat.repliedMessage.attachments[0].original_url
+                           ).type
+                        "
                         :filePreview="
                            chat.repliedMessage.attachments[0].original_url
                         "
@@ -178,17 +135,17 @@ function onSelectEmoji(emoji) {
          leave-from-class="opacity-100"
          leave-to-class="opacity-0"
       >
-         <div v-loading="loading">
+         <div v-loading="chat.isSendingMsg">
             <div
-               v-if="filesData"
+               v-if="chat.filesData"
                class="grid grid-cols-4 gap-2 ml-auto overflow-hidden overflow-y-auto max-h-32 hideScrollBar place-items-center"
             >
                <!-- {{ form.attachments }} -->
-               <template v-for="(file, index) in filesData">
+               <template v-for="(file, index) in chat.filesData">
                   <div class="relative w-full">
                      <MediaPreview
                         :fileType="file.type"
-                        :filePreview="file.url"
+                        :filePreview="file.previewUrl"
                         :fileName="file.name"
                      />
                      <button
@@ -229,8 +186,8 @@ function onSelectEmoji(emoji) {
          </OnClickOutside>
          <div class="flex items-center flex-grow p-1 rounded-full bg-stone-100">
             <textarea
-               v-model="form.body"
-               @keypress.enter.exact.prevent="submit"
+               v-model="chat.formCreateMessage.body"
+               @keypress.enter.exact.prevent="chat.sendMsg()"
                name="body"
                id="body"
                rows="1"
@@ -244,15 +201,21 @@ function onSelectEmoji(emoji) {
                <UploadChatFile
                   :show="openUploadModal"
                   @close="openUploadModal = false"
-                  @upload="addFiles"
+                  @upload="chat.addFiles"
                />
                <ArrowUpCircleIcon class="w-2 h-2 text-neutral-400" />
             </span>
          </button>
-         <button :disabled="loading" class="p-1 group" @click="submit">
+         <button
+            :disabled="chat.isSendingMsg"
+            class="p-1 group"
+            @click="chat.sendMsg()"
+         >
             <PaperAirplaneIcon
                class="w-5 rtl:rotate-180"
-               :class="loading ? 'text-neutral-400' : 'text-neutral-900'"
+               :class="
+                  chat.isSendingMsg ? 'text-neutral-400' : 'text-neutral-900'
+               "
             />
          </button>
       </div>

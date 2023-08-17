@@ -15,7 +15,7 @@ import ChatGallery from "./MediaGallery.vue";
 import MediaThumbnails from "./MediaThumbnails.vue";
 import SingleMediaPreview from "./SingleMediaPreview.vue";
 import { useUserStore } from "@/stores";
-
+import useGetFileType from "@/Composables/useGetFileType.js";
 const chat = useChat();
 const userStore = useUserStore();
 const props = defineProps({
@@ -117,7 +117,12 @@ function deleteMessage() {
                   <span class="">{{ message.parent?.body }}</span>
                   <MediaPreview
                      v-if="message.parent.attachments[0]"
-                     :fileType="message.parent.attachments[0].mime_type"
+                     :fileType="
+                        useGetFileType(
+                           message.parent.attachments[0].mime_type,
+                           message.parent.attachments[0].original_url
+                        ).type
+                     "
                      :filePreview="message.parent.attachments[0].original_url"
                      :fileName="message.parent.attachments[0].name"
                   />
