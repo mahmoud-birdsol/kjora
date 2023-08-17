@@ -28,7 +28,7 @@ class PostController extends Controller
    public function update(Request $request, Post $post): RedirectResponse
    {
       $data = $request->validate([
-         'caption' => 'required',
+         'caption' => 'required|max:255',
       ]);
 
       $post->update($data);

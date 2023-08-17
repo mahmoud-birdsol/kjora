@@ -117,8 +117,8 @@ export const usePostStore = defineStore("post", () => {
       captionForm.patch(route("posts.update", post.value), {
          preserveScroll: true,
          preserveState: true,
+         onSuccess: () => (isEditingCaption.value = false),
       });
-      isEditingCaption.value = false;
    };
 
    const cancelEditCaption = () => {
