@@ -34,7 +34,7 @@ function onSelectEmoji(emoji) {
 
    <MentionTextArea
       v-model:newText="postStore.newComment"
-      @addText="postStore.addComment"
+      @send="postStore.addComment"
       :ref="commentInput"
    />
    <button

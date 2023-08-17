@@ -350,7 +350,7 @@ watch(
                   </div>
                </OnClickOutside>
                <MentionTextArea
-                  @addText="addReply"
+                  @send="addReply"
                   v-model:newText="newReply"
                   ref="replyInputRef"
                />

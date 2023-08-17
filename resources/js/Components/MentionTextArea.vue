@@ -6,38 +6,51 @@ const props = defineProps({
    newText: String,
    ref: String,
 });
-const emits = defineEmits(["addText", "update:newText"]);
+const emits = defineEmits(["send", "update:newText"]);
 
 const postStore = usePostStore();
 const showMentionList = ref(false);
 const customTextAreaRef = ref();
 const inputRef = ref(null);
 const searchChars = ref("");
-const options = ref(null);
-const currentOption = ref(0);
+const users = ref(null);
+const selectedUserId = ref(0);
 
-const suggestion = computed(() => {
-   let allSuggestion = postStore.usersCanBeMentioned.filter((user) =>
-      user.username.toLowerCase().includes(searchChars.value.toLowerCase())
-   );
-   let allMentions = props.newText.match(/@\w+/g);
-   return allSuggestion.filter(
-      (suggestion) => !allMentions.includes(`@${suggestion.username}`)
-   );
+const allMatchedWordsInText = computed(() =>
+   props.newText.match(/\B@\w+|\B[@]/g)
+);
+const mentionSuggestions = computed(() => {
+   // find users that match the characters that user write after @
+   if (!Boolean(searchChars.value)) {
+      return postStore.usersCanBeMentioned.filter(
+         (user) => !allMatchedWordsInText.value.includes(`@${user.username}`)
+      );
+   } else {
+      return postStore.usersCanBeMentioned.filter(
+         (user) =>
+            user.username
+               .toLowerCase()
+               .includes(searchChars.value.toLowerCase()) &&
+            !allMatchedWordsInText.value.includes(`@${user.username}`)
+      );
+   }
 });
-const CommentInDiv = computed(() => {
-   if (!props.newText.match(/@\w+/g)) return props.newText;
-   let allComment = props.newText.split(" ");
-   let comment = [];
-   comment = allComment.map((word) => {
-      if (checkIfUserExist(word)) {
-         return `<span class="text-primary" dir="ltr">@${word.slice(1)}</span>`;
-      } else return word;
-   });
-   return comment.join(" ");
+const displayedComment = computed(() => {
+   if (!Boolean(allMatchedWordsInText.value?.length)) return props.newText;
+   return props.newText
+      .split(" ")
+      .map((word) => {
+         if (checkIfUserExist(word)) {
+            return `<span class="text-primary" dir="ltr">@${word.slice(
+               1
+            )}</span>`;
+         } else return word;
+      })
+      .join(" ");
 });
 
-function addToDiv(user) {
+function addSelectedUserToTextarea(user) {
+   // remove last characters and [@] from the end of comment
    let all = props.newText.split(" ");
    all.splice(-1, 1);
    emits("update:newText", `${all.join(" ")} @${user.username} `);
@@ -51,19 +64,20 @@ function goUp(e) {
    if (!showMentionList.value) return;
    e.preventDefault();
 
-   if (currentOption.value <= 0) currentOption.value = options.value.length - 1;
-   else currentOption.value -= 1;
+   if (selectedUserId.value <= 0) selectedUserId.value = users.value.length - 1;
+   else selectedUserId.value -= 1;
 }
 function goDown(e) {
    if (!showMentionList.value) return;
    e.preventDefault();
-   if (currentOption.value >= suggestion.value.length - 1)
-      currentOption.value = 0;
-   else currentOption.value += 1;
+   if (selectedUserId.value >= mentionSuggestions.value.length - 1)
+      selectedUserId.value = 0;
+   else selectedUserId.value += 1;
 }
 function sendOrSelect(e) {
-   if (!showMentionList.value) return emits("addText");
-   addToDiv(suggestion.value[currentOption.value]);
+   // if user press enter and mention list is closed then user want to sent comment
+   if (!showMentionList.value) return emits("send");
+   addSelectedUserToTextarea(mentionSuggestions.value[selectedUserId.value]);
 }
 function checkIfUserExist(words) {
    return postStore.usersCanBeMentioned.some(
@@ -74,17 +88,20 @@ function checkIfUserExist(words) {
 watch(
    () => props.newText,
    (newVal) => {
-      let lastWord = newVal.split(" ").slice(-1).join();
-      if (lastWord.match(/@\w+/g)) {
-         searchChars.value = lastWord.substring(1);
+      let lastWord = newVal.split(" ").slice(-1);
+      if (lastWord[0].match(/\B@\w+|\B[@]/g)) {
+         searchChars.value = lastWord[0].substring(1);
          showMentionList.value = true;
       } else {
          showMentionList.value = false;
       }
    }
 );
-watch(currentOption, () => {
-   options.value[currentOption.value].scrollIntoView();
+watch(selectedUserId, () => {
+   users.value[selectedUserId.value].scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+   });
 });
 
 defineExpose({
@@ -97,7 +114,7 @@ defineExpose({
          ref="customTextAreaRef"
          class="w-full p-2 px-4 border-none rounded-full resize-none hideScrollBar break-all whitespace-pre-wrap placeholder:text-neutral-400 bg-stone-100 text-stone-700 focus:ring-1 focus:ring-primary min-h-[2.5rem] overflow-auto max-h-[3.75rem]"
       >
-         <span v-html="CommentInDiv" />
+         <span v-html="displayedComment" />
       </div>
       <textarea
          @keypress.enter.exact.prevent="sendOrSelect"
@@ -113,14 +130,14 @@ defineExpose({
       </textarea>
       <ul
          class="absolute flex flex-col text-center bg-white border divide-y rounded bottom-full w-full max-h-[10vh] overflow-auto hideScrollBar"
-         v-if="showMentionList && suggestion.length"
+         v-if="showMentionList && mentionSuggestions.length"
       >
          <li
-            v-for="(user, i) in suggestion"
+            v-for="(user, i) in mentionSuggestions"
             class="p-1 text-sm transition-colors duration-300 cursor-pointer text-primary hover:bg-stone-300"
-            :class="currentOption === i && 'bg-primary text-white'"
-            @click="addToDiv(user)"
-            ref="options"
+            :class="selectedUserId === i && 'bg-primary text-white'"
+            @click="addSelectedUserToTextarea(user)"
+            ref="users"
          >
             {{ user.username }}
          </li>
