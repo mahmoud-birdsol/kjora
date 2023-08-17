@@ -84,16 +84,7 @@ function handleSplideActive(e) {
    currentMediaName.value = `Kjora-${dayjs().format("YYYY-MM-DD-HH-mm-ss")}`;
 }
 </script>
-<style scoped>
-[some-slider] li.is-active img {
-   transform: scale(0.9);
-   outline: 1px solid rgb(0, 100, 0);
-}
 
-.splide {
-   margin: auto;
-}
-</style>
 <template>
    <Modal
       :show="show"
@@ -196,7 +187,7 @@ function handleSplideActive(e) {
                </SplideTrack>
             </Splide>
          </div>
-         <div v-show="props.media.length > 1" class="" some-slider>
+         <div v-show="props.media.length > 1" some-slider>
             <Splide
                dir="ltr"
                :options="thumbsOptions"
@@ -206,7 +197,6 @@ function handleSplideActive(e) {
                <SplideSlide
                   v-for="item in media"
                   :key="item.id"
-                  class=""
                   style="border: none !important"
                >
                   <template v-if="item.mime_type.startsWith('image')">
@@ -228,3 +218,13 @@ function handleSplideActive(e) {
       </div>
    </Modal>
 </template>
+<style scoped>
+[some-slider] li.is-active img {
+   transform: scale(0.9);
+   outline: 1px solid rgb(0, 100, 0);
+}
+
+.splide {
+   margin: auto;
+}
+</style>

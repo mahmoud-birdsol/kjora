@@ -15,7 +15,7 @@ export const useChat = defineStore("chat", () => {
    const replyToMessage = ref(null);
    const currentUserId = ref(null);
    const interval = ref(null);
-   const filesData = ref(null);
+   const filesData = ref([]);
    const isSendingMsg = ref(false);
    const formCreateMessage = useForm({
       parent_id: null,
@@ -274,18 +274,6 @@ export const useChat = defineStore("chat", () => {
          fetchMessages();
       }
    }
-   function addFiles(files, filesUrls) {
-      if (formCreateMessage.attachments) {
-         formCreateMessage.attachments = [
-            ...formCreateMessage.attachments,
-            ...files,
-         ];
-         filesData.value = [...filesData.value, ...filesUrls];
-      } else {
-         formCreateMessage.attachments = files;
-         filesData.value = filesUrls;
-      }
-   }
    const sendMsg = () => {
       if (isSendingMsg.value) {
          return;
@@ -302,7 +290,6 @@ export const useChat = defineStore("chat", () => {
       if (repliedMessage.value) {
          formCreateMessage.parent_id = repliedMessage.value.id;
       }
-
       axios
          .post(
             route("api.messages.store", conversation.value.id),
@@ -325,6 +312,7 @@ export const useChat = defineStore("chat", () => {
             isSendingMsg.value = false;
          });
    };
+
    return {
       // state
       messages,
@@ -365,7 +353,6 @@ export const useChat = defineStore("chat", () => {
       scrollToMessagesBottom,
       scrollToMessagesTop,
       handleScroll,
-      addFiles,
       sendMsg,
    };
 });

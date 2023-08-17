@@ -6,7 +6,7 @@ const maximumUploadNumberOfFiles = computed(
 );
 
 const useGetAllowedUploadFiles = (files, newFile) => {
-   let FilesCount = files.length;
+   let FilesCount = files.length || 0;
    let availableSpace = maximumUploadNumberOfFiles.value - FilesCount;
    if (availableSpace <= 0) return [];
    if (availableSpace > 0) return (newFile = newFile.slice(0, availableSpace));

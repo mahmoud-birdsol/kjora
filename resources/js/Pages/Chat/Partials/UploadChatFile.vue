@@ -10,6 +10,8 @@ import { PlayIcon } from "@heroicons/vue/24/solid";
 import { usePage } from "@inertiajs/vue3";
 import { ref, computed } from "vue";
 import VueEasyLightbox from "vue-easy-lightbox";
+import { useChat } from "@/stores/chat";
+
 const props = defineProps({
    modelValue: {
       required: false,
@@ -59,7 +61,6 @@ const props = defineProps({
 const emit = defineEmits(["close", "update:modelValue", "reload", "upload"]);
 
 const showPreview = ref(false);
-const filesData = ref([]);
 const isLoading = ref(false);
 const isDisabled = ref(false);
 const showAsError = ref(false);
@@ -68,6 +69,7 @@ const visibleRef = ref(false);
 const imgsRef = ref(null);
 const cropFile = ref([]);
 const openModal = ref(false);
+const chat = useChat();
 const maximumUploadNumberOfFiles = computed(
    () => usePage().props.maximumUploadNumberOfFiles
 );
@@ -82,37 +84,40 @@ function hideLightBox() {
 }
 
 const loadFiles = (_newFiles, newFilesData) => {
-   newFilesData = useGetAllowedUploadFiles(filesData.value, newFilesData);
-   if (newFilesData.length <= 0) return (showAsError.value = true);
-
-   filesData.value = [...filesData.value, ...newFilesData];
+   let newFilesDataAfterValidation = useGetAllowedUploadFiles(
+      chat.filesData,
+      newFilesData
+   );
+   if (newFilesDataAfterValidation.length < newFilesData.length) {
+      showAsError.value = true;
+   }
+   chat.filesData = [...chat.filesData, ...newFilesDataAfterValidation];
    showPreview.value = true;
 };
 
 const removePhoto = (i) => {
-   if ((cropFile.value.id, filesData.value[i].id)) {
+   if ((cropFile.value.id, chat.filesData[i].id)) {
       cropFile.value = {};
       openModal.value = false;
    }
-   filesData.value.splice(i, 1);
-   filesData.value.length === 0 ? (showPreview.value = false) : null;
+   chat.filesData.splice(i, 1);
+   chat.filesData.length === 0 ? (showPreview.value = false) : null;
 };
 
 const upload = () => {
-   if (!filesData.value.length) {
+   if (!chat.filesData.length) {
       return;
    }
    isLoading.value = true;
    isDisabled.value = true;
-   let files = filesData.value.map((file) => file.file);
-   emit("upload", files, filesData.value);
+   chat.formCreateMessage.attachments = chat.filesData.map((file) => file.file);
    reset();
 };
 
 function reset(_e) {
-   filesData.value = [];
    isLoading.value = false;
    isDisabled.value = false;
+   showAsError.value = false;
    num.value += 1;
    emit("close");
 }
@@ -122,10 +127,10 @@ let showCropModal = (file) => {
    openModal.value = true;
 };
 function changeFiles(file, url, id) {
-   let fileUrlIndex = filesData.value.findIndex((f) => f.id === id);
-   filesData.value[fileUrlIndex].url = url;
-   filesData.value[fileUrlIndex].previewUrl = url;
-   filesData.value[fileUrlIndex].file = file;
+   let fileUrlIndex = chat.filesData.findIndex((f) => f.id === id);
+   chat.filesData[fileUrlIndex].url = url;
+   chat.filesData[fileUrlIndex].previewUrl = url;
+   chat.filesData[fileUrlIndex].file = file;
    cropFile.value = [];
 }
 </script>
@@ -162,7 +167,10 @@ function changeFiles(file, url, id) {
                v-loading="isLoading"
             >
                <div class="relative grid grid-cols-3 gap-2">
-                  <template v-for="(file, index) in filesData" :key="index">
+                  <template
+                     v-for="(file, index) in chat.filesData"
+                     :key="index"
+                  >
                      <div class="relative">
                         <template v-if="file.isVideo">
                            <video

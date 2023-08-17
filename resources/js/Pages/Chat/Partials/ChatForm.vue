@@ -201,7 +201,6 @@ function onSelectEmoji(emoji) {
                <UploadChatFile
                   :show="openUploadModal"
                   @close="openUploadModal = false"
-                  @upload="chat.addFiles"
                />
                <ArrowUpCircleIcon class="w-2 h-2 text-neutral-400" />
             </span>
