@@ -176,7 +176,7 @@ const showCropModal = (file) => {
 
 const loadFiles = (newFiles, newFilesData) => {
    newFilesData = useGetAllowedUploadFiles(filesData.value, newFilesData);
-   if (newFilesData.length <= 0) return;
+   if (newFilesData.length <= 0) return (showAsError.value = true);
    filesData.value = [...filesData.value, ...newFilesData];
    showPreview.value = true;
 };

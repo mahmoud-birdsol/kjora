@@ -62,6 +62,7 @@ const showPreview = ref(false);
 const filesData = ref([]);
 const isLoading = ref(false);
 const isDisabled = ref(false);
+const showAsError = ref(false);
 const num = ref(0);
 const visibleRef = ref(false);
 const imgsRef = ref(null);
@@ -82,7 +83,7 @@ function hideLightBox() {
 
 const loadFiles = (_newFiles, newFilesData) => {
    newFilesData = useGetAllowedUploadFiles(filesData.value, newFilesData);
-   if (newFilesData.length <= 0) return;
+   if (newFilesData.length <= 0) return (showAsError.value = true);
 
    filesData.value = [...filesData.value, ...newFilesData];
    showPreview.value = true;
@@ -236,7 +237,7 @@ function changeFiles(file, url, id) {
                @update:open="() => (openModal = false)"
             />
             <div
-               v-if="filesData.length >= maximumUploadNumberOfFiles"
+               v-if="showAsError"
                class="mb-2 text-sm text-center text-red-500"
             >
                {{
