@@ -113,7 +113,7 @@ function handleSplideActive(e) {
                   :username="user.name"
                   :border="true"
                />
-               <div>
+               <div class="flex flex-col">
                   <div class="text-primary">{{ user.name }}</div>
                   <Link
                      class="text-xs text-gray-400"
