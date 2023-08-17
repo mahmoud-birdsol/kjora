@@ -90,7 +90,6 @@ function reset() {
 
 function getFileMetaData(file, url) {
    let type = file.type;
-
    let fileType;
    let isImage = false;
    let isVideo = false;
