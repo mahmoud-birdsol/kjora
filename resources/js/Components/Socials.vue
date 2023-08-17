@@ -1,7 +1,7 @@
 <script setup>
 import { ShareIcon } from "@heroicons/vue/24/outline";
 import { usePage } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 const props = defineProps({
    shareUrl: {
@@ -13,7 +13,7 @@ const props = defineProps({
 });
 const emits = defineEmits(["showCopied"]);
 const showSocials = ref(false);
-const url = usePage().props.ziggy.url + "/" + props.shareUrl;
+const url = computed(() => `${usePage().props.ziggy.url}/${props.shareUrl}`);
 
 function copy() {
    navigator.clipboard.writeText(url).then(() => {
