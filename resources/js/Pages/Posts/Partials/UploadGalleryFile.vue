@@ -158,6 +158,8 @@ const reset = (_e) => {
    postId = null;
    caption.value = "";
    countUploadFiles.value += 1;
+   cropFile.value = null;
+   openCropModal.value = false;
    emit("close");
 };
 
