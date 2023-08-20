@@ -64,7 +64,6 @@ const showPreview = ref(false);
 const isLoading = ref(false);
 const isDisabled = ref(false);
 const showAsError = ref(false);
-const num = ref(0);
 const visibleRef = ref(false);
 const imgsRef = ref(null);
 const cropFile = ref(null);
@@ -118,7 +117,7 @@ function reset(_e) {
    isLoading.value = false;
    isDisabled.value = false;
    showAsError.value = false;
-   num.value += 1;
+   cropFile.value = null;
    emit("close");
 }
 
@@ -142,7 +141,6 @@ function changeFiles(file, url, id) {
       :closeable="closeable"
       :position="position"
       @close="reset"
-      :key="num"
    >
       <div class="flex min-h-[500px] flex-col justify-between p-6 pt-0">
          <div class="flex justify-center">

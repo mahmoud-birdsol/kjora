@@ -68,7 +68,6 @@ const form = useForm({
    collection_name: props.collectionName,
    image: null,
 });
-const num = ref(Math.floor(Math.random() * 100));
 const cropFile = ref({});
 const openCropModal = ref(false);
 
@@ -116,12 +115,13 @@ const upload = () => {
       },
    });
 };
-function changeFiles(file, url, _id) {
+
+function substituteFiles(file, url, _id) {
    fileData.value = file;
    previewImageUrl.value = url;
-   cropFile.value = {};
+   cropFile.value = null;
 }
-let showCropModal = (url) => {
+const showCropModal = (url) => {
    cropFile.value = {
       name: fileData.value.name,
       url,
@@ -132,7 +132,6 @@ let showCropModal = (url) => {
 };
 function close() {
    fileData.value = null;
-   num.value += 1;
    emit("close");
 }
 
@@ -152,7 +151,6 @@ const loadFiles = (_newFiles, newFileData) => {
       :closeable="closeable"
       :position="position"
       @close="close"
-      :key="num"
    >
       <div class="flex flex-col min-h-[500px] justify-between p-6 pt-0">
          <Title>{{ $t("upload") }}</Title>
@@ -193,7 +191,7 @@ const loadFiles = (_newFiles, newFileData) => {
          <div>
             <Crop
                :img="cropFile"
-               @crop="changeFiles"
+               @crop="substituteFiles"
                :open="openCropModal"
                @close="() => (openCropModal = false)"
                :presetMode="{
