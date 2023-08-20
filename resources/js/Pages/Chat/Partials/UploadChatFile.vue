@@ -67,7 +67,7 @@ const showAsError = ref(false);
 const num = ref(0);
 const visibleRef = ref(false);
 const imgsRef = ref(null);
-const cropFile = ref([]);
+const cropFile = ref(null);
 const openModal = ref(false);
 const chat = useChat();
 const maximumUploadNumberOfFiles = computed(
@@ -97,7 +97,7 @@ const loadFiles = (_newFiles, newFilesData) => {
 
 const removePhoto = (i) => {
    if ((cropFile.value.id, chat.filesData[i].id)) {
-      cropFile.value = {};
+      cropFile.value = null;
       openModal.value = false;
    }
    chat.filesData.splice(i, 1);
@@ -131,7 +131,7 @@ function changeFiles(file, url, id) {
    chat.filesData[fileUrlIndex].url = url;
    chat.filesData[fileUrlIndex].previewUrl = url;
    chat.filesData[fileUrlIndex].file = file;
-   cropFile.value = [];
+   cropFile.value = null;
 }
 </script>
 
@@ -241,8 +241,8 @@ function changeFiles(file, url, id) {
             <Crop
                :img="cropFile"
                @crop="changeFiles"
-               v-model:open="openModal"
-               @update:open="() => (openModal = false)"
+               :open="openModal"
+               @close="() => (openModal = false)"
             />
             <div
                v-if="showAsError"

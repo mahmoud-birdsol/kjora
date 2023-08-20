@@ -127,11 +127,9 @@ let showCropModal = (_) => {
       url: photoUrl.value,
    };
    openCropModal.value = true;
-   // cropLoading.value = false
 };
 const submit = () => {
    emit("update:modelValue", photoUrl);
-
    close();
 };
 </script>
@@ -195,7 +193,7 @@ const submit = () => {
                         <p class="text-xs font-light text-gray-500">
                            {{
                               $t(
-                                 "Click on the following link to open the camera"
+                                 "Click-on-the-following-link-to-open-the-camera"
                               )
                            }}.
                            <a
@@ -238,8 +236,8 @@ const submit = () => {
                      <Crop
                         :img="cropFile"
                         @crop="changeFiles"
-                        v-model:open="openCropModal"
-                        @update:open="() => (openCropModal = false)"
+                        :open="openCropModal"
+                        @close="() => (openCropModal = false)"
                      />
                      <div class="flex justify-center">
                         <button

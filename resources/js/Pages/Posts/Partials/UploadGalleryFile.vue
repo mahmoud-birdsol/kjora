@@ -66,7 +66,7 @@ const filesData = ref([]);
 const isLoading = ref(false);
 const isDisabled = ref(false);
 const caption = ref("");
-const cropFile = ref([]);
+const cropFile = ref(null);
 const openCropModal = ref(false);
 const countUploadFiles = ref(0);
 const showAsError = ref(false);
@@ -80,7 +80,7 @@ const removeFile = ({ id }) => {
    let fileDataIndex = filesData.value.findIndex((f) => f.id === id);
    filesData.value.splice(fileDataIndex, 1);
    if (cropFile.value.id === id) {
-      cropFile.value = [];
+      cropFile.value = null;
       openCropModal.value = false;
    }
 };
@@ -168,7 +168,7 @@ const changeFiles = (file, url, id) => {
    filesData.value[fileObjIndex].url = url;
    filesData.value[fileObjIndex].previewUrl = url;
    filesData.value[fileObjIndex].file = file;
-   cropFile.value = [];
+   cropFile.value = null;
 };
 
 const showCropModal = (file) => {
@@ -294,8 +294,8 @@ const loadFiles = (newFiles, newFilesData) => {
             <Crop
                :img="cropFile"
                @crop="changeFiles"
-               v-model:open="openCropModal"
-               @update:open="() => (openCropModal = false)"
+               :open="openCropModal"
+               @close="() => (openCropModal = false)"
             />
             <div
                v-if="filesData.length >= maximumUploadNumberOfFiles"

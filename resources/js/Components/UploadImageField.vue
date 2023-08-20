@@ -194,23 +194,28 @@ const loadFiles = (_newFiles, newFileData) => {
             <Crop
                :img="cropFile"
                @crop="changeFiles"
-               v-model:open="openCropModal"
-               @update:open="() => (openCropModal = false)"
+               :open="openCropModal"
+               @close="() => (openCropModal = false)"
                :presetMode="{
                   mode: 'round',
                   width: 250,
                   height: 250,
                }"
-               :addOption="{
+               :extraOptions="{
                   viewMode: 1,
                   dragMode: 'move',
                   aspectRatio: 1,
                   cropBoxResizable: false,
                }"
             />
-            <PrimaryButton @click.prevent="upload" :disabled="form.processing">
-               {{ $t("upload") }}
-            </PrimaryButton>
+            <template v-if="!openCropModal">
+               <PrimaryButton
+                  @click.prevent="upload"
+                  :disabled="form.processing"
+               >
+                  {{ $t("upload") }}
+               </PrimaryButton>
+            </template>
             <InputError class="mt-2" :message="form.errors.image" />
          </div>
       </div>
