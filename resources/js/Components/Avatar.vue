@@ -38,7 +38,7 @@ const props = defineProps({
    },
 });
 const userStore = useUserStore();
-const currentUser = userStore.currentUser.value ?? null;
+const currentUser = userStore.currentUser ?? null;
 //
 const isCurrentUser = currentUser?.id === props?.id;
 const isPlayerProfile = usePage().url.includes("player/");
