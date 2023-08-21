@@ -23,6 +23,11 @@ export const useChat = defineStore("chat", () => {
       attachments: null,
    });
 
+   const showFilesPreview = ref(false);
+   const isLoadingFiles = ref(false);
+   const cropFile = ref();
+   const showCropModal = ref(false);
+
    /**
     * Get store messages.
     *
@@ -329,7 +334,10 @@ export const useChat = defineStore("chat", () => {
       filesData,
       formCreateMessage,
       isSendingMsg,
-
+      showFilesPreview,
+      isLoadingFiles,
+      cropFile,
+      showCropModal,
       //   getter
       lastPageReached,
       messageList,

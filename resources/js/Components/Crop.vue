@@ -11,7 +11,7 @@ const props = defineProps({
       default: null,
    },
    presetMode: Object,
-   extraOptions: Object,
+   addOption: Object,
 });
 
 const emit = defineEmits(["crop", "close"]);
@@ -19,7 +19,7 @@ const result = reactive({
    dataURL: "",
    blobURL: "",
 });
-const cropKey = ref(Math.floor(Math.random() * 100));
+const num = ref(Math.floor(Math.random() * 100));
 const options = {
    viewMode: 3,
    dragMode: "crop",
@@ -40,6 +40,7 @@ const imageObj = computed(() => {
 
 async function getResult() {
    if (!cropper) return;
+   isLoading.value = true;
    const filePreviewUrl = cropper.getDataURL();
    const blob = await cropper.getBlob();
    if (!blob) return;
@@ -51,6 +52,7 @@ async function getResult() {
    result.dataURL = filePreviewUrl;
 
    emit("crop", file, filePreviewUrl, imageObj.value.id);
+   isLoading.value = false;
    emit("close");
 }
 function ready() {
@@ -61,7 +63,7 @@ function ready() {
    ) {
       isLoading.value = false;
    } else {
-      cropKey.value += 1;
+      num.value += 1;
    }
 }
 </script>
@@ -76,9 +78,9 @@ function ready() {
                <VuePictureCropper
                   :boxStyle="boxStyle"
                   :img="imageObj?.url"
-                  :options="{ ...options, ...extraOptions }"
+                  :options="{ ...options, ...addOption }"
                   @ready="ready"
-                  :key="cropKey"
+                  :key="num"
                   :presetMode="presetMode"
                />
             </div>

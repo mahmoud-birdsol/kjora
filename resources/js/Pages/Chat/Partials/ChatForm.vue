@@ -14,7 +14,7 @@ import {
 } from "@heroicons/vue/24/solid";
 import { Link } from "@inertiajs/vue3";
 import { ref } from "vue";
-import UploadChatFile from "./UploadChatFile.vue";
+import UploadChatFile from "./UploadChatFile/Index.vue";
 
 const props = defineProps({
    conversation: {
