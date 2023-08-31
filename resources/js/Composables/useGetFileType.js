@@ -1,3 +1,4 @@
+const WORD_FILE_TYPES = ['text/xml','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document']
 export default function useGetFileType(type, url) {
    let fileType;
    let isImage = false;
@@ -20,7 +21,7 @@ export default function useGetFileType(type, url) {
          isWord = true;
          previewUrl = "/images/pdf.png";
          break;
-      case type.startsWith("application/msword"):
+      case WORD_FILE_TYPES.includes(type):
          fileType = "word";
          isWord = true;
          previewUrl = "/images/doc.png";

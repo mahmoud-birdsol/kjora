@@ -32,7 +32,9 @@ defineEmits(["showGallery"]);
          v-else-if="
             media?.mime_type.endsWith('.document') ||
             media?.mime_type.startsWith('application/msword') ||
-            media?.mime_type.startsWith('application/pdf')
+            media?.mime_type.startsWith('application/pdf') ||
+            media?.mime_type.startsWith('text/xml')
+
          "
          class="flex items-center justify-between gap-2"
       >
@@ -40,7 +42,8 @@ defineEmits(["showGallery"]);
             <img
                v-if="
                   media?.mime_type.endsWith('.document') ||
-                  media?.mime_type.startsWith('application/msword')
+                  media?.mime_type.startsWith('application/msword') ||
+                  media?.mime_type.startsWith('text/xml')
                "
                class="object-contain w-7 h-7"
                src="/images/doc.png"
