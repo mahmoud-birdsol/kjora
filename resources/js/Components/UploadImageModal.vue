@@ -1,7 +1,7 @@
 <script setup>
 import Modal from '@/Components/Modal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { useForm } from '@inertiajs/inertia-vue3';
+import { useForm } from '@inertiajs/vue3';
 import { PlusCircleIcon, XMarkIcon } from '@heroicons/vue/24/outline';
 import { ref, onMounted } from 'vue';
 import Title from './Title.vue';

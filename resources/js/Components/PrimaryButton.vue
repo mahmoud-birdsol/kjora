@@ -1,5 +1,5 @@
 <script setup>
-import { usePage } from '@inertiajs/inertia-vue3'
+import { usePage } from '@inertiajs/vue3'
 defineProps({
     type: {
         type: String,

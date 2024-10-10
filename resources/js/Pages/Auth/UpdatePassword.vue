@@ -1,6 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import Card from '@/Components/Card.vue';
 import CardContent from '@/Components/CardContent.vue';
 import InputLabel from '@/Components/InputLabel.vue';

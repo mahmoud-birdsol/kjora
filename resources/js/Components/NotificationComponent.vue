@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import { TrashIcon, EyeIcon } from '@heroicons/vue/24/outline';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { useForm, Link } from '@inertiajs/inertia-vue3';
+import { useForm, Link } from '@inertiajs/vue3';
 import DateTranslation from './DateTranslation.vue';
 dayjs.extend(relativeTime);
 

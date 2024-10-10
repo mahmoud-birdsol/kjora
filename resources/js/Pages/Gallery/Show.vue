@@ -8,47 +8,81 @@
                 <PostMedia :postMedia="post.media" :user="user"></PostMedia>
             </template>
             <template #userImage>
-                <Avatar :id="user.id" :username="user.name" :image-url="user.avatar_url" :size="'md'" :border="true" border-color="primary" />
+                <Avatar
+                    :id="user.id"
+                    :username="user.name"
+                    :image-url="user.avatar_url"
+                    :size="'md'"
+                    :border="true"
+                    border-color="primary"
+                />
             </template>
             <template #userInfo>
                 <div class="flex justify-between w-full">
                     <div class="flex flex-col">
                         <div class="flex flex-row gap-2">
-                            <h3 class="m-0 text-lg font-bold leading-none capitalize">
+                            <h3
+                                class="m-0 text-lg font-bold leading-none capitalize"
+                            >
                                 {{ user.name }}
                             </h3>
-                            <div v-if="currentUser?.state_name === 'Premium'" class="shrink-0">
-                                <div class="w-4 rounded-full bg-golden aspect-square">
-                                    <StarIcon class=" fill-white stroke-none" />
+                            <div
+                                v-if="currentUser?.state_name === 'Premium'"
+                                class="shrink-0"
+                            >
+                                <div
+                                    class="w-4 rounded-full bg-golden aspect-square"
+                                >
+                                    <StarIcon class="fill-white stroke-none" />
                                 </div>
                             </div>
                         </div>
-                        <Link :href="route('player.profile', user.id)" class="text-xs text-stone-400">@{{ user.username }}
+                        <Link
+                            :href="route('player.profile', user.id)"
+                            class="text-xs text-stone-400"
+                            >@{{ user.username }}
                         </Link>
                     </div>
-                    <PostOptionMenu :isCurrentUser="isCurrentUser" :postId="post.id" @editingCaption="
-                        postCaptionComp
-                            ? (postCaptionComp.isEditingCaption = true)
-                            : null
-                    ">
+                    <PostOptionMenu
+                        :isCurrentUser="isCurrentUser"
+                        :postId="post.id"
+                        @editingCaption="
+                            postCaptionComp
+                                ? (postCaptionComp.isEditingCaption = true)
+                                : null
+                        "
+                    >
                     </PostOptionMenu>
                 </div>
             </template>
             <template #postDate&Time>
-                <div class="flex justify-between w-full gap-2 text-[10px] text-stone-400">
+                <div
+                    class="flex justify-between w-full gap-2 text-[10px] text-stone-400"
+                >
                     <div class="flex flex-row gap-1">
-                        <DateTranslation :start="post.created_at" type="range" />
+                        <DateTranslation
+                            :start="post.created_at"
+                            type="range"
+                        />
                         <span>|</span>
-                        <DateTranslation :start="post.created_at" format="hh:mm A" />
+                        <DateTranslation
+                            :start="post.created_at"
+                            format="hh:mm A"
+                        />
                     </div>
                 </div>
             </template>
             <template #postCaption>
-                <PostCaptionFrom ref="postCaptionComp" :post="post"></PostCaptionFrom>
+                <PostCaptionFrom
+                    ref="postCaptionComp"
+                    :post="post"
+                ></PostCaptionFrom>
             </template>
 
             <template #commentsCount>
-                <div class="flex items-center justify-between p-4 pt-5 border-b border-stone-300">
+                <div
+                    class="flex items-center justify-between p-4 pt-5 border-b border-stone-300"
+                >
                     <div class="text-sm">
                         {{
                             $t("comments ( :count )", {
@@ -57,35 +91,67 @@
                         }}
                     </div>
                     <div class="flex items-center gap-1">
-                        <button v-if="post?.likes_count > 0" @click="showLikesModal = true">
+                        <button
+                            v-if="post?.likes_count > 0"
+                            @click="showLikesModal = true"
+                        >
                             <span class="text-sm">{{ post?.likes_count }}</span>
-                            <LikesModal :show="showLikesModal" :users="post.likes?.map((like) => like.user)" @close="showLikesModal = false" />
+                            <LikesModal
+                                :show="showLikesModal"
+                                :users="post.likes?.map((like) => like.user)"
+                                @close="showLikesModal = false"
+                            />
                         </button>
-                        <LikeButton :canLiked="isCurrentUser" :isLiked="post?.is_liked" :likeable_id="post.id" :likeable_type="'App\\Models\\Post'">
+                        <LikeButton
+                            :canLiked="isCurrentUser"
+                            :isLiked="post?.is_liked"
+                            :likeable_id="post.id"
+                            :likeable_type="'App\\Models\\Post'"
+                        >
                             <template v-slot="{ isLiked }">
-                                <HeartIcon class="w-4 stroke-current stroke-2 text-primary" :class="
-                                    isLiked
-                                        ? 'fill-current'
-                                        : 'fill-transparent'
-                                " />
+                                <HeartIcon
+                                    class="w-4 stroke-current stroke-2 text-primary"
+                                    :class="
+                                        isLiked
+                                            ? 'fill-current'
+                                            : 'fill-transparent'
+                                    "
+                                />
                             </template>
                         </LikeButton>
                     </div>
                 </div>
             </template>
             <template #postComments>
-                <div ref="commentsContainer" @scroll="handleScroll" class="flex flex-col gap-4 w-full max-h-[500px] hideScrollBar overflow-auto"
-                    v-if="postComments">
-                    <template v-for="comment in postComments.filter(
-                        (c) => !c.parent_id
-                    )" :key="comment.id">
-                        <Comment @addedReply="getPostComments" :comment="comment" :users="users" ref="commentsComps" :parentOffset="commentsContainerOffset"
-                            :id="comment.id" />
+                <div
+                    ref="commentsContainer"
+                    @scroll="handleScroll"
+                    class="flex flex-col gap-4 w-full max-h-[500px] hideScrollBar overflow-auto"
+                    v-if="postComments"
+                >
+                    <template
+                        v-for="comment in postComments.filter(
+                            (c) => !c.parent_id
+                        )"
+                        :key="comment.id"
+                    >
+                        <Comment
+                            @addedReply="getPostComments"
+                            :comment="comment"
+                            :users="users"
+                            ref="commentsComps"
+                            :parentOffset="commentsContainerOffset"
+                            :id="comment.id"
+                        />
                     </template>
                 </div>
             </template>
             <template #newCommentForm>
-                <PostCommentForm :postId="post.id" :commentsContainer="commentsContainer" @addComment="getPostComments">
+                <PostCommentForm
+                    :postId="post.id"
+                    :commentsContainer="commentsContainer"
+                    @addComment="getPostComments"
+                >
                 </PostCommentForm>
             </template>
         </PostLayout>
@@ -94,7 +160,7 @@
 
 <script setup>
 import { onMounted, onBeforeMount, ref, computed, provide } from "vue";
-import { usePage, Link } from "@inertiajs/inertia-vue3";
+import { usePage, Link } from "@inertiajs/vue3";
 import { HeartIcon } from "@heroicons/vue/24/solid";
 import AppLayout from "../../Layouts/AppLayout.vue";
 import Avatar from "../../Components/Avatar.vue";
@@ -126,9 +192,9 @@ const commentsComps = ref(null);
 const postCaptionComp = ref(null);
 const postComments = ref([]);
 const showLikesModal = ref(false);
-const currentUser = usePage().props.value.auth.user;
+const currentUser = usePage().props.auth.user;
 const isCurrentUser = currentUser.id === props.user.id;
-const users = ref([])
+const users = ref([]);
 const numComments = computed(() =>
     postComments.value
         ? postComments.value.filter((c) => !c.parent_id)?.length
@@ -170,9 +236,10 @@ function scrollToCommentsBottom() {
     }, 100);
 }
 async function fetchUsername() {
-    users.value = await axios.get(route("api.user.get.users.name")).then((res) => res.data.data);
+    users.value = await axios
+        .get(route("api.user.get.users.name"))
+        .then((res) => res.data.data);
 }
-
 </script>
 
 <style lang="scss" scoped></style>

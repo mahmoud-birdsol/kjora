@@ -1,27 +1,26 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
-import AppLayout from '@/Layouts/AppLayout.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
+import { Head, Link, useForm } from "@inertiajs/vue3";
+import AppLayout from "@/Layouts/AppLayout.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 import InvitationCard from "./Partials/InvitationCard.vue";
-import DateTranslation from '@/Components/DateTranslation.vue';
-import InvitationsFilter from '@/Components/InvitationsFilter.vue';
-import Pagination from '@/Components/Pagination.vue';
+import DateTranslation from "@/Components/DateTranslation.vue";
+import InvitationsFilter from "@/Components/InvitationsFilter.vue";
+import Pagination from "@/Components/Pagination.vue";
 import { CalendarIcon } from "@heroicons/vue/20/solid";
-import dayjs from 'dayjs';
-import { computed, ref } from 'vue';
-import { paginationEmits } from 'element-plus';
-import InvitationHireTaps from '../../Components/InvitationHireTaps.vue';
+import dayjs from "dayjs";
+import { computed, ref } from "vue";
+import { paginationEmits } from "element-plus";
+import InvitationHireTaps from "../../Components/InvitationHireTaps.vue";
 const props = defineProps({
     invitations: Object,
 });
 
-const fromDate = ref(null)
-const toDate = ref(null)
-
+const fromDate = ref(null);
+const toDate = ref(null);
 
 function showFromToDates(date1, date2) {
-    fromDate.value = dayjs(date1).format('DD MMMM YYYY hh:mm')
-    toDate.value = dayjs(date2).format('DD MMMM YYYY hh:mm')
+    fromDate.value = dayjs(date1).format("DD MMMM YYYY hh:mm");
+    toDate.value = dayjs(date2).format("DD MMMM YYYY hh:mm");
 }
 </script>
 
@@ -30,7 +29,9 @@ function showFromToDates(date1, date2) {
 
     <AppLayout title="Invitations">
         <template #header>
-            <p class="text-4xl font-black md:text-7xl">{{ $t('invitations') }}</p>
+            <p class="text-4xl font-black md:text-7xl">
+                {{ $t("invitations") }}
+            </p>
         </template>
 
         <div class="py-12">
@@ -38,31 +39,54 @@ function showFromToDates(date1, date2) {
                 <InvitationHireTaps />
 
                 <div class="bg-white rounded-xl mt-4 min-h-[500px] p-2 md:p-6">
-                    <div class="flex gap-1 mb-4 text-xs font-bold" v-if="fromDate && toDate">
+                    <div
+                        class="flex gap-1 mb-4 text-xs font-bold"
+                        v-if="fromDate && toDate"
+                    >
                         <CalendarIcon class="w-4" />
                         <span>
-                            {{ $t('from') }}
+                            {{ $t("from") }}
                         </span>
-                        <DateTranslation :start="fromDate" format="DD MMMM YYYY" />
+                        <DateTranslation
+                            :start="fromDate"
+                            format="DD MMMM YYYY"
+                        />
                         <span>
-                            {{ $t('to') }}
+                            {{ $t("to") }}
                         </span>
-                        <DateTranslation :start="toDate" format="DD MMMM YYYY" />
+                        <DateTranslation
+                            :start="toDate"
+                            format="DD MMMM YYYY"
+                        />
                     </div>
-                    <div v-if="invitations.data.length" class="grid grid-cols-1 gap-4">
-                        <template v-for="( invitation ) in invitations.data" :key="invitation.id">
-                            <div class="text-xs font-bold flex gap-1">
+                    <div
+                        v-if="invitations.data.length"
+                        class="grid grid-cols-1 gap-4"
+                    >
+                        <template
+                            v-for="invitation in invitations.data"
+                            :key="invitation.id"
+                        >
+                            <div class="flex gap-1 text-xs font-bold">
                                 <CalendarIcon class="w-4" />
-                                <DateTranslation :start="invitation.date" format="DD MMMM YYYY hh:mm" />
+                                <DateTranslation
+                                    :start="invitation.date"
+                                    format="DD MMMM YYYY hh:mm"
+                                />
                             </div>
                             <InvitationCard :invitation="invitation" />
                         </template>
                     </div>
 
-                    <div v-else class="grid place-items-center min-h-[480px] h-full">
-                        <p class="text-sm font-bold text-black">{{ $t(`Sorry, we couldn't find any results`) }} </p>
+                    <div
+                        v-else
+                        class="grid place-items-center min-h-[480px] h-full"
+                    >
+                        <p class="text-sm font-bold text-black">
+                            {{ $t(`Sorry, we couldn't find any results`) }}
+                        </p>
                     </div>
-                    <div class="mt-4 flex justify-center">
+                    <div class="flex justify-center mt-4">
                         <Pagination :links="invitations.links"></Pagination>
                     </div>
                 </div>
@@ -79,6 +103,5 @@ function showFromToDates(date1, date2) {
 
 .el-input__inner {
     color: white;
-
 }
 </style>

@@ -3,56 +3,82 @@
         <meta property="og:url" :content="url" />
         <!-- <meta property="og:type" content="website" /> -->
         <meta property="og:title" content="Kjora" />
-        <meta property="og:description" :content="`this is profile of ${user.name} on kjora website `" />
+        <meta
+            property="og:description"
+            :content="`this is profile of ${user.name} on kjora website `"
+        />
         <meta property="og:image" :content="user.avatar_url" />
-
     </Head>
 
     <PublicLayout title="Gallery">
-
         <template #header>
-            <p>{{ $t('post') }}</p>
+            <p>{{ $t("post") }}</p>
         </template>
         <PostLayout>
             <template #media>
                 <PostMedia :postMedia="post.media" :user="user"></PostMedia>
             </template>
             <template #userImage>
-                <Avatar :id="user.id" :username="user.name" :image-url="user.avatar_url" :size="'md'" :border="true"
-                    border-color="primary" />
+                <Avatar
+                    :id="user.id"
+                    :username="user.name"
+                    :image-url="user.avatar_url"
+                    :size="'md'"
+                    :border="true"
+                    border-color="primary"
+                />
             </template>
             <template #userInfo>
                 <div class="flex justify-between w-full">
                     <div class="flex flex-col">
                         <div class="flex flex-row gap-2">
-                            <h3 class="m-0 text-lg font-bold leading-none capitalize ">{{ user.name
-                            }} </h3>
+                            <h3
+                                class="m-0 text-lg font-bold leading-none capitalize"
+                            >
+                                {{ user.name }}
+                            </h3>
                             <span v-if="false">star icon</span>
                         </div>
-                        <Link :href="route('public.player', user.id)" class="text-xs text-stone-400 ">@{{
-                            user.username }} </Link>
+                        <Link
+                            :href="route('public.player', user.id)"
+                            class="text-xs text-stone-400"
+                            >@{{ user.username }}
+                        </Link>
                     </div>
                     <!-- <PostOptionMenu :isCurrentUser="isCurrentUser" :postId="post.id" @editingCaption="postCaptionComp ? postCaptionComp.isEditingCaption = true : null">
                     </PostOptionMenu> -->
                 </div>
             </template>
             <template #postDate&Time>
-                <div class="flex justify-between w-full gap-2 text-[10px] text-stone-400">
+                <div
+                    class="flex justify-between w-full gap-2 text-[10px] text-stone-400"
+                >
                     <div class="flex flex-row gap-1">
-                        <DateTranslation :start="post.created_at" type="range" />
+                        <DateTranslation
+                            :start="post.created_at"
+                            type="range"
+                        />
                         <span>|</span>
-                        <DateTranslation :start="post.created_at" format="hh:mm A" />
+                        <DateTranslation
+                            :start="post.created_at"
+                            format="hh:mm A"
+                        />
                     </div>
                 </div>
             </template>
             <template #postCaption>
-                <PostCaptionFrom ref="postCaptionComp" :post="post"></PostCaptionFrom>
+                <PostCaptionFrom
+                    ref="postCaptionComp"
+                    :post="post"
+                ></PostCaptionFrom>
             </template>
             <template #commentsCount>
-                <div class="grid place-items-center min-h-[200px] font-bold ">
+                <div class="grid place-items-center min-h-[200px] font-bold">
                     <div>
                         {{ $t("please") }}
-                        <Link :href="route('register')" class="text-blue-700"> {{ $t("sign up") }} </Link>
+                        <Link :href="route('register')" class="text-blue-700">
+                            {{ $t("sign up") }}
+                        </Link>
                         {{ $t("to kjora to view more photos and videos") }}
                     </div>
                 </div>
@@ -94,75 +120,79 @@
                 </PostCommentForm>
             </template> -->
         </PostLayout>
-
     </PublicLayout>
 </template>
 
 <script setup>
-import { onMounted, onBeforeMount, ref, computed } from 'vue';
-import { usePage, Link, Head } from '@inertiajs/inertia-vue3';
-import { HeartIcon } from '@heroicons/vue/24/solid';
-import AppLayout from '../../Layouts/AppLayout.vue';
-import Avatar from '../../Components/Avatar.vue';
-import Comment from '../../Components/Comment.vue';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime.js';
-import LikeButton from '@/Components/LikeButton.vue';
-import DateTranslation from '../../Components/DateTranslation.vue';
+import { onMounted, onBeforeMount, ref, computed } from "vue";
+import { usePage, Link, Head } from "@inertiajs/vue3";
+import { HeartIcon } from "@heroicons/vue/24/solid";
+import AppLayout from "../../Layouts/AppLayout.vue";
+import Avatar from "../../Components/Avatar.vue";
+import Comment from "../../Components/Comment.vue";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime.js";
+import LikeButton from "@/Components/LikeButton.vue";
+import DateTranslation from "../../Components/DateTranslation.vue";
 
-import PostMedia from '../../Components/Posts/PostMedia.vue';
-import PostLayout from '../../Components/Posts/PostLayout.vue';
-import PostOptionMenu from '../../Components/Posts/PostOptionMenu.vue';
-import PostCaptionFrom from '../../Components/Posts/PostCaptionForm.vue';
-import PostCommentForm from '../../Components/Posts/PostCommentForm.vue';
-import PublicLayout from '../../Layouts/PublicLayout.vue';
-import LikesModal from '../../Components/LikesModal.vue';
-
+import PostMedia from "../../Components/Posts/PostMedia.vue";
+import PostLayout from "../../Components/Posts/PostLayout.vue";
+import PostOptionMenu from "../../Components/Posts/PostOptionMenu.vue";
+import PostCaptionFrom from "../../Components/Posts/PostCaptionForm.vue";
+import PostCommentForm from "../../Components/Posts/PostCommentForm.vue";
+import PublicLayout from "../../Layouts/PublicLayout.vue";
+import LikesModal from "../../Components/LikesModal.vue";
 
 onBeforeMount(() => {
-    dayjs.extend(relativeTime)
+    dayjs.extend(relativeTime);
 });
 
 const props = defineProps({
     user: null,
-    post: null
-})
-
+    post: null,
+});
 
 const commentsContainer = ref(null);
 const postCaptionComp = ref(null);
-const postComments = ref([])
-const currentUser = usePage().props.value.auth.user
-const isCurrentUser = currentUser?.id === props?.user?.id
-const isPublic = usePage().url.value.includes('public/posts')
-const showLikesModal = ref(false)
+const postComments = ref([]);
+const currentUser = usePage().props.auth.user;
+const isCurrentUser = currentUser?.id === props?.user?.id;
+const isPublic = usePage().url.includes("public/posts");
+const showLikesModal = ref(false);
 
-const numComments = computed(() => postComments.value ? postComments.value.filter(c => !c.parent_id)?.length : 0)
+const numComments = computed(() =>
+    postComments.value
+        ? postComments.value.filter((c) => !c.parent_id)?.length
+        : 0
+);
 const commentsContainerOffset = computed(() => {
-    return commentsContainer.value?.getBoundingClientRect().top + window.scrollY
-})
-
-const url = usePage().props.value.ziggy.url + '/public/posts/' + props.post.id
-
-onMounted(() => {
-    getPostComments()
+    return (
+        commentsContainer.value?.getBoundingClientRect().top + window.scrollY
+    );
 });
 
+const url = usePage().props.ziggy.url + "/public/posts/" + props.post.id;
+
+onMounted(() => {
+    getPostComments();
+});
 
 function getPostComments() {
-    axios.get(route('public.post.comments'), {
-        params: {
-            commentable_id: props.post.id,
-            commentable_type: 'App\\Models\\Post'
-        }
-    }).then(res => {
-        postComments.value = res.data.data
-        scrollToCommentsBottom()
-    }).catch(err => console.error(err))
+    axios
+        .get(route("public.post.comments"), {
+            params: {
+                commentable_id: props.post.id,
+                commentable_type: "App\\Models\\Post",
+            },
+        })
+        .then((res) => {
+            postComments.value = res.data.data;
+            scrollToCommentsBottom();
+        })
+        .catch((err) => console.error(err));
 }
 // helper function to scroll comments container to bottom
 function scrollToCommentsBottom() {
-
     setTimeout(() => {
         commentsContainer.value.scrollTo({
             top: commentsContainer.value.scrollHeight,
@@ -171,7 +201,6 @@ function scrollToCommentsBottom() {
         });
     }, 100);
 }
-
 </script>
 
 <style lang="scss" scoped></style>

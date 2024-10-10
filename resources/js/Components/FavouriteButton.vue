@@ -10,7 +10,7 @@
 <script setup>
 import { HeartIcon } from '@heroicons/vue/20/solid'
 import { HeartIcon as HeartIconOutline } from '@heroicons/vue/24/outline';
-import { useForm } from '@inertiajs/inertia-vue3';
+import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 const props = defineProps({
     user: null

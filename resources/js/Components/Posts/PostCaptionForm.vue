@@ -16,7 +16,7 @@
 
 <script setup>
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { useForm } from '@inertiajs/inertia-vue3';
+import { useForm } from '@inertiajs/vue3';
 import { formContextKey } from 'element-plus';
 import { ref } from 'vue';
 

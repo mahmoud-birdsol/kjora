@@ -1,16 +1,16 @@
 <script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
-import { Head } from '@inertiajs/inertia-vue3';
-import NotificationComponent from '@/Components/NotificationComponent.vue';
-import Pagination from '@/Components/Pagination.vue';
+import AppLayout from "@/Layouts/AppLayout.vue";
+import { Head } from "@inertiajs/vue3";
+import NotificationComponent from "@/Components/NotificationComponent.vue";
+import Pagination from "@/Components/Pagination.vue";
 
 defineProps({
-    notifications: Object
+    notifications: Object,
 });
 </script>
 
 <template>
-    <Head title="Notifications"/>
+    <Head title="Notifications" />
 
     <AppLayout>
         <template #header>Notifications</template>
@@ -19,14 +19,16 @@ defineProps({
             <div v-if="notifications.data.length">
                 <ul role="list" class="divide-y divide-gray-200">
                     <template v-for="notification in notifications.data">
-                        <NotificationComponent :notification="notification"/>
+                        <NotificationComponent :notification="notification" />
                     </template>
                 </ul>
             </div>
 
             <div v-else>
-                <div class="bg-white rounded p-6 mt-4">
-                    <div class="block px-4 py-2 text-xs text-gray-500 text-center">
+                <div class="p-6 mt-4 bg-white rounded">
+                    <div
+                        class="block px-4 py-2 text-xs text-center text-gray-500"
+                    >
                         You don't have any notifications yet.
                     </div>
                 </div>
@@ -34,7 +36,7 @@ defineProps({
         </div>
 
         <div class="flex justify-start">
-            <Pagination :links="notifications.links"/>
+            <Pagination :links="notifications.links" />
         </div>
     </AppLayout>
 </template>

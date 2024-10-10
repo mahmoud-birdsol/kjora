@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import GuestTwoColumnLayout from '@/Layouts/Partials/GuestTwoColumnLayout.vue';

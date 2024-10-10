@@ -1,7 +1,7 @@
 <script setup>
 import DateTranslation from "@/Components/DateTranslation.vue";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { useForm, usePage } from '@inertiajs/inertia-vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import AppLayout from '../Layouts/AppLayout.vue';
 import GuestLayout from "../Layouts/GuestLayout.vue";

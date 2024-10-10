@@ -1,4 +1,4 @@
-declare module "@inertiajs/inertia-vue3" {
+declare module "@inertiajs/vue3" {
     export interface Jetstream {
         canCreateTeams: boolean;
         canManageTwoFactorAuthentication: boolean;

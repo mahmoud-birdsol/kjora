@@ -8,7 +8,7 @@ import { ref } from 'vue'
 import { ElDatePicker } from 'element-plus';
 import InputLabel from '@/Components/InputLabel.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
 import FixedActionBtn from '@/Components/FixedActionBtn.vue';
 const props = defineProps({
     url: String,

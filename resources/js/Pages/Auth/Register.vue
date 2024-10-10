@@ -1,5 +1,5 @@
 <script setup>
-import {Head} from '@inertiajs/inertia-vue3';
+import {Head} from '@inertiajs/vue3';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import GuestTwoColumnLayout from '@/Layouts/Partials/GuestTwoColumnLayout.vue';
 import RegisterForm from '@/Pages/Auth/Forms/RegisterForm.vue';

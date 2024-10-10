@@ -1,18 +1,18 @@
 <script setup>
-import { Head, usePage } from '@inertiajs/inertia-vue3';
-import SystemMessage from '@/Components/SystemMessage.vue';
-import CopyrightClaim from '@/Components/CopyrightClaim.vue';
-import Navbar from '@/Layouts/Partials/Navbar.vue';
-import RealtimeNotifications from '@/Layouts/Partials/RealtimeNotifications.vue';
-import { onMounted, provide } from 'vue';
-import { loadLanguageAsync } from 'laravel-vue-i18n';
+import { Head, usePage } from "@inertiajs/vue3";
+import SystemMessage from "@/Components/SystemMessage.vue";
+import CopyrightClaim from "@/Components/CopyrightClaim.vue";
+import Navbar from "@/Layouts/Partials/Navbar.vue";
+import RealtimeNotifications from "@/Layouts/Partials/RealtimeNotifications.vue";
+import { onMounted, provide } from "vue";
+import { loadLanguageAsync } from "laravel-vue-i18n";
 
 onMounted(() => {
-    loadLanguageAsync(usePage().props.value.locale)
+    loadLanguageAsync(usePage().props.locale);
 });
 
-const greetings = usePage().props.value.greetings;
-provide('greetings', greetings)
+const greetings = usePage().props.greetings;
+provide("greetings", greetings);
 
 defineProps({
     title: String,
@@ -23,43 +23,51 @@ defineProps({
     },
 });
 
-
-
 onMounted(() => {
-    navigator.geolocation.getCurrentPosition(successCallback, errorCallback, { enableHighAccuracy: true });
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {
+        enableHighAccuracy: true,
+    });
     // navigator.permissions.query({ name: "geolocation" }).then((result) => {
     //     console.log(result);
     // });
-})
+});
 const successCallback = (position) => {
-
-
-    axios.post(route('api.location.store'), {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-    }).catch(err => console.error(err))
+    axios
+        .post(route("api.location.store"), {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+        })
+        .catch((err) => console.error(err));
 };
 
 const errorCallback = (error) => {
     console.log(error);
 };
-
 </script>
 
 <template>
     <div :dir="$page.props.locale == 'ar' ? 'rtl' : 'ltr'">
-
         <Head :title="title" />
 
-        <div class="relative min-h-screen bg-gradient-to-b from-black to-primaryDark isolate before:-z-10"
-            :class="showBall ? ` before:bg-[url('.././images/ballkjoura.png')] before:hidden sm:before:block before:absolute before:inset-0 before:bg-[center_-243px] before:bg-no-repeat before:mix-blend-overlay` : ''">
-            <div class="flex flex-col justify-between min-h-screen pt-6 space-y-4 sm:pt-0 ltr:font-sans rtl:font-tahoma">
+        <div
+            class="relative min-h-screen bg-gradient-to-b from-black to-primaryDark isolate before:-z-10"
+            :class="
+                showBall
+                    ? ` before:bg-[url('.././images/ballkjoura.png')] before:hidden sm:before:block before:absolute before:inset-0 before:bg-[center_-243px] before:bg-no-repeat before:mix-blend-overlay`
+                    : ''
+            "
+        >
+            <div
+                class="flex flex-col justify-between min-h-screen pt-6 space-y-4 sm:pt-0 ltr:font-sans rtl:font-tahoma"
+            >
                 <Navbar />
 
                 <header v-if="$slots.header" class="">
                     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                        <div class="flex flex-col gap-6 md:grid md:grid-cols-2 ">
-                            <h1 class="text-2xl font-bold text-white uppercase sm:text-7xl">
+                        <div class="flex flex-col gap-6 md:grid md:grid-cols-2">
+                            <h1
+                                class="text-2xl font-bold text-white uppercase sm:text-7xl"
+                            >
                                 <slot name="header" />
                             </h1>
                             <slot v-if="$slots.ads" name="ads" />
@@ -84,7 +92,6 @@ const errorCallback = (error) => {
     </div>
     <RealtimeNotifications />
 </template>
-
 
 <style>
 .el-input__inner {
@@ -126,7 +133,7 @@ const errorCallback = (error) => {
 .el-date-picker__header-label,
 .el-picker-panel__icon-btn,
 .el-picker-panel__content,
-.el-date-table>tbody>tr>th {
+.el-date-table > tbody > tr > th {
     color: green !important;
     font-weight: bold !important;
 }
@@ -153,4 +160,3 @@ const errorCallback = (error) => {
     color: green !important;
 }
 </style>
-

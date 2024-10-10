@@ -116,7 +116,7 @@ import {
     XMarkIcon
 } from '@heroicons/vue/24/solid'
 import axios from "axios";
-import { useForm, Link } from "@inertiajs/inertia-vue3";
+import { useForm, Link } from "@inertiajs/vue3";
 import Avatar from "../Avatar.vue";
 import UploadChatFile from './UploadChatFile.vue';
 import EmojiPickerElement from '../EmojiPickerElement.vue';

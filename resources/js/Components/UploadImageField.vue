@@ -1,5 +1,5 @@
 <script setup>
-import { useForm } from "@inertiajs/inertia-vue3";
+import { useForm } from "@inertiajs/vue3";
 import Modal from "@/Components/Modal.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { XMarkIcon, PlusCircleIcon } from "@heroicons/vue/24/outline";
@@ -149,7 +149,7 @@ let showCropModal = (url) => {
         name: fileData.value.name,
         url,
     };
-    
+
 
     openCropModal.value = true;
     cropLoading.value = false;

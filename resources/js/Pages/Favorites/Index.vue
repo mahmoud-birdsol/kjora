@@ -1,22 +1,21 @@
 <script setup>
-import { ref } from 'vue';
-import { Head, Link, useForm, usePage } from '@inertiajs/inertia-vue3';
-import dayjs from 'dayjs';
-import { Inertia } from "@inertiajs/inertia";
-import AppLayout from '@/Layouts/AppLayout.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import Modal from '@/Components/Modal.vue';
-import { ElSlider } from 'element-plus';
-import InputLabel from '@/Components/InputLabel.vue';
-import Pagination from '@/Components/Pagination.vue';
-import MainPlayerCard from '@/Components/PlayerCards/MainPlayerCard.vue';
-import HelloUserHeader from '@/Components/HelloUserHeader.vue';
-import FiltersModel from '@/Components/FiltersModel.vue';
+import { ref } from "vue";
+import { Head, Link, useForm, usePage } from "@inertiajs/vue3";
+import dayjs from "dayjs";
+import { router } from "@inertiajs/vue3";
+import AppLayout from "@/Layouts/AppLayout.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
+import Modal from "@/Components/Modal.vue";
+import { ElSlider } from "element-plus";
+import InputLabel from "@/Components/InputLabel.vue";
+import Pagination from "@/Components/Pagination.vue";
+import MainPlayerCard from "@/Components/PlayerCards/MainPlayerCard.vue";
+import HelloUserHeader from "@/Components/HelloUserHeader.vue";
+import FiltersModel from "@/Components/FiltersModel.vue";
 import {
     XMarkIcon,
     AdjustmentsHorizontalIcon,
-} from '@heroicons/vue/24/outline';
-
+} from "@heroicons/vue/24/outline";
 
 const props = defineProps({
     players: Object,
@@ -30,9 +29,9 @@ const form = useForm({
     ageTo: 60,
     ratingFrom: 0,
     ratingTo: 5,
-    search: '',
+    search: "",
     location: null,
-    country_id: null
+    country_id: null,
 });
 
 const loading = ref(false);
@@ -46,18 +45,17 @@ const filterByPosition = (position) => {
 const filter = () => {
     loading.value = true;
 
-    form.get(route('favorites.index'), {
+    form.get(route("favorites.index"), {
         preserveState: true,
         preserveScroll: true,
         onSuccess: () => {
             loading.value = false;
             showFiltersModal.value = false;
-        }
+        },
     });
 };
 
 const reset = () => {
-
     form.position = null;
     form.ageFrom = null;
     form.ageTo = null;
@@ -65,9 +63,9 @@ const reset = () => {
     form.ratingTo = null;
     form.location = null;
     form.search = null;
-    form.country_id = null
+    form.country_id = null;
     filter();
-}
+};
 </script>
 
 <template>
@@ -75,7 +73,7 @@ const reset = () => {
 
     <AppLayout :title="$t('home')">
         <template #header>
-            <p class="font-black sm:text-7xl">{{ $t('favorites') }}</p>
+            <p class="font-black sm:text-7xl">{{ $t("favorites") }}</p>
         </template>
 
         <div class="py-12">
@@ -103,14 +101,25 @@ const reset = () => {
 
                 <!-- Current list...
                                                                             =====================================================-->
-                <div class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6" v-loading="loading">
-
+                <div
+                    class="bg-white min-h-[500px] overflow-hidden shadow-xl sm:rounded-lg p-6"
+                    v-loading="loading"
+                >
                     <div class="flex items-start justify-start my-6">
-                        <p class="text-sm font-bold">{{ $t('total ( :count )', { count: players.total }) }}</p>
+                        <p class="text-sm font-bold">
+                            {{
+                                $t("total ( :count )", { count: players.total })
+                            }}
+                        </p>
                     </div>
 
-                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-                        <template v-for="player in players.data" :key="player.id">
+                    <div
+                        class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3"
+                    >
+                        <template
+                            v-for="player in players.data"
+                            :key="player.id"
+                        >
                             <MainPlayerCard :player="player" />
                         </template>
                     </div>
