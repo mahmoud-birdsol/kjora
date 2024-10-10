@@ -7,6 +7,7 @@ import { useForm, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import { useUserStore } from "@/stores";
+
 const props = defineProps({
    terms: Object,
 });

@@ -1,8 +1,7 @@
 <script setup>
-import { computed, onBeforeMount, onMounted, onUpdated, ref, watch } from "vue";
+import { onMounted, onUpdated, ref, watch } from "vue";
 import { router, Link, usePage } from "@inertiajs/vue3";
 import Dropdown from "@/Components/Dropdown.vue";
-import DropdownLink from "@/Components/DropdownLink.vue";
 import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import NotificationComponent from "@/Components/NotificationComponent.vue";
@@ -13,7 +12,6 @@ import {
    MapPinIcon,
    HomeIcon,
    HeartIcon,
-   Cog6ToothIcon,
    EllipsisHorizontalCircleIcon,
    ChatBubbleOvalLeftIcon,
    StarIcon,

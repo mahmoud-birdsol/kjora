@@ -1,5 +1,5 @@
 <script setup>
-import { Link, useForm, usePage } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import InputError from "@/Components/Forms/InputError.vue";
 import InputLabel from "@/Components/Forms/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
@@ -9,9 +9,7 @@ import RichSelectInput from "@/Components/RichSelectInput.vue";
 import PhoneInput from "@/Components/PhoneInput.vue";
 import UploadImageField from "@/Components/UploadImageField.vue";
 import Avatar from "@/Components/Avatar.vue";
-
 import { ElDatePicker } from "element-plus";
-import { computed, onMounted, ref } from "vue";
 
 const props = defineProps([
    "countries",

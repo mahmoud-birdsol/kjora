@@ -15,9 +15,14 @@ const form = useForm({
     current_password: "",
     password: "",
     password_confirmation: "",
+    current_password: "",
+    password: "",
+    password_confirmation: "",
 });
 
 const updatePassword = () => {
+    form.put(route("user-password.update"), {
+        errorBag: "updatePassword",
     form.put(route("user-password.update"), {
         errorBag: "updatePassword",
         preserveScroll: true,
@@ -25,10 +30,12 @@ const updatePassword = () => {
         onError: () => {
             if (form.errors.password) {
                 form.reset("password", "password_confirmation");
+                form.reset("password", "password_confirmation");
                 passwordInput.value.focus();
             }
 
             if (form.errors.current_password) {
+                form.reset("current_password");
                 form.reset("current_password");
                 currentPasswordInput.value.focus();
             }
@@ -39,6 +46,7 @@ const updatePassword = () => {
 
 <template>
     <FormSection @submitted="updatePassword">
+        <template #title> Update Password </template>
         <template #title> Update Password </template>
 
         <template #description>
@@ -53,8 +61,12 @@ const updatePassword = () => {
                     ref="currentPasswordInput"
                     v-model="form.current_password"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="block w-full mt-1"
                     autocomplete="current-password"
+                />
+                <InputError
+                    :message="form.errors.current_password"
+                    class="mt-2"
                 />
                 <InputError
                     :message="form.errors.current_password"
@@ -69,7 +81,7 @@ const updatePassword = () => {
                     ref="passwordInput"
                     v-model="form.password"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="block w-full mt-1"
                     autocomplete="new-password"
                 />
                 <InputError :message="form.errors.password" class="mt-2" />
@@ -80,12 +92,20 @@ const updatePassword = () => {
                     for="password_confirmation"
                     value="Confirm Password"
                 />
+                <InputLabel
+                    for="password_confirmation"
+                    value="Confirm Password"
+                />
                 <TextInput
                     id="password_confirmation"
                     v-model="form.password_confirmation"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="block w-full mt-1"
                     autocomplete="new-password"
+                />
+                <InputError
+                    :message="form.errors.password_confirmation"
+                    class="mt-2"
                 />
                 <InputError
                     :message="form.errors.password_confirmation"
@@ -99,6 +119,10 @@ const updatePassword = () => {
                 Saved.
             </ActionMessage>
 
+            <PrimaryButton
+                :class="{ 'opacity-25': form.processing }"
+                :disabled="form.processing"
+            >
             <PrimaryButton
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"

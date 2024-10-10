@@ -7,52 +7,52 @@ import TextInput from "@/Components/Forms/TextInput.vue";
 import PasswordInput from "@/Components/Forms/PasswordInput.vue";
 
 const props = defineProps({
-    email: String,
-    token: String,
+   email: String,
+   token: String,
 });
 
 const form = useForm({
-    token: props.token,
-    email: props.email,
-    password: "",
-    password_confirmation: "",
+   token: props.token,
+   email: props.email,
+   password: "",
+   password_confirmation: "",
 });
 
 const submit = () => {
-    form.post(route("password.update"), {
-        onFinish: () => form.reset("password", "password_confirmation"),
-    });
+   form.post(route("password.update"), {
+      onFinish: () => form.reset("password", "password_confirmation"),
+   });
 };
 </script>
 
 <template>
-    <form @submit.prevent="submit" class="w-full">
-        <div class="mt-4">
-            <InputLabel color="primary" for="password" value="Password" />
-            <PasswordInput v-model="form.password" />
-            <InputError class="mt-2" :message="form.errors.password" />
-        </div>
+   <form @submit.prevent="submit" class="w-full">
+      <div class="mt-4">
+         <InputLabel color="primary" for="password" value="Password" />
+         <PasswordInput v-model="form.password" />
+         <InputError class="mt-2" :message="form.errors.password" />
+      </div>
 
-        <div class="mt-4">
-            <InputLabel
-                color="primary"
-                for="password_confirmation"
-                value="Confirm Password"
-            />
-            <PasswordInput v-model="form.password_confirmation" />
-            <InputError
-                class="mt-2"
-                :message="form.errors.password_confirmation"
-            />
-        </div>
+      <div class="mt-4">
+         <InputLabel
+            color="primary"
+            for="password_confirmation"
+            value="Confirm Password"
+         />
+         <PasswordInput v-model="form.password_confirmation" />
+         <InputError
+            class="mt-2"
+            :message="form.errors.password_confirmation"
+         />
+      </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <PrimaryButton
-                :class="{ 'opacity-25': form.processing }"
-                :disabled="form.processing"
-            >
-                Reset
-            </PrimaryButton>
-        </div>
-    </form>
+      <div class="flex items-center justify-end mt-4">
+         <PrimaryButton
+            :class="{ 'opacity-25': form.processing }"
+            :disabled="form.processing"
+         >
+            Reset
+         </PrimaryButton>
+      </div>
+   </form>
 </template>
