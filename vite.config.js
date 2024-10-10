@@ -23,31 +23,19 @@ export default defineConfig({
       }),
       i18n(),
       AutoImport({
-         dirs: [
-            "./resources/js/Composables",
-            "./resources/js/utils",
-            // "./resources/js/Stores",
-         ],
+         dts: true,
+         dirs: ["./resources/js/Composables", "./resources/js/Utils"],
+         resolvers: [ElementPlusResolver()],
          imports: [
             "vue",
-            "@vueuse/core",
             {
                "@inertiajs/vue3": ["useForm", "usePage", "router"],
             },
-            {
-               dayjs: [["default", "dayjs"]],
-            },
-
-            {
-               "laravel-vue-i18n": ["trans", "wTrans"],
-            },
          ],
-         vueTemplate: true,
-         dts: true,
-         resolvers: [ElementPlusResolver()],
       }),
       Components({
-         dts: "./auto-components.d.ts",
+         dts: "auto-components.d.ts",
+         dirs: ["./resources/js/Components", "./resources/js/Layouts"],
          resolvers: [
             ElementPlusResolver(),
             {
@@ -62,15 +50,14 @@ export default defineConfig({
                type: "component",
             },
          ],
-         dirs: ["./resources/js/Components"],
       }),
    ],
    ssr: {
       noExternal: ["@inertiajs/server"],
    },
-   // resolve: {
-   //     alias: {
-   //         '@': '/resources/js',
-   //     },
-   // },
+   resolve: {
+      alias: {
+         "@": "/resources/js",
+      },
+   },
 });
