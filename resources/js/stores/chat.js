@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia';
-import axios from 'axios';
+import { defineStore } from 'pinia'
+import axios from 'axios'
 
 export const useChat = defineStore('chat', {
 	state() {
@@ -14,8 +14,8 @@ export const useChat = defineStore('chat', {
 			search: '',
 			replyToMessage: null,
 			currentUserId: null,
-			interval: null
-		};
+			interval: null,
+		}
 	},
 
 	getters: {
@@ -26,7 +26,7 @@ export const useChat = defineStore('chat', {
 		 * @returns {Array}
 		 */
 		messageList(state) {
-			return state.messages;
+			return state.messages
 		},
 
 		/**
@@ -36,7 +36,7 @@ export const useChat = defineStore('chat', {
 		 * @returns {boolean}
 		 */
 		lastPageReached(state) {
-			return state.page === state.lastPage;
+			return state.page === state.lastPage
 		},
 
 		/**
@@ -46,7 +46,7 @@ export const useChat = defineStore('chat', {
 		 * @returns {*}
 		 */
 		isLoading(state) {
-			return state.loading;
+			return state.loading
 		},
 
 		/**
@@ -56,8 +56,8 @@ export const useChat = defineStore('chat', {
 		 * @returns {null|*}
 		 */
 		repliedMessage(state) {
-			return state.replyToMessage;
-		}
+			return state.replyToMessage
+		},
 	},
 
 	actions: {
@@ -69,19 +69,19 @@ export const useChat = defineStore('chat', {
 		 * @private
 		 */
 		initialize({ conversation, container, currentUserId }) {
-			this.conversation = conversation;
-			this.container = container;
-			this.currentUserId = currentUserId;
-			this.subscribeToConversation();
-			this.messages = [];
-			this.fetchMessages();
+			this.conversation = conversation
+			this.container = container
+			this.currentUserId = currentUserId
+			this.subscribeToConversation()
+			this.messages = []
+			this.fetchMessages()
 			//fetch messages every 30 sec for case pusher doesn't work well
-			this.interval = setInterval(this.fetchNewMessages, 30000);
+			this.interval = setInterval(this.fetchNewMessages, 30000)
 			// Add event listener for the container
 			// scroll to load more messages.
 			setTimeout(() => {
-				this.registerScrollListener();
-			}, 3000);
+				this.registerScrollListener()
+			}, 3000)
 		},
 		/**
 		 * Subscribe to the conversation channel.
@@ -90,14 +90,14 @@ export const useChat = defineStore('chat', {
 			Echo.private(`users.chat.${this.conversation.id}`)
 				.listen('.message-sent', (event) => {
 					if (this.currentUserId !== event.sender_id) {
-						this.messages.unshift({ ...event, new: true });
-						this.scrollToMessagesBottom();
-						axios.post(route('api.message.mark-as-read', event.id));
+						this.messages.unshift({ ...event, new: true })
+						this.scrollToMessagesBottom()
+						axios.post(route('api.message.mark-as-read', event.id))
 					}
 				})
 				.listen('.message-read', (event) => {
-					this.setMessageAsRead(event);
-				});
+					this.setMessageAsRead(event)
+				})
 		},
 		/**
 		 * Fetch the conversation messages from api.
@@ -105,29 +105,32 @@ export const useChat = defineStore('chat', {
 		 * @returns {Promise<*>}
 		 */
 		async fetchMessages() {
-			this.loading = true;
+			this.loading = true
 			try {
-				let response = await axios.get(route(`api.messages.index`, this.conversation), {
-					params: {
-						page: this.page,
-						search: this.search
+				let response = await axios.get(
+					route(`api.messages.index`, this.conversation),
+					{
+						params: {
+							page: this.page,
+							search: this.search,
+						},
 					}
-				});
-				this.messages = this.messages.concat(response.data.data);
-				this.lastPage = response.data.meta.last_page;
-				this.loading = false;
+				)
+				this.messages = this.messages.concat(response.data.data)
+				this.lastPage = response.data.meta.last_page
+				this.loading = false
 
 				//mark messages that not read as read on fetch
 				this.messages.forEach((m) => {
 					if (m.read_at == null && m.sender_id !== this.currentUserId) {
-						axios.post(route('api.message.mark-as-read', m.id));
+						axios.post(route('api.message.mark-as-read', m.id))
 					}
-				});
+				})
 
-				this.page === 1 ? this.scrollToMessagesBottom() : null;
+				this.page === 1 ? this.scrollToMessagesBottom() : null
 			} catch (error) {
-				this.loading = false;
-				return error;
+				this.loading = false
+				return error
 			}
 		},
 
@@ -139,19 +142,21 @@ export const useChat = defineStore('chat', {
 		async fetchNewMessages() {
 			// this.loading = true;
 			try {
-				let response = await axios.get(route(`api.messages.new`, this.conversation));
+				let response = await axios.get(
+					route(`api.messages.new`, this.conversation)
+				)
 
-				let newMessages = response.data.data;
+				let newMessages = response.data.data
 				newMessages.forEach((newM) => {
 					// check if the pusher didn't work correctly then the message will not be in the messages array
 					if (!this.messages.some((m) => m.id === newM.id)) {
-						this.messages.unshift({ ...newM, new: true });
-						this.scrollToMessagesBottom();
+						this.messages.unshift({ ...newM, new: true })
+						this.scrollToMessagesBottom()
 					}
-				});
+				})
 			} catch (error) {
-				this.loading = false;
-				return error;
+				this.loading = false
+				return error
 			}
 		},
 		/**
@@ -160,14 +165,14 @@ export const useChat = defineStore('chat', {
 		 * @returns {Promise<void>}
 		 */
 		async searchMessages() {
-			console.log('searchMessages');
-			this.page = 1;
-			this.messages = [];
-			await this.fetchMessages();
+			console.log('searchMessages')
+			this.page = 1
+			this.messages = []
+			await this.fetchMessages()
 		},
 		deleteMessage(id) {
-			let index = this.messages.findIndex((m) => m.id === id);
-			this.messages.splice(index, 1);
+			let index = this.messages.findIndex((m) => m.id === id)
+			this.messages.splice(index, 1)
 		},
 
 		/**
@@ -175,34 +180,38 @@ export const useChat = defineStore('chat', {
 		 * @param message
 		 */
 		setMessageAsRead(message) {
-			let oldMessageIndex = this.messages.findIndex((m) => m.id === message.id);
-			this.messages[oldMessageIndex].read_at = message.read_at;
+			let oldMessageIndex = this.messages.findIndex((m) => m.id === message.id)
+			this.messages[oldMessageIndex].read_at = message.read_at
 		},
 		/**
 		 * Register the container scroll listener.
 		 */
 		registerScrollListener() {
-			this.container ? this.container.addEventListener('scroll', this.handleScroll) : null;
+			this.container
+				? this.container.addEventListener('scroll', this.handleScroll)
+				: null
 		},
 
 		/**
 		 * Un register the container scroll listener.
 		 */
 		unRegisterScrollListener() {
-			this.container ? this.container.removeEventListener('scroll', this.handleScroll) : null;
+			this.container
+				? this.container.removeEventListener('scroll', this.handleScroll)
+				: null
 		},
 		/**
 		 * Unsubscribe from chat channel.
 		 */
 		UnsubscribeFromChatChannel() {
-			Echo.leave(`users.chat.${this.conversation.id}`);
+			Echo.leave(`users.chat.${this.conversation.id}`)
 			// console.log("leave chat channel");
 		},
 		/**
 		 * clear fetch new message interval.
 		 */
 		clearFetchNewMessages() {
-			clearInterval(this.interval);
+			clearInterval(this.interval)
 		},
 
 		/**
@@ -211,7 +220,7 @@ export const useChat = defineStore('chat', {
 		 * @param message
 		 */
 		setMessageToReplyTo(message) {
-			this.replyToMessage = message;
+			this.replyToMessage = message
 		},
 
 		/**
@@ -220,9 +229,9 @@ export const useChat = defineStore('chat', {
 		 * @param message
 		 */
 		pushNewMessage(message) {
-			this.messages.unshift(message);
-			this.scrollToMessagesBottom();
-			this.replyToMessage = null;
+			this.messages.unshift(message)
+			this.scrollToMessagesBottom()
+			this.replyToMessage = null
 		},
 
 		/**
@@ -230,40 +239,40 @@ export const useChat = defineStore('chat', {
 		 */
 
 		scrollToMessagesBottom() {
-			let vm = this;
+			let vm = this
 			setTimeout(() => {
 				vm.container.scrollTo({
 					top: vm.container.scrollHeight,
 					left: 0,
-					behavior: 'smooth'
-				});
-			}, 200);
+					behavior: 'smooth',
+				})
+			}, 200)
 		},
 
 		scrollToMessagesTop() {
-			let vm = this;
+			let vm = this
 			setTimeout(() => {
 				vm.container.scrollTo({
 					top: 0,
 					left: 0,
-					behavior: 'smooth'
-				});
-			}, 200);
+					behavior: 'smooth',
+				})
+			}, 200)
 		},
 
 		handleScroll(e) {
-			let element = e.target;
+			let element = e.target
 
 			if (this.lastPageReached) {
 				// Do nothing.
-				this.showLastPageNotice = true;
-				return;
+				this.showLastPageNotice = true
+				return
 			}
 
 			if (element.scrollTop === 0) {
-				this.page++;
-				this.fetchMessages();
+				this.page++
+				this.fetchMessages()
 			}
-		}
-	}
-});
+		},
+	},
+})

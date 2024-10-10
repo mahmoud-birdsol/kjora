@@ -1,38 +1,35 @@
 <template>
-    <div class="relative">
-        <Splide
-            @splide:moved="
-                (e) => {
-                    currentMediaIndex = e.index + 1;
-                }
-            "
-            dir="ltr"
-            class=""
-            :options="options"
-        >
-            <template v-for="media in postMedia" :key="media.id">
-                <SplideSlide class="">
-                    <div
-                        class="flex justify-center overflow-hidden group h-full"
-                    >
-                        <img
-                            v-if="
-                                media.mime_type.startsWith('image') ||
-                                media.mime_type.startsWith('webp')
-                            "
-                            :src="media.original_url"
-                            alt=""
-                            class="object-contain h-full rounded-2xl"
-                        />
-                        <video
-                            v-if="media.mime_type.startsWith('video')"
-                            controls
-                            :src="media.original_url"
-                            alt=""
-                            class="object-contain h-full rounded-2xl"
-                        />
-                        <!-- delete single media -->
-                        <!-- <button v-if="currentUser.id === user.id"
+	<div class="relative">
+		<Splide
+			@splide:moved="
+				(e) => {
+					currentMediaIndex = e.index + 1
+				}
+			"
+			dir="ltr"
+			class=""
+			:options="options">
+			<template
+				v-for="media in postMedia"
+				:key="media.id">
+				<SplideSlide class="">
+					<div class="flex justify-center overflow-hidden group h-full">
+						<img
+							v-if="
+								media.mime_type.startsWith('image') ||
+								media.mime_type.startsWith('webp')
+							"
+							:src="media.original_url"
+							alt=""
+							class="object-contain h-full rounded-2xl" />
+						<video
+							v-if="media.mime_type.startsWith('video')"
+							controls
+							:src="media.original_url"
+							alt=""
+							class="object-contain h-full rounded-2xl" />
+						<!-- delete single media -->
+						<!-- <button v-if="currentUser.id === user.id"
                                         @click.prevent.stop="showDeleteMediaModal = true"
                                         class="absolute top-0 right-0 hidden bg-white group-hover:block bg-opacity-90 rounded-bl-xl">
                                         <div class="flex flex-col items-start justify-center h-full p-1 opacity-100 ">
@@ -55,42 +52,41 @@
                                             </div>
                                         </Modal>
                                     </button> -->
-                    </div>
-                </SplideSlide>
-            </template>
-        </Splide>
-        <div
-            v-if="postMedia.length > 1"
-            class="absolute top-2 right-2 text-stone-200 text-xs p-1"
-        >
-            <span>{{ currentMediaIndex }}</span>
-            <span>/</span>
-            <span>{{ postMedia.length }} </span>
-        </div>
-    </div>
+					</div>
+				</SplideSlide>
+			</template>
+		</Splide>
+		<div
+			v-if="postMedia.length > 1"
+			class="absolute top-2 right-2 text-stone-200 text-xs p-1">
+			<span>{{ currentMediaIndex }}</span>
+			<span>/</span>
+			<span>{{ postMedia.length }} </span>
+		</div>
+	</div>
 </template>
 
 <script setup>
-import { Splide, SplideSlide } from "@splidejs/vue-splide";
-import { ref } from "vue";
+import { Splide, SplideSlide } from '@splidejs/vue-splide'
+import { ref } from 'vue'
 
-const props = defineProps(["postMedia", "user"]);
-const currentMediaIndex = ref(1);
+const props = defineProps(['postMedia', 'user'])
+const currentMediaIndex = ref(1)
 // slider option
 const options = {
-    arrows: false,
-    rewind: false,
-    pagination: true,
-    // drag: "free",
-    fixedHeight: 300,
-    type: "slide",
-    focus: "center",
-    cover: true,
-    perPage: 1,
-    perMove: 1,
-    snap: true,
-    autoplay: false,
-};
+	arrows: false,
+	rewind: false,
+	pagination: true,
+	// drag: "free",
+	fixedHeight: 300,
+	type: 'slide',
+	focus: 'center',
+	cover: true,
+	perPage: 1,
+	perMove: 1,
+	snap: true,
+	autoplay: false,
+}
 // delete media
 // function removeSingleMedia(id) {
 //     axios.delete(route('api.gallery.destroy', id)).then((res) => console.log(res))
@@ -104,6 +100,6 @@ const options = {
 
 <style>
 .splide__pagination__page.is-active {
-    background-color: rgb(0, 100, 0) !important;
+	background-color: rgb(0, 100, 0) !important;
 }
 </style>
