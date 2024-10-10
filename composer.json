@@ -14,6 +14,7 @@
         "php": "^8.0.2",
         "algolia/algoliasearch-client-php": "^3.3",
         "coroowicaksono/chart-js-integration": "^0.4.0",
+        "doctrine/dbal": "^3.9",
         "ebess/advanced-nova-media-library": "^4.0",
         "emilianotisato/nova-google-autocomplete-field": "^0.8.0",
         "guzzlehttp/guzzle": "^7.5",
@@ -46,6 +47,7 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
+        "fumeapp/modeltyper": "^2.0",
         "laravel/pint": "^1.2",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
