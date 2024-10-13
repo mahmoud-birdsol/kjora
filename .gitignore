@@ -25,5 +25,5 @@ yarn-error.log
 
 auto-imports.d.ts
 auto-components.d.ts
-models.d.ts
+/models.d.ts
 public/vendor
