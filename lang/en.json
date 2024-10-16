@@ -394,5 +394,7 @@
   "Please approve our privacy policy": "Please approve our privacy policy",
   "You cant invite this player because he has been invited to a match in this time": "You can't invite this player because he has been invited to a match in this time",
   "This player already has match at this time": "This player already has match at this time",
-  "You already invited this player at these time": "You already invited this player at these time"
+  "You already invited this player at these time": "You already invited this player at these time",
+  "teams": "Teams",
+  "count-player-or-count-players": "{0,1} :count Player |[2,*] :count Players"
 }

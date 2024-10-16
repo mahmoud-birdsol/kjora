@@ -135,4 +135,13 @@ declare global {
         media: TMedias;
     }
     export type Countries = Country[];
+
+    export interface Team {
+        id:number
+        name:string,
+        description:string,
+        users:Users,
+        image:string
+    }
+    export type Teams = Team[];
 }

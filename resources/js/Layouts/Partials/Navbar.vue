@@ -60,8 +60,15 @@ const links = [
 		current: 'invitation.*',
 		icon: FootBallIcon,
 	},
-	{
+    {
 		id: 5,
+		label: 'teams',
+		routeName: 'teams.index',
+		current: 'teams.*',
+		icon: FootBallIcon,
+	},
+	{
+		id: 6,
 		label: 'more',
 		routeName: 'more',
 		current: 'more',
