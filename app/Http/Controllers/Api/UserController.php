@@ -9,14 +9,13 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
-    public function getUsersNames(Request $request)
-    {
-        $query = User::query()->where('id','!=' , $request->user()->id);
-        return UserNameResource::collection($query->get());
+   /**
+    * @param Request $request
+    * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    */
+   public function getUsersNames(Request $request)
+   {
 
-    }
+      return UserNameResource::collection(User::all());
+   }
 }

@@ -27,18 +27,18 @@ class EnsurePoliciesVerified
         //check if user accept the same version of current version
         if (($this->termsConditionsVersionChecker($request->user(), $lastTerm) != 0) && $lastTerm) {
             FlashMessage::make()->warning(
-                message: __('Please approve our terms Conditions')
-            )->action(route('terms.and.condition.index'), __('Approve terms and conditions'))->closeable()->send();
+                message: __('please-approve-our-terms-conditions')
+            )->action(route('terms.and.condition.index'), __('approve-terms-and-conditions'))->closeable()->send();
         }
         if (($this->privacyPolicyVersionChecker($request->user(), $lastPrivacyPolicy) != 0) && $lastPrivacyPolicy) {
             FlashMessage::make()->warning(
                 message: __('Please approve our privacy policy')
-            )->action(route('privacy.policy.index'), __('privacy policy'))->closeable()->send();
+            )->action(route('privacy.policy.index'), __('privacy-policy'))->closeable()->send();
         }
         if (($this->cookiesVersionChecker($request->user(), $lastCookie) != 0) && $lastCookie) {
             FlashMessage::make()->warning(
-                message: __('Please approve our cookies')
-            )->action(route('cookies.policy.index'), __('Cookies policy'))->closeable()->send();
+                message: __('please-approve-our-cookies')
+            )->action(route('cookies.policy.index'), __('cookies-policy'))->closeable()->send();
         }
 
         return $next($request);

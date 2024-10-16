@@ -1,12 +1,12 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3'
-import { ref } from 'vue'
-import GuestLayout from '@/Layouts/GuestLayout.vue'
-import GuestTwoColumnLayout from '@/Layouts/Partials/GuestTwoColumnLayout.vue'
-import ForgotPasswordForm from '@/Pages/Auth/Forms/ForgotPasswordForm.vue'
-import Card from '@/Components/Card.vue'
-import CardContent from '@/Components/CardContent.vue'
-import SuccessMessageModal from '@/Components/SuccessMessageModal.vue'
+import { Head, Link } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import GuestLayout from '@/Layouts/GuestLayout.vue';
+import GuestTwoColumnLayout from '@/Layouts/Partials/GuestTwoColumnLayout.vue';
+import ForgotPasswordForm from '@/Pages/Auth/Forms/ForgotPasswordForm.vue';
+import Card from '@/Components/Card.vue';
+import CardContent from '@/Components/CardContent.vue';
+import SuccessMessageModal from '@/Components/SuccessMessageModal.vue';
 
 defineProps({
 	status: String,
@@ -51,11 +51,6 @@ const showSuccessModal = ref(true)
 			</Card>
 		</GuestTwoColumnLayout>
 
-		<SuccessMessageModal
-			:show="status && showSuccessModal"
-			@close="showSuccessModal = false"
-			position="right"
-			title="Forgot Password"
-			:message="status" />
-	</GuestLayout>
+        <SuccessMessageModal :show="status && showSuccessModal" @close="showSuccessModal = false" position="right" title="Forgot Password" :message="status" />
+    </GuestLayout>
 </template>

@@ -40,7 +40,8 @@
 </template>
 
 <script setup>
-import { Head, Link } from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3';
+
 </script>
 
 <style lang="scss" scoped></style>

@@ -397,7 +397,5 @@
   "Please approve our cookies": "يرجى الموافقة على ملفات الارتباط خاصتنا",
   "You cant invite this player because he has been invited to a match in this time": "لا يمكنك دعوة ذلك الاعب لانه لديه مباراة فى ذلك الوقت",
   "This player already has match at this time": "ذلك اللاعب لديه مباراة فى ذلك الوقت",
-  "You already invited this player at these time": "لقد دعوة ذلك اللاعب لمبارارة فى نفس ذلك الوقت",
-  "teams": "فرق",
-  "count-player-or-count-players": "{0,1} :count لاعب |[2,*] :count اللاعبين"
+  "You already invited this player at these time": "لقد دعوة ذلك اللاعب لمبارارة فى نفس ذلك الوقت"
 }

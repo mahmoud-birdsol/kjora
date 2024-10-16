@@ -48,7 +48,7 @@ class UserEmailController extends Controller
         $user->sendEmailVerificationNotification();
 
         FlashMessage::make()->success(
-            message: __('Email changed successfully please verify your mail')
+            message: __('email-changed-successfully-please-verify-your-mail')
         )->closeable()->send();
 
         return redirect()->route('home');

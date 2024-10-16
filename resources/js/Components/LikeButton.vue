@@ -32,10 +32,10 @@ const props = defineProps({
 	},
 })
 
-const emits = defineEmits(['like', 'disLike'])
+const emits = defineEmits(["like", "disLike"]);
 
-const isLiked = ref(props.isLiked)
-const isPending = ref(false)
+const isLiked = ref(props.isLiked);
+const isPending = ref(false);
 const form = useForm({
 	likeable_id: props.likeable_id,
 	likeable_type: props.likeable_type,

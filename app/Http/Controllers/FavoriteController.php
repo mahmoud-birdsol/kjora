@@ -83,7 +83,7 @@ class FavoriteController extends Controller
         $favorite->notify(new FavoriteAddedNotification($request->user()));
 
         FlashMessage::make()->success(
-            message: $favorite->name . __('has been successfully added to your favorites.')
+            message: $favorite->name . __('has-been-successfully-added-to-your-favorites.')
 
         )->closeable()->send();
 

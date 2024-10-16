@@ -147,7 +147,7 @@ class User extends Resource
                 'female' => 'Female',
             ])->displayUsingLabels()->showOnPreview()->sortable()->filterable()->required()->rules('required'),
 
-            Date::make(__('Date of birth'), 'date_of_birth')
+            Date::make(__('date-of-birth'), 'date_of_birth')
                 ->showOnPreview()
                 ->filterable()
                 ->sortable()
@@ -157,7 +157,7 @@ class User extends Resource
             Number::make(__('Age'), 'age')
                 ->onlyOnDetail(),
 
-            Select::make(__('Preferred Foot'), 'preferred_foot')->options([
+            Select::make(__('preferred-foot'), 'preferred_foot')->options([
                 'left' => 'Left',
                 'right' => 'Right',
             ])->displayUsingLabels()->showOnPreview()->sortable()->filterable()->required()->rules('required'),

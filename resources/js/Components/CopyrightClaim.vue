@@ -1,13 +1,11 @@
 <script setup>
-import DateTranslation from '@/Components/DateTranslation.vue'
-import dayjs from 'dayjs'
+import DateTranslation from '@/Components/DateTranslation.vue';
 </script>
 
 <template>
-	<div class="h-10 flex justify-center">
-		<p class="text-white text-xs font-regular">
-			{{ $t('Copyright') }} &copy; <DateTranslation format="YYYY" /> KJORA.
-			{{ $t('All Rights Reserved') }}.
-		</p>
-	</div>
+    <div class="flex justify-center h-10">
+        <p class="text-xs text-white font-regular">{{ $t('Copyright') }} &copy;
+            <DateTranslation format="YYYY" /> KJORA. {{ $t('All Rights Reserved') }}.
+        </p>
+    </div>
 </template>

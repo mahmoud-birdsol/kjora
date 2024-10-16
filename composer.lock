@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "24afd4b2ca7f12f4446912e297718637",
+    "content-hash": "f5e4e06f6a3ddb0bef4994e9ca803ac9",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -530,16 +530,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "3.6.1",
+            "version": "3.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "57815c7bbcda3cd18871d253c1dd8cbe56f8526e"
+                "reference": "d7dc08f98cba352b2bab5d32c5e58f7e745c11a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/57815c7bbcda3cd18871d253c1dd8cbe56f8526e",
-                "reference": "57815c7bbcda3cd18871d253c1dd8cbe56f8526e",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/d7dc08f98cba352b2bab5d32c5e58f7e745c11a7",
+                "reference": "d7dc08f98cba352b2bab5d32c5e58f7e745c11a7",
                 "shasum": ""
             },
             "require": {
@@ -552,16 +552,17 @@
                 "psr/log": "^1|^2|^3"
             },
             "require-dev": {
-                "doctrine/coding-standard": "11.1.0",
+                "doctrine/coding-standard": "12.0.0",
                 "fig/log-test": "^1",
-                "jetbrains/phpstorm-stubs": "2022.3",
-                "phpstan/phpstan": "1.10.3",
-                "phpstan/phpstan-strict-rules": "^1.5",
-                "phpunit/phpunit": "9.6.4",
+                "jetbrains/phpstorm-stubs": "2023.1",
+                "phpstan/phpstan": "1.12.0",
+                "phpstan/phpstan-strict-rules": "^1.6",
+                "phpunit/phpunit": "9.6.20",
                 "psalm/plugin-phpunit": "0.18.4",
-                "squizlabs/php_codesniffer": "3.7.2",
-                "symfony/cache": "^5.4|^6.0",
-                "symfony/console": "^4.4|^5.4|^6.0",
+                "slevomat/coding-standard": "8.13.1",
+                "squizlabs/php_codesniffer": "3.10.2",
+                "symfony/cache": "^5.4|^6.0|^7.0",
+                "symfony/console": "^4.4|^5.4|^6.0|^7.0",
                 "vimeo/psalm": "4.30.0"
             },
             "suggest": {
@@ -622,7 +623,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/3.6.1"
+                "source": "https://github.com/doctrine/dbal/tree/3.9.1"
             },
             "funding": [
                 {
@@ -638,7 +639,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-03-02T19:26:24+00:00"
+            "time": "2024-09-01T13:49:23+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -12955,6 +12956,63 @@
                 }
             ],
             "time": "2023-04-12T12:00:00+00:00"
+        },
+        {
+            "name": "fumeapp/modeltyper",
+            "version": "v2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fumeapp/modeltyper.git",
+                "reference": "ba9be35c4c8d7adb12e2d6d36c54472fcc28333d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fumeapp/modeltyper/zipball/ba9be35c4c8d7adb12e2d6d36c54472fcc28333d",
+                "reference": "ba9be35c4c8d7adb12e2d6d36c54472fcc28333d",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "9.*|10.*",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "illuminate/database": "^9.45",
+                "laravel/pint": "^1.3",
+                "mockery/mockery": "^1.4.4",
+                "nunomaduro/larastan": "^2.2",
+                "orchestra/testbench": "^7.0|^8.0",
+                "phpunit/phpunit": "^9.5|^10.0",
+                "spatie/laravel-ray": "^1.17"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "FumeApp\\ModelTyper\\ModelTyperServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FumeApp\\ModelTyper\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "kevin olson",
+                    "email": "acidjazz@gmail.com"
+                }
+            ],
+            "description": "Generate TypeScript interfaces from Laravel Models",
+            "support": {
+                "issues": "https://github.com/fumeapp/modeltyper/issues",
+                "source": "https://github.com/fumeapp/modeltyper/tree/v2.0.3"
+            },
+            "time": "2023-02-24T19:36:32+00:00"
         },
         {
             "name": "laravel/pint",

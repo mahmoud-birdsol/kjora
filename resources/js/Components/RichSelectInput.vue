@@ -78,17 +78,16 @@ onMounted(() => {
 					}
 				}
 
-				if (props.modelValue) {
-					selected.value = filteredOptions.value.filter((option) => {
-						return option[props.valueName] == props.modelValue
-					})[0]
-				} else {
-					selected.value = response.data.data[0]
-				}
-			})
-			.catch((error) => console.log(error))
-	}
-})
+            if (props.modelValue) {
+                selected.value = filteredOptions.value.filter((option) => {
+                    return option[props.valueName] == props.modelValue;
+                })[0];
+            } else {
+                selected.value = response.data.data[0];
+            }
+        }).catch(error => console.error(error));
+    }
+});
 
 const showDropDown = ref(false)
 
@@ -110,24 +109,24 @@ const select = (option) => {
 const searchValue = ref('')
 
 const search = () => {
-	if (props.options.length) {
-		filteredOptions.value = props.options.filter((option) => {
-			return option.name.toUpperCase().includes(searchValue.value.toUpperCase())
-		})
-	} else {
-		axios
-			.get(props.source, {
-				params: {
-					search: searchValue.value,
-				},
-			})
-			.then((response) => {
-				filteredOptions.value = response.data.data
-				nextPageUrl.value = response.data.links.next
-			})
-			.catch((error) => console.log(error.response))
-	}
-}
+    if (props.options.length) {
+        filteredOptions.value = props.options.filter((option) => {
+            return option.name
+                .toUpperCase()
+                .includes(searchValue.value.toUpperCase());
+        });
+    } else {
+        axios.get(props.source, {
+            params: {
+                search: searchValue.value,
+            }
+        }).then(response => {
+            filteredOptions.value = response.data.data;
+            nextPageUrl.value = response.data.links.next;
+        }).catch(error => console.error(error.response));
+    }
+
+};
 
 const loading = ref(false)
 
@@ -144,15 +143,14 @@ const loadMore = () => {
 		return
 	}
 
-	axios
-		.get(nextPageUrl.value)
-		.then((response) => {
-			filteredOptions.value = filteredOptions.value.concat(response.data.data)
-			loading.value = false
-			nextPageUrl.value = response.data.links.next
-		})
-		.catch((error) => console.log(error.response))
-}
+
+    axios.get(nextPageUrl.value).then(response => {
+        filteredOptions.value = filteredOptions.value.concat(response.data.data);
+        loading.value = false;
+        nextPageUrl.value = response.data.links.next;
+    }).catch(error => console.error(error.response));
+};
+
 </script>
 
 <template>

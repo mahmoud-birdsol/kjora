@@ -1,6 +1,6 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3'
-import PrimaryButton from '@/Components/PrimaryButton.vue'
+import { useForm } from '@inertiajs/vue3';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 const form = useForm()
 
@@ -12,15 +12,11 @@ const submit = () => {
 </script>
 
 <template>
-	<form
-		@submit.prevent="submit"
-		class="w-full">
-		<div class="mt-4 flex items-center justify-between w-full">
-			<PrimaryButton
-				:class="{ 'opacity-25': form.processing }"
-				:disabled="form.processing">
-				{{ $t('Resend Email') }}
-			</PrimaryButton>
-		</div>
-	</form>
+    <form @submit.prevent="submit" class="w-full">
+        <div class="mt-4 flex items-center justify-between w-full">
+            <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                {{ $t('resend-email') }}
+            </PrimaryButton>
+        </div>
+    </form>
 </template>

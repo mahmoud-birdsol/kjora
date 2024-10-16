@@ -1,11 +1,12 @@
 <script setup>
-import { PlusCircleIcon, XMarkIcon } from '@heroicons/vue/24/outline'
-import Modal from '@/Components/Modal.vue'
-import { ref } from 'vue'
-import InputLabel from '@/Components/InputLabel.vue'
-import SecondaryButton from '@/Components/SecondaryButton.vue'
-import { useForm } from '@inertiajs/vue3'
-import FixedActionBtn from '@/Components/FixedActionBtn.vue'
+import FixedActionBtn from '@/Components/FixedActionBtn.vue';
+import InputLabel from '@/Components/Forms/InputLabel.vue';
+import Modal from '@/Components/Modal.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import { PlusCircleIcon, XMarkIcon, } from '@heroicons/vue/24/outline';
+import { useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
+
 
 let showAddStadiumModal = ref(false)
 let showPlacesInput = ref(false)
@@ -46,47 +47,36 @@ function closeModal() {
 }
 </script>
 <template>
-	<FixedActionBtn @click="openModal">
-		<PlusCircleIcon class="w-8 h-8 text-white" />
-	</FixedActionBtn>
-	<Modal
-		:show="showAddStadiumModal"
-		max-width="sm"
-		@close="closeModal"
-		:closeable="true"
-		:show-close-icon="false">
-		<div class="p-6 bg-black">
-			<div class="flex items-center justify-between">
-				<p class="text-lg text-white">{{ $t('Add new Stadium') }}</p>
+    <FixedActionBtn @click="openModal">
+        <PlusCircleIcon class="w-8 h-8 text-white" />
+    </FixedActionBtn>
+    <Modal :show="showAddStadiumModal" max-width="sm" @close="closeModal" :closeable="true" :show-close-icon="false">
+        <div class="p-6 bg-black">
+            <div class="flex items-center justify-between">
+                <p class="text-lg text-white">{{ $t('add-new-stadium') }} </p>
+
 
 				<button @click="showAddStadiumModal = false">
 					<XMarkIcon class="w-4 h-4 text-white" />
 				</button>
 			</div>
 
-			<form @submit.prevent="addStadium">
-				<div class="my-6">
-					<InputLabel>{{ $t('Stadium Name') }}</InputLabel>
-					<input
-						type="text"
-						name="search"
-						id="search"
-						v-model="form.name"
-						class="block w-full px-4 text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
-						:placeholder="$t('Stadium Name') + '...'" />
-				</div>
-				<div class="my-6">
-					<InputLabel>{{ $t('Choose stadium place') }}</InputLabel>
-					<GMapAutocomplete
-						:placeholder="$t('Choose from map')"
-						@place_changed="setPlace"
-						class="block w-full p-2 px-4 text-white bg-black border border-white rounded-full focus:border focus:border-primary focus:ring-primary sm:text-sm placeholder:center">
-					</GMapAutocomplete>
-				</div>
-				<div class="my-6 mt-4">
-					<SecondaryButton @click="addStadium">{{ $t('Add') }}</SecondaryButton>
-				</div>
-			</form>
-		</div>
-	</Modal>
+
+            <form @submit.prevent="addStadium">
+                <div class="my-6">
+                    <InputLabel>{{ $t('Stadium-name') }}</InputLabel>
+                    <input type="text" name="search" id="search" v-model="form.name" class="block w-full px-4 text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center" :placeholder="$t('Stadium-name') + '...'" />
+                </div>
+                <div class="my-6">
+                    <InputLabel>{{ $t('choose-stadium-place') }}</InputLabel>
+                    <GMapAutocomplete :placeholder="$t('Choose-from-map')" @place_changed="setPlace" class="block w-full p-2 px-4 text-white bg-black border border-white rounded-full focus:border focus:border-primary focus:ring-primary sm:text-sm placeholder:center">
+                    </GMapAutocomplete>
+                </div>
+                <div class="my-6 mt-4">
+                    <SecondaryButton @click="addStadium">{{ $t('Add') }}</SecondaryButton>
+                </div>
+
+            </form>
+        </div>
+    </Modal>
 </template>
