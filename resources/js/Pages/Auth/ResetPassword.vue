@@ -7,9 +7,9 @@ import Card from '@/Components/Card.vue';
 import CardContent from '@/Components/CardContent.vue';
 
 const props = defineProps({
-    email: String,
-    token: String,
-});
+	email: String,
+	token: String,
+})
 </script>
 
 <template>

@@ -30,11 +30,11 @@ const updateApiTokenForm = useForm({
    permissions: [],
 });
 
-const deleteApiTokenForm = useForm();
+const deleteApiTokenForm = useForm()
 
-const displayingToken = ref(false);
-const managingPermissionsFor = ref(null);
-const apiTokenBeingDeleted = ref(null);
+const displayingToken = ref(false)
+const managingPermissionsFor = ref(null)
+const apiTokenBeingDeleted = ref(null)
 
 const createApiToken = () => {
    createApiTokenForm.post(route("api-tokens.store"), {

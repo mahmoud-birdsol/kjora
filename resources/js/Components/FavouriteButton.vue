@@ -19,7 +19,7 @@ const props = defineProps({
 const isFavorite = ref(props.user.is_favorite);
 const isPending = ref(false);
 
-const form = useForm({});
+const form = useForm({})
 function toggleFavorite() {
    if (isPending.value) return;
 
@@ -52,3 +52,4 @@ function toggleFavorite() {
 </script>
 
 <style lang="scss" scoped></style>
+

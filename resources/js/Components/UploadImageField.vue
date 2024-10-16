@@ -55,7 +55,7 @@ const props = defineProps({
    },
 });
 
-const emit = defineEmits(["close", "update:modelValue", "selected"]);
+const emit = defineEmits(['close', 'update:modelValue', 'selected'])
 
 const showPreview = ref(false);
 const previewImageUrl = ref(null);

@@ -8,8 +8,8 @@ import InputError from "@/Components/InputError.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 
-const confirmingUserDeletion = ref(false);
-const passwordInput = ref(null);
+const confirmingUserDeletion = ref(false)
+const passwordInput = ref(null)
 
 const form = useForm({
    password: "",

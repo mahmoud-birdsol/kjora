@@ -13,8 +13,6 @@ const props = defineProps({
 });
 const inputs = Array(4);
 const codeInputs = ref(null);
-const inputs = Array(4);
-const codeInputs = ref(null);
 
 const form = useForm({
    code: "",

@@ -2,13 +2,13 @@
 import { useForm } from '@inertiajs/vue3';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 
-const form = useForm();
+const form = useForm()
 
 const submit = () => {
-    form.post(route('verification.send'), {
-        preserveState: false,
-    });
-};
+	form.post(route('verification.send'), {
+		preserveState: false,
+	})
+}
 </script>
 
 <template>

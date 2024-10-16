@@ -50,12 +50,12 @@ const props = defineProps({
    countries: Array,
 });
 
-const showIdentityFrontImageModal = ref(false);
-const showIdentityBackImageModal = ref(false);
-const showIdentitySelfieModal = ref(false);
-const identityBackImagePreview = ref(null);
-const identityFrontImagePreview = ref(null);
-const identitySelfieImagePreview = ref(null);
+const showIdentityFrontImageModal = ref(false)
+const showIdentityBackImageModal = ref(false)
+const showIdentitySelfieModal = ref(false)
+const identityBackImagePreview = ref(null)
+const identityFrontImagePreview = ref(null)
+const identitySelfieImagePreview = ref(null)
 
 const form = useForm({
    identity_issue_country:
@@ -106,7 +106,7 @@ watch(
    { deep: true }
 );
 
-const showSuccessMessage = ref(false);
+const showSuccessMessage = ref(false)
 
 const save = () => {
    form.post(route("identity.verification.store"), {

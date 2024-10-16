@@ -1,73 +1,81 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import { ChevronDownIcon, CheckIcon } from '@heroicons/vue/24/solid';
+import { onMounted, ref } from 'vue'
+import { ChevronDownIcon, CheckIcon } from '@heroicons/vue/24/solid'
 
 const props = defineProps({
-    modelValue: String,
-    valueName: String,
-    textName: String,
-    imageName: String,
-    options: {
-        required: true,
-        type: Array,
-    }
-});
+	modelValue: String,
+	valueName: String,
+	textName: String,
+	imageName: String,
+	options: {
+		required: true,
+		type: Array,
+	},
+})
 
-const filteredOptions = ref([]);
+const filteredOptions = ref([])
 
 onMounted(() => {
-    if (props.modelValue) {
-        selected.value = props.options.filter((option) => {
-            return option[props.valueName] == props.modelValue;
-        })[0];
-    } else {
-        selected.value = props.options.filter((option) => {
-            return option[props.valueName] == 121;
-        })[0];
+	if (props.modelValue) {
+		selected.value = props.options.filter((option) => {
+			return option[props.valueName] == props.modelValue
+		})[0]
+	} else {
+		selected.value = props.options.filter((option) => {
+			return option[props.valueName] == 121
+		})[0]
 
-        emit('update:modelValue', '+' + selected.value.calling_code);
-    }
+		emit('update:modelValue', '+' + selected.value.calling_code)
+	}
 
-    filteredOptions.value = props.options;
-});
+	filteredOptions.value = props.options
+})
 
-const showDropDown = ref(false);
+const showDropDown = ref(false)
 
-const selected = ref(null);
+const selected = ref(null)
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue'])
 
 
 
 const select = (option) => {
-    selected.value = option;
-    showDropDown.value = false;
-    emit('update:modelValue', '+' + selected.value.calling_code);
-};
+	selected.value = option
+	showDropDown.value = false
+	emit('update:modelValue', '+' + selected.value.calling_code)
+}
 
-const searchValue = ref('');
+const searchValue = ref('')
 
 const search = () => {
-    filteredOptions.value = props.options.filter((option) => {
-        return option.name
-            .toUpperCase()
-            .includes(searchValue.value.toUpperCase());
-    });
-};
+	filteredOptions.value = props.options.filter((option) => {
+		return option.name.toUpperCase().includes(searchValue.value.toUpperCase())
+	})
+}
 
 const type = (event) => {
-    emit('update:modelValue', event.target.value);
+	emit('update:modelValue', event.target.value)
 
-    props.options.forEach((country) => {
-        if (event.target.value.substring(0, 3).toUpperCase().includes('+' + country.calling_code.toUpperCase())) {
-            selected.value = country;
-        }
+	props.options.forEach((country) => {
+		if (
+			event.target.value
+				.substring(0, 3)
+				.toUpperCase()
+				.includes('+' + country.calling_code.toUpperCase())
+		) {
+			selected.value = country
+		}
 
-        if (event.target.value.substring(0, 4).toUpperCase().includes('00' + country.calling_code.toUpperCase())) {
-            selected.value = country;
-        }
-    });
-};
+		if (
+			event.target.value
+				.substring(0, 4)
+				.toUpperCase()
+				.includes('00' + country.calling_code.toUpperCase())
+		) {
+			selected.value = country
+		}
+	})
+}
 </script>
 
 <template>

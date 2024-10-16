@@ -1,11 +1,11 @@
 {
-    "title": "About us",
-    "created_at": "2023-04-12 14:39:38",
-    "updated_at": "2023-04-12 12:40:13",
-    "attributes": {
-        "title_en": "ABOUT",
-        "title_ar": "\u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0639\u0646\u0646\u0627",
-        "body_en": "<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Excepturi hic laboriosam facere, voluptas ipsum at sint accusantium iste velit facilis, porro nostrum accusamus eveniet dolorem sapiente id autem dignissimos soluta dicta voluptate fugit tempora repellat eius. In cum iure distinctio?<\/p>",
-        "body_ar": "<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Excepturi hic laboriosam facere, voluptas ipsum at sint accusantium iste velit facilis, porro nostrum accusamus eveniet dolorem sapiente id autem dignissimos soluta dicta voluptate fugit tempora repellat eius. In cum iure distinctio?<\/p>"
-    }
+	"title": "About us",
+	"created_at": "2023-04-12 14:39:38",
+	"updated_at": "2023-04-12 12:40:13",
+	"attributes": {
+		"title_en": "ABOUT",
+		"title_ar": "\u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0639\u0646\u0646\u0627",
+		"body_en": "<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Excepturi hic laboriosam facere, voluptas ipsum at sint accusantium iste velit facilis, porro nostrum accusamus eveniet dolorem sapiente id autem dignissimos soluta dicta voluptate fugit tempora repellat eius. In cum iure distinctio?</p>",
+		"body_ar": "<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Excepturi hic laboriosam facere, voluptas ipsum at sint accusantium iste velit facilis, porro nostrum accusamus eveniet dolorem sapiente id autem dignissimos soluta dicta voluptate fugit tempora repellat eius. In cum iure distinctio?</p>"
+	}
 }

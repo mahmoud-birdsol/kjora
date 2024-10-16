@@ -19,7 +19,7 @@ const borderColor = computed(() => {
    }[props.notification.data.state.toString()];
 });
 
-const readForm = useForm({});
+const readForm = useForm({})
 
 const markAsRead = () => {
    readForm.patch(
@@ -31,7 +31,7 @@ const markAsRead = () => {
    );
 };
 
-const deleteForm = useForm({});
+const deleteForm = useForm({})
 
 const deleteNotification = () => {
    deleteForm.delete(

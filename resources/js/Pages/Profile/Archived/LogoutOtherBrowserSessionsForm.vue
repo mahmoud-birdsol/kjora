@@ -13,8 +13,8 @@ defineProps({
    sessions: Array,
 });
 
-const confirmingLogout = ref(false);
-const passwordInput = ref(null);
+const confirmingLogout = ref(false)
+const passwordInput = ref(null)
 
 const form = useForm({
    password: "",

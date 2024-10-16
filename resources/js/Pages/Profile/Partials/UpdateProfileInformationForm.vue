@@ -52,7 +52,7 @@ const updateProfileInformation = () => {
    });
 };
 
-const showUploadAvatarModal = ref(false);
+const showUploadAvatarModal = ref(false)
 </script>
 
 <template>

@@ -2,8 +2,8 @@
 import { Link } from '@inertiajs/vue3';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/solid';
 defineProps({
-    links: Array,
-});
+	links: Array,
+})
 </script>
 
 <template>

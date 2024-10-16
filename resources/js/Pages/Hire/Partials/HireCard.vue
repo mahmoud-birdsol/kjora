@@ -8,13 +8,11 @@ import RespondToInvitationModal from "@/Components/RespondToInvitationModal.vue"
 import InvitationPlayerCard from '@/Components/PlayerCards/InvitationPlayerCard.vue';
 
 const props = defineProps({
-    invitation: {
-        required: true,
-        type: Object,
-    },
-});
-
-
+	invitation: {
+		required: true,
+		type: Object,
+	},
+})
 </script>
 
 <template>

@@ -12,7 +12,7 @@ const props = defineProps({
    status: String,
 });
 
-const showSuccessModal = ref(true);
+const showSuccessModal = ref(true)
 
 const verificationLinkSent = computed(
    () => props.status === "verification-link-sent"

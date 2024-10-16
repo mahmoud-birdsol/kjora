@@ -10,7 +10,7 @@ const props = defineProps({
    },
 });
 
-const showSideBar = ref(false);
+const showSideBar = ref(false)
 
 props.conversations.forEach((conversation) => {
    Echo.join("chat." + conversation.id)

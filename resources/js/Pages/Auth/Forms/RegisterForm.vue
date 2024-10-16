@@ -37,8 +37,8 @@ const form = useForm({
    photo: null,
 });
 
-const showUploadAvatarModal = ref(false);
-const avatarPreview = ref(null);
+const showUploadAvatarModal = ref(false)
+const avatarPreview = ref(null)
 
 const setAvatarPreview = (photo) => {
    avatarPreview.value = photo;

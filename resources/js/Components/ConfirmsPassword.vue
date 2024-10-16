@@ -23,7 +23,7 @@ defineProps({
    },
 });
 
-const confirmingPassword = ref(false);
+const confirmingPassword = ref(false)
 
 const form = reactive({
    password: "",
@@ -31,7 +31,7 @@ const form = reactive({
    processing: false,
 });
 
-const passwordInput = ref(null);
+const passwordInput = ref(null)
 
 const startConfirmingPassword = () => {
    axios.get(route("password.confirmation")).then((response) => {

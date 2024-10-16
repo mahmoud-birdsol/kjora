@@ -10,6 +10,7 @@ import GuestNavbar from "./Partials/GuestNavbar.vue";
 
 // onMounted(() => {
 //     loadLanguageAsync(usePage().props.locale)
+//     loadLanguageAsync(usePage().props.locale)
 // })
 
 defineProps({

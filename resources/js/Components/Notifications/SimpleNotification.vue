@@ -2,19 +2,19 @@
 import { Link } from '@inertiajs/vue3';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import {
-    CheckCircleIcon,
-    XCircleIcon,
-    ExclamationTriangleIcon,
-    ExclamationCircleIcon,
-    XMarkIcon,
-} from '@heroicons/vue/24/outline';
+	CheckCircleIcon,
+	XCircleIcon,
+	ExclamationTriangleIcon,
+	ExclamationCircleIcon,
+	XMarkIcon,
+} from '@heroicons/vue/24/outline'
 
 const props = defineProps({
-    notification: {
-        required: true,
-        type: Object,
-    },
-});
+	notification: {
+		required: true,
+		type: Object,
+	},
+})
 </script>
 
 <template>
@@ -32,10 +32,12 @@ const props = defineProps({
                     <ExclamationCircleIcon v-if="notification.state == 'info'" class="h-6 w-6 text-sky-400" aria-hidden="true" />
                 </div>
 
-                <!-- Notification Body -->
-                <div class="ml-3 w-0 flex-1 pt-0.5">
-                    <p class="text-sm font-medium text-gray-900">{{ notification.title }}</p>
-                    <p class="mt-1 text-sm text-gray-500">{{ notification.subtitle }}</p>
+				<!-- Notification Body -->
+				<div class="ml-3 w-0 flex-1 pt-0.5">
+					<p class="text-sm font-medium text-gray-900">
+						{{ notification.title }}
+					</p>
+					<p class="mt-1 text-sm text-gray-500">{{ notification.subtitle }}</p>
 
                     <div class="mt-4" v-if="notification.actionData">
                         <Link class="mt-4" :href="notification.actionData.route">

@@ -8,8 +8,8 @@ import InputLabel from "@/Components/Forms/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 
-const passwordInput = ref(null);
-const currentPasswordInput = ref(null);
+const passwordInput = ref(null)
+const currentPasswordInput = ref(null)
 
 const form = useForm({
     current_password: "",
@@ -49,9 +49,9 @@ const updatePassword = () => {
         <template #title> Update Password </template>
         <template #title> Update Password </template>
 
-        <template #description>
-            Ensure your account is using a long, random password to stay secure.
-        </template>
+		<template #description>
+			Ensure your account is using a long, random password to stay secure.
+		</template>
 
         <template #form>
             <div class="col-span-6 sm:col-span-4">
@@ -114,10 +114,12 @@ const updatePassword = () => {
             </div>
         </template>
 
-        <template #actions>
-            <ActionMessage :on="form.recentlySuccessful" class="mr-3">
-                Saved.
-            </ActionMessage>
+		<template #actions>
+			<ActionMessage
+				:on="form.recentlySuccessful"
+				class="mr-3">
+				Saved.
+			</ActionMessage>
 
             <PrimaryButton
                 :class="{ 'opacity-25': form.processing }"

@@ -12,7 +12,7 @@ const form = useForm({
    password: "",
 });
 
-const passwordInput = ref(null);
+const passwordInput = ref(null)
 
 const submit = () => {
    form.post(route("password.confirm"), {

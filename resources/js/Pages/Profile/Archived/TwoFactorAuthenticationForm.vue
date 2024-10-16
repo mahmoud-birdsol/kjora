@@ -15,12 +15,12 @@ const props = defineProps({
    requiresConfirmation: Boolean,
 });
 
-const enabling = ref(false);
-const confirming = ref(false);
-const disabling = ref(false);
-const qrCode = ref(null);
-const setupKey = ref(null);
-const recoveryCodes = ref([]);
+const enabling = ref(false)
+const confirming = ref(false)
+const disabling = ref(false)
+const qrCode = ref(null)
+const setupKey = ref(null)
+const recoveryCodes = ref([])
 
 const confirmationForm = useForm({
    code: "",

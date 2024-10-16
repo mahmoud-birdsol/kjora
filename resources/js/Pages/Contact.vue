@@ -18,7 +18,7 @@ const form = useForm({
    message: null,
 });
 
-const showSuccessMessage = ref(false);
+const showSuccessMessage = ref(false)
 
 function submit() {
    form.post(route("contacts.store"), {

@@ -8,44 +8,42 @@ import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 
-
 let showAddStadiumModal = ref(false)
 let showPlacesInput = ref(false)
-let loading = ref(false);
+let loading = ref(false)
 const form = useForm({
-    name: null,
-    longitude: null,
-    latitude: null,
-    street_address: null,
-    country: null,
-    city: null,
-    google_place_id: null
-});
+	name: null,
+	longitude: null,
+	latitude: null,
+	street_address: null,
+	country: null,
+	city: null,
+	google_place_id: null,
+})
 
 function addStadium() {
-    form.post(route('stadiums.store'))
-    form.reset();
-    showPlacesInput.value = false
-    showAddStadiumModal.value = false
-
+	form.post(route('stadiums.store'))
+	form.reset()
+	showPlacesInput.value = false
+	showAddStadiumModal.value = false
 }
 
 function setPlace(e) {
-    form.google_place_id = e.place_id;
-    form.street_address = e.address_components[1]?.long_name;
-    form.country = e.address_components[5]?.long_name;
-    form.city = e.address_components[4]?.long_name;
-    form.latitude = e.geometry.location.lat();
-    form.longitude = e.geometry.location.lng();
-    form.name = e.name
+	form.google_place_id = e.place_id
+	form.street_address = e.address_components[1]?.long_name
+	form.country = e.address_components[5]?.long_name
+	form.city = e.address_components[4]?.long_name
+	form.latitude = e.geometry.location.lat()
+	form.longitude = e.geometry.location.lng()
+	form.name = e.name
 }
 
 function openModal() {
-    showAddStadiumModal.value = true
+	showAddStadiumModal.value = true
 }
 
 function closeModal() {
-    showAddStadiumModal.value = false
+	showAddStadiumModal.value = false
 }
 </script>
 <template>
@@ -57,10 +55,12 @@ function closeModal() {
             <div class="flex items-center justify-between">
                 <p class="text-lg text-white">{{ $t('add-new-stadium') }} </p>
 
-                <button @click="showAddStadiumModal = false">
-                    <XMarkIcon class="w-4 h-4 text-white" />
-                </button>
-            </div>
+
+				<button @click="showAddStadiumModal = false">
+					<XMarkIcon class="w-4 h-4 text-white" />
+				</button>
+			</div>
+
 
             <form @submit.prevent="addStadium">
                 <div class="my-6">

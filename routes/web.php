@@ -30,8 +30,7 @@ use App\Http\Controllers\UpgradeMembershipController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\VerificationCodeController;
 use App\Http\Controllers\CancelInvitationController;
-use App\Http\Requests\CommentStoreRequest;
-use App\Models\Comment;
+use App\Http\Controllers\TeamController;
 use App\Models\Country;
 use App\Models\Invitation;
 use App\Models\MediaLibrary;
@@ -303,6 +302,7 @@ Route::middleware([
 
          return redirect()->back();
       })->name('upload');
+      Route::resource('teams', TeamController::class);
    });
 
    /*
@@ -571,7 +571,7 @@ Route::any('nova/language/{language}', function (Request $request, $language) {
 Route::get('public/posts/{post}', function (Post $post) {
    $data = Post::where('id', $post->id)->with(['likes.user:id,username,first_name,last_name'])->first();
 
-   return Inertia::render('Posts/Public/Index', [
+   return Inertia::render('Public/PostView', [
       'post' => $data,
       'user' => $post->user,
       'social_meta' => [
@@ -599,7 +599,7 @@ Route::get('public/player/{player:username}', function (User $player) {
    $countries = Country::active()->orderBy('name')->get();
    $positions = Position::all();
 
-   return Inertia::render('Player/Public/Index', [
+   return Inertia::render('Public/PlayerView', [
       'player' => $player,
       'posts' => $player->posts->load('comments'),
       'playerRating' => $playerRating,

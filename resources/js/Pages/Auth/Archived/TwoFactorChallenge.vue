@@ -8,15 +8,15 @@ import InputLabel from "@/Components/Forms/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/Forms/TextInput.vue";
 
-const recovery = ref(false);
+const recovery = ref(false)
 
 const form = useForm({
    code: "",
    recovery_code: "",
 });
 
-const recoveryCodeInput = ref(null);
-const codeInput = ref(null);
+const recoveryCodeInput = ref(null)
+const codeInput = ref(null)
 
 const toggleRecovery = async () => {
    recovery.value ^= true;
