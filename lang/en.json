@@ -396,5 +396,8 @@
   "This player already has match at this time": "This player already has match at this time",
   "You already invited this player at these time": "You already invited this player at these time",
   "teams": "Teams",
-  "count-player-or-count-players": "{0,1} :count Player |[2,*] :count Players"
+  "count-player-or-count-players": "{0,1} :count Player |[2,*] :count Players",
+  "be-the-next-winner": "Be the next winner",
+  "create-your-match-now": "Create your match now",
+  "join-us-in-an-exciting-football-match-and-compete-with-others-our-event-offers-a-fun-and-challenging-experience-for-players-of-all-levels-dont-miss-this-opportunity-to-showcase-your-skills-and-team-spirit": "Join us in an exciting football match and compete with others our event offers a fun and challenging experience for players of all levels dont miss this opportunity to showcase your skills and team spirit"
 }

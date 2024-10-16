@@ -1,16 +1,21 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 const props = defineProps<{
-    teams:Teams ,
+	teams: Teams
 }>()
 </script>
 <template>
-    <Head :title="$t('teams')" />
+	<Head :title="$t('teams')" />
 
 	<AppLayout :title="$t('teams')">
-        <section class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            <template v-for="(team) in teams" :key="team.id">
-                <TeamCard :team="team" />
-            </template>
-        </section>
-    </AppLayout>
+		<div class="grid lg:grid-cols-[1fr_minmax(15rem,20rem)] gap-6">
+			<section class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+				<template
+					v-for="team in teams"
+					:key="team.id">
+					<TeamCard :team="team" />
+				</template>
+			</section>
+			<MatchAdvertise />
+		</div>
+	</AppLayout>
 </template>

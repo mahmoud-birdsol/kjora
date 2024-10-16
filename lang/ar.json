@@ -399,5 +399,8 @@
   "This player already has match at this time": "ذلك اللاعب لديه مباراة فى ذلك الوقت",
   "You already invited this player at these time": "لقد دعوة ذلك اللاعب لمبارارة فى نفس ذلك الوقت",
   "teams": "فرق",
-  "count-player-or-count-players": "{0,1} :count لاعب |[2,*] :count اللاعبين"
+  "count-player-or-count-players": "{0,1} :count لاعب |[2,*] :count اللاعبين",
+  "be-the-next-winner": "كن الفائز التالي",
+  "create-your-match-now": "قم بإنشاء المباراة الخاصة بك الآن",
+  "join-us-in-an-exciting-football-match-and-compete-with-others-our-event-offers-a-fun-and-challenging-experience-for-players-of-all-levels-dont-miss-this-opportunity-to-showcase-your-skills-and-team-spirit": "انضم إلينا في مباراة كرة قدم مثيرة وتنافس مع الآخرين، يقدم حدثنا تجربة ممتعة ومليئة بالتحديات للاعبين من جميع المستويات، لا تفوت هذه الفرصة لعرض مهاراتك وروح الفريق"
 }
