@@ -402,5 +402,9 @@
   "count-player-or-count-players": "{0,1} :count لاعب |[2,*] :count اللاعبين",
   "be-the-next-winner": "كن الفائز التالي",
   "create-your-match-now": "قم بإنشاء المباراة الخاصة بك الآن",
-  "join-us-in-an-exciting-football-match-and-compete-with-others-our-event-offers-a-fun-and-challenging-experience-for-players-of-all-levels-dont-miss-this-opportunity-to-showcase-your-skills-and-team-spirit": "انضم إلينا في مباراة كرة قدم مثيرة وتنافس مع الآخرين، يقدم حدثنا تجربة ممتعة ومليئة بالتحديات للاعبين من جميع المستويات، لا تفوت هذه الفرصة لعرض مهاراتك وروح الفريق"
+  "join-us-in-an-exciting-football-match-and-compete-with-others-our-event-offers-a-fun-and-challenging-experience-for-players-of-all-levels-dont-miss-this-opportunity-to-showcase-your-skills-and-team-spirit": "انضم إلينا في مباراة كرة قدم مثيرة وتنافس مع الآخرين، يقدم حدثنا تجربة ممتعة ومليئة بالتحديات للاعبين من جميع المستويات، لا تفوت هذه الفرصة لعرض مهاراتك وروح الفريق",
+  "latest-matches": "آخر المباريات",
+  "no-data": "لا توجد بيانات",
+  "there-is-no-data-to-show-you-right-now": "لا توجد بيانات لتظهر لك الآن",
+  "top-rating-players": "أعلى اللاعبين تقييما"
 }
