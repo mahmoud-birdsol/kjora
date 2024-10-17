@@ -14,7 +14,8 @@
 		"paths": {
 			"@/*": ["./resources/js/*"],
 			"ziggy-js": ["./vendor/tightenco/ziggy"]
-		}
+		},
+		"types": ["element-plus/global"]
 	},
 	"exclude": ["node_modules", "public", "vendor"]
 }
