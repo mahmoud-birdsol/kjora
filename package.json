@@ -49,6 +49,7 @@
 		"tailwind-merge": "^2.5.4",
 		"unplugin-auto-import": "^0.12.1",
 		"unplugin-vue-components": "^0.22.12",
+		"vite-plugin-watch": "^0.3.1",
 		"vue": "^3.5.11",
 		"vue-chartjs": "^5.2.0",
 		"vue-easy-lightbox": "^1.14.0",

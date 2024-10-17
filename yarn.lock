@@ -2438,6 +2438,13 @@ vite-plugin-full-reload@^1.0.5:
     picocolors "^1.0.0"
     picomatch "^2.3.1"
 
+vite-plugin-watch@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-watch/-/vite-plugin-watch-0.3.1.tgz#5000f7ded6eb1c42e9483d6ea3d812061ab8188f"
+  integrity sha512-tmLJ5tqSqXY7wSXoM8+huOgbictUG6SKLh/tZ6LAY51KPSAnPBr0dYwyxPPPQm+JgIIBbKSyNnPHpW11ad+qlw==
+  dependencies:
+    minimatch "^5.1.1"
+
 vite@^3.0.0:
   version "3.2.11"
   resolved "https://registry.yarnpkg.com/vite/-/vite-3.2.11.tgz#8d1c8e05ef2f24b04c8693f56d3e01fe8835e6d7"

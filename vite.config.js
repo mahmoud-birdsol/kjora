@@ -5,9 +5,14 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import i18n from 'laravel-vue-i18n/vite'
+import { watch } from 'vite-plugin-watch'
 
 export default defineConfig({
 	plugins: [
+		watch({
+			pattern: ['routes/*.php'],
+			command: 'php artisan ziggy:generate --types-only',
+		}),
 		laravel({
 			input: 'resources/js/app.js',
 			ssr: 'resources/js/ssr.js',

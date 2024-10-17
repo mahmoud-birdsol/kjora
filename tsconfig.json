@@ -1,19 +1,20 @@
 {
-    "extends": "@vue/tsconfig/tsconfig.json",
-    "include": [
-        "**/*.d.ts",
-        "./resources/js/**/*",
-        "./resources/js/**/*.vue",
-        "./auto-imports.d.ts",
-        "./auto-components.d.ts"
-    ],
-    "compilerOptions": {
-        "moduleResolution": "Bundler",
-        "baseUrl": ".",
-        "isolatedModules": true,
-        "paths": {
-            "@/*": ["./resources/js/*"]
-        }
-    },
-    "exclude": ["node_modules", "public", "vendor"]
+	"extends": "@vue/tsconfig/tsconfig.json",
+	"include": [
+		"**/*.d.ts",
+		"./resources/js/**/*",
+		"./resources/js/**/*.vue",
+		"./auto-imports.d.ts",
+		"./auto-components.d.ts"
+	],
+	"compilerOptions": {
+		"moduleResolution": "Bundler",
+		"baseUrl": ".",
+		"isolatedModules": true,
+		"paths": {
+			"@/*": ["./resources/js/*"],
+			"ziggy-js": ["./vendor/tightenco/ziggy"]
+		}
+	},
+	"exclude": ["node_modules", "public", "vendor"]
 }

@@ -27,3 +27,5 @@ auto-imports.d.ts
 auto-components.d.ts
 /models.d.ts
 public/vendor
+
+resources/js/ziggy.d.ts
