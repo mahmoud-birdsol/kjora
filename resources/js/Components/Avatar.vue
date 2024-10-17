@@ -1,42 +1,26 @@
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from 'vue'
-import VueEasyLightbox, { useEasyLightbox } from 'vue-easy-lightbox'
+import VueEasyLightbox from 'vue-easy-lightbox'
 import { Link, usePage } from '@inertiajs/vue3'
 
-const props = defineProps({
-	imageUrl: {
-		required: false,
-		type: String,
-	},
-	size: {
-		required: false,
-		type: String,
-		default: 'sm',
-	},
-	username: {
-		required: false,
-		type: String,
-		default: 'Kjora',
-	},
-	border: {
-		required: false,
-		type: Boolean,
-		default: false,
-	},
-	borderColor: {
-		default: 'primary',
-	},
-	enableLightBox: {
-		required: false,
-		type: Boolean,
-		default: true,
-	},
-	id: {
-		required: true,
-		type: Number,
-	},
-})
-// const isRegister = id === null
+const props = withDefaults(
+	defineProps<{
+		imageUrl?: string
+		size?: 'sm' | 'md' | 'lg' | 'xlg'
+		username?: string
+		border?: boolean
+		borderColor?: 'white' | 'primary' | 'black' | 'blackDark' | 'golden'
+		enableLightBox?: boolean
+		id: number
+	}>(),
+	{
+		size: 'sm',
+		username: 'Kjora',
+		borderColor: 'primary',
+		enableLightBox: true,
+	}
+)
+
 const currentUser = usePage().props?.auth?.user ?? null
 // console.log(currentUser);
 const isCurrentUser = currentUser?.id === props?.id
@@ -66,7 +50,7 @@ const borderClasses = computed(() => {
 
 // adding vue light boc on click on player image
 const visibleRef = ref(false)
-const imgsRef = ref(null)
+const imgsRef = ref<string>()
 const showLightBox = () => {
 	if (props.enableLightBox) {
 		imgsRef.value =
