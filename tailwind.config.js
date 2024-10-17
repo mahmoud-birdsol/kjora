@@ -35,5 +35,13 @@ module.exports = {
 		},
 	},
 
-	plugins: [formsPlugin, typographyPlugin, logicalPlugin, dirPlugin, appPlugin],
+	plugins: [
+		formsPlugin({
+			strategy: 'class',
+		}),
+		typographyPlugin,
+		logicalPlugin,
+		dirPlugin,
+		appPlugin,
+	],
 }
