@@ -29,20 +29,20 @@ defineExpose({ focus: () => input.value.focus() })
 			:type="type"
 			:value="modelValue"
 			:placeholder="placeholder"
-			class="removeEyeIcon block w-full rounded-full border-gray-300 px-4 shadow-sm focus:border-primary focus:ring-primary sm:text-sm disabled:bg-gray-100 text-xs"
+			class="block w-full px-4 text-xs border-gray-300 rounded-full shadow-sm removeEyeIcon focus:border-primary focus:ring-primary sm:text-sm disabled:bg-gray-100 form-input"
 			@input="$emit('update:modelValue', $event.target.value)"
 			autocomplete="new-password"
 			aria-required="true" />
 		<div
-			class="cursor-pointer absolute inset-y-0 ltr:right-0 rtl:left-0 flex items-center ltr:pr-3 rtl:pl-3">
+			class="absolute inset-y-0 flex items-center cursor-pointer ltr:right-0 rtl:left-0 ltr:pr-3 rtl:pl-3">
 			<EyeSlashIcon
 				v-if="type == 'text'"
 				@click="type = 'password'"
-				class="h-5 w-5 text-gray-400" />
+				class="w-5 h-5 text-gray-400" />
 			<EyeIcon
 				v-if="type == 'password'"
 				@click="type = 'text'"
-				class="h-5 w-5 text-gray-400" />
+				class="w-5 h-5 text-gray-400" />
 		</div>
 	</div>
 </template>
