@@ -1,12 +1,5 @@
 {
 	"extends": "@vue/tsconfig/tsconfig.json",
-	"include": [
-		"**/*.d.ts",
-		"./resources/js/**/*",
-		"./resources/js/**/*.vue",
-		"./auto-imports.d.ts",
-		"./auto-components.d.ts"
-	],
 	"compilerOptions": {
 		"moduleResolution": "Bundler",
 		"baseUrl": ".",

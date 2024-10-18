@@ -1,4 +1,5 @@
-declare module '@inertiajs/vue3' {
+export {}
+declare module '@inertiajs/core' {
 	export interface Jetstream {
 		canCreateTeams: boolean
 		canManageTwoFactorAuthentication: boolean
@@ -21,8 +22,7 @@ declare module '@inertiajs/vue3' {
 			action: Action
 		}
 	}
-
-	interface PageProps {
+	export interface PageProps {
 		jetstream: Jetstream
 		user: User
 		errorBags: any[]
