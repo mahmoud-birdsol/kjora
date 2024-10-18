@@ -139,9 +139,12 @@ declare global {
 	export interface Team {
 		id: number
 		name: string
-		description: string
 		users: Users
 		image: string
+		code: string
+		type: string
+		country: Country
+		number: number
 	}
 	export type Teams = Team[]
 

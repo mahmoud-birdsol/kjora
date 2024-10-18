@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -19,6 +20,7 @@ class TeamController extends Controller
         ]];
         return Inertia::render('teams/Index', [
             'teams' => $teams,
+            'countries' => Country::all()
         ]);
     }
     public function create()

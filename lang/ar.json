@@ -406,5 +406,12 @@
   "latest-matches": "آخر المباريات",
   "no-data": "لا توجد بيانات",
   "there-is-no-data-to-show-you-right-now": "لا توجد بيانات لتظهر لك الآن",
-  "top-rating-players": "أعلى اللاعبين تقييما"
+  "top-rating-players": "أعلى اللاعبين تقييما",
+  "team-name": "اسم الفريق",
+  "team-code": "رمز الفريق",
+  "type": "نوع",
+  "country": "دولة",
+  "number": "رقم",
+  "build": "يبني",
+  "build-team": "بناء الفريق"
 }

@@ -1,4 +1,5 @@
 <script setup>
+import { cva } from 'class-variance-authority'
 defineProps({
 	value: String,
 	color: {
@@ -11,7 +12,7 @@ defineProps({
 
 <template>
 	<label
-		class="block font-medium text-xs uppercase ml-4 mb-1"
+		class="block mb-1 ml-4 text-xs font-medium uppercase"
 		:class="`text-${color}`">
 		<span v-if="value">{{ value }}</span>
 		<span v-else>

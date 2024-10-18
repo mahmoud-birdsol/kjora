@@ -403,5 +403,12 @@
   "latest-matches": "Latest Matches",
   "no-data": "No data",
   "there-is-no-data-to-show-you-right-now": "There is no data to show you right now",
-  "top-rating-players": "Top Rating Players"
+  "top-rating-players": "Top Rating Players",
+  "team-name": "Team Name",
+  "build-team": "Build Team",
+  "team-code": "TEAM CODE",
+  "type": "TYPE",
+  "country": "country",
+  "number": "NUMBER",
+  "build": "Build"
 }

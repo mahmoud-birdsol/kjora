@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{
 	teams: Teams
+	countries: Countries
 }>()
 // [TODO] remove
 const user: User = {
@@ -99,6 +100,9 @@ const user: User = {
 				<p class="text-4xl font-black text-white md:text-7xl">
 					{{ $t('teams') }}
 				</p>
+				<div class="flex items-center justify-between gap-2">
+					<TeamForm :countries="countries" />
+				</div>
 				<section class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 					<template
 						v-for="team in teams"
