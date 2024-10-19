@@ -90,6 +90,7 @@ const user: User = {
 	distance: 100,
 	two_factor_enabled: true,
 }
+const { query } = useSearch()
 </script>
 <template>
 	<Head :title="$t('teams')" />
@@ -101,6 +102,10 @@ const user: User = {
 					{{ $t('teams') }}
 				</p>
 				<div class="flex items-center justify-between gap-2">
+					<TextInput
+						v-model="query"
+						type="search" />
+
 					<TeamForm :countries="countries" />
 				</div>
 				<section class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

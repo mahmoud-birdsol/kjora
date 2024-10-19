@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { PencilIcon } from '@heroicons/vue/24/outline'
-import { useForm } from '@inertiajs/vue3'
 import { type VisitOptions } from '@inertiajs/core'
 type Model = Team
 const props = defineProps<{
@@ -56,7 +55,11 @@ const showUploadAvatarModal = ref<boolean>(false)
 const previewImage = ref<string>()
 </script>
 <template>
-	<PrimaryButton @click="openForm">{{ $t('build-team') }}</PrimaryButton>
+	<PrimaryButton
+		class="w-fit"
+		@click="openForm"
+		>{{ $t('build-team') }}</PrimaryButton
+	>
 	<Modal
 		@close="closeForm"
 		:show="showForm">
