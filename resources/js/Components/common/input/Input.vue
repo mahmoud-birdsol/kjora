@@ -45,9 +45,8 @@ defineExpose({ focus: () => (input.value ? input.value.focus() : null) })
 			class="px-4 text-xs sm:text-sm grow focus-visible:outline-none readonly:cursor-not-allowed disabled:cursor-not-allowed"
 			:type="type"
 			v-model="modelValue"
-			disabled
-			readonly
-			autocomplete
+			:disabled="disabled"
+			:autocomplete
 			:placeholder />
 
 		<span
