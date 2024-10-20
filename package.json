@@ -27,6 +27,7 @@
 	},
 	"dependencies": {
 		"@fawmi/vue-google-maps": "0.9.72",
+		"@floating-ui/vue": "^1.1.5",
 		"@fortawesome/fontawesome-svg-core": "^6.3.0",
 		"@fortawesome/free-brands-svg-icons": "^6.3.0",
 		"@fortawesome/free-regular-svg-icons": "^6.3.0",
