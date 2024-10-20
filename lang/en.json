@@ -410,5 +410,7 @@
   "type": "TYPE",
   "country": "country",
   "number": "NUMBER",
-  "build": "Build"
+  "build": "Build",
+  "invite-players": "Invite players",
+  "invite": "Invite"
 }

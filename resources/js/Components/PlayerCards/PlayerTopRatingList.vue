@@ -12,22 +12,7 @@ const props = defineProps<{
 			<template
 				v-for="player in players"
 				:key="player.id">
-				<li class="flex items-center gap-3">
-					<Avatar
-						:username="player.username"
-						:imageUrl="player.avatar_url" />
-					<div>
-						<Link
-							:href="route('player.profile', player.id)"
-							class="text-sm font-medium">
-							{{ `${player.first_name} ${player.last_name}` }}
-						</Link>
-						<StarRating
-							:modelValue="Number(player.rating)"
-							disabled
-							showRatingValue />
-					</div>
-				</li>
+				<PlayerSimpleCard :player="player" />
 			</template>
 		</ul>
 		<Empty v-else />

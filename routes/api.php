@@ -109,3 +109,4 @@ Route::get(
     ]
 )->name('api.user.get.users.name');
 
+Route::get('users', [UserController::class, 'index'])->name('api.users.index');

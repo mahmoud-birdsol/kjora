@@ -72,6 +72,8 @@ declare global {
 		distance?: number
 		two_factor_enabled?: boolean
 	}
+
+	export type Users = User[]
 	export interface Conversation {
 		id: number
 		created_at: Date

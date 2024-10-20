@@ -17,7 +17,7 @@ const form = useForm<Prettify<TFormModel>>(() => ({
 	name: props.team?.name ?? '',
 	code: props.team?.code ?? '',
 	type: props.team?.type ?? '',
-	country: props.team?.country,
+	country_id: props.team?.country.id,
 	number: props.team?.number,
 	image: props.team?.image ?? '',
 }))
@@ -25,6 +25,7 @@ const form = useForm<Prettify<TFormModel>>(() => ({
 const showForm = defineModel<boolean>('open', {
 	default: false,
 })
+const showInvitationForm = ref<boolean>(false)
 
 const openForm = () => {
 	showForm.value = true
@@ -33,9 +34,12 @@ const closeForm = () => {
 	showForm.value = false
 }
 const submitOption: Partial<VisitOptions> = {
-	onSuccess: () => {
+	preserveState: true,
+	onSuccess: (e) => {
+		console.log(e)
 		form.reset()
 		closeForm()
+		showInvitationForm.value = true
 	},
 }
 const store = () => {
@@ -80,6 +84,7 @@ const previewImage = ref<string>()
 					<PencilIcon class="w-3 text-white" />
 				</div>
 			</button>
+			<InputError :message="form.errors.image" />
 			<FormField
 				:label="$t('team-name')"
 				:error="form.errors.name">
@@ -93,7 +98,7 @@ const previewImage = ref<string>()
 
 			<FormField
 				:label="$t('country')"
-				:error="form.errors.type">
+				:error="form.errors.country_id">
 				<RichSelectInput
 					:options="countries"
 					value-name="id"
@@ -119,4 +124,5 @@ const previewImage = ref<string>()
 			@close="showUploadAvatarModal = false"
 			@selected="(photo: string) => (previewImage = photo)" />
 	</Modal>
+	<TeamInvitationForm v-model:open="showInvitationForm" />
 </template>
