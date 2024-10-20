@@ -20,7 +20,7 @@ class TeamController extends Controller
         ]];
         return Inertia::render('teams/Index', [
             'teams' => $teams,
-            'countries' => Country::all(),
+            'countries' => Country::paginate(),
         ]);
     }
     public function show($team)

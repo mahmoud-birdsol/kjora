@@ -11,7 +11,7 @@ const isUpdate = computed(() => {
 	return !!props.team
 })
 
-type TFormModel = Partial<Omit<Model, 'id'>>
+type TFormModel = Partial<Omit<Model, 'id'> & { country_id: number }>
 
 const form = useForm<Prettify<TFormModel>>(() => ({
 	name: props.team?.name ?? '',
@@ -100,10 +100,11 @@ const previewImage = ref<string>()
 				:label="$t('country')"
 				:error="form.errors.country_id">
 				<RichSelectInput
-					:options="countries"
+					:source="route('api.countries.index')"
 					value-name="id"
 					text-name="name"
 					image-name="flag"
+					:append="team?.country"
 					v-model="form.country_id" />
 			</FormField>
 
