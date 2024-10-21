@@ -1,33 +1,35 @@
 <script setup lang="ts">
-import { cn } from '@/Utils'
-import { ChevronRight } from 'lucide-vue-next'
+import { type HTMLAttributes, computed } from 'vue'
 import {
-  DropdownMenuSubTrigger,
-  type DropdownMenuSubTriggerProps,
-  useForwardProps,
+	DropdownMenuSubTrigger,
+	type DropdownMenuSubTriggerProps,
+	useForwardProps,
 } from 'radix-vue'
-import { computed, type HTMLAttributes } from 'vue'
+import { ChevronRightIcon } from '@radix-icons/vue'
 
-const props = defineProps<DropdownMenuSubTriggerProps & { class?: HTMLAttributes['class'] }>()
+const props = defineProps<
+	DropdownMenuSubTriggerProps & { class?: HTMLAttributes['class'] }
+>()
 
 const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
+	const { class: _, ...delegated } = props
 
-  return delegated
+	return delegated
 })
 
 const forwardedProps = useForwardProps(delegatedProps)
 </script>
 
 <template>
-  <DropdownMenuSubTrigger
-    v-bind="forwardedProps"
-    :class="cn(
-      'flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent data-[state=open]:bg-accent',
-      props.class,
-    )"
-  >
-    <slot />
-    <ChevronRight class="ml-auto h-4 w-4" />
-  </DropdownMenuSubTrigger>
+	<DropdownMenuSubTrigger
+		v-bind="forwardedProps"
+		:class="
+			cn(
+				'flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent data-[state=open]:bg-accent',
+				props.class
+			)
+		">
+		<slot />
+		<ChevronRightIcon class="w-4 h-4 ml-auto" />
+	</DropdownMenuSubTrigger>
 </template>
