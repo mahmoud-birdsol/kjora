@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import {
-	EllipsisHorizontalCircleIcon,
 	EllipsisHorizontalIcon,
 	StarIcon,
 	TrashIcon,
 } from '@heroicons/vue/24/outline'
-import { EllipsisVerticalIcon } from '@heroicons/vue/24/solid'
-
+type Model = Team
 const props = defineProps<{
-	team: Team
+	team: Prettify<Model>
 }>()
 </script>
 <template>
@@ -17,11 +15,16 @@ const props = defineProps<{
 			<StarIcon class="w-5 h-5" />
 		</button>
 		<Avatar
+			:id="team.id"
 			:image-url="team.image"
 			:size="'xlg'"
 			:username="team.name"
 			:enableLightBox="true" />
-		<h2 class="text-sm font-semibold capitalize">{{ team.name }}</h2>
+		<Link
+			:href="route('teams.show', [team])"
+			class="text-sm font-semibold capitalize"
+			>{{ team.name }}</Link
+		>
 		<StarRating
 			show-rating-value
 			:model-value="4"
