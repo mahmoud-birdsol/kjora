@@ -412,5 +412,7 @@
   "number": "NUMBER",
   "build": "Build",
   "invite-players": "Invite players",
-  "invite": "Invite"
+  "invite": "Invite",
+  "team-players": "Team Players",
+  "matches": "Matches"
 }

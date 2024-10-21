@@ -415,5 +415,7 @@
   "build": "يبني",
   "build-team": "بناء الفريق",
   "invite-players": "دعوة اللاعبين",
-  "invite": "يدعو"
+  "invite": "يدعو",
+  "matches": "مباريات",
+  "team-players": "لاعبي الفريق"
 }
