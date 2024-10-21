@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Country;
+use App\Models\Stadium;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -32,12 +33,21 @@ class TeamController extends Controller
             'code' => '155',
             'users' => User::all(),
         ];
+        $matches = [
+            '0' => [
+                'team_1' => $team,
+                'team_2' => $team,
+                'point_team_1' => 3,
+                'point_team_2' => 3,
+                'stadium' => Stadium::first(),
+            ]
+        ];
         return Inertia::render('teams/Show', [
             'team' => $team,
             // team Players
             'players' => User::all(),
             // team Matches
-            'matches' => [],
+            'matches' => fn() => $matches,
         ]);
     }
 
