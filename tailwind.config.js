@@ -1,6 +1,7 @@
 import animate from 'tailwindcss-animate'
 import defaultTheme from 'tailwindcss/defaultTheme'
 import { appPlugin } from './resources/js/tailwind'
+import { icons } from './resources/js/tailwind/icons'
 import { getColorCssVariables } from './resources/js/tailwind/utils'
 import formsPlugin from '@tailwindcss/forms'
 import typographyPlugin from '@tailwindcss/typography'
@@ -11,7 +12,6 @@ module.exports = {
 	darkMode: ['class'],
 	safelist: ['dark'],
 	prefix: '',
-
 	content: [
 		'./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
 		'./storage/framework/views/*.php',
@@ -114,5 +114,6 @@ module.exports = {
 		logicalPlugin,
 		dirPlugin,
 		appPlugin,
+		icons,
 	],
 }
