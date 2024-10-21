@@ -37,6 +37,7 @@
 		"@heroicons/vue": "^2.0.13",
 		"@inertiajs/vue3": "^1.2.0",
 		"@splidejs/vue-splide": "^0.6.12",
+		"@tanstack/vue-table": "^8.20.5",
 		"@vueuse/components": "^9.13.0",
 		"@vueuse/core": "^9.13.0",
 		"@vueuse/integrations": "^11.1.0",
