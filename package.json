@@ -47,9 +47,12 @@
 		"dayjs": "^1.11.7",
 		"element-plus": "^2.8.5",
 		"laravel-vue-i18n": "^2.3.0",
+		"lucide-vue-next": "^0.453.0",
 		"notiwind": "^1.2.6",
 		"pinia": "^2.0.32",
+		"radix-vue": "^1.9.7",
 		"tailwind-merge": "^2.5.4",
+		"tailwindcss-animate": "^1.0.7",
 		"unplugin-auto-import": "^0.12.1",
 		"unplugin-vue-components": "^0.22.12",
 		"vite-plugin-watch": "^0.3.1",
@@ -61,5 +64,6 @@
 		"vue3-apexcharts": "^1.4.1",
 		"vue3-emoji-picker": "^1.1.7",
 		"vue3-google-map": "^0.15.0"
-	}
+	},
+	"packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }
