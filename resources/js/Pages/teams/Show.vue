@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { trans } from 'laravel-vue-i18n'
+import { useBrowserLocation } from '@vueuse/core'
 
 type Model = Team
 const props = defineProps<{
@@ -8,15 +9,30 @@ const props = defineProps<{
 	matches: Matches
 }>()
 
+const location = useBrowserLocation()
+
 const showInvitationForm = ref<boolean>(false)
 const tabs = computed(() => [
 	{
 		label: trans('team-players'),
-		value: undefined,
+		href: route('teams.show', [props.team]),
+		component: defineAsyncComponent({
+			loader: () => import('@/Components/Teams/TeamPlayersTable.vue'),
+		}),
+		props: { players: props.players },
 	},
 	{
 		label: trans('matches'),
-		value: 'matches',
+		href: route('teams.show', [
+			props.team,
+			{
+				tab: 'matches',
+			},
+		]),
+		component: defineAsyncComponent({
+			loader: () => import('@/Components/Teams/TeamMatchesList.vue'),
+		}),
+		props: { matches: props.matches },
 	},
 ])
 </script>
@@ -38,20 +54,7 @@ const tabs = computed(() => [
 					</div>
 				</div>
 				<div class="flex flex-wrap items-center gap-3">
-					<template
-						v-for="tab in tabs"
-						:key="tab.value">
-						<Link
-							:class="[
-								'px-3 py-1 text-center bg-white rounded-full ',
-								route().current('teams.show', [team.id, { tab: tab.value }])
-									? 'text-primary'
-									: 'text-stone-400',
-							]"
-							:href="route('teams.show', [team.id, { tab: tab.value }])">
-							{{ tab.label }}
-						</Link>
-					</template>
+					<AppTabs :tabs />
 					<span class="ms-auto grow" />
 					<AppSearchInput />
 					<PrimaryButton
@@ -60,12 +63,12 @@ const tabs = computed(() => [
 						>{{ $t('invite-players') }}</PrimaryButton
 					>
 				</div>
-				<TeamPlayersTable
-					v-if="!route().params.tab"
-					:players="players" />
-				<TeamMatchesList
-					v-if="route().params.tab === 'matches'"
-					:matches="matches" />
+				<template v-for="tab in tabs">
+					<component
+						v-bind="tab.props"
+						v-if="tab.href === location.href"
+						:is="tab.component" />
+				</template>
 			</div>
 			<div class="space-y-6">
 				<MatchAdvertise />

@@ -39,6 +39,13 @@ export const buttonVariants = cva(
 					'[--solid-active-color:theme(colors.gray.600)]',
 					'[--soft-color:theme(colors.gray.400)]',
 				],
+				mute: [
+					'[--bg-color:theme(colors.white)]',
+					'[--text-color:theme(colors.muted.foreground)]',
+					'[--solid-hover-color:theme(colors.gray.200)]',
+					'[--solid-active-color:theme(colors.gray.600)]',
+					'[--soft-color:theme(colors.gray.400)]',
+				],
 			},
 			variant: {
 				solid:
