@@ -80,9 +80,10 @@ watch(
 						</div>
 					</template>
 				</ElScrollbar>
-				<div class="flex gap-4">
+				<div class="flex items-center gap-4">
 					<PrimaryButton>{{ $t('invite') }}</PrimaryButton>
 					<SecondaryButton
+						size="sm"
 						@click="closeForm"
 						type="button"
 						>{{ $t('Cancel') }}</SecondaryButton
