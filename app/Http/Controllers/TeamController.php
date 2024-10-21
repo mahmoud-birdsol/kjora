@@ -34,6 +34,10 @@ class TeamController extends Controller
         ];
         return Inertia::render('teams/Show', [
             'team' => $team,
+            // team Players
+            'players' => User::all(),
+            // team Matches
+            'matches' => [],
         ]);
     }
 
