@@ -112,7 +112,7 @@ const maxWidthClass = computed(() => {
 						class="">
 						<div
 							v-if="position == 'center'"
-							class="mb-6 overflow-hidden transition-all transform bg-white rounded-lg shadow-xl sm:w-full sm:mx-auto"
+							class="mb-6 overflow-hidden transition-all transform rounded-lg shadow-xl bg-card text-card-foreground sm:w-full sm:mx-auto"
 							:class="maxWidthClass">
 							<div
 								class="flex justify-end p-1"
