@@ -22,7 +22,7 @@ const props = defineProps<{
 			:enableLightBox="true" />
 		<Link
 			:href="route('teams.show', [team])"
-			class="text-sm font-semibold capitalize"
+			class="text-sm font-semibold text-black capitalize"
 			>{{ team.name }}</Link
 		>
 		<StarRating
