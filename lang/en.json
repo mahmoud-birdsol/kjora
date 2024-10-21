@@ -416,5 +416,8 @@
   "team-players": "Team Players",
   "matches": "Matches",
   "player-info": "Player Info",
-  "open-chat": "Open Chat"
+  "open-chat": "Open Chat",
+  "vs": "VS",
+  "point1-vs-point2": ":point1 VS :point2",
+  "distance-km": ":distance KM"
 }

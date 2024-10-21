@@ -43,7 +43,6 @@ const tabs = computed(() => [
 				<div class="flex items-center gap-3">
 					<Avatar
 						size="xlg"
-						:id="team.id"
 						:image-url="team.image" />
 					<div class="space-y-1 text-white">
 						<StarRating />

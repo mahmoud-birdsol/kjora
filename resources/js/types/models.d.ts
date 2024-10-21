@@ -167,6 +167,10 @@ declare global {
 
 	export interface Match {
 		users: Users
+		team_1: Team
+		team_2: Team
+		point_team_1: number
+		point_team_2: number
 		stadium: Stadium
 		created_at: Date
 		updated_at: Date

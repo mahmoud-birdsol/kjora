@@ -419,5 +419,8 @@
   "matches": "مباريات",
   "team-players": "لاعبي الفريق",
   "player-info": "معلومات اللاعب",
-  "open-chat": "افتح الدردشة"
+  "open-chat": "افتح الدردشة",
+  "vs": "مقابل",
+  "point1-vs-point2": ":point1 مقابل :point2",
+  "distance-km": ": distance كم"
 }
