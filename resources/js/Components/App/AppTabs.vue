@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { useBrowserLocation } from '@vueuse/core'
-type TTab = {
+import type { Component } from 'vue'
+export type TTab = {
 	label: string
 	href: string
-	component: Component
+	component?: Component
 }
 const location = useBrowserLocation()
 const props = defineProps<{
