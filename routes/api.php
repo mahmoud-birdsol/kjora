@@ -112,3 +112,4 @@ Route::get(
 
 Route::get('users', [UserController::class, 'index'])->name('api.users.index');
 Route::get('countries', [CountryController::class, 'index'])->name('api.countries.index');
+Route::get('countries/{country}', [CountryController::class, 'show'])->name('api.countries.show');

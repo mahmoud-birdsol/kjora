@@ -423,5 +423,7 @@
   "vs": "مقابل",
   "point1-vs-point2": ":point1 مقابل :point2",
   "distance-km": ": distance كم",
-  "apply-to-join": "تقدم بطلب الانضمام"
+  "apply-to-join": "تقدم بطلب الانضمام",
+  "team-description": "وصف الفريق",
+  "delete-team": "حذف الفريق"
 }

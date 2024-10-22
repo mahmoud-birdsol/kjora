@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { PencilIcon } from '@heroicons/vue/24/outline'
 import { type VisitOptions } from '@inertiajs/core'
+import axios from 'axios'
+import { Primitive } from 'radix-vue'
 type Model = Team
 const props = defineProps<{
 	team?: Model
-	countries: Countries
 }>()
 
 const isUpdate = computed(() => {
@@ -15,11 +16,12 @@ type TFormModel = Partial<Omit<Model, 'id'> & { country_id: number }>
 
 const form = useForm<Prettify<TFormModel>>(() => ({
 	name: props.team?.name ?? '',
+	description: props.team?.description ?? '',
 	code: props.team?.code ?? '',
 	type: props.team?.type ?? '',
-	country_id: props.team?.country.id,
-	number: props.team?.number,
-	image: props.team?.image ?? '',
+	country_id: props.team?.country.id ?? 121,
+	team_number: props.team?.team_number,
+	team_logo: props.team?.team_logo ?? '',
 }))
 
 const showForm = defineModel<boolean>('open', {
@@ -36,7 +38,6 @@ const closeForm = () => {
 const submitOption: Partial<VisitOptions> = {
 	preserveState: true,
 	onSuccess: (e) => {
-		console.log(e)
 		form.reset()
 		closeForm()
 		showInvitationForm.value = true
@@ -46,9 +47,10 @@ const store = () => {
 	form.post(route('teams.store'), submitOption)
 }
 const update = () => {
-	form.patch(route('teams.update'), submitOption)
+	form.patch(route('teams.update', [props.team]), submitOption)
 }
 const submit = () => {
+	console.log(form.data())
 	if (isUpdate.value) {
 		update()
 	} else {
@@ -57,13 +59,20 @@ const submit = () => {
 }
 const showUploadAvatarModal = ref<boolean>(false)
 const previewImage = ref<string>()
+const defaultCountry = ref()
+
+axios.get(route('api.countries.show', [121])).then((res) => {
+	defaultCountry.value = res.data.data
+})
 </script>
 <template>
-	<PrimaryButton
-		class="w-fit"
-		@click="openForm"
-		>{{ $t('build-team') }}</PrimaryButton
-	>
+	<Primitive
+		as-child
+		@click="openForm">
+		<slot name="trigger">
+			<PrimaryButton class="w-fit">{{ $t('build-team') }}</PrimaryButton>
+		</slot>
+	</Primitive>
 	<Modal
 		@close="closeForm"
 		:show="showForm">
@@ -78,17 +87,21 @@ const previewImage = ref<string>()
 					:image-url="previewImage"
 					:border="true"
 					size="xlg"
-					:id="team?.id"
 					:enableLightBox="false" />
 				<div class="absolute bottom-0 p-1 bg-black rounded-full end-0">
 					<PencilIcon class="w-3 text-white" />
 				</div>
 			</button>
-			<InputError :message="form.errors.image" />
+			<InputError :message="form.errors.team_logo" />
 			<FormField
 				:label="$t('team-name')"
 				:error="form.errors.name">
 				<TextInput v-model="form.name" />
+			</FormField>
+			<FormField
+				:label="$t('team-description')"
+				:error="form.errors.description">
+				<TextInput v-model="form.description" />
 			</FormField>
 			<FormField
 				:label="$t('team-code')"
@@ -104,14 +117,14 @@ const previewImage = ref<string>()
 					value-name="id"
 					text-name="name"
 					image-name="flag"
-					:append="team?.country"
+					:append="team?.country ?? defaultCountry"
 					v-model="form.country_id" />
 			</FormField>
 
 			<FormField
 				:label="$t('number')"
-				:error="form.errors.number">
-				<TextInput v-model="form.number" />
+				:error="form.errors.team_number">
+				<TextInput v-model="form.team_number" />
 			</FormField>
 			<PrimaryButton :disabled="form.processing">{{
 				$t('build')
@@ -120,7 +133,7 @@ const previewImage = ref<string>()
 		<UploadImageField
 			:should-upload="false"
 			:show="showUploadAvatarModal"
-			v-model="form.image"
+			v-model="form.team_logo"
 			:currentImageUrl="previewImage"
 			@close="showUploadAvatarModal = false"
 			@selected="(photo: string) => (previewImage = photo)" />

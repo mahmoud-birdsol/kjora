@@ -11,7 +11,7 @@ const props = defineProps<{
 		<div :class="'flex items-center justify-between'">
 			<Avatar
 				size="lg"
-				:image-url="team.image"
+				:image-url="team.team_logo"
 				:username="team.name" />
 			<div class="text-center">
 				<Link

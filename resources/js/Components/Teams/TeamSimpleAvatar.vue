@@ -8,11 +8,10 @@ const props = defineProps<{
 }>()
 </script>
 <template>
-	<div
-		:class="cn('flex items-center', teamAvatarVariants({ direction }))">
+	<div :class="cn('flex items-center', teamAvatarVariants({ direction }))">
 		<Avatar
 			size="lg"
-			:image-url="team.image"
+			:image-url="team.team_logo"
 			:username="team.name" />
 		<div>
 			<Link

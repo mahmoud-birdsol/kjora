@@ -42,7 +42,7 @@ defineExpose({ focus: () => (input.value ? input.value.focus() : null) })
 		</span>
 		<input
 			ref="input"
-			class="px-4 text-xs sm:text-sm grow focus-visible:outline-none readonly:cursor-not-allowed disabled:cursor-not-allowed"
+			class="px-4 text-xs sm:text-sm grow focus-visible:outline-none readonly:cursor-not-allowed disabled:cursor-not-allowed text-primary"
 			:type="type"
 			v-model="modelValue"
 			:disabled="disabled"

@@ -156,12 +156,13 @@ declare global {
 	export interface Team {
 		id: number
 		name: string
+		description: string
 		users: Users
-		image: string
+		team_logo: string
 		code: string
 		type: string
 		country: Country
-		number: number
+		team_number: number
 	}
 	export type Teams = Team[]
 

@@ -50,7 +50,7 @@ class CountryController extends Controller
      */
     public function show(country $country)
     {
-        //
+        return CountryResource::make($country);
     }
 
     /**

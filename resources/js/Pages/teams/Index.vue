@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import type { TTab } from '@/Components/App/AppTabs.vue'
+import { useBrowserLocation } from '@vueuse/core'
 
 const props = defineProps<{
-	teams: Teams
-	myTeams: Teams
-	countries: Countries
+	teams: PaginationData<Team>
+	myTeams: PaginationData<Teams>
+	topRatingPlayer: Resource<Users>
 }>()
+console.log(props.topRatingPlayer)
+const location = useBrowserLocation()
 // [TODO] remove
 const user: User = {
 	id: 123,
@@ -131,7 +134,7 @@ const tabs = computed<TTab[]>(() => [
 				<p class="text-4xl font-black text-white md:text-7xl">
 					{{ $t('teams') }}
 				</p>
-				<div class="flex items-center justify-between gap-2">
+				<div class="flex items-center justify-between gap-2 flex-wrap">
 					<AppTabs :tabs />
 					<AppSearchInput />
 					<TeamForm />
@@ -146,7 +149,7 @@ const tabs = computed<TTab[]>(() => [
 			<div class="space-y-6">
 				<MatchAdvertise />
 				<MatchesLatestList :matches="[]" />
-				<PlayerTopRatingList :players="[user]" />
+				<PlayerTopRatingList :players="topRatingPlayer.data" />
 			</div>
 		</div>
 	</AppLayout>

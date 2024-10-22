@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TeamRequest;
+use App\Http\Resources\SimpleUserResource;
 use App\Models\Country;
 use App\Models\Stadium;
+use App\Models\Team;
 use App\Models\User;
 use App\Services\FlashMessage;
 use Illuminate\Http\Request;
@@ -14,11 +16,18 @@ class TeamController extends Controller
 {
     public function index(Request $request): \Inertia\Response
     {
-        $teams = $request->user()->teams()->with('players');
-
+        $myTeams = $request->user()->teams()->with(['players', 'country']);
+        $team = Team::query();
+        $teams = $team->where('owner_id', '!=', $request->user()->id)->with(['players']);
+        $request->whenFilled('search', function () use ($teams, $myTeams, $request) {
+            $teams->where('name', 'LIKE', '%' . $request->input('search') . '%');
+            $myTeams->where('name', 'LIKE', '%' . $request->input('search') . '%');
+        });
+        $topRatingPlayers = User::query()->orderBy('rating', 'desc')->limit(5);
         return Inertia::render('teams/Index', [
+            'myTeams' => $myTeams->paginate(),
             'teams' => $teams->paginate(),
-            'countries' => Country::all()
+            'topRatingPlayer' => SimpleUserResource::collection($topRatingPlayers->get())
         ]);
     }
     public function show($team)
@@ -66,10 +75,28 @@ class TeamController extends Controller
 
         return redirect()->back();
     }
-
-
-    public function destroy($team)
+    public function update(TeamRequest $request, Team $team)
     {
+        $data = $request->validated();
+
+
+
+        if ($request->hasFile('team_logo')) {
+            $team->addMediaFromRequest('team_logo')->toMediaCollection('team_logo');
+        }
+        $team = $team->update($data);
+
+        FlashMessage::make()->success(
+            message: 'Team Updated Successfully',
+        )->closeable()->send();
+
+        return redirect()->back();
+    }
+
+    public function destroy(Team $team)
+    {
+        $team->delete();
+
         return redirect()->back();
     }
 }
