@@ -6,7 +6,7 @@ import type { Component, HTMLAttributes } from 'vue'
 export { default as Button } from './Button.vue'
 
 export const buttonVariants = cva(
-	'relative inline-flex items-center justify-center gap-2 font-medium transition-all duration-500 first-letter:capitalize focus-visible:outline-none focus-visible:ring focus-visible:ring-[--soft-color] text-sm group/btn border',
+	'relative whitespace-nowrap inline-flex items-center justify-center gap-2 font-medium transition-all duration-500 first-letter:capitalize focus-visible:outline-none focus-visible:ring focus-visible:ring-[--soft-color] text-sm group/btn border',
 	{
 		variants: {
 			size: {
