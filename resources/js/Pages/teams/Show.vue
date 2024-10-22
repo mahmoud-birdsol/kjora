@@ -70,9 +70,7 @@ const tabs = computed(() => [
 				</template>
 			</div>
 			<div class="space-y-6">
-				<MatchAdvertise />
-				<MatchesLatestList :matches="[]" />
-				<PlayerTopRatingList :players="[]" />
+				<TeamOrganization />
 			</div>
 		</div>
 	</AppLayout>
