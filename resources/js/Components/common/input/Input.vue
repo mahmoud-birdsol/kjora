@@ -46,8 +46,8 @@ defineExpose({ focus: () => (input.value ? input.value.focus() : null) })
 			:type="type"
 			v-model="modelValue"
 			:disabled="disabled"
-			:autocomplete
-			:placeholder />
+			:autocomplete="autocomplete"
+			:placeholder="placeholder" />
 
 		<span
 			v-if="$slots.trailing"
