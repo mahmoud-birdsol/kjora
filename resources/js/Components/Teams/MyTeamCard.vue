@@ -15,7 +15,6 @@ const props = defineProps<{
 			<StarIcon class="w-5 h-5" />
 		</button>
 		<Avatar
-			:id="team.id"
 			:image-url="team.image"
 			:size="'xlg'"
 			:username="team.name"

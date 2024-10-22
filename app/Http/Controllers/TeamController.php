@@ -17,11 +17,13 @@ class TeamController extends Controller
             'name' => 'test',
             'image' => 'https://th.bing.com/th/id/OIP.rNCzUC11htsS4jErkJcZfgHaHa?rs=1&pid=ImgDetMain',
             'code' => '155',
+            'country' => Country::first(),
             'users' => User::all(),
         ]];
         return Inertia::render('teams/Index', [
             'teams' => $teams,
-            'countries' => Country::paginate(),
+            'myTeams' => fn() => $teams,
+            'countries' => fn() => Country::paginate(),
         ]);
     }
     public function show($team)

@@ -419,5 +419,6 @@
   "open-chat": "Open Chat",
   "vs": "VS",
   "point1-vs-point2": ":point1 VS :point2",
-  "distance-km": ":distance KM"
+  "distance-km": ":distance KM",
+  "apply-to-join": "Apply To Join"
 }

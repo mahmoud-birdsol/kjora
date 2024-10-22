@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import type { TTab } from '@/Components/App/AppTabs.vue'
+
 const props = defineProps<{
 	teams: Teams
+	myTeams: Teams
 	countries: Countries
 }>()
 // [TODO] remove
@@ -91,6 +94,19 @@ const user: User = {
 	two_factor_enabled: true,
 }
 const { query } = useSearch()
+
+const tabs: TTab[] = [
+	{
+		label: 'Looking For Team',
+		href: route('teams.index'),
+	},
+	{
+		label: 'My Teams',
+		href: route('teams.index', {
+			tab: 'my_team',
+		}),
+	},
+]
 </script>
 <template>
 	<Head :title="$t('teams')" />
@@ -102,6 +118,7 @@ const { query } = useSearch()
 					{{ $t('teams') }}
 				</p>
 				<div class="flex items-center justify-between gap-2">
+					<AppTabs :tabs />
 					<TextInput
 						v-model="query"
 						type="search" />
@@ -109,10 +126,19 @@ const { query } = useSearch()
 					<TeamForm :countries="countries" />
 				</div>
 				<section class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-					<template
-						v-for="team in teams"
-						:key="team.id">
-						<TeamCard :team="team" />
+					<template v-if="!route().params.tab">
+						<template
+							v-for="team in teams"
+							:key="team.id">
+							<TeamCard :team="team" />
+						</template>
+					</template>
+					<template v-else-if="route().params.tab == 'my_team'">
+						<template
+							v-for="team in myTeams"
+							:key="team.id">
+							<MyTeamCard :team="team" />
+						</template>
 					</template>
 				</section>
 			</div>
