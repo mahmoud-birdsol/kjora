@@ -30,15 +30,8 @@ class TeamController extends Controller
             'topRatingPlayer' => SimpleUserResource::collection($topRatingPlayers->get())
         ]);
     }
-    public function show($team)
+    public function show(Team $team)
     {
-        $team = [
-            'id' => 1,
-            'name' => 'test',
-            'image' => 'https://th.bing.com/th/id/OIP.rNCzUC11htsS4jErkJcZfgHaHa?rs=1&pid=ImgDetMain',
-            'code' => '155',
-            'users' => User::all(),
-        ];
         $matches = [
             '0' => [
                 'team_1' => $team,
@@ -75,23 +68,23 @@ class TeamController extends Controller
 
         return redirect()->back();
     }
+
     public function update(TeamRequest $request, Team $team)
     {
         $data = $request->validated();
-
-
+        $team->update($data);
 
         if ($request->hasFile('team_logo')) {
             $team->addMediaFromRequest('team_logo')->toMediaCollection('team_logo');
         }
-        $team = $team->update($data);
 
         FlashMessage::make()->success(
-            message: 'Team Updated Successfully',
+            message: 'Team updated Successfully',
         )->closeable()->send();
 
         return redirect()->back();
     }
+
 
     public function destroy(Team $team)
     {
