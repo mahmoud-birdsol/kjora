@@ -1,4 +1,5 @@
 import './bootstrap'
+import '../css/element-plus.css'
 import '../css/app.css'
 import '@splidejs/splide/css'
 import '@splidejs/vue-splide/css/core'

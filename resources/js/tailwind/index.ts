@@ -19,7 +19,7 @@ export const appPlugin = plugin(function ({
 			'@apply space-y-6': {},
 		},
 		'.card': {
-			'@apply p-4 bg-white rounded-2xl shadow': {},
+			'@apply p-4 bg-white rounded-2xl shadow text-card-foreground': {},
 		},
 		'.card-title': {
 			'@apply text-xl font-semibold': {},

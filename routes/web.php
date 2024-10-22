@@ -30,7 +30,9 @@ use App\Http\Controllers\UpgradeMembershipController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\VerificationCodeController;
 use App\Http\Controllers\CancelInvitationController;
+use App\Http\Controllers\MatchController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\TeamInvitationController;
 use App\Models\Country;
 use App\Models\Invitation;
 use App\Models\MediaLibrary;
@@ -291,6 +293,8 @@ Route::middleware([
             return redirect()->back();
         })->name('upload');
         Route::resource('teams', TeamController::class);
+        Route::post('teams/invite', [TeamInvitationController::class, 'store'])->name('teams.invite');
+        Route::resource('match', MatchController::class);
     });
 
     /*

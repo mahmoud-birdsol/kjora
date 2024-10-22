@@ -34,7 +34,7 @@
   "Time": "الوقت",
   "Date": "التاريخ",
   "Save": "حفظ",
-  "Cancel": "انهاء",
+  "Cancel": "يلغي",
   "Are you sure you want delete this post ? ": "هل أنت متأكد أنك تريد حذف هذا المنشور؟",
   "Are you sure you want delete this message ? ": "هل أنت متأكد أنك تريد حذف هذه الرسالة؟",
   "Are you sure you want delete this comment ? ": "هل أنت متأكد أنك تريد حذف هذه التعليق؟",
@@ -413,5 +413,15 @@
   "country": "دولة",
   "number": "رقم",
   "build": "يبني",
-  "build-team": "بناء الفريق"
+  "build-team": "بناء الفريق",
+  "invite-players": "دعوة اللاعبين",
+  "invite": "يدعو",
+  "matches": "مباريات",
+  "team-players": "لاعبي الفريق",
+  "player-info": "معلومات اللاعب",
+  "open-chat": "افتح الدردشة",
+  "vs": "مقابل",
+  "point1-vs-point2": ":point1 مقابل :point2",
+  "distance-km": ": distance كم",
+  "apply-to-join": "تقدم بطلب الانضمام"
 }

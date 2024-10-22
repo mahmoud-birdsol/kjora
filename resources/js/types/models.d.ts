@@ -72,6 +72,8 @@ declare global {
 		distance?: number
 		two_factor_enabled?: boolean
 	}
+
+	export type Users = User[]
 	export interface Conversation {
 		id: number
 		created_at: Date
@@ -136,6 +138,21 @@ declare global {
 	}
 	export type Countries = Country[]
 
+	export interface Stadium {
+		id: number
+		name: string
+		google_place_id: string
+		country: string
+		city: string
+		street_address: string
+		longitude: string
+		latitude: string
+		approved_at: Date
+		created_at: Date
+		updated_at: Date
+		user_id: null
+	}
+	export type Stadiums = Stadium[]
 	export interface Team {
 		id: number
 		name: string
@@ -150,6 +167,10 @@ declare global {
 
 	export interface Match {
 		users: Users
+		team_1: Team
+		team_2: Team
+		point_team_1: number
+		point_team_2: number
 		stadium: Stadium
 		created_at: Date
 		updated_at: Date

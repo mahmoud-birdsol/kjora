@@ -410,5 +410,15 @@
   "type": "TYPE",
   "country": "country",
   "number": "NUMBER",
-  "build": "Build"
+  "build": "Build",
+  "invite-players": "Invite players",
+  "invite": "Invite",
+  "team-players": "Team Players",
+  "matches": "Matches",
+  "player-info": "Player Info",
+  "open-chat": "Open Chat",
+  "vs": "VS",
+  "point1-vs-point2": ":point1 VS :point2",
+  "distance-km": ":distance KM",
+  "apply-to-join": "Apply To Join"
 }

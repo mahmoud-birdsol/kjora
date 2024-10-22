@@ -43,7 +43,7 @@ const updateRating = (i: number) => {
 		</template>
 		<span
 			v-if="showRatingValue"
-			class="text-xs font-medium text-star-foreground ms-2 shrink-0"
+			class="text-xs font-medium text-gold ms-2 shrink-0"
 			>( {{ rating }} )</span
 		>
 	</div>

@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\UserLocationController;
 use App\Http\Resources\CommentResource;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\CountryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -109,3 +110,5 @@ Route::get(
     ]
 )->name('api.user.get.users.name');
 
+Route::get('users', [UserController::class, 'index'])->name('api.users.index');
+Route::get('countries', [CountryController::class, 'index'])->name('api.countries.index');
