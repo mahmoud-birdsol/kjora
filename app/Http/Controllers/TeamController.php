@@ -2,24 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TeamRequest;
 use App\Models\Country;
 use App\Models\User;
+use App\Services\FlashMessage;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class TeamController extends Controller
 {
-    public function index()
+    public function index(Request $request): \Inertia\Response
     {
-        $teams = [0 => [
-            'id' => 1,
-            'name' => 'test',
-            'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            'users' => User::all(),
-            'image' => 'https://th.bing.com/th/id/OIP.rNCzUC11htsS4jErkJcZfgHaHa?rs=1&pid=ImgDetMain'
-        ]];
+        $teams = $request->user()->teams()->with('players');
+
         return Inertia::render('teams/Index', [
-            'teams' => $teams,
+            'teams' => $teams->paginate(),
             'countries' => Country::all()
         ]);
     }
@@ -28,19 +25,23 @@ class TeamController extends Controller
         return redirect()->back();
     }
 
-    public function store(Request $request)
+    public function store(TeamRequest $request)
     {
-        // $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'description' => 'required|string|max:255',
-        //     'country_id' => 'required|numeric',
-        // ]);
+        $data = $request->validated();
+        $data['owner_id'] = $request->user()->id;
 
-        // $team = Team::create([
-        //     'name' => $request->name,
-        //     'description' => $request->description,
-        //     'country_id' => $request->country_id,
-        // ]);
+        $team = $request->user()->teams()->create($data);
+
+
+        if ($request->hasFile('team_logo')) {
+            $team->addMediaFromRequest('team_logo')->toMediaCollection('team_logo');
+        }
+
+        FlashMessage::make()->success(
+            message: 'Team Created Successfully',
+        )->closeable()->send();
+
+
         return redirect()->back();
     }
     public function show($team)

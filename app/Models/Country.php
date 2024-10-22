@@ -106,4 +106,9 @@ class Country extends Model implements Suspendable, HasMedia
     {
         return $this->hasMany(User::class);
     }
+
+    public function teams(): HasMany
+    {
+        return $this->hasMany(Team::class);
+    }
 }
