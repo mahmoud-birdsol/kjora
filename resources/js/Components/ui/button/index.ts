@@ -53,7 +53,7 @@ export const buttonVariants = cva(
 				outline:
 					'border-[--bg-color] text-[--bg-color] hover:bg-[--soft-color] hover:border-[--soft-color] active:bg-[--solid-active-color] active:border-[--solid-active-color]',
 				ghost:
-					'border-transparent text-[--bg-color] hover:bg-[--solid-hover-color] active:bg-[--solid-active-color] active:border-[--solid-active-color]',
+					'border-transparent text-[--bg-color] hover:bg-[--soft-color] active:bg-[--solid-active-color] active:border-[--solid-active-color]',
 				soft: 'border-[--soft-color] bg-[--soft-color] text-[--bg-color] active:bg-[--solid-active-color] active:border-[--solid-active-color]',
 				link: 'border-transparent text-[--bg-color] hover:underline active:text-[--solid-active-color]',
 			},
