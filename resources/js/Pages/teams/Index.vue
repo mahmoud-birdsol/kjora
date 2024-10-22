@@ -93,20 +93,34 @@ const user: User = {
 	distance: 100,
 	two_factor_enabled: true,
 }
-const { query } = useSearch()
 
-const tabs: TTab[] = [
+const tabs = computed<TTab[]>(() => [
 	{
 		label: 'Looking For Team',
 		href: route('teams.index'),
+		active: !route().params.tab,
+		component: defineAsyncComponent({
+			loader: () => import('@/Components/Teams/TeamsList.vue'),
+		}),
+
+		props: {
+			teams: props.teams.data,
+		},
 	},
 	{
 		label: 'My Teams',
 		href: route('teams.index', {
 			tab: 'my_team',
 		}),
+		active: route().params.tab == 'my_team',
+		component: defineAsyncComponent({
+			loader: () => import('@/Components/Teams/MyTeamsList.vue'),
+		}),
+		props: {
+			teams: props.myTeams.data,
+		},
 	},
-]
+])
 </script>
 <template>
 	<Head :title="$t('teams')" />
@@ -119,28 +133,15 @@ const tabs: TTab[] = [
 				</p>
 				<div class="flex items-center justify-between gap-2">
 					<AppTabs :tabs />
-					<TextInput
-						v-model="query"
-						type="search" />
-
-					<TeamForm :countries="countries" />
+					<AppSearchInput />
+					<TeamForm />
 				</div>
-				<section class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-					<template v-if="!route().params.tab">
-						<template
-							v-for="team in teams"
-							:key="team.id">
-							<TeamCard :team="team" />
-						</template>
-					</template>
-					<template v-else-if="route().params.tab == 'my_team'">
-						<template
-							v-for="team in myTeams"
-							:key="team.id">
-							<MyTeamCard :team="team" />
-						</template>
-					</template>
-				</section>
+				<template v-for="tab in tabs">
+					<component
+						v-bind="tab.props"
+						v-if="tab.href === location.href"
+						:is="tab.component" />
+				</template>
 			</div>
 			<div class="space-y-6">
 				<MatchAdvertise />

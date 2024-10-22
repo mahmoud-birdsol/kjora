@@ -20,6 +20,7 @@ const tabs = computed(() => [
 			loader: () => import('@/Components/Teams/TeamPlayersTable.vue'),
 		}),
 		props: { players: props.players },
+		active: !route().params.tab,
 	},
 	{
 		label: trans('matches'),
@@ -33,6 +34,7 @@ const tabs = computed(() => [
 			loader: () => import('@/Components/Teams/TeamMatchesList.vue'),
 		}),
 		props: { matches: props.matches },
+		active: route().params.tab === 'matches',
 	},
 ])
 </script>
@@ -43,7 +45,7 @@ const tabs = computed(() => [
 				<div class="flex items-center gap-3">
 					<Avatar
 						size="xlg"
-						:image-url="team.image" />
+						:image-url="team.team_logo" />
 					<div class="space-y-1 text-white">
 						<StarRating />
 						<h2 class="text-3xl font-bold capitalize">{{ team.name }}</h2>

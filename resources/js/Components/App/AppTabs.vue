@@ -4,7 +4,9 @@ import type { Component } from 'vue'
 export type TTab = {
 	label: string
 	href: string
-	component?: Component
+    active:boolean,
+	component: Component
+	props: object
 }
 const location = useBrowserLocation()
 const props = defineProps<{
@@ -18,7 +20,7 @@ const props = defineProps<{
 			:key="tab.value">
 			<Button
 				color="mute"
-				:class="tab.href == location.href ? 'bg-primary-100 text-primary' : ''"
+				:class="tab.active ? 'bg-primary-100 text-primary' : ''"
 				:href="tab.href">
 				{{ tab.label }}
 			</Button>
