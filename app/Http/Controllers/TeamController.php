@@ -30,7 +30,7 @@ class TeamController extends Controller
             'topRatingPlayer' => SimpleUserResource::collection($topRatingPlayers->get())
         ]);
     }
-    public function show(Team $team)
+    public function show(Team $team, Request $request)
     {
         $matches = [
             '0' => [
@@ -41,10 +41,20 @@ class TeamController extends Controller
                 'stadium' => Stadium::first(),
             ]
         ];
+        $players = $team->players();
+        $request->whenFilled(
+            'search',
+            function () use ($players, $request) {
+                $players->where('first_name', 'LIKE', '%' . $request->input('search') . '%');
+                $players->where('last_name', 'LIKE', '%' . $request->input('search') . '%');
+                $players->where('email', 'LIKE', '%' . $request->input('search') . '%');
+            }
+        );
+
         return Inertia::render('teams/Show', [
             'team' => $team,
             // team Players
-            'players' => User::all(),
+            'players' => $players->get(),
             // team Matches
             'matches' => fn() => $matches,
         ]);

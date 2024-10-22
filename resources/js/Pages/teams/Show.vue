@@ -50,7 +50,7 @@ const tabs = computed(() => [
 						<StarRating />
 						<h2 class="text-3xl font-bold capitalize">{{ team.name }}</h2>
 						<span class="text-lg font-medium">{{
-							$tChoice('count-player-or-count-players', team.users.length)
+							$tChoice('count-player-or-count-players', players.length)
 						}}</span>
 					</div>
 				</div>
