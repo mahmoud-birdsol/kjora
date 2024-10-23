@@ -221,7 +221,7 @@ const markerOptions = { position: position }
 							anchorPoint: 'TOP_RIGHT',
 						}">
 						<div class="text-center rounded-md bg-white/90">
-							<div class="p-2 text-xs font-bold">
+							<div class="p-2 text-xs font-bold text-black">
 								{{ invitation.stadium.name }}
 							</div>
 						</div>
@@ -276,7 +276,7 @@ const markerOptions = { position: position }
 						})
 					"
 					v-if="isAccepted && !isShouldRate"
-					class="flex items-center justify-center w-full px-4 py-2 rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
+					class="flex items-center justify-center w-full px-4 py-2 text-black rounded-full shadow-sm bg-stone-100 enabled:hover:bg-opacity-90 enabled:active:scale-95">
 					{{ $t('chat') }}
 				</Link>
 				<!-- Rate -->
