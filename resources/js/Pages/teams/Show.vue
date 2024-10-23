@@ -58,11 +58,9 @@ const tabs = computed(() => [
 					<AppTabs :tabs />
 					<span class="ms-auto grow" />
 					<AppSearchInput />
-					<PrimaryButton
-						class="w-fit"
-						@click="showInvitationForm = true"
-						>{{ $t('invite-players') }}</PrimaryButton
-					>
+					<Button @click="showInvitationForm = true">{{
+						$t('invite-players')
+					}}</Button>
 				</div>
 				<template v-for="tab in tabs">
 					<component
@@ -72,7 +70,7 @@ const tabs = computed(() => [
 				</template>
 			</div>
 			<div class="space-y-6">
-				<TeamOrganization />
+				<TeamOrganization :players="players" />
 			</div>
 		</div>
 	</AppLayout>
