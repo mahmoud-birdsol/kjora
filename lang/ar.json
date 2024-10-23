@@ -425,5 +425,7 @@
   "distance-km": ": distance كم",
   "apply-to-join": "تقدم بطلب الانضمام",
   "team-description": "وصف الفريق",
-  "delete-team": "حذف الفريق"
+  "delete-team": "حذف الفريق",
+  "welcome-to-football-teams": "مرحبا بكم في فرق كرة القدم",
+  "bring-your-friends": "أحضر أصدقائك"
 }

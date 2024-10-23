@@ -44,10 +44,18 @@ const tabs = computed<TTab[]>(() => [
 	<AppLayout :title="$t('teams')">
 		<div class="grid lg:grid-cols-[1fr_minmax(15rem,20rem)] gap-6 items-start">
 			<div class="space-y-6">
-				<p class="text-4xl font-black text-white md:text-7xl">
-					{{ $t('teams') }}
-				</p>
-				<div class="flex items-center justify-between gap-2 flex-wrap">
+				<div class="relative">
+					<div
+						class="w-full p-6 bg-center bg-cover rounded-xl min-h-60 bg-primary rtl:-scale-x-100"
+						style="background-image: url(/images/teams-banner.webp)"></div>
+					<div class="absolute max-w-xs -translate-y-1/2 start-1/2 top-1/2">
+						<p class="font-medium">{{ $t('welcome-to-football-teams') }}</p>
+						<h2 class="text-4xl font-semibold">
+							{{ $t('bring-your-friends') }}
+						</h2>
+					</div>
+				</div>
+				<div class="flex flex-wrap items-center justify-between gap-2">
 					<AppTabs :tabs />
 					<AppSearchInput />
 					<TeamForm />
