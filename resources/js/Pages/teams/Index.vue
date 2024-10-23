@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { TTab } from '@/Components/App/AppTabs.vue'
 import { useBrowserLocation } from '@vueuse/core'
+import { trans } from 'laravel-vue-i18n'
 
 const props = defineProps<{
 	teams: PaginationData<Team>
@@ -12,7 +13,7 @@ const location = useBrowserLocation()
 
 const tabs = computed<TTab[]>(() => [
 	{
-		label: 'Looking For Team',
+		label: trans('looking-for-team'),
 		href: route('teams.index'),
 		active: !route().params.tab,
 		component: defineAsyncComponent({
@@ -24,7 +25,7 @@ const tabs = computed<TTab[]>(() => [
 		},
 	},
 	{
-		label: 'My Teams',
+		label: trans('my-teams'),
 		href: route('teams.index', {
 			tab: 'my_team',
 		}),

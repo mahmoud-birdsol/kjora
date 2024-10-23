@@ -72,7 +72,7 @@ axios.get(route('api.countries.show', [121])).then((res) => {
 		as-child
 		@click="openForm">
 		<slot name="trigger">
-			<PrimaryButton class="w-fit">{{ $t('build-team') }}</PrimaryButton>
+			<Button :label="$t('build-team')" />
 		</slot>
 	</Primitive>
 	<Modal
