@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TeamInvitationRequest;
 use App\Models\Team;
 use App\Models\TeamInvitation;
+use App\Models\User;
 use App\Services\FlashMessage;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -18,10 +19,12 @@ class TeamInvitationController extends Controller
      */
     public function index(Team $team): Response
     {
+        $users = User::whereNotIn('id', $team->players->pluck('id'));
         $teamInvitations = $team->teamInvitations()->with('invitedPlayer');
         return Inertia::render('TeamInvitations/Index', [
             'team' => $team,
-            'teamInvitations' => $teamInvitations->paginate()
+            'teamInvitations' => $teamInvitations->paginate(),
+            'users' => $users->paginate(10, '*', 'users_page')
         ]);
     }
 
