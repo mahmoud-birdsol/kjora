@@ -56,8 +56,7 @@ watch(
 <template>
 	<Modal
 		:show="showForm"
-		@close="closeForm"
-		:title="$t('invite-players')">
+		@close="closeForm">
 		<div class="p-6 space-y-6">
 			<TextInput
 				v-model="query"

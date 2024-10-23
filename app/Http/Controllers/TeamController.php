@@ -25,8 +25,8 @@ class TeamController extends Controller
         });
         $topRatingPlayers = User::query()->orderBy('rating', 'desc')->limit(5);
         return Inertia::render('teams/Index', [
-            'myTeams' => $myTeams->paginate(),
-            'teams' => $teams->paginate(),
+            'myTeams' => $myTeams->paginate(12)->withQueryString(),
+            'teams' => $teams->paginate(12)->withQueryString(),
             'topRatingPlayer' => SimpleUserResource::collection($topRatingPlayers->get())
         ]);
     }
