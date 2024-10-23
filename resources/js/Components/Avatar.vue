@@ -65,9 +65,7 @@ function hideLightBox() {
 </script>
 
 <template>
-	<template
-		v-if="isPlayerProfile"
-		class="text-red-600 bg-white">
+	<template v-if="isPlayerProfile">
 		<span
 			@click="showLightBox"
 			v-if="imageUrl"

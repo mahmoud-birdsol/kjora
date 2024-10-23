@@ -28,7 +28,7 @@ declare global {
 		next: null
 	}
 	export interface PaginationData<T> {
-		meta: PaginateMeta
+		meta: PaginationMeta
 		links: PaginationLinks
 		data: T[]
 	}

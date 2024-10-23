@@ -17,7 +17,7 @@ const deleteTeam = () => {
 }
 </script>
 <template>
-	<section class="flex flex-col items-center gap-1 card">
+	<section class="flex flex-col items-center gap-1 card min-w-60">
 		<button class="self-end bg-black text-white p-0.5 rounded-full">
 			<StarIcon class="w-5 h-5" />
 		</button>

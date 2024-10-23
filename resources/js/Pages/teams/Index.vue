@@ -16,10 +16,6 @@ const tabs = computed<TTab[]>(() => [
 		label: trans('looking-for-team'),
 		href: route('teams.index'),
 		active: !route().params.tab,
-		component: defineAsyncComponent({
-			loader: () => import('@/Components/Teams/TeamsList.vue'),
-		}),
-
 		props: {
 			teams: props.teams,
 		},
@@ -30,9 +26,6 @@ const tabs = computed<TTab[]>(() => [
 			tab: 'my_team',
 		}),
 		active: route().params.tab == 'my_team',
-		component: defineAsyncComponent({
-			loader: () => import('@/Components/Teams/MyTeamsList.vue'),
-		}),
 		props: {
 			teams: props.myTeams,
 		},
@@ -44,12 +37,12 @@ const tabs = computed<TTab[]>(() => [
 
 	<AppLayout :title="$t('teams')">
 		<div class="grid lg:grid-cols-[1fr_minmax(15rem,20rem)] gap-6 items-start">
-			<div class="space-y-6">
-				<div class="relative">
+			<div class="min-w-0 space-y-6">
+				<div class="relative flex items-end justify-end">
 					<div
-						class="w-full p-6 bg-center bg-cover rounded-xl min-h-60 bg-primary rtl:-scale-x-100"
+						class="w-full bg-center bg-cover rounded-xl min-h-60 bg-primary rtl:-scale-x-100"
 						style="background-image: url(/images/teams-banner.webp)"></div>
-					<div class="absolute max-w-xs -translate-y-1/2 start-1/2 top-1/2">
+					<div class="absolute w-full max-w-xs p-6 -translate-y-1/2 top-1/2">
 						<p class="font-medium">{{ $t('welcome-to-football-teams') }}</p>
 						<h2 class="text-4xl font-semibold">
 							{{ $t('bring-your-friends') }}
@@ -61,12 +54,12 @@ const tabs = computed<TTab[]>(() => [
 					<AppSearchInput />
 					<TeamForm />
 				</div>
-				<template v-for="tab in tabs">
-					<component
-						v-bind="tab.props"
-						v-if="tab.active"
-						:is="tab.component" />
-				</template>
+				<MyTeamsList
+					v-if="route().params.tab === 'my_team'"
+					:teams="myTeams" />
+				<TeamsList
+					v-else-if="!route().params.tab"
+					:teams="teams" />
 			</div>
 			<div class="space-y-6">
 				<MatchAdvertise />

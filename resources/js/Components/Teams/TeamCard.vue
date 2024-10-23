@@ -8,11 +8,13 @@ const props = defineProps<{
 	<div
 		class="flex flex-col justify-between p-4 bg-center bg-no-repeat bg-cover rounded-xl min-h-48"
 		:style="{ backgroundImage: 'url(/images/team-image.webp)' }">
-		<div :class="'flex items-center justify-between'">
-			<Avatar
-				size="lg"
-				:image-url="team.team_logo_url"
-				:username="team.name" />
+		<div :class="'flex items-center justify-between gap-4'">
+			<div class="grow">
+				<Avatar
+					size="lg"
+					:image-url="team.team_logo_url"
+					:username="team.name" />
+			</div>
 			<div class="text-center">
 				<Link
 					class="text-sm font-semibold uppercase"
@@ -26,7 +28,7 @@ const props = defineProps<{
 					:modelValue="4" />
 			</div>
 		</div>
-		<div class="flex justify-between">
+		<div class="flex justify-between gap-4">
 			<div class="overflow-hidden rounded-full size-6">
 				<img
 					:src="team.country.flag"
@@ -35,7 +37,7 @@ const props = defineProps<{
 				<!-- [TODO] add distance between team current user -->
 			</div>
 			<Button
-				icon="i-heroicons-chevron-double-right"
+				icon="ltr:i-heroicons-chevron-double-right rtl:i-heroicons-chevron-double-left"
 				trailing
 				variant="link"
 				color="white"

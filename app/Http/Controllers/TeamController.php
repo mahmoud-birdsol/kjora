@@ -18,15 +18,15 @@ class TeamController extends Controller
     {
         $myTeams = $request->user()->teams()->with(['players', 'country']);
         $team = Team::query();
-        $teams = $team->where('owner_id', '!=', $request->user()->id)->with(['players']);
+        $teams = $team->where('owner_id', '!=', $request->user()->id)->with(['players', 'country']);
         $request->whenFilled('search', function () use ($teams, $myTeams, $request) {
             $teams->where('name', 'LIKE', '%' . $request->input('search') . '%');
             $myTeams->where('name', 'LIKE', '%' . $request->input('search') . '%');
         });
         $topRatingPlayers = User::query()->orderBy('rating', 'desc')->limit(5);
         return Inertia::render('teams/Index', [
-            'myTeams' => $myTeams->paginate(12)->withQueryString(),
-            'teams' => $teams->paginate(12)->withQueryString(),
+            'myTeams' => $myTeams->paginate(5)->withQueryString(),
+            'teams' => $teams->paginate(5)->withQueryString(),
             'topRatingPlayer' => SimpleUserResource::collection($topRatingPlayers->get())
         ]);
     }

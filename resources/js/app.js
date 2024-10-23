@@ -19,6 +19,8 @@ import EmojiPicker from 'vue3-emoji-picker'
 import { OnClickOutside } from '@vueuse/components'
 // import "vue3-emoji-picker/css";
 import '../../node_modules/vue3-emoji-picker/dist/style.css'
+import paginationScroll from '@/Plugins/vue/directive/paginationScroll'
+
 library.add()
 const appName =
 	window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel'
@@ -51,6 +53,7 @@ createInertiaApp({
 			.component('EmojiPicker', EmojiPicker)
 			.component('OnClickOutside', OnClickOutside)
 			.component('font-awesome-icon', FontAwesomeIcon)
+			.directive('paginationScroll', paginationScroll)
 			.mount(el)
 	},
 	progress: { color: 'rgb(0, 100, 0)', showSpinner: true },
