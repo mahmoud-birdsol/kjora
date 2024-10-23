@@ -11,4 +11,5 @@ export interface InputProps {
 	readonly?: InputHTMLAttributes['readonly']
 	autocomplete?: InputHTMLAttributes['autocomplete']
 	placeholder?: InputHTMLAttributes['placeholder']
+	type?: InputHTMLAttributes['type']
 }

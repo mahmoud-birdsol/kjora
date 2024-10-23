@@ -11,7 +11,7 @@ const props = withDefaults(
 		border?: boolean
 		borderColor?: 'white' | 'primary' | 'black' | 'blackDark' | 'golden'
 		enableLightBox?: boolean
-		id: number
+		id?: number
 	}>(),
 	{
 		size: 'sm',
