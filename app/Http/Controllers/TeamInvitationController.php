@@ -19,7 +19,9 @@ class TeamInvitationController extends Controller
      */
     public function index(Team $team): Response
     {
-        $users = User::whereNotIn('id', $team->players->pluck('id'));
+        $users = User::whereNotIn('id', $team->players->pluck('id'))
+            ->orWhereNotIn('id', $team->teamInvitations->pluck('invited_player_id'));
+
         $teamInvitations = $team->teamInvitations()->with('invitedPlayer');
         return Inertia::render('TeamInvitations/Index', [
             'team' => $team,
