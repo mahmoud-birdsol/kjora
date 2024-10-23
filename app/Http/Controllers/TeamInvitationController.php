@@ -36,6 +36,7 @@ class TeamInvitationController extends Controller
             TeamInvitation::create([
                 'team_id' => $request->input('team_id'),
                 'invited_player_id' => $player['id'],
+                'state' => 'pending'
             ]);
         }
 
