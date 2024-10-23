@@ -12,7 +12,9 @@ const isUpdate = computed(() => {
 	return !!props.team
 })
 
-type TFormModel = Partial<Omit<Model, 'id'> & { country_id: number }>
+type TFormModel = Partial<
+	Omit<Model, 'id'> & { country_id: number; team_logo: File | undefined }
+>
 
 const form = useForm<Prettify<TFormModel>>(() => ({
 	name: props.team?.name ?? '',
@@ -58,7 +60,7 @@ const submit = () => {
 	}
 }
 const showUploadAvatarModal = ref<boolean>(false)
-const previewImage = ref<string>()
+const previewImage = ref<string>(props.team?.team_logo_url)
 const defaultCountry = ref()
 
 axios.get(route('api.countries.show', [121])).then((res) => {

@@ -45,7 +45,7 @@ const tabs = computed(() => [
 				<div class="flex items-center gap-3">
 					<Avatar
 						size="xlg"
-						:image-url="team.team_logo" />
+						:image-url="team.team_logo_url" />
 					<div class="space-y-1 text-white">
 						<StarRating />
 						<h2 class="text-3xl font-bold capitalize">{{ team.name }}</h2>

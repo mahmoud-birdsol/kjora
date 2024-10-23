@@ -6,12 +6,12 @@ const props = defineProps<{
 </script>
 <template>
 	<div
-		class="bg-center bg-cover bg-no-repeat rounded-xl p-4 min-h-48 flex flex-col justify-between"
+		class="flex flex-col justify-between p-4 bg-center bg-no-repeat bg-cover rounded-xl min-h-48"
 		:style="{ backgroundImage: 'url(/images/team-image.webp)' }">
 		<div :class="'flex items-center justify-between'">
 			<Avatar
 				size="lg"
-				:image-url="team.team_logo"
+				:image-url="team.team_logo_url"
 				:username="team.name" />
 			<div class="text-center">
 				<Link
@@ -27,11 +27,11 @@ const props = defineProps<{
 			</div>
 		</div>
 		<div class="flex justify-between">
-			<div class="size-6 rounded-full overflow-hidden">
+			<div class="overflow-hidden rounded-full size-6">
 				<img
 					:src="team.country.flag"
 					:alt="team.country.name"
-					class="object-cover object-center h-full w-full" />
+					class="object-cover object-center w-full h-full" />
 				<!-- [TODO] add distance between team current user -->
 			</div>
 			<Button

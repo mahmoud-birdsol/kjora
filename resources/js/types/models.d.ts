@@ -158,7 +158,8 @@ declare global {
 		name: string
 		description: string
 		users: Users
-		team_logo: string
+		team_logo_url: string | null
+		media: TMedia
 		code: string
 		type: string
 		country: Country

@@ -11,7 +11,7 @@ const props = defineProps<{
 	<div :class="cn('flex items-center', teamAvatarVariants({ direction }))">
 		<Avatar
 			size="lg"
-			:image-url="team.team_logo"
+			:image-url="team.team_logo_url"
 			:username="team.name" />
 		<div>
 			<Link

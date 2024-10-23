@@ -22,7 +22,7 @@ const deleteTeam = () => {
 			<StarIcon class="w-5 h-5" />
 		</button>
 		<Avatar
-			:image-url="team.team_logo"
+			:image-url="team.team_logo_url"
 			:size="'xlg'"
 			:username="team.name"
 			:enableLightBox="true" />
