@@ -64,4 +64,9 @@ class Team extends Model implements HasMedia
             'player_id'
         );
     }
+
+    public function teamInvitations()
+    {
+        return $this->hasMany(TeamInvitation::class);
+    }
 }
