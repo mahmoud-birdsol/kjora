@@ -293,6 +293,7 @@ Route::middleware([
             return redirect()->back();
         })->name('upload');
         Route::resource('teams', TeamController::class);
+        Route::get('teams/{team}/invitations', [TeamInvitationController::class, 'index'])->name('teams.invitations.index');
         Route::post('teams/invite', [TeamInvitationController::class, 'store'])->name('teams.invite');
         Route::resource('match', MatchController::class);
     });
