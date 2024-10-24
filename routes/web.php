@@ -3,6 +3,7 @@
 use App\Http\Controllers\AcceptInvitationController;
 use App\Http\Controllers\Actions\MarkNotificationAsRead;
 use App\Http\Controllers\AdvertisementController;
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\UserEmailController;
 use App\Http\Controllers\Auth\UserNameController;
@@ -296,6 +297,7 @@ Route::middleware([
         Route::get('teams/{team}/invitations', [TeamInvitationController::class, 'index'])->name('teams.invitations.index');
         Route::post('teams/invite', [TeamInvitationController::class, 'store'])->name('teams.invite');
         Route::resource('match', MatchController::class);
+        Route::resource('requests', ApplicationController::class);
     });
 
     /*
