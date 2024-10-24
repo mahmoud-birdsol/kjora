@@ -10,7 +10,7 @@ class ApplicationController extends Controller
 {
     public function index()
     {
-        $teams = Team::paginate(6);
+        $teams = Team::with(['players', 'country'])->paginate(6);
         return Inertia::render('requests/Index', [
             'teams' => $teams
         ]);
