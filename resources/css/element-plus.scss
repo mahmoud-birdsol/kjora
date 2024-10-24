@@ -1,0 +1,15 @@
+$--colors: (
+	'primary': (
+		'base': #006400,
+	),
+);
+
+$--calendar: (
+	'border': none,
+	'selected-bg-color': hsla(var('--primary')),
+	'cell-width': 40px,
+);
+@forward '../../node_modules/element-plus/theme-chalk/src/common/var.scss' with (
+	$colors: $--colors,
+	$calendar: $--calendar
+);

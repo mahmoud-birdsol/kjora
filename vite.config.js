@@ -43,7 +43,7 @@ export default defineConfig({
 			dts: 'auto-components.d.ts',
 			dirs: ['./resources/js/Components', './resources/js/Layouts'],
 			resolvers: [
-				ElementPlusResolver(),
+				ElementPlusResolver({ importStyle: 'sass' }),
 				{
 					resolve: (componentName) => {
 						if (['Link', 'Head'].includes(componentName)) {
@@ -64,6 +64,13 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			'@': '/resources/js',
+		},
+	},
+	css: {
+		preprocessorOptions: {
+			scss: {
+				additionalData: `@use "/resources/css/element-plus.scss" as *;`,
+			},
 		},
 	},
 })
