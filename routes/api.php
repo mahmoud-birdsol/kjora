@@ -14,6 +14,10 @@ use App\Http\Controllers\Api\UserLocationController;
 use App\Http\Resources\CommentResource;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\TeamInvitationController;
+use App\Http\Resources\SimpleUserResource;
+use App\Models\Team;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -113,3 +117,5 @@ Route::get(
 Route::get('users', [UserController::class, 'index'])->name('api.users.index');
 Route::get('countries', [CountryController::class, 'index'])->name('api.countries.index');
 Route::get('countries/{country}', [CountryController::class, 'show'])->name('api.countries.show');
+
+Route::get('teams/{team}/invitations/users', [TeamInvitationController::class, 'index'])->name('team.invitation.users');

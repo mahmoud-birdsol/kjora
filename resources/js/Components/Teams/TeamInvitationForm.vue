@@ -18,18 +18,29 @@ const closeForm = () => {
 }
 type TFormModel = {
 	team_id: number
-	players: User['id'][]
+	players: { id: User['id'] }[]
 }
 const form = useForm<TFormModel>(() => ({
 	team_id: props?.team?.id,
 	players: [],
 }))
+
+const submit = () => {
+	form.post(route('teams.invite'), {
+		preserveScroll: true,
+		preserveState: true,
+		onSuccess: () => {
+			closeForm()
+		},
+	})
+}
+
 const {
 	data: users,
 	isLoading: isLoadingUsers,
 	execute: fetchUser,
 } = useAxios<Resource<Users>>(
-	route('api.users.index'),
+	route('team.invitation.users', [props.team]),
 	{
 		method: 'get',
 	},
@@ -52,6 +63,23 @@ watch(
 		)
 	}, 500)
 )
+const togglePlayer = (playerId: Model['id']) => {
+	let playerIndex: number
+	const playerObj = form.players.find((id, index) => {
+		if (id === playerId) {
+			playerIndex = index
+			return true
+		}
+		return false
+	})
+	if (playerObj) {
+		form.players.splice(playerIndex, 1)
+	} else {
+		form.players.push({
+			id: playerId,
+		})
+	}
+}
 </script>
 <template>
 	<Modal
@@ -62,6 +90,7 @@ watch(
 				v-model="query"
 				type="search" />
 			<form
+				@submit.prevent="submit"
 				class="space-y-6"
 				v-if="users?.data.length">
 				<ElScrollbar
@@ -73,14 +102,21 @@ watch(
 						:key="user.id">
 						<div class="flex items-center gap-3">
 							<Checkbox
-								v-model:checked="form.players"
+								:checked="form.players.find((id) => user.id === id)"
+								@update:checked="togglePlayer(user.id)"
 								:value="String(user.id)" />
 							<PlayerSimpleCard :player="user" />
+							<span class="ms-auto" />
+							<Badge>{{ user.position.name[$page.props.locale] }}</Badge>
 						</div>
 					</template>
 				</ElScrollbar>
-				<div class="flex items-center gap-4">
-					<PrimaryButton>{{ $t('invite') }}</PrimaryButton>
+				<div class="grid grid-cols-2 gap-4">
+					<Button
+						type="submit"
+						:loading="form.processing"
+						>{{ $t('invite') }}</Button
+					>
 					<SecondaryButton
 						size="sm"
 						@click="closeForm"

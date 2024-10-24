@@ -23,7 +23,7 @@ const form = useForm<Prettify<TFormModel>>(() => ({
 	type: props.team?.type ?? '',
 	country_id: props.team?.country.id ?? 121,
 	team_number: props.team?.team_number,
-	team_logo: props.team?.team_logo ?? '',
+	team_logo: props.team?.team_logo,
 }))
 
 const showForm = defineModel<boolean>('open', {
@@ -40,9 +40,9 @@ const closeForm = () => {
 const submitOption: Partial<VisitOptions> = {
 	preserveState: true,
 	onSuccess: (e) => {
+		console.log('e:', e)
 		form.reset()
 		closeForm()
-		showInvitationForm.value = true
 	},
 }
 const store = () => {
@@ -140,5 +140,4 @@ axios.get(route('api.countries.show', [121])).then((res) => {
 			@close="showUploadAvatarModal = false"
 			@selected="(photo: string) => (previewImage = photo)" />
 	</Modal>
-	<TeamInvitationForm v-model:open="showInvitationForm" />
 </template>
