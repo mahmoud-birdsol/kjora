@@ -21,7 +21,6 @@ class Team extends Model implements HasMedia
         'description',
         'code',
         'team_number',
-        'team_logo'
     ];
 
     protected $casts = [
