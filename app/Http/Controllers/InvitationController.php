@@ -25,13 +25,13 @@ class InvitationController extends Controller
         $query = TeamInvitation::where('invited_player_id', $request->user()->id)->with(['team', 'invitedPlayer'])
             ->latest('created_at');
 
-        // $request->whenFilled('search', fn() => $query->where(function ($query) use ($request) {
-        //     $query->whereHas('invitingPlayer', function ($q) use ($request) {
-        //         $q->where('first_name', 'LIKE', '%' . $request->input('search') . '%')
-        //             ->orWhere('last_name', 'LIKE', '%' . $request->input('search') . '%')
-        //             ->orWhere('username', 'LIKE', '%' . $request->input('search') . '%');
-        //     });
-        // }));
+        $request->whenFilled('search', fn() => $query->where(function ($query) use ($request) {
+            $query->whereHas('invitedPlayer', function ($q) use ($request) {
+                $q->where('first_name', 'LIKE', '%' . $request->input('search') . '%')
+                    ->orWhere('last_name', 'LIKE', '%' . $request->input('search') . '%')
+                    ->orWhere('username', 'LIKE', '%' . $request->input('search') . '%');
+            });
+        }));
 
         $request->whenFilled(
             'dateFrom',

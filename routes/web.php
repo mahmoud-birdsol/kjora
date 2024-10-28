@@ -33,6 +33,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\VerificationCodeController;
 use App\Http\Controllers\CancelInvitationController;
 use App\Http\Controllers\MatchController;
+use App\Http\Controllers\RejectTeamInvitationController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TeamInvitationController;
 use App\Models\Country;
@@ -300,6 +301,8 @@ Route::middleware([
         Route::resource('match', MatchController::class);
         Route::resource('requests', ApplicationController::class);
         Route::post('teams/invitation/{teamInvitation}', [AcceptTeamInvitationController::class, 'store'])->name('team.invitation.accept');
+        Route::post('teams/invitation/{teamInvitation}', [AcceptTeamInvitationController::class, 'store'])->name('team.invitation.accept');
+        Route::delete('teams/invitation/{teamInvitation}', RejectTeamInvitationController::class)->name('team.invitation.reject');
     });
 
     /*

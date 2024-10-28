@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type VisitOptions } from '@inertiajs/core'
-import { trans } from 'laravel-vue-i18n'
+import { trans, wTrans } from 'laravel-vue-i18n'
 import type { BadgeProps } from '../ui/badge'
 type Model = Prettify<TeamInvitation>
 const props = defineProps<{
@@ -36,15 +36,15 @@ const acceptInvitation = () => {
 
 const rejectInvitationForm = useForm(() => ({}))
 const rejectInvitation = () => {
-	rejectInvitationForm.post(
-		route('team.invitation.accept', [props.invitation]),
+	rejectInvitationForm.delete(
+		route('team.invitation.reject', [props.invitation]),
 		{
 			...visitOptions,
 			onError: () => {
 				props.invitation.state = 'pending'
 			},
 			onSuccess: () => {
-				props.invitation.state = 'cancelled'
+				props.invitation.state = 'rejected'
 			},
 		}
 	)
@@ -52,14 +52,14 @@ const rejectInvitation = () => {
 
 const stateVariants: Record<Model['state'], BadgeProps> = {
 	accepted: {
-		label: trans('accepted'),
+		label: wTrans('accepted'),
 	},
 	rejected: {
-		label: trans('rejected'),
+		label: wTrans('rejected'),
 		variant: 'destructive',
 	},
 	cancelled: {
-		label: trans('cancelled'),
+		label: wTrans('cancelled'),
 		variant: 'secondary',
 	},
 }
