@@ -426,5 +426,10 @@
   "bring-your-friends": "Bring Your Friends",
   "welcome-to-football-teams": "Welcome to Football Teams",
   "my-teams": "My Teams",
-  "looking-for-team": "Looking For Team"
+  "looking-for-team": "Looking For Team",
+  "wants-to-invite-you-for-a-join-his-team-team": "Wants to invite you for a join his team :team",
+  "match-invitations": "Match Invitations",
+  "team-invitations": "Team Invitations",
+  "cancelled": "Cancelled",
+  "rejected": "Rejected"
 }

@@ -30,5 +30,8 @@ export const appPlugin = plugin(function ({
 		'.inputs-row': {
 			'@apply grid lg:grid-cols-2 gap-4': {},
 		},
+		'.page-title': {
+			'@apply text-4xl font-black md:text-7xl': {},
+		},
 	})
 }, {})

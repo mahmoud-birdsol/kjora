@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AcceptInvitationController;
+use App\Http\Controllers\AcceptTeamInvitationController;
 use App\Http\Controllers\Actions\MarkNotificationAsRead;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\ApplicationController;
@@ -298,6 +299,7 @@ Route::middleware([
         Route::post('teams/invite', [TeamInvitationController::class, 'store'])->name('teams.invite');
         Route::resource('match', MatchController::class);
         Route::resource('requests', ApplicationController::class);
+        Route::post('teams/invitation/{teamInvitation}', [AcceptTeamInvitationController::class, 'store'])->name('team.invitation.accept');
     });
 
     /*

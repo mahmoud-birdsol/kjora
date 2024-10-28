@@ -21,14 +21,12 @@ class AcceptTeamInvitationController extends Controller
     {
         if ($teamInvitation->state != 'cancelled') {
             $teamInvitation->forceFill(['state' => 'accepted'])->save();
-        }
-
-        else {
+        } else {
             FlashMessage::make()->error(
                 message: __('Sorry you cannot approve cancelled invitation')
             )->closeable()->send();
         }
 
-        return redirect()->route('teams.invitations.index', $teamInvitation->team->id);
+        return redirect()->back();
     }
 }
