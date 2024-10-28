@@ -4,9 +4,7 @@ import type { Component } from 'vue'
 export type TTab = {
 	label: string
 	href: string
-    active:boolean,
-	component: Component
-	props: object
+	active: boolean
 }
 const location = useBrowserLocation()
 const props = defineProps<{
