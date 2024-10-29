@@ -1,12 +1,13 @@
-<script setup lang="ts">
-import { useBrowserLocation } from '@vueuse/core'
-import type { Component } from 'vue'
-export type TTab = {
-	label: string
+<script lang="ts">
+type TTab = {
+	label: string | ComputedRef<string>
 	href: string
 	active: boolean
 }
-const location = useBrowserLocation()
+</script>
+<script setup lang="ts">
+import { useBrowserLocation } from '@vueuse/core'
+import type { ComputedRef } from 'vue'
 const props = defineProps<{
 	tabs: TTab[]
 }>()
