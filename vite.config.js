@@ -37,6 +37,9 @@ export default defineConfig({
 				{
 					'@inertiajs/vue3': ['useForm', 'usePage', 'router'],
 				},
+				{
+					'laravel-vue-i18n': ['trans', 'wTrans'],
+				},
 			],
 		}),
 		Components({
