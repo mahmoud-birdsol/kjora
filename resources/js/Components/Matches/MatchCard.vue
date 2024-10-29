@@ -19,7 +19,7 @@ const distance = calculateDistance(
 	<div class="card">
 		<div class="flex items-center justify-between gap-3">
 			<TeamSimpleAvatar :team="match.team_1" />
-			<p class="font-semibold">
+			<p class="font-semibold whitespace-nowrap">
 				{{
 					$t('point1-vs-point2', {
 						point1: String(match.point_team_1),

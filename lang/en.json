@@ -431,5 +431,8 @@
   "match-invitations": "Match Invitations",
   "team-invitations": "Team Invitations",
   "cancelled": "Cancelled",
-  "rejected": "Rejected"
+  "rejected": "Rejected",
+  "individual-matches": "Individual Matches",
+  "team-matches": "Team Matches",
+  "create-match": "Create Match"
 }

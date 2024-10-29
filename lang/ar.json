@@ -421,7 +421,7 @@
   "player-info": "معلومات اللاعب",
   "open-chat": "افتح الدردشة",
   "vs": "مقابل",
-  "point1-vs-point2": ":point1 مقابل :point2",
+  "point1-vs-point2": ":point1 ضد  :point2",
   "distance-km": ": distance كم",
   "apply-to-join": "تقدم بطلب الانضمام",
   "team-description": "وصف الفريق",
@@ -434,5 +434,8 @@
   "match-invitations": "مطابقة الدعوات",
   "team-invitations": "دعوات الفريق",
   "rejected": "مرفوض",
-  "cancelled": "تم الإلغاء"
+  "cancelled": "تم الإلغاء",
+  "team-matches": "مباريات الفريق",
+  "individual-matches": "المباريات الفردية",
+  "create-match": "إنشاء مباراة"
 }
