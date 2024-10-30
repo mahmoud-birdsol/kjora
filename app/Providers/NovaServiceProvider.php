@@ -23,6 +23,7 @@ use App\Nova\Lenses\ArchivedAdvertisement;
 use App\Nova\Lenses\ExpiringAdvertisement;
 use App\Nova\Lenses\UnverifiedUsers;
 use App\Nova\Like;
+use App\Nova\MatchGame;
 use App\Nova\Message;
 use App\Nova\Position;
 use App\Nova\Post;
@@ -122,6 +123,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(TeamPositionRequests::class),
                     MenuItem::resource(RequestApplication::class),
                     MenuItem::resource(TeamInvitation::class),
+                    MenuItem::resource(MatchGame::class),
                 ])->icon('paper-clip')->collapsable(),
 
                 MenuSection::make(__('Chat'), [
