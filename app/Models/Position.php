@@ -52,4 +52,9 @@ class Position extends Model
             ->belongsToMany(RatingCategory::class)
             ->withTimestamps();
     }
+
+    public function teamPositionRequests(): HasMany
+    {
+        return $this->hasMany(TeamPositionRequests::class);
+    }
 }

@@ -252,6 +252,8 @@ class User extends Resource
 
             HasMany::make('Clicks'),
             HasMany::make('Impressions'),
+
+            HasMany::make(__('Applications'), 'requestApplications', RequestApplication::class)
         ];
     }
 

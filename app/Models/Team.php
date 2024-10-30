@@ -64,8 +64,13 @@ class Team extends Model implements HasMedia
         );
     }
 
-    public function teamInvitations()
+    public function teamInvitations(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(TeamInvitation::class);
+    }
+
+    public function teamPositionRequests(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(TeamPositionRequests::class);
     }
 }

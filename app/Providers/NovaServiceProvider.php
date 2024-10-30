@@ -31,9 +31,13 @@ use App\Nova\Rating;
 use App\Nova\RatingCategory;
 use App\Nova\Report;
 use App\Nova\ReportOption;
+use App\Nova\RequestApplication;
 use App\Nova\Review;
 use App\Nova\Social;
 use App\Nova\Stadium;
+use App\Nova\Team;
+use App\Nova\TeamInvitation;
+use App\Nova\TeamPositionRequests;
 use App\Nova\TermsAndConditions;
 use App\Nova\User;
 use Illuminate\Http\Request;
@@ -111,6 +115,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(Post::class),
                     MenuItem::resource(Comment::class),
                     MenuItem::resource(Like::class),
+                ])->icon('paper-clip')->collapsable(),
+
+                MenuSection::make(__('Teams'), [
+                    MenuItem::resource(Team::class),
+                    MenuItem::resource(TeamPositionRequests::class),
+                    MenuItem::resource(RequestApplication::class),
+                    MenuItem::resource(TeamInvitation::class),
                 ])->icon('paper-clip')->collapsable(),
 
                 MenuSection::make(__('Chat'), [
