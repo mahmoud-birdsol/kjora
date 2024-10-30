@@ -3,18 +3,20 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\MorphMany;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Comment extends Resource
+class MatchGame extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Comment>
+     * @var class-string<\App\Models\MatchGame>
      */
-    public static $model = \App\Models\Comment::class;
+    public static $model = \App\Models\MatchGame::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -32,6 +34,16 @@ class Comment extends Resource
         'id',
     ];
 
+    public static function label()
+    {
+        return 'Match Games';
+    }
+
+    public static function singularLabel()
+    {
+        return 'Match Game';
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -43,7 +55,30 @@ class Comment extends Resource
         return [
             ID::make()->sortable(),
 
-            MorphMany::make('Likes'),
+            BelongsTo::make(__('Home Team'), 'homeTeam', Team::class)
+                ->sortable()
+                ->filterable()
+                ->rules('required'),
+
+            BelongsTo::make(__('Away Team'), 'awayTeam', Team::class)
+                ->sortable()
+                ->filterable()
+                ->rules('required'),
+
+            BelongsTo::make(__('Winning Team'), 'winnerTeam', Team::class)
+                ->sortable()
+                ->filterable()
+                ->nullable(),
+
+            Text::make(__('Final Score'), 'final_score')
+                ->sortable()
+                ->nullable()
+                ->rules('nullable', 'string', 'max:255'),
+
+            DateTime::make(__('Match Date'), 'match_date')
+                ->sortable()
+                ->nullable()
+                ->rules('required', 'date'),
         ];
     }
 

@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('admins', function (Blueprint $table) {
-            $table->string('locale')->default('en');
-
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('state')->default("App\\\Models\\\States\\\Free");
         });
     }
 
@@ -26,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('admins', function (Blueprint $table) {
-            $table->dropColumn('locale');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('state');
         });
     }
 };

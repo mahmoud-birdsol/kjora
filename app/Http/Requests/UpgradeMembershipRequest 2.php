@@ -25,8 +25,8 @@ class UpgradeMembershipRequest extends FormRequest
     {
         return [
             'payment_plan' => [
-                'required'
-            ]
+                'required',
+            ],
         ];
     }
 }

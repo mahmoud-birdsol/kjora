@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('admins', function (Blueprint $table) {
-            $table->string('locale')->default('en');
-
+        Schema::create('posts', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id');
+            $table->string('caption')->nullable();
+            $table->foreignId('cover_id')->nullable()->constrained()->nullOnDelete()->references('id')->on('media');
+            $table->timestamps();
         });
     }
 
@@ -26,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('admins', function (Blueprint $table) {
-            $table->dropColumn('locale');
-        });
+        Schema::dropIfExists('posts');
     }
 };

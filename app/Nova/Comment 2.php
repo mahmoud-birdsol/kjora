@@ -3,8 +3,12 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\MorphMany;
+use Laravel\Nova\Fields\MorphTo;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Comment extends Resource
@@ -35,13 +39,26 @@ class Comment extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
     public function fields(NovaRequest $request)
     {
         return [
             ID::make()->sortable(),
+
+            MorphTo::make(__('Commentable'), 'commentable', Comment::class)->types([
+                Post::class,
+                Comment::class,
+            ])->rules('required'),
+
+            BelongsTo::make(__('User'), 'user', User::class)->rules('required')
+                ->sortable()
+                ->filterable()
+                ->showOnPreview(),
+
+            HasMany::make(__('Replies'), 'replies', Comment::class),
+
+            Textarea::make(__('Body'), 'body')->sortable()->showOnPreview(),
 
             MorphMany::make('Likes'),
         ];
@@ -50,7 +67,6 @@ class Comment extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
     public function cards(NovaRequest $request)
@@ -61,7 +77,6 @@ class Comment extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
     public function filters(NovaRequest $request)
@@ -72,7 +87,6 @@ class Comment extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
     public function lenses(NovaRequest $request)
@@ -83,7 +97,6 @@ class Comment extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
     public function actions(NovaRequest $request)

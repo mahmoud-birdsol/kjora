@@ -9,10 +9,15 @@ use Illuminate\Support\Facades\Auth;
 
 trait CanBeLiked
 {
-    public function bootLikeable()
+    /**
+     * Initialize the trait model object.
+     *
+     * @return void
+     */
+    public function initializeCanBeLiked()
     {
+        $this->appends[] = 'likes_count';
         $this->appends[] = 'is_liked';
-        $this->with[] = 'likes_count';
     }
 
     public function likes(): MorphMany
@@ -23,16 +28,23 @@ trait CanBeLiked
     public function isLiked(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->isLikedByUser()
+            get: fn () => $this->isLikedByUser()
+        );
+    }
+
+    public function likesCount(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => Like::where('likeable_id', $this->id)->where('likeable_type', get_class($this))->count(),
         );
     }
 
     public function isLikedByUser(): bool
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return false;
         }
 
-        return (bool)$this->likes()->where('user_id', Auth::id())->count();
+        return (bool) $this->likes()->where('user_id', Auth::id())->count();
     }
 }
