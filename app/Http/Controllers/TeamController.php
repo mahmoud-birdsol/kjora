@@ -23,11 +23,9 @@ class TeamController extends Controller
             $teams->where('name', 'LIKE', '%' . $request->input('search') . '%');
             $myTeams->where('name', 'LIKE', '%' . $request->input('search') . '%');
         });
-        $topRatingPlayers = User::query()->orderBy('rating', 'desc')->limit(5);
         return Inertia::render('teams/Index', [
             'myTeams' => $myTeams->paginate(5)->withQueryString(),
             'teams' => $teams->paginate(5)->withQueryString(),
-            'topRatingPlayer' => SimpleUserResource::collection($topRatingPlayers->get())
         ]);
     }
     public function show(Team $team, Request $request)

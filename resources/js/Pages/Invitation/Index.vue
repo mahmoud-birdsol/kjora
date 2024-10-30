@@ -1,93 +1,82 @@
-<script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3'
-import AppLayout from '@/Layouts/AppLayout.vue'
-import SecondaryButton from '@/Components/SecondaryButton.vue'
-import InvitationCard from './Partials/InvitationCard.vue'
-import DateTranslation from '@/Components/DateTranslation.vue'
-import InvitationsFilter from '@/Components/InvitationsFilter.vue'
-import Pagination from '@/Components/Pagination.vue'
-import { CalendarIcon } from '@heroicons/vue/20/solid'
-import dayjs from 'dayjs'
-import { computed, ref } from 'vue'
-import { paginationEmits } from 'element-plus'
-import InvitationHireTaps from '../../Components/InvitationHireTaps.vue'
-const props = defineProps({
-	invitations: Object,
+<script setup lang="ts">
+import { Head } from '@inertiajs/vue3'
+import { ref } from 'vue'
+import { type TTab } from '@/Components/App/AppTabs.vue'
+import { trans } from 'laravel-vue-i18n'
+type Model = TeamInvitation
+const props = defineProps<{
+	invitations: PaginationData<Model>
+}>()
+
+const { filterForm } = useFilter({
+	dateFrom: route().params.dateFrom,
+	dateTo: route().params.dateTo,
 })
+const filterDateRange = ref<(Date | undefined)[]>([
+	filterForm.dateFrom,
+	filterForm.dateTo,
+])
 
-const fromDate = ref(null)
-const toDate = ref(null)
-
-function showFromToDates(date1, date2) {
-	fromDate.value = dayjs(date1).format('DD MMMM YYYY hh:mm')
-	toDate.value = dayjs(date2).format('DD MMMM YYYY hh:mm')
-}
+const { loadFun, data, canLoad } = useInfiniteScroll<Model>('invitations')
+const tabs = computed<TTab[]>(() => [
+	{
+		label: trans('match-invitations'),
+		href: route('invitation.index'),
+		active: !route().params.tab,
+	},
+	{
+		label: trans('team-invitations'),
+		href: route('invitation.index', {
+			tab: 'team-invitations',
+		}),
+		active: route().params.tab == 'team-invitations',
+	},
+])
 </script>
 
 <template>
 	<Head title="Invitations" />
 
 	<AppLayout title="Invitations">
-		<template #header>
-			<p class="text-4xl font-black md:text-7xl">
-				{{ $t('invitations') }}
-			</p>
-		</template>
-
-		<div class="py-12">
-			<div class="">
-				<InvitationHireTaps />
-
-				<div class="bg-white rounded-xl mt-4 min-h-[500px] p-2 md:p-6">
+		<section class="grid lg:grid-cols-[1fr_20rem] gap-6 items-start">
+			<div class="space-y-6">
+				<h2 class="page-title">{{ $t('invitations') }}</h2>
+				<div class="flex flex-wrap justify-between gap-4">
+					<AppSearchInput />
+					<AppTabs :tabs />
+				</div>
+				<template v-if="invitations.data.length">
 					<div
-						class="flex gap-1 mb-4 text-xs font-bold"
-						v-if="fromDate && toDate">
-						<CalendarIcon class="w-4" />
-						<span>
-							{{ $t('from') }}
-						</span>
-						<DateTranslation
-							:start="fromDate"
-							format="DD MMMM YYYY" />
-						<span>
-							{{ $t('to') }}
-						</span>
-						<DateTranslation
-							:start="toDate"
-							format="DD MMMM YYYY" />
-					</div>
-					<div
-						v-if="invitations.data.length"
-						class="grid grid-cols-1 gap-4">
+						class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+						v-pagination-scroll="{
+							loadFun,
+							canLoad,
+						}">
 						<template
-							v-for="invitation in invitations.data"
+							v-for="invitation in data"
 							:key="invitation.id">
-							<div class="flex gap-1 text-xs font-bold">
-								<CalendarIcon class="w-4" />
-								<DateTranslation
-									:start="invitation.date"
-									format="DD MMMM YYYY hh:mm" />
-							</div>
-							<InvitationCard :invitation="invitation" />
+							<TeamInvitationCard :invitation="invitation" />
 						</template>
 					</div>
-
-					<div
-						v-else
-						class="grid place-items-center min-h-[480px] h-full">
-						<p class="text-sm font-bold text-black">
-							{{ $t(`Sorry, we couldn't find any results`) }}
-						</p>
-					</div>
-					<div class="flex justify-center mt-4">
-						<Pagination :links="invitations.links"></Pagination>
-					</div>
-				</div>
+				</template>
+				<v-else v-else />
 			</div>
-		</div>
-		<InvitationsFilter
-			url="invitation.index"
-			@filter="showFromToDates" />
+			<div class="space-y-6">
+				<InputDate
+					:teleport="false"
+					v-model="filterDateRange"
+					@update:model-value="
+						() => {
+							filterForm.dateFrom = filterDateRange[0]
+							filterForm.dateTo = filterDateRange[1]
+						}
+					"
+					inline
+					range
+					auto-apply />
+				<MatchesLatestList :matches="[]" />
+			</div>
+		</section>
 	</AppLayout>
 </template>
 <style>

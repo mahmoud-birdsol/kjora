@@ -178,4 +178,17 @@ declare global {
 		updated_at: Date
 	}
 	export type Matches = Match[]
+
+	export interface TeamInvitation {
+		id: number
+		team_id: number
+		invited_player_id: number
+		state: 'accepted' | 'cancelled' | 'pending' | 'rejected'
+		accepted_at: null
+		created_at: Date
+		updated_at: Date
+		team: Team
+		invited_player: User
+	}
+	export type TeamInvitations = TeamInvitation[]
 }

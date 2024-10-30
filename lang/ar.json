@@ -421,7 +421,7 @@
   "player-info": "معلومات اللاعب",
   "open-chat": "افتح الدردشة",
   "vs": "مقابل",
-  "point1-vs-point2": ":point1 مقابل :point2",
+  "point1-vs-point2": ":point1 ضد  :point2",
   "distance-km": ": distance كم",
   "apply-to-join": "تقدم بطلب الانضمام",
   "team-description": "وصف الفريق",
@@ -429,5 +429,13 @@
   "welcome-to-football-teams": "مرحبا بكم في فرق كرة القدم",
   "bring-your-friends": "أحضر أصدقائك",
   "looking-for-team": "أبحث عن فريق",
-  "my-teams": "فرقي"
+  "my-teams": "فرقي",
+  "wants-to-invite-you-for-a-join-his-team-team": "يريد دعوتك للانضمام إلى فريقه :team",
+  "match-invitations": "مطابقة الدعوات",
+  "team-invitations": "دعوات الفريق",
+  "rejected": "مرفوض",
+  "cancelled": "تم الإلغاء",
+  "team-matches": "مباريات الفريق",
+  "individual-matches": "المباريات الفردية",
+  "create-match": "إنشاء مباراة"
 }

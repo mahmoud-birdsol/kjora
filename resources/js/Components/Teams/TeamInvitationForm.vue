@@ -65,8 +65,8 @@ watch(
 )
 const togglePlayer = (playerId: Model['id']) => {
 	let playerIndex: number
-	const playerObj = form.players.find((id, index) => {
-		if (id === playerId) {
+	const playerObj = form.players.find((player, index) => {
+		if (player.id === playerId) {
 			playerIndex = index
 			return true
 		}

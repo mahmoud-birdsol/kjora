@@ -1,0 +1,59 @@
+.dp__theme_light {
+	--dp-background-color: theme(colors.white);
+	--dp-text-color: theme(colors.black);
+	--dp-font-size: theme(fontSize.sm);
+	--dp-hover-color: theme(colors.primary.100);
+	--dp-hover-text-color: theme(colors.primary.800);
+	--dp-hover-icon-color: theme(colors.primary.500);
+	--dp-primary-color: theme(colors.primary.DEFAULT);
+	--dp-primary-text-color: theme(colors.white);
+	--dp-secondary-color: theme(colors.gray.400);
+	--dp-border-color: theme(colors.input);
+	--dp-border-color-focus: theme(colors.primary.DEFAULT);
+	--dp-menu-border-color: theme(colors.gray.100);
+	--dp-border-color-hover: theme(colors.gray.50);
+	--dp-disabled-color: #f6f6f6;
+	--dp-scroll-bar-background: #f3f3f3;
+	--dp-scroll-bar-color: #959595;
+	--dp-success-color: #76d275;
+	--dp-success-color-disabled: #a3d9b1;
+	--dp-icon-color: theme(colors.primary.DEFAULT);
+	--dp-danger-color: #ff6f60;
+	--dp-highlight-color: rgba(25, 118, 210, 0.1);
+	--db-font-family: inherit;
+	--dp-cell-size: 2.75rem;
+	--dp-border-radius: theme(borderRadius.lg);
+}
+
+:is(.dark) .dp__theme_light {
+	--dp-background-color: theme(colors.transparent);
+	--dp-text-color: theme(colors.white);
+	--dp-hover-color: theme(colors.gray.700);
+	--dp-hover-text-color: #ffffff;
+	--dp-hover-icon-color: theme(colors.primary.400);
+	--dp-primary-color: theme(colors.primary.DEFAULT);
+	--dp-primary-text-color: #ffffff;
+	--dp-secondary-color: #a9a9a9;
+	--dp-border-color: theme(colors.white);
+	--dp-menu-border-color: theme(colors.gray.700);
+	--dp-border-color-hover: theme(colors.white);
+	--dp-disabled-color: #737373;
+	--dp-scroll-bar-background: theme(colors.gray.800);
+	--dp-scroll-bar-color: theme(colors.gray.600);
+	--dp-success-color: #00701a;
+	--dp-success-color-disabled: #428f59;
+	--dp-icon-color: theme(colors.white);
+	--dp-danger-color: #e53935;
+	--dp-highlight-color: rgba(0, 92, 178, 0.2);
+	--dp-border-radius: theme(borderRadius.lg);
+}
+html[dir='rtl'] .dp--arrow-btn-nav {
+	@apply rotate-180;
+}
+.dp__input {
+	--dp-background-color: theme(colors.transparent);
+	@apply shadow-sm;
+}
+.dp__main[aria-invalid='true'] {
+	--dp-border-color: hsl(var(--dp-destructive-color) / 1);
+}

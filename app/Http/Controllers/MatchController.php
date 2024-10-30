@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Match;
+use App\Models\Stadium;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -15,9 +16,19 @@ class MatchController extends Controller
      */
     public function index()
     {
+        $userTeams = auth()->user()->teams()->get();
+        $matches = [
+            '0' => [
+                'team_1' => $userTeams[0],
+                'team_2' => $userTeams[1],
+                'point_team_1' => 3,
+                'point_team_2' => 3,
+                'stadium' => Stadium::first(),
+            ]
+        ];
         return Inertia::render('Match/Index', [
-            'individualMatches' => [],
-            'teamMatches' => [],
+            'individualMatches' => $matches,
+            'teamMatches' => $matches,
             'latestMatches' => []
         ]);
     }

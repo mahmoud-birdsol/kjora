@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InvitationRequest;
 use App\Models\Invitation;
+use App\Models\TeamInvitation;
 use App\Models\User;
 use App\Notifications\InvitationCreatedNotification;
 use App\Services\FlashMessage;
@@ -21,16 +22,11 @@ class InvitationController extends Controller
      */
     public function index(Request $request): Response
     {
-        $query = Invitation::where('invited_player_id', $request->user()->id)
-            ->latest('date')
-            ->with('invitingPlayer')
-            ->with(['reviews' => function ($q) use ($request) {
-                $q->whereNot('player_id', '=', $request->user()->id)->whereDoesntHave('ratingCategories');
-            }])
-            ->with('stadium');
+        $query = TeamInvitation::where('invited_player_id', $request->user()->id)->with(['team', 'invitedPlayer'])
+            ->latest('created_at');
 
-        $request->whenFilled('search', fn () => $query->where(function ($query) use ($request) {
-            $query->whereHas('invitingPlayer', function ($q) use ($request) {
+        $request->whenFilled('search', fn() => $query->where(function ($query) use ($request) {
+            $query->whereHas('invitedPlayer', function ($q) use ($request) {
                 $q->where('first_name', 'LIKE', '%' . $request->input('search') . '%')
                     ->orWhere('last_name', 'LIKE', '%' . $request->input('search') . '%')
                     ->orWhere('username', 'LIKE', '%' . $request->input('search') . '%');
@@ -39,15 +35,15 @@ class InvitationController extends Controller
 
         $request->whenFilled(
             'dateFrom',
-            fn () => $query->where('date', '>=', \Carbon\Carbon::parse($request->input('dateFrom'))->toDatetimeString())
+            fn() => $query->where('created_at', '>=', \Carbon\Carbon::parse($request->input('dateFrom'))->toDatetimeString())
         );
         $request->whenFilled(
             'dateTo',
-            fn () => $query->where('date', '<=', \Carbon\Carbon::parse($request->input('dateTo'))->toDatetimeString())
+            fn() => $query->where('created_at', '<=', \Carbon\Carbon::parse($request->input('dateTo'))->toDatetimeString())
         );
 
         return Inertia::render('Invitation/Index', [
-            'invitations' => $query->paginate(10),
+            'invitations' => $query->paginate(10)->withQueryString(),
         ]);
     }
 

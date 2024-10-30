@@ -19,13 +19,13 @@ const paginationScroll: ObjectDirective<
 		) => {
 			if (entries[0].isIntersecting) {
 				const { loadFun, getCanLoad: getCanLoad } = binding.value
-				if (loadFun) {
-					await loadFun()
-				}
 				observer.unobserve(element)
 				const newObserveElement = el.lastElementChild
 				if (getCanLoad() && newObserveElement) {
 					observer.observe(newObserveElement)
+					if (loadFun) {
+						await loadFun()
+					}
 				} else {
 					observer.disconnect()
 				}

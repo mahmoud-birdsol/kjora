@@ -6,7 +6,6 @@ import { trans } from 'laravel-vue-i18n'
 const props = defineProps<{
 	teams: PaginationData<Team>
 	myTeams: PaginationData<Teams>
-	topRatingPlayer: Resource<Users>
 }>()
 
 const location = useBrowserLocation()
@@ -64,7 +63,7 @@ const tabs = computed<TTab[]>(() => [
 			<div class="space-y-6">
 				<MatchAdvertise />
 				<MatchesLatestList :matches="[]" />
-				<PlayerTopRatingList :players="topRatingPlayer.data" />
+				<PlayerTopRatingList />
 			</div>
 		</div>
 	</AppLayout>
