@@ -98,9 +98,9 @@ class Click extends Resource
     public function title(): string
     {
         return
-            $this->resource->advertisement->name.' ('.
-            $this->resource->user->name.') '.
-            $this->resource->created_at->toDateTimeString();
+            $this->resource->advertisement?->name.' ('.
+            $this->resource->user?->name.') '.
+            $this->resource->created_at?->toDateTimeString();
     }
 
     /**
