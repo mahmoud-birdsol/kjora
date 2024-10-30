@@ -47,7 +47,7 @@ class TeamInvitation extends Resource
                 ->filterable()
                 ->rules('required', 'in:pending,accepted,rejected'),
 
-            DateTime::make(__('Accepted At'), 'accepted_atg5')
+            DateTime::make(__('Accepted At'), 'accepted_at')
                 ->sortable()
                 ->rules('nullable', 'date'),
         ];
