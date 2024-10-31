@@ -156,11 +156,11 @@ const locale = usePage().props.locale
 				</div>
 				<RadioGroup
 					v-model="currentTabId"
-					class="flex items-center justify-end w-full mb-2 rounded-sm">
+					class="flex items-center justify-end w-full mb-2 rounded-sm text-black">
 					<RadioGroupOption
 						v-slot="{ checked }"
 						:value="1"
-						class="p-2 px-2 text-xs font-bold leading-none text-black uppercase bg-white cursor-pointer hover:bg-stone-200 active:scale-95"
+						class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white cursor-pointer hover:bg-stone-200 active:scale-95"
 						:class="currentTabId == 1 ? 'bg-primary bg-opacity-80' : ''"
 						>{{ $t('grid') }}</RadioGroupOption
 					>
