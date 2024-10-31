@@ -4,19 +4,20 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\URL;
+use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Click extends Resource
+class TeamPositionRequests extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Click>
+     * @var class-string<\App\Models\TeamPositionRequests>
      */
-    public static $model = \App\Models\Click::class;
+    public static $model = \App\Models\TeamPositionRequests::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -31,28 +32,24 @@ class Click extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'user.name', 'advertisement.name',
+        'id', 'description'
     ];
 
-    /**
-     * Get the displayable label of the resource.
-     */
+
     public static function label(): string
     {
-        return __('Clicks');
+        return 'Team Position Requests';
     }
 
-    /**
-     * Get the displayable singular label of the resource.
-     */
     public static function singularLabel(): string
     {
-        return __('Click');
+        return 'Team Position Request';
     }
 
     /**
      * Get the fields displayed by the resource.
      *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
     public function fields(NovaRequest $request)
@@ -60,52 +57,38 @@ class Click extends Resource
         return [
             ID::make()->sortable(),
 
-            BelongsTo::make(__('User'), 'user', User::class)
-                ->showCreateRelationButton()
-                ->showOnPreview()
-                ->filterable()
+            BelongsTo::make(__('Team'), 'team', Team::class)
                 ->sortable()
-                ->searchable()
+                ->showCreateRelationButton()
+                ->filterable()
                 ->rules('required'),
 
-            BelongsTo::make(__('Advertisement'), 'advertisement', Advertisement::class)
-                ->showCreateRelationButton()
-                ->showOnPreview()
-                ->filterable()
+            BelongsTo::make(__('Position'), 'position', Position::class)
                 ->sortable()
-                ->searchable()
+                ->showCreateRelationButton()
+                ->filterable()
                 ->rules('required'),
 
-            URL::make(__('Source'), 'source')
-                ->showOnPreview()
-                ->required()
-                ->rules('required', 'url', 'max:254'),
+            Textarea::make(__('Description'), 'description')
+                ->sortable()
+                ->filterable()
+                ->nullable()
+                ->rules('max:65535'),
 
-            Text::make('URL', 'source')
-                ->showOnPreview()
-                ->onlyOnDetail()
-                ->copyable(),
+            DateTime::make(__('Approved At'), 'approved_at')
+                ->sortable()
+                ->nullable()
+                ->filterable()
+                ->rules('date'),
 
-            Text::make(__('IP address'), 'ip')
-                ->showOnPreview()
-                ->required('required'),
+            HasMany::make(__('Applications'), 'requestApplications', RequestApplication::class)
         ];
-    }
-
-    /**
-     * Get the value that should be displayed to represent the resource.
-     */
-    public function title(): string
-    {
-        return
-            $this->resource->advertisement?->name.' ('.
-            $this->resource->user?->name.') '.
-            $this->resource->created_at?->toDateTimeString();
     }
 
     /**
      * Get the cards available for the request.
      *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
     public function cards(NovaRequest $request)
@@ -116,6 +99,7 @@ class Click extends Resource
     /**
      * Get the filters available for the resource.
      *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
     public function filters(NovaRequest $request)
@@ -126,6 +110,7 @@ class Click extends Resource
     /**
      * Get the lenses available for the resource.
      *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
     public function lenses(NovaRequest $request)
@@ -136,6 +121,7 @@ class Click extends Resource
     /**
      * Get the actions available for the resource.
      *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
     public function actions(NovaRequest $request)

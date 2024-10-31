@@ -615,6 +615,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia, Reporta
         return $this->hasMany(TeamInvitation::class, 'invited_player_id');
     }
 
+    public function requestApplications()
+    {
+        return $this->hasMany(RequestApplication::class, 'player_id');
+    }
+
 
     public function reportedUser(): static
     {

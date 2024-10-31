@@ -3,18 +3,19 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\MorphMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Comment extends Resource
+class RequestApplication extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Comment>
+     * @var class-string<\App\Models\RequestApplication>
      */
-    public static $model = \App\Models\Comment::class;
+    public static $model = \App\Models\RequestApplication::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -32,6 +33,16 @@ class Comment extends Resource
         'id',
     ];
 
+    public static function label()
+    {
+        return 'Request Applications';
+    }
+
+    public static function singularLabel()
+    {
+        return 'Request Application';
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -43,7 +54,29 @@ class Comment extends Resource
         return [
             ID::make()->sortable(),
 
-            MorphMany::make('Likes'),
+            BelongsTo::make(__('Team Position Request'), 'teamPositionRequest', TeamPositionRequests::class)
+                ->sortable()
+                ->filterable()
+                ->showCreateRelationButton()
+                ->rules('required'),
+
+            BelongsTo::make(__('Player'), 'player', User::class)
+                ->sortable()
+                ->filterable()
+                ->showCreateRelationButton()
+                ->rules('required'),
+
+            DateTime::make(__('Applied At'), 'applied_at')
+                ->sortable()
+                ->filterable()
+                ->nullable()
+                ->rules( 'date'),
+
+            DateTime::make(__('Approved At'), 'approved_at')
+                ->sortable()
+                ->filterable()
+                ->nullable()
+                ->rules( 'date'),
         ];
     }
 

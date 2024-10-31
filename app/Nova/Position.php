@@ -66,6 +66,8 @@ class Position extends Resource
 
             BelongsToMany::make(__('Rating Categories'), 'ratingCategories', RatingCategory::class),
 
+            HasMany::make(__('Team Position Requests'), 'teamPositionRequests', TeamPositionRequests::class),
+
             HasMany::make('Users'),
         ];
     }
