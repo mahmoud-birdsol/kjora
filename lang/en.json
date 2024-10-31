@@ -434,5 +434,17 @@
   "rejected": "Rejected",
   "individual-matches": "Individual Matches",
   "team-matches": "Team Matches",
-  "create-match": "Create Match"
+  "create-match": "Create Match",
+  "please-select-what-you-want-to-create-team-match-or-friendly-match": "Please Select What you want to create team match or Friendly match",
+  "individual-match": "Individual Match",
+  "team-match": "Team Match",
+  "match-details-information": "Match details information",
+  "invite-opponent-team": "Invite opponent team",
+  "1-invite-my-team": "1- Invite My Team",
+  "select-team": "Select Team",
+  "team-members": "Team Members",
+  "select-all": "Select All",
+  "selected-members-count": "Selected Members (:count)",
+  "send-invitation-and-continue": "Send invitation and continue",
+  "step-invite-opponent-team": ":step- Invite opponent team"
 }

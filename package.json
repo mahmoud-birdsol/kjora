@@ -60,6 +60,7 @@
 		"radix-vue": "^1.9.7",
 		"tailwind-merge": "^2.5.4",
 		"tailwindcss-animate": "^1.0.7",
+		"tailwindcss-radix": "^3.0.5",
 		"unplugin-auto-import": "^0.12.1",
 		"unplugin-vue-components": "^0.22.12",
 		"vite-plugin-watch": "^0.3.1",

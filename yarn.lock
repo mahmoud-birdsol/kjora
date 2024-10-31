@@ -2585,6 +2585,11 @@ tailwindcss-logical@^3.0.0:
   dependencies:
     tailwindcss "3.3.1"
 
+tailwindcss-radix@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/tailwindcss-radix/-/tailwindcss-radix-3.0.5.tgz#327f6a314b7935cd7a4b9ec58cf5c52c11a88cd9"
+  integrity sha512-dy5bIHixuvrmMzljDoteKD1mcLAm76Z1IPkCr7IWUN89zoxfokVepPlxMQkmWEQokYs3N9BOLsXXvn8fLZWoBg==
+
 tailwindcss@3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-3.3.1.tgz#b6662fab6a9b704779e48d083a9fef5a81d2b81e"
