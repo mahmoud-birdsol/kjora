@@ -1,9 +1,9 @@
 <template>
 	<div
 		class="text-xl text-center text-white capitalize overflow-hidden max-sm:pb-20">
-		<RatingChart
+		<!-- <RatingChart
 			:data="data"
-			:labels="labels" />
+			:labels="labels" /> -->
 	</div>
 </template>
 

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, watch } from 'vue'
 import FadeInTransition from '@/Components/FadeInTransition.vue'
 import Avatar from '@/Components/Avatar.vue'
@@ -12,6 +12,8 @@ import {
 import TextInput from '../TextInput.vue'
 import { Link } from '@inertiajs/vue3'
 import DateTranslation from '../DateTranslation.vue'
+import { useDebounceFn } from '@vueuse/core'
+
 const props = defineProps({
 	conversation: {
 		required: true,
@@ -33,7 +35,7 @@ function handleExitSearch() {
 	chat.fetchMessages()
 }
 
-const searchMessagesDebounced = _.debounce(chat.searchMessages, 500)
+const searchMessagesDebounced = useDebounceFn(chat.searchMessages, 500)
 watch(
 	() => chat.search,
 	() => {

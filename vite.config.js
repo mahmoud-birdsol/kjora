@@ -22,9 +22,6 @@ export default defineConfig({
 					if (id.includes('@fawmi/vue-google-maps')) {
 						return '@fawmi/vue-google-maps'
 					}
-					if (id.includes('lodash')) {
-						return 'lodash'
-					}
 					if (id.includes('apexcharts')) {
 						return 'apexcharts'
 					}
@@ -94,6 +91,9 @@ export default defineConfig({
 				},
 				{
 					'laravel-vue-i18n': ['trans', 'wTrans'],
+				},
+				{
+					uuid: [['v4', 'uuid']],
 				},
 			],
 		}),

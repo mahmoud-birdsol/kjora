@@ -90,7 +90,7 @@ const updatePhotoPreview = () => {
 		return
 	}
 	let newFiles = Array.from(photoInput.value.files).map((file) => {
-		return { file: file, id: _.uniqueId('f') }
+		return { file: file, id: uuid() }
 	})
 	newFiles = checkAvailableSize(newFiles)
 	newFiles?.forEach(({ file, id }, i) => {

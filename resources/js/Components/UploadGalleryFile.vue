@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useForm, usePage } from '@inertiajs/vue3'
 import Modal from '@/Components/Modal.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
@@ -87,7 +87,7 @@ const updateFilesPreview = () => {
 		return
 	}
 	let newFiles = Array.from(fileInput.value.files).map((file) => {
-		return { file: file, id: _.uniqueId('f') }
+		return { file: file, id: uuid() }
 	})
 
 	newFiles = checkAvailableSize(newFiles)
