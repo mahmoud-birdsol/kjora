@@ -160,7 +160,7 @@ const locale = usePage().props.locale
 					<RadioGroupOption
 						v-slot="{ checked }"
 						:value="1"
-						class="p-2 px-2 text-xs font-bold leading-none uppercase bg-white cursor-pointer hover:bg-stone-200 active:scale-95"
+						class="p-2 px-2 text-xs font-bold leading-none text-black uppercase bg-white cursor-pointer hover:bg-stone-200 active:scale-95"
 						:class="currentTabId == 1 ? 'bg-primary bg-opacity-80' : ''"
 						>{{ $t('grid') }}</RadioGroupOption
 					>
@@ -230,7 +230,7 @@ const locale = usePage().props.locale
 					v-model:form="form"
 					@reset="reset"
 					@filter="filter"
-					:showFiltersModal="showFiltersModal" />
+					v-model:showFiltersModal="showFiltersModal" />
 			</div>
 		</div>
 	</AppLayout>

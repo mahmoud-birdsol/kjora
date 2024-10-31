@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useForm, usePage } from '@inertiajs/vue3'
 import { XMarkIcon, AdjustmentsHorizontalIcon } from '@heroicons/vue/24/outline'
@@ -13,10 +13,13 @@ let rating = ref([0, 5])
 const props = defineProps({
 	positions: Array,
 	form: Object,
-	showFiltersModal: Boolean,
 	countries: Array,
 })
 let emit = defineEmits(['filter', 'reset', 'update:form'])
+
+const showFiltersModal = defineModel<boolean>('showFiltersModal', {
+	default: false,
+})
 function filter() {
 	emit('update:form', props.form)
 	emit('filter')
@@ -103,7 +106,7 @@ const distances = [5, 10, 20, 30, 40, 50]
 								name="search"
 								id="search"
 								v-model="form.search"
-								class="block w-full px-4 text-center text-white bg-black border-white rounded-full focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
+								class="block w-full px-4 text-center text-white bg-black border-white rounded-full form-input focus:border-primary focus:ring-primary sm:text-sm placeholder:center"
 								:placeholder="$t('search by name or username')" />
 						</div>
 					</div>
@@ -114,7 +117,7 @@ const distances = [5, 10, 20, 30, 40, 50]
 								id="location"
 								name="location"
 								v-model="form.location"
-								class="block w-full py-2 pl-3 pr-10 mt-1 text-base text-center text-white bg-black border-white rounded-full focus:border-primary focus:outline-none focus:ring-primary sm:text-sm placeholder:center">
+								class="block w-full py-2 pl-3 pr-10 mt-1 text-base text-center text-white bg-black border-white rounded-full form-select focus:border-primary focus:outline-none focus:ring-primary sm:text-sm placeholder:center">
 								<option :value="null">
 									{{ $t('distance') }}
 								</option>
@@ -147,7 +150,7 @@ const distances = [5, 10, 20, 30, 40, 50]
 								id="location"
 								name="location"
 								v-model="form.position"
-								class="block w-full py-2 pl-3 pr-10 mt-1 text-base text-center text-white bg-black border-white rounded-full focus:border-primary focus:outline-none focus:ring-primary sm:text-sm placeholder:center">
+								class="block w-full py-2 pl-3 pr-10 mt-1 text-base text-center text-white bg-black border-white rounded-full form-select focus:border-primary focus:outline-none focus:ring-primary sm:text-sm placeholder:center">
 								<option :value="null">
 									{{ $t('All positions') }}
 								</option>

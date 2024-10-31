@@ -18,7 +18,7 @@ const state = usePage().props?.auth?.user?.state_name
 				</h2>
 			</div>
 		</div>
-		<div class="mx-2 md:mx-8">
+		<div class="mx-2 text-black md:mx-8">
 			<slot name="body"></slot>
 		</div>
 		<div
