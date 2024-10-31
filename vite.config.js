@@ -5,9 +5,60 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import i18n from 'laravel-vue-i18n/vite'
+import { visualizer } from 'rollup-plugin-visualizer'
 import { watch } from 'vite-plugin-watch'
 
 export default defineConfig({
+	build: {
+		rollupOptions: {
+			output: {
+				manualChunks: (id) => {
+					if (id.includes('element-plus')) {
+						return 'element-plus'
+					}
+					if (id.includes('headlessui')) {
+						return 'headlessui'
+					}
+					if (id.includes('@fawmi/vue-google-maps')) {
+						return '@fawmi/vue-google-maps'
+					}
+					if (id.includes('lodash')) {
+						return 'lodash'
+					}
+					if (id.includes('apexcharts')) {
+						return 'apexcharts'
+					}
+					if (id.includes('vue-datepicker')) {
+						return 'vue-datepicker'
+					}
+					if (id.includes('emoji-picker')) {
+						return 'emoji-picker'
+					}
+					if (id.includes('pusher-js')) {
+						return 'pusher-js'
+					}
+					if (id.includes('@tanstack')) {
+						return '@tanstack'
+					}
+					if (id.includes('@fortawesome')) {
+						return '@fortawesome'
+					}
+					if (id.includes('date-fns')) {
+						return 'date-fns'
+					}
+					if (id.includes('vue-picture-cropper')) {
+						return 'vue-picture-cropper'
+					}
+					if (id.includes('vue-easy-lightbox')) {
+						return 'vue-easy-lightbox'
+					}
+					if (id.includes('node_modules')) {
+						return 'vendor'
+					}
+				},
+			},
+		},
+	},
 	plugins: [
 		watch({
 			pattern: ['routes/*.php'],
@@ -30,7 +81,11 @@ export default defineConfig({
 		AutoImport({
 			dts: true,
 			dirs: ['./resources/js/Composables', './resources/js/Utils'],
-			resolvers: [ElementPlusResolver()],
+			resolvers: [
+				ElementPlusResolver({
+					importStyle: 'sass',
+				}),
+			],
 			vueTemplate: true,
 			imports: [
 				'vue',
@@ -60,10 +115,8 @@ export default defineConfig({
 				},
 			],
 		}),
+		visualizer(),
 	],
-	ssr: {
-		noExternal: ['@inertiajs/server'],
-	},
 	resolve: {
 		alias: {
 			'@': '/resources/js',
