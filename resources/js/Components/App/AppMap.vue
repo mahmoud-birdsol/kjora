@@ -5,11 +5,11 @@ const props = defineProps<{
 	longitude: string
 }>()
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
-
+const { currentUser } = useCurrentUser()
 const center = computed(() => {
 	return {
-		lat: parseFloat(props.latitude),
-		lng: parseFloat(props.longitude),
+		lat: parseFloat(props.latitude ?? currentUser.value?.current_latitude),
+		lng: parseFloat(props.longitude ?? currentUser.value?.current_latitude),
 	}
 })
 </script>

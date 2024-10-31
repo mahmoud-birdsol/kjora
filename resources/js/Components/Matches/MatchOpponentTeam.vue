@@ -11,8 +11,8 @@ const form = useForm(() => ({ team_id: '' }))
 		<CardContent>
 			<template #body>
 				<div class="space-y-6">
-					<div class="flex flex-wrap items-center gap-3">
-						<h2>
+					<div>
+						<h2 class="card-title">
 							{{
 								$t('step-invite-opponent-team', {
 									step: String(2),

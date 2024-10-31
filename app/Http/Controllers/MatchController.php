@@ -44,6 +44,7 @@ class MatchController extends Controller
         return Inertia::render('Match/Create', [
             'teams' => Team::query()->where('owner_id', auth()->user()->id)->with('players')->get(),
             'opponentTeams' => Team::query()->whereNot('owner_id', auth()->user()->id)->whereDoesntHave('players', fn($q) => $q->where('users.id', auth()->user()->id))->with(['players', 'country'])->get(),
+            'stadiums' => Stadium::all(),
         ]);
     }
 

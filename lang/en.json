@@ -446,5 +446,14 @@
   "select-all": "Select All",
   "selected-members-count": "Selected Members (:count)",
   "send-invitation-and-continue": "Send invitation and continue",
-  "step-invite-opponent-team": ":step- Invite opponent team"
+  "step-invite-opponent-team": ":step- Invite opponent team",
+  "invite-my-team": "Invite My Team",
+  "finish": "Finish",
+  "step-match-details-information": ":step- Match details information",
+  "match-date": "Match date",
+  "match-time": "Match time",
+  "match-stadium": "Match stadium",
+  "your-match-created-successfully": "Your Match Created Successfully",
+  "go-to-home-page": "Go To Home Page",
+  "view-match-details-page": "View Match Details Page"
 }

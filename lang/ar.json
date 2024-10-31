@@ -449,5 +449,13 @@
   "select-all": "حدد الكل",
   "selected-members-count": "الأعضاء المختارون (:count)",
   "send-invitation-and-continue": "أرسل الدعوة واستمر",
-  "step-invite-opponent-team": ":step- دعوة فريق الخصم"
+  "step-invite-opponent-team": ":step- دعوة فريق الخصم",
+  "finish": "ينهي",
+  "step-match-details-information": "معلومات تفاصيل مباراة -:step",
+  "match-date": "تاريخ المباراة",
+  "match-time": "وقت المباراة",
+  "match-stadium": "ملعب المباراة",
+  "your-match-created-successfully": "تم إنشاء المطابقة الخاصة بك بنجاح",
+  "view-match-details-page": "عرض صفحة تفاصيل المباراة",
+  "go-to-home-page": "انتقل إلى الصفحة الرئيسية"
 }
