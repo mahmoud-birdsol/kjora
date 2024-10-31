@@ -31,6 +31,9 @@ export default defineConfig({
 					if (id.includes('emoji-picker')) {
 						return 'emoji-picker'
 					}
+					if (id.includes('lodash-es')) {
+						return 'lodash-es'
+					}
 					if (id.includes('pusher-js')) {
 						return 'pusher-js'
 					}
