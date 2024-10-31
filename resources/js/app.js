@@ -4,6 +4,7 @@ import '../css/app.css'
 import '@splidejs/splide/css'
 import '@splidejs/vue-splide/css/core'
 import '@splidejs/vue-splide/css'
+import VueApexCharts from 'vue3-apexcharts'
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
@@ -41,6 +42,7 @@ createInertiaApp({
 			})
 			.use(ZiggyVue, Ziggy)
 			.use(pinia)
+			.use(VueApexCharts)
 			.use(VueGoogleMaps, {
 				load: {
 					key: apiKey,

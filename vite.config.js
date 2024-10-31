@@ -22,7 +22,12 @@ export default defineConfig({
 					if (id.includes('@fawmi/vue-google-maps')) {
 						return '@fawmi/vue-google-maps'
 					}
+					if (id.includes('vue3-apexcharts')) {
+						console.log('id:', id)
+						return 'vue3-apexcharts'
+					}
 					if (id.includes('apexcharts')) {
+						console.log('id:', id)
 						return 'apexcharts'
 					}
 					if (id.includes('vue-datepicker')) {
