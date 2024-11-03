@@ -1,0 +1,1 @@
+import{_ as o,o as s,d as r,m as t}from"./app.8ff0f107.js";const n={},c={class:"bg-white rounded-2xl px-2 py-6 md:p-6 w-full min-h-[500px]"};function a(e,d){return s(),r("div",c,[t(e.$slots,"default")])}const _=o(n,[["render",a]]);export{_ as C};
