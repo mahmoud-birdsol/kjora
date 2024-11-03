@@ -156,7 +156,7 @@ const locale = usePage().props.locale
 				</div>
 				<RadioGroup
 					v-model="currentTabId"
-					class="flex items-center justify-end w-full mb-2 rounded-sm">
+					class="flex items-center justify-end w-full mb-2 rounded-sm text-black">
 					<RadioGroupOption
 						v-slot="{ checked }"
 						:value="1"
@@ -230,7 +230,7 @@ const locale = usePage().props.locale
 					v-model:form="form"
 					@reset="reset"
 					@filter="filter"
-					:showFiltersModal="showFiltersModal" />
+					v-model:showFiltersModal="showFiltersModal" />
 			</div>
 		</div>
 	</AppLayout>

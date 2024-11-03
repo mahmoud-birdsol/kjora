@@ -25,9 +25,7 @@ const tabs: TTab[] = [
 				<div class="flex flex-wrap justify-between gap-3">
 					<AppTabs :tabs="tabs" />
 					<AppSearchInput />
-					<Button
-						:label="$t('create-match')"
-						color="primary" />
+					<MatchOptions />
 				</div>
 				<MatchTeamsList
 					v-if="tabs[0].active"

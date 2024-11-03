@@ -3,7 +3,7 @@ import { ref, watch } from 'vue'
 import ConversationCard from '@/Components/Chat/ConversationCard.vue'
 import ListGroupTransition from '@/Components/ListGroupTransition.vue'
 import TextInput from '@/Components/TextInput.vue'
-
+import { useDebounceFn } from '@vueuse/core'
 const props = defineProps({
 	conversations: Array,
 })
@@ -15,7 +15,7 @@ const search = ref('')
  * Watch the search value to
  * debounce the filter update.
  */
-watch(search, () => _.debounce(filterConversations, 300)())
+watch(search, () => useDebounceFn(filterConversations, 300)())
 
 /**
  * Filter the conversations according

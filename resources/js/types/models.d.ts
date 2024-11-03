@@ -156,14 +156,17 @@ declare global {
 	export interface Team {
 		id: number
 		name: string
+		country_id: Country['id']
+		owner_id: User['id']
 		description: string
-		users: Users
-		team_logo_url: string | null
-		media: TMedia
 		code: string
-		type: string
-		country: Country
 		team_number: number
+		created_at: Date
+		updated_at: null
+		team_logo_url: null
+		players: Users
+		country: Country
+		media: TMedias
 	}
 	export type Teams = Team[]
 

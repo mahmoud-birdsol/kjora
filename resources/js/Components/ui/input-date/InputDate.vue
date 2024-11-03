@@ -6,7 +6,7 @@ import type { VueDatePickerProps, EmitEvents } from '@vuepic/vue-datepicker'
 import DatePicker from '@vuepic/vue-datepicker'
 import { useForwardPropsEmits } from 'radix-vue'
 const props = withDefaults(defineProps<VueDatePickerProps>(), {
-	teleport: '#vue-datepicker',
+	teleport: 'body',
 	enableTimePicker: false,
 	autoApply: true,
 	timePickerInline: true,

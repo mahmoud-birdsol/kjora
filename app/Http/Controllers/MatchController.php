@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Match;
 use App\Models\Stadium;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -40,7 +41,11 @@ class MatchController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Match/Create');
+        return Inertia::render('Match/Create', [
+            'teams' => Team::query()->where('owner_id', auth()->user()->id)->with('players')->get(),
+            'opponentTeams' => Team::query()->whereNot('owner_id', auth()->user()->id)->whereDoesntHave('players', fn($q) => $q->where('users.id', auth()->user()->id))->with(['players', 'country'])->get(),
+            'stadiums' => Stadium::all(),
+        ]);
     }
 
     /**

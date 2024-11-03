@@ -22,7 +22,7 @@ export const appPlugin = plugin(function ({
 			'@apply p-4 bg-white rounded-2xl shadow text-card-foreground': {},
 		},
 		'.card-title': {
-			'@apply text-xl font-semibold': {},
+			'@apply text-lg font-medium': {},
 		},
 		'.card-subtitle': {
 			'@apply text-sm': {},

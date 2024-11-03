@@ -159,7 +159,7 @@ function markAllNotificationsAsRead() {
 					<div class="flex items-center justify-between gap-2">
 						<!-- upgrade button  -->
 						<button
-							class="rounded-full bg-[#CFC27A] font-medium px-2 py-1 flex items-center gap-1 justify-evenly">
+							class="rounded-full bg-[#CFC27A] font-medium px-2 py-1 flex items-center gap-1 text-black justify-evenly">
 							<span class="bg-black rounded-full">
 								<StarIcon class="w-4 h-4 fill-[#CFC27A]" />
 							</span>

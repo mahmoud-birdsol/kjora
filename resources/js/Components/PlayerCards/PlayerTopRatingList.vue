@@ -12,7 +12,7 @@ const { data: players = { data: [] } } = useAxios<Resource<Users>>(
 </script>
 <template>
 	<div class="space-y-4 card">
-		<h2 class="card-title">{{ $t('top-rating-players') }}</h2>
+		<h2 class="text-xl font-semibold">{{ $t('top-rating-players') }}</h2>
 		<ul
 			class="space-y-3"
 			v-if="players?.data.length">

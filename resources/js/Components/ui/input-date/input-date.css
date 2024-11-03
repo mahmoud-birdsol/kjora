@@ -52,7 +52,7 @@ html[dir='rtl'] .dp--arrow-btn-nav {
 }
 .dp__input {
 	--dp-background-color: theme(colors.transparent);
-	@apply shadow-sm;
+	@apply shadow-sm rounded-full;
 }
 .dp__main[aria-invalid='true'] {
 	--dp-border-color: hsl(var(--dp-destructive-color) / 1);

@@ -7,6 +7,7 @@ import formsPlugin from '@tailwindcss/forms'
 import typographyPlugin from '@tailwindcss/typography'
 import logicalPlugin from 'tailwindcss-logical'
 import dirPlugin from 'tailwindcss-dir'
+import tailwindcssRadix from 'tailwindcss-radix'
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	darkMode: ['class'],
@@ -115,5 +116,6 @@ module.exports = {
 		dirPlugin,
 		appPlugin,
 		icons,
+		tailwindcssRadix,
 	],
 }
